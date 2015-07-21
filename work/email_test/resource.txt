@@ -12,7 +12,7 @@ Library        Selenium2Library
 ${SERVER}        192.168.100.21:8080
 ${BROWSER}       firefox
 ${DELAY}         0
-${SENDMAIL URL}     http://${SERVER}/Hello/
+${SENDMAIL URL}     http://${SERVER}/massive_mailer/
 
 *** Keywords ***
 
