@@ -16,16 +16,16 @@ public class SendMailController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Mail email = new Mail();
-		String tempReceipt = req.getParameter("receipt");	
-		StringTokenizer st = new StringTokenizer(tempReceipt,";");
-		ArrayList<String> receiptList = new ArrayList();
+		String tempRecipient = req.getParameter("recipient");	
+		StringTokenizer st = new StringTokenizer(tempRecipient,";");
+		ArrayList<String> recipientList = new ArrayList<String>();
 		while(st.hasMoreTokens()){
-			receiptList.add(st.nextToken());
+			recipientList.add(st.nextToken());
 		}
 		
 		email.setContent(req.getParameter("content"));
 		email.setContent(req.getParameter("subject"));
-		email.setReceipts(receiptList);
+		email.setReceipts(recipientList);
 		
 		//Test
 		resp.sendRedirect("/index.jsp");
