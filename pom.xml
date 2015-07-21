@@ -28,11 +28,18 @@
           <scope>provided</scope>
         </dependency>
         <dependency>
+
         	<groupId>javax.mail</groupId>
           	<artifactId>javax.mail-api</artifactId>
           	<version>1.5.4</version>
           	<scope>provided</scope>
         </dependency>
+<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.5</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

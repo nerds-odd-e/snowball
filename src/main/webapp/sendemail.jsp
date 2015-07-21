@@ -4,17 +4,25 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Massive Email Button</title>
+<link rel="stylesheet" type="text/css" href="resources/decor.css">
 </head>
 <body>
-    <div class="float_full">
-      To: <input type="text" name="recipient" id="recipient"/>
+    <form method="post" action="/sendMail">
+    <div class="emailform">
+      <div class="float_full">
+        To: <input type="text" name="recipient" id="recipient"/>
+      </div>
+      <div class="float_full">
+        Subject: <input type="text" name="subject" id="subject"/>
+      </div>
+      <div class="float_full">
+        <textarea rows="5" cols="20" name="content" id="content"></textarea>
+      </div>
+      <div class="float_full">
+        <input type="submit" class="send_button" id="send_button" value="send">
+      </div>
     </div>
-    <div class="float_full">
-      Subject: <input type="text" name="subject" id="subject"/>
-    </div>
-    <div class="float_full">
-      <textarea rows="5" cols="20" name="content" id="content"></textarea>
-    </div>
+    </form>
 </body>
 </html>
