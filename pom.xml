@@ -22,19 +22,19 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-          <groupId>javax.servlet</groupId>
-          <artifactId>javax.servlet-api</artifactId>
-          <version>3.1.0</version>
-          <scope>provided</scope>
-        </dependency>
-        <dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+			<scope>provided</scope>
+		</dependency>
 
-        	<groupId>javax.mail</groupId>
-          	<artifactId>javax.mail-api</artifactId>
-          	<version>1.5.4</version>
-          	<scope>provided</scope>
-        </dependency>
-<dependency>
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.5.4</version>
+		</dependency>
+
+		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.5</version>
@@ -54,6 +54,6 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		 <finalName>Hello</finalName>
+		<finalName>Hello</finalName>
 	</build>
 </project>
