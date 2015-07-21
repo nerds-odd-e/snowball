@@ -1,0 +1,13 @@
+.float_full {
+	width: 100%;
+	float: left;
+}
+
+.emailform {
+	width: 800px;
+	border: 1px;
+}
+
+.send_button {
+	align: right;
+}
