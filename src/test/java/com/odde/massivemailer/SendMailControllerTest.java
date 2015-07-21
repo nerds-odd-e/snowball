@@ -20,9 +20,11 @@ import javax.servlet.ServletInputStream;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpUpgradeHandler;
 import javax.servlet.http.Part;
 
 import org.junit.Assert;
@@ -32,8 +34,15 @@ import com.odde.massivemailer.model.Mail;
 
 public class SendMailControllerTest {
 	
+	
+	
 	HttpServletRequest httpReq = new HttpServletRequest() {
 		Map<String, Object> reqData = new HashMap<String, Object>();
+		
+		<T extends HttpUpgradeHandler> Object upgrade(Class<T> handlerClass) {
+			
+			return null;
+		}
 		
 		@Override
 		public AsyncContext startAsync(ServletRequest arg0, ServletResponse arg1) {
