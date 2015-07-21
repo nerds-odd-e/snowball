@@ -12,25 +12,29 @@ import javax.servlet.http.HttpServletResponse;
 import com.odde.massivemailer.model.Mail;
 
 public class SendMailController extends HttpServlet {
-	
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+		Mail email = processRequest(req);
+
+	}
+
+	public Mail processRequest(HttpServletRequest req) {
+
 		Mail email = new Mail();
-		String tempRecipient = req.getParameter("recipient");	
-		StringTokenizer st = new StringTokenizer(tempRecipient,";");
+		String tempRecipient = req.getParameter("recipient");
+		StringTokenizer st = new StringTokenizer(tempRecipient, ";");
 		ArrayList<String> recipientList = new ArrayList<String>();
-		while(st.hasMoreTokens()){
+		while (st.hasMoreTokens()) {
 			recipientList.add(st.nextToken());
 		}
-		
+
 		email.setContent(req.getParameter("content"));
-		email.setContent(req.getParameter("subject"));
+		email.setSubject(req.getParameter("subject"));
 		email.setReceipts(recipientList);
-		
-		//Test
-		resp.sendRedirect("/index.jsp");
-		
+
+		return email;
 	}
-	
 
 }
