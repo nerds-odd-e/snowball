@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.odde.massivemailer.model.Mail;
+import com.odde.massivemailer.service.MailService;
+import com.odde.massivemailer.service.impl.EmailServiceImpl;
 
 public class SendMailController extends HttpServlet {
 
@@ -17,7 +19,8 @@ public class SendMailController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		Mail email = processRequest(req);
-
+		MailService mailService =  new EmailServiceImpl();
+		mailService.send(email);
 	}
 
 	public Mail processRequest(HttpServletRequest req) {
