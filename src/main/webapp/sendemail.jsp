@@ -27,8 +27,6 @@
 </head>
 
 <body>
-
-<<<<<<< HEAD
 	<form name="sendmail" id="sendmail" method="post" action="sendMail">
 		<div id="wrapper">
 
