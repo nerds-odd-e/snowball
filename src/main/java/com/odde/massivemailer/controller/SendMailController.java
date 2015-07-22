@@ -16,18 +16,19 @@ import com.odde.massivemailer.service.impl.EmailServiceImpl;
 
 public class SendMailController extends HttpServlet {
 
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-		Mail email = processRequest(req);
+ 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+ 		 
+ 		Mail email = processRequest(req);
 		MailService mailService =  new EmailServiceImpl();
-		try {
-			mailService.send(email);
-		} catch (EmailException e) {
+ 		try {
+ 			mailService.send(email);
+			resp.sendRedirect("sendemail.jsp?status=success&msg=Email successfully sent");
+ 		} catch (EmailException e) {
 			// TODO: handling for email sending failure
-			e.printStackTrace();
-		}
-	}
+			resp.sendRedirect("sendemail.jsp?status=failed&msg=Unable to send");
+ 			e.printStackTrace();
+ 		}
+ 	}
 
 	public Mail processRequest(HttpServletRequest req) {
 
