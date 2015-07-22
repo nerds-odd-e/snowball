@@ -83,21 +83,14 @@
 						</div>
 					</div>
 					<!-- /.row -->
-
-				 <div class="row">
-                    <div class="col-lg-12">
-                        <div class="alert alert-info alert-dismissable">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <i class="fa fa-info-circle"></i>   <b><%
-    if (request.getParameter("status") != null) {
-        out.println(request.getParameter("status") + " : " + request.getParameter("msg"));
-    }
-    %></b>
-                        </div>
-                    </div>
-                </div> 
-
-
+					<%
+						if (request.getParameter("status") != null) {
+							out.println(
+									"<div class='row'><div class='col-lg-12'><div class='alert alert-info alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><i class='fa fa-info-circle'></i>&nbsp;<b>"
+											+ request.getParameter("status") + " : " + request.getParameter("msg")
+											+ "</b></div> </div></div>");
+						}
+					%>
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="panel panel-default">
@@ -147,7 +140,7 @@
 	</form>
 
 	<!-- jQuery -->
-	<script type="text/javascript" src="/resources/bootstrap/js/jquery.js"></script>
+	<script type="text/javascript" src="resources/bootstrap/js/jquery.js"></script>
 	<script type="text/javascript" src="resources/sendemail.js"></script>
 
 	<!-- Bootstrap Core JavaScript -->
