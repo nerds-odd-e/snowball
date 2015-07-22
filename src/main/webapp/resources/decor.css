@@ -11,3 +11,15 @@
 .send_button {
 	align: right;
 }
+.textCol {
+	width: 10%;
+	float: left;
+}
+.valueCol {
+	width: 90%;
+	float: left;
+	
+}
+.inputText {
+	width: 700px;
+}

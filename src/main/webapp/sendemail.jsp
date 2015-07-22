@@ -10,23 +10,54 @@
 <script type="text/javascript" src="resources/sendemail.js"></script>
 </head>
 <body>
-	<form name="main_emailform" id="main_emailform" method="post"
-		action="/sendMail">
-		<div class="emailform">
-			<div class="float_full">
-				To: <input type="text" name="recipient" id="recipient" />
-			</div>
-			<div class="float_full">
-				Subject: <input type="text" name="subject" id="subject" />
-			</div>
-			<div class="float_full">
-				<textarea rows="5" cols="20" name="content" id="content"></textarea>
-			</div>
-			<div class="float_full">
-				<input type="button" class="send_button" id="send_button"
-					value="send" disabled="disabled">
-			</div>
-		</div>
+    <form name="sendmail" id="sendmail" method="post" action="/sendMail">
+        <table>
+            <tr>
+                <td>
+                  <div class="textCol">
+                    <label for="recipient">To: </label>
+                   </div>
+                </td>
+                <td>
+                  <div class="valueCol">
+                    <input type="text" name="recipient" id="recipient" class="inputText" />
+                  </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                  <div class="textCol">
+                    <label for="recipient">Subject: </label>
+                  </div>
+                </td>
+                <td>
+                 <div class="valueCol">
+                    <input type="text" name="subject" id="subject" class="inputText" />
+                </div>
+                </td>
+            </tr>            
+            <tr>
+                <td>
+                  <div>
+                    <label for="recipient">body: </label>
+                  </div>
+                </td>
+                <td>
+                  <div>
+                        <textarea rows="20" name="content" id="content" class="inputText"></textarea>
+                  </div>
+                </td>
+            </tr>   
+            <tr>
+                <td></td>
+                <td>
+                  <div>
+                      <input type="button" class="send_button" id="send_button"
+                            value="send" disabled="disabled">
+                  </div>
+                </td>
+            </tr>                    
+        </table>
 	</form>
 </body>
 </html>

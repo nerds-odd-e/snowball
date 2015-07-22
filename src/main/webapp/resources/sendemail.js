@@ -15,7 +15,7 @@ $(document).ready(
 			});
 
 			function submitForm() {
-				$("#main_emailform").submit();
+				$("#sendmail").submit();
 			}
 			function checkInputElement() {
 				if (isBlank($("#recipient")) || isBlank($("#content"))
