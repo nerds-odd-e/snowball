@@ -10,7 +10,14 @@
 <script type="text/javascript" src="resources/sendemail.js"></script>
 </head>
 <body>
-    <form name="sendmail" id="sendmail" method="post" action="/sendMail">
+
+	<b><%
+	if (request.getParameter("status") != null) {
+        out.println(request.getParameter("status") + " : " + request.getParameter("msg"));
+    }
+	%></b>
+
+    <form name="sendmail" id="sendmail" method="post" action="sendMail">
         <table>
             <tr>
                 <td>
