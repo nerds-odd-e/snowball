@@ -76,7 +76,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<!-- configuration properties will go here -->
+					<jsSrcDir>${project.basedir}/src/main/webapp/resources</jsSrcDir>
 				</configuration>
 			</plugin>
 			<plugin>
