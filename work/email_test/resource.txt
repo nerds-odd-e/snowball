@@ -16,6 +16,11 @@ ${SENDMAIL URL}     http://${SERVER}/massive_mailer/
 
 *** Keywords ***
 
+Key all field
+    Input textfield    recipient    ${recipient}
+    Input textfield    subject      ${subject}
+    Input textfield    content      ${content}
+
 Open Browser To Send Email
     Open Browser  ${SENDMAIL URL}  ${BROWSER}
     Maximize Browser Window
@@ -23,4 +28,7 @@ Open Browser To Send Email
 
 Input textfield  [Arguments]  ${input_id}    ${input_value}
     Input Text  ${input_id}  ${input_value}
+
+Send Email
+    Click Button    send_button   
 
