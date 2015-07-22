@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generated="20150722 17:12:25.452" generator="Robot 2.8.1 (Python 2.7.3 on win32)">
+<suite source="C:\workspace\robot\work\email_test\sendEmail.txt" id="s1" name="sendEmail">
+<test id="s1-t1" name="First open send email page sent email button should disable">
+<kw type="kw" name="resource.Open Browser To Send Email">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="Selenium2Library.Open Browser">
+<doc>Opens a new browser instance to given URL.</doc>
+<arguments>
+<arg>${SENDMAIL URL}</arg>
+<arg>${BROWSER}</arg>
+</arguments>
+<msg timestamp="20150722 17:12:25.577" level="INFO">Opening browser 'firefox' to base url 'http://localhost:8080/Hello/'</msg>
+<status status="PASS" endtime="20150722 17:12:30.136" starttime="20150722 17:12:25.577"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Maximize Browser Window">
+<doc>Maximizes current browser window.</doc>
+<arguments>
+</arguments>
+<status status="PASS" endtime="20150722 17:12:31.662" starttime="20150722 17:12:30.136"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Set Selenium Speed">
+<doc>Sets the delay in seconds that is waited after each Selenium command.</doc>
+<arguments>
+<arg>${DELAY}</arg>
+</arguments>
+<status status="PASS" endtime="20150722 17:12:31.663" starttime="20150722 17:12:31.662"></status>
+</kw>
+<status status="PASS" endtime="20150722 17:12:31.663" starttime="20150722 17:12:25.576"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Element Should Be Disabled">
+<doc>Verifies that element identified with `locator` is disabled.</doc>
+<arguments>
+<arg>send_button</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Capture Page Screenshot">
+<doc>Takes a screenshot of the current page and embeds it into the log.</doc>
+<arguments>
+</arguments>
+<msg timestamp="20150722 17:12:31.767" html="yes" level="INFO">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-1.png"&gt;&lt;img src="selenium-screenshot-1.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" endtime="20150722 17:12:31.767" starttime="20150722 17:12:31.674"></status>
+</kw>
+<msg timestamp="20150722 17:12:31.768" level="FAIL">ValueError: Element locator 'send_button' did not match any elements.</msg>
+<status status="FAIL" endtime="20150722 17:12:31.768" starttime="20150722 17:12:31.664"></status>
+</kw>
+<kw type="teardown" name="Selenium2Library.Close Browser">
+<doc>Closes the current browser.</doc>
+<arguments>
+</arguments>
+<status status="PASS" endtime="20150722 17:12:31.844" starttime="20150722 17:12:31.769"></status>
+</kw>
+<doc></doc>
+<tags>
+</tags>
+<status status="FAIL" endtime="20150722 17:12:31.845" critical="yes" starttime="20150722 17:12:25.575">ValueError: Element locator 'send_button' did not match any elements.</status>
+</test>
+<test id="s1-t2" name="Send Button will be disabled if add data only a recipient field.">
+<kw type="kw" name="resource.Open Browser To Send Email">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="Selenium2Library.Open Browser">
+<doc>Opens a new browser instance to given URL.</doc>
+<arguments>
+<arg>${SENDMAIL URL}</arg>
+<arg>${BROWSER}</arg>
+</arguments>
+<msg timestamp="20150722 17:12:31.848" level="INFO">Opening browser 'firefox' to base url 'http://localhost:8080/Hello/'</msg>
+<status status="PASS" endtime="20150722 17:12:37.764" starttime="20150722 17:12:31.847"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Maximize Browser Window">
+<doc>Maximizes current browser window.</doc>
+<arguments>
+</arguments>
+<status status="PASS" endtime="20150722 17:12:39.606" starttime="20150722 17:12:37.765"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Set Selenium Speed">
+<doc>Sets the delay in seconds that is waited after each Selenium command.</doc>
+<arguments>
+<arg>${DELAY}</arg>
+</arguments>
+<status status="PASS" endtime="20150722 17:12:39.607" starttime="20150722 17:12:39.607"></status>
+</kw>
+<status status="PASS" endtime="20150722 17:12:39.607" starttime="20150722 17:12:31.847"></status>
+</kw>
+<kw type="kw" name="resource.Input textfield">
+<doc></doc>
+<arguments>
+<arg>recipient</arg>
+<arg>${recipient}</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Input Text">
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<arguments>
+<arg>${input_id}</arg>
+<arg>${input_value}</arg>
+</arguments>
+<msg timestamp="20150722 17:12:39.609" level="INFO">Typing text 'name1@gmail.com; name2@gmail.com' into text field 'recipient'</msg>
+<kw type="kw" name="Selenium2Library.Capture Page Screenshot">
+<doc>Takes a screenshot of the current page and embeds it into the log.</doc>
+<arguments>
+</arguments>
+<msg timestamp="20150722 17:12:39.708" html="yes" level="INFO">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-2.png"&gt;&lt;img src="selenium-screenshot-2.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" endtime="20150722 17:12:39.709" starttime="20150722 17:12:39.617"></status>
+</kw>
+<msg timestamp="20150722 17:12:39.709" level="FAIL">ValueError: Element locator 'recipient' did not match any elements.</msg>
+<status status="FAIL" endtime="20150722 17:12:39.710" starttime="20150722 17:12:39.609"></status>
+</kw>
+<status status="FAIL" endtime="20150722 17:12:39.710" starttime="20150722 17:12:39.608"></status>
+</kw>
+<kw type="teardown" name="Selenium2Library.Close Browser">
+<doc>Closes the current browser.</doc>
+<arguments>
+</arguments>
+<status status="PASS" endtime="20150722 17:12:39.780" starttime="20150722 17:12:39.711"></status>
+</kw>
+<doc></doc>
+<tags>
+</tags>
+<status status="FAIL" endtime="20150722 17:12:39.781" critical="yes" starttime="20150722 17:12:31.846">ValueError: Element locator 'recipient' did not match any elements.</status>
+</test>
+<test id="s1-t3" name="Send Button will be disabled if add data only a subject field.">
+<kw type="kw" name="resource.Open Browser To Send Email">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="Selenium2Library.Open Browser">
+<doc>Opens a new browser instance to given URL.</doc>
+<arguments>
+<arg>${SENDMAIL URL}</arg>
+<arg>${BROWSER}</arg>
+</arguments>
+<msg timestamp="20150722 17:12:39.785" level="INFO">Opening browser 'firefox' to base url 'http://localhost:8080/Hello/'</msg>
+<kw type="kw" name="Selenium2Library.Capture Page Screenshot">
+<doc>Takes a screenshot of the current page and embeds it into the log.</doc>
+<arguments>
+</arguments>
+<status status="FAIL" endtime="20150722 17:12:45.686" starttime="20150722 17:12:45.686"></status>
+</kw>
+<msg timestamp="20150722 17:12:45.686" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: Execution terminated by signal</msg>
+<status status="FAIL" endtime="20150722 17:12:45.690" starttime="20150722 17:12:39.785"></status>
+</kw>
+<status status="FAIL" endtime="20150722 17:12:45.691" starttime="20150722 17:12:39.784"></status>
+</kw>
+<kw type="teardown" name="Selenium2Library.Close Browser">
+<doc>Closes the current browser.</doc>
+<arguments>
+</arguments>
+<status status="PASS" endtime="20150722 17:12:45.692" starttime="20150722 17:12:45.691"></status>
+</kw>
+<doc></doc>
+<tags>
+</tags>
+<status status="FAIL" endtime="20150722 17:12:45.692" critical="yes" starttime="20150722 17:12:39.783">Execution terminated by signal</status>
+</test>
+<test id="s1-t4" name="Send Button will be disabled if add data only a content field.">
+<doc></doc>
+<tags>
+</tags>
+<status status="FAIL" endtime="20150722 17:12:45.698" critical="yes" starttime="20150722 17:12:45.696">Test execution stopped due to a fatal error.</status>
+</test>
+<test id="s1-t5" name="Send Button will be enabled if add all data field, subject, content, recipient">
+<doc></doc>
+<tags>
+</tags>
+<status status="FAIL" endtime="20150722 17:12:45.703" critical="yes" starttime="20150722 17:12:45.701">Test execution stopped due to a fatal error.</status>
+</test>
+<doc>A test suite with a single test for valid login. This test has
+a workflow that is created using keywords from the resource file.</doc>
+<metadata>
+</metadata>
+<status status="FAIL" endtime="20150722 17:12:45.708" starttime="20150722 17:12:25.452"></status>
+</suite>
+<statistics>
+<total>
+<stat fail="5" pass="0">Critical Tests</stat>
+<stat fail="5" pass="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat fail="5" pass="0" id="s1" name="sendEmail">sendEmail</stat>
+</suite>
+</statistics>
+<errors>
+<msg timestamp="20150722 17:12:45.686" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: Execution terminated by signal</msg>
+</errors>
+</robot>

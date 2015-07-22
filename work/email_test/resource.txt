@@ -1,0 +1,26 @@
+*** Settings ***
+
+Documentation  A resource file containing the application specific keywords
+...            that create our own domain specific language. This resource
+...            implements keywords for testing HTML version of the test
+...            application.
+Library        Selenium2Library
+
+
+*** Variables ***
+
+${SERVER}        localhost:8080
+${BROWSER}       firefox
+${DELAY}         0
+${SENDMAIL URL}     http://${SERVER}/Hello/
+
+*** Keywords ***
+
+Open Browser To Send Email
+    Open Browser  ${SENDMAIL URL}  ${BROWSER}
+    Maximize Browser Window
+    Set Selenium Speed  ${DELAY}
+
+Input textfield  [Arguments]  ${input_id}    ${input_value}
+    Input Text  ${input_id}  ${input_value}
+
