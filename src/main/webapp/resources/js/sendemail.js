@@ -32,7 +32,8 @@ function checkInputElement() {
 }
 
 function isBlank(value) {
-	return value.trim() === "";
+//	return value.trim() === "";
+	return value.replace(/^\s+|\s+$/gm,'') === "";
 }
 
 function enableButton() {
