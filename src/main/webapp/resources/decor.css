@@ -1,0 +1,9 @@
+#recipient {
+	display: inline;
+	width: 98%;
+}
+
+span.add-contact-button {
+	color: cadetblue;
+	cursor: pointer;
+}
