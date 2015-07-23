@@ -49,13 +49,5 @@ public class SendMailController extends HttpServlet {
 		return email;
 	}
 	
-	public List<ContactPerson> getContactData() {
-		List<ContactPerson> cpList = new ArrayList<ContactPerson>();
-		ContactPerson cp = new ContactPerson();
-		cp.setId(1);
-		cp.setName("mail@hotmail.com");
-		cpList.add(cp);
-		return cpList;
-	}
 
 }

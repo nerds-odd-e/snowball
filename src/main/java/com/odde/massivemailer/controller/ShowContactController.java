@@ -22,7 +22,11 @@ public class ShowContactController extends HttpServlet {
 		List<ContactPerson> cpList = new ArrayList<ContactPerson>();
 		ContactPerson cp = new ContactPerson();
 		cp.setId(1);
-		cp.setName("mail@hotmail.com");
+		cp.setName("mail12@hotmail.com");
+		cpList.add(cp);
+		cp = new ContactPerson();
+		cp.setId(2);
+		cp.setName("mailxx@hotmail.com");
 		cpList.add(cp);
 		return cpList;
 	}

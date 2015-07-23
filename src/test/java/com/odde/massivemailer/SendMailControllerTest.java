@@ -39,11 +39,6 @@ public class SendMailControllerTest {
 	    Assert.assertEquals("content-na-ka",mail.getContent());
 	}
 	
-	@Test
-	public void shouldReturnNameOfListWhenCalledController() {
-		assertEquals("mail@hotmail.com",mailController.getContactData().get(0).getName());
-	}
-	
 	
 	
 }

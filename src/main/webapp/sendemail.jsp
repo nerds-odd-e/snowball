@@ -6,6 +6,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
+<%@ page import="com.odde.massivemailer.model.ContactPerson" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
 
 <title>ODD-E</title>
 
@@ -21,6 +24,9 @@
 <!-- Custom Fonts -->
 <link href="resources/bootstrap/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
+
+<link href="resources/decor.css" rel="stylesheet">
+
 </head>
 <body>
 	<form name="sendmail" id="sendmail" method="post" action="sendMail">
@@ -91,6 +97,25 @@
 						<div class="col-lg-12">
 							<div class="panel panel-default">
 								<div class="panel-heading">
+									<h3 class="panel-title">Add Recipients</h3>
+								</div>
+								<table id="contactTable" class="table table-hover">
+									<tr>									   
+										<th>Email</th>
+									</tr>
+								</table>
+								<div class="panel-body">
+									<div class="col-lg-11">
+										<input name="newContactTextBox" class="form-control" type="text"/>
+									</div>
+									<div class="col-lg-1">									
+										<button type="button" class="btn btn-default"
+												id="add_contact" value="send" disabled>Add Contact</button>
+									</div>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-heading">
 									<h3 class="panel-title">Send Email</h3>
 								</div>
 								<div class="panel-body">
@@ -99,6 +124,7 @@
 										<div class="col-lg-11">
 											<input type="text" class="form-control" name="recipient"
 												id="recipient">
+											<span class="glyphicon glyphicon-plus add-contact-button" aria-hidden="true"></span>	
 										</div>
 									</div>
 									<br />
@@ -135,6 +161,7 @@
 
 <!-- jQuery -->
 <script type="text/javascript" src="resources/bootstrap/js/jquery.js"></script>
+<script type="text/javascript" src="resources/showContact.js"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="resources/sendemail.js"></script>
