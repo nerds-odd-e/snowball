@@ -2,6 +2,7 @@ package com.odde.massivemailer.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.servlet.ServletException;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.odde.massivemailer.exception.EmailException;
+import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.service.MailService;
 import com.odde.massivemailer.service.impl.EmailServiceImpl;
@@ -45,6 +47,15 @@ public class SendMailController extends HttpServlet {
 		email.setReceipts(recipientList);
 
 		return email;
+	}
+	
+	public List<ContactPerson> getContactData() {
+		List<ContactPerson> cpList = new ArrayList<ContactPerson>();
+		ContactPerson cp = new ContactPerson();
+		cp.setId(1);
+		cp.setName("mail@hotmail.com");
+		cpList.add(cp);
+		return cpList;
 	}
 
 }
