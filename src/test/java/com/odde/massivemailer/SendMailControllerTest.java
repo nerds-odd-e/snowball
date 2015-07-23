@@ -1,5 +1,6 @@
 package com.odde.massivemailer;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
+import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.odde.massivemailer.controller.SendMailController;
@@ -18,6 +20,7 @@ public class SendMailControllerTest {
 	
 	
 	HttpServletRequest httpReq = Mockito.mock(HttpServletRequest.class);
+	SendMailController mailController = new SendMailController();
 	
 	@org.junit.Test
 	public void testProcessRequest(){
@@ -27,7 +30,6 @@ public class SendMailControllerTest {
 		Mockito.when(httpReq.getParameter("content")).thenReturn("content-na-ka");
 		Mockito.when(httpReq.getParameter("subject")).thenReturn("suject for test");
 		
-		SendMailController mailController = new SendMailController();
 		Mail mail = mailController.processRequest(httpReq);
 		
 	    Assert.assertEquals("suject for test",mail.getSubject());
