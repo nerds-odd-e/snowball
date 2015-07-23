@@ -87,6 +87,7 @@
 											+ "</b></div> </div></div>");
 						}
 					%>
+					<input type="hidden" id="msg_sent_cnt" value="${param.repcnt}"/>
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="panel panel-default">
