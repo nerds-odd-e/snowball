@@ -14,4 +14,13 @@
 		<servlet-name>mailController</servlet-name>
 		<url-pattern>/sendMail</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>showContactController</servlet-name>
+		<servlet-class>com.odde.massivemailer.controller.ShowContactController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>showContactController</servlet-name>
+		<url-pattern>/showContact</url-pattern>
+	</servlet-mapping>	
 </web-app>

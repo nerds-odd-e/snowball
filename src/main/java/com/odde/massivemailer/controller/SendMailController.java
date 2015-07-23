@@ -12,23 +12,23 @@ import javax.servlet.http.HttpServletResponse;
 import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.service.MailService;
-import com.odde.massivemailer.service.impl.EmailServiceImpl;
+import com.odde.massivemailer.service.impl.GMailService;
 
 public class SendMailController extends HttpServlet {
 
- 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
- 		 
- 		Mail email = processRequest(req);
-		MailService mailService =  new EmailServiceImpl();
- 		try {
- 			mailService.send(email);
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+
+		Mail email = processRequest(req);
+		MailService mailService = new GMailService();
+		try {
+			mailService.send(email);
 			resp.sendRedirect("sendemail.jsp?status=success&msg=Email successfully sent");
- 		} catch (EmailException e) {
-			// TODO: handling for email sending failure
+		} catch (EmailException e) {
 			resp.sendRedirect("sendemail.jsp?status=failed&msg=Unable to send");
- 			e.printStackTrace();
- 		}
- 	}
+			e.printStackTrace();
+		}
+	}
 
 	public Mail processRequest(HttpServletRequest req) {
 
