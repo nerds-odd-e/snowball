@@ -13,20 +13,17 @@
 <title>ODD-E</title>
 
 <!-- Bootstrap Core CSS -->
-<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="resources/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom CSS -->
-<link href="resources/bootstrap/css/sb-admin.css" rel="stylesheet">
+<link href="resources/lib/bootstrap/css/sb-admin.css" rel="stylesheet">
 
-<link href="resources/bootstrap/css/plugins/morris.css"
+<link href="resources/lib/bootstrap/css/plugins/morris.css"
 	rel="stylesheet">
 
 <!-- Custom Fonts -->
-<link href="resources/bootstrap/font-awesome/css/font-awesome.min.css"
+<link href="resources/lib/bootstrap/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
-
-<link href="resources/decor.css" rel="stylesheet">
-
 </head>
 <body>
 	<form name="sendmail" id="sendmail" method="post" action="sendMail">
@@ -161,10 +158,10 @@
 </body>
 
 <!-- jQuery -->
-<script type="text/javascript" src="resources/bootstrap/js/jquery.js"></script>
-<script type="text/javascript" src="resources/showContact.js"></script>
+<script type="text/javascript" src="resources/lib/bootstrap/js/jquery.js"></script>
 <!-- Bootstrap Core JavaScript -->
-<script src="resources/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="resources/sendemail.js"></script>
+<script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="resources/js/sendemail.js"></script>
+<script type="text/javascript" src="resources/showContact.js"></script>
 
 </html>
