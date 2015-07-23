@@ -76,9 +76,9 @@
 					</execution>
 				</executions>
 				<configuration>
-					<jsSrcDir>${project.basedir}/src/main/webapp/resources</jsSrcDir>
+					<jsSrcDir>${project.basedir}/src/main/webapp/resources/js</jsSrcDir>
 					<preloadSources>
-						<source>/src/main/webapp/resources/bootstrap/js/jquery.js</source>
+						<source>/src/main/webapp/resources/lib/bootstrap/js/jquery.js</source>
 					</preloadSources>
 				</configuration>
 			</plugin>

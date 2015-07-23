@@ -1,7 +1,7 @@
 describe('test isBlank function',function(){
 	
   it('should return true when pass blank value',function(){
-	  expect(isBlank(" ")).toBe(true);
+	  expect(isBlank("  ")).toBe(true);
   });
   
   it('should return false when pass not blank value',function(){
