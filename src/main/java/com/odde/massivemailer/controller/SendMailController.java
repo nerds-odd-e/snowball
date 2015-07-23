@@ -12,16 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.service.MailService;
-import com.odde.massivemailer.service.impl.EmailServiceImpl;
+import com.odde.massivemailer.service.impl.GMailService;
 
 public class SendMailController extends HttpServlet {
-	
-	MailService mailService =  new EmailServiceImpl();
 
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 
 		Mail email = processRequest(req);
+		MailService mailService = new GMailService();
 		try {
 			mailService.send(email);
 			resp.sendRedirect("sendemail.jsp?status=success&msg=Email successfully sent");

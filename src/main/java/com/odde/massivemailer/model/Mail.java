@@ -2,34 +2,86 @@ package com.odde.massivemailer.model;
 
 import java.util.List;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
+import com.odde.massivemailer.exception.EmailException;
+
 public class Mail {
-	
-	List<String> receipts;
-	String subject;
-	String content;
-	
+
+	private static final String FROM = "myodde@gmail.com";
+
+	private MimeMessage message;
+	private List<String> receipts;
+	private String subject;
+	private String content;
+
+	public Mail() {
+	}
+
 	public List<String> getReceipts() {
 		return receipts;
 	}
-	
+
 	public void setReceipts(List<String> receipts) {
 		this.receipts = receipts;
 	}
-	
+
 	public String getSubject() {
 		return subject;
 	}
-	
+
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
-	
+
 	public String getContent() {
 		return content;
 	}
-	
+
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
+
+	private MimeMessage setMessageProperty(Session session)
+			throws AddressException, MessagingException {
+		message = new MimeMessage(session);
+		message.setFrom(new InternetAddress(FROM));
+		message.setSubject(this.getSubject());
+		message.setText(this.getContent());
+		return message;
+	}
+
+	public void setMessage(MimeMessage message) {
+		this.message = message;
+	}
+
+	public Message createMessage(Session session) throws EmailException,
+			AddressException, MessagingException {
+
+		List<String> recipients = getReceipts();
+		MimeMessage message = setMessageProperty(session);
+		composeMessage(recipients, message);
+		return message;
+	}
+
+	public void composeMessage(List<String> recipients, MimeMessage message)
+			throws EmailException {
+		try {
+
+			InternetAddress[] toAddress = new InternetAddress[recipients.size()];
+
+			for (int i = 0; i < recipients.size(); i++) {
+				toAddress[i] = new InternetAddress(recipients.get(i));
+				message.addRecipient(Message.RecipientType.TO, toAddress[i]);
+			}
+
+		} catch (MessagingException ex) {
+			throw new EmailException("Unable to send an email: " + ex);
+		}
+	}
 }
