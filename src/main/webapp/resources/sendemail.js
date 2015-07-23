@@ -20,8 +20,11 @@ function submitForm() {
 }
 
 function checkInputElement() {
-	if (isBlank($("#recipient").val()) || isBlank($("#content").val())
-			|| isBlank($("#subject").val())) {
+	var recipientIsBlank = isBlank($("#recipient").val());
+	var contentIsBlank = isBlank($("#content").val());
+	var subjectIsBlank = isBlank($("#subject").val());
+	
+	if (recipientIsBlank || contentIsBlank || subjectIsBlank) {
 		disableButton();
 	} else {
 		enableButton();

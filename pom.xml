@@ -81,6 +81,9 @@
 				</executions>
 				<configuration>
 					<jsSrcDir>${project.basedir}/src/main/webapp/resources</jsSrcDir>
+					<preloadSources>
+						<source>/src/main/webapp/resources/bootstrap/js/jquery.js</source>
+					</preloadSources>
 				</configuration>
 			</plugin>
 			<plugin>
