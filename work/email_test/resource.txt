@@ -9,14 +9,16 @@ Library        Selenium2Library
 
 *** Variables ***
 
-${SERVER}        192.168.100.21:8080
+${SERVER}        192.168.100.28:8080
 ${BROWSER}       firefox
 ${DELAY}         0
 ${SENDMAIL URL}     http://${SERVER}/massive_mailer/
+${subject}       subject for test send email
+${content}       content for test send email
 
 *** Keywords ***
 
-Key all field
+Key all email field  [Arguments]  ${recipient}  ${subject}  ${content}
     Input textfield    recipient    ${recipient}
     Input textfield    subject      ${subject}
     Input textfield    content      ${content}
@@ -32,3 +34,21 @@ Input textfield  [Arguments]  ${input_id}    ${input_value}
 Send Email
     Click Button    send_button   
 
+Can click  [Arguments]  ${send_button}
+     Element Should Be Enabled  ${send_button}
+     
+Can not click  [Arguments]  ${send_button}
+     Element Should Be Disabled  ${send_button}     
+     
+Create default email with recipients  [Arguments]  ${recipient}  
+    Open Browser To Send Email
+    Input textfield    recipient    ${recipient}
+    Input textfield    subject      ${subject}
+    Input textfield    content      ${content}
+
+Should sent email  [Arguments]    ${msg_cnt}
+    ${value}=  Get Value  msg_sent_cnt
+    Should Be Equal    ${value}   ${msg_cnt}
+    Close Browser
+          
+    

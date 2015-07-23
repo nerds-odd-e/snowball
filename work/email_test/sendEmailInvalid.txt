@@ -1,7 +1,6 @@
 *** Settings ***
 
-Documentation  A test suite with a single test for valid login. This test has
-...            a workflow that is created using keywords from the resource file.
+Documentation  A test suite with a single test for invalid sending email.
 Resource       resource.txt
 
 
@@ -10,54 +9,39 @@ Resource       resource.txt
 ${recipient}     name1@gmail.com; name2@gmail.com   
 ${subject}       subject for test send email
 ${content}       content for test send email
-${successURL}     http://localhost:8080/massive_mailer/sendemail.jsp?status=success&msg=Email successfully sent
+${invalid_format_recipient}     name1gmail.com
 
 
 *** Test Cases ***
 
 First open send email page sent email button should disable
     Open Browser To Send Email
-    Element Should Be Disabled    send_button
+    Can not click     send_button
     [Teardown]  Close Browser
 
 
 Send Button will be disabled if add data only a recipient field.
     Open Browser To Send Email
     Input textfield    recipient    ${recipient}
-    Element Should Be Disabled    send_button
-    #Input content    data for email
+    Can not click    send_button
     [Teardown]  Close Browser
 
 Send Button will be disabled if add data only a subject field.
     Open Browser To Send Email
     Input textfield    subject      ${subject}
-    Element Should Be Disabled    send_button
-    #Input content    data for email
+    Can not click    send_button
     [Teardown]  Close Browser
 
 Send Button will be disabled if add data only a content field.
     Open Browser To Send Email
     Input textfield    content    ${content}
-    Element Should Be Disabled    send_button
-    #Input content    data for email
-    [Teardown]  Close Browser
-
-Page show success message when add data conrrectly and click send button
-    Open Browser To Send Email
-    Key all field
-    Element Should Be Enabled    send_button
-    Send Email
-    Page Should Contain    success
+    Can not click    send_button
     [Teardown]  Close Browser
 
 Page show fail message when add data conrrectly and click send button
     Open Browser To Send Email
-    Key all field
-    Input textfield    recipient    xXx
-    Element Should Be Enabled    send_button
+    Key all email field  ${invalid_format_recipient}  ${subject}  ${content}
+    Can click    send_button
     Send Email
     Page Should Contain    fail
     [Teardown]  Close Browser
-
-
-
