@@ -1,6 +1,7 @@
 package com.odde.massivemailer.model;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
 import static org.junit.Assert.assertEquals;
@@ -22,9 +23,11 @@ public class MailTest {
 		mail.setSubject("subject");
 		mail.setReceipts(Arrays.asList("test@gmail.com"));
 		
-		Message message = mail.createMessage(session);
+		List<Message> messages = mail.createMessages(session);
 		
-		assertEquals(mail.getSubject(), message.getSubject());
+		assertEquals(1, messages.size());
+		
+		assertEquals(mail.getSubject(), messages.get(0).getSubject());
 	}
 	
 }

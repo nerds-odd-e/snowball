@@ -1,5 +1,6 @@
 package com.odde.massivemailer.service.impl;
 
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -35,21 +36,24 @@ public class GMailService implements MailService {
 
 	@Override
 	public void send(Mail email) throws EmailException {
-		Message msg;
+		List<Message> msg;
 		try {
-			msg = email.createMessage(session);
+			msg = email.createMessages(session);
 		} catch (MessagingException ex) {
 			throw new EmailException("Unable to send an email: " + ex);
 		}
 		this.sendEmailViaGmail(msg);
 	}
 
-	private void sendEmailViaGmail(Message msg) throws EmailException {
+	private void sendEmailViaGmail(List<Message> msgs) throws EmailException {
 		try {
 
 			Transport transport = getTransport();
 			transport.connect(HOST, FROM, PASSWD);
-			transport.sendMessage(msg, msg.getAllRecipients());
+			for (Message msg : msgs) {
+				transport.sendMessage(msg, msg.getAllRecipients());
+			}
+
 			transport.close();
 
 		} catch (Exception ex) {
@@ -60,5 +64,5 @@ public class GMailService implements MailService {
 	protected Transport getTransport() throws NoSuchProviderException {
 		return session.getTransport("smtp");
 	}
-	
+
 }

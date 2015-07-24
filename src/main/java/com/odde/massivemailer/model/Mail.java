@@ -1,5 +1,6 @@
 package com.odde.massivemailer.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.mail.Message;
@@ -60,25 +61,44 @@ public class Mail {
 		this.message = message;
 	}
 
-	public Message createMessage(Session session) throws EmailException,
+	public List<Message> createMessages(Session session) throws EmailException,
 			AddressException, MessagingException {
 
 		List<String> recipients = getReceipts();
-		MimeMessage message = setMessageProperty(session);
-		composeMessage(recipients, message);
-		return message;
+
+		List<Message> returnMsg = new ArrayList<Message>();
+
+		for (String recipient : recipients) {
+			MimeMessage message = setMessageProperty(session);
+			composeMessage(recipient, message);
+			returnMsg.add(message);
+		}
+
+		return returnMsg;
 	}
 
-	public void composeMessage(List<String> recipients, MimeMessage message)
+	// public void composeMessage(List<String> recipients, MimeMessage message)
+	// throws EmailException {
+	// try {
+	//
+	// InternetAddress[] toAddress = new InternetAddress[recipients.size()];
+	//
+	// for (int i = 0; i < recipients.size(); i++) {
+	// toAddress[i] = new InternetAddress(recipients.get(i));
+	// message.addRecipient(Message.RecipientType.TO, toAddress[i]);
+	// }
+	//
+	// } catch (MessagingException ex) {
+	// throw new EmailException("Unable to send an email: " + ex);
+	// }
+	// }
+
+	public void composeMessage(String recipient, MimeMessage message)
 			throws EmailException {
 		try {
 
-			InternetAddress[] toAddress = new InternetAddress[recipients.size()];
-
-			for (int i = 0; i < recipients.size(); i++) {
-				toAddress[i] = new InternetAddress(recipients.get(i));
-				message.addRecipient(Message.RecipientType.TO, toAddress[i]);
-			}
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(
+					recipient));
 
 		} catch (MessagingException ex) {
 			throw new EmailException("Unable to send an email: " + ex);

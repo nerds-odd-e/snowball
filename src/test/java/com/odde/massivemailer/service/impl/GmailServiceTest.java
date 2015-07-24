@@ -60,7 +60,7 @@ public class GmailServiceTest {
 		email.setReceipts(Arrays.asList(RECIPIENTS));
 		emailService.send(email);
 		verify(transport, times(1)).connect(anyString(), anyString(), anyString());
-		verify(transport, times(1)).sendMessage(any(Message.class), any(Address[].class));
+		verify(transport, times(2)).sendMessage(any(Message.class), any(Address[].class));
 		verify(transport, times(1)).close();
 
 	}
