@@ -104,7 +104,7 @@
 								</table>
 								<div class="panel-body">
 									<div class="col-lg-11">
-										<input name="newContactTextBox" class="form-control" type="text"/>
+										<input id="add_new_contact" name="newContactTextBox" class="form-control" type="text"/>
 									</div>
 									<div class="col-lg-1">									
 										<button type="button" class="btn btn-default"
