@@ -20,7 +20,7 @@ Check Send Button
     Input textfield    	subject   	${subject}
     Input textfield    	content  	${content}
     Run Keyword If		'${expected_status}'=='Enabled' 	Can click  		send_button
-    Run Keyword If    	'${expected_status}'=='Disabled' 	Can Not click 	send_button
+    Run Keyword If    	'${expected_status}'=='Disabled' 	Can not click 	send_button
 
 	
 	
