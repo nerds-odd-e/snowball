@@ -13,11 +13,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.odde.massivemailer.model.ContactPerson;
-import com.odde.massivemailer.service.ContactService;
+import com.odde.massivemailer.service.impl.SqliteContact;
 
 public class ContactServiceTest {
 
-	private ContactService service = new ContactService();
+	private SqliteContact service = new SqliteContact();
 	private Connection connection;
 	private Statement stmt;
 	private ResultSet resultSet;
@@ -25,8 +25,11 @@ public class ContactServiceTest {
 
 	@Before
 	public void setupConnection() throws ClassNotFoundException, SQLException {
-		connection = service.connectDB("jdbc:sqlite:oddemail.db");
-		stmt = connection.createStatement();
+		service.connectDB("jdbc:sqlite:oddemail.db");
+		connection = service.getConnection();
+		stmt = service.getStatement();
+		stmt.executeUpdate(
+				"CREATE TABLE IF NOT EXISTS mail (id INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL, name VARCHAR(50) NOT NULL)");
 		stmt.executeUpdate("DELETE FROM mail");
 		stmt.executeUpdate("INSERT INTO mail(name) VALUES ('name 1')");
 	}
