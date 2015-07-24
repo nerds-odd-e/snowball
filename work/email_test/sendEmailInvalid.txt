@@ -1,7 +1,7 @@
 *** Settings ***
-
-Documentation  A test suite with a single test for invalid sending email.
 Resource       resource.txt
+Test Setup     Open Browser To Send Email
+Test Teardown  Close Browser
 
 
 
@@ -12,36 +12,33 @@ ${content}       content for test send email
 ${invalid_format_recipient}     name1gmail.com
 
 
+
+***Keywords***
+Check Send Button
+	[Arguments]  ${recipient}   ${subject}   ${content}    ${expected_status}
+    Input textfield    	recipient 	${recipient}
+    Input textfield    	subject   	${subject}
+    Input textfield    	content  	${content}
+    Run Keyword If		'${expected_status}'=='Enabled' 	Can click  		send_button
+    Run Keyword If    	'${expected_status}'=='Disabled' 	Can Not click 	send_button
+
+	
+	
 *** Test Cases ***
 
-First open send email page sent email button should disable
-    Open Browser To Send Email
-    Can not click     send_button
-    [Teardown]  Close Browser
+Verify value and check button
+	[Template]   Check Send Button
+	#*recipient*   *subject*    *content*   *expectation*
+	#----------------------------------------------------------
+	${EMPTY}      ${EMPTY}     ${EMPTY}      Disabled
+	${recipient}  ${EMPTY}     ${EMPTY}      Disabled
+	${EMPTY}      ${subject}   ${EMPTY}      Disabled
+	${EMPTY}      ${EMPTY}     ${content}    Disabled
+	${recipient}  ${subject}   ${content}    Enabled
 
-
-Send Button will be disabled if add data only a recipient field.
-    Open Browser To Send Email
-    Input textfield    recipient    ${recipient}
-    Can not click    send_button
-    [Teardown]  Close Browser
-
-Send Button will be disabled if add data only a subject field.
-    Open Browser To Send Email
-    Input textfield    subject      ${subject}
-    Can not click    send_button
-    [Teardown]  Close Browser
-
-Send Button will be disabled if add data only a content field.
-    Open Browser To Send Email
-    Input textfield    content    ${content}
-    Can not click    send_button
-    [Teardown]  Close Browser
-
-Page show fail message when add data conrrectly and click send button
-    Open Browser To Send Email
-    Key all email field  ${invalid_format_recipient}  ${subject}  ${content}
+Page show success message when add data correctly and click send button
+    Key all email field    ${invalid_format_recipient}    ${subject}    ${content}
     Can click    send_button
     Send Email
     Page Should Contain    fail
-    [Teardown]  Close Browser
+
