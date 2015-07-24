@@ -1,17 +1,29 @@
 *** Settings ***
-
-Documentation  A test suite with add email contact.
 Resource       resource.txt
+Test Setup     Open Browser To Send Email
+Test Teardown  Close Browser
+
+
 
 *** Variables ***
 ${new_recipient}     name1@gmail.com
 
 
+
+***Keywords***
+Check Add Contact Button
+	[Arguments]  ${new_recipient}    ${expected_status}
+    Input textfield    	add_new_contact 	${new_recipient}
+    Run Keyword If		'${expected_status}'=='Enabled'		Can click		add_contact
+    Run Keyword If    	'${expected_status}'=='Disabled'	Can not click	add_contact
+	
+	
+	
 *** Test Cases ***
 
-
-
-First open send email page sent email button should disable
-    Open Browser To Send Email
-    Can not click     add_contact
-    [Teardown]  Close Browser
+Verify Value And Check Button
+	[Template]   Check Add Contact Button
+	#*recipient*   		*expectation*
+	#--------------------------------
+	${EMPTY}      		Disabled
+	${new_recipient}  	Enabled
