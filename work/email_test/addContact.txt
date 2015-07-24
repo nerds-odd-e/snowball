@@ -1,0 +1,17 @@
+*** Settings ***
+
+Documentation  A test suite with add email contact.
+Resource       resource.txt
+
+*** Variables ***
+${new_recipient}     name1@gmail.com
+
+
+*** Test Cases ***
+
+
+
+First open send email page sent email button should disable
+    Open Browser To Send Email
+    Can not click     add_contact
+    [Teardown]  Close Browser
