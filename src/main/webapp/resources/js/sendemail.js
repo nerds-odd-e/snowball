@@ -1,9 +1,14 @@
 $(document).ready(function() {
 
-	disableButton();
+	disableSendEmailButton();
+	disableAddContactButton();
 
 	$("#recipient, #content, #subject").keyup(function() {
-		checkInputElement();
+		checkSendEmailInputElement();
+	});
+	
+	$("#add_new_contact").keyup(function() {
+		checkAddContactInputElement();
 	});
 
 	$("#send_button").click(function() {
@@ -13,21 +18,34 @@ $(document).ready(function() {
 		submitForm();
 	});
 
+	$("#add_contact").click(function() {
+		//Do something
+	});
 });
 
 function submitForm() {
 	$("#sendmail").submit();
 }
 
-function checkInputElement() {
+function checkSendEmailInputElement() {
 	var recipientIsBlank = isBlank($("#recipient").val());
 	var contentIsBlank = isBlank($("#content").val());
 	var subjectIsBlank = isBlank($("#subject").val());
 	
 	if (recipientIsBlank || contentIsBlank || subjectIsBlank) {
-		disableButton();
+		disableSendEmailButton();
 	} else {
-		enableButton();
+		enableSendEmailButton();
+	}
+}
+
+function checkAddContactInputElement() {
+	var newContactIsBlank = isBlank($("#add_new_contact").val());
+	
+	if (newContactIsBlank) {
+		disableAddContactButton();
+	} else {
+		enableAddContactButton();
 	}
 }
 
@@ -35,10 +53,18 @@ function isBlank(value) {
 	return value.replace(/^\s+|\s+$/gm,'') === "";
 }
 
-function enableButton() {
+function enableSendEmailButton() {
 	$("#send_button").removeAttr('disabled');
 }
 
-function disableButton() {
+function disableSendEmailButton() {
 	$("#send_button").attr('disabled', 'disabled');
+}
+
+function enableAddContactButton() {
+	$("#add_contact").removeAttr('disabled');
+}
+
+function disableAddContactButton() {
+	$("#add_contact").attr('disabled', 'disabled');
 }

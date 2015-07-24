@@ -106,6 +106,7 @@
 									<div class="col-lg-11">
 										<input id="add_new_contact" name="newContactTextBox" class="form-control" type="text"/>
 									</div>
+									<br/>
 									<div class="col-lg-1">									
 										<button type="button" class="btn btn-default"
 												id="add_contact" value="send" disabled>Add Contact</button>
