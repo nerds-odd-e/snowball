@@ -1,4 +1,4 @@
-describe('test isBlank function',function(){
+describe('isBlank function',function(){
 	
   it('should return true when pass blank value',function(){
 	  expect(isBlank("  ")).toBe(true);
@@ -9,7 +9,7 @@ describe('test isBlank function',function(){
  });
 });
 
-describe('test checkInputElement function', function(){
+describe('checkInputElement function', function(){
 	var rootId = "testContainer";
 	var markup = "<input type='text' id='recipient'> " +
 			"<input type='text' id='content'> " +
