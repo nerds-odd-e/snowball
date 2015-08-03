@@ -1,5 +1,6 @@
 package com.odde.massivemailer.model;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import com.odde.massivemailer.exception.EmailException;
 public class Mail {
 
 	private static final String FROM = "myodde@gmail.com";
+	private static final String DISPLAY_NAME = "Inspector Gadget";
 
 	private MimeMessage message;
 	private List<String> receipts;
@@ -50,10 +52,17 @@ public class Mail {
 
 	private MimeMessage setMessageProperty(Session session)
 			throws AddressException, MessagingException {
-		message = new MimeMessage(session);
-		message.setFrom(new InternetAddress(FROM));
-		message.setSubject(this.getSubject());
-		message.setText(this.getContent());
+		
+		try {
+			message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(FROM, DISPLAY_NAME));
+			message.setSubject(this.getSubject());
+			message.setText(this.getContent());
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return message;
 	}
 

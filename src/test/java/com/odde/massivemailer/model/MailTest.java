@@ -6,6 +6,7 @@ import java.util.Properties;
 
 import static org.junit.Assert.assertEquals;
 
+import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.Session;
 
@@ -26,8 +27,24 @@ public class MailTest {
 		List<Message> messages = mail.createMessages(session);
 		
 		assertEquals(1, messages.size());
-		
 		assertEquals(mail.getSubject(), messages.get(0).getSubject());
+	}
+	
+	@Test
+	public void testDisplayName() throws Exception {
+
+		Properties props = System.getProperties();
+		Session session = Session.getDefaultInstance(props);
+		
+		Mail mail = new Mail();
+		mail.setContent("content");
+		mail.setSubject("subject");
+		mail.setReceipts(Arrays.asList("test@gmail.com"));
+		
+		List<Message> messages = mail.createMessages(session);
+		String[] address = messages.get(0).getFrom()[0].toString().split("<");
+		
+		assertEquals("Inspector Gadget", address[0].trim());
 	}
 	
 }
