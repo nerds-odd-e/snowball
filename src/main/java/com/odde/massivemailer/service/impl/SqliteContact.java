@@ -8,8 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.spi.DirStateFactory.Result;
-
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.service.ContactService;
 
@@ -21,6 +19,7 @@ public class SqliteContact implements ContactService {
 	private Connection connection;
 
 	public void connectDB(String url) throws ClassNotFoundException, SQLException {
+		Class.forName("org.sqlite.JDBC");
 		connection = DriverManager.getConnection(url);
 	}
 
@@ -32,6 +31,8 @@ public class SqliteContact implements ContactService {
 		ResultSet resultSet = null;
 		try {
 			openConnection();
+			createIfNotExistTable();
+			
 			resultSet = statement.executeQuery(this.selectMailSql);
 			populateContactList(resultSet);
 		} catch (ClassNotFoundException | SQLException e) {
@@ -40,6 +41,11 @@ public class SqliteContact implements ContactService {
 			closeConnection();
 		}
 		return contactList;
+	}
+
+	private void createIfNotExistTable() throws SQLException {
+		statement.executeUpdate(
+				"CREATE TABLE IF NOT EXISTS mail (id INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL, name VARCHAR(50) NOT NULL)");		
 	}
 
 	/* (non-Javadoc)
@@ -86,6 +92,7 @@ public class SqliteContact implements ContactService {
 	
 	private Statement openConnection() throws ClassNotFoundException, SQLException {
 		this.connectDB(dbName);
+		statement = getStatement();
 		return statement;
 	}
 	
