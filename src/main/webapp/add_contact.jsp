@@ -100,7 +100,8 @@
 									<br> <br>
 									<div class="row">
 										<div class="col-lg-12">
-											<button type="button" class="btn btn-default" id="add_button">Add</button>
+											<button type="button" class="btn btn-default"
+												id="add_button" value="add" disabled>Add</button>
 										</div>
 									</div>
 								</div>
@@ -117,4 +118,5 @@
 	src="resources/lib/bootstrap/js/jquery.js"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="resources/js/addContact.js"></script>
 </html>
