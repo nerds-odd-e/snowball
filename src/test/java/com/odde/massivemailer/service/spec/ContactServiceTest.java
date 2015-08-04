@@ -29,9 +29,9 @@ public class ContactServiceTest {
 		connection = service.getConnection();
 		stmt = service.getStatement();
 		stmt.executeUpdate(
-				"CREATE TABLE IF NOT EXISTS mail (id INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL, name VARCHAR(50) NOT NULL)");
+				"CREATE TABLE IF NOT EXISTS mail (id INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL, name VARCHAR(50) NOT NULL, email VARCHAR(50))");
 		stmt.executeUpdate("DELETE FROM mail");
-		stmt.executeUpdate("INSERT INTO mail(name) VALUES ('name 1')");
+		stmt.executeUpdate("INSERT INTO mail(name, email) VALUES ('name 1', 'aaa@gmail.com')");
 	}
 
 	@Test
@@ -44,13 +44,13 @@ public class ContactServiceTest {
 	
 	@Test
 	public void addNewContactTest() throws SQLException {
-		int rowAffected = service.addNewContact("AddNewContact");
+		int rowAffected = service.addNewContact("AddNewContact","MyTest@email.com");
 		assertEquals(1, rowAffected);
 	}
 	
 	@Test
 	public void addNewContactFailedTest() throws SQLException {
-		int rowAffected = service.addNewContact("name 1");
+		int rowAffected = service.addNewContact("name 1","aaa@gmail.com");
 		assertEquals(0, rowAffected);
 	}
 	

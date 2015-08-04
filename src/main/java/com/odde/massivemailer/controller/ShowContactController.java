@@ -16,6 +16,10 @@ import com.odde.massivemailer.service.impl.SqliteContact;
 
 public class ShowContactController extends HttpServlet {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ContactService contactService;
 	
 	public ContactService getContactService() {

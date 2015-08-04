@@ -8,6 +8,6 @@ public interface ContactService {
 
 	List<ContactPerson> getContactList();
 
-	int addNewContact(String name);
+	int addNewContact(String name,String email);
 
 }
