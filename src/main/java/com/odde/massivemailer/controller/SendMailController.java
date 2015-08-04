@@ -18,7 +18,7 @@ public class SendMailController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-
+	
 		Mail email = processRequest(req);
 		MailService mailService = new GMailService();
 		try {
