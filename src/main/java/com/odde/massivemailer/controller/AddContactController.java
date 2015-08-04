@@ -29,7 +29,7 @@ public class AddContactController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println(req.getParameterMap());
 		getContactService().addNewContact("dummy", req.getParameter("email"));
+		resp.sendRedirect("contactlist.jsp?status=success&msg=Add contact successfully");
 	}
 }
