@@ -44,13 +44,13 @@ public class ContactServiceTest {
 	
 	@Test
 	public void addNewContactTest() throws SQLException {
-		int rowAffected = service.addNewContact("AddNewContact");
+		int rowAffected = service.addNewContact("AddNewContact","MyTest@email.com");
 		assertEquals(1, rowAffected);
 	}
 	
 	@Test
 	public void addNewContactFailedTest() throws SQLException {
-		int rowAffected = service.addNewContact("name 1");
+		int rowAffected = service.addNewContact("name 1","aaa@gmail.com");
 		assertEquals(0, rowAffected);
 	}
 	

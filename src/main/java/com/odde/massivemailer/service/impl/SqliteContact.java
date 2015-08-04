@@ -53,11 +53,11 @@ public class SqliteContact implements ContactService {
 	 * @see com.odde.massivemailer.service.ContactService#addNewContact(java.lang.String)
 	 */
 	@Override
-	public int addNewContact(String name) {
+	public int addNewContact(String name,String email) {
 		int rowAffected = 0;
 		try {
 			openConnection();
-			rowAffected = saveContactToDatabase(name);
+			rowAffected = saveContactToDatabase(name,email);
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -66,15 +66,15 @@ public class SqliteContact implements ContactService {
 		return rowAffected;
 	}
 
-	private int saveContactToDatabase(String name) throws SQLException {
+	private int saveContactToDatabase(String name,String email) throws SQLException {
 		int rowAffected = 0;
-		if(!contactExisted(name))
-			rowAffected = statement.executeUpdate("INSERT INTO mail(name) VALUES ('"+ name +"')");
+		if(!contactExisted(email))
+			rowAffected = statement.executeUpdate("INSERT INTO mail(name,email) VALUES ('"+ name +"', '"+email+"')");
 		return rowAffected;
 	}
 
-	private boolean contactExisted(String name) throws SQLException {
-		ResultSet resultSet = statement.executeQuery("SELECT name FROM mail WHERE name='" + name + "'");
+	private boolean contactExisted(String email) throws SQLException {
+		ResultSet resultSet = statement.executeQuery("SELECT email FROM mail WHERE email='" + email + "'");
 		if(resultSet.next()) {			
 			return true;
 		}
