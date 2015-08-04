@@ -64,8 +64,10 @@
 						<li class="active"><a href="sendemail.jsp"><span
 								class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
 								Send Mail</a></li>
-						<li><a href="#"><span class="glyphicon glyphicon-user"
+						<li><a href="add_contact.jsp"><span class="glyphicon glyphicon-user"
 								aria-hidden="true"></span> Add Contact</a></li>
+						<li><a href="contactlist.jsp"><span class="glyphicon glyphicon-user"
+								aria-hidden="true"></span> Contact List</a></li>
 					</ul>
 				</div>
 				<!-- /.navbar-collapse -->
