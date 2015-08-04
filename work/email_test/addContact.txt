@@ -16,27 +16,24 @@ Key email field  [Arguments]  ${email}
 
 Connect DB
 	Connect To Database Using Custom Params    sqlite3    database='/Users/cadet/workspace/massive_mailer/oddemail.db'
-
-# Contact List Should Contain New Contact
-
 	
 *** Test Cases ***
 
 Verify Add New Contact To Contact List
-	Given Click Add Contact 
-	When Key email field    ${email}
+	Given Key email field    ${email} 
+	When Click Add Contact 	
 	Then Page Should Contain    ${email}
 
-Verify Add Existing Contact To Contact List
-	Given Click Add Contact 
-	And Key email field    ${email}
-	When Key email field    ${email}
-	Then Page Should Contain    ${email}
+# Verify Add Existing Contact To Contact List
+# 	Given Click Add Contact 
+# 	And Key email field    ${email}
+# 	When Key email field    ${email}
+# 	Then Page Should Contain    ${email}
 
-Delete Contact Row
-    Connect DB
-    Check If Exists In Database     SELECT name FROM mail WHERE email = 'name1@gmail.com'
-    Execute Sql Script    delete_name1.sql
+# Delete Contact Row
+#     Connect DB
+#     Check If Exists In Database     SELECT name FROM mail WHERE email = 'name1@gmail.com'
+#     Execute Sql Script    delete_name1.sql
 
 
 
