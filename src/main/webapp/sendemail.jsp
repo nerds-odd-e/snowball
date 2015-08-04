@@ -6,14 +6,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<%@ page import="com.odde.massivemailer.model.ContactPerson" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.odde.massivemailer.model.ContactPerson"%>
+<%@ page import="java.util.List"%>
+<%@ page import="java.util.ArrayList"%>
 
 <title>ODD-E</title>
 
 <!-- Bootstrap Core CSS -->
-<link href="resources/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="resources/lib/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet">
 
 <!-- Custom CSS -->
 <link href="resources/lib/bootstrap/css/sb-admin.css" rel="stylesheet">
@@ -22,7 +23,8 @@
 	rel="stylesheet">
 
 <!-- Custom Fonts -->
-<link href="resources/lib/bootstrap/font-awesome/css/font-awesome.min.css"
+<link
+	href="resources/lib/bootstrap/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -64,10 +66,12 @@
 						<li class="active"><a href="sendemail.jsp"><span
 								class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
 								Send Mail</a></li>
-						<li><a href="add_contact.jsp"><span class="glyphicon glyphicon-user"
-								aria-hidden="true"></span> Add Contact</a></li>
-						<li><a href="contactlist.jsp"><span class="glyphicon glyphicon-user"
-								aria-hidden="true"></span> Contact List</a></li>
+						<li><a href="add_contact.jsp"><span
+								class="glyphicon glyphicon-user" aria-hidden="true"></span> Add
+								Contact</a></li>
+						<li><a href="contactlist.jsp"><span
+								class="glyphicon glyphicon-user" aria-hidden="true"></span>
+								Contact List</a></li>
 					</ul>
 				</div>
 				<!-- /.navbar-collapse -->
@@ -92,29 +96,9 @@
 											+ "</b></div> </div></div>");
 						}
 					%>
-					<input type="hidden" id="msg_sent_cnt" value="${param.repcnt}"/>
+					<input type="hidden" id="msg_sent_cnt" value="${param.repcnt}" />
 					<div class="row">
 						<div class="col-lg-12">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h3 class="panel-title">Add Recipients</h3>
-								</div>
-								<table id="contactTable" class="table table-hover">
-									<tr>									   
-										<th>Email</th>
-									</tr>
-								</table>
-								<div class="panel-body">
-									<div class="col-lg-11">
-										<input id="add_new_contact" name="newContactTextBox" class="form-control" type="text"/>
-									</div>
-									<br/>
-									<div class="col-lg-1">									
-										<button type="button" class="btn btn-default"
-												id="add_contact" value="send" disabled>Add Contact</button>
-									</div>
-								</div>
-							</div>
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									<h3 class="panel-title">Send Email</h3>
@@ -124,8 +108,9 @@
 										<div class="col-lg-1">To:</div>
 										<div class="col-lg-11">
 											<input type="text" class="form-control" name="recipient"
-												id="recipient">
-											<span class="glyphicon glyphicon-plus add-contact-button" aria-hidden="true"></span>	
+												id="recipient"> <span
+												class="glyphicon glyphicon-plus add-contact-button"
+												aria-hidden="true"></span>
 										</div>
 									</div>
 									<br />
@@ -161,7 +146,8 @@
 </body>
 
 <!-- jQuery -->
-<script type="text/javascript" src="resources/lib/bootstrap/js/jquery.js"></script>
+<script type="text/javascript"
+	src="resources/lib/bootstrap/js/jquery.js"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="resources/js/sendemail.js"></script>
