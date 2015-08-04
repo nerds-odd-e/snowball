@@ -1,29 +1,44 @@
 *** Settings ***
+Library        DatabaseLibrary
 Resource       resource.txt
-Test Setup     Open Browser To Send Email
+Test Setup     Open Browser To Add Contact
 Test Teardown  Close Browser
 
 
 
 *** Variables ***
-${new_recipient}     name1@gmail.com
+${email}     name1@gmail.com
 
 
+***Keywords***	
+Key email field  [Arguments]  ${email}
+    Input textfield    email    ${email}
 
-***Keywords***
-Check Add Contact Button
-	[Arguments]  ${new_recipient}    ${expected_status}
-    Input textfield    	add_new_contact 	${new_recipient}
-    Run Keyword If		'${expected_status}'=='Enabled'		Can click		add_contact
-    Run Keyword If    	'${expected_status}'=='Disabled'	Can not click	add_contact
-	
-	
+Connect DB
+	Connect To Database Using Custom Params    sqlite3    database='/Users/cadet/workspace/massive_mailer/oddemail.db'
+
+# Contact List Should Contain New Contact
+
 	
 *** Test Cases ***
 
-Verify Value And Check Button
-	[Template]   Check Add Contact Button
-	#*recipient*   		*expectation*
-	#--------------------------------
-	${EMPTY}      		Disabled
-	${new_recipient}  	Enabled
+Verify Add New Contact To Contact List
+	Given Click Add Contact 
+	When Key email field    ${email}
+	Then Page Should Contain    ${email}
+
+Verify Add Existing Contact To Contact List
+	Given Click Add Contact 
+	And Key email field    ${email}
+	When Key email field    ${email}
+	Then Page Should Contain    ${email}
+
+Delete Contact Row
+    Connect DB
+    Check If Exists In Database     SELECT name FROM mail WHERE email = 'name1@gmail.com'
+    Execute Sql Script    delete_name1.sql
+
+
+
+
+

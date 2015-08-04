@@ -1,0 +1,1 @@
+delete from mail where email = 'name1@gmail.com';
