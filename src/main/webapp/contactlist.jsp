@@ -110,5 +110,10 @@
 <script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
 <!-- <script type="text/javascript" src="resources/js/sendemail.js"></script> -->
 <script type="text/javascript" src="resources/js/showContact.js"></script>
-
+<script type="text/javascript">
+$(document).ready(function() {
+	var contactList = retrieveContactListFromServer();
+	renderContactList(contactList, $('#contactTable'));
+});
+</script>
 </html>

@@ -3,6 +3,8 @@ describe('test show contact function', function() {
 	
 	var rootId = "testContainer";
 	var markup = "<ul id='contactTable' class='list-inline' ></ul>";
+	var mock_json = [{email:"a@a.com", id:1, name:"Tom"},{email:"b@b.com", id:2, name:"Jerry"}];
+	
 	beforeEach(function(){
 		var container = document.createElement('div');
 		container.setAttribute('id', rootId);
@@ -17,24 +19,28 @@ describe('test show contact function', function() {
 	
 	it('should render empty contact list when server JSON is empty',function() {
 
-				var mock_json = [];
-				renderContactList(mock_json);
-				expect($("#contactTable .col-md-1").length).toBe(mock_json.length);
-			});
+		var mock_json = [];
+		
+		renderContactList(mock_json, $("#contactTable"));
+		expect($("#contactTable .col-md-1").length).toBe(mock_json.length);
+	});
 	
 
 	it('should render complete contact lists when server JSON contains some elements',function() {
 
-		var mock_json = [{email:"a@a.com", id:1, name:"Tom"},{email:"b@b.com", id:2, name:"Jerry"}];
-		renderContactList(mock_json);
+		renderContactList(mock_json, $("#contactTable"));
 		expect($("#contactTable .col-md-1").length).toBe(mock_json.length);
 
 		$.each(mock_json, function(index, obj)
 		{
 			expect($("#contactTable li").eq((index*2)).text()).toBe(obj.id+"");
 			expect($("#contactTable li").eq((index*2)+1).text()).toBe(obj.email);
-		})
-		
+		})	
 
+	});
+	
+	it('should render contact list with checkbox and number of checkbox must be equal to the number of contacts', function(){
+		renderContactSelectionList(mock_json, $("#contactTable"));
+		expect($("#contactTable .email-checkbox").length).toBe(mock_json.length);
 	});
 });
