@@ -1,0 +1,14 @@
+*** Settings ***
+Library        Selenium2Library
+Resource       resource.txt
+
+*** Test Cases ***
+Select One Contact
+	[Tags]    work_in_progress 
+	Open Browser To Send Email
+    Click Element    select_contact
+    Wait Until Element Is Visible     contactTable
+    Click Element    select_1
+    ${email} =    Get Text    select_1
+    Click Element    select_button
+    Element Should Contain    recipient    ${email}
