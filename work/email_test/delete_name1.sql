@@ -1,1 +1,1 @@
-delete from mail where email = 'name1@gmail.com';
+delete from mail where email = 'name10@gmail.com';
