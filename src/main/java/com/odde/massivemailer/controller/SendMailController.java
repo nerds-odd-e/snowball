@@ -27,6 +27,7 @@ public class SendMailController extends HttpServlet {
 		} catch (EmailException e) {
 			resp.sendRedirect("sendemail.jsp?status=failed&msg=Unable to send");
 			e.printStackTrace();
+			//
 		}
 	}
 
