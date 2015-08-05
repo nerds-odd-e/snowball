@@ -1,5 +1,9 @@
 package com.odde.massivemailer.service.impl;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -20,6 +24,12 @@ public class SqliteContact implements ContactService {
 
 	public void connectDB(String url) throws ClassNotFoundException, SQLException {
 		Class.forName("org.sqlite.JDBC");
+//		File file = new File("folder");
+//		try {
+//			dbName = "jdbc:sqlite:/"+file.getCanonicalPath().replace("folder", "oddemail.db");
+//		} catch (IOException e) {
+//			e.toString();
+//		}
 		connection = DriverManager.getConnection(url);
 	}
 
