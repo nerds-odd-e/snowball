@@ -24,12 +24,12 @@ public class SqliteContact implements ContactService {
 
 	public void connectDB(String url) throws ClassNotFoundException, SQLException {
 		Class.forName("org.sqlite.JDBC");
-		File file = new File("folder");
-		try {
-			dbName = "jdbc:sqlite:/"+file.getCanonicalPath().replace("folder", "oddemail.db");
-		} catch (IOException e) {
-			e.toString();
-		}
+//		File file = new File("folder");
+//		try {
+//			dbName = "jdbc:sqlite:/"+file.getCanonicalPath().replace("folder", "oddemail.db");
+//		} catch (IOException e) {
+//			e.toString();
+//		}
 		connection = DriverManager.getConnection(url);
 	}
 
