@@ -1,16 +1,16 @@
 function retrieveContactListFromServer()
 {
-	var contactList = [];
+	var contactList = [];	
 	
-	var getContacts = function() {
-		$.getJSON("showContact", function(data) {
-			contactList = data;
-		});
-		
-		return contactList;
-	};
-
-	return getContacts();
+	$.ajax({
+	    type: 'GET',
+	    url: 'showContact',
+	    dataType: 'json',
+	    success: function(data) {contactList = data },
+	    async: false
+	});
+	
+	return contactList;
 }
 
 function renderContactList(json, selector)
