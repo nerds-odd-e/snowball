@@ -40,21 +40,6 @@ def get_sender_name(account,password,subject):
   return result
 
 
-M = imaplib.IMAP4_SSL('imap.gmail.com')
-
-try:
-    M.login(account, password)
-except imaplib.IMAP4.error:
-    print "LOGIN FAILED!!! "
-
-rv, data = M.select("[Gmail]/Sent Mail")
-if rv == 'OK':
-    print "Processing mailbox...\n"
-    process_mailbox(M,"test")
-    M.close()
-M.logout()
-
-
 from robot.api import logger
 def write_to_console(s):
     logger.console(s)
