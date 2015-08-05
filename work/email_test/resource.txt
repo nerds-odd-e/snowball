@@ -4,15 +4,16 @@ Documentation  A resource file containing the application specific keywords
 ...            that create our own domain specific language. This resource
 ...            implements keywords for testing HTML version of the test
 ...            application.
-Library        Selenium2Library
+Library        Selenium2Library 
 
 
 *** Variables ***
 
-${SERVER}        192.168.100.21:8080
+${SERVER}        localhost:8080
 ${BROWSER}       firefox
 ${DELAY}         0
 ${SENDMAIL URL}     http://${SERVER}/massive_mailer/
+${CONTACT LIST URL}    http://${SERVER}/massive_mailer/add_contact.jsp
 ${subject}       subject for test send email
 ${content}       content for test send email
 
@@ -28,11 +29,19 @@ Open Browser To Send Email
     Maximize Browser Window
     Set Selenium Speed  ${DELAY}
 
+Open Browser To Add Contact
+    Open Browser  ${CONTACT LIST URL}  ${BROWSER}
+    Maximize Browser Window
+    Set Selenium Speed  ${DELAY}
+
 Input textfield  [Arguments]  ${input_id}    ${input_value}
     Input Text  ${input_id}  ${input_value}
 
 Send Email
-    Click Button    send_button   
+    Click Button    send_button
+
+Click Add Contact
+    Click Button    add_button   
 
 Can click  [Arguments]  ${send_button}
      Element Should Be Enabled  ${send_button}
