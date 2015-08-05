@@ -6,21 +6,29 @@ Resource       resource.txt
 Test Setup     Suite Setup
 
 *** Variables ***
-${CURRENT_DATE}           Actual value set dynamically at suite setup
+${SUBJECT_CURRENT_DATE}           Actual value set dynamically at suite setup
+${SENDER_EMAIL}    myodde@gmail.com
+${SENDER_PASSWORD}    1234qwer@
+${RECIPIEN_EMAIL}    steve.zuckerburk@gmail.com
 
 *** Testcases ***
-Test Send Email
+Sender Name In Send Box Should Contain Display Name
+	Send An Email With Subject Is Current Date
+    Sender Name Should be    Inspector Gadget <myodde@gmail.com>
+
+
+*** Keywords ***
+Suite Setup
+	${SUBJECT_CURRENT_DATE} =   Get Current Date    UTC
+	Set Suite Variable  ${SUBJECT_CURRENT_DATE}
+
+
+Send An Email With Subject Is Current Date
 	Open Browser To Send Email
-	Key all email field    steve.zuckerburk@gmail.com    ${CURRENT_DATE}    test
+	Key all email field    ${RECIPIEN_EMAIL}    ${SUBJECT_CURRENT_DATE}    content
 	Click Button    send_button
 	Close Browser
 
-Test Get Sender Mail
-    ${sender} =    Get Sender Name    myodde@gmail.com    1234qwer@    ${CURRENT_DATE}
-    Should Be Equal As Strings    ${sender}    Inspector Gadget <myodde@gmail.com>
-
-*** Keywords ***
-
-Suite Setup
-	${CURRENT_DATE} =   Get Current Date    UTC
-	Set Suite Variable  ${CURRENT_DATE}
+Sender Name Should be    [Arguments]    ${expected sender}     
+    ${sender} =    Get Sender Name    ${SENDER_EMAIL}    ${SENDER_PASSWORD}    ${SUBJECT_CURRENT_DATE}
+    Should Be Equal As Strings    ${sender}    ${expected sender}
