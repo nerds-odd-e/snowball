@@ -1,14 +1,17 @@
 *** Settings ***
 Library		   Selenium2Library
 Resource       resource.txt
-
+Test Setup     Open Browser To View Contract 
+Test Teardown  Close Browser
 
 *** Variables ***
 ${UPDATED_FIRSTNAME}     ""  
 
 ***Keywords***	
-There Is A Contact    [Arguments]    ${email}
+Open Browser To View Contract
     Open Browser    http://localhost:8080/massive_mailer/contactlist.jsp    firefox
+
+There Is A Contact    [Arguments]    ${email}
     #Element Should Contain    //*[@id="contactTable"]    aaa@gmail.com
     Element Should Contain    //li[contains(., '${email}')]    ${email}
     
