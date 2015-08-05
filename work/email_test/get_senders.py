@@ -43,7 +43,7 @@ def get_sender_name(account,password,subject):
 M = imaplib.IMAP4_SSL('imap.gmail.com')
 
 try:
-    M.login('yod.jim@gmail.com', '2662645')
+    M.login(account, password)
 except imaplib.IMAP4.error:
     print "LOGIN FAILED!!! "
 
