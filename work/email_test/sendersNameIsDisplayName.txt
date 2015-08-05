@@ -1,0 +1,26 @@
+*** Settings ***
+Library		   Selenium2Library
+Library        DateTime
+Library        get_senders.py
+Resource       resource.txt
+Test Setup     Suite Setup
+
+*** Variables ***
+${CURRENT_DATE}           Actual value set dynamically at suite setup
+
+*** Testcases ***
+Test Send Email
+	Open Browser To Send Email
+	Key all email field    steve.zuckerburk@gmail.com    ${CURRENT_DATE}    test
+	Click Button    send_button
+	Close Browser
+
+Test Get Sender Mail
+    ${sender} =    Get Sender Name    myodde@gmail.com    1234qwer@    ${CURRENT_DATE}
+    Should Be Equal As Strings    ${sender}    Inspector Gadget <myodde@gmail.com>
+
+*** Keywords ***
+
+Suite Setup
+	${CURRENT_DATE} =   Get Current Date    UTC
+	Set Suite Variable  ${CURRENT_DATE}

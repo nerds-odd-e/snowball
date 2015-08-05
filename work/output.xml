@@ -1,296 +1,141 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generated="20150723 17:46:31.389" generator="Robot 2.8.1 (Python 2.7.3 on win32)">
-<suite source="C:\Users\Cadet\Documents\robotforemail\work\email_test\sendEmailvalid.txt" id="s1" name="sendEmailvalid">
-<test id="s1-t1" name="Send Email one recepient success.">
-<kw type="kw" name="resource.Given Create default email with recipients">
-<doc></doc>
+<robot generated="20150805 13:20:34.663" generator="Robot 2.9 (Python 2.7.6 on darwin)">
+<suite source="/Users/cadet/Workspace/robotforemail/work/email_test/sendersNameIsDisplayName.txt" id="s1" name="sendersNameIsDisplayName">
+<test id="s1-t1" name="Test Send Email">
+<kw type="setup" name="Suite Setup">
+<kw name="Get Current Date" library="DateTime">
+<doc>Returns current local or UTC time with an optional increment.</doc>
 <arguments>
-<arg>terry@odd-e.com</arg>
+<arg>UTC</arg>
 </arguments>
-<kw type="kw" name="resource.Open Browser To Send Email">
-<doc></doc>
+<assign>
+<var>${CURRENT_DATE}</var>
+</assign>
+<msg timestamp="20150805 13:20:38.409" level="INFO">${CURRENT_DATE} = 2015-08-05 06:20:38.408</msg>
+<status status="PASS" endtime="20150805 13:20:38.409" starttime="20150805 13:20:38.407"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
 <arguments>
+<arg>${CURRENT_DATE}</arg>
 </arguments>
-<kw type="kw" name="Selenium2Library.Open Browser">
+<msg timestamp="20150805 13:20:38.411" level="INFO">${CURRENT_DATE} = 2015-08-05 06:20:38.408</msg>
+<status status="PASS" endtime="20150805 13:20:38.411" starttime="20150805 13:20:38.410"></status>
+</kw>
+<status status="PASS" endtime="20150805 13:20:38.412" starttime="20150805 13:20:38.406"></status>
+</kw>
+<kw name="Open Browser To Send Email" library="resource">
+<kw name="Open Browser" library="Selenium2Library">
 <doc>Opens a new browser instance to given URL.</doc>
 <arguments>
 <arg>${SENDMAIL URL}</arg>
 <arg>${BROWSER}</arg>
 </arguments>
-<msg timestamp="20150723 17:46:31.529" level="INFO">Opening browser 'firefox' to base url 'http://192.168.100.28:8080/massive_mailer/'</msg>
-<status status="PASS" endtime="20150723 17:46:34.576" starttime="20150723 17:46:31.529"></status>
+<msg timestamp="20150805 13:20:38.414" level="INFO">Opening browser 'firefox' to base url 'http://192.168.100.21:8080/massive_mailer/'</msg>
+<status status="PASS" endtime="20150805 13:20:42.043" starttime="20150805 13:20:38.413"></status>
 </kw>
-<kw type="kw" name="Selenium2Library.Maximize Browser Window">
+<kw name="Maximize Browser Window" library="Selenium2Library">
 <doc>Maximizes current browser window.</doc>
-<arguments>
-</arguments>
-<status status="PASS" endtime="20150723 17:46:34.669" starttime="20150723 17:46:34.576"></status>
+<status status="PASS" endtime="20150805 13:20:42.492" starttime="20150805 13:20:42.044"></status>
 </kw>
-<kw type="kw" name="Selenium2Library.Set Selenium Speed">
+<kw name="Set Selenium Speed" library="Selenium2Library">
 <doc>Sets the delay in seconds that is waited after each Selenium command.</doc>
 <arguments>
 <arg>${DELAY}</arg>
 </arguments>
-<status status="PASS" endtime="20150723 17:46:34.669" starttime="20150723 17:46:34.669"></status>
+<status status="PASS" endtime="20150805 13:20:42.494" starttime="20150805 13:20:42.492"></status>
 </kw>
-<status status="PASS" endtime="20150723 17:46:34.669" starttime="20150723 17:46:31.529"></status>
+<status status="PASS" endtime="20150805 13:20:42.494" starttime="20150805 13:20:38.412"></status>
 </kw>
-<kw type="kw" name="resource.Input textfield">
-<doc></doc>
+<kw name="Key all email field" library="resource">
+<arguments>
+<arg>steve.zuckerburk@gmail.com</arg>
+<arg>${CURRENT_DATE}</arg>
+<arg>test</arg>
+</arguments>
+<kw name="Input textfield" library="resource">
 <arguments>
 <arg>recipient</arg>
 <arg>${recipient}</arg>
 </arguments>
-<kw type="kw" name="Selenium2Library.Input Text">
+<kw name="Input Text" library="Selenium2Library">
 <doc>Types the given `text` into text field identified by `locator`.</doc>
 <arguments>
 <arg>${input_id}</arg>
 <arg>${input_value}</arg>
 </arguments>
-<msg timestamp="20150723 17:46:34.669" level="INFO">Typing text 'terry@odd-e.com' into text field 'recipient'</msg>
-<status status="PASS" endtime="20150723 17:46:34.841" starttime="20150723 17:46:34.669"></status>
+<msg timestamp="20150805 13:20:42.499" level="INFO">Typing text 'steve.zuckerburk@gmail.com' into text field 'recipient'</msg>
+<kw name="Capture Page Screenshot" library="Selenium2Library">
+<doc>Takes a screenshot of the current page and embeds it into the log.</doc>
+<msg timestamp="20150805 13:20:42.588" html="yes" level="INFO">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-1.png"&gt;&lt;img src="selenium-screenshot-1.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" endtime="20150805 13:20:42.589" starttime="20150805 13:20:42.506"></status>
 </kw>
-<status status="PASS" endtime="20150723 17:46:34.841" starttime="20150723 17:46:34.669"></status>
+<msg timestamp="20150805 13:20:42.590" level="FAIL">ValueError: Element locator 'recipient' did not match any elements.</msg>
+<status status="FAIL" endtime="20150805 13:20:42.591" starttime="20150805 13:20:42.498"></status>
 </kw>
-<kw type="kw" name="resource.Input textfield">
-<doc></doc>
-<arguments>
-<arg>subject</arg>
-<arg>${subject}</arg>
-</arguments>
-<kw type="kw" name="Selenium2Library.Input Text">
-<doc>Types the given `text` into text field identified by `locator`.</doc>
-<arguments>
-<arg>${input_id}</arg>
-<arg>${input_value}</arg>
-</arguments>
-<msg timestamp="20150723 17:46:34.841" level="INFO">Typing text 'subject for test send email' into text field 'subject'</msg>
-<status status="PASS" endtime="20150723 17:46:35.013" starttime="20150723 17:46:34.841"></status>
+<status status="FAIL" endtime="20150805 13:20:42.591" starttime="20150805 13:20:42.497"></status>
 </kw>
-<status status="PASS" endtime="20150723 17:46:35.013" starttime="20150723 17:46:34.841"></status>
+<status status="FAIL" endtime="20150805 13:20:42.592" starttime="20150805 13:20:42.495"></status>
 </kw>
-<kw type="kw" name="resource.Input textfield">
-<doc></doc>
-<arguments>
-<arg>content</arg>
-<arg>${content}</arg>
-</arguments>
-<kw type="kw" name="Selenium2Library.Input Text">
-<doc>Types the given `text` into text field identified by `locator`.</doc>
-<arguments>
-<arg>${input_id}</arg>
-<arg>${input_value}</arg>
-</arguments>
-<msg timestamp="20150723 17:46:35.013" level="INFO">Typing text 'content for test send email' into text field 'content'</msg>
-<status status="PASS" endtime="20150723 17:46:35.465" starttime="20150723 17:46:35.013"></status>
-</kw>
-<status status="PASS" endtime="20150723 17:46:35.465" starttime="20150723 17:46:35.013"></status>
-</kw>
-<status status="PASS" endtime="20150723 17:46:35.465" starttime="20150723 17:46:31.529"></status>
-</kw>
-<kw type="kw" name="resource.When Send Email">
-<doc></doc>
-<arguments>
-</arguments>
-<kw type="kw" name="Selenium2Library.Click Button">
-<doc>Clicks a button identified by `locator`.</doc>
-<arguments>
-<arg>send_button</arg>
-</arguments>
-<msg timestamp="20150723 17:46:35.465" level="INFO">Clicking button 'send_button'.</msg>
-<status status="PASS" endtime="20150723 17:46:42.677" starttime="20150723 17:46:35.465"></status>
-</kw>
-<status status="PASS" endtime="20150723 17:46:42.677" starttime="20150723 17:46:35.465"></status>
-</kw>
-<kw type="kw" name="resource.Then Should sent email">
-<doc></doc>
-<arguments>
-<arg>1</arg>
-</arguments>
-<kw type="kw" name="${value} = Selenium2Library.Get Value">
-<doc>Returns the value attribute of element identified by `locator`.</doc>
-<arguments>
-<arg>msg_sent_cnt</arg>
-</arguments>
-<msg timestamp="20150723 17:46:42.708" level="INFO">${value} = 1</msg>
-<status status="PASS" endtime="20150723 17:46:42.708" starttime="20150723 17:46:42.677"></status>
-</kw>
-<kw type="kw" name="BuiltIn.Should Be Equal">
-<doc>Fails if the given objects are unequal.</doc>
-<arguments>
-<arg>${value}</arg>
-<arg>${msg_cnt}</arg>
-</arguments>
-<msg timestamp="20150723 17:46:42.708" level="INFO">Argument types are:
-&lt;type 'str'&gt;
-&lt;type 'unicode'&gt;</msg>
-<status status="PASS" endtime="20150723 17:46:42.708" starttime="20150723 17:46:42.708"></status>
-</kw>
-<kw type="kw" name="Selenium2Library.Close Browser">
-<doc>Closes the current browser.</doc>
-<arguments>
-</arguments>
-<status status="PASS" endtime="20150723 17:46:42.802" starttime="20150723 17:46:42.708"></status>
-</kw>
-<status status="PASS" endtime="20150723 17:46:42.802" starttime="20150723 17:46:42.677"></status>
-</kw>
-<doc></doc>
-<tags>
-</tags>
-<status status="PASS" endtime="20150723 17:46:42.802" critical="yes" starttime="20150723 17:46:31.529"></status>
+<status status="FAIL" endtime="20150805 13:20:42.592" critical="yes" starttime="20150805 13:20:38.405">ValueError: Element locator 'recipient' did not match any elements.</status>
 </test>
-<test id="s1-t2" name="Send Email multiple recepient success.">
-<kw type="kw" name="resource.Given Create default email with recipients">
-<doc></doc>
+<test id="s1-t2" name="Test Get Sender Mail">
+<kw type="setup" name="Suite Setup">
+<kw name="Get Current Date" library="DateTime">
+<doc>Returns current local or UTC time with an optional increment.</doc>
 <arguments>
-<arg>terry@odd-e.com;roof@odd-e.com</arg>
+<arg>UTC</arg>
 </arguments>
-<kw type="kw" name="resource.Open Browser To Send Email">
-<doc></doc>
+<assign>
+<var>${CURRENT_DATE}</var>
+</assign>
+<msg timestamp="20150805 13:20:42.596" level="INFO">${CURRENT_DATE} = 2015-08-05 06:20:42.596</msg>
+<status status="PASS" endtime="20150805 13:20:42.596" starttime="20150805 13:20:42.595"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
 <arguments>
+<arg>${CURRENT_DATE}</arg>
 </arguments>
-<kw type="kw" name="Selenium2Library.Open Browser">
-<doc>Opens a new browser instance to given URL.</doc>
+<msg timestamp="20150805 13:20:42.598" level="INFO">${CURRENT_DATE} = 2015-08-05 06:20:42.596</msg>
+<status status="PASS" endtime="20150805 13:20:42.598" starttime="20150805 13:20:42.597"></status>
+</kw>
+<status status="PASS" endtime="20150805 13:20:42.599" starttime="20150805 13:20:42.594"></status>
+</kw>
+<kw name="Get Sender Name" library="get_senders">
 <arguments>
-<arg>${SENDMAIL URL}</arg>
-<arg>${BROWSER}</arg>
+<arg>myodde@gmail.com</arg>
+<arg>1234qwer@</arg>
+<arg>${CURRENT_DATE}</arg>
 </arguments>
-<msg timestamp="20150723 17:46:42.817" level="INFO">Opening browser 'firefox' to base url 'http://192.168.100.28:8080/massive_mailer/'</msg>
-<status status="PASS" endtime="20150723 17:46:44.957" starttime="20150723 17:46:42.817"></status>
+<assign>
+<var>${sender}</var>
+</assign>
+<msg timestamp="20150805 13:20:44.831" level="INFO">${sender} = None</msg>
+<status status="PASS" endtime="20150805 13:20:44.831" starttime="20150805 13:20:42.600"></status>
 </kw>
-<kw type="kw" name="Selenium2Library.Maximize Browser Window">
-<doc>Maximizes current browser window.</doc>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
 <arguments>
+<arg>${sender}</arg>
+<arg>Inspector Gadget &lt;myodde@gmail.com&gt;</arg>
 </arguments>
-<status status="PASS" endtime="20150723 17:46:45.067" starttime="20150723 17:46:44.957"></status>
+<msg timestamp="20150805 13:20:44.835" level="FAIL">None != Inspector Gadget &lt;myodde@gmail.com&gt;</msg>
+<status status="FAIL" endtime="20150805 13:20:44.836" starttime="20150805 13:20:44.833"></status>
 </kw>
-<kw type="kw" name="Selenium2Library.Set Selenium Speed">
-<doc>Sets the delay in seconds that is waited after each Selenium command.</doc>
-<arguments>
-<arg>${DELAY}</arg>
-</arguments>
-<status status="PASS" endtime="20150723 17:46:45.067" starttime="20150723 17:46:45.067"></status>
-</kw>
-<status status="PASS" endtime="20150723 17:46:45.067" starttime="20150723 17:46:42.817"></status>
-</kw>
-<kw type="kw" name="resource.Input textfield">
-<doc></doc>
-<arguments>
-<arg>recipient</arg>
-<arg>${recipient}</arg>
-</arguments>
-<kw type="kw" name="Selenium2Library.Input Text">
-<doc>Types the given `text` into text field identified by `locator`.</doc>
-<arguments>
-<arg>${input_id}</arg>
-<arg>${input_value}</arg>
-</arguments>
-<msg timestamp="20150723 17:46:45.067" level="INFO">Typing text 'terry@odd-e.com;roof@odd-e.com' into text field 'recipient'</msg>
-<status status="PASS" endtime="20150723 17:46:45.301" starttime="20150723 17:46:45.067"></status>
-</kw>
-<status status="PASS" endtime="20150723 17:46:45.301" starttime="20150723 17:46:45.067"></status>
-</kw>
-<kw type="kw" name="resource.Input textfield">
-<doc></doc>
-<arguments>
-<arg>subject</arg>
-<arg>${subject}</arg>
-</arguments>
-<kw type="kw" name="Selenium2Library.Input Text">
-<doc>Types the given `text` into text field identified by `locator`.</doc>
-<arguments>
-<arg>${input_id}</arg>
-<arg>${input_value}</arg>
-</arguments>
-<msg timestamp="20150723 17:46:45.301" level="INFO">Typing text 'subject for test send email' into text field 'subject'</msg>
-<status status="PASS" endtime="20150723 17:46:45.613" starttime="20150723 17:46:45.301"></status>
-</kw>
-<status status="PASS" endtime="20150723 17:46:45.613" starttime="20150723 17:46:45.301"></status>
-</kw>
-<kw type="kw" name="resource.Input textfield">
-<doc></doc>
-<arguments>
-<arg>content</arg>
-<arg>${content}</arg>
-</arguments>
-<kw type="kw" name="Selenium2Library.Input Text">
-<doc>Types the given `text` into text field identified by `locator`.</doc>
-<arguments>
-<arg>${input_id}</arg>
-<arg>${input_value}</arg>
-</arguments>
-<msg timestamp="20150723 17:46:45.613" level="INFO">Typing text 'content for test send email' into text field 'content'</msg>
-<status status="PASS" endtime="20150723 17:46:45.847" starttime="20150723 17:46:45.613"></status>
-</kw>
-<status status="PASS" endtime="20150723 17:46:45.847" starttime="20150723 17:46:45.613"></status>
-</kw>
-<status status="PASS" endtime="20150723 17:46:45.847" starttime="20150723 17:46:42.817"></status>
-</kw>
-<kw type="kw" name="resource.When Send Email">
-<doc></doc>
-<arguments>
-</arguments>
-<kw type="kw" name="Selenium2Library.Click Button">
-<doc>Clicks a button identified by `locator`.</doc>
-<arguments>
-<arg>send_button</arg>
-</arguments>
-<msg timestamp="20150723 17:46:45.847" level="INFO">Clicking button 'send_button'.</msg>
-<status status="PASS" endtime="20150723 17:46:51.983" starttime="20150723 17:46:45.847"></status>
-</kw>
-<status status="PASS" endtime="20150723 17:46:51.998" starttime="20150723 17:46:45.847"></status>
-</kw>
-<kw type="kw" name="resource.Then Should sent email">
-<doc></doc>
-<arguments>
-<arg>2</arg>
-</arguments>
-<kw type="kw" name="${value} = Selenium2Library.Get Value">
-<doc>Returns the value attribute of element identified by `locator`.</doc>
-<arguments>
-<arg>msg_sent_cnt</arg>
-</arguments>
-<msg timestamp="20150723 17:46:52.107" level="INFO">${value} = 2</msg>
-<status status="PASS" endtime="20150723 17:46:52.107" starttime="20150723 17:46:51.998"></status>
-</kw>
-<kw type="kw" name="BuiltIn.Should Be Equal">
-<doc>Fails if the given objects are unequal.</doc>
-<arguments>
-<arg>${value}</arg>
-<arg>${msg_cnt}</arg>
-</arguments>
-<msg timestamp="20150723 17:46:52.107" level="INFO">Argument types are:
-&lt;type 'str'&gt;
-&lt;type 'unicode'&gt;</msg>
-<status status="PASS" endtime="20150723 17:46:52.107" starttime="20150723 17:46:52.107"></status>
-</kw>
-<kw type="kw" name="Selenium2Library.Close Browser">
-<doc>Closes the current browser.</doc>
-<arguments>
-</arguments>
-<status status="PASS" endtime="20150723 17:46:52.186" starttime="20150723 17:46:52.107"></status>
-</kw>
-<status status="PASS" endtime="20150723 17:46:52.186" starttime="20150723 17:46:51.998"></status>
-</kw>
-<doc></doc>
-<tags>
-</tags>
-<status status="PASS" endtime="20150723 17:46:52.186" critical="yes" starttime="20150723 17:46:42.817"></status>
+<status status="FAIL" endtime="20150805 13:20:44.836" critical="yes" starttime="20150805 13:20:42.593">None != Inspector Gadget &lt;myodde@gmail.com&gt;</status>
 </test>
-<doc>A test suite for sending valid emails.</doc>
-<metadata>
-</metadata>
-<status status="PASS" endtime="20150723 17:46:52.186" starttime="20150723 17:46:31.389"></status>
+<status status="FAIL" endtime="20150805 13:20:44.838" starttime="20150805 13:20:34.665"></status>
 </suite>
 <statistics>
 <total>
-<stat fail="0" pass="2">Critical Tests</stat>
-<stat fail="0" pass="2">All Tests</stat>
+<stat fail="2" pass="0">Critical Tests</stat>
+<stat fail="2" pass="0">All Tests</stat>
 </total>
 <tag>
 </tag>
 <suite>
-<stat fail="0" pass="2" id="s1" name="sendEmailvalid">sendEmailvalid</stat>
+<stat fail="2" id="s1" name="sendersNameIsDisplayName" pass="0">sendersNameIsDisplayName</stat>
 </suite>
 </statistics>
 <errors>
