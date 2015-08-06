@@ -16,14 +16,13 @@ function retrieveContactListFromServer()
 function renderContactList(json, selector)
 {
 	$.each(json, function(idx, item) {
-		selector.append('<li class="col-md-1 email-id" style="text-align: center">'+item.id+'</li> <li class="col-md-11 email-address" style="text-align: center">'+item.email+'</li>');
+		selector.append('<li class="col-md-11 email-address" style="text-align: left">'+item.email+'</li>');
 	})
 }
 
 function renderContactSelectionList(json, selector)
 {
 	//selector.loadTemplate("/massive_mailer/contactSelectionTemplate.html", json);
-	
 	
 	var contactCheckbox = '<li class="col-md-2 email-checkbox" style="text-align: center"><input type="checkbox" id=""/></li>';
 	var contactEmail = '<li class="col-md-4 email-address" style="text-align: center">';
@@ -36,4 +35,11 @@ function renderContactSelectionList(json, selector)
 		
 		selector.append(contactCheckbox + contactEmail + item.email+ '</li>');
 	})
+}
+
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }

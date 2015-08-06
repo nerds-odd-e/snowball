@@ -9,5 +9,5 @@ public interface ContactService {
 	List<ContactPerson> getContactList();
 
 	int addNewContact(String name,String email);
-
+	String addContact(String name,String email);
 }
