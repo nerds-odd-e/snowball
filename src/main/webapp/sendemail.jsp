@@ -108,9 +108,10 @@
 										<div class="col-lg-1">To:</div>
 										<div class="col-lg-11">
 											<input type="text" class="form-control" name="recipient"
-												id="recipient"> <span
-												class="glyphicon glyphicon-plus add-contact-button"
-												aria-hidden="true"></span>
+												id="recipient"> 
+											<span id="select_contact"
+											class="glyphicon glyphicon-plus add-contact-button"
+											aria-hidden="true"></span>
 										</div>
 									</div>
 									<br />

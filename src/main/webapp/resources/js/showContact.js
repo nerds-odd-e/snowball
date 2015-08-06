@@ -1,21 +1,31 @@
-/**
- * 
- */
-$(document).ready(function() {
-
-	retrieveContactListFromServer();
-
-});
-
 function retrieveContactListFromServer()
 {
-	$.getJSON("showContact", renderContactList);
+	var contactList = [];	
+	
+	$.ajax({
+	    type: 'GET',
+	    url: 'showContact',
+	    dataType: 'json',
+	    success: function(data) {contactList = data },
+	    async: false
+	});
+	
+	return contactList;
 }
 
-function renderContactList(json)
+function renderContactList(json, selector)
 {
-	var $contactTable = $('#contactTable');
 	$.each(json, function(idx, item) {
-		$contactTable.append('<li class="col-md-1" style="text-align: center">'+item.id+'</li> <li class="col-md-11" style="text-align: center">'+item.email+'</li>');
+		selector.append('<li class="col-md-11 email-address" style="text-align: left">'+item.email+'</li>');
+	})
+}
+
+function renderContactSelectionList(json, selector)
+{
+	var contactEmail = '<li class="col-md-10 email-address" style="text-align: center">';
+	var contactCheckbox = '<li class="col-md-1 email-checkbox" style="text-align: center"><input type="checkbox" id=""/></li>';
+	$.each(json, function(idx, item) {
+		
+		selector.append(contactEmail + item.email+ '</li>');
 	})
 }

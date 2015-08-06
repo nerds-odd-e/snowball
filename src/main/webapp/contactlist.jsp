@@ -83,7 +83,6 @@
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									<ul class="list-inline" >
-										<li class="col-md-1" style="text-align: center">ID</li>
 										<li class="col-md-11" style="text-align: center">Email</li>
 									</ul>							
 								</div>
@@ -110,5 +109,10 @@
 <script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
 <!-- <script type="text/javascript" src="resources/js/sendemail.js"></script> -->
 <script type="text/javascript" src="resources/js/showContact.js"></script>
-
+<script type="text/javascript">
+$(document).ready(function() {
+	var contactList = retrieveContactListFromServer();
+	renderContactList(contactList, $('#contactTable'));
+});
+</script>
 </html>
