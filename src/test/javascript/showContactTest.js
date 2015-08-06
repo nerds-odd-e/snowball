@@ -22,25 +22,25 @@ describe('test show contact function', function() {
 		var mock_json = [];
 		
 		renderContactList(mock_json, $("#contactTable"));
-		expect($("#contactTable .col-md-1").length).toBe(mock_json.length);
+		expect($("#contactTable .col-md-11").length).toBe(mock_json.length);
 	});
 	
 
 	it('should render complete contact lists when server JSON contains some elements',function() {
 
 		renderContactList(mock_json, $("#contactTable"));
-		expect($("#contactTable .col-md-1").length).toBe(mock_json.length);
+		expect($("#contactTable .col-md-11").length).toBe(mock_json.length);
 
 		$.each(mock_json, function(index, obj)
 		{
-			expect($("#contactTable li").eq((index*2)).text()).toBe(obj.id+"");
-			expect($("#contactTable li").eq((index*2)+1).text()).toBe(obj.email);
+			//expect($("#contactTable li").eq((index*2)).text()).toBe(obj.id+"");
+			expect($("#contactTable li").eq(index).text()).toBe(obj.email);
 		})	
 
 	});
 	
-	it('should render contact list with checkbox and number of checkbox must be equal to the number of contacts', function(){
-		renderContactSelectionList(mock_json, $("#contactTable"));
-		expect($("#contactTable .email-checkbox").length).toBe(mock_json.length);
-	});
+//	it('should render contact list with checkbox and number of checkbox must be equal to the number of contacts', function(){
+//		renderContactSelectionList(mock_json, $("#contactTable"));
+//		expect($("#contactTable .email-checkbox").length).toBe(mock_json.length);
+//	});
 });

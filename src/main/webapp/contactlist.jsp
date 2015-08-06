@@ -83,7 +83,6 @@
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									<ul class="list-inline" >
-										<li class="col-md-1" style="text-align: center">ID</li>
 										<li class="col-md-11" style="text-align: center">Email</li>
 									</ul>							
 								</div>
