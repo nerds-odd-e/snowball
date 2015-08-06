@@ -1,5 +1,6 @@
-log.html
-output.xml
-report.html
-selenium-screenshot-*.png
-*.pyc
+**/**/*.png
+**/**/*.pyc
+**/**/log.html
+**/**/report.html
+**/**/output.xml
+
