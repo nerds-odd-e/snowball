@@ -14,8 +14,8 @@ ${RECIPIEN_EMAIL}    steve.zuckerburk@gmail.com
 *** Testcases ***
 Sender Name In Send Box Should Contain Display Name
 	Send An Email With Subject Is Current Date
-	Sleep    5 sec
-    Sender Name Should be    Inspector Gadget <myodde@gmail.com>
+	# Sleep    5 sec
+    Wait Until Keyword Succeeds    1 min    3 sec     Sender Name Should be    Inspector Gadget <myodde@gmail.com>
 
 
 *** Keywords ***
