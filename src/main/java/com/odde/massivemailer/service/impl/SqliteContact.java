@@ -1,12 +1,7 @@
 package com.odde.massivemailer.service.impl;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -23,18 +18,15 @@ public class SqliteContact implements ContactService {
 	private Statement statement;
 	private Connection connection;
 
-	public void connectDB(String url) throws ClassNotFoundException, SQLException {
+	public void connectDB(String url) throws ClassNotFoundException,
+			SQLException {
 		Class.forName("org.sqlite.JDBC");
-//		File file = new File("folder");
-//		try {
-//			dbName = "jdbc:sqlite:/"+file.getCanonicalPath().replace("folder", "oddemail.db");
-//		} catch (IOException e) {
-//			e.toString();
-//		}
 		connection = DriverManager.getConnection(url);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.odde.massivemailer.service.ContactService#getContactList()
 	 */
 	@Override
@@ -43,7 +35,7 @@ public class SqliteContact implements ContactService {
 		try {
 			openConnection();
 			createIfNotExistTable();
-			
+
 			resultSet = statement.executeQuery(this.selectMailSql);
 			populateContactList(resultSet);
 		} catch (ClassNotFoundException | SQLException e) {
@@ -55,20 +47,24 @@ public class SqliteContact implements ContactService {
 	}
 
 	private void createIfNotExistTable() throws SQLException {
-				
-		statement.executeUpdate(
-				"CREATE TABLE IF NOT EXISTS mail (id INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL, name VARCHAR(50), email VARCHAR(50) NOT NULL, lastname VARCHAR(50))");		
+
+		statement
+				.executeUpdate("CREATE TABLE IF NOT EXISTS mail (id INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL, name VARCHAR(50), email VARCHAR(50) NOT NULL, lastname VARCHAR(50))");
 	}
 
-	/* (non-Javadoc)
-	 * @see com.odde.massivemailer.service.ContactService#addNewContact(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.odde.massivemailer.service.ContactService#addNewContact(java.lang
+	 * .String)
 	 */
 	@Override
-	public int addNewContact(String name,String email) {
+	public int addNewContact(String name, String email) {
 		int rowAffected = 0;
 		try {
 			openConnection();
-			rowAffected = saveContactToDatabase(name,email);
+			rowAffected = saveContactToDatabase(name, email);
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -77,22 +73,27 @@ public class SqliteContact implements ContactService {
 		return rowAffected;
 	}
 
-	private int saveContactToDatabase(String name,String email) throws SQLException {
+	private int saveContactToDatabase(String name, String email)
+			throws SQLException {
 		int rowAffected = 0;
-		if(!contactExisted(email))
-			rowAffected = statement.executeUpdate("INSERT INTO mail(name,email) VALUES ('"+ name +"', '"+email+"')");
+		if (!contactExisted(email))
+			rowAffected = statement
+					.executeUpdate("INSERT INTO mail(name,email) VALUES ('"
+							+ name + "', '" + email + "')");
 		return rowAffected;
 	}
 
 	private boolean contactExisted(String email) throws SQLException {
-		ResultSet resultSet = statement.executeQuery("SELECT email FROM mail WHERE email='" + email + "'");
-		if(resultSet.next()) {			
+		ResultSet resultSet = statement
+				.executeQuery("SELECT email FROM mail WHERE email='" + email
+						+ "'");
+		if (resultSet.next()) {
 			return true;
 		}
 		return false;
 	}
-	
-	private void populateContactList(ResultSet resultSet) throws SQLException{
+
+	private void populateContactList(ResultSet resultSet) throws SQLException {
 		contactList = new ArrayList<ContactPerson>();
 		while (resultSet.next()) {
 			ContactPerson contact = new ContactPerson();
@@ -102,17 +103,19 @@ public class SqliteContact implements ContactService {
 			contactList.add(contact);
 		}
 	}
-	
-	public Statement openConnections() throws ClassNotFoundException, SQLException{
+
+	public Statement openConnections() throws ClassNotFoundException,
+			SQLException {
 		return openConnection();
 	}
-	
-	private Statement openConnection() throws ClassNotFoundException, SQLException {
+
+	private Statement openConnection() throws ClassNotFoundException,
+			SQLException {
 		this.connectDB(dbName);
 		statement = getStatement();
 		return statement;
 	}
-	
+
 	private void closeConnection() {
 		try {
 			statement.close();
@@ -121,11 +124,12 @@ public class SqliteContact implements ContactService {
 			e.printStackTrace();
 		}
 	}
+
 	public Statement getStatement() throws SQLException {
 		statement = connection.createStatement();
 		return statement;
 	}
-	
+
 	public Connection getConnection() {
 		return connection;
 	}
@@ -133,17 +137,23 @@ public class SqliteContact implements ContactService {
 	@Override
 	public String addContact(String name, String email) {
 		// TODO Auto-generated method stub
-		int rowEffected =	addNewContact("dummy", email);
+		int rowEffected = addNewContact("dummy", email);
 		String resultMsg = "status=success&msg=Add contact successfully";
 		if (rowEffected == 0) {
-			resultMsg = "status=failed&msg=Email "+email+" is already exist";
+			resultMsg = "status=failed&msg=Email " + email
+					+ " is already exist";
 		}
 		return resultMsg;
 	}
 
-	public int updateContact(ContactPerson contactPerson, Statement statement) throws SQLException {
-		
-		return statement.executeUpdate("UPDATE mail SET name='"+contactPerson.getName()+"',email='"+contactPerson.getEmail()+"',lastname='"+contactPerson.getLastname()+"' where email='"+contactPerson.getEmail()+"'");
+	public int updateContact(ContactPerson contactPerson, Statement statement)
+			throws SQLException {
+
+		return statement.executeUpdate("UPDATE mail SET name='"
+				+ contactPerson.getName() + "',email='"
+				+ contactPerson.getEmail() + "',lastname='"
+				+ contactPerson.getLastname() + "' where email='"
+				+ contactPerson.getEmail() + "'");
 	}
-	
+
 }
