@@ -35,9 +35,9 @@
 		</dependency>
 
 		<dependency>
-		   <groupId>org.xerial</groupId>
-		   <artifactId>sqlite-jdbc</artifactId>
-		   <version>3.8.7</version>
+			<groupId>org.xerial</groupId>
+			<artifactId>sqlite-jdbc</artifactId>
+			<version>3.8.7</version>
 		</dependency>
 
 		<dependency>
@@ -45,11 +45,18 @@
 			<artifactId>mockito-all</artifactId>
 			<version>1.9.5</version>
 		</dependency>
-	   <dependency>
-	        <groupId>com.google.code.gson</groupId>
-	        <artifactId>gson</artifactId>
-	        <version>1.7.1</version>
-	    </dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>1.7.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.javalite</groupId>
+			<artifactId>db-migrator-maven-plugin</artifactId>
+			<version>1.4.11</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -93,11 +100,29 @@
 				<configuration>
 					<url>http://192.168.100.21:8080/manager/text</url>
 					<server>TomcatServer</server>
-                	<username>admin</username>
-                	<password>Fireba11!</password>
+					<username>admin</username>
+					<password>Fireba11!</password>
 					<path>/massive_mailer</path>
 				</configuration>
-			</plugin>			
+			</plugin>
+			<plugin>
+				<groupId>org.javalite</groupId>
+				<artifactId>db-migrator-maven-plugin</artifactId>
+				<version>1.4.11</version>
+				<configuration>
+					<driver>org.sqlite.JDBC</driver>
+					<url>jdbc:sqlite:oddemail.db</url>
+					<username>x</username>
+					<password>y</password>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.xerial</groupId>
+						<artifactId>sqlite-jdbc</artifactId>
+						<version>3.8.7</version>
+					</dependency>
+				</dependencies>
+			</plugin>
 		</plugins>
 		<finalName>massive_mailer</finalName>
 	</build>
