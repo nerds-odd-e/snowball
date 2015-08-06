@@ -11,9 +11,6 @@ import com.odde.massivemailer.service.ContactService;
 import com.odde.massivemailer.service.impl.SqliteContact;
 
 public class AddContactController extends HttpServlet {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private ContactService contactService;
 
