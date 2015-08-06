@@ -22,13 +22,10 @@ function renderContactList(json, selector)
 
 function renderContactSelectionList(json, selector)
 {
-	//selector.loadTemplate("/massive_mailer/contactSelectionTemplate.html", json);
-	
 	var contactCheckbox = '<li class="col-md-2 email-checkbox" style="text-align: center"><input type="checkbox" id=""/></li>';
 	var contactEmail = '<li class="col-md-4 email-address" style="text-align: center">';
 	var contactName = '<li class="col-md-3 contact-name" style="text-align: center">';
 	var contactLastName = '<li class="col-md-3 contact-lname" style="text-align: center">';
-	
 	
 	selector.html('');
 	$.each(json, function(idx, item) {
