@@ -7,24 +7,20 @@ Test Teardown  Close Browser
 
 *** Variables ***
 ${email}     name10@gmail.com
+${alertMessage}    Email name10@gmail.com is already exist
+${successMessage}    Add contact successfully
 
-
-***Keywords***	
-Key email field  [Arguments]  ${email}
-    Input textfield    email    ${email}
 	
 *** Test Cases ***
 
 Verify Add New Contact To Contact List
 	Given Key email field    ${email} 
-	When Click Add Contact	
-	Then Page Should Contain    ${email}
+	When Click Add Contact
+	Then I should get an alert dialog with message  ${successMessage}	
+	And Page Should Contain    ${email}
 
 Verify Add Existing Contact To Contact List
  	Given Key email field    ${email}
-	When Click Add Contact 
-	Then Page Should Contain    ${email}
-
-
-
-
+	When Click Add Contact
+	Then I should get an alert dialog with message  ${alertMessage}
+	And Page Should Contain    ${email}
