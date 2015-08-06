@@ -109,9 +109,10 @@
 										<div class="col-lg-11">
 											<input type="text" class="form-control" name="recipient"
 												id="recipient"> 
-											<span id="select_contact"
+											<span id="select_contact" data-toggle="modal" data-target="#selectContactModal"
 											class="glyphicon glyphicon-plus add-contact-button"
 											aria-hidden="true"></span>
+											
 										</div>
 									</div>
 									<br />
@@ -143,15 +144,24 @@
 				</div>
 			</div>
 		</div>
+		<%@ include file="select_contact.jsp" %>
 	</form>
 </body>
 
 <!-- jQuery -->
-<script type="text/javascript"
-	src="resources/lib/bootstrap/js/jquery.js"></script>
+<script type="text/javascript" src="resources/lib/bootstrap/js/jquery.js"></script>
+<script type="text/javascript" src="resources/lib/jquery-template/jquery.loadTemplate-1.4.4.js"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="resources/js/sendemail.js"></script>
-<script type="text/javascript" src="resources/showContact.js"></script>
+<script type="text/javascript" src="resources/js/showContact.js"></script>
 
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#select_contact').click(function () {
+			var contactList = retrieveContactListFromServer();
+			renderContactSelectionList(contactList, $('#selectContactTable'));
+		});
+	});
+</script>
 </html>

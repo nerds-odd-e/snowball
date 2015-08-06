@@ -1,22 +1,23 @@
-<div id="page-wrapper">
-	<div class="container-fluid">
-
-		<!-- Page Heading -->
-		<div class="row">
-			 
-			<div class="col-lg-12">
-				<h1 class="page-header">Select Contact</h1>
-			</div>
-		</div>
-		<!-- /.row -->
-		<div class="row">
+<!-- Modal -->
+<div class="modal fade" id="selectContactModal" role="dialog">
+  <div class="modal-dialog">
+  
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Contacts</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
 			<div class="col-lg-12">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<ul class="list-inline">
-							<li class="col-md-1" style="text-align: center"></li>
-							<li class="col-md-1" style="text-align: center">ID</li>
-							<li class="col-md-10" style="text-align: center">Email</li>
+							<li class="col-md-2" style="text-align: center"><span></span></li>
+							<li class="col-md-4" style="text-align: center">Email</li>
+							<li class="col-md-3" style="text-align: center">Name</li>
+							<li class="col-md-3" style="text-align: center">Lastname</li>
 						</ul>
 					</div>
 
@@ -27,5 +28,10 @@
 				</div>
 			</div>
 		</div>
-	</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>

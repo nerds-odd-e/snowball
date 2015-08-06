@@ -83,6 +83,7 @@
 					<jsSrcDir>${project.basedir}/src/main/webapp/resources/js</jsSrcDir>
 					<preloadSources>
 						<source>/src/main/webapp/resources/lib/bootstrap/js/jquery.js</source>
+						<source>/src/main/webapp/resources/lib/jquery-template/jquery.loadTemplate-1.4.4.js</source>
 					</preloadSources>
 				</configuration>
 			</plugin>

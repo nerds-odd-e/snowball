@@ -3,7 +3,7 @@ describe('test show contact function', function() {
 	
 	var rootId = "testContainer";
 	var markup = "<ul id='contactTable' class='list-inline' ></ul>";
-	var mock_json = [{email:"a@a.com", id:1, name:"Tom"},{email:"b@b.com", id:2, name:"Jerry"}];
+	var mock_json = [{email:"a@a.com", id:1, name:"Tom", lname:" Jerry"},{email:"b@b.com", id:2, name:"Jerry", lname: "Tom"}];
 	
 	beforeEach(function(){
 		var container = document.createElement('div');
@@ -40,7 +40,7 @@ describe('test show contact function', function() {
 	});
 	
 	it('should render contact list with checkbox and number of checkbox must be equal to the number of contacts', function(){
-		renderContactSelectionList(mock_json, $("#contactTable"));
+		renderContactSelectionList(mock_json, $('#contactTable'));
 		expect($("#contactTable .email-checkbox").length).toBe(mock_json.length);
 	});
 });
