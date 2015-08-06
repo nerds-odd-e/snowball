@@ -124,5 +124,16 @@ public class SqliteContact implements ContactService {
 	public Connection getConnection() {
 		return connection;
 	}
+
+	@Override
+	public String addContact(String name, String email) {
+		// TODO Auto-generated method stub
+		int rowEffected =	addNewContact("dummy", email);
+		String resultMsg = "status=success&msg=Add contact successfully";
+		if (rowEffected == 0) {
+			resultMsg = "status=failed&msg=Email "+email+" is already exist";
+		}
+		return resultMsg;
+	}
 	
 }

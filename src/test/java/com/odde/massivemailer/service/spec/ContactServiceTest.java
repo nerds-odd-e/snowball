@@ -54,6 +54,19 @@ public class ContactServiceTest {
 		assertEquals(0, rowAffected);
 	}
 	
+	@Test
+	public void addContactSuccess() {
+		String result = service.addContact("contact name", "a@b.com");
+		assertEquals("status=success&msg=Add contact successfully", result);
+	}
+	
+	@Test
+	public void addExistingContact() {
+		service.addContact("contact name", "a@b.com");
+		String result = service.addContact("contact name", "a@b.com");
+		assertEquals("status=failed&msg=Email a@b.com is already exist", result);
+	}
+	
 	@After
 	public void resetConnection() throws SQLException {
 		stmt.close();

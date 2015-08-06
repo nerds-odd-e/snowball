@@ -33,7 +33,6 @@ describe('test show contact function', function() {
 
 		$.each(mock_json, function(index, obj)
 		{
-			//expect($("#contactTable li").eq((index*2)).text()).toBe(obj.id+"");
 			expect($("#contactTable li").eq(index).text()).toBe(obj.email);
 		})	
 

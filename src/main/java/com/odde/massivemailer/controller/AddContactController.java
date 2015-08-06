@@ -26,7 +26,7 @@ public class AddContactController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		getContactService().addNewContact("dummy", req.getParameter("email"));
-		resp.sendRedirect("contactlist.jsp?status=success&msg=Add contact successfully");
+		String resultMsg =	getContactService().addContact("dummy", req.getParameter("email"));
+		resp.sendRedirect("contactlist.jsp?"+resultMsg);
 	}
 }
