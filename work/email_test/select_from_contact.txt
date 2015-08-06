@@ -2,13 +2,32 @@
 Library        Selenium2Library
 Resource       resource.txt
 
+*** Variables ***
+${EMAIL}    Actual value set dynamically at suite setup
+
 *** Test Cases ***
-Select One Contact
+Select Contact(s) To Recipient
 	[Tags]    work_in_progress 
+	Given There are some existing contact
+	And I'm sending email
+	When Selected some existing contact
+	Then Selected contact appear in recipient form
+
+*** Keywords ***
+There are some existing contact
+	Log    There are some existing contact
+
+I'm sending email
+	Log    I'm sending email
+	
+Selected some existing contact
 	Open Browser To Send Email
     Click Element    select_contact
     Wait Until Element Is Visible     contactTable
-    Click Element    select_1
-    ${email} =    Get Text    select_1
+    Click Element    ${select_1}
+    ${EMAIL} =    Get Text    ${select_1}
+    Set Suite Variable  ${EMAIL}
     Click Element    select_button
-    Element Should Contain    recipient    ${email}
+
+Selected contact appear in recipient form
+	Element Should Contain    recipient    ${EMAIL}
