@@ -111,8 +111,14 @@
 <script type="text/javascript" src="resources/js/showContact.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
+	var msg = getParameterByName('msg');
+	if(msg) {
+		alert(msg);
+	}
 	var contactList = retrieveContactListFromServer();
 	renderContactList(contactList, $('#contactTable'));
 });
+
 </script>
 </html>
+
