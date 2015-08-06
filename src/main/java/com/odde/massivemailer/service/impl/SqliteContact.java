@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -102,6 +103,10 @@ public class SqliteContact implements ContactService {
 		}
 	}
 	
+	public Statement openConnections() throws ClassNotFoundException, SQLException{
+		return openConnection();
+	}
+	
 	private Statement openConnection() throws ClassNotFoundException, SQLException {
 		this.connectDB(dbName);
 		statement = getStatement();
@@ -134,6 +139,11 @@ public class SqliteContact implements ContactService {
 			resultMsg = "status=failed&msg=Email "+email+" is already exist";
 		}
 		return resultMsg;
+	}
+
+	public int updateContact(ContactPerson contactPerson, Statement statement) throws SQLException {
+		
+		return statement.executeUpdate("UPDATE mail SET name='"+contactPerson.getName()+"',email='"+contactPerson.getEmail()+"',lastname='"+contactPerson.getLastname()+"' where email='"+contactPerson.getEmail()+"'");
 	}
 	
 }
