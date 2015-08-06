@@ -18,6 +18,7 @@ function submitForm() {
 	$("#email").val("");
 }
 
+
 function checkAddInputElement() {
 	
 	if (isChange($("#email").val())) {
