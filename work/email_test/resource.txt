@@ -18,7 +18,9 @@ ${subject}       subject for test send email
 ${content}       content for test send email
 
 *** Keywords ***
-
+Key email field  [Arguments]  ${email}
+    Input textfield    email    ${email}
+    
 Key all email field  [Arguments]  ${recipient}  ${subject}  ${content}
     Input textfield    recipient    ${recipient}
     Input textfield    subject      ${subject}
@@ -59,5 +61,7 @@ Should sent email  [Arguments]    ${msg_cnt}
     ${value}=  Get Value  msg_sent_cnt
     Should Be Equal    ${value}   ${msg_cnt}
     Close Browser
-          
+
+I should get an alert dialog with message  [Arguments]    ${alertMessage}
+    Alert Should Be Present    ${alertMessage}          
     
