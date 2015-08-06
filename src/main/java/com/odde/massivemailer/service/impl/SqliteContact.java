@@ -146,9 +146,9 @@ public class SqliteContact implements ContactService {
 		return resultMsg;
 	}
 
-	public int updateContact(ContactPerson contactPerson, Statement statement)
-			throws SQLException {
-
+	@Override
+	public int updateContact(ContactPerson contactPerson, Statement statement) throws SQLException {
+		// TODO open connection first
 		return statement.executeUpdate("UPDATE mail SET name='"
 				+ contactPerson.getName() + "',email='"
 				+ contactPerson.getEmail() + "',lastname='"

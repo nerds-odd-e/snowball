@@ -22,7 +22,8 @@
 	<servlet-mapping>
 		<servlet-name>showContactController</servlet-name>
 		<url-pattern>/showContact</url-pattern>
-	</servlet-mapping>	
+	</servlet-mapping>
+		
 	<servlet>
 		<servlet-name>addContactController</servlet-name>
 		<servlet-class>com.odde.massivemailer.controller.AddContactController</servlet-class>
@@ -30,5 +31,14 @@
 	<servlet-mapping>
 		<servlet-name>addContactController</servlet-name>
 		<url-pattern>/addContact</url-pattern>
+	</servlet-mapping>	
+	
+	<servlet>
+		<servlet-name>updateContactController</servlet-name>
+		<servlet-class>com.odde.massivemailer.controller.UpdateContactController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>updateContactController</servlet-name>
+		<url-pattern>/editContact</url-pattern>
 	</servlet-mapping>	
 </web-app>
