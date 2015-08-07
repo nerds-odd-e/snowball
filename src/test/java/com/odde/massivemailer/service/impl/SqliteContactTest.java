@@ -1,16 +1,16 @@
 package com.odde.massivemailer.service.impl;
 
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Matchers;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.odde.massivemailer.model.ContactPerson;
@@ -21,7 +21,7 @@ public class SqliteContactTest {
 	private SqliteContact sqliteContact;
 
 	@Mock
-	private Statement mockStatement;
+	private PreparedStatement mockPreparedStatement;
 
 	@Mock
 	private Connection mockConnection;
@@ -29,42 +29,31 @@ public class SqliteContactTest {
 	@Before
 	public void setUp() throws SQLException, ClassNotFoundException {
 		sqliteContact = new SqliteContact();
-		Mockito.when(mockStatement.executeUpdate(Matchers.anyString()))
-				.thenReturn(1);
-		sqliteContact.setStatement(mockStatement);
+		when(mockPreparedStatement.executeUpdate()).thenReturn(1);
+		when(mockConnection.prepareStatement(Matchers.anyString())).thenReturn(mockPreparedStatement);
+		sqliteContact.setConnection(mockConnection);
 	}
 	
 	@After
 	public void tearDown() {
 		sqliteContact.closeConnection();
 	}
-
+	
 	@Test
-	public void updateContactTerry() throws SQLException,
-			ClassNotFoundException {
-
+	public void testUpdateContact() throws SQLException{
+		
 		ContactPerson contactPerson = new ContactPerson("terry",
-				"terry@gmail.com", "e");
-		sqliteContact.setStatement(mockStatement);
+				"roof@gmail.com", "e");
 		sqliteContact.updateContact(contactPerson);
-
-		Mockito.verify(mockStatement)
-				.executeUpdate(
-						"UPDATE mail SET name='terry',email='terry@gmail.com',lastname='e' where email='terry@gmail.com'");
-
+		verify(mockPreparedStatement).executeUpdate();
 	}
 
-	@Test
-	public void updateContactRoof() throws SQLException, ClassNotFoundException {
-
-		ContactPerson contactPerson = new ContactPerson("roof",
+	@Test(expected = SQLException.class)
+	public void testUpdateContactFailed() throws SQLException{
+		when(mockPreparedStatement.executeUpdate()).thenThrow(new SQLException());
+		ContactPerson contactPerson = new ContactPerson("terry",
 				"roof@gmail.com", "e");
-		sqliteContact.setStatement(mockStatement);
 		sqliteContact.updateContact(contactPerson);
-
-		Mockito.verify(mockStatement)
-				.executeUpdate(
-						"UPDATE mail SET name='roof',email='roof@gmail.com',lastname='e' where email='roof@gmail.com'");
 	}
 
 }

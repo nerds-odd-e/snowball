@@ -2,6 +2,7 @@ package com.odde.massivemailer.service.impl;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -117,14 +118,18 @@ public class SqliteContact implements ContactService {
 		}
 		return resultMsg;
 	}
-
+	
 	@Override
 	public void updateContact(ContactPerson contactPerson) throws SQLException {
-		statement.executeUpdate("UPDATE mail SET name='"
-				+ contactPerson.getName() + "',email='"
-				+ contactPerson.getEmail() + "',lastname='"
-				+ contactPerson.getLastname() + "' where email='"
-				+ contactPerson.getEmail() + "'");
+		String sql = "UPDATE mail SET name=?, email=?, lastname=? where email=?";
+		
+		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		preparedStatement.setString(1, contactPerson.getName());
+		preparedStatement.setString(2, contactPerson.getEmail());
+		preparedStatement.setString(3, contactPerson.getLastname());
+		preparedStatement.setString(4, contactPerson.getEmail());
+
+		preparedStatement.executeUpdate();
 	}
 
 	private Statement openConnection() throws ClassNotFoundException,
@@ -159,6 +164,10 @@ public class SqliteContact implements ContactService {
 
 	public Connection getConnection() {
 		return connection;
+	}
+
+	public void setConnection(Connection connection) {
+		this.connection = connection;		
 	}
 
 }
