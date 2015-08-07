@@ -3,5 +3,5 @@ var ShowContactPresenter = function(showContactView) {
 };
 
 ShowContactPresenter.prototype.showContact = function() {
-	this.showContactView.getContact();
+	this.showContactView.renderContact();
 };
