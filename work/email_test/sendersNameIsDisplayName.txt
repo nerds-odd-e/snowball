@@ -1,35 +1,12 @@
 *** Settings ***
 Library		   Selenium2Library
 Library        DateTime
-Library        get_senders.py
+Library        ../scripts/get_senders.py
 Resource       resource.txt
-Test Setup     Suite Setup
-
-*** Variables ***
-${SUBJECT_CURRENT_DATE}           Actual value set dynamically at suite setup
-${SENDER_EMAIL}    myodde@gmail.com
-${SENDER_PASSWORD}    1234qwer@
-${RECIPIEN_EMAIL}    steve.zuckerburk@gmail.com
+resource 	   ../resources/senderNameCheckResource.txt
+Test Setup     Test Setup
 
 *** Testcases ***
 Sender Name In Send Box Should Contain Display Name
-	Send An Email With Subject Is Current Date
-	# Sleep    5 sec
-    Wait Until Keyword Succeeds    1 min    3 sec     Sender Name Should be    Inspector Gadget <myodde@gmail.com>
-
-
-*** Keywords ***
-Suite Setup
-	${SUBJECT_CURRENT_DATE} =   Get Current Date    result_format=%d%m%Y
-	Set Suite Variable  ${SUBJECT_CURRENT_DATE}
-
-
-Send An Email With Subject Is Current Date
-	Open Browser To Send Email
-	Key all email field    ${RECIPIEN_EMAIL}    ${SUBJECT_CURRENT_DATE}    content
-	Click Button    send_button
-	Close Browser
-
-Sender Name Should be    [Arguments]    ${expected sender}     
-    ${sender} =    Get Sender Name    ${SENDER_EMAIL}    ${SENDER_PASSWORD}    ${SUBJECT_CURRENT_DATE}
-    Should Be Equal As Strings    ${sender}    ${expected sender}
+	Given Send An Email
+    Then Sender Name Should be    Inspector Gadget <myodde@gmail.com>
