@@ -3,3 +3,8 @@
 .profile
 /.idea
 .db
+**/**/*.png
+**/**/*.pyc
+**/**/log.html
+**/**/report.html
+**/**/output.xml

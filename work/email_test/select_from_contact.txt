@@ -1,0 +1,45 @@
+*** Settings ***
+Library        Selenium2Library
+Resource       ../resources/resource.txt
+Test Teardown  Close Browser
+
+*** Test Cases ***
+Select A Contact To Recipient
+	[Tags]    work_in_progress 
+	Given There is a contact    terry@gmail.com
+	When Select a contact    terry@gmail.com
+	Then Selected contact appear in the recipient form    terry@gmail.com
+
+Select Two Contact To Recipient
+    [Tags]    work_in_progress 
+    Given There is a contact    terry1@gmail.com  
+    And There is a contact    terry2@gmail.com
+    When Select two contact    terry1@gmail.com    terry2@gmail.com  
+    Then Selected contact appear in the recipient form    terry1@gmail.com
+    And Selected contact appear in the recipient form    terry2@gmail.com      
+
+*** Keywords ***
+Open Browser To Select Contact
+    Open Browser    http://192.168.100.21:8080/massive_mailer/sendemail.jsp    firefox
+
+There is a contact    [Arguments]    ${email}
+    Open Browser To Add Contact
+    Key email field    ${email}
+    Click Add Contact
+    Close Browser
+
+Select a contact    [Arguments]    ${email}
+    Open Browser To Select Contact
+    Click Element    select_contact
+    sleep    3000milliseconds
+    Select Checkbox    xpath=//*[@id="selectContactTable"]/li[contains(., '${email}')]//preceding-sibling::li/input
+    Click Button    xpath=//*[@id="selectContactModal"]/div/div/div[3]/button
+
+Select two contact    [Arguments]    ${email1}    ${email2}
+    Open Browser To Select Contact 
+    Select Checkbox    xpath=//*[@id="selectContactTable"]/li[contains(., '${email1}')]//preceding-sibling::li/input
+    Select Checkbox    xpath=//*[@id="selectContactTable"]/li[contains(., '${email2}')]//preceding-sibling::li/input
+    Click Button    xpath=//*[@id="selectContactModal"]/div/div/div[3]/button
+
+Selected contact appear in the recipient form    [Arguments]    ${email}
+    Element Should Contain    recipient    ${email} 
