@@ -18,17 +18,20 @@ public class SqliteContact implements ContactService {
 	private Statement statement;
 	private Connection connection;
 
+	public SqliteContact() {
+		try {
+			openConnection();
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void connectDB(String url) throws ClassNotFoundException,
 			SQLException {
 		Class.forName("org.sqlite.JDBC");
 		connection = DriverManager.getConnection(url);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.odde.massivemailer.service.ContactService#getContactList()
-	 */
 	@Override
 	public List<ContactPerson> getContactList() {
 		ResultSet resultSet = null;
@@ -104,39 +107,8 @@ public class SqliteContact implements ContactService {
 		}
 	}
 
-	public Statement openConnections() throws ClassNotFoundException,
-			SQLException {
-		return openConnection();
-	}
-
-	private Statement openConnection() throws ClassNotFoundException,
-			SQLException {
-		this.connectDB(dbName);
-		statement = getStatement();
-		return statement;
-	}
-
-	private void closeConnection() {
-		try {
-			statement.close();
-			connection.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public Statement getStatement() throws SQLException {
-		statement = connection.createStatement();
-		return statement;
-	}
-
-	public Connection getConnection() {
-		return connection;
-	}
-
 	@Override
 	public String addContact(String name, String email) {
-		// TODO Auto-generated method stub
 		int rowEffected = addNewContact("dummy", email);
 		String resultMsg = "status=success&msg=Add contact successfully";
 		if (rowEffected == 0) {
@@ -147,13 +119,46 @@ public class SqliteContact implements ContactService {
 	}
 
 	@Override
-	public int updateContact(ContactPerson contactPerson, Statement statement) throws SQLException {
-		// TODO open connection first
-		return statement.executeUpdate("UPDATE mail SET name='"
+	public void updateContact(ContactPerson contactPerson) throws SQLException {
+		statement.executeUpdate("UPDATE mail SET name='"
 				+ contactPerson.getName() + "',email='"
 				+ contactPerson.getEmail() + "',lastname='"
 				+ contactPerson.getLastname() + "' where email='"
 				+ contactPerson.getEmail() + "'");
+	}
+
+	private Statement openConnection() throws ClassNotFoundException,
+			SQLException {
+		this.connectDB(dbName);
+		statement = getStatement();
+		return statement;
+	}
+
+	public void closeConnection() {
+		try {
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public Statement openConnections() throws ClassNotFoundException,
+			SQLException {
+		return openConnection();
+	}
+
+	public Statement getStatement() throws SQLException {
+		statement = connection.createStatement();
+		return statement;
+	}
+
+	public void setStatement(Statement statement) {
+		this.statement = statement;
+	}
+
+	public Connection getConnection() {
+		return connection;
 	}
 
 }

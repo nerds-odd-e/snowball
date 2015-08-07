@@ -20,12 +20,12 @@ public class UpdateContactController extends HttpServlet {
 		contactPerson.setEmail(req.getParameter("email"));
 		contactPerson.setLastname(req.getParameter("lastname"));
 		SqliteContact service = new SqliteContact();
-		String resultMsg = "0";
 		try {
-			resultMsg = String.valueOf(service.updateContact(contactPerson, service.getStatement()));
+			service.updateContact(contactPerson);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		resp.sendRedirect("contactlist.jsp?"+resultMsg);
+		service.closeConnection();
+		resp.sendRedirect("contactlist.jsp");
 	}
 }
