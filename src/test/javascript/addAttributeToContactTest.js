@@ -57,11 +57,11 @@ describe("Add Firstname and Lastname to Existing Contact",function(){
 	});
 	
 	it("should show name and lastname as the same as the one that was being clicked", function(){
-		var mock_json_contact_item = {name:'John', email:'john@gmail.com', lname:'Winyu'};
+		var mock_json_contact_item = {name:'John', email:'john@gmail.com', lastname:'Winyu'};
 		spyOn(window,'openEditContactModal');
 		showEditContactDetail(mock_json_contact_item);
 		expect($('#name').val()).toBe(mock_json_contact_item.name);
-		expect($('#lastname').val()).toBe(mock_json_contact_item.lname);
+		expect($('#lastname').val()).toBe(mock_json_contact_item.lastname);
 		expect($('#email').val()).toBe(mock_json_contact_item.email);
 		expect($('#email_label').text()).toBe(mock_json_contact_item.email);
 	});

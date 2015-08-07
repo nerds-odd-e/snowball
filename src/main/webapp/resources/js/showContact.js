@@ -56,7 +56,7 @@ function showEditContactDetail(item)
 function insertDataIntoContactModal(item){
 
 	$('#name').val(item.name);
-	$('#lastname').val(item.lname);
+	$('#lastname').val(item.lastname);
 	$('#email').val(item.email);
 	$('#email_label').text(item.email);
 }
