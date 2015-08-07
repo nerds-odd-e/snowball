@@ -14,14 +14,4 @@ describe('Show Contact Selection Page', function() {
 		
 		expect(mockView.getContact).toHaveBeenCalled();
 	});
-	
 });
-
-
-
-
-var ShowContactView = function() {};
-
-ShowContactView.prototype.email = function() {};
-ShowContactView.prototype.getContact = function() {};
-
