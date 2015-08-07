@@ -1,22 +1,14 @@
 *** Settings ***
-
 Documentation  A test suite for sending valid emails.
-Resource       resource.txt
-
-
+Resource       ../resources/resource.txt
 
 *** Test Cases ***
-    
 Send Email one recepient success.
     Given Create default email with recipients   terry@odd-e.com
     When Send Email
     Then Should sent email  1
     
-    
 Send Email multiple recepient success.
     Given Create default email with recipients   terry@odd-e.com;roof@odd-e.com
     When Send Email
     Then Should sent email  2    
-
-
-

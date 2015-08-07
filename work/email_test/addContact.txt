@@ -1,5 +1,5 @@
 *** Settings ***
-Resource       resource.txt
+Resource       ../resources/resource.txt
 Test Setup     Open Browser To Add Contact
 Test Teardown  Close Browser
 

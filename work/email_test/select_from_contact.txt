@@ -1,6 +1,6 @@
 *** Settings ***
 Library        Selenium2Library
-Resource       resource.txt
+Resource       ../resources/resource.txt
 Test Teardown  Close Browser
 
 *** Test Cases ***

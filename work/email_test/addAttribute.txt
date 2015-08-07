@@ -1,6 +1,6 @@
 *** Settings ***
 Library		   Selenium2Library
-Resource       resource.txt
+Resource       ../resources/resource.txt
 Test Setup     Open Browser To View Contract 
 Test Teardown  Close Browser
 

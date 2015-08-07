@@ -1,17 +1,13 @@
 *** Settings ***
-Resource       resource.txt
+Resource       ../resources/resource.txt
 Test Setup     Open Browser To Send Email
 Test Teardown  Close Browser
-
-
 
 *** Variables ***
 ${recipient}     name1@gmail.com; name2@gmail.com   
 ${subject}       subject for test send email
 ${content}       content for test send email
 ${invalid_format_recipient}     name1gmail.com
-
-
 
 ***Keywords***
 Check Send Button
@@ -21,11 +17,8 @@ Check Send Button
     Input textfield    	content  	${content}
     Run Keyword If		'${expected_status}'=='Enabled' 	Can click  		send_button
     Run Keyword If    	'${expected_status}'=='Disabled' 	Can not click 	send_button
-
-	
 	
 *** Test Cases ***
-
 Verify value and check button
 	[Template]   Check Send Button
 	#*recipient*   *subject*    *content*   *expectation*

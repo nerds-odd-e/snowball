@@ -2,7 +2,7 @@
 Library		   Selenium2Library
 Library        DateTime
 Library        ../scripts/get_senders.py
-Resource       resource.txt
+Resource       ../resources/resource.txt
 resource 	   ../resources/senderNameCheckResource.txt
 Test Setup     Test Setup
 
