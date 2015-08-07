@@ -69,9 +69,6 @@
 			<form name="addContact" id="addContact" method="post"
 				action="addContact">
 
-
-
-
 				<div class="container-fluid">
 
 					<!-- Page Heading -->

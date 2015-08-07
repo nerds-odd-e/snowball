@@ -29,11 +29,13 @@ describe('test show contact function', function() {
 	it('should render complete contact lists when server JSON contains some elements',function() {
 
 		renderContactList(mock_json, $("#contactTable"));
-		expect($("#contactTable .col-md-11").length).toBe(mock_json.length);
+		expect($("#contactTable .email-address").length).toBe(mock_json.length);
 
+		
+		
 		$.each(mock_json, function(index, obj)
 		{
-			expect($("#contactTable li").eq(index).text()).toBe(obj.email);
+			expect($("#contactTable .email-address").eq(index).text()).toBe(obj.email);
 		})	
 
 	});

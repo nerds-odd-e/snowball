@@ -13,7 +13,7 @@ import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.service.ContactService;
 
 public class SqliteContact implements ContactService {
-	private String selectMailSql = "SELECT id, name, email FROM mail";
+	private String selectMailSql = "SELECT id, name, email, lastname FROM mail";
 	private String dbName = "jdbc:sqlite:oddemail.db";
 	private List<ContactPerson> contactList;
 	private Statement statement;
@@ -104,6 +104,7 @@ public class SqliteContact implements ContactService {
 			contact.setId(resultSet.getInt("id"));
 			contact.setName(resultSet.getString("name"));
 			contact.setEmail(resultSet.getString("email"));
+			contact.setLastname(resultSet.getString("lastname"));
 			contactList.add(contact);
 		}
 	}
