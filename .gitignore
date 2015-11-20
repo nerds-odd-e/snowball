@@ -3,7 +3,7 @@
 /target
 .settings/
 .profile
-/.idea
+.idea/
 *.db
 **/**/*.png
 **/**/*.pyc
