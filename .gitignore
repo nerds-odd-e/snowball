@@ -1,8 +1,10 @@
+.classpath
+.project
 /target
 .settings/
 .profile
 /.idea
-.db
+*.db
 **/**/*.png
 **/**/*.pyc
 **/**/log.html
