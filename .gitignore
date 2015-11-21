@@ -1,5 +1,7 @@
 **/**/selenium-screenshot-*
 *.iml
+*.ipr
+*.iws
 .classpath
 .project
 /target
