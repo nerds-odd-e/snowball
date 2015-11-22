@@ -1,0 +1,13 @@
+*** Settings ***
+Library		   Selenium2Library
+Library        DateTime
+Library        get_senders.py
+Resource       resource.txt
+resource 	   senderNameCheckResource.txt
+Test Setup     Test Setup
+Default Tags   send_mail
+
+*** Testcases ***
+Sender Name In Send Box Should Contain Display Name
+	Given Send An Email
+    Then Sender Name Should be    Inspector Gadget <myodde@gmail.com>

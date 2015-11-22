@@ -1,0 +1,38 @@
+*** Settings ***
+Resource       resource.txt
+Test Setup     Open Browser To Send Email
+Test Teardown  Close Browser
+Default Tags   send_mail
+
+*** Variables ***
+${recipient}     name1@gmail.com; name2@gmail.com   
+${subject}       subject for test send email
+${content}       content for test send email
+${invalid_format_recipient}     name1gmail.com
+
+***Keywords***
+Check Send Button
+	[Arguments]  ${recipient}   ${subject}   ${content}    ${expected_status}
+    Input textfield    	recipient 	${recipient}
+    Input textfield    	subject   	${subject}
+    Input textfield    	content  	${content}
+    Run Keyword If		'${expected_status}'=='Enabled' 	Can click  		send_button
+    Run Keyword If    	'${expected_status}'=='Disabled' 	Can not click 	send_button
+	
+*** Test Cases ***
+Verify value and check button
+	[Template]   Check Send Button
+	#*recipient*   *subject*    *content*   *expectation*
+	#----------------------------------------------------------
+	${EMPTY}      ${EMPTY}     ${EMPTY}      Disabled
+	${recipient}  ${EMPTY}     ${EMPTY}      Disabled
+	${EMPTY}      ${subject}   ${EMPTY}      Disabled
+	${EMPTY}      ${EMPTY}     ${content}    Disabled
+	${recipient}  ${subject}   ${content}    Enabled
+
+Page show success message when add data correctly and click send button
+    Key all email field    ${invalid_format_recipient}    ${subject}    ${content}
+    Can click    send_button
+    Send Email
+    Page Should Contain    fail
+

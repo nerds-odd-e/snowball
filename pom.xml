@@ -62,9 +62,54 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.apache.tomcat.maven</groupId>
-				<artifactId>tomcat7-maven-plugin</artifactId>
-				<version>2.2</version>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>9.2.14.v20151106</version>
+				<configuration>
+					<scanIntervalSeconds>10</scanIntervalSeconds>
+					<stopKey>foo</stopKey>
+					<stopPort>9999</stopPort>
+				</configuration>
+				<executions>
+					<execution>
+						<id>start-jetty</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<!-- Use forked mode to reduce out of memory problems -->
+							<goal>run-forked</goal>
+						</goals>
+						<configuration>
+							<waitForChild>false</waitForChild>
+							<scanIntervalSeconds>0</scanIntervalSeconds>
+						</configuration>
+					</execution>
+					<execution>
+						<id>stop-jetty</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.robotframework</groupId>
+				<artifactId>robotframework-maven-plugin</artifactId>
+				<version>1.4.5</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<includes>
+						<include>contact</include>
+					</includes>
+					<libdoc/>
+					<testdoc/>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -92,18 +137,6 @@
 						<source>/src/main/webapp/resources/lib/bootstrap/js/jquery.js</source>
 						<source>/src/main/webapp/resources/lib/jquery-template/jquery.loadTemplate-1.4.4.js</source>
 					</preloadSources>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.tomcat.maven</groupId>
-				<artifactId>tomcat7-maven-plugin</artifactId>
-				<version>2.2</version>
-				<configuration>
-					<url>http://192.168.100.21:8080/manager/text</url>
-					<server>TomcatServer</server>
-					<username>admin</username>
-					<password>Fireba11!</password>
-					<path>/massive_mailer</path>
 				</configuration>
 			</plugin>
 			<plugin>

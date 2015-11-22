@@ -1,1 +1,0 @@
-python runRobot.py email_test/sendEmail.txt
