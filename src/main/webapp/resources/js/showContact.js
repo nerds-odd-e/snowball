@@ -4,7 +4,7 @@ function retrieveContactListFromServer()
 	
 	$.ajax({
 	    type: 'GET',
-	    url: 'showContact',
+	    url: 'contacts',
 	    dataType: 'json',
 	    success: function(data) {contactList = data },
 	    async: false

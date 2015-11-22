@@ -16,15 +16,6 @@
 	</servlet-mapping>
 
 	<servlet>
-		<servlet-name>showContactController</servlet-name>
-		<servlet-class>com.odde.massivemailer.controller.ShowContactController</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>showContactController</servlet-name>
-		<url-pattern>/showContact</url-pattern>
-	</servlet-mapping>
-		
-	<servlet>
 		<servlet-name>contactsController</servlet-name>
 		<servlet-class>com.odde.massivemailer.controller.ContactsController</servlet-class>
 	</servlet>

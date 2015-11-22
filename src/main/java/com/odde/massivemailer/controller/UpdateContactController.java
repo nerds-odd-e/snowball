@@ -25,7 +25,6 @@ public class UpdateContactController extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		service.closeConnection();
 		resp.sendRedirect("contactlist.jsp");
 	}
 }

@@ -125,6 +125,8 @@ public class SqliteContact implements ContactService {
 		preparedStatement.setString(4, contactPerson.getEmail());
 
 		preparedStatement.executeUpdate();
+
+		closeConnection();
 	}
 
 	private Statement openConnection() throws ClassNotFoundException,
