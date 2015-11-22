@@ -26,7 +26,7 @@ public class ContactsController extends HttpServlet {
         this.contactService = contactService;
     }
 
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String resultMsg = "";
 
         ContactPerson contact = new ContactPerson("todo name", req.getParameter("email"), "todo last name");
@@ -39,7 +39,7 @@ public class ContactsController extends HttpServlet {
         resp.sendRedirect("contactlist.jsp?" + resultMsg);
     }
 
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String convertedContactToJSON = new Gson().toJson(contactService.getContactList());
         ServletOutputStream outputStream = resp.getOutputStream();
         outputStream.print(convertedContactToJSON);
