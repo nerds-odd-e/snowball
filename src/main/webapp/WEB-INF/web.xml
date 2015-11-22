@@ -25,12 +25,12 @@
 	</servlet-mapping>
 		
 	<servlet>
-		<servlet-name>addContactController</servlet-name>
-		<servlet-class>com.odde.massivemailer.controller.AddContactController</servlet-class>
+		<servlet-name>contactsController</servlet-name>
+		<servlet-class>com.odde.massivemailer.controller.ContactsController</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>addContactController</servlet-name>
-		<url-pattern>/addContact</url-pattern>
+		<servlet-name>contactsController</servlet-name>
+		<url-pattern>/contacts</url-pattern>
 	</servlet-mapping>	
 	
 	<servlet>

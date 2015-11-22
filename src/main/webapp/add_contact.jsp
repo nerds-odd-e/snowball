@@ -67,7 +67,7 @@
 
 		<div id="page-wrapper">
 			<form name="addContact" id="addContact" method="post"
-				action="addContact">
+				action="contacts">
 
 				<div class="container-fluid">
 

@@ -11,11 +11,11 @@ import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.service.ContactService;
 import com.odde.massivemailer.service.impl.SqliteContact;
 
-public class AddContactController extends HttpServlet {
+public class ContactsController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private ContactService contactService;
 
-    public AddContactController() {
+    public ContactsController() {
         contactService = new SqliteContact();
     }
 
