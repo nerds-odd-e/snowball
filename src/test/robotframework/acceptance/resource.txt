@@ -31,10 +31,10 @@ Open Browser To Send Email
     Maximize Browser Window
     Set Selenium Speed  ${DELAY}
 
+# To be deprecated
 Open Browser To Add Contact
     Open Browser  ${CONTACT LIST URL}  ${BROWSER}
     Maximize Browser Window
-    Set Selenium Speed  ${DELAY}
 
 Input textfield  [Arguments]  ${input_id}    ${input_value}
     Input Text  ${input_id}  ${input_value}
@@ -65,6 +65,7 @@ Should sent email  [Arguments]    ${msg_cnt}
 I should get an alert dialog with message  [Arguments]    ${alertMessage}
     Alert Should Be Present    ${alertMessage}          
     
-Add A Contact    [Arguments]    ${email}
+Add A Contact          [Arguments]    ${email}
+    Go To              ${CONTACT LIST URL}
     Key email field    ${email}
     Click Add Contact

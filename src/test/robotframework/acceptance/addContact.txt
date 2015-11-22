@@ -1,13 +1,13 @@
 *** Settings ***
-Resource       resource.txt
-Test Setup     Open Browser To Add Contact
-Test Teardown  Close Browser
-Default Tags   contact
+Resource          resource.txt
+Suite Setup       Open Browser    ${SERVER}
+Suite Teardown    Close Browser
+Default Tags      contact
 
 *** Variables ***
-${email}     name10@gmail.com
-${alertMessage}    Email name10@gmail.com is already exist
-${successMessage}    Add contact successfully
+${email}            to_add_contact@gmail.com
+${alertMessage}     Email ${email} is already exist
+${successMessage}   Add contact successfully
 
 *** Test Cases ***
 Verify Add New Contact To Contact List

@@ -1,6 +1,6 @@
 package com.odde.massivemailer.service.spec;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -58,15 +58,13 @@ public class ContactServiceTest {
 	
 	@Test
 	public void addContactSuccess() {
-		String result = service.addContact("contact name", "a@b.com");
-		assertEquals("status=success&msg=Add contact successfully", result);
+		assertTrue(service.addContact(new ContactPerson("contact name", "a@b.com", "")));
 	}
 	
 	@Test
 	public void addExistingContact() {
-		service.addContact("contact name", "a@b.com");
-		String result = service.addContact("contact name", "a@b.com");
-		assertEquals("status=failed&msg=Email a@b.com is already exist", result);
+		service.addContact(new ContactPerson("contact name", "a@b.com", ""));
+		assertFalse(service.addContact(new ContactPerson("contact name", "a@b.com", "")));
 	}
 	
 	@After

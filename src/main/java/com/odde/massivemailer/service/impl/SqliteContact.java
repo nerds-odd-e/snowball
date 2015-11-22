@@ -110,20 +110,14 @@ public class SqliteContact implements ContactService {
 	}
 
 	@Override
-	public String addContact(String name, String email) {
-		int rowEffected = addNewContact("dummy", email);
-		String resultMsg = "status=success&msg=Add contact successfully";
-		if (rowEffected == 0) {
-			resultMsg = "status=failed&msg=Email " + email
-					+ " is already exist";
-		}
-		return resultMsg;
+	public boolean addContact(ContactPerson contact) {
+		return addNewContact(contact.getName(), contact.getEmail()) > 0;
 	}
-	
+
 	@Override
 	public void updateContact(ContactPerson contactPerson) throws SQLException {
 		String sql = "UPDATE mail SET name=?, email=?, lastname=? where email=?";
-		
+
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
 		preparedStatement.setString(1, contactPerson.getName());
 		preparedStatement.setString(2, contactPerson.getEmail());
