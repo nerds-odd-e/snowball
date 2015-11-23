@@ -1,6 +1,6 @@
 *** Settings ***
 Library        Selenium2Library
-Resource       resource.txt
+Resource       resource.robot
 Test Teardown  Close Browser
 Default Tags   contact
 

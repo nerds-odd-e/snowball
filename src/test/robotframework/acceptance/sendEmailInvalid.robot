@@ -1,5 +1,5 @@
 *** Settings ***
-Resource       resource.txt
+Resource       resource.robot
 Test Setup     Open Browser To Send Email
 Test Teardown  Close Browser
 Default Tags   send_mail

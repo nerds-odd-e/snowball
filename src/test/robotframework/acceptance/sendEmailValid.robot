@@ -1,6 +1,6 @@
 *** Settings ***
 Documentation  A test suite for sending valid emails.
-Resource       resource.txt
+Resource       resource.robot
 Default Tags   send_mail
 
 *** Test Cases ***

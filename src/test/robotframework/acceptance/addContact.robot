@@ -1,5 +1,5 @@
 *** Settings ***
-Resource          resource.txt
+Resource          resource.robot
 Suite Setup       Open Browser    ${SERVER}
 Suite Teardown    Close Browser
 Default Tags      contact

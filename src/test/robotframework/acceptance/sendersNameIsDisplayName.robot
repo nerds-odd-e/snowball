@@ -2,8 +2,8 @@
 Library		   Selenium2Library
 Library        DateTime
 Library        get_senders.py
-Resource       resource.txt
-resource 	   senderNameCheckResource.txt
+Resource       resource.robot
+resource 	   senderNameCheckResource.robot
 Test Setup     Test Setup
 Default Tags   send_mail
 
