@@ -5,10 +5,9 @@ Documentation  A resource file containing the application specific keywords
 ...            implements keywords for testing HTML version of the test
 ...            application.
 Library        Selenium2Library 
-
+Library        CustomKeyword.py
 
 *** Variables ***
-
 ${SERVER}        localhost:8080
 ${BROWSER}       chrome
 ${DELAY}         0.5
@@ -16,6 +15,11 @@ ${SENDMAIL URL}     http://${SERVER}
 ${CONTACT LIST URL}    http://${SERVER}/add_contact.jsp
 ${subject}       subject for test send email
 ${content}       content for test send email
+
+${DBAPI}          sqlite3
+${DBNAME}         jdbc:sqlite:oddemail.db
+
+
 
 *** Keywords ***
 Key email field  [Arguments]  ${email}
@@ -69,3 +73,7 @@ Add A Contact          [Arguments]    ${email}
     Go To              ${CONTACT LIST URL}
     Key email field    ${email}
     Click Add Contact
+
+Delete All Contacts
+    clear_all_contacts
+    
