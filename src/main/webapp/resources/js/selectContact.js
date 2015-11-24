@@ -26,7 +26,7 @@ function whenContactIsSelected(checkBoxID) {
 function whenAddButtonIsClicked() {
 	
 	var existingContact = $('#recipient').val();
-	$('#recipient').val(existingContact + getCurrentSelectedContactValue()+";");
+	$('#recipient').val(existingContact + getCurrentSelectedContactValue());
 	
 	//don't forget! modal dismiss
 }

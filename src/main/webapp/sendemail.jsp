@@ -155,12 +155,18 @@
 <script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="resources/js/sendemail.js"></script>
 <script type="text/javascript" src="resources/js/showContact.js"></script>
+<script type="text/javascript" src="resources/js/selectContact.js"></script>
 
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('#select_contact').click(function () {
 			var contactList = retrieveContactListFromServer();
+			selectedContact = '';
 			renderContactSelectionList(contactList, $('#selectContactTable'));
+		});
+
+		$('#add_contact_button').click(function () {
+			whenAddButtonIsClicked();
 		});
 	});
 </script>
