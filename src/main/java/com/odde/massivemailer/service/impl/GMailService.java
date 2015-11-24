@@ -15,8 +15,8 @@ import com.odde.massivemailer.service.MailService;
 
 public class GMailService implements MailService {
 
-	private static final String FROM = "myodde@gmail.com";
-	private static final String PASSWD = "1234qwer@";
+	private static final String FROM = "marcus.odde@gmail.com";
+	private static final String PASSWD = "Fireba11!";
 	private static final String HOST = "smtp.gmail.com";
 
 	public static Session session;
