@@ -13,7 +13,7 @@ import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.service.ContactService;
 
 public class SqliteContact implements ContactService {
-	private String selectMailSql = "SELECT id, name, email, lastname FROM mail";
+	private String selectMailSql = "SELECT id, name, email, lastname, company FROM mail";
 	private String dbName = "jdbc:sqlite:oddemail.db";
 	private List<ContactPerson> contactList;
 	private Statement statement;
@@ -53,7 +53,7 @@ public class SqliteContact implements ContactService {
 	private void createIfNotExistTable() throws SQLException {
 
 		statement
-				.executeUpdate("CREATE TABLE IF NOT EXISTS mail (id INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL, name VARCHAR(50), email VARCHAR(50) NOT NULL, lastname VARCHAR(50))");
+				.executeUpdate("CREATE TABLE IF NOT EXISTS mail (id INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL, name VARCHAR(50), email VARCHAR(50) NOT NULL, lastname VARCHAR(50), company VARCHAR(50))");
 	}
 
 	/*
@@ -64,11 +64,16 @@ public class SqliteContact implements ContactService {
 	 * .String)
 	 */
 	@Override
-	public int addNewContact(String name, String email) {
+	public int addNewContact(String name, String email ) {
+		return addNewContact(name, email, "");
+	}
+	
+	@Override
+	public int addNewContact(String name, String email, String company) {
 		int rowAffected = 0;
 		try {
 			openConnection();
-			rowAffected = saveContactToDatabase(name, email);
+			rowAffected = saveContactToDatabase(name, email, company);
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -76,14 +81,14 @@ public class SqliteContact implements ContactService {
 		}
 		return rowAffected;
 	}
-
-	private int saveContactToDatabase(String name, String email)
+	
+	private int saveContactToDatabase(String name, String email, String company)
 			throws SQLException {
 		int rowAffected = 0;
 		if (!contactExisted(email))
 			rowAffected = statement
-					.executeUpdate("INSERT INTO mail(name,email) VALUES ('"
-							+ name + "', '" + email + "')");
+					.executeUpdate("INSERT INTO mail(name,email,company) VALUES ('"
+							+ name + "', '" + email + "','" + company + "')");
 		return rowAffected;
 	}
 
@@ -105,24 +110,26 @@ public class SqliteContact implements ContactService {
 			contact.setName(resultSet.getString("name"));
 			contact.setEmail(resultSet.getString("email"));
 			contact.setLastname(resultSet.getString("lastname"));
+			contact.setCompany(resultSet.getString("company"));
 			contactList.add(contact);
 		}
 	}
 
 	@Override
 	public boolean addContact(ContactPerson contact) {
-		return addNewContact(contact.getName(), contact.getEmail()) > 0;
+		return addNewContact(contact.getName(), contact.getEmail(), contact.getCompany()) > 0;
 	}
 
 	@Override
 	public void updateContact(ContactPerson contactPerson) throws SQLException {
-		String sql = "UPDATE mail SET name=?, email=?, lastname=? where email=?";
+		String sql = "UPDATE mail SET name=?, email=?, lastname=? , company=? where email=?";
 
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
 		preparedStatement.setString(1, contactPerson.getName());
 		preparedStatement.setString(2, contactPerson.getEmail());
 		preparedStatement.setString(3, contactPerson.getLastname());
-		preparedStatement.setString(4, contactPerson.getEmail());
+		preparedStatement.setString(4, contactPerson.getCompany());
+		preparedStatement.setString(5, contactPerson.getEmail());
 
 		preparedStatement.executeUpdate();
 
