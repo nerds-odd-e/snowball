@@ -62,7 +62,7 @@ public class SqliteContactTest {
 	public void testUpdateContact() throws SQLException{
 		
 		ContactPerson contactPerson = new ContactPerson("terry",
-				"roof@gmail.com", "e");
+				"roof@gmail.com", "e", "ComA");
 		sqliteContact.updateContact(contactPerson);
 		verify(mockPreparedStatement).executeUpdate();
 	}
@@ -81,7 +81,7 @@ public class SqliteContactTest {
 	public void testUpdateContactFailed() throws SQLException{
 		when(mockPreparedStatement.executeUpdate()).thenThrow(new SQLException());
 		ContactPerson contactPerson = new ContactPerson("terry",
-				"roof@gmail.com", "e");
+				"roof@gmail.com", "e", "ComA");
 		sqliteContact.updateContact(contactPerson);
 	}
 	

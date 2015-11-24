@@ -32,8 +32,8 @@ public class ContactsControllerTest {
         contactService = mock(SqliteContact.class);
         contactsController = new ContactsController(contactService);
 
-        contacts.add(new ContactPerson("John", "john@gmail.com", "Doe"));
-        contacts.add(new ContactPerson("Peter", "peter@gmail.com", "Toh"));
+        contacts.add(new ContactPerson("John", "john@gmail.com", "Doe", "ComA"));
+        contacts.add(new ContactPerson("Peter", "peter@gmail.com", "Toh", "ComA"));
     }
 
     @Test

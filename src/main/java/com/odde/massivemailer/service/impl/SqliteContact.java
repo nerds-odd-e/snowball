@@ -14,6 +14,7 @@ import com.odde.massivemailer.service.ContactService;
 
 public class SqliteContact implements ContactService {
 	private String selectMailSql = "SELECT id, name, email, lastname, company FROM mail";
+
 	private String dbName = "jdbc:sqlite:oddemail.db";
 	private List<ContactPerson> contactList;
 	private Statement statement;
@@ -122,7 +123,7 @@ public class SqliteContact implements ContactService {
 
 	@Override
 	public void updateContact(ContactPerson contactPerson) throws SQLException {
-		String sql = "UPDATE mail SET name=?, email=?, lastname=? , company=? where email=?";
+		String sql = "UPDATE mail SET name=?, email=?, lastname=?, company=? where email=?";
 
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
 		preparedStatement.setString(1, contactPerson.getName());

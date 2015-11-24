@@ -85,9 +85,10 @@
 							<div class="panel-heading">
 								<ul class="list-inline">
 									<li class="col-md-3" style="text-align: left">Email</li>
-									<li class="col-md-3" style="text-align: left">Name</li>
+									<li class="col-md-2" style="text-align: left">Name</li>
 									<li class="col-md-3" style="text-align: left">Last Name</li>
-									<li class="col-md-3" style="text-align: left; padding-bottom: 1%">Edit</li>
+									<li class="col-md-3" style="text-align: left">Company</li>
+									<li class="col-md-1" style="text-align: left; padding-bottom: 1%">Edit</li>
 								</ul>
 							</div>
 
@@ -141,7 +142,13 @@
 										<input type="text" class="form-control" name="lastname" id="lastname">
 									</div>
 								</div>
-
+								<br>
+								<div class="row">
+									<div class="col-md-2">Company</div>
+									<div class="col-md-10">
+										<input type="text" class="form-control" name="company" id="company">
+									</div>
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default"

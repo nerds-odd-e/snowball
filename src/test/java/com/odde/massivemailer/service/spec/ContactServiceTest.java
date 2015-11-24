@@ -58,13 +58,13 @@ public class ContactServiceTest {
 	
 	@Test
 	public void addContactSuccess() {
-		assertTrue(service.addContact(new ContactPerson("contact name", "a@b.com", "")));
+		assertTrue(service.addContact(new ContactPerson("contact name", "a@b.com", "", "")));
 	}
 	
 	@Test
 	public void addExistingContact() {
-		service.addContact(new ContactPerson("contact name", "a@b.com", ""));
-		assertFalse(service.addContact(new ContactPerson("contact name", "a@b.com", "")));
+		service.addContact(new ContactPerson("contact name", "a@b.com", "", ""));
+		assertFalse(service.addContact(new ContactPerson("contact name", "a@b.com", "", "")));
 	}
 	
 	@After
