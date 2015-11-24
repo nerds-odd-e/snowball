@@ -1,11 +1,10 @@
 package com.odde.massivemailer.service.impl;
 
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.verify;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import static junit.framework.TestCase.assertEquals;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.*;
+
+import java.sql.*;
 
 import org.junit.After;
 import org.junit.Before;
@@ -14,12 +13,14 @@ import org.junit.runner.RunWith;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.junit.Assert;
 
 import com.odde.massivemailer.model.ContactPerson;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SqliteContactTest {
 
+	@Mock
 	private SqliteContact sqliteContact;
 
 	@Mock
@@ -92,6 +93,26 @@ public class SqliteContactTest {
 		ContactPerson contactPerson = new ContactPerson("terry",
 				"roof@gmail.com", "e", "myCompany");
 		sqliteContact.updateContact(contactPerson);
+	}
+
+	@Test
+	public void testGetContactByEmail() throws SQLException, ClassNotFoundException{
+		ResultSet mockResultSet = mock(ResultSet.class);
+		when(mockResultSet.getInt("id")).thenReturn(1);
+		when(mockResultSet.getString("name")).thenReturn("roof");
+		when(mockResultSet.getString("lastname")).thenReturn("ed");
+		when(mockResultSet.getString("email")).thenReturn("roof@gmail.com");
+		when(mockResultSet.getString("company")).thenReturn("odde");
+		when(mockResultSet.next()).thenReturn(true);
+		when(mockPreparedStatement.executeQuery()).thenReturn(mockResultSet);
+
+		ContactPerson person = sqliteContact.getContactByEmail("roof@gmail.com");
+
+		assertEquals("roof", person.getName());
+		assertEquals("ed", person.getLastname());
+		assertEquals("roof@gmail.com", person.getEmail());
+		assertEquals("odde", person.getCompany());
+		verify(mockPreparedStatement).executeQuery();
 	}
 
 }

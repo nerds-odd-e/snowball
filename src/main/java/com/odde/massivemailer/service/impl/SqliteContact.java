@@ -136,6 +136,25 @@ public class SqliteContact implements ContactService {
 
 		closeConnection();
 	}
+	@Override
+	public ContactPerson getContactByEmail(String email) throws SQLException{
+
+		String sql = "SELECT email FROM mail WHERE email=?";
+		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		preparedStatement.setString(1, email);
+		ResultSet resultSet = preparedStatement.executeQuery();
+
+		if (resultSet.next()) {
+			ContactPerson contact = new ContactPerson();
+			contact.setId(resultSet.getInt("id"));
+			contact.setName(resultSet.getString("name"));
+			contact.setEmail(resultSet.getString("email"));
+			contact.setLastname(resultSet.getString("lastname"));
+			contact.setCompany(resultSet.getString("company"));
+			return contact;
+		}
+		return null;
+	}
 
 	private Statement openConnection() throws ClassNotFoundException,
 			SQLException {
