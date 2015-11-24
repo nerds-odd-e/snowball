@@ -1,6 +1,6 @@
 *** Settings ***
 Resource          resource.robot
-Suite Setup       Open Browser    ${SERVER}    ${BROWSER}
+Suite Setup       Open Browser and Clean Database
 Suite Teardown    Close Browser
 Default Tags      contact
 
@@ -19,3 +19,8 @@ Verify Add Existing Contact To Contact List
  	Given Add A Contact    ${email}
 	Then I should get an alert dialog with message  ${alertMessage}
 	And Page Should Contain    ${email}
+
+*** Keyword ***
+Open Browser and Clean Database
+	Open Browser    ${SERVER}
+	Delete All Contacts
