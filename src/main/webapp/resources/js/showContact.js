@@ -27,7 +27,7 @@ function renderContactList(json, selector)
 
 function renderContactSelectionList(json, selector)
 {
-	var contactCheckbox = '<li class="col-md-2 email-checkbox" style="text-align: center"><input type="checkbox" id=""/></li>';
+	var contactCheckbox = '<li class="col-md-2 email-checkbox" style="text-align: center"><input type="checkbox" onclick="whenContactIsSelected(#checkbox#)" id="#checkbox#" value="#email#" /></li>';
 	var contactEmail = '<li class="col-md-4 email-address" style="text-align: center">';
 	var contactName = '<li class="col-md-3 contact-name" style="text-align: center">';
 	var contactLastName = '<li class="col-md-3 contact-lname" style="text-align: center">';
@@ -35,7 +35,7 @@ function renderContactSelectionList(json, selector)
 	selector.html('');
 	$.each(json, function(idx, item) {
 		
-		selector.append(contactCheckbox + contactEmail + item.email+ '</li>');
+		selector.append(contactCheckbox.replace(/#checkbox#/gi, idx).replace(/#email#/gi, item.email) + contactEmail + item.email+ '</li>');
 	})
 }
 

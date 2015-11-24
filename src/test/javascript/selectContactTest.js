@@ -19,13 +19,13 @@ describe('test whenAddButtonIsClicked function', function(){
 	
 	it('should append selected contacts to the existing in the textbox when user clieck Add button with any contact(s) selected', function(){
 		
-		var mocked_selected_contact = "newbody@gmail.com";
+		var mocked_selected_contact = "newbody@gmail.com;";
 		
 		spyOn(window, 'getCurrentSelectedContactValue').andReturn(mocked_selected_contact);
 		
 		whenAddButtonIsClicked();
 
-		expect($('#recipient').val()).toBe(default_existing_contact+mocked_selected_contact+";");
+		expect($('#recipient').val()).toBe(default_existing_contact+mocked_selected_contact);
 	});
 });
 
