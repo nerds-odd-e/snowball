@@ -117,13 +117,14 @@ public class SqliteContact implements ContactService {
 
 	@Override
 	public void updateContact(ContactPerson contactPerson) throws SQLException {
-		String sql = "UPDATE mail SET name=?, email=?, lastname=? where email=?";
+		String sql = "UPDATE mail SET name=?, email=?, lastname=?, company=? where email=?";
 
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
 		preparedStatement.setString(1, contactPerson.getName());
 		preparedStatement.setString(2, contactPerson.getEmail());
 		preparedStatement.setString(3, contactPerson.getLastname());
-		preparedStatement.setString(4, contactPerson.getEmail());
+		preparedStatement.setString(4, contactPerson.getCompany());
+		preparedStatement.setString(5, contactPerson.getEmail());
 
 		preparedStatement.executeUpdate();
 
