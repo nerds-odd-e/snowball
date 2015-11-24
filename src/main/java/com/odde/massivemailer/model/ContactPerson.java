@@ -5,17 +5,23 @@ public class ContactPerson {
 	private String name;
 	private String email;
 	private String lastname;
+	private String company;
 	
 	public ContactPerson(){
 		
 	}
 	
 	public ContactPerson(String name, String email, String lastname){
+		this(name, email, lastname, "");
+	}
+	
+	public ContactPerson(String name, String email, String lastname, String company) {
 		this.name = name;
 		this.email = email;
 		this.lastname = lastname;
+		this.company = company;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -40,4 +46,13 @@ public class ContactPerson {
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
+
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
+	}
+	
 }
