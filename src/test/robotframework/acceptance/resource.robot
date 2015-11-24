@@ -10,7 +10,7 @@ Library        Selenium2Library
 *** Variables ***
 
 ${SERVER}        localhost:8080
-${BROWSER}       firefox
+${BROWSER}       chrome
 ${DELAY}         0.5
 ${SENDMAIL URL}     http://${SERVER}
 ${CONTACT LIST URL}    http://${SERVER}/add_contact.jsp

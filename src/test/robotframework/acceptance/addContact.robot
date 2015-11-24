@@ -1,6 +1,6 @@
 *** Settings ***
 Resource          resource.robot
-Suite Setup       Open Browser    ${SERVER}
+Suite Setup       Open Browser    ${SERVER}    ${BROWSER}
 Suite Teardown    Close Browser
 Default Tags      contact
 
@@ -10,9 +10,9 @@ ${alertMessage}     Email ${email} is already exist
 ${successMessage}   Add contact successfully
 
 *** Test Cases ***
-Verify Add New Contact To Contact List
+Verify Add New Contact To Contact List  
 	Given Add A Contact    ${email}
-	Then I should get an alert dialog with message  ${successMessage}	
+	Then I should get an alert dialog with message  ${successMessage}
 	And Page Should Contain    ${email}
 
 Verify Add Existing Contact To Contact List

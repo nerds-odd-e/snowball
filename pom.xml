@@ -116,6 +116,9 @@
 					</execution>
 				</executions>
 				<configuration>
+					<nonCriticalTags>
+						<nonCriticalTag>not_ready</nonCriticalTag>
+					</nonCriticalTags>
 					<includes>
 						<include>contact</include>
 					</includes>

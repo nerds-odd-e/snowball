@@ -21,7 +21,7 @@ Select Two Contact To Recipient
 
 *** Keywords ***
 Open Browser To Select Contact
-    Open Browser    http://localhost:8080/sendemail.jsp    firefox
+    Open Browser    http://localhost:8080/sendemail.jsp    ${BROWSER}
 
 There is a contact    [Arguments]    ${email}
     Open Browser To Add Contact

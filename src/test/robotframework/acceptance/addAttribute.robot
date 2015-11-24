@@ -19,7 +19,7 @@ Verify Edit Attribute
 
 ***Keywords***	
 Open Browser To View Contract
-    Open Browser    http://localhost:8080/contactlist.jsp    firefox
+    Open Browser    http://localhost:8080/contactlist.jsp    ${BROWSER}
 
 There Is A Contact    [Arguments]    ${email}
     #Element Should Contain    //*[@id="contactTable"]    aaa@gmail.com
