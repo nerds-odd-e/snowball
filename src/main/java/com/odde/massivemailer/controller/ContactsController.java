@@ -29,7 +29,7 @@ public class ContactsController extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String resultMsg = "";
 
-        ContactPerson contact = new ContactPerson("todo name", req.getParameter("email"), "todo last name");
+        ContactPerson contact = new ContactPerson("todo name", req.getParameter("email"), "todo last name", "todo company");
         if (contactService.addContact(contact))
             resultMsg = "status=success&msg=Add contact successfully";
         else
