@@ -54,16 +54,27 @@ public class Mail {
 			throws AddressException, MessagingException {
 		
 		try {
+			// TODO: Replace with the value from service
+			ContactPerson contact = new ContactPerson("John", "john@gmail.com", "Doe");
+
 			message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(FROM, DISPLAY_NAME));
-			message.setSubject(this.getSubject());
-			message.setText(this.getContent());
+			message.setSubject(ReplaceAttibuteValue(this.getSubject(), contact));
+			message.setText(ReplaceAttibuteValue(this.getContent(), contact));
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		return message;
+	}
+
+	public String ReplaceAttibuteValue(String template, ContactPerson contact) {
+
+		template = template.replaceAll("(^|[^\\{])(\\{FirstName\\})([^\\}]|$)", "$1" + contact.getName() + "$3");
+		template = template.replaceAll("(^|[^\\{])(\\{LastName\\})([^\\}]|$)", "$1" + contact.getLastname() + "$3");
+
+		return template;
 	}
 
 	public void setMessage(MimeMessage message) {
