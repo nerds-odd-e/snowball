@@ -14,9 +14,10 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<ul class="list-inline">
-							<li class="col-md-2" style="text-align: center"><span></span></li>
-							<li class="col-md-4" style="text-align: center">Email</li>
-							<li class="col-md-3" style="text-align: center">Name</li>
+							<li class="col-md-1" style="text-align: center"><span></span></li>
+							<li class="col-md-3" style="text-align: center">Email</li>
+							<li class="col-md-2" style="text-align: center">Name</li>
+							<li class="col-md-3" style="text-align: center">Lastname</li>
 							<li class="col-md-3" style="text-align: center">Lastname</li>
 						</ul>
 					</div>

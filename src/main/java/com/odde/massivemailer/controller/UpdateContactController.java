@@ -19,6 +19,7 @@ public class UpdateContactController extends HttpServlet {
 		contactPerson.setName(req.getParameter("name"));
 		contactPerson.setEmail(req.getParameter("email"));
 		contactPerson.setLastname(req.getParameter("lastname"));
+		contactPerson.setCompany(req.getParameter("company"));
 		SqliteContact service = new SqliteContact();
 		try {
 			service.updateContact(contactPerson);
