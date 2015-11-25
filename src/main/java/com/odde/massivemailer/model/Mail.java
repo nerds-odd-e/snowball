@@ -26,11 +26,11 @@ public class Mail {
 	public Mail() {
 	}
 
-	public List<String> getReceipts() {
+	public List<String> getRecipients() {
 		return receipts;
 	}
 
-	public void setReceipts(List<String> receipts) {
+	public void setRecipients(List<String> receipts) {
 		this.receipts = receipts;
 	}
 
@@ -52,7 +52,7 @@ public class Mail {
 
 	private MimeMessage setMessageProperty(Session session)
 			throws AddressException, MessagingException {
-		
+
 		try {
 			// TODO: Replace with the value from service
 			ContactPerson contact = new ContactPerson("John", "john@gmail.com", "Doe");
@@ -65,14 +65,13 @@ public class Mail {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return message;
 	}
 
 	public String ReplaceAttibuteValue(String template, ContactPerson contact) {
-
-		template = template.replaceAll("(^|[^\\{])(\\{FirstName\\})([^\\}]|$)", "$1" + contact.getName() + "$3");
-		template = template.replaceAll("(^|[^\\{])(\\{LastName\\})([^\\}]|$)", "$1" + contact.getLastname() + "$3");
+		for (String name : contact.getAllAttributeNames())
+			template = template.replaceAll("(^|[^\\{])(\\{" + name + "\\})([^\\}]|$)", "$1" + contact.getAttribute(name) + "$3");
 
 		return template;
 	}
@@ -84,7 +83,7 @@ public class Mail {
 	public List<Message> createMessages(Session session) throws EmailException,
 			AddressException, MessagingException {
 
-		List<String> recipients = getReceipts();
+		List<String> recipients = getRecipients();
 
 		List<Message> returnMsg = new ArrayList<Message>();
 

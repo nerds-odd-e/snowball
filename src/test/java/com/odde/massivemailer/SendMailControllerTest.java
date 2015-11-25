@@ -8,7 +8,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
-import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.odde.massivemailer.controller.SendMailController;
@@ -33,7 +32,7 @@ public class SendMailControllerTest {
 		Mail mail = mailController.processRequest(httpReq);
 		
 	    Assert.assertEquals("suject for test",mail.getSubject());
-	    List<String> repList = mail.getReceipts();
+	    List<String> repList = mail.getRecipients();
 	    Assert.assertEquals("name1@gmail.com",repList.get(0));
 	    Assert.assertEquals("name2@gmail.com",repList.get(1));
 	    Assert.assertEquals("content-na-ka",mail.getContent());

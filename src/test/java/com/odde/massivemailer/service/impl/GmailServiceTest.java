@@ -26,7 +26,7 @@ public class GmailServiceTest {
 		Mail email = new Mail();
 		email.setContent("test conent");
 		email.setSubject("test subject");
-		email.setReceipts(Arrays.asList(RECIPIENTS[0]));
+		email.setRecipients(Arrays.asList(RECIPIENTS[0]));
 		return email;
 	}
 	
@@ -57,7 +57,7 @@ public class GmailServiceTest {
 		final Transport transport = mock(Transport.class);
 		MailService emailService = this.getEmailService(transport);
 		Mail email = createEmail();
-		email.setReceipts(Arrays.asList(RECIPIENTS));
+		email.setRecipients(Arrays.asList(RECIPIENTS));
 		emailService.send(email);
 		verify(transport, times(1)).connect(anyString(), anyString(), anyString());
 		verify(transport, times(2)).sendMessage(any(Message.class), any(Address[].class));

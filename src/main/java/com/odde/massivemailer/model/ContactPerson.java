@@ -1,12 +1,16 @@
 package com.odde.massivemailer.model;
 
+import java.util.HashMap;
+import java.util.Set;
+
 public class ContactPerson {
 	private int id;
 	private String name;
 	private String email;
 	private String lastname;
 	private String company;
-	
+	private HashMap<String, String> attribute = new HashMap<>();
+
 	public ContactPerson(){
 		
 	}
@@ -16,10 +20,11 @@ public class ContactPerson {
 	}
 	
 	public ContactPerson(String name, String email, String lastname, String company) {
-		this.name = name;
+		setName(name);
+		setLastname(lastname);
+		setCompany(company);
 		this.email = email;
-		this.lastname = lastname;
-		this.company = company;
+
 	}
 
 	public int getId() {
@@ -29,10 +34,10 @@ public class ContactPerson {
 		this.id = id;
 	}
 	public String getName() {
-		return name;
+		return getAttribute("FirstName");
 	}
 	public void setName(String name) {
-		this.name = name;
+		setAttribute("FirstName", name);
 	}
 	public String getEmail() {
 		return email;
@@ -41,18 +46,29 @@ public class ContactPerson {
 		this.email = email;
 	}
 	public String getLastname() {
-		return lastname;
+		return getAttribute("LastName");
 	}
 	public void setLastname(String lastname) {
-		this.lastname = lastname;
+		setAttribute("LastName", lastname);
 	}
 
 	public String getCompany() {
-		return company;
+		return attribute.get("Company");
 	}
 
 	public void setCompany(String company) {
-		this.company = company;
+		attribute.put("Company", company);
 	}
-	
+
+	public void setAttribute(String name, String value) {
+		attribute.put(name, value);
+	}
+
+	public String getAttribute(String name) {
+		return attribute.get(name);
+	}
+
+	public Set<String> getAllAttributeNames() {
+		return attribute.keySet();
+	}
 }

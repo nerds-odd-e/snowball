@@ -23,7 +23,7 @@ public class SendMailController extends HttpServlet {
 		MailService mailService = new GMailService();
 		try {
 			mailService.send(email);
-			resp.sendRedirect("sendemail.jsp?status=success&msg=Email successfully sent&repcnt="+email.getReceipts().size());
+			resp.sendRedirect("sendemail.jsp?status=success&msg=Email successfully sent&repcnt="+email.getRecipients().size());
 		} catch (EmailException e) {
 			resp.sendRedirect("sendemail.jsp?status=failed&msg=Unable to send");
 			e.printStackTrace();
@@ -43,7 +43,7 @@ public class SendMailController extends HttpServlet {
 
 		email.setContent(req.getParameter("content"));
 		email.setSubject(req.getParameter("subject"));
-		email.setReceipts(recipientList);
+		email.setRecipients(recipientList);
 
 		return email;
 	}
