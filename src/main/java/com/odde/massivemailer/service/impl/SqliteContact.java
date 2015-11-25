@@ -52,7 +52,7 @@ public class SqliteContact implements ContactService {
 
 	private void createIfNotExistTable() throws SQLException {
 
-		if(!isTableExists("mail"))
+		//if(!isTableExists("mail"))
 			statement
 				.executeUpdate("CREATE TABLE IF NOT EXISTS mail (id INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL, name VARCHAR(50), email VARCHAR(50) NOT NULL, lastname VARCHAR(50), company VARCHAR(50))");
 	}

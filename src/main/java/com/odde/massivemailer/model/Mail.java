@@ -1,6 +1,7 @@
 package com.odde.massivemailer.model;
 
 import java.io.UnsupportedEncodingException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import com.odde.massivemailer.exception.EmailException;
+import com.odde.massivemailer.service.impl.SqliteContact;
 
 public class Mail {
 
@@ -22,8 +24,14 @@ public class Mail {
 	private List<String> receipts;
 	private String subject;
 	private String content;
+	private SqliteContact sqliteContact;
 
 	public Mail() {
+		this.sqliteContact = new SqliteContact();
+	}
+
+	public Mail(SqliteContact sqliteContact) {
+		this.sqliteContact = sqliteContact;
 	}
 
 	public List<String> getReceipts() {
@@ -50,22 +58,31 @@ public class Mail {
 		this.content = content;
 	}
 
-	private MimeMessage setMessageProperty(Session session)
+	private MimeMessage setMessageProperty(Session session, String recipient)
 			throws AddressException, MessagingException {
 		
 		try {
-			// TODO: Replace with the value from service
-			ContactPerson contact = new ContactPerson("John", "john@gmail.com", "Doe");
+			ContactPerson contact = sqliteContact.getContactByEmail(recipient);
+			String subject, content;
+			if( contact != null ) {
+				subject = ReplaceAttibute(this.getSubject(), contact);
+				content = ReplaceAttibute(this.getContent(), contact);
+			}
+			else{
+				subject = getSubject();
+				content = getContent();
+			}
 
 			message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(FROM, DISPLAY_NAME));
-			message.setSubject(ReplaceAttibute(this.getSubject(), contact));
-			message.setText(ReplaceAttibute(this.getContent(), contact));
-		} catch (UnsupportedEncodingException e) {
+			message.setSubject(subject);
+			message.setText(content);
+
+		} catch (UnsupportedEncodingException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return message;
 	}
 
@@ -92,7 +109,7 @@ public class Mail {
 		List<Message> returnMsg = new ArrayList<Message>();
 
 		for (String recipient : recipients) {
-			MimeMessage message = setMessageProperty(session);
+			MimeMessage message = setMessageProperty(session, recipient);
 			composeMessage(recipient, message);
 			returnMsg.add(message);
 		}
