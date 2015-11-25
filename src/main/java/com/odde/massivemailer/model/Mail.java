@@ -59,8 +59,8 @@ public class Mail {
 
 			message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(FROM, DISPLAY_NAME));
-			message.setSubject(ReplaceAttibuteValue(this.getSubject(), contact));
-			message.setText(ReplaceAttibuteValue(this.getContent(), contact));
+			message.setSubject(ReplaceAttibute(this.getSubject(), contact));
+			message.setText(ReplaceAttibute(this.getContent(), contact));
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -69,11 +69,12 @@ public class Mail {
 		return message;
 	}
 
-	public String ReplaceAttibuteValue(String template, ContactPerson contact) {
-		for (String attr : ContactPerson.ATTRIBUTES) {
+	public String ReplaceAttibute(String template, ContactPerson contact) {
+
+		for (String attr : contact.getAttributeKeys()) {
 			String regexp = "(^|[^\\{])(\\{" + attr + "\\})([^\\}]|$)";
 
-			template = template.replaceAll(regexp, "$1" + contact.getAttributeValue(attr) + "$3");
+			template = template.replaceAll(regexp, "$1" + contact.getAttribute(attr) + "$3");
 		}
 
 		return template;

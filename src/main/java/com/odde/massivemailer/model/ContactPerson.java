@@ -1,43 +1,38 @@
 package com.odde.massivemailer.model;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 public class ContactPerson {
 	private int id;
 	private String name;
 	private String email;
 	private String lastname;
+	private String company;
 
 	public static final String FIRSTNAME = "FirstName";
 	public static final String LASTNAME = "LastName";
 	public static final String EMAIL = "Email";
+	public static final String COMPANY = "Company";
 
-	public static final String[] ATTRIBUTES = new String[] {FIRSTNAME, LASTNAME, EMAIL};
+	public Map<String, String> attributes = new HashMap<>();
 
 	public ContactPerson(){
-		
+
 	}
-	
+
 	public ContactPerson(String name, String email, String lastname){
-		this.name = name;
-		this.email = email;
-		this.lastname = lastname;
+		this(name, email, lastname, "");
 	}
 
-	public String getAttributeValue(String keyName)
-	{
-		switch (keyName)
-		{
-			case FIRSTNAME:
-				return this.getName();
-			case LASTNAME:
-				return this.getLastname();
-			case EMAIL:
-				return this.getEmail();
-			default:
-				return "";
-		}
-
+	public ContactPerson(String name, String email, String lastname, String company) {
+		setName(name);
+		setEmail(email);
+		setLastname(lastname);
+		setCompany(company);
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -45,21 +40,45 @@ public class ContactPerson {
 		this.id = id;
 	}
 	public String getName() {
-		return name;
+
+		return getAttribute(FIRSTNAME);
 	}
 	public void setName(String name) {
-		this.name = name;
+		setAttribute(FIRSTNAME, name);
 	}
 	public String getEmail() {
-		return email;
+		return getAttribute(EMAIL);
 	}
 	public void setEmail(String email) {
-		this.email = email;
+		setAttribute(EMAIL, email);
 	}
 	public String getLastname() {
-		return lastname;
+		return getAttribute(LASTNAME);
 	}
 	public void setLastname(String lastname) {
-		this.lastname = lastname;
+		setAttribute(LASTNAME, lastname);
+	}
+
+	public String getCompany() {
+		return getAttribute(COMPANY);
+	}
+
+	public void setCompany(String company) {
+		setAttribute(COMPANY, company);
+	}
+
+	private void setAttribute(String name, String value)
+	{
+		attributes.put(name, value);
+	}
+
+	public String getAttribute(String name)
+	{
+		return attributes.containsKey(name) ? attributes.get(name) : "";
+	}
+
+	public Set<String> getAttributeKeys()
+	{
+		return attributes.keySet();
 	}
 }
