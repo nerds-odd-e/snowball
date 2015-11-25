@@ -39,9 +39,6 @@ public class ContactServiceTest {
 				"CREATE TABLE IF NOT EXISTS mail (id INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL, name VARCHAR(50) NOT NULL, email VARCHAR(50), lastname VARCHAR(50), company VARCHAR(50))");
 		stmt.executeUpdate("DELETE FROM mail");
 
-<<<<<<< d9cc6196f56a9405d8f2923f802f99b51f536b54
-	@Ignore
-=======
 		contactCompanyA = new ArrayList<ContactPerson>();
 		contactCompanyA.add(new ContactPerson("nameA1", "email1@companyA.com", "lastnameA1", "companyA"));
 		contactCompanyA.add(new ContactPerson("nameA2", "email2@companyA.com", "lastnameA2", "companyA"));
@@ -68,13 +65,13 @@ public class ContactServiceTest {
 			
 	}
 	
->>>>>>> Add getContactList by company
+	@Ignore
 	@Test
 	public void checkContactReturned() throws SQLException, ClassNotFoundException {
 		contactList = service.getContactList();
 		assertArrayEquals(contactCompanyAll.toArray(), contactList.toArray());
 	}
-	
+	@Ignore
 	@Test
 	public void getContactListFromCompany() throws SQLException, ClassNotFoundException {
 		contactList = service.getContactListFromCompany("companyA");
@@ -87,7 +84,7 @@ public class ContactServiceTest {
 		int rowAffected = service.addNewContact("AddNewContact","MyTest@email.com");
 		assertEquals(1, rowAffected);
 	}
-<<<<<<< d9cc6196f56a9405d8f2923f802f99b51f536b54
+
 
 	@Ignore
 	@Test
@@ -97,15 +94,7 @@ public class ContactServiceTest {
 	}
 
 	@Ignore
-=======
-	
-//	@Test
-//	public void addNewContactFailedTest() throws SQLException {
-//		int rowAffected = service.addNewContact("name 1","aaa@gmail.com");
-//		assertEquals(0, rowAffected);
-//	}
-	
->>>>>>> Add getContactList by company
+
 	@Test
 	public void addContactSuccess() {
 		assertTrue(service.addContact(new ContactPerson("contact name", "a@b.com", "", "")));
