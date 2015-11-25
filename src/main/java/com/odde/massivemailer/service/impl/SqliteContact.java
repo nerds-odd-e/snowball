@@ -1,11 +1,6 @@
 package com.odde.massivemailer.service.impl;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +18,7 @@ public class SqliteContact implements ContactService {
 	public SqliteContact() {
 		try {
 			openConnection();
+			createIfNotExistTable();
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
@@ -41,7 +37,6 @@ public class SqliteContact implements ContactService {
 		ResultSet resultSet = null;
 		try {
 			openConnection();
-			createIfNotExistTable();
 
 			resultSet = statement.executeQuery(this.selectMailSql);
 			populateContactList(resultSet);
@@ -55,8 +50,21 @@ public class SqliteContact implements ContactService {
 
 	private void createIfNotExistTable() throws SQLException {
 
-		statement
+		if(!isTableExists("mail"))
+			statement
 				.executeUpdate("CREATE TABLE IF NOT EXISTS mail (id INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL, name VARCHAR(50), email VARCHAR(50) NOT NULL, lastname VARCHAR(50), company VARCHAR(50))");
+	}
+
+	private boolean isTableExists(String name)
+	{
+		try {
+			DatabaseMetaData md = connection.getMetaData();
+			ResultSet rs = md.getTables(null, null, name, null);
+			return (rs.next());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 	/*
@@ -125,18 +133,26 @@ public class SqliteContact implements ContactService {
 
 	@Override
 	public void updateContact(ContactPerson contactPerson) throws SQLException {
-		String sql = "UPDATE mail SET name=?, email=?, lastname=?, company=? where email=?";
 
-		PreparedStatement preparedStatement = connection.prepareStatement(sql);
-		preparedStatement.setString(1, contactPerson.getName());
-		preparedStatement.setString(2, contactPerson.getEmail());
-		preparedStatement.setString(3, contactPerson.getLastname());
-		preparedStatement.setString(4, contactPerson.getCompany());
-		preparedStatement.setString(5, contactPerson.getEmail());
+		try {
+			openConnection();
 
-		preparedStatement.executeUpdate();
+			String sql = "UPDATE mail SET name=?, email=?, lastname=?, company=? where email=?";
 
-		closeConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, contactPerson.getName());
+			preparedStatement.setString(2, contactPerson.getEmail());
+			preparedStatement.setString(3, contactPerson.getLastname());
+			preparedStatement.setString(4, contactPerson.getCompany());
+			preparedStatement.setString(5, contactPerson.getEmail());
+
+			preparedStatement.executeUpdate();
+
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection();
+		}
 	}
 
 	@Override

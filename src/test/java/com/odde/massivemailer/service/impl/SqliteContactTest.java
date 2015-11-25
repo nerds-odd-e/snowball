@@ -54,6 +54,11 @@ public class SqliteContactTest {
 	}
 
 	@Test
+	public void testIsTableExists() {
+
+	}
+
+	@Test
 	public void testUpdateContact() throws SQLException{
 		
 		ContactPerson contactPerson = new ContactPerson("terry",
@@ -87,6 +92,17 @@ public class SqliteContactTest {
 		ContactPerson contactPerson = new ContactPerson("terry",
 				"roof@gmail.com", "e", "myCompany");
 		sqliteContact.updateContact(contactPerson);
+	}
+
+	@Test
+	public void testUpdateContactMultipleTimes() throws SQLException{
+		ContactPerson contactPerson = new ContactPerson("terry",
+				"roof@gmail.com", "e", "ComA");
+		sqliteContact.updateContact(contactPerson);
+		sqliteContact.setConnection(mockConnection);
+		ContactPerson contactPerson2 = new ContactPerson("terry2",
+				"roof@gmail.com", "e", "ComA");
+		sqliteContact.updateContact(contactPerson2);
 	}
 
 	@Test
