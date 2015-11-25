@@ -6,13 +6,10 @@ Default Tags   contact
 
 *** Test Cases ***
 Display Contacts In The Contact List
-	Given There is a contact    terry1@gmail.com  
-    And There is a contact    terry2@gmail.com
+	Given There is a contact    terry1@gmail.com
     When Open Browser To See Contacts
     Then Contact Should Be There	terry1@gmail.com
-    	And Contact Should Be There	terry2@gmail.com
     	And Company Should Be There	terry1@gmail.com	todo company
-    	And Company Should Be There	terry2@gmail.com	todo company
     	
 Update Company In The Contact List
 	Given There is a contact    terry1@gmail.com  
