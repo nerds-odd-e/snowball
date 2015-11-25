@@ -29,6 +29,8 @@
 <style>
 #selectContactTable li {
 	height: 25px;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 </style>
 </head>
