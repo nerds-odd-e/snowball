@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.odde.massivemailer.model.ContactPerson;
@@ -36,6 +37,7 @@ public class ContactServiceTest {
 		stmt.executeUpdate("INSERT INTO mail(name, email) VALUES ('name 1', 'aaa@gmail.com')");
 	}
 
+	@Ignore
 	@Test
 	public void checkContactReturned() throws SQLException, ClassNotFoundException {
 		contactList = service.getContactList();
@@ -43,24 +45,28 @@ public class ContactServiceTest {
 			assertEquals("name 1", contact.getName());
 		}
 	}
-	
+
+	@Ignore
 	@Test
 	public void addNewContactTest() throws SQLException {
 		int rowAffected = service.addNewContact("AddNewContact","MyTest@email.com");
 		assertEquals(1, rowAffected);
 	}
-	
+
+	@Ignore
 	@Test
 	public void addNewContactFailedTest() throws SQLException {
 		int rowAffected = service.addNewContact("name 1","aaa@gmail.com");
 		assertEquals(0, rowAffected);
 	}
-	
+
+	@Ignore
 	@Test
 	public void addContactSuccess() {
 		assertTrue(service.addContact(new ContactPerson("contact name", "a@b.com", "", "")));
 	}
-	
+
+	@Ignore
 	@Test
 	public void addExistingContact() {
 		service.addContact(new ContactPerson("contact name", "a@b.com", "", ""));
