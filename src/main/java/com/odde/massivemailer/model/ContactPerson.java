@@ -7,6 +7,13 @@ public class ContactPerson {
 	private String lastname;
 	private String company;
 	
+
+	public static final String FIRSTNAME = "FirstName";
+	public static final String LASTNAME = "LastName";
+	public static final String EMAIL = "Email";
+
+	public static final String[] ATTRIBUTES = new String[] {FIRSTNAME, LASTNAME, EMAIL};
+
 	public ContactPerson(){
 		
 	}
@@ -22,6 +29,22 @@ public class ContactPerson {
 		this.company = company;
 	}
 
+	public String getAttributeValue(String keyName)
+	{
+		switch (keyName)
+		{
+			case FIRSTNAME:
+				return this.getName();
+			case LASTNAME:
+				return this.getLastname();
+			case EMAIL:
+				return this.getEmail();
+			default:
+				return "";
+		}
+
+	}
+	
 	public int getId() {
 		return id;
 	}

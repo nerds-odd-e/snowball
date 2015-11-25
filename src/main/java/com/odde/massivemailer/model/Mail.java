@@ -70,9 +70,11 @@ public class Mail {
 	}
 
 	public String ReplaceAttibuteValue(String template, ContactPerson contact) {
+		for (String attr : ContactPerson.ATTRIBUTES) {
+			String regexp = "(^|[^\\{])(\\{" + attr + "\\})([^\\}]|$)";
 
-		template = template.replaceAll("(^|[^\\{])(\\{FirstName\\})([^\\}]|$)", "$1" + contact.getName() + "$3");
-		template = template.replaceAll("(^|[^\\{])(\\{LastName\\})([^\\}]|$)", "$1" + contact.getLastname() + "$3");
+			template = template.replaceAll(regexp, "$1" + contact.getAttributeValue(attr) + "$3");
+		}
 
 		return template;
 	}
