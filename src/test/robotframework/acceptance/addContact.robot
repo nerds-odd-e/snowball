@@ -10,7 +10,7 @@ ${alertMessage}     Email ${email} is already exist
 ${successMessage}   Add contact successfully
 
 *** Test Cases ***
-Verify Add New Contact To Contact List  
+Verify Add New Contact To Contact List
 	Given Add A Contact    ${email}
 	Then I should get an alert dialog with message  ${successMessage}
 	And Page Should Contain    ${email}
@@ -23,4 +23,3 @@ Verify Add Existing Contact To Contact List
 *** Keyword ***
 Open Browser and Clean Database
 	Open Browser    ${SERVER}    ${BROWSER}
-	Delete All Contacts
