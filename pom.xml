@@ -118,6 +118,7 @@
 				<configuration>
 					<nonCriticalTags>
 						<nonCriticalTag>not_ready</nonCriticalTag>
+						<nonCriticalTag>work_in_progress</nonCriticalTag>
 					</nonCriticalTags>
 					<includes>
 						<include>contact</include>

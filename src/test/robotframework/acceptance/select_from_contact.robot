@@ -2,7 +2,7 @@
 Library        Selenium2Library
 Resource       resource.robot
 Test Teardown  Close Browser
-Default Tags   contact
+Force Tags   contact
 
 *** Test Cases ***
 Select A Contact To Recipient

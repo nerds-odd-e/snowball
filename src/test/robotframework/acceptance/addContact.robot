@@ -20,7 +20,7 @@ Verify Add Existing Contact To Contact List
 	Then I should get an alert dialog with message  ${alertMessage}
 	And Page Should Contain    ${email}
 
-*** Keyword ***
+*** Keywords ***
 Open Browser and Clean Database
 	Open Browser    ${SERVER}    ${BROWSER}
 	Delete All Contacts
