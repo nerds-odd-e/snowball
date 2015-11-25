@@ -15,6 +15,12 @@ public interface ContactService {
 	void updateContact(ContactPerson contactPerson) throws SQLException;
 	boolean addContact(ContactPerson contact);
 
+
 	ContactPerson getContactByEmail(String email) throws SQLException;
+
+
+	List<ContactPerson> getContactListFromCompany(String company) throws SQLException;
+
+	int addNewContact(String name, String email, String lastname, String company);
 
 }

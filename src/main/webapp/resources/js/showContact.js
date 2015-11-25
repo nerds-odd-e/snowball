@@ -16,10 +16,10 @@ function retrieveContactListFromServer()
 function renderContactList(json, selector)
 {
 	$.each(json, function(idx, item) {
-		var firstName = item.name===undefined?'':item.name;
-		var lastName = item.lastname===undefined?'':item.lastname;
-		var company = item.company===undefined?'':item.company;
-		selector.append('<li class="col-md-3 email-address" style="text-align: left">'+item.email+'</li>');
+		var firstName = item.attributes.FirstName===undefined?'':item.attributes.FirstName;
+		var lastName = item.attributes.LastName===undefined?'':item.attributes.LastName;
+		var company = item.attributes.Company===undefined?'':item.attributes.Company;
+		selector.append('<li class="col-md-3 email-address" style="text-align: left">'+item.attributes.Email+'</li>');
 		selector.append('<li class="col-md-2" style="text-align: left">'+firstName+'</li>');
 		selector.append('<li class="col-md-3" style="text-align: left">'+lastName+'</li>');
 		selector.append('<li class="col-md-3" style="text-align: left">'+company+'</li>');
@@ -31,11 +31,11 @@ function renderContactSelectionList(json, selector)
 {
 	selector.html('');
 	$.each(json, function(idx, item) {
-		var firstName = item.name===undefined?'':item.name;
-		var lastName = item.lastname===undefined?'':item.lastname;
-		var company = item.company===undefined?'':item.company;
-		selector.append('<li class="col-md-1 email-checkbox" style="text-align: center"><input type="checkbox" onclick="whenContactIsSelected(' + idx + ')" id="' + idx + '" value="' + item.email + '" /></li>');
-		selector.append('<li class="col-md-3 email-address" style="text-align: left">'+item.email+'</li>');
+		var firstName = item.attributes.FirstName===undefined?'':item.attributes.FirstName;
+		var lastName = item.attributes.LastName===undefined?'':item.attributes.LastName;
+		var company = item.attributes.Company===undefined?'':item.attributes.Company;
+		selector.append('<li class="col-md-1 email-checkbox" style="text-align: center"><input type="checkbox" onclick="whenContactIsSelected(' + idx + ')" id="' + idx + '" value="' + item.attributes.Email + '" /></li>');
+		selector.append('<li class="col-md-3 email-address" style="text-align: left">'+item.attributes.Email+'</li>');
 		selector.append('<li class="col-md-2 contact-name" style="text-align: left">'+firstName+'</li>');
 		selector.append('<li class="col-md-3 contact-lname" style="text-align: left">'+lastName+'</li>');
 		selector.append('<li class="col-md-3 contact-cname" style="text-align: left">'+company+'</li>');
@@ -58,11 +58,11 @@ function showEditContactDetail(item)
 
 function insertDataIntoContactModal(item){
 
-	$('#name').val(item.name);
-	$('#lastname').val(item.lastname);
-	$('#company').val(item.company);
-	$('#email').val(item.email);
-	$('#email_label').text(item.email);
+	$('#name').val(item.attributes.FirstName);
+	$('#lastname').val(item.attributes.LastName);
+	$('#company').val(item.attributes.Company);
+	$('#email').val(item.attributes.Email);
+	$('#email_label').text(item.attributes.Email);
 }
 
 function openEditContactModal()

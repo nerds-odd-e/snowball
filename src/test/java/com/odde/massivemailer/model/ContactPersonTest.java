@@ -1,11 +1,12 @@
 package com.odde.massivemailer.model;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
 public class ContactPersonTest {
 	
+
 	@Test
 	public void testCreateContactObjectWithoutCompany() {
 		
@@ -35,5 +36,17 @@ public class ContactPersonTest {
 		assertEquals(lastname, person.getLastname());
 		assertEquals(company, person.getCompany());
 	}
+
+ 
+	@Test
+	public void testGetInvalidAttributeValue() throws Exception {
+		ContactPerson contact =  new ContactPerson("John", "john@gmail.com", "Doe");
+
+		String invalidKey = contact.getAttribute("Invalid");
+
+		assertEquals("", invalidKey);
+	}
+
+
 
 }

@@ -54,6 +54,11 @@ public class SqliteContactTest {
 	}
 
 	@Test
+	public void testIsTableExists() {
+
+	}
+
+	@Test
 	public void testUpdateContact() throws SQLException{
 		
 		ContactPerson contactPerson = new ContactPerson("terry",
@@ -90,6 +95,17 @@ public class SqliteContactTest {
 	}
 
 	@Test
+	public void testUpdateContactMultipleTimes() throws SQLException{
+		ContactPerson contactPerson = new ContactPerson("terry",
+				"roof@gmail.com", "e", "ComA");
+		sqliteContact.updateContact(contactPerson);
+		sqliteContact.setConnection(mockConnection);
+		ContactPerson contactPerson2 = new ContactPerson("terry2",
+				"roof@gmail.com", "e", "ComA");
+		sqliteContact.updateContact(contactPerson2);
+	}
+
+	@Test
 	public void testGetContactByEmail() throws SQLException{
 
 		// Arrange
@@ -99,6 +115,7 @@ public class SqliteContactTest {
 		when(resultSetMock.getString("name")).thenReturn("roof");
 		when(resultSetMock.getString("email")).thenReturn("roof@gmail.com");
 		when(resultSetMock.getString("lastname")).thenReturn("dd");
+		when(resultSetMock.getString("company")).thenReturn("odde");
 		when(mockPreparedStatement.executeQuery()).thenReturn(resultSetMock);
 
 		// Act
@@ -107,8 +124,9 @@ public class SqliteContactTest {
 		// Assert
 		assertEquals(1, person.getId());
 		assertEquals("roof", person.getName());
-		assertEquals("roof", person.getName());
+		assertEquals("roof@gmail.com", person.getEmail());
 		assertEquals("dd", person.getLastname());
+		assertEquals("odde", person.getCompany());
 
 		verify(mockPreparedStatement).executeQuery();
 
