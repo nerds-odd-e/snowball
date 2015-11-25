@@ -31,12 +31,16 @@ public class GmailServiceTest {
 	}
 	
 	private MailService getEmailService(final Transport transport) {
+		SMTPConfiguration config = new SMTPConfiguration("myodde@gmail.com", "1234qwer@", "smtp.gmail.com", 587);
 		MailService emailService = new GMailService() {
 			@Override
 			protected Transport getTransport() throws NoSuchProviderException {
 				return transport;
 			} 
 		};
+
+		emailService.setConfiguration(config);
+
 		return emailService;
 	}
     
@@ -46,7 +50,7 @@ public class GmailServiceTest {
 		MailService emailService = this.getEmailService(transport);
 		Mail email = createEmail();		
 		emailService.send(email);
-		verify(transport, times(1)).connect(anyString(), anyString(), anyString());
+		verify(transport, times(1)).connect(anyString(), anyInt(), anyString(), anyString());
 		verify(transport, times(1)).sendMessage(any(Message.class), any(Address[].class));
 		verify(transport, times(1)).close();
 
@@ -59,7 +63,7 @@ public class GmailServiceTest {
 		Mail email = createEmail();
 		email.setReceipts(Arrays.asList(RECIPIENTS));
 		emailService.send(email);
-		verify(transport, times(1)).connect(anyString(), anyString(), anyString());
+		verify(transport, times(1)).connect(anyString(), anyInt(), anyString(), anyString());
 		verify(transport, times(2)).sendMessage(any(Message.class), any(Address[].class));
 		verify(transport, times(1)).close();
 
