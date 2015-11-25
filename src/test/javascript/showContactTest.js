@@ -3,7 +3,7 @@ describe('test show contact function', function() {
 	
 	var rootId = "testContainer";
 	var markup = "<ul id='contactTable' class='list-inline' ></ul>";
-	var mock_json = [{email:"a@a.com", id:1, name:"Tom", lname:" Jerry", cname: ""},{email:"b@b.com", id:2, name:"Jerry", lname: "Tom", cname: ""}];
+	var mock_json = [{"id":1,"attributes":{"Company":"","Email":"a@a.com","FirstName":"Tom","LastName":"Jerry"}},{"id":2,"attributes":{"Company":"","Email":"b@b.com","FirstName":"Jerry","LastName":"Tom"}}];
 	
 	beforeEach(function(){
 		var container = document.createElement('div');
@@ -35,8 +35,8 @@ describe('test show contact function', function() {
 		
 		$.each(mock_json, function(index, obj)
 		{
-			expect($("#contactTable .email-address").eq(index).text()).toBe(obj.email);
-			expect($("#contactTable .company").eq(index).text()).toBe(obj.cname);
+			expect($("#contactTable .email-address").eq(index).text()).toBe(obj.attributes.Email);
+			expect($("#contactTable .company").eq(index).text()).toBe(obj.attributes.Company);
 		})	
 
 	});
