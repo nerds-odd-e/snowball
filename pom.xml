@@ -79,8 +79,8 @@
                                         <version>2.2</version>
                                                 <configuration>
                                                                 <url>http://localhost:8080/manager/text</url>
-                                                                            <server>TomcatServer</server>
-                                                                                        <path>/mkyongWebApp</path>
+                                  <server>tomcat7</server>
+                                  <path>/massive_mail</path>
                                                                                                 </configuration>
                                                                                                     </plugin>
 			<plugin>
