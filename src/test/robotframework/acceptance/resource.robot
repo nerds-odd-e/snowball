@@ -8,7 +8,7 @@ Library        Selenium2Library
 Library        CustomKeyword.py
 
 *** Variables ***
-${SERVER}        localhost:8080
+${SERVER}        192.168.100.27:8080/massive-mail
 ${BROWSER}       chrome
 ${DELAY}         0.5
 ${SENDMAIL URL}     http://${SERVER}
