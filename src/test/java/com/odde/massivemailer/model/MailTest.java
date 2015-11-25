@@ -46,5 +46,41 @@ public class MailTest {
 		
 		assertEquals("Inspector Gadget", address[0].trim());
 	}
-	
+
+	@org.junit.Test
+	public void testReplaceAttributeValue(){
+		String FirstNameTemplate = "Greeting {FirstName}";
+		String LastNameTemplate = "Greeting {LastName}";
+		String CompanyTemplate = "Greeting {Company}";
+		ContactPerson contact =  new ContactPerson("John", "john@gmail.com", "Doe");
+
+		Mail mail = new Mail();
+
+		String fResult = mail.ReplaceAttibuteValue(FirstNameTemplate, contact);
+		String lResult = mail.ReplaceAttibuteValue(LastNameTemplate, contact);
+		//String cResult = mail.ReplaceAttibuteValue(CompanyTemplate, contact);
+
+		assertEquals("Greeting John", fResult);
+		assertEquals("Greeting Doe", lResult);
+		//assertEquals("Greeting TR", cResult);
+	}
+
+	@org.junit.Test
+	public void testEscapeSyntax(){
+		String FirstNameTemplate = "Greeting {{{FirstName}}} {{FirstName}} {FirstName} FirstName";
+		String LastNameTemplate = "Greeting {{{LastName}}} {{LastName}} {LastName} LastName";
+		String CompanyTemplate = "Greeting {{Company}";
+		ContactPerson contact =  new ContactPerson("John", "john@gmail.com", "Doe");
+
+		Mail mail = new Mail();
+
+		String fResult = mail.ReplaceAttibuteValue(FirstNameTemplate, contact);
+		String lResult = mail.ReplaceAttibuteValue(LastNameTemplate, contact);
+		//String cResult = mail.ReplaceAttibuteValue(CompanyTemplate, contact);
+
+		assertEquals("Greeting {{{FirstName}}} {{FirstName}} John FirstName", fResult);
+		assertEquals("Greeting {{{LastName}}} {{LastName}} Doe LastName", lResult);
+		//assertEquals("Greeting TR", cResult);
+	}
+
 }
