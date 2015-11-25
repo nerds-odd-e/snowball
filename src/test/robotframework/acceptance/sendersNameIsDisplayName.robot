@@ -9,5 +9,6 @@ Default Tags   send_mail
 
 *** Testcases ***
 Sender Name In Send Box Should Contain Display Name
+	[tags]	  work_in_progress
 	Given Send An Email
     Then Sender Name Should be    Inspector Gadget <myodde@gmail.com>

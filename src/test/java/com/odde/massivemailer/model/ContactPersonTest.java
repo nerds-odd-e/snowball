@@ -36,4 +36,14 @@ public class ContactPersonTest {
 		assertEquals(company, person.getCompany());
 	}
 
+	@Test
+	public void testGetInvalidAttributeValue() throws Exception {
+		ContactPerson contact =  new ContactPerson("John", "john@gmail.com", "Doe");
+
+		String invalidKey = contact.getAttribute("Invalid");
+
+		assertEquals("", invalidKey);
+	}
+
+
 }
