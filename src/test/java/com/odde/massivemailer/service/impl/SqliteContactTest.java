@@ -123,7 +123,7 @@ public class SqliteContactTest {
 		// Assert
 		assertEquals(1, person.getId());
 		assertEquals("roof", person.getName());
-		assertEquals("roof", person.getName());
+		assertEquals("roof@gmail.com", person.getEmail());
 		assertEquals("dd", person.getLastname());
 
 		verify(mockPreparedStatement).executeQuery();
