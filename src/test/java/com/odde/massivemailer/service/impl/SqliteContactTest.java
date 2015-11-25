@@ -1,11 +1,15 @@
 package com.odde.massivemailer.service.impl;
 
+import static junit.framework.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.*;
+
 
 import org.junit.After;
 import org.junit.Before;
@@ -13,6 +17,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Matchers;
 import org.mockito.Mock;
+
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.odde.massivemailer.model.ContactPerson;
@@ -36,6 +41,7 @@ public class SqliteContactTest {
 		sqliteContact = new SqliteContact();
 		when(mockPreparedStatement.executeUpdate()).thenReturn(1);
 		when(mockConnection.prepareStatement(Matchers.anyString())).thenReturn(mockPreparedStatement);
+		when(mockPreparedStatement.executeQuery()).thenReturn(null);
 		sqliteContact.setConnection(mockConnection);
 		
 		// for addContact test
@@ -44,20 +50,9 @@ public class SqliteContactTest {
 	
 	@After
 	public void tearDown() {
-		sqliteContact.closeConnection();
+//		sqliteContact.closeConnection();
 	}
-	
-//	@Test
-//	public void testAddContact() throws SQLException{
-//		
-//		ContactPerson contactPerson = new ContactPerson("terry",
-//				"roof@gmail.com", "e");
-//		sqliteContact.addContact(contactPerson);
-//		
-//		verify(mockStatement).executeUpdate("INSERT INTO mail(name,email,company) VALUES ('"
-//				+ contactPerson.getName() + "', '" + contactPerson.getEmail() + "','" + contactPerson.getCompany() + "')");
-//	}
-	
+
 	@Test
 	public void testUpdateContact() throws SQLException{
 		
@@ -92,6 +87,53 @@ public class SqliteContactTest {
 		ContactPerson contactPerson = new ContactPerson("terry",
 				"roof@gmail.com", "e", "myCompany");
 		sqliteContact.updateContact(contactPerson);
+	}
+
+	@Test
+	public void testGetContactByEmail() throws SQLException{
+
+		// Arrange
+		ResultSet resultSetMock = mock(ResultSet.class);
+		when(resultSetMock.next()).thenReturn(true).thenReturn(false);
+		when(resultSetMock.getInt("id")).thenReturn(1);
+		when(resultSetMock.getString("name")).thenReturn("roof");
+		when(resultSetMock.getString("email")).thenReturn("roof@gmail.com");
+		when(resultSetMock.getString("lastname")).thenReturn("dd");
+		when(mockPreparedStatement.executeQuery()).thenReturn(resultSetMock);
+
+		// Act
+		ContactPerson person = sqliteContact.getContactByEmail("roof@gmail.com");
+
+		// Assert
+		assertEquals(1, person.getId());
+		assertEquals("roof", person.getName());
+		assertEquals("roof", person.getName());
+		assertEquals("dd", person.getLastname());
+
+		verify(mockPreparedStatement).executeQuery();
+
+	}
+
+	@Test
+	public void testGetContactByEmailNotFound() throws SQLException{
+
+		// Arrange
+		ResultSet resultSetMock = mock(ResultSet.class);
+		when(resultSetMock.next()).thenReturn(false);
+		when(resultSetMock.getInt("id")).thenReturn(1);
+		when(resultSetMock.getString("name")).thenReturn("roof");
+		when(resultSetMock.getString("email")).thenReturn("roof@gmail.com");
+		when(resultSetMock.getString("lastname")).thenReturn("dd");
+		when(mockPreparedStatement.executeQuery()).thenReturn(resultSetMock);
+
+		// Act
+		ContactPerson person = sqliteContact.getContactByEmail("roof@gmail.com");
+
+		// Assert
+		assertEquals(null, person);
+
+		verify(mockPreparedStatement).executeQuery();
+
 	}
 
 }

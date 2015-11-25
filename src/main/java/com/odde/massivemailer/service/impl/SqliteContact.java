@@ -30,8 +30,10 @@ public class SqliteContact implements ContactService {
 
 	public void connectDB(String url) throws ClassNotFoundException,
 			SQLException {
-		Class.forName("org.sqlite.JDBC");
-		connection = DriverManager.getConnection(url);
+		if (connection == null ) {
+			Class.forName("org.sqlite.JDBC");
+			connection = DriverManager.getConnection(url);
+		}
 	}
 
 	@Override
@@ -137,8 +139,38 @@ public class SqliteContact implements ContactService {
 		closeConnection();
 	}
 
+	@Override
+	public ContactPerson getContactByEmail(String email) throws SQLException {
+		try {
+			openConnection();
+
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT email FROM mail WHERE email=?");
+			preparedStatement.setString(1, email);
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if ((resultSet != null) && (resultSet.next())) {
+				ContactPerson contact = new ContactPerson();
+				contact.setId(resultSet.getInt("id"));
+				contact.setName(resultSet.getString("name"));
+				contact.setEmail(resultSet.getString("email"));
+				contact.setLastname(resultSet.getString("lastname"));
+
+				return contact;
+			}
+			return null;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection();
+		}
+
+		return null;
+
+	}
+
 	private Statement openConnection() throws ClassNotFoundException,
 			SQLException {
+
 		this.connectDB(dbName);
 		statement = getStatement();
 		return statement;
@@ -146,26 +178,26 @@ public class SqliteContact implements ContactService {
 
 	public void closeConnection() {
 		try {
-			statement.close();
-			connection.close();
+			if( statement != null)
+			{
+				statement.close();
+				statement = null;
+			}
+			if( connection != null ) {
+				connection.close();
+				connection = null;
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public Statement openConnections() throws ClassNotFoundException,
-			SQLException {
-		return openConnection();
-	}
 
 	public Statement getStatement() throws SQLException {
-		statement = connection.createStatement();
+		statement = this.connection.createStatement();
 		return statement;
 	}
 
-	public void setStatement(Statement statement) {
-		this.statement = statement;
-	}
 
 	public Connection getConnection() {
 		return connection;
