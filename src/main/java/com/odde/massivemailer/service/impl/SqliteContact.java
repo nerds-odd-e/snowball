@@ -144,7 +144,7 @@ public class SqliteContact implements ContactService {
 		try {
 			openConnection();
 
-			PreparedStatement preparedStatement = connection.prepareStatement("SELECT email FROM mail WHERE email=?");
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM mail WHERE email=?");
 			preparedStatement.setString(1, email);
 			ResultSet resultSet = preparedStatement.executeQuery();
 
