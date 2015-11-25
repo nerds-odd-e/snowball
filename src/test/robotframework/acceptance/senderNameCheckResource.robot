@@ -21,4 +21,4 @@ Sender Name Should be    [Arguments]    ${expected sender}
 
 Check Sender Name in OutBox    [Arguments]    ${expected sender}
     ${sender} =    Get Sender Name    ${SENDER_EMAIL}    ${SENDER_PASSWORD}    ${SUBJECT_CURRENT_DATE}
-    Should Be Equal As Strings    ${sender}    ${expected sender}
+    Should Be Equal As Strings    ${sender}    ${expected sender} 
