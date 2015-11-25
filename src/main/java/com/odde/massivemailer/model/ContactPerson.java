@@ -81,4 +81,13 @@ public class ContactPerson {
 	{
 		return attributes.keySet();
 	}
+<<<<<<< d9cc6196f56a9405d8f2923f802f99b51f536b54
+=======
+
+	@Override
+	public boolean equals(Object obj) {
+		ContactPerson otherContact = (ContactPerson)obj;
+		return name.equals(otherContact.name) && email.equals(otherContact.email) && lastname.equals(otherContact.lastname) && company.equals(otherContact.company);
+	}
+>>>>>>> Add getContactList by company
 }

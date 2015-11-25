@@ -15,6 +15,8 @@ public class SqliteContact implements ContactService {
 	private Statement statement;
 	private Connection connection;
 
+	private String selectMailFromCompanySql = "SELECT id, name, email, lastname, company FROM mail where company = ";
+
 	public SqliteContact() {
 		try {
 			openConnection();
@@ -81,10 +83,15 @@ public class SqliteContact implements ContactService {
 	
 	@Override
 	public int addNewContact(String name, String email, String company) {
+		return addNewContact(name, email, "", company);
+	}
+	
+	@Override
+	public int addNewContact(String name, String email, String lastname, String company) {
 		int rowAffected = 0;
 		try {
 			openConnection();
-			rowAffected = saveContactToDatabase(name, email, company);
+			rowAffected = saveContactToDatabase(name, email, lastname, company);
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -93,13 +100,13 @@ public class SqliteContact implements ContactService {
 		return rowAffected;
 	}
 	
-	private int saveContactToDatabase(String name, String email, String company)
+	private int saveContactToDatabase(String name, String email, String lastname, String company)
 			throws SQLException {
 		int rowAffected = 0;
 		if (!contactExisted(email))
 			rowAffected = statement
-					.executeUpdate("INSERT INTO mail(name,email,company) VALUES ('"
-							+ name + "', '" + email + "','" + company + "')");
+					.executeUpdate("INSERT INTO mail(name,email,lastname,company) VALUES ('"
+							+ name + "', '" + email + "','" + lastname + "','" + company + "')");
 		return rowAffected;
 	}
 
@@ -128,7 +135,7 @@ public class SqliteContact implements ContactService {
 
 	@Override
 	public boolean addContact(ContactPerson contact) {
-		return addNewContact(contact.getName(), contact.getEmail(), contact.getCompany()) > 0;
+		return addNewContact(contact.getName(), contact.getEmail(), contact.getLastname(), contact.getCompany()) > 0;
 	}
 
 	@Override
@@ -182,6 +189,25 @@ public class SqliteContact implements ContactService {
 
 		return null;
 
+	}
+	
+	@Override
+	public List<ContactPerson> getContactListFromCompany(String company) throws SQLException {
+				
+		ResultSet resultSet = null;
+		try {
+			openConnection();
+			createIfNotExistTable();
+
+			resultSet = statement.executeQuery(this.selectMailFromCompanySql + "'" + company + "'");
+			populateContactList(resultSet);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection();
+		}
+		return contactList;	
+	
 	}
 
 	private Statement openConnection() throws ClassNotFoundException,
