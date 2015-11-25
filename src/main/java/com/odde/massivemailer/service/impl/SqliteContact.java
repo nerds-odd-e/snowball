@@ -177,7 +177,7 @@ public class SqliteContact implements ContactService {
 				contact.setName(resultSet.getString("name"));
 				contact.setEmail(resultSet.getString("email"));
 				contact.setLastname(resultSet.getString("lastname"));
-
+				contact.setCompany(resultSet.getString("company"));
 				return contact;
 			}
 			return null;

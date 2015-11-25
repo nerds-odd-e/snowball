@@ -115,6 +115,7 @@ public class SqliteContactTest {
 		when(resultSetMock.getString("name")).thenReturn("roof");
 		when(resultSetMock.getString("email")).thenReturn("roof@gmail.com");
 		when(resultSetMock.getString("lastname")).thenReturn("dd");
+		when(resultSetMock.getString("company")).thenReturn("odde");
 		when(mockPreparedStatement.executeQuery()).thenReturn(resultSetMock);
 
 		// Act
@@ -125,6 +126,7 @@ public class SqliteContactTest {
 		assertEquals("roof", person.getName());
 		assertEquals("roof@gmail.com", person.getEmail());
 		assertEquals("dd", person.getLastname());
+		assertEquals("odde", person.getCompany());
 
 		verify(mockPreparedStatement).executeQuery();
 

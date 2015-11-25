@@ -43,18 +43,21 @@ public class MailTest {
 		ContactPerson contactPerson = new ContactPerson();
 		contactPerson.setName("TestName");
 		contactPerson.setLastname("LastName");
+		contactPerson.setEmail("EmailName");
+		contactPerson.setCompany("CompanyName");
 		when(mockSqliteContact.getContactByEmail(anyString())).thenReturn(contactPerson);
 
 		Mail mail = new Mail(mockSqliteContact);
-		mail.setContent("content {FirstName}");
-		mail.setSubject("subject {LastName}");
+		mail.setContent("content {FirstName}, {Company}");
+		mail.setSubject("subject {LastName} - {Email}");
 		mail.setReceipts(Arrays.asList("test@gmail.com"));
 
 		List<Message> messages = mail.createMessages(session);
 
 
 		verify(mockSqliteContact).getContactByEmail(anyString());
-		assertEquals("content TestName", messages.get(0).getContent());
+		assertEquals("content TestName, CompanyName", messages.get(0).getContent());
+		assertEquals("subject LastName - EmailName", messages.get(0).getSubject());
 	}
 	
 	@Test
