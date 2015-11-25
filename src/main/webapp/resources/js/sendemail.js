@@ -29,15 +29,18 @@ function submitForm() {
 
 function checkSendEmailInputElement() {
 	var recipientIsBlank = isBlank($("#recipient").val());
+	var recipientIsEmail = isRecipientEmailFormat($("#recipient").val());
+	var recipientIsCompany = isRecipientCompanyFormat($("#recipient").val());
 	var contentIsBlank = isBlank($("#content").val());
 	var subjectIsBlank = isBlank($("#subject").val());
 	
-	if (recipientIsBlank || contentIsBlank || subjectIsBlank) {
+	if ( (recipientIsBlank || contentIsBlank || subjectIsBlank) || !(recipientIsEmail || recipientIsCompany)) {
 		disableSendEmailButton();
 	} else {
 		enableSendEmailButton();
 	}
 }
+
 
 function checkAddContactInputElement() {
 	var newContactIsBlank = isBlank($("#add_new_contact").val());
@@ -47,6 +50,16 @@ function checkAddContactInputElement() {
 	} else {
 		enableAddContactButton();
 	}
+}
+
+function isRecipientEmailFormat(value) {
+	var pattern = new RegExp("([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4};?)+");
+	return pattern.test(value);
+}
+
+function isRecipientCompanyFormat(value)  {
+	var pattern = new RegExp("company:\"?[^\"].*");
+	return pattern.test(value);
 }
 
 function isBlank(value) {

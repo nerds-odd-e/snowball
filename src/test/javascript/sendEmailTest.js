@@ -41,7 +41,62 @@ describe('checkSendEmailInputElement function', function(){
         
         expect(document.getElementById("send_button").disabled).toBe(false);
 	});
+});
+
+describe('isRecipientEmailFormat function', function(){	
+	it('should pass when input one email', function(){
+		expect(isRecipientEmailFormat("mail@mail.com")).toBe(true);
+	});
 	
+	it('should pass when input two email', function(){
+		expect(isRecipientEmailFormat("mail@mail.com;mail1@mail.com")).toBe(true);
+	});
+	
+	it('should pass when input two email with semi colon', function(){
+		expect(isRecipientEmailFormat("mail@mail.com;mail1@mail.com;")).toBe(true);
+	});
+});
+
+
+describe('isRecipientCompanyFormat function', function(){	
+	it('should false when does not input company name format1', function(){
+		expect(isRecipientCompanyFormat("company:")).toBe(false);
+	});
+	
+	it('should false when does not input company name format2', function(){
+		expect(isRecipientCompanyFormat("company:\"")).toBe(false);
+	});
+	
+	it('should false when does not input company name format3', function(){
+		expect(isRecipientCompanyFormat("company:\"\"")).toBe(false);
+	});
+	
+	it('should true when input company format 1', function(){
+		expect(isRecipientCompanyFormat("company:\"AAA\"")).toBe(true);
+	});
+	
+	it('should true when input company format 2', function(){
+		expect(isRecipientCompanyFormat("company:\"AAA")).toBe(true);
+	});
+	
+	it('should true when input company format 3', function(){
+		expect(isRecipientCompanyFormat("company:AAA")).toBe(true);
+	});
+	
+	it('should true when input company format 4', function(){
+		expect(isRecipientCompanyFormat("company:A\"AA")).toBe(true);
+	});
+	
+	it('should true when input company format 5', function(){
+		expect(isRecipientCompanyFormat("company:AAA\"")).toBe(true);
+	});
+	
+	it('should true when input company format 6', function(){
+		expect(isRecipientCompanyFormat("company:AAA\"A\"")).toBe(true);
+	});
+	it('should true when input company format 7', function(){
+		expect(isRecipientCompanyFormat("company:\"AA\"BB")).toBe(true);
+	});
 });
 
 describe('checkAddContactInputElement function', function(){
