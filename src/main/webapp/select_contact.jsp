@@ -18,7 +18,7 @@
 							<li class="col-md-3" style="text-align: center">Email</li>
 							<li class="col-md-2" style="text-align: center">Name</li>
 							<li class="col-md-3" style="text-align: center">Lastname</li>
-							<li class="col-md-3" style="text-align: center">Lastname</li>
+							<li class="col-md-3" style="text-align: center">Company</li>
 						</ul>
 					</div>
 

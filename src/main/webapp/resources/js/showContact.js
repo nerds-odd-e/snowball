@@ -29,16 +29,16 @@ function renderContactList(json, selector)
 
 function renderContactSelectionList(json, selector)
 {
-	var contactCheckbox = '<li class="col-md-1 email-checkbox" style="text-align: center"><input type="checkbox" onclick="whenContactIsSelected(#checkbox#)" id="#checkbox#" value="#email#" /></li>';
-	var contactEmail = '<li class="col-md-3 email-address" style="text-align: center">';
-	var contactName = '<li class="col-md-2 contact-name" style="text-align: center">';
-	var contactLastName = '<li class="col-md-3 contact-lname" style="text-align: center">';
-	var contactCompany = '<li class="col-md-3 contact-cname" style="text-align: center">';
-	
 	selector.html('');
 	$.each(json, function(idx, item) {
-		
-		selector.append(contactCheckbox.replace(/#checkbox#/gi, idx).replace(/#email#/gi, item.email) + contactEmail + item.email+ contactName + contactLastName + '</li>');
+		var firstName = item.name===undefined?'':item.name;
+		var lastName = item.lastname===undefined?'':item.lastname;
+		var company = item.company===undefined?'':item.company;
+		selector.append('<li class="col-md-1 email-checkbox" style="text-align: center"><input type="checkbox" onclick="whenContactIsSelected(' + idx + ')" id="' + idx + '" value="' + item.email + '" /></li>');
+		selector.append('<li class="col-md-3 email-address" style="text-align: left">'+item.email+'</li>');
+		selector.append('<li class="col-md-2 contact-name" style="text-align: left">'+firstName+'</li>');
+		selector.append('<li class="col-md-3 contact-lname" style="text-align: left">'+lastName+'</li>');
+		selector.append('<li class="col-md-3 contact-cname" style="text-align: left">'+company+'</li>');
 	})
 }
 

@@ -26,6 +26,11 @@
 <link
 	href="resources/lib/bootstrap/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
+<style>
+#selectContactTable li {
+	height: 25px;
+}
+</style>
 </head>
 <body>
 	<form name="sendmail" id="sendmail" method="post" action="sendMail">
