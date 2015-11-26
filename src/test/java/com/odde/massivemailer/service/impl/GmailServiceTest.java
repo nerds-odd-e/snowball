@@ -28,7 +28,7 @@ public class GmailServiceTest {
 
 	private Mail createEmail() {
 		Mail email = new Mail();
-		email.setContent("Hi {FirstName}");
+		email.setContent("Hi Dude");
 		email.setSubject("test subject");
 		email.setReceipts(Arrays.asList(RECIPIENTS));
 		return email;
@@ -97,8 +97,8 @@ public class GmailServiceTest {
 		mailService.send(email);
 
 		//Assert
-		assertEquals("Hi John", GreenMailUtil.getBody(greenMail.getReceivedMessages()[0]));
-		assertEquals("Hi John", GreenMailUtil.getBody(greenMail.getReceivedMessages()[1]));
+		assertEquals("Hi Dude", GreenMailUtil.getBody(greenMail.getReceivedMessages()[0]));
+		assertEquals("Hi Dude", GreenMailUtil.getBody(greenMail.getReceivedMessages()[1]));
 		greenMail.stop();
 	}
 
