@@ -22,11 +22,15 @@ public class SqliteTemplate extends SqliteBase implements TemplateService{
         }
     }
 
-    private void createIfNotExistTable() throws SQLException {
+    private void createIfNotExistTable() {
+        try {
+            statement.executeUpdate("CREATE TABLE Template (Id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, TemplateName VARCHAR(255) NOT NULL, Subject VARCHAR(255), Content NVARCHAR(5000))");
+            statement.executeUpdate("INSERT INTO Template (TemplateName,Subject,Content) VALUES ('Default Template 1', 'Greeting {FirstName}', 'Hi, {FirstName} {LastName} from {Company}')");
+        }
+        catch (SQLException ex)
+        {
 
-        //if(!isTableExists("mail"))
-        statement
-                .executeUpdate("CREATE TABLE IF NOT EXISTS Template (Id INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL, TemplateName VARCHAR(255) NOT NULL, Subject VARCHAR(255), Content NVARCHAR(5000))");
+        }
     }
 
     @Override
