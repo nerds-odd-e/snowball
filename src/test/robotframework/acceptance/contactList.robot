@@ -9,22 +9,20 @@ Display Contacts In The Contact List
 	Given There is a contact    terry1@gmail.com
     When Open Browser To See Contacts
     Then Contact Should Be There	terry1@gmail.com
-    #And Company Should Be There	terry1@gmail.com	todo company
-    	
-#Update Company In The Contact List
-#	Given There is a contact    terry1@gmail.com  
- #   And There is a contact    terry2@gmail.com
-  #  When Open Browser To See Contacts
-   # 	And Update Contact Company	terry2@gmail.com	Com A
-    #Then Company Should Be There	terry2@gmail.com	Com A
+    And Company Should Be There	terry1@gmail.com	todo company
+
+# Update Company In The Contact List
+# 	Given There is a contact    terry1@gmail.com  
+#     And There is a contact    terry2@gmail.com
+#     When Open Browser To See Contacts
+#    	And Update Contact Company	terry2@gmail.com	Com A
+#     Then Company Should Be There	terry2@gmail.com	Com A
 
 *** Keywords ***
 Open Browser To See Contacts
-    Open Browser  http://localhost:8080/contactlist.jsp  ${BROWSER}
+    Open Browser  ${LIST_CONTACT_URL}  ${BROWSER}
     Maximize Browser Window
-    
-   
-    
+
 Contact Should Be There	[Arguments]	${email}
 	Element Should Contain	xpath=//*[@id="contactTable"]/li[contains(., '${email}')]		${email}
 	
