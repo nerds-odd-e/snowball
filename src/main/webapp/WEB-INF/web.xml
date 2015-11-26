@@ -31,5 +31,14 @@
 	<servlet-mapping>
 		<servlet-name>updateContactController</servlet-name>
 		<url-pattern>/editContact</url-pattern>
-	</servlet-mapping>	
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>TemplatesController</servlet-name>
+		<servlet-class>com.odde.massivemailer.controller.TemplatesController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TemplatesController</servlet-name>
+		<url-pattern>/templates</url-pattern>
+	</servlet-mapping>
 </web-app>
