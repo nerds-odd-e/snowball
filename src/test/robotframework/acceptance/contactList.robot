@@ -35,6 +35,7 @@ There is a contact    [Arguments]    ${email}
     Wait Until Keyword Succeeds    10 sec    1    Open Browser To Add Contact     
     Key email field    ${email}
     Click Add Contact
+    sleep    1000milliseconds
     Close Browser
 
 Update Contact Company	[Arguments]	${email}	${company}
