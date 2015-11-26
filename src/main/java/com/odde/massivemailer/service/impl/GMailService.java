@@ -15,20 +15,14 @@ import com.odde.massivemailer.service.MailService;
 
 public class GMailService implements MailService {
 
-	private static final String FROM = "myodde@gmail.com";
-	private static final String PASSWD = "1234qwer@";
-	private static final String HOST = "smtp.gmail.com";
+	private SMTPConfiguration configuration;
 
 	public static Session session;
 
 	public GMailService() {
 
 		Properties props = System.getProperties();
-		props.put("mail.smtp.host", HOST);
-		props.put("mail.smtp.user", FROM);
-		props.put("mail.smtp.password", PASSWD);
 		props.put("mail.smtp.starttls.enable", "true");
-		props.put("mail.smtp.port", "587");
 		props.put("mail.smtp.auth", "true");
 
 		session = Session.getDefaultInstance(props);
@@ -45,11 +39,16 @@ public class GMailService implements MailService {
 		this.sendEmailViaGmail(msg);
 	}
 
+	@Override
+	public void setConfiguration(SMTPConfiguration config) {
+		this.configuration = config;
+	}
+
 	private void sendEmailViaGmail(List<Message> msgs) throws EmailException {
 		try {
 
 			Transport transport = getTransport();
-			transport.connect(HOST, FROM, PASSWD);
+			transport.connect(configuration.HOST, configuration.PORT, configuration.FROM, configuration.PASSWD);
 			for (Message msg : msgs) {
 				transport.sendMessage(msg, msg.getAllRecipients());
 			}
