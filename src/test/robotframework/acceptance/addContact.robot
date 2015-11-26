@@ -23,3 +23,4 @@ Verify Add Existing Contact To Contact List
 *** Keyword ***
 Open Browser and Clean Database
 	Open Browser    ${SERVER}    ${BROWSER}
+	Delete All Contacts

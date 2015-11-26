@@ -6,6 +6,8 @@ Documentation  A resource file containing the application specific keywords
 ...            application.
 Library        Selenium2Library 
 Library        CustomKeyword.py
+#Library         OperatingSystem
+#Library         DatabaseLibrary
 
 *** Variables ***
 ${SERVER}        localhost:8080
@@ -76,4 +78,7 @@ Add A Contact          [Arguments]    ${email}
 
 Delete All Contacts
     clear_all_contacts
+#	Connect To Database Using Custom Params	${EMPTY}	jdbc:sqlite:oddemail.db	${EMPTY}	${EMPTY}
+#	Execute SQL  delete from mail
+#	Disconnect From Database
     
