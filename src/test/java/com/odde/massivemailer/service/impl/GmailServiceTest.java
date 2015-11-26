@@ -47,18 +47,7 @@ public class GmailServiceTest {
 
 		return emailService;
 	}
-    
-	@Test
-	public void testSend() throws EmailException, MessagingException {
-		final Transport transport = mock(Transport.class);
-		MailService emailService = this.getEmailService(transport);
-		Mail email = createEmail();		
-		emailService.send(email);
-		verify(transport, times(1)).connect(anyString(), anyInt(), anyString(), anyString());
-		verify(transport, times(1)).sendMessage(any(Message.class), any(Address[].class));
-		verify(transport, times(1)).close();
-
-	}
+   
 	
 	@Test
 	public void testSend_multipleRecipients() throws EmailException, MessagingException {
