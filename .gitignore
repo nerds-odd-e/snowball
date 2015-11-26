@@ -12,6 +12,7 @@
 *.db
 **/**/*.png
 **/**/*.pyc
+**/**/CustomKeyword.py
 **/**/log.html
 **/**/report.html
 **/**/output.xml
