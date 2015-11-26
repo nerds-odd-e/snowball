@@ -29,5 +29,5 @@ function whenAddButtonIsClicked() {
 	$('#recipient').val(existingContact + getCurrentSelectedContactValue());
 
 	//don't forget! modal dismiss
-	$('#selectContactModal').modal('hide');
+	//$('#selectContactModal').modal('hide');
 }
