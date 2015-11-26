@@ -1,15 +1,11 @@
 package com.odde.massivemailer.controller;
 
 import com.google.gson.Gson;
-import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Template;
 import com.odde.massivemailer.service.TemplateService;
-import com.odde.massivemailer.service.impl.SqliteContact;
 import com.odde.massivemailer.service.impl.SqliteTemplate;
-import jdk.nashorn.internal.ir.debug.JSONWriter;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
