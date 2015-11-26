@@ -85,7 +85,7 @@
 				<configuration>
 					<url>http://localhost:8080/manager/text</url>
 					<server>tomcat7</server>
-					<path>/massive-mail</path>
+					<path></path>
 				</configuration>
 			</plugin>
 			<plugin>
