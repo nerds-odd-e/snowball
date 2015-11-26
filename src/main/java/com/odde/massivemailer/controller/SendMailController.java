@@ -13,6 +13,7 @@ import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.service.MailService;
 import com.odde.massivemailer.service.impl.GMailService;
+import com.odde.massivemailer.service.impl.SMTPConfiguration;
 
 public class SendMailController extends HttpServlet {
 
@@ -21,6 +22,7 @@ public class SendMailController extends HttpServlet {
 	
 		Mail email = processRequest(req);
 		MailService mailService = new GMailService();
+		mailService.setConfiguration(new SMTPConfiguration("myodde@gmail.com", "1234qwer@", "smtp.gmail.com", 587));
 		try {
 			mailService.send(email);
 			resp.sendRedirect("sendemail.jsp?status=success&msg=Email successfully sent&repcnt="+email.getReceipts().size());
