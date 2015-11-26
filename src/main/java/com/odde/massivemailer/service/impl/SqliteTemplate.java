@@ -1,6 +1,4 @@
 package com.odde.massivemailer.service.impl;
-
-import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Template;
 import com.odde.massivemailer.service.TemplateService;
 
@@ -11,12 +9,7 @@ import java.util.List;
 /**
  * Created by Cadet on 11/26/2015.
  */
-public class SqliteTemplate implements TemplateService{
-
-    private String dbName = "jdbc:sqlite:oddemail.db";
-
-    private Statement statement;
-    private Connection connection;
+public class SqliteTemplate extends SqliteBase implements TemplateService{
 
     private static String selectTemplateListSql = "SELECT * FROM TEMPLATE ORDER BY TEMPLATENAME";
 
@@ -65,51 +58,6 @@ public class SqliteTemplate implements TemplateService{
             templateList.add(template);
         }
         return templateList;
-    }
-
-    private Statement openConnection() throws ClassNotFoundException,
-            SQLException {
-
-        this.connectDB(dbName);
-        statement = getStatement();
-        return statement;
-    }
-
-    public void closeConnection() {
-        try {
-            if( statement != null)
-            {
-                statement.close();
-                statement = null;
-            }
-            if( connection != null ) {
-                connection.close();
-                connection = null;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public Connection getConnection() {
-        return connection;
-    }
-
-    public Statement getStatement() throws SQLException {
-        statement = this.connection.createStatement();
-        return statement;
-    }
-
-    public void setConnection(Connection connection) {
-        this.connection = connection;
-    }
-
-    public void connectDB(String url) throws ClassNotFoundException,
-            SQLException {
-        if (connection == null ) {
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection(url);
-        }
     }
 
 }

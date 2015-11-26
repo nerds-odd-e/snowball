@@ -7,13 +7,9 @@ import java.util.List;
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.service.ContactService;
 
-public class SqliteContact implements ContactService {
+public class SqliteContact  extends SqliteBase implements ContactService {
 	private String selectMailSql = "SELECT id, name, email, lastname, company FROM mail";
-
-	private String dbName = "jdbc:sqlite:oddemail.db";
 	private List<ContactPerson> contactList;
-	private Statement statement;
-	private Connection connection;
 
 	private String selectMailFromCompanySql = "SELECT id, name, email, lastname, company FROM mail where company = ";
 
@@ -23,14 +19,6 @@ public class SqliteContact implements ContactService {
 			createIfNotExistTable();
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
-		}
-	}
-
-	public void connectDB(String url) throws ClassNotFoundException,
-			SQLException {
-		if (connection == null ) {
-			Class.forName("org.sqlite.JDBC");
-			connection = DriverManager.getConnection(url);
 		}
 	}
 
@@ -208,45 +196,6 @@ public class SqliteContact implements ContactService {
 		}
 		return contactList;	
 	
-	}
-
-	private Statement openConnection() throws ClassNotFoundException,
-			SQLException {
-
-		this.connectDB(dbName);
-		statement = getStatement();
-		return statement;
-	}
-
-	public void closeConnection() {
-		try {
-			if( statement != null)
-			{
-				statement.close();
-				statement = null;
-			}
-			if( connection != null ) {
-				connection.close();
-				connection = null;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-
-	public Statement getStatement() throws SQLException {
-		statement = this.connection.createStatement();
-		return statement;
-	}
-
-
-	public Connection getConnection() {
-		return connection;
-	}
-
-	public void setConnection(Connection connection) {
-		this.connection = connection;		
 	}
 
 }

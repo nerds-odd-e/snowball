@@ -1,12 +1,10 @@
 package com.odde.massivemailer.service.impl;
 
-import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Template;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
