@@ -5,7 +5,7 @@ Documentation  A resource file containing the application specific keywords
 ...            implements keywords for testing HTML version of the test
 ...            application.
 Library        Selenium2Library 
-Library        CustomKeyword.py
+Library        com.odde.massivemailer.testlibrary.SqliteLibrary
 
 *** Variables ***
 ${SERVER}        localhost:8080
@@ -18,7 +18,6 @@ ${content}       content for test send email
 
 ${DBAPI}          sqlite3
 ${DBNAME}         jdbc:sqlite:oddemail.db
-
 
 
 *** Keywords ***
@@ -75,5 +74,9 @@ Add A Contact          [Arguments]    ${email}
     Click Add Contact
 
 Delete All Contacts
-    clear_all_contacts
-    
+	Clear All Contacts
+
+
+	
+	
+
