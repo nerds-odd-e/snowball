@@ -2,15 +2,13 @@ var templateList = [];
 
 $(document).ready(function() {
 
-//	$("#applytemplate_button").click(function() {
-//		var tem = new Object();
-//		tem.Subject = "Hi , {FirstName}";
-//		tem.Content = "Hey , {Company}";
-//		ApplyTemplateToUI(tem);
-//	});
+	$("#templateList").change(function(evt) {
+        ApplyTemplateToUI(evt.target.value);
+	});
 
     retrieveTemplateListFromServer(function(data) {
         templateList = data;
+   		renderTemplateList(templateList, $('#templateList'));
     });
 });
 
@@ -45,5 +43,7 @@ function ApplyTemplateToUI(templateID)
             return;
         }
     }
-}
 
+    $("#content").val('');
+    $("#subject").val('');
+}

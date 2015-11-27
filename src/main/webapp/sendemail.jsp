@@ -186,8 +186,7 @@
 			whenAddButtonIsClicked();
 		});
 
-		var templateList = retrieveTemplateListFromServer();
-		renderTemplateList(templateList, $('#templateList'));
+
 
 
 
