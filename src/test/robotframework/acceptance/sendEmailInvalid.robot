@@ -9,6 +9,18 @@ ${recipient}     name1@gmail.com; name2@gmail.com
 ${subject}       subject for test send email
 ${content}       content for test send email
 ${invalid_format_recipient}     name1gmail.com
+${Blankformat1}	company:
+${Blankformat2}	company:"
+${Blankformat3}	company:""
+${Companyformat1}	company:"AAA"
+${Companyformat2}	company:"AAA
+${Companyformat3}	company:AAA
+${Companyformat4}	company:A"AA
+${Companyformat5}	company:AAA"
+${Companyformat6}	company:AAA"A"
+${Companyformat7}	company:"AA"BB
+${Companyformat8}	company:"AA"BB"
+
 
 ***Keywords***
 Check Send Button
@@ -29,8 +41,25 @@ Verify value and check button
 	${EMPTY}      ${subject}   ${EMPTY}      Disabled
 	${EMPTY}      ${EMPTY}     ${content}    Disabled
 	${recipient}  ${subject}   ${content}    Enabled
-
+	${invalid_format_recipient}    ${subject}    ${content}	 Disabled
+	${Blankformat1}    ${subject}    ${content}	 Disabled
+	${Blankformat2}    ${subject}    ${content}	 Disabled
+	${Blankformat3}    ${subject}    ${content}	 Disabled
+	${Companyformat1}    ${subject}    ${content}	 Enabled
+	${Companyformat2}    ${subject}    ${content}	 Enabled
+	${Companyformat3}    ${subject}    ${content}	 Enabled
+	${Companyformat4}    ${subject}    ${content}	 Enabled
+	${Companyformat5}    ${subject}    ${content}	 Disabled
+	${Companyformat6}    ${subject}    ${content}	 Disabled
+	${Companyformat7}    ${subject}    ${content}	 Enabled
+	${Companyformat8}    ${subject}    ${content}	 Disabled
+	
+	
+	
+	
+	
 Page show success message when add data correctly and click send button
+	[tags]	  work_in_progress
     Key all email field    ${invalid_format_recipient}    ${subject}    ${content}
     Can click    send_button
     Send Email

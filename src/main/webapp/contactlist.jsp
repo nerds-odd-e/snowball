@@ -61,7 +61,7 @@
 						Contact</a></li>
 				<li class="active"><a href="contactlist.jsp"><span
 						class="glyphicon glyphicon-user" aria-hidden="true"></span>
-						Contact List</a></li>
+						Contacts List</a></li>
 			</ul>
 		</div>
 		<!-- /.navbar-collapse --> </nav>

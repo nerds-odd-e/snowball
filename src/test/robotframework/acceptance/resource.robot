@@ -11,8 +11,12 @@ Library        com.odde.massivemailer.testlibrary.SqliteLibrary
 ${SERVER}        localhost:8080
 ${BROWSER}       chrome
 ${DELAY}         0.5
+${BASE_URL}          http://${SERVER}
 ${SENDMAIL URL}     http://${SERVER}
 ${CONTACT LIST URL}    http://${SERVER}/add_contact.jsp
+
+${LIST_CONTACT_URL}     ${BASE_URL}/contactlist.jsp
+
 ${subject}       subject for test send email
 ${content}       content for test send email
 
@@ -75,8 +79,3 @@ Add A Contact          [Arguments]    ${email}
 
 Delete All Contacts
 	Clear All Contacts
-
-
-	
-	
-

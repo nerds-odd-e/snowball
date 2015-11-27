@@ -9,7 +9,7 @@ import java.sql.Statement;
 
 public class SqliteLibrary {
 
-	protected String dbName = "jdbc:sqlite:oddemail.db";
+	protected String dbName = "jdbc:sqlite:/usr/share/oddemail.db";
 
 	protected Statement statement;
 	protected Connection connection;
