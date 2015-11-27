@@ -1,11 +1,12 @@
 | Item                                                           | Size | Value |
 |----------------------------------------------------------------|----|---|
+| Item                                                                                    | Size |   |
 | Send email to multiple recipients                                                       | 5    |   |
-| Sprint 1                                                                                | 5    |   |
+| *Sprint 1*                                                                              | 5    |   |
 | Sender's display name                                                                   | 2    |   |
 | Add contact                                                                             | 2    |   |
 | Add attribute to contact                                                                | 3    |   |
-| Sprint 2                                                                                | 7    |   |
+| *Sprint 2*                                                                              | 7    |   |
 | Replace attr value                                                                      | M    |   |
 | As a user I want to send email by single "company"                                      | M    |   |
 | Load template                                                                           | S    |   |
@@ -14,6 +15,10 @@
 | Validate body contents                                                                  | S    |   |
 | As a user, I want to send email by mulitple companies                                   | L    |   |
 | As a user, I want to send email by gender in company (multiple attributes)              | L    |   |
+| *Sprint 3*                                                                              |      |   |
+| More detailed reason for not-able-to-send-mail                                          |      |   |
+| Alert of ereasing template (when selecting template)                                    |      |   |
+| Adding attributes when creating new contact                                             |      |   |
 | As a user, I can see successful e-mail sent after I clicked send                        | L    |   |
 | As a user, I want to know how to use attribute to send email. So that I use it corectly | XS   |   |
 | Auto trigger                                                                            |      |   |
