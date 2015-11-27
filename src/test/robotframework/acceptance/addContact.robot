@@ -1,7 +1,7 @@
 *** Settings ***
 Resource          resource.robot
 Suite Setup       Open Browser and Clean Database
-Suite Teardown    Close Browser
+Suite Teardown    Close All Browsers
 Default Tags      contact
 
 *** Variables ***
