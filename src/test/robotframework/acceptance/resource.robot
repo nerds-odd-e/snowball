@@ -73,7 +73,7 @@ Should sent email  [Arguments]    ${msg_cnt}
     Close Browser
 
 I should get an alert dialog with message  [Arguments]    ${alertMessage}
-    Alert Should Be Present    ${alertMessage}          
+     Wait Until Keyword Succeeds    10 sec    1    Alert Should Be Present    ${alertMessage}          
     
 Add A Contact          [Arguments]    ${email}
     Go To              ${CONTACT LIST URL}
