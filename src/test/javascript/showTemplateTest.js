@@ -1,10 +1,11 @@
+var mock_json = [{"Id":1,"TemplateName":"Default Template 1","Subject":"Greeting {FirstName}","Content":"Hi, {FirstName} {LastName} from {Company}"},{"Id":2,"TemplateName":"Greeting Template","Subject":"Greeting {LastName}","Content":"Hello, {FirstName} {LastName} from {Company}"}];
+
 describe('test show template function', function() {
 
 	
 	var rootId = "testContainer";
 	var markup = "<select name='templateList' id='templateList'></select>";
-	var mock_json = [{"Id":1,"TemplateName":"Default Template 1","Subject":"Greeting {FirstName}","Content":"Hi, {FirstName} {LastName} from {Company}"},{"Id":2,"TemplateName":"Greeting Template","Subject":"Greeting {FirstName}","Content":"Hi, {FirstName} {LastName} from {Company}"}];
-	
+
 	beforeEach(function(){
 		var container = document.createElement('div');
 		container.setAttribute('id', rootId);
@@ -44,4 +45,43 @@ describe('test show template function', function() {
 		})	
 
 	});
+});
+
+describe('checkOnChangeTemplate function', function(){
+    var rootId = "testContainer";
+	var markup = "<select id='templateList'> " +
+	                "<option id='blank' value='0'>Blank</option>" +
+			        "<option id='template_1' value='1'>Default Template 1</option>" +
+			      "</select>" +
+			      "<input type='text' id='content'> " +
+                  "<input type='text' id='subject'> ";
+
+    templateList = mock_json;
+	beforeEach(function(){
+		var container = document.createElement('div');
+		container.setAttribute('id', rootId);
+		document.body.appendChild(container);
+		container.innerHTML = markup;
+	});
+
+	afterEach(function() {
+		var container = document.getElementById(rootId);
+		container.parentNode.removeChild(container);
+	});
+
+	it('subject and content should be changed when template 1 is selected',function(){
+		ApplyTemplateToUI(1);
+
+        expect(document.getElementById("subject").value).toBe("Greeting {FirstName}");
+		expect(document.getElementById("content").value).toBe("Hi, {FirstName} {LastName} from {Company}");
+	});
+
+	it('subject and content should be changed when template 2 is selected',function(){
+        ApplyTemplateToUI(2);
+
+        expect(document.getElementById("subject").value).toBe("Greeting {LastName}");
+        expect(document.getElementById("content").value).toBe("Hello, {FirstName} {LastName} from {Company}");
+    });
+
+
 });

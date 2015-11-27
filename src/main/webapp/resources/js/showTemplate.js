@@ -1,27 +1,25 @@
+var templateList = [];
+
 $(document).ready(function() {
 
-	$("#applytemplate_button").click(function() {
-		var tem = new Object();
-		tem.Subject = "Hi , {FirstName}";
-		tem.Content = "Hey , {Company}";
-		ApplyTemplateToUI(tem);
+	$("#templateList").change(function(evt) {
+        ApplyTemplateToUI(evt.target.value);
 	});
 
+    retrieveTemplateListFromServer(function(data) {
+        templateList = data;
+   		renderTemplateList(templateList, $('#templateList'));
+    });
 });
 
-function retrieveTemplateListFromServer()
+function retrieveTemplateListFromServer(callback)
 {
-	var templateList = [];
-
 	$.ajax({
 	    type: 'GET',
 	    url: 'templates',
 	    dataType: 'json',
-	    success: function(data) {templateList = data },
-	    async: false
+	    success: function(data) { callback(data) }
 	});
-
-	return templateList;
 }
 
 function renderTemplateList(json, selector)
@@ -33,8 +31,19 @@ function renderTemplateList(json, selector)
 	})
 }
 
-function ApplyTemplateToUI(template)
+function ApplyTemplateToUI(templateID)
 {
-	$("#subject").val(template.Subject);
-	$("#content").val(template.Content);
+    for (var i = 0; i < templateList.length; i++) {
+        if (templateList[i].Id == templateID) {
+            var selectedTemplate = templateList[i];
+
+            $("#content").val(templateList[i].Content);
+            $("#subject").val(templateList[i].Subject);
+
+            return;
+        }
+    }
+
+    $("#content").val('');
+    $("#subject").val('');
 }
