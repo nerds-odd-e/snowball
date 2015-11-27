@@ -3,6 +3,7 @@ package com.odde.massivemailer;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,10 +30,15 @@ public class SendMailControllerTest {
 		Mockito.when(httpReq.getParameter("recipient")).thenReturn(recipient);
 		Mockito.when(httpReq.getParameter("content")).thenReturn("content-na-ka");
 		Mockito.when(httpReq.getParameter("subject")).thenReturn("suject for test");
-		
-		Mail mail = mailController.processRequest(httpReq);
-		
-	    Assert.assertEquals("suject for test",mail.getSubject());
+
+		Mail mail = null;
+		try {
+			mail = mailController.processRequest(httpReq);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		Assert.assertEquals("suject for test",mail.getSubject());
 	    List<String> repList = mail.getReceipts();
 	    Assert.assertEquals("name1@gmail.com",repList.get(0));
 	    Assert.assertEquals("name2@gmail.com",repList.get(1));
