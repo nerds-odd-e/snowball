@@ -59,7 +59,11 @@ function isRecipientEmailFormat(value) {
 
 function isRecipientCompanyFormat(value)  {
 	var pattern = new RegExp("company:\"?[^\"].*");
-	return pattern.test(value);
+	return pattern.test(value) && !isInvalidCompanyFormat(value.split(':')[1]);
+}
+
+function isInvalidCompanyFormat(value) {
+	return (((value[0] != '"') && (value.slice(-1) == '"')) || (value.replace(/[^"]/g, "").length > 2 ));
 }
 
 function isBlank(value) {

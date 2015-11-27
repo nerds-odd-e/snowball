@@ -88,14 +88,17 @@ describe('isRecipientCompanyFormat function', function(){
 	});
 	
 	it('should true when input company format 5', function(){
-		expect(isRecipientCompanyFormat("company:AAA\"")).toBe(true);
+		expect(isRecipientCompanyFormat("company:AAA\"")).toBe(false);
 	});
 	
 	it('should true when input company format 6', function(){
-		expect(isRecipientCompanyFormat("company:AAA\"A\"")).toBe(true);
+		expect(isRecipientCompanyFormat("company:AAA\"A\"")).toBe(false);
 	});
 	it('should true when input company format 7', function(){
 		expect(isRecipientCompanyFormat("company:\"AA\"BB")).toBe(true);
+	});
+	it('should true when input company format 8', function(){
+		expect(isRecipientCompanyFormat("company:\"AA\"BB\"")).toBe(false);
 	});
 });
 

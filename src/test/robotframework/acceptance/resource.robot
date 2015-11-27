@@ -5,7 +5,7 @@ Documentation  A resource file containing the application specific keywords
 ...            implements keywords for testing HTML version of the test
 ...            application.
 Library        Selenium2Library 
-Library        CustomKeyword.py
+Library        com.odde.massivemailer.testlibrary.SqliteLibrary
 
 *** Variables ***
 ${SERVER}        localhost:8080
@@ -22,7 +22,6 @@ ${content}       content for test send email
 
 ${DBAPI}          sqlite3
 ${DBNAME}         jdbc:sqlite:oddemail.db
-
 
 
 *** Keywords ***
@@ -71,7 +70,7 @@ Should sent email  [Arguments]    ${msg_cnt}
     Close Browser
 
 I should get an alert dialog with message  [Arguments]    ${alertMessage}
-    Alert Should Be Present    ${alertMessage}          
+     Wait Until Keyword Succeeds    10 sec    1    Alert Should Be Present    ${alertMessage}          
     
 Add A Contact          [Arguments]    ${email}
     Go To              ${CONTACT LIST URL}
@@ -79,5 +78,4 @@ Add A Contact          [Arguments]    ${email}
     Click Add Contact
 
 Delete All Contacts
-    clear_all_contacts
-    
+	Clear All Contacts
