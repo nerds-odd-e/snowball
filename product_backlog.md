@@ -16,6 +16,7 @@
 | As a user, I want to send email by mulitple companies                                   | L    |   |
 | As a user, I want to send email by gender in company (multiple attributes)              | L    |   |
 | *Sprint 3*                                                                              |      |   |
+| Issue: secret ...                                                                       |      |   |
 | More detailed reason for not-able-to-send-mail                                          |      |   |
 | Alert of ereasing template (when selecting template)                                    |      |   |
 | Adding attributes when creating new contact                                             |      |   |
