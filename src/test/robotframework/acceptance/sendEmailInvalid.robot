@@ -19,6 +19,7 @@ ${Companyformat4}	company:A"AA
 ${Companyformat5}	company:AAA"
 ${Companyformat6}	company:AAA"A"
 ${Companyformat7}	company:"AA"BB
+${Companyformat8}	company:"AA"BB"
 
 
 ***Keywords***
@@ -48,9 +49,10 @@ Verify value and check button
 	${Companyformat2}    ${subject}    ${content}	 Enabled
 	${Companyformat3}    ${subject}    ${content}	 Enabled
 	${Companyformat4}    ${subject}    ${content}	 Enabled
-	${Companyformat5}    ${subject}    ${content}	 Enabled
-	${Companyformat6}    ${subject}    ${content}	 Enabled
+	${Companyformat5}    ${subject}    ${content}	 Disabled
+	${Companyformat6}    ${subject}    ${content}	 Disabled
 	${Companyformat7}    ${subject}    ${content}	 Enabled
+	${Companyformat8}    ${subject}    ${content}	 Disabled
 	
 	
 	
