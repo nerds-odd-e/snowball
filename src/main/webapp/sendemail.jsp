@@ -112,6 +112,15 @@
 								</div>
 								<div class="panel-body">
 									<div class="row">
+										<div class="col-lg-1">Template:</div>
+										<div class="col-lg-11">
+											<select name="templateList" id="templateList"></select>
+											
+										</div>
+									</div>
+
+									<br />
+									<div class="row">
 										<div class="col-lg-1">To:</div>
 										<div class="col-lg-11">
 											<input type="text" class="form-control" name="recipient"
@@ -163,6 +172,7 @@
 <script type="text/javascript" src="resources/js/sendemail.js"></script>
 <script type="text/javascript" src="resources/js/showContact.js"></script>
 <script type="text/javascript" src="resources/js/selectContact.js"></script>
+<script type="text/javascript" src="resources/js/showTemplate.js"></script>
 
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -175,6 +185,12 @@
 		$('#add_contact_button').click(function () {
 			whenAddButtonIsClicked();
 		});
+
+		var templateList = retrieveTemplateListFromServer();
+		renderTemplateList(templateList, $('#templateList'));
+
+
+
 	});
 </script>
 </html>
