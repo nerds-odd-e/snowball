@@ -11,12 +11,15 @@ Display Contacts In The Contact List
     Then Contact Should Be There	terry1@gmail.com
     And Company Should Be There	terry1@gmail.com	todo company
 
-# Update Company In The Contact List
-# 	Given There is a contact    terry1@gmail.com  
-#     And There is a contact    terry2@gmail.com
-#     When Open Browser To See Contacts
-#    	And Update Contact Company	terry2@gmail.com	Com A
-#     Then Company Should Be There	terry2@gmail.com	Com A
+Update Company In The Contact List
+ 	Given There is a contact    terry1@gmail.com  
+     And There is a contact    terry2@gmail.com
+     When Open Browser To See Contacts
+    	And Update Contact Company	terry1@gmail.com	ComA
+    	And Update Contact Company	terry2@gmail.com	ComA
+    
+	Then Company Should Be There	terry1@gmail.com	ComA
+		And Company Should Be There	terry2@gmail.com	ComA
 
 *** Keywords ***
 Open Browser To See Contacts

@@ -136,6 +136,8 @@
 					</nonCriticalTags>
 					<includes>
 						<include>contact</include>
+						<include>send_mail</include>
+						<include>template</include>
 					</includes>
 					<libdoc/>
 					<testdoc/>
