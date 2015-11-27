@@ -6,6 +6,7 @@ Documentation  A resource file containing the application specific keywords
 ...            application.
 Library        Selenium2Library 
 Library        com.odde.massivemailer.testlibrary.SqliteLibrary
+Library        CustomKeyword.py
 
 *** Variables ***
 ${SERVER}        localhost:8080
