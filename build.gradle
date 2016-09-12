@@ -11,10 +11,27 @@ targetCompatibility = 1.7
 
 
 
+configurations {
+    cucumberRuntime {
+        extendsFrom testRuntime
+    }
+}
+
 repositories {
-        
      maven { url "http://repo.maven.apache.org/maven2" }
 }
+
+task cucumber() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "cucumber.api.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'gradle.cucumber', 'src/test/features']
+        }
+    }
+}
+
 dependencies {
     compile group: 'com.sun.mail', name: 'javax.mail', version:'1.5.4'
     compile group: 'org.xerial', name: 'sqlite-jdbc', version:'3.8.11.2'
@@ -26,4 +43,8 @@ dependencies {
     testCompile group: 'org.springframework', name: 'spring-core', version:'2.0.8'
     compile group: 'javax.servlet', name: 'javax.servlet-api', version:'3.1.0'
     compile group: 'org.javalite', name: 'db-migrator-maven-plugin', version:'1.4.11'
+
+
+    testCompile 'info.cukes:cucumber-java:1.2.4'
+    testCompile 'info.cukes:cucumber-junit:1.2.4'
 }
