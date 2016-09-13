@@ -21,8 +21,12 @@ repositories {
     jcenter()
 }
 
+task jettyStart(type: JettyRun) {
+    daemon = true
+}
+
 task cucumber() {
-    dependsOn assemble, compileTestJava
+    dependsOn assemble, jettyStart
     doLast {
         javaexec {
             main = "cucumber.api.cli.Main"
@@ -31,6 +35,8 @@ task cucumber() {
         }
     }
 }
+
+check.dependsOn(cucumber)
 
 dependencies {
     compile group: 'com.sun.mail', name: 'javax.mail', version:'1.5.4'
