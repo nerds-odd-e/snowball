@@ -68,7 +68,7 @@ task cucumber() {
     }
 }
 
-check.dependsOn(cucumber)
+check.dependsOn(['karmaRun', cucumber])
 
 dependencies {
 
