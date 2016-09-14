@@ -1,6 +1,19 @@
+
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "gradle.plugin.com.craigburke.gradle:jasmine-gradle:1.2.0"
+    }
+}
+
 apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'jetty'
+apply plugin: "com.craigburke.jasmine"
 
 group = 'com.odde'
 version = '0.0.1-SNAPSHOT'
