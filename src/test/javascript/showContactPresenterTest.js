@@ -8,7 +8,7 @@ describe('Show Contact Selection Page', function() {
 	
 	it('should call renderContact when showContact',function() {
 		spyOn(mockView, 'renderContact');
-		spyOn(mockView, 'email').andReturn('a@b.com');
+		spyOn(mockView, 'email').and.returnValue('a@b.com');
 		
 		presenter.showContact();
 		

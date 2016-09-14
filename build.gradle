@@ -1,5 +1,6 @@
 plugins {
     id "org.flywaydb.flyway" version "4.0.3"
+    id 'com.craigburke.karma' version '1.4.3'
 }
 apply plugin: 'java'
 apply plugin: 'war'
@@ -30,6 +31,24 @@ repositories {
 
 gretty {
     port = 8070
+}
+
+karma {
+    basePath = '../src/main/'
+    colors = true
+    profile('default'){
+        libraryBases = ['webapp/resources/lib/**/']
+        libraryFiles = ['jquery.js', 'bootstrap.js'] // <1>
+
+        sourceBases = ['webapp/resources/js/']
+        sourceFiles = ['**/*.js'] // <2>
+
+        testBases = ['../test/javascript/']
+        testFiles = ['**/*Test.js'] // <3>
+    }
+
+    browsers = ['PhantomJS']
+    frameworks = ['jasmine']
 }
 
 flyway {

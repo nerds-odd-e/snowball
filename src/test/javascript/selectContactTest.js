@@ -21,7 +21,7 @@ describe('test whenAddButtonIsClicked function', function(){
 		
 		var mocked_selected_contact = "newbody@gmail.com;";
 		
-		spyOn(window, 'getCurrentSelectedContactValue').andReturn(mocked_selected_contact);
+		spyOn(window, 'getCurrentSelectedContactValue').and.returnValue(mocked_selected_contact);
 		
 		whenAddButtonIsClicked();
 
