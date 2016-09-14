@@ -27,7 +27,9 @@ repositories {
 
 task cucumber() {
     dependsOn assemble, testClasses, 'appBeforeIntegrationTest'
+    finalizedBy 'appAfterIntegrationTest'
     doLast {
+        appAfterIntegrationTest
         javaexec {
             main = "cucumber.api.cli.Main"
             classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
