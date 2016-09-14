@@ -1,3 +1,6 @@
+plugins {
+    id "org.flywaydb.flyway" version "4.0.3"
+}
 apply plugin: 'java'
 apply plugin: 'war'
 apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
@@ -25,8 +28,12 @@ repositories {
     jcenter()
 }
 
+flyway {
+    url = 'jdbc:sqlite:./oddemail.db'
+}
+
 task cucumber() {
-    dependsOn assemble, testClasses, 'appBeforeIntegrationTest'
+    dependsOn assemble, testClasses, 'flywayClean', 'appBeforeIntegrationTest'
     finalizedBy 'appAfterIntegrationTest'
     doLast {
         appAfterIntegrationTest
@@ -37,8 +44,6 @@ task cucumber() {
         }
     }
 }
-
-gretty { integrationTestTask = cucumber }
 
 check.dependsOn(cucumber)
 
@@ -58,6 +63,7 @@ dependencies {
 
     testCompile 'info.cukes:cucumber-java:1.2.4'
     testCompile 'info.cukes:cucumber-junit:1.2.4'
+    compile 'org.flywaydb:flyway-core:3.2.1'
 
     testCompile "org.seleniumhq.selenium:selenium-java:$seleniumVersion"
     testCompile "org.seleniumhq.selenium:selenium-server:$seleniumVersion"

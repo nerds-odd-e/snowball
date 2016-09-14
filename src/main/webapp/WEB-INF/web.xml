@@ -41,4 +41,14 @@
 		<servlet-name>TemplatesController</servlet-name>
 		<url-pattern>/templates</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>DBResetController</servlet-name>
+		<servlet-class>com.odde.massivemailer.controller.DBResetController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DBResetController</servlet-name>
+		<url-pattern>/reset</url-pattern>
+	</servlet-mapping>
+
 </web-app>

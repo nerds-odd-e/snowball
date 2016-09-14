@@ -2,18 +2,19 @@ package gradle.cucumber;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import gradle.cucumber.driver.SingleDrive;
+import gradle.cucumber.driver.WebDriverWrapper;
+import org.flywaydb.core.Flyway;
 
 public class Hooks {
-    private WebDriver driver = SingleDrive.getDriver();
 
     @Before
     public void beforeScenario() {
+        SingleDrive.getDriver().visit("http://localhost:8080/massive_mailer/reset.jsp");
     }
 
     @After
     public void afterScenario() {
-        driver.close();
+        SingleDrive.reset();
     }
 }
