@@ -15,7 +15,7 @@ public class MyStepdefs {
 
     @When("^Add A Contact \"([^\"]*)\"$")
     public void addAContact(String arg0) throws Throwable {
-        driver.get("http://google.com");
+        driver.get("http://localhost:8080/massive_mailer");
     }
 
     @Then("^I should get an alert dialog with message \"([^\"]*)\"$")
