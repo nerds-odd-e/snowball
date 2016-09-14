@@ -23,4 +23,5 @@ public interface ContactService {
 
 	int addNewContact(String name, String email, String lastname, String company);
 
+	void destroyAll();
 }

@@ -87,7 +87,19 @@ public class SqliteContact  extends SqliteBase implements ContactService {
 		}
 		return rowAffected;
 	}
-	
+
+	@Override
+	public void destroyAll() {
+		try {
+			openConnection();
+            statement.execute("DELETE FROM mail;");
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection();
+		}
+	}
+
 	private int saveContactToDatabase(String name, String email, String lastname, String company)
 			throws SQLException {
 		int rowAffected = 0;

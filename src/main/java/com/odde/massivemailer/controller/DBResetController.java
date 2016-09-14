@@ -1,5 +1,7 @@
 package com.odde.massivemailer.controller;
 
+import com.odde.massivemailer.service.ContactService;
+import com.odde.massivemailer.service.impl.SqliteContact;
 import org.flywaydb.core.Flyway;
 
 import javax.servlet.ServletException;
@@ -10,12 +12,15 @@ import java.io.IOException;
 
 public class DBResetController extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    private ContactService contactService;
+
+    public DBResetController() {
+        contactService = new SqliteContact();
+    }
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //Flyway flyway = new Flyway();
-        //flyway.setDataSource("jdbc:sqlite:./oddemail.db", "", "");
-        //flyway.clean();
-        resp.getWriter().write("haha");
+        contactService.destroyAll();
+        resp.getWriter().write("db is reset");
 
     }
 }

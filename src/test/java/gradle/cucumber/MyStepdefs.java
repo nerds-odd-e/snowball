@@ -30,6 +30,8 @@ public class MyStepdefs {
 
     @Given("^\"([^\"]*)\" is a contact already$")
     public void is_a_contact_already(String email) throws Throwable {
+        addAContact(email);
+        iShouldGetAnAlertDialogWithMessage("Add contact successfully");
     }
 
 }
