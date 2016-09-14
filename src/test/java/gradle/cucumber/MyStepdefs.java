@@ -11,7 +11,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class MyStepdefs {
 
-    private WebDriver driver = new FirefoxDriver();
+    private WebDriver driver = SingleDrive.getDriver();
 
     @When("^Add A Contact \"([^\"]*)\"$")
     public void addAContact(String arg0) throws Throwable {
