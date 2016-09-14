@@ -10,7 +10,7 @@ public class Hooks {
 
     @Before
     public void beforeScenario() {
-        SingleDrive.getDriver().visit("http://localhost:8080/massive_mailer/reset");
+        SingleDrive.getDriver().visit("http://localhost:8070/massive_mailer/reset");
     }
 
     @After

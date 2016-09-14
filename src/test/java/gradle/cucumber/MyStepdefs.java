@@ -13,7 +13,7 @@ public class MyStepdefs {
 
     @When("^Add A Contact \"([^\"]*)\"$")
     public void addAContact(String email) throws Throwable {
-        driver.visit("http://localhost:8080/massive_mailer/add_contact.jsp");
+        driver.visit("http://localhost:8070/massive_mailer/add_contact.jsp");
         driver.text_field("email", email);
         driver.click_button("add_button");
     }

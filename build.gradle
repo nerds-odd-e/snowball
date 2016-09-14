@@ -28,6 +28,10 @@ repositories {
     jcenter()
 }
 
+gretty {
+    port = 8070
+}
+
 flyway {
     url = 'jdbc:sqlite:./oddemail.db'
 }
