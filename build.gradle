@@ -19,6 +19,9 @@ ext {
     seleniumVersion = '2.53.1'
 }
 
+task getHomeDir << {
+    println gradle.gradleHomeDir
+}
 configurations {
     cucumberRuntime {
         extendsFrom testRuntime
