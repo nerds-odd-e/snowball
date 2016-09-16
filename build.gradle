@@ -1,6 +1,6 @@
 buildscript {
     dependencies {
-        classpath 'com.github.markusbernhardt:robotframework-selenium2library-java:1.4.0.7'
+        classpath 'com.github.markusbernhardt:robotframework-selenium2library-java:1.4.0.8'
     }
 }
 
