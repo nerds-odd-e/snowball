@@ -1,11 +1,6 @@
-buildscript {
-    dependencies {
-        classpath 'com.github.markusbernhardt:robotframework-selenium2library-java:1.4.0.8'
-    }
-}
 
 plugins {
-    id "org.flywaydb.flyway" version "4.0.3"
+    //id "org.flywaydb.flyway" version "4.0.3"
     id 'com.craigburke.karma' version '1.4.3'
     id "org.roboscratch.robot" version "0.1.1"
 }
@@ -15,7 +10,6 @@ apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.p
 
 group = 'com.odde'
 version = '0.0.1-SNAPSHOT'
-
 description = """massive_mailer"""
 
 sourceCompatibility = 1.7
@@ -26,20 +20,12 @@ ext {
     seleniumVersion = '2.53.1'
 }
 
-task getHomeDir << {
-    println gradle.gradleHomeDir
-}
 configurations {
     cucumberRuntime {
         extendsFrom testRuntime
     }
 }
 
-runrobot {
-    dependsOn 'flywayClean', 'appBeforeIntegrationTest'
-    finalizedBy 'appAfterIntegrationTest'
-    data_sources = 'src/test/robotframework/acceptance/'
-}
 
 repositories {
     jcenter()
@@ -67,12 +53,8 @@ karma {
     frameworks = ['jasmine']
 }
 
-flyway {
-    url = 'jdbc:sqlite:./oddemail.db'
-}
-
 task cucumber() {
-    dependsOn assemble, testClasses, 'flywayClean', 'appBeforeIntegrationTest'
+    dependsOn assemble, testClasses, 'appBeforeIntegrationTest'
     finalizedBy 'appAfterIntegrationTest'
     doLast {
         appAfterIntegrationTest

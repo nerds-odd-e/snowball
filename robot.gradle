@@ -1,0 +1,13 @@
+buildscript {
+    dependencies {
+        classpath 'com.github.markusbernhardt:robotframework-selenium2library-java:1.4.0.8'
+    }
+}
+apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
+gretty { port = 8070 }
+
+runrobot {
+    dependsOn 'appBeforeIntegrationTest'
+    finalizedBy 'appAfterIntegrationTest'
+    data_sources = 'src/test/robotframework/acceptance/'
+}
