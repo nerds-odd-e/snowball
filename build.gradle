@@ -1,6 +1,13 @@
+buildscript {
+    dependencies {
+        classpath 'com.github.markusbernhardt:robotframework-selenium2library-java:1.4.0.8'
+    }
+}
+
 plugins {
     id "org.flywaydb.flyway" version "4.0.3"
     id 'com.craigburke.karma' version '1.4.3'
+    id "org.roboscratch.robot" version "0.1.1"
 }
 apply plugin: 'java'
 apply plugin: 'war'
@@ -26,6 +33,12 @@ configurations {
     cucumberRuntime {
         extendsFrom testRuntime
     }
+}
+
+runrobot {
+    dependsOn 'flywayClean', 'appBeforeIntegrationTest'
+    finalizedBy 'appAfterIntegrationTest'
+    data_sources = 'src/test/robotframework/acceptance/'
 }
 
 repositories {

@@ -5,12 +5,11 @@ Documentation  A resource file containing the application specific keywords
 ...            implements keywords for testing HTML version of the test
 ...            application.
 Library        Selenium2Library 
-Library        com.odde.massivemailer.testlibrary.SqliteLibrary
 Library        CustomKeyword.py
 
 *** Variables ***
-${SERVER}        localhost:8080
-${BROWSER}       chrome
+${SERVER}        localhost:8070/massive_mailer
+${BROWSER}       ff
 ${DELAY}         0.5
 ${BASE_URL}          http://${SERVER}
 ${SENDMAIL URL}     http://${SERVER}
