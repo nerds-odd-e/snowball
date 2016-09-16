@@ -10,15 +10,15 @@
 | Replace attr value                                                                      | M    |   |
 | As a user I want to send email by single "company"                                      | M    |   |
 | Load template                                                                           | S    |   |
+| *Sprint 3*                                                                              |      |   |
+| Issue: secret ...                                                                       |      |   |
+| More detailed reason for not-able-to-send-mail                                          |      |   |
+| Alert of ereasing template (when selecting template)                                    |      |   |
 | Save template                                                                           | M    |   |
 | As a user, I want to see preview contact list before send e-mail                        | M    |   |
 | Validate body contents                                                                  | S    |   |
 | As a user, I want to send email by mulitple companies                                   | L    |   |
 | As a user, I want to send email by gender in company (multiple attributes)              | L    |   |
-| *Sprint 3*                                                                              |      |   |
-| Issue: secret ...                                                                       |      |   |
-| More detailed reason for not-able-to-send-mail                                          |      |   |
-| Alert of ereasing template (when selecting template)                                    |      |   |
 | Adding attributes when creating new contact                                             |      |   |
 | As a user, I can see successful e-mail sent after I clicked send                        | L    |   |
 | As a user, I want to know how to use attribute to send email. So that I use it corectly | XS   |   |
