@@ -2,8 +2,6 @@ package com.odde.massivemailer.controller;
 
 import com.odde.massivemailer.service.ContactService;
 import com.odde.massivemailer.service.impl.SqliteContact;
-import org.flywaydb.core.Flyway;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

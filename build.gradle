@@ -1,6 +1,5 @@
 
 plugins {
-    //id "org.flywaydb.flyway" version "4.0.3"
     id 'com.craigburke.karma' version '1.4.3'
     id "org.roboscratch.robot" version "0.1.1"
 }
