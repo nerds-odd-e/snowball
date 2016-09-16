@@ -1,6 +1,6 @@
 buildscript {
     dependencies {
-        classpath 'com.github.markusbernhardt:robotframework-selenium2library-java:1.4.0.8'
+        classpath 'com.github.markusbernhardt:robotframework-selenium2library-java:1.4.0.7'
     }
 }
 
@@ -38,7 +38,7 @@ configurations {
 runrobot {
     dependsOn 'flywayClean', 'appBeforeIntegrationTest'
     finalizedBy 'appAfterIntegrationTest'
-    data_sources = 'src/test/robotframework/acceptance/sendEmailInvalid.robot'
+    data_sources = 'src/test/robotframework/acceptance/'
 }
 
 repositories {
