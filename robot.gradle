@@ -39,6 +39,7 @@ repositories {
 
 gretty {
     port = 8075
+    servicePort = 8964
 }
 
 dependencies {
