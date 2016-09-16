@@ -4,7 +4,12 @@ buildscript {
     }
 }
 apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
-gretty { port = 8070 }
+
+repositories {
+    jcenter()
+}
+
+gretty { port = 8075 }
 
 runrobot {
     dependsOn 'appBeforeIntegrationTest'

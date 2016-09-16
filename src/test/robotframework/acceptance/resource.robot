@@ -8,7 +8,7 @@ Library        Selenium2Library
 Library        CustomKeyword.py
 
 *** Variables ***
-${SERVER}        localhost:8070/massive_mailer
+${SERVER}        localhost:8075/massive_mailer
 ${BROWSER}       ff
 ${DELAY}         0.5
 ${BASE_URL}          http://${SERVER}
