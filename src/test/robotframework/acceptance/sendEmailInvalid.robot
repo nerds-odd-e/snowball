@@ -54,14 +54,4 @@ Verify value and check button
 	${Companyformat7}    ${subject}    ${content}	 Enabled
 	${Companyformat8}    ${subject}    ${content}	 Disabled
 	
-	
-	
-	
-	
-Page show success message when add data correctly and click send button
-	[tags]	  work_in_progress
-    Key all email field    ${invalid_format_recipient}    ${subject}    ${content}
-    Can click    send_button
-    Send Email
-    Page Should Contain    fail
 

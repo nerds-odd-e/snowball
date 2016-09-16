@@ -14,6 +14,7 @@ ${DELAY}         0.5
 ${BASE_URL}          http://${SERVER}
 ${SENDMAIL URL}     http://${SERVER}
 ${CONTACT LIST URL}    http://${SERVER}/add_contact.jsp
+${RESET DATABASE URL}    http://${SERVER}/reset
 
 ${LIST_CONTACT_URL}     ${BASE_URL}/contactlist.jsp
 
@@ -78,4 +79,5 @@ Add A Contact          [Arguments]    ${email}
     Click Add Contact
 
 Delete All Contacts
-	Clear All Contacts
+    Open Browser  ${RESET DATABASE URL}  ${BROWSER}
+    Close Browser

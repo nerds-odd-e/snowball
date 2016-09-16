@@ -38,7 +38,7 @@ configurations {
 runrobot {
     dependsOn 'flywayClean', 'appBeforeIntegrationTest'
     finalizedBy 'appAfterIntegrationTest'
-    data_sources = 'src/test/robotframework/acceptance/'
+    data_sources = 'src/test/robotframework/acceptance/sendEmailInvalid.robot'
 }
 
 repositories {

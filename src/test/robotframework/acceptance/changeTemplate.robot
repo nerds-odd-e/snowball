@@ -16,7 +16,7 @@ There is a template
     insert_default_template
 
 Cleanup Template
-    clear_template
+    Delete All Contacts
 
 Select a template    [Arguments]    ${textboxID}
     Select From List  id=templateList    ${textboxID}
