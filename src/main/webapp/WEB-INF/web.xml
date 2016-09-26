@@ -3,6 +3,10 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5">
 
+	<listener>
+		<listener-class>com.odde.massivemailer.MassiveMailerServletContextListener</listener-class>
+	</listener>
+
 	<welcome-file-list>
 		<welcome-file>sendemail.jsp</welcome-file>
 	</welcome-file-list>
