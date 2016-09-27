@@ -10,7 +10,6 @@
 .profile
 .idea/
 *.db
-**/**/*.png
 **/**/*.pyc
 **/**/CustomKeyword.py
 **/**/log.html

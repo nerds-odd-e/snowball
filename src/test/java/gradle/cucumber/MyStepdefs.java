@@ -30,8 +30,13 @@ public class MyStepdefs {
     }
 
     @Then("^Element \"([^\"]*)\" Should Contain \"([^\"]*)\"$")
-    public void elementShouldContain(String element, String text) throws Throwable {
-        driver.elementShouldContain(element, text);
+    public void expectElementWithIdToContainText(String element, String text) throws Throwable {
+        driver.expectElementWithIdToContainText(element, text);
+    }
+
+    @And("^Page Should Contain Exactly (\\d+) \"([^\"]*)\"$")
+    public void pageShouldContainExactlyNElements(int count, String text) throws Throwable {
+        driver.expectPageToContainExactlyNElements(text, count);
     }
 
     @Given("^\"([^\"]*)\" is a contact already$")
@@ -46,8 +51,8 @@ public class MyStepdefs {
     }
 
     @Then("^Page should be redirected to \"([^\"]*)\"$")
-    public void pageIsAt(String page) throws Throwable{
-        driver.isAtURL(BASE_URL + page + ".jsp");
+    public void pageRedirectTo(String page) throws Throwable {
+        driver.expectRedirect(page);
     }
 
     @And("^Contacts page should contain \"([^\"]*)\"$")
@@ -56,23 +61,16 @@ public class MyStepdefs {
         pageShouldContain(email);
     }
 
+    @And("^Contacts page should contain exactly (\\d+) \"([^\"]*)\"$")
+    public void contactsListPageShouldContain(int count, String email) throws Throwable{
+        driver.visit(BASE_URL + "contactlist.jsp");
+        pageShouldContainExactlyNElements(count, email);
+    }
+
     private void loginToPage(String url, String email) throws Throwable{
         driver.visit(url);
         driver.text_field("email", email);
         driver.click_button("add_button");
-    }
-
-    @Given("^I am at Emerson's landing page$")
-    public void iAmAtEmersonsLandingPage() throws Throwable {
-        driver.visit(BASE_URL + "emersons.jsp");
-        driver.findElementById("inputDistance");
-        driver.findElementById("btnCreate");
-    }
-
-    @When("^I submit a distance of (\\d+)$")
-    public void submtValidDistance(int dist) throws Throwable {
-        driver.text_field("inputDistance", Integer.toString(dist));
-        driver.click_button("btnCreate");
     }
 
 }

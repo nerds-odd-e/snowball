@@ -2,6 +2,7 @@ Feature: Game login
   As the player I want to be able to input my email address
   so that I can play the game.
 
+  @wip
   Scenario Outline: Checking invalid email
     When Login with email "<email>"
     Then Element "error_message" Should Contain "Invalid email provided!"
@@ -22,4 +23,4 @@ Feature: Game login
     Given "terry@odd-e.com" is a contact already
     When Login with email "terry@odd-e.com"
     Then Page should be redirected to "game_player"
-    And Contacts page should contain "terry@odd-e.com"
+    And Contacts page should contain exactly 1 "terry@odd-e.com"

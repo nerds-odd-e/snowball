@@ -26,7 +26,7 @@ public class WebDriverWrapper {
         driver.quit();
     }
 
-    public void isAtURL(String url){
+    public void isAtURL(String url) {
         assertTrue(driver.getCurrentUrl().equals(url));
     }
 
@@ -56,18 +56,23 @@ public class WebDriverWrapper {
         alert.accept();
     }
 
+    public void expectRedirect(String url) {
+        WebDriverWait wait = new WebDriverWait(driver, 2);
+        wait.until(ExpectedConditions.urlContains(url));
+    }
+
     public void pageShouldContain(String text) {
         String bodyText = driver.findElement(By.tagName("body")).getText();
         assertTrue("Text not found!", bodyText.contains(text));
     }
 
-    public void elementShouldContain(String elementName, String text) {
-        String elementText = findElementById(elementName).getText();
-        assertTrue("Text not found!", elementText.contains(text));
+    public void expectElementWithIdToContainText(String id, String text) {
+        assertTrue("Text not found!", findElementById(id).getText().contains(text));
     }
 
-    public void expectElementWithText(String id, String text) {
-        String elementText = findElementById(id).getText();
-        assertTrue(text, elementText.contains(text));
+    public void expectPageToContainExactlyNElements(String text, int count) {
+        List<WebElement> elements = driver.findElements(By.xpath("//*[contains(text(),'"+text+"')]"));
+        assertEquals(elements.size(), count);
     }
 }
+
