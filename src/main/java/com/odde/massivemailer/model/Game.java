@@ -1,23 +1,11 @@
 package com.odde.massivemailer.model;
 
-/**
- * Created by wenjie on 27/9/16.
- */
-public class Game {
+public interface Game {
+    int getDistance();
 
-    private int distance;
+    void setDistance(int t_Dist);
 
-    public Game(){
-        this.distance = 0;
-    }
+    int player1Roll();
 
-    public int getDistance(){
-        return this.distance;
-    }
-
-    public void setDistance(int t_Dist){
-        if(t_Dist > -1){
-            this.distance = t_Dist;
-        }
-    }
+    int getPlayer1Position();
 }
