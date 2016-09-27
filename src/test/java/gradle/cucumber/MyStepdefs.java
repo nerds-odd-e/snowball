@@ -39,8 +39,8 @@ public class MyStepdefs {
     }
 
     @Then("^Page should be redirected to \"([^\"]*)\"$")
-    public void pageIsAt(String url) throws Throwable{
-        driver.isAtURL(url);
+    public void pageIsAt(String page) throws Throwable{
+        driver.isAtURL("http://localhost:8070/massive_mailer/" + page + ".jsp");
     }
 
     @And("^Contacts page should contain \"([^\"]*)\"$")
