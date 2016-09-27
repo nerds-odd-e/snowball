@@ -3,9 +3,13 @@ package gradle.cucumber.driver;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.SystemClock;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -52,6 +56,28 @@ public class WebDriverWrapper {
     public void pageShouldContain(String text) {
         String bodyText = driver.findElement(By.tagName("body")).getText();
         assertTrue("Text not found!", bodyText.contains(text));
+    }
+
+    public void pageShouldContainElementTagWithAttribute(String tag, String attr, String attrValue) {
+        List<WebElement> listTextbox = driver.findElements(By.tagName(tag));
+        for(int i = 0; i < listTextbox.size(); i++) {
+            if(listTextbox.get(i).getAttribute(attr).contains(attrValue)) {
+                assertTrue(true);
+                return;
+            }
+        }
+        assertTrue(tag + " not found!", false);
+    }
+
+    public void pageShouldContainElementTagWithText(String tag, String text) {
+        List<WebElement> listTextbox = driver.findElements(By.tagName(tag));
+        for(int i = 0; i < listTextbox.size(); i++) {
+            if(listTextbox.get(i).getText().contains(text)) {
+                assertTrue(true);
+                return;
+            }
+        }
+        assertTrue(tag + " not found!", false);
     }
 
     public void expectElement(String name, String text) {
