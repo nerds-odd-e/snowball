@@ -11,10 +11,11 @@ import gradle.cucumber.driver.WebDriverWrapper;
 public class MyStepdefs {
 
     private WebDriverWrapper driver = SingleDrive.getDriver();
+    private String BASE_URL = "http://localhost:8070/massive_mailer/";
 
     @When("^Add A Contact \"([^\"]*)\"$")
     public void addAContact(String email) throws Throwable {
-        loginToPage("http://localhost:8070/massive_mailer/add_contact.jsp", email);
+        loginToPage(BASE_URL  + "add_contact.jsp", email);
     }
 
     @Then("^I should get an alert dialog with message \"([^\"]*)\"$")
@@ -35,17 +36,17 @@ public class MyStepdefs {
 
     @When("^Login with email \"([^\"]*)\"$")
     public void loginWithEmail(String email) throws Throwable{
-        loginToPage("http://localhost:8070/massive_mailer/game_login.jsp", email);
+        loginToPage(BASE_URL + "game_login.jsp", email);
     }
 
     @Then("^Page should be redirected to \"([^\"]*)\"$")
     public void pageIsAt(String page) throws Throwable{
-        driver.isAtURL("http://localhost:8070/massive_mailer/" + page + ".jsp");
+        driver.isAtURL(BASE_URL + page + ".jsp");
     }
 
     @And("^Contacts page should contain \"([^\"]*)\"$")
     public void contactsListPageShouldContain(String email) throws Throwable{
-        driver.visit("http://localhost:8070/massive_mailer/contactlist.jsp");
+        driver.visit(BASE_URL + "contactlist.jsp");
         pageShouldContain(email);
     }
 
