@@ -1,15 +1,16 @@
 package com.odde.massivemailer.model;
 
-/**
- * Created by wenjie on 27/9/16.
- */
+import java.util.ArrayList;
+
 public class GameForTest implements Game {
 
     private int distance;
     private int nextRand;
     private int player1Pos;
+    private ArrayList<Player> players;
 
-    public GameForTest(){
+    public GameForTest() {
+        players = new ArrayList<Player>();
         this.distance = 0;
     }
 
@@ -29,7 +30,7 @@ public class GameForTest implements Game {
         nextRand = num;
     }
 
-    public void normalPlayer1WillBeAt(int position) {
+    public void movePlayerForNormalMode(int position) {
         player1Pos = position;
     }
 
@@ -43,7 +44,16 @@ public class GameForTest implements Game {
         return player1Pos;
     }
 
-    public void superPlayer1WillBeAt() {
-        player1Pos = nextRand;
+    public void movePlayerForSuperMode(int playerIndex) {
+        player1Pos = nextRand - players.get(playerIndex).getScars();
+    }
+
+    public Player getPlayerAtIndex(int playerIndex) {
+        return players.get(playerIndex);
+    }
+
+    public int addPlayer() {
+        players.add(new Player());
+        return players.size() - 1;
     }
 }
