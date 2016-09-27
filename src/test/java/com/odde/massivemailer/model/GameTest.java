@@ -10,7 +10,7 @@ public class GameTest {
     @Test
     public void testCreateGameObject()
     {
-        Game t_GameObj = new Game();
+        GameForTest t_GameObj = new GameForTest();
         assertNotNull(t_GameObj);
         assertEquals(0, t_GameObj.getDistance());
     }
@@ -18,7 +18,7 @@ public class GameTest {
     @Test
     public void testSetDistance()
     {
-        Game t_GameObj = new Game();
+        GameForTest t_GameObj = new GameForTest();
         int t_Dist = 2;
 
         t_GameObj.setDistance(t_Dist);
