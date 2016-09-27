@@ -13,9 +13,7 @@ public class MyStepdefs {
 
     @When("^Add A Contact \"([^\"]*)\"$")
     public void addAContact(String email) throws Throwable {
-        driver.visit("http://localhost:8070/massive_mailer/add_contact.jsp");
-        driver.text_field("email", email);
-        driver.click_button("add_button");
+        loginToPage("http://localhost:8070/massive_mailer/add_contact.jsp", email);
     }
 
     @Then("^I should get an alert dialog with message \"([^\"]*)\"$")
@@ -34,4 +32,20 @@ public class MyStepdefs {
         iShouldGetAnAlertDialogWithMessage("Add contact successfully");
     }
 
+
+    @When("^Login with email \"([^\"]*)\"$")
+    public void loginWithEmail(String email) throws Throwable{
+        loginToPage("http://localhost:8070/massive_mailer/game_login.jsp", email);
+    }
+
+    public void loginToPage(String url, String email) throws Throwable{
+        driver.visit(url);
+        driver.text_field("email", email);
+        driver.click_button("add_button");
+    }
+
+
+    //Login with email "@@"
+    //Then Page should be redirected to "game_page"
+    //Then Contacts page should contain "new_terry@odd-e.com"
 }
