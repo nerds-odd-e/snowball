@@ -31,7 +31,7 @@ public class SendMailController extends HttpServlet {
 		try {
 			Mail email = processRequest(req);
 			MailService mailService = new GMailService();
-			mailService.setConfiguration(new SMTPConfiguration("myodde@gmail.com", "1234qwer@", "smtp.gmail.com", 587));
+			mailService.setConfiguration(new SMTPConfiguration(System.getenv("MM_EMAIL_USERID"), System.getenv("MM_EMAIL_PASSWORD"), "smtp.gmail.com", 587));
 			mailService.send(email);
 			resp.sendRedirect("sendemail.jsp?status=success&msg=Email successfully sent&repcnt="+email.getReceipts().size());
 		} catch (EmailException e) {
