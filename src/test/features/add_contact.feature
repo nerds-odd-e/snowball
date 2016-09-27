@@ -12,5 +12,5 @@ Feature: Add Contact
     Given "terry@odd-e.com" is a contact already
     When Add A Contact "terry@odd-e.com"
     Then I should get an alert dialog with message "Email terry@odd-e.com is already exist"
-    And Page Should Contain "terry@odd-e.com"
+    And Page Should Contain "terry222@odd-e.com"
 

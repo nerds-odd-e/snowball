@@ -13,12 +13,14 @@
 | *Sprint 3*                                                                              | *8*  |   |
 | **Done above this line.**                                                               |      |   |
 | Issue: secret ...                                                                       | 2    |   |
-| Create empty game   | 2  | |
-| single player no admin | 5  | |
 | Login with URL   | 2  | |
-| single player | 3  | |
 | Multiple player game   | 8  | |
 | QR code   | 1  | |
+| *Sprint 3 Tim Ho Wan*                                                                       |   |   |
+| Create empty game   | 2  | |
+| single player no admin | 5  | |
+| single player | 3  | |
+| *Sprint 3 TeamBuk2*                                                                       |   |   |
 | Save template                                                                           | 3    |   |
 | Step types | 1  | |
 | Change distance | 1  | |
