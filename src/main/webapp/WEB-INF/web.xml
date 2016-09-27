@@ -64,4 +64,13 @@
 		<url-pattern>/reset</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>GamePlayerController</servlet-name>
+		<servlet-class>com.odde.massivemailer.controller.GamePlayerController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GamePlayerController</servlet-name>
+		<url-pattern>/EmersonsGame</url-pattern>
+	</servlet-mapping>
+
 </web-app>
