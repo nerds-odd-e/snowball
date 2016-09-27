@@ -44,6 +44,10 @@ public class WebDriverWrapper {
         e.click();
     }
 
+    public void clickXPath(String xpath) {
+        driver.findElement(By.xpath(xpath)).click();
+    }
+
     public UiElement findElementById(String id) {
         return new SeleniumWebElement(driver.findElement(By.id(id)));
     }

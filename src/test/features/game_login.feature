@@ -2,7 +2,7 @@ Feature: Game login
   As the player I want to be able to input my email address
   so that I can play the game.
 
-  @wip
+
   Scenario Outline: Checking invalid email
     When Login with email "<email>"
     Then Element "error_message" Should Contain "Invalid email provided!"
