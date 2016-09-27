@@ -1,5 +1,6 @@
 package gradle.cucumber;
 
+import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -34,7 +35,6 @@ public class MyStepdefs {
         iShouldGetAnAlertDialogWithMessage("Add contact successfully");
     }
 
-
     @When("^Login with email \"([^\"]*)\"$")
     public void loginWithEmail(String email) throws Throwable{
         loginToPage(BASE_URL + "game_login.jsp", email);
@@ -57,11 +57,17 @@ public class MyStepdefs {
         driver.click_button("add_button");
     }
 
-    @Given("^I am at \"([^\"]*)\"$")
-    public void iAmAt(String endpoint) throws Throwable {
-        driver.visit(BASE_URL + endpoint);
+    @Given("^I am at Emerson's landing page$")
+    public void iAmAtEmersonsLandingPage() throws Throwable {
+        driver.visit(BASE_URL + "emersons.jsp");
         driver.findElementById("inputDistance");
         driver.findElementById("btnCreate");
+    }
+
+    @When("^I submit a distance of (\\d+)$")
+    public void submtValidDistance(int dist) throws Throwable {
+        driver.text_field("inputDistance", Integer.toString(dist));
+        driver.click_button("btnCreate");
     }
 
 }

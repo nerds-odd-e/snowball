@@ -22,7 +22,7 @@
 </head>
 <body>
 	<div id="wrapper">
-        <input id="inputDistance" type="text" />
+        <input id="inputDistance" name="inputDistance" type="number" />
         <a id="btnCreate" type="button">Create</a>
     </div>
 </body>
