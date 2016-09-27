@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Contact List</title>
+<title>Create Game</title>
 <!-- Bootstrap Core CSS -->
 <link href="resources/lib/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -21,10 +21,12 @@
 	rel="stylesheet" type="text/css">
 </head>
 <body>
-	<div id="wrapper">
-        <input id="inputDistance" name="inputDistance" type="number" />
-        <a id="btnCreate" type="button">Create</a>
-    </div>
+	<form class="col-md-offset-4 col-md-4 center-form" method="post" action="gameCreate">
+	    <label for="inputDistance">Distance</label>
+        <input id="inputDistance" name="inputDistance" class="form-control" type="number" />
+        <br />
+        <input value="Create" class="btn btn-default" id="btnCreate" type="submit" />
+    </form>
 </body>
 
 <!-- jQuery -->

@@ -26,6 +26,12 @@ body {
     padding-left: 0;
 }
 
+.center-form {
+    background-color: #fff;
+    padding: 5%;
+    border-radius: 4px;
+}
+
 #page-wrapper {
     width: 100%;
     padding: 0;

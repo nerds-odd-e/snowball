@@ -56,6 +56,11 @@ public class WebDriverWrapper {
         alert.accept();
     }
 
+    public void expectRedirect(String url) {
+        WebDriverWait wait = new WebDriverWait(driver, 2);
+        wait.until(ExpectedConditions.urlContains(url));
+    }
+
     public void pageShouldContain(String text) {
         String bodyText = driver.findElement(By.tagName("body")).getText();
         assertTrue("Text not found!", bodyText.contains(text));

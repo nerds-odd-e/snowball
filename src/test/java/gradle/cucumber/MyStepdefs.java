@@ -51,6 +51,11 @@ public class MyStepdefs {
         driver.isAtURL(BASE_URL + page + ".jsp");
     }
 
+    @Then("^Page should redirect to \"([^\"]*)\"$")
+    public void pageRedirectTo(String page) throws Throwable {
+        driver.expectRedirect(page);
+    }
+
     @And("^Contacts page should contain \"([^\"]*)\"$")
     public void contactsListPageShouldContain(String email) throws Throwable{
         driver.visit(BASE_URL + "contactlist.jsp");
@@ -71,7 +76,7 @@ public class MyStepdefs {
 
     @Given("^I am at Emerson's landing page$")
     public void iAmAtEmersonsLandingPage() throws Throwable {
-        driver.visit(BASE_URL + "emersons.jsp");
+        driver.visit(BASE_URL + "game_create.jsp");
         driver.findElementById("inputDistance");
         driver.findElementById("btnCreate");
     }
