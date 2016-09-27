@@ -30,7 +30,7 @@
                 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
-                        Distance: <% request.getAttribute("distance") %>
+                        Distance: <% request.getAttribute("distance"); %>
 
                     </div>
                 </div>
