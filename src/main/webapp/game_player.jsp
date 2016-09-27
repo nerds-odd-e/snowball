@@ -24,21 +24,18 @@
 	<div id="wrapper">
 
 		<div id="page-wrapper">
-			<form name="addContact" id="addContact" method="post"
-				action="gameLogin">
 
-				<div class="container-fluid">
+            <div class="container-fluid">
 
-					<!-- Page Heading -->
-					<div class="row">
-						<div class="col-lg-12">
-							<h1 class="page-header">Welcome to the Game!!!</h1>
-						</div>
-					</div>
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Welcome to the Game!!!</h1>
+                    </div>
+                </div>
 
-				</div>
+            </div>
 
-			</form>
 		</div>
 </body>
 <!-- jQuery -->
