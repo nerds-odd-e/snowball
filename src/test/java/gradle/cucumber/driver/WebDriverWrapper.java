@@ -26,7 +26,7 @@ public class WebDriverWrapper {
         driver.quit();
     }
 
-    public void isAtURL(String url){
+    public void isAtURL(String url) {
         assertTrue(driver.getCurrentUrl().equals(url));
     }
 
@@ -61,8 +61,14 @@ public class WebDriverWrapper {
         assertTrue("Text not found!", bodyText.contains(text));
     }
 
-    public void expectElementWithText(String id, String text) {
+    public void expectElementWithIdToContainText(String id, String text) {
         String elementText = findElementById(id).getText();
         assertTrue(text, elementText.contains(text));
     }
+
+    public void expectPageToContainExactlyNElements(String text, int count) {
+        List<WebElement> elements = driver.findElements(By.xpath("//*[text()=" + text + "]"));
+        assertEquals(elements.size(), count);
+    }
 }
+

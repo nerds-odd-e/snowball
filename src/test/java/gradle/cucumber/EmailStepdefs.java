@@ -23,7 +23,7 @@ public class EmailStepdefs {
     }
     @Then("^I should get an element with message \"([^\"]*)\"$")
     public void iShouldGetAnElementWithMessage(String msg) throws Throwable {
-        driver.expectElementWithText("email_result", msg);
+        driver.expectElementWithIdToContainText("email_result", msg);
     }
 
 

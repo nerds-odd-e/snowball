@@ -29,6 +29,12 @@ public class MyStepdefs {
         driver.pageShouldContain(text);
     }
 
+    @And("^Page Should Contain Exactly (\\d+) \"([^\"]*)\"$")
+    public void pageShouldContainExactlyNElements(int count, String text) throws Throwable {
+        driver.expectPageToContainExactlyNElements(text, count);
+    }
+
+
     @Given("^\"([^\"]*)\" is a contact already$")
     public void is_a_contact_already(String email) throws Throwable {
         addAContact(email);
@@ -49,6 +55,12 @@ public class MyStepdefs {
     public void contactsListPageShouldContain(String email) throws Throwable{
         driver.visit(BASE_URL + "contactlist.jsp");
         pageShouldContain(email);
+    }
+
+    @And("^Contacts page should contain exactly (\\d+) \"([^\"]*)\"$")
+    public void contactsListPageShouldContain(int count, String email) throws Throwable{
+        driver.visit(BASE_URL + "contactlist.jsp");
+        pageShouldContainExactlyNElements(count, email);
     }
 
     private void loginToPage(String url, String email) throws Throwable{
