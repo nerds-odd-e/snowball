@@ -15,11 +15,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class WebDriverWrapper {
-     private WebDriver driver = new FirefoxDriver();
+    private WebDriver driver = new FirefoxDriver();
 
-     public void visit(String url) {
-         driver.get(url);
-     }
+    public void visit(String url) {
+        driver.get(url);
+    }
 
     public void closeAll() {
         driver.close();
@@ -38,10 +38,9 @@ public class WebDriverWrapper {
     public void click_button(String button_name) {
         UiElement e = findElementById(button_name);
         e.click();
-
     }
 
-    private UiElement findElementById(String id) {
+    public UiElement findElementById(String id) {
         return new SeleniumWebElement(driver.findElement(By.id(id)));
     }
 
@@ -56,27 +55,5 @@ public class WebDriverWrapper {
     public void pageShouldContain(String text) {
         String bodyText = driver.findElement(By.tagName("body")).getText();
         assertTrue("Text not found!", bodyText.contains(text));
-    }
-
-    public void pageShouldContainElementTagWithAttribute(String tag, String attr, String attrValue) {
-        List<WebElement> listTextbox = driver.findElements(By.tagName(tag));
-        for(int i = 0; i < listTextbox.size(); i++) {
-            if(listTextbox.get(i).getAttribute(attr).contains(attrValue)) {
-                assertTrue(true);
-                return;
-            }
-        }
-        assertTrue(tag + " not found!", false);
-    }
-
-    public void pageShouldContainElementTagWithText(String tag, String text) {
-        List<WebElement> listTextbox = driver.findElements(By.tagName(tag));
-        for(int i = 0; i < listTextbox.size(); i++) {
-            if(listTextbox.get(i).getText().contains(text)) {
-                assertTrue(true);
-                return;
-            }
-        }
-        assertTrue(tag + " not found!", false);
     }
 }

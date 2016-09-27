@@ -35,4 +35,11 @@ public class MyStepdefs {
         iShouldGetAnAlertDialogWithMessage("Add contact successfully");
     }
 
+    @Given("^I am at \"([^\"]*)\"$")
+    public void iAmAt(String endpoint) throws Throwable {
+        driver.visit(BASE_URL + endpoint);
+        driver.findElementById("inputDistance");
+        driver.findElementById("btnCreate");
+    }
+
 }
