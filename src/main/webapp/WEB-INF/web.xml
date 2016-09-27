@@ -51,4 +51,13 @@
 		<url-pattern>/reset</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>GameSpectatorController</servlet-name>
+		<servlet-class>com.odde.massivemailer.controller.GameSpectatorController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GameSpectatorController</servlet-name>
+		<url-pattern>/GameSpectator</url-pattern>
+	</servlet-mapping>
+
 </web-app>
