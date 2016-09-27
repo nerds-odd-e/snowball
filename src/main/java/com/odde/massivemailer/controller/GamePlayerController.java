@@ -16,7 +16,9 @@ public class GamePlayerController extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletOutputStream outputStream = resp.getOutputStream();
         if(req.getParameter("roll").equals("normal")) {
-            outputStream.print("{" + game.rollDiceNormal(1) + "," + game.getPlayerPosition(1) + "}");
+            outputStream.print("{" + game.rollDice(1) + "," + game.getPlayerPosition(1) + "}");
+        } else if(req.getParameter("roll").equals("super")) {
+            outputStream.print("{" + game.rollDice(1) + "," + game.getPlayerPosition(1) + "}");
         } else {
             outputStream.print(game.getDistance());
         }

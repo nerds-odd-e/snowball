@@ -14,8 +14,8 @@ import java.io.IOException;
 
 public class GamePlayerControllerTest {
     GamePlayerController gamePlayerController = new GamePlayerController();
-    MockHttpServletRequest req = new MockHttpServletRequest();
-    MockHttpServletResponse res = new MockHttpServletResponse();
+    MockHttpServletRequest req;
+    MockHttpServletResponse res;
     GameForTest game = new GameForTest();
 
     @Before
@@ -30,13 +30,26 @@ public class GamePlayerControllerTest {
     }
 
     @Test
-    public void rollDice() throws Exception {
+    public void rollDiceNormal() throws Exception {
         game.nextRandomNumber(6);
-        game.player1WillBeAt(2);
+        game.normalPlayer1WillBeAt(2);
         assertEquals("{6,2}", getPostResponse("normal"));
+
+        game.nextRandomNumber(5);
+        game.normalPlayer1WillBeAt(1);
+        assertEquals("{5,1}", getPostResponse("normal"));
+    }
+
+    @Test
+    public void rollDiceSuper() throws Exception {
+        game.nextRandomNumber(6);
+        game.superPlayer1WillBeAt();
+        assertEquals("{6,6}", getPostResponse("super"));
     }
 
     private String getPostResponse(String value) throws ServletException, IOException {
+        req = new MockHttpServletRequest();
+        res = new MockHttpServletResponse();
         req.setParameter("roll", value);
         gamePlayerController.doPost(req, res);
         return res.getContentAsString();

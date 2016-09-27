@@ -29,17 +29,21 @@ public class GameForTest implements Game {
         nextRand = num;
     }
 
-    public void player1WillBeAt(int position) {
+    public void normalPlayer1WillBeAt(int position) {
         player1Pos = position;
     }
 
     @Override
-    public int rollDiceNormal(int playerID) {
+    public int rollDice(int playerID) {
         return nextRand;
     }
-
+ 
     @Override
     public int getPlayerPosition(int playerID) {
         return player1Pos;
+    }
+
+    public void superPlayer1WillBeAt() {
+        player1Pos = nextRand;
     }
 }
