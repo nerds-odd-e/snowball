@@ -34,7 +34,6 @@ public class MyStepdefs {
         driver.expectPageToContainExactlyNElements(text, count);
     }
 
-
     @Given("^\"([^\"]*)\" is a contact already$")
     public void is_a_contact_already(String email) throws Throwable {
         addAContact(email);
@@ -47,11 +46,6 @@ public class MyStepdefs {
     }
 
     @Then("^Page should be redirected to \"([^\"]*)\"$")
-    public void pageIsAt(String page) throws Throwable{
-        driver.isAtURL(BASE_URL + page + ".jsp");
-    }
-
-    @Then("^Page should redirect to \"([^\"]*)\"$")
     public void pageRedirectTo(String page) throws Throwable {
         driver.expectRedirect(page);
     }
@@ -72,19 +66,6 @@ public class MyStepdefs {
         driver.visit(url);
         driver.text_field("email", email);
         driver.click_button("add_button");
-    }
-
-    @Given("^I am at Emerson's landing page$")
-    public void iAmAtEmersonsLandingPage() throws Throwable {
-        driver.visit(BASE_URL + "game_create.jsp");
-        driver.findElementById("inputDistance");
-        driver.findElementById("btnCreate");
-    }
-
-    @When("^I submit a distance of (\\d+)$")
-    public void submtValidDistance(int dist) throws Throwable {
-        driver.text_field("inputDistance", Integer.toString(dist));
-        driver.click_button("btnCreate");
     }
 
 }
