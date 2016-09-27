@@ -3,4 +3,4 @@ Feature: Create Game
 
 
   Scenario: Create New Game
-    Given I am at "emersons.jsp"
+    Given I am at Emerson's landing page

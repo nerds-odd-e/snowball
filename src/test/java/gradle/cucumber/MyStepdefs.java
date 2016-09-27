@@ -57,9 +57,9 @@ public class MyStepdefs {
         driver.click_button("add_button");
     }
 
-    @Given("^I am at \"([^\"]*)\"$")
-    public void iAmAt(String endpoint) throws Throwable {
-        driver.visit(BASE_URL + endpoint);
+    @Given("^I am at Emerson's landing page")
+    public void iAmAtEmersonsLandingPage() throws Throwable {
+        driver.visit(BASE_URL + "emersons.jsp");
         driver.findElementById("inputDistance");
         driver.findElementById("btnCreate");
     }
