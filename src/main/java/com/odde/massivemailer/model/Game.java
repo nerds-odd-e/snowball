@@ -5,7 +5,7 @@ public interface Game {
 
     void setDistance(int t_Dist);
 
-    int player1Roll();
+    int rollDiceNormal(int playerID);
 
-    int getPlayer1Position();
+    int getPlayerPosition(int playerID);
 }

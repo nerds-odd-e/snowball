@@ -34,12 +34,12 @@ public class GameForTest implements Game {
     }
 
     @Override
-    public int player1Roll() {
+    public int rollDiceNormal(int playerID) {
         return nextRand;
     }
 
     @Override
-    public int getPlayer1Position() {
+    public int getPlayerPosition(int playerID) {
         return player1Pos;
     }
 }
