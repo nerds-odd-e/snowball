@@ -34,6 +34,7 @@ public class MyStepdefs {
         iShouldGetAnAlertDialogWithMessage("Add contact successfully");
     }
 
+
     @When("^Login with email \"([^\"]*)\"$")
     public void loginWithEmail(String email) throws Throwable{
         loginToPage(BASE_URL + "game_login.jsp", email);
@@ -55,4 +56,12 @@ public class MyStepdefs {
         driver.text_field("email", email);
         driver.click_button("add_button");
     }
+
+    @Given("^I am at \"([^\"]*)\"$")
+    public void iAmAt(String endpoint) throws Throwable {
+        driver.visit(BASE_URL + endpoint);
+        driver.findElementById("inputDistance");
+        driver.findElementById("btnCreate");
+    }
+
 }
