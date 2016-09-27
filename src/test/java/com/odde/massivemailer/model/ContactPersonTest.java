@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class ContactPersonTest {
-	
 
 	@Test
 	public void testCreateContactObjectWithoutCompany() {
