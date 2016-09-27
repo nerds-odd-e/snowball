@@ -1,20 +1,16 @@
-package com.odde.massivemailer;
+package com.odde.massivemailer.startup;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-
 public class MassiveMailerServletContextListener implements ServletContextListener {
 
-    private static final String EMAIL_USERID = "EMAIL_USERID";
-    private static final String EMAIL_PASSWORD = "EMAIL_PASSWORD";
+    private static final String EMAIL_USERID = "MM_EMAIL_USERID";
+    private static final String EMAIL_PASSWORD = "MM_EMAIL_PASSWORD";
 
     @Override
-    public void contextDestroyed(ServletContextEvent arg0) {
-        System.out.println("ServletContextListener destroyed");
-    }
+    public void contextDestroyed(ServletContextEvent arg0) {}
 
-    //Run this before web application is started
     @Override
     public void contextInitialized(ServletContextEvent arg0) {
         System.out.println("ServletContextListener started");
@@ -24,8 +20,7 @@ public class MassiveMailerServletContextListener implements ServletContextListen
         String emailPassword = System.getenv(EMAIL_PASSWORD);
 
         if(null == emailUserID || null == emailPassword){
-            System.out.println("Necessary environment variable does not exist yet!");
+            System.err.println("Necessary environment variable does not exist yet!");
         }
-
     }
 }

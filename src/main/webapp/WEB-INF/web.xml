@@ -4,7 +4,7 @@
 	version="2.5">
 
 	<listener>
-		<listener-class>com.odde.massivemailer.MassiveMailerServletContextListener</listener-class>
+		<listener-class>com.odde.massivemailer.startup.MassiveMailerServletContextListener</listener-class>
 	</listener>
 
 	<welcome-file-list>
