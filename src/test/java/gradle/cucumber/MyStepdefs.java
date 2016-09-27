@@ -34,4 +34,35 @@ public class MyStepdefs {
         iShouldGetAnAlertDialogWithMessage("Add contact successfully");
     }
 
+    @Given("^Visit Send Mail Page$")
+    public void visitSendMailPage() throws Throwable {
+        driver.visit("http://localhost:8070/massive_mailer");
+    }
+
+    @Given("^Add Email Recipient \"(*)\"$")
+    public void addEmailRecipient(String recipient) throws Throwable {
+        driver.text_field("recipient", recipient);
+    }
+
+    @Given("^Email Subject is \"(*)\"$")
+    public void addEmailSubject(String content) throws Throwable {
+        driver.text_field("subject", content);
+    }
+
+    @Given("^Email Content is \"(*)\"$")
+    public void addEmailContent(String content) throws Throwable {
+        driver.text_field("content", content);
+    }
+
+    @When("^I Click Send Email$")
+    public void clickSendEmail() throws Throwable {
+        driver.click_button("send_button");
+    }
+    @Then("^I should get an element with message \"([^\"]*)\"$")
+    public void iShouldGetAnElementWithMessage(String msg) throws Throwable {
+        driver.expectElement("email_result", msg);
+    }
+
+
+
 }
