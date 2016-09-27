@@ -24,7 +24,7 @@
 	<div id="wrapper">
 
 		<div id="page-wrapper">
-			<form name="addContact" id="addContact" method="post"
+			<form name="gameLogin" id="gameLogin" method="post"
 				action="gameLogin">
 
 				<div class="container-fluid">
