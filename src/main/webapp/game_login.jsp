@@ -19,6 +19,7 @@
 <link
 	href="resources/lib/bootstrap/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
+	<link href="resources/decor.css" rel="stylesheet">
 </head>
 <body>
 	<div id="wrapper">
@@ -52,6 +53,13 @@
 												id="email">
 										</div>
 									</div>
+                                    <%
+                                        if (request.getParameter("error") != null) {
+                                    %>
+                                        <div id="error_message" class="error_fonts"><%= request.getParameter("error") %></div>
+                                    <%
+                                        }
+                                    %>
 									<br> <br>
 									<div class="row">
 										<div class="col-lg-12">

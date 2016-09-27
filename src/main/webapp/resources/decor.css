@@ -7,3 +7,7 @@ span.add-contact-button {
 	color: cadetblue;
 	cursor: pointer;
 }
+
+.error_fonts {
+    color: red;
+}

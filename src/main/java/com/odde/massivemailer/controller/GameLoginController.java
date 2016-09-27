@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.service.ContactService;
 import com.odde.massivemailer.service.impl.SqliteContact;
+import com.odde.massivemailer.utilities.EmailValidator;
 
 public class GameLoginController extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -27,8 +28,17 @@ public class GameLoginController extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ContactPerson contact = new ContactPerson("todo name", req.getParameter("email"), "todo last name", "todo company");
-        contactService.addContact(contact);
-        resp.sendRedirect("game_player.jsp");
+        String email = req.getParameter("email");
+
+        if(EmailValidator.isEmailValid(email)) {
+            ContactPerson contact = new ContactPerson("todo name", email, "todo last name", "todo company");
+            contactService.addContact(contact);
+            resp.sendRedirect("game_player.jsp");
+        } else {
+
+            resp.sendRedirect("game_login.jsp?error=Invalid+email+provided!");
+        }
+
+
     }
 }
