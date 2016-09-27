@@ -29,6 +29,11 @@ public class MyStepdefs {
         driver.pageShouldContain(text);
     }
 
+    @Then("^Element \"([^\"]*)\" Should Contain \"([^\"]*)\"$")
+    public void elementShouldContain(String element, String text) throws Throwable {
+        driver.elementShouldContain(element, text);
+    }
+
     @Given("^\"([^\"]*)\" is a contact already$")
     public void is_a_contact_already(String email) throws Throwable {
         addAContact(email);

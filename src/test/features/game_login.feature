@@ -4,12 +4,13 @@ Feature: Game login
 
   Scenario Outline: Checking invalid email
     When Login with email "<email>"
-    Then Page Should Contain "Invalid email provided!"
+    Then Element "error_message" Should Contain "Invalid email provided!"
 
     Examples:
-    | abc@        |
-    | "@@"        |
-    | "abc@abc"   |
+    | email      |
+    | abc@     |
+    | @@       |
+    | @abc.com |
 
   Scenario: Ensure valid new email is saved before redirecting to game page
     When Login with email "new_terry@odd-e.com"

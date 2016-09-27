@@ -61,6 +61,11 @@ public class WebDriverWrapper {
         assertTrue("Text not found!", bodyText.contains(text));
     }
 
+    public void elementShouldContain(String elementName, String text) {
+        String elementText = findElementById(elementName).getText();
+        assertTrue("Text not found!", elementText.contains(text));
+    }
+
     public void expectElementWithText(String id, String text) {
         String elementText = findElementById(id).getText();
         assertTrue(text, elementText.contains(text));
