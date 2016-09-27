@@ -80,8 +80,8 @@ public class WebDriverWrapper {
         assertTrue(tag + " not found!", false);
     }
 
-    public void expectElement(String name, String text) {
-        String elementText = findElementById(name).getText();
+    public void expectElementWithText(String id, String text) {
+        String elementText = findElementById(id).getText();
         assertTrue(text, elementText.contains(text));
     }
 }
