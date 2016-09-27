@@ -22,6 +22,10 @@ public class WebDriverWrapper {
         driver.quit();
     }
 
+    public void isAtURL(String url){
+        assertTrue(driver.getCurrentUrl().equals(url));
+    }
+
     public UiElement findElementByName(String name) {
         return new SeleniumWebElement(driver.findElement(By.name(name)));
     }

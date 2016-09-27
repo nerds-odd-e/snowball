@@ -7,6 +7,7 @@ import cucumber.api.java.en.When;
 import gradle.cucumber.driver.SingleDrive;
 import gradle.cucumber.driver.WebDriverWrapper;
 
+
 public class MyStepdefs {
 
     private WebDriverWrapper driver = SingleDrive.getDriver();
@@ -32,20 +33,25 @@ public class MyStepdefs {
         iShouldGetAnAlertDialogWithMessage("Add contact successfully");
     }
 
-
     @When("^Login with email \"([^\"]*)\"$")
     public void loginWithEmail(String email) throws Throwable{
         loginToPage("http://localhost:8070/massive_mailer/game_login.jsp", email);
     }
 
-    public void loginToPage(String url, String email) throws Throwable{
+    @Then("^Page should be redirected to \"([^\"]*)\"$")
+    public void pageIsAt(String url) throws Throwable{
+        driver.isAtURL(url);
+    }
+
+    @And("^Contacts page should contain \"([^\"]*)\"$")
+    public void contactsListPageShouldContain(String email) throws Throwable{
+        driver.visit("http://localhost:8070/massive_mailer/contactlist.jsp");
+        pageShouldContain(email);
+    }
+
+    private void loginToPage(String url, String email) throws Throwable{
         driver.visit(url);
         driver.text_field("email", email);
         driver.click_button("add_button");
     }
-
-
-    //Login with email "@@"
-    //Then Page should be redirected to "game_page"
-    //Then Contacts page should contain "new_terry@odd-e.com"
 }
