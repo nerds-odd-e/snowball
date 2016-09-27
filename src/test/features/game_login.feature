@@ -12,13 +12,12 @@ Feature: Game login
     | "@@"        |
     | "abc@abc"   |
 
-  @wip
   Scenario: Ensure valid new email is saved before redirecting to game page
     When Login with email "new_terry@odd-e.com"
     Then Page should be redirected to "game_player"
     Then Contacts page should contain "new_terry@odd-e.com"
 
-  @wip
+
   Scenario: Ensure valid existing email redirects to game page
     Given "terry@odd-e.com" is a contact already
     When Login with email "terry@odd-e.com"

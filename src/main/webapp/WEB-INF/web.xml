@@ -20,6 +20,15 @@
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>GameLoginController</servlet-name>
+		<servlet-class>com.odde.massivemailer.controller.GameLoginController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GameLoginController</servlet-name>
+		<url-pattern>/gameLogin</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>contactsController</servlet-name>
 		<servlet-class>com.odde.massivemailer.controller.ContactsController</servlet-class>
 	</servlet>

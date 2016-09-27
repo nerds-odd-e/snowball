@@ -14,7 +14,7 @@ $(document).ready(function() {
 });
 
 function submitForm() {
-	$("#addContact").submit();
+	document.forms[0].submit();
 	$("#email").val("");
 }
 
