@@ -8,6 +8,7 @@ import cucumber.api.java.en.When;
 import gradle.cucumber.driver.SingleDrive;
 import gradle.cucumber.driver.WebDriverWrapper;
 
+
 public class MyStepdefs {
 
     private WebDriverWrapper driver = SingleDrive.getDriver();
@@ -15,9 +16,7 @@ public class MyStepdefs {
 
     @When("^Add A Contact \"([^\"]*)\"$")
     public void addAContact(String email) throws Throwable {
-        driver.visit(BASE_URL + "add_contact.jsp");
-        driver.text_field("email", email);
-        driver.click_button("add_button");
+        loginToPage(BASE_URL  + "add_contact.jsp", email);
     }
 
     @Then("^I should get an alert dialog with message \"([^\"]*)\"$")
@@ -35,4 +34,35 @@ public class MyStepdefs {
         addAContact(email);
         iShouldGetAnAlertDialogWithMessage("Add contact successfully");
     }
+
+
+    @When("^Login with email \"([^\"]*)\"$")
+    public void loginWithEmail(String email) throws Throwable{
+        loginToPage(BASE_URL + "game_login.jsp", email);
+    }
+
+    @Then("^Page should be redirected to \"([^\"]*)\"$")
+    public void pageIsAt(String page) throws Throwable{
+        driver.isAtURL(BASE_URL + page + ".jsp");
+    }
+
+    @And("^Contacts page should contain \"([^\"]*)\"$")
+    public void contactsListPageShouldContain(String email) throws Throwable{
+        driver.visit(BASE_URL + "contactlist.jsp");
+        pageShouldContain(email);
+    }
+
+    private void loginToPage(String url, String email) throws Throwable{
+        driver.visit(url);
+        driver.text_field("email", email);
+        driver.click_button("add_button");
+    }
+
+    @Given("^I am at Emerson's landing page")
+    public void iAmAtEmersonsLandingPage() throws Throwable {
+        driver.visit(BASE_URL + "emersons.jsp");
+        driver.findElementById("inputDistance");
+        driver.findElementById("btnCreate");
+    }
+
 }
