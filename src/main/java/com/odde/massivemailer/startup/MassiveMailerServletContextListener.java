@@ -5,8 +5,8 @@ import javax.servlet.ServletContextListener;
 
 public class MassiveMailerServletContextListener implements ServletContextListener {
 
-    private static final String EMAIL_USERID = "MM_EMAIL_USERID";
-    private static final String EMAIL_PASSWORD = "MM_EMAIL_PASSWORD";
+    public static final String EMAIL_USERID = "MM_EMAIL_USERID";
+    public static final String EMAIL_PASSWORD = "MM_EMAIL_PASSWORD";
 
     @Override
     public void contextDestroyed(ServletContextEvent arg0) {}
