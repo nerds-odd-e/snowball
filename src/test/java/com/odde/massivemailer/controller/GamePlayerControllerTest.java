@@ -1,8 +1,8 @@
-package com.odde.massivemailer;
+package com.odde.massivemailer.controller;
 
 import static org.junit.Assert.assertEquals;
-import com.odde.massivemailer.controller.GamePlayerController;
-import com.odde.massivemailer.model.GameForTest;
+
+import com.odde.emersonsgame.stubs.StubbedGameRound;
 import com.odde.massivemailer.model.Player;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +17,7 @@ public class GamePlayerControllerTest {
     GamePlayerController gamePlayerController = new GamePlayerController();
     MockHttpServletRequest req;
     MockHttpServletResponse res;
-    GameForTest game = new GameForTest();
+    StubbedGameRound game = new StubbedGameRound();
 
     @Before
     public void setupGame() {

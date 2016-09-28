@@ -1,6 +1,6 @@
 package com.odde.massivemailer.controller;
 
-import com.odde.massivemailer.model.Game;
+import com.odde.emersonsgame.GameRound;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class GamePlayerController extends HttpServlet {
 
-    private Game game;
+    private GameRound game;
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletOutputStream outputStream = resp.getOutputStream();
@@ -24,7 +24,7 @@ public class GamePlayerController extends HttpServlet {
         }
     }
 
-    public void setGame(Game game) {
+    public void setGame(GameRound game) {
         this.game = game;
     }
 }

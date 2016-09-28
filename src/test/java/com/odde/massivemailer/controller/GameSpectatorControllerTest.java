@@ -1,4 +1,4 @@
-package com.odde.massivemailer;
+package com.odde.massivemailer.controller;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.eq;

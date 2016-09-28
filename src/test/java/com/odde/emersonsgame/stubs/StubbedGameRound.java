@@ -1,15 +1,19 @@
-package com.odde.massivemailer.model;
+package com.odde.emersonsgame.stubs;
+
+
+import com.odde.emersonsgame.GameRound;
+import com.odde.massivemailer.model.Player;
 
 import java.util.ArrayList;
 
-public class GameForTest implements Game {
+public class StubbedGameRound implements GameRound {
 
     private int distance;
     private int nextRand;
     private int player1Pos;
     private ArrayList<Player> players;
 
-    public GameForTest() {
+    public StubbedGameRound() {
         players = new ArrayList<Player>();
         this.distance = 0;
     }
