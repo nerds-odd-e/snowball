@@ -15,11 +15,14 @@
 <body>
 
 <div>
+    <div id="canvas">
+
+    </div>
     <div class="footer">
         <form class="form-inline">
             <div class="form-group">
                 <label for="inputDistance">Distance</label>
-                <input type="text" class="form-control" id="inputDistance" placeholder="Distance" value=<%= request.getParameter("distance")%> disabled>
+                <input type="text" class="form-control"  id="inputDistance" placeholder="Distance" value=<%= request.getParameter("distance")%> disabled>
             </div>
             <div class="form-group">
                 <label for="inputType">Game Type</label>
@@ -32,11 +35,15 @@
     </div>
     <div class="player-badge">
         <div class="player-badge-counter">
-            <span class="player-count" id="player-count">000</span>
+            <span class="player-count" id="player-count">0</span>
             <span>Players joined</span>
         </div>
     </div>
 </body>
 
-<script src="resources/js/gameSpectator.js"></script>
+<!-- jQuery -->
+<script type="text/javascript" src="resources/lib/bootstrap/js/jquery.js"></script>
+<script type="text/javascript" src="resources/lib/jquery-template/jquery.loadTemplate-1.4.4.js"></script>
+
+<script type="text/javascript" src="resources/js/gameSpectator.js"></script>
 </html>

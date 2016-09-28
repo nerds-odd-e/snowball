@@ -1,12 +1,11 @@
 
 body {
-    margin-top: 100px;
     background-color: #222;
 }
 
 .footer {
     background-color: #fff;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
     padding: 5px;
@@ -17,7 +16,7 @@ body {
 }
 
 .player-badge {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     right: 0;
     width: 120px;
@@ -31,9 +30,28 @@ body {
 .player-badge-counter {
     position: absolute;
     bottom: 0;
+    right: 0;
     padding: 5%;
 }
 
 .player-count {
     font-size: -webkit-xxx-large;
+    display: block;
+}
+
+#canvas {
+    height: 100vh;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.racer{
+    background-color: #fff;
+    border: 2px solid darkcyan;
+    height: 20%;
+    position: relative;
+    flex: 0 0 15%;
+    min-width: 150px;
 }
