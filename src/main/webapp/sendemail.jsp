@@ -79,7 +79,7 @@
 						<li><a href="contactlist.jsp"><span
 								class="glyphicon glyphicon-user" aria-hidden="true"></span>
 								Contact List</a></li>
-                        <li><a href="emersons.jsp"><span
+                        <li><a href="game_create.jsp"><span
                                 class="glyphicon glyphicon-user" aria-hidden="true"></span>
                                 Emerson's Game</a></li>
 					</ul>
