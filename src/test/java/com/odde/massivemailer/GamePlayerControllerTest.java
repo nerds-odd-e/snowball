@@ -44,14 +44,14 @@ public class GamePlayerControllerTest {
     @Test
     public void rollDiceSuper() throws Exception {
         int player1Index = game.addPlayer();
+        Player player = game.getPlayerAtIndex(player1Index);
 
         game.nextRandomNumber(6);
         game.movePlayerForSuperMode(player1Index);
         assertEquals("{6,6}", getPostResponse("super"));
+        player.addScar();
 
         game.nextRandomNumber(6);
-        Player player = game.getPlayerAtIndex(player1Index);
-        player.addScar();
         game.movePlayerForSuperMode(player1Index);
         assertEquals("{6,5}", getPostResponse("super"));
     }

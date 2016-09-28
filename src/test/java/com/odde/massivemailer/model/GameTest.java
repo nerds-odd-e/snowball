@@ -24,9 +24,6 @@ public class GameTest {
         t_GameObj.setDistance(t_Dist);
         assertEquals(t_Dist, t_GameObj.getDistance());
 
-        t_GameObj.setDistance(-t_Dist);
-        assertEquals(t_Dist, t_GameObj.getDistance());
-
         t_GameObj.setDistance(0);
         assertEquals(0, t_GameObj.getDistance());
     }

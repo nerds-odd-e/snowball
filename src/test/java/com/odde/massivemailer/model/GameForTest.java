@@ -15,15 +15,13 @@ public class GameForTest implements Game {
     }
 
     @Override
-    public int getDistance(){
+    public int getDistance() {
         return this.distance;
     }
 
     @Override
-    public void setDistance(int t_Dist){
-        if(t_Dist > -1){
-            this.distance = t_Dist;
-        }
+    public void setDistance(int t_Dist) {
+        this.distance = t_Dist;
     }
 
     public void nextRandomNumber(int num) {
