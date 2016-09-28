@@ -1,5 +1,6 @@
 package gradle.cucumber;
 
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 import gradle.cucumber.driver.SingleDrive;
@@ -18,9 +19,15 @@ public class GameStepdefs {
     }
 
     @When("^I submit a distance of (\\d+)$")
-    public void submtValidDistance(int dist) throws Throwable {
+    public void submitValidDistance(int dist) throws Throwable {
         driver.text_field("distance", Integer.toString(dist));
         driver.click_button("btnCreate");
+    }
+
+    @And("^Distance should be (\\d+)$")
+    public void checkDistance(int dist) throws Throwable{
+      //  driver.expectElementWithIdToContainText("inputDistance", ""+dist);
+        driver.findElementById("inputDistance");
     }
 
 }

@@ -19,7 +19,7 @@ import java.io.IOException;
 
 public class GameSpectatorControllerTest {
     @Test
-    public void x() throws ServletException, IOException {
+    public void redirectToSpectatorViewTest() throws ServletException, IOException {
         MockHttpServletRequest req = new MockHttpServletRequest();
         MockHttpServletResponse resp = new MockHttpServletResponse();
 

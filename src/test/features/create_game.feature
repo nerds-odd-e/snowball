@@ -5,3 +5,4 @@ Feature: Create Game
     Given I am at Emerson's landing page
     When I submit a distance of 20
     Then Page should be redirected to "GameSpectator"
+    And Distance should be 20
