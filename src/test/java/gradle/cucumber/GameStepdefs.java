@@ -16,13 +16,13 @@ public class GameStepdefs {
     @Given("^I am at Emerson's landing page$")
     public void iAmAtEmersonsLandingPage() throws Throwable {
         driver.visit(BASE_URL + "game_create.jsp");
-        driver.findElementById("inputDistance");
+        driver.findElementById("distance");
         driver.findElementById("btnCreate");
     }
 
     @When("^I submit a distance of (\\d+)$")
     public void submtValidDistance(int dist) throws Throwable {
-        driver.text_field("inputDistance", Integer.toString(dist));
+        driver.text_field("distance", Integer.toString(dist));
         driver.click_button("btnCreate");
     }
 

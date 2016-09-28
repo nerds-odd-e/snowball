@@ -1,4 +1,4 @@
-package com.odde.massivemailer;
+package com.odde.massivemailer.controller;
 
 import com.google.gson.Gson;
 import com.odde.massivemailer.controller.ContactsController;

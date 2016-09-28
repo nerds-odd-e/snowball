@@ -20,9 +20,9 @@
 	rel="stylesheet" type="text/css">
 </head>
 <body>
-	<form class="col-md-offset-4 col-md-4 center-form" method="post" action="gameCreate">
+	<form class="col-md-offset-4 col-md-4 center-form" method="post" action="GameSpectator">
 	    <label for="inputDistance">Distance</label>
-        <input id="inputDistance" name="inputDistance" class="form-control" type="number" />
+        <input id="distance" name="distance" class="form-control" type="number" />
         <br />
         <input value="Create" class="btn btn-default" id="btnCreate" type="submit" />
     </form>

@@ -1,6 +1,6 @@
-package com.odde.massivemailer.model;
+package com.odde.emersonsgame;
 
-public interface Game {
+public interface GameRound {
     int getDistance();
 
     void setDistance(int t_Dist);
@@ -8,6 +8,4 @@ public interface Game {
     int rollDice(int playerID);
 
     int getPlayerPosition(int playerID);
-
-
 }

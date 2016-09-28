@@ -19,7 +19,7 @@
         <form class="form-inline">
             <div class="form-group">
                 <label for="inputDistance">Distance</label>
-                <input type="text" class="form-control" id="inputDistance" placeholder="Distance" value=<%= request.getAttribute("distance")%> disabled>
+                <input type="text" class="form-control" id="inputDistance" placeholder="Distance" value=<%= request.getParameter("distance")%> disabled>
             </div>
             <div class="form-group">
                 <label for="inputType">Game Type</label>
