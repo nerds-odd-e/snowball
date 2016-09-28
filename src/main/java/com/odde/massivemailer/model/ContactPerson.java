@@ -1,8 +1,13 @@
 package com.odde.massivemailer.model;
 
+import com.odde.massivemailer.exception.InvalidEmailException;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+
 
 public class ContactPerson {
 	private int id;
@@ -22,13 +27,21 @@ public class ContactPerson {
 
 	}
 
-	public ContactPerson(String name, String email, String lastname){
+	public ContactPerson(String name, String email, String lastname) {
 		this(name, email, lastname, "");
 	}
 
 	public ContactPerson(String name, String email, String lastname, String company) {
 		setName(name);
+
+		try {
+			new InternetAddress(email).validate();
+		}catch(AddressException ae){
+			throw new InvalidEmailException("Invalid email", ae);
+		}
+
 		setEmail(email);
+
 		setLastname(lastname);
 		setCompany(company);
 	}
@@ -39,10 +52,7 @@ public class ContactPerson {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getName() {
-
-		return getAttribute(FIRSTNAME);
-	}
+	public String getName() { return getAttribute(FIRSTNAME); }
 	public void setName(String name) {
 		setAttribute(FIRSTNAME, name);
 	}
