@@ -6,6 +6,9 @@ import cucumber.api.java.en.When;
 import gradle.cucumber.driver.SingleDrive;
 import gradle.cucumber.driver.WebDriverWrapper;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 public class GameStepdefs {
 
     private WebDriverWrapper driver = SingleDrive.getDriver();
@@ -25,9 +28,8 @@ public class GameStepdefs {
     }
 
     @And("^Distance should be (\\d+)$")
-    public void checkDistance(int dist) throws Throwable{
-      //  driver.expectElementWithIdToContainText("inputDistance", ""+dist);
-        driver.findElementById("inputDistance");
+    public void checkDistance(int dist) throws Throwable {
+      assertEquals(Integer.toString(dist), driver.findElementById("inputDistance").getAttribute("value"));
     }
 
 }

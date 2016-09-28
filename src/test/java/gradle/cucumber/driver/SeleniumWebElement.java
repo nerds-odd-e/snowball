@@ -28,4 +28,9 @@ public class SeleniumWebElement implements UiElement {
     public void click() {
         element.click();
     }
+
+    @Override
+    public String getAttribute(String attrName) {
+        return element.getAttribute(attrName);
+    }
 }
