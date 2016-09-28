@@ -60,6 +60,12 @@ public class GamePlayerControllerTest {
         return jsonObject;
     }
 
+    @Test
+    public void testPlayer2() throws Exception {
+        gamePlayerController.doGet();
+
+    }
+
     private String getPostResponse(String name, String value) throws ServletException, IOException {
         req = new MockHttpServletRequest();
         res = new MockHttpServletResponse();
