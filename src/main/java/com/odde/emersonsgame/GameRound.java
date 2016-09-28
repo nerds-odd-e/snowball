@@ -5,7 +5,11 @@ public interface GameRound {
 
     void setDistance(int t_Dist);
 
-    int rollDice(int playerID);
+    void rollDieForPlayer(int playerID, String rollType);
 
     int getPlayerPosition(int playerID);
+
+    String toString();
+
+    String getGameRound();
 }

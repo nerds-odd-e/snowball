@@ -16,15 +16,11 @@ public class GamePlayerController extends HttpServlet {
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletOutputStream outputStream = resp.getOutputStream();
-        JsonObject response = new JsonObject();
 
-        if(null != req.getParameter("distance")) {
-            response.addProperty("distance", game.getDistance());
-        } else if(null != req.getParameter("roll")) {
-            response.addProperty("dieResult", game.rollDice(1));
-            response.addProperty("playerPos", game.getPlayerPosition(1));
+        if(null != req.getParameter("roll")) {
+            game.rollDieForPlayer(1, req.getParameter("roll"));
         }
-        outputStream.print(response.toString());
+        outputStream.print(game.getGameRound());
     }
 
     public void setGameRound(GameRound game) {

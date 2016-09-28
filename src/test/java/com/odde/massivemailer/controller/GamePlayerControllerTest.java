@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import com.google.gson.JsonObject;
 import com.odde.emersonsgame.stubs.StubbedGameRound;
-import com.odde.massivemailer.model.Player;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,38 +17,36 @@ public class GamePlayerControllerTest {
     GamePlayerController gamePlayerController = new GamePlayerController();
     MockHttpServletRequest req;
     MockHttpServletResponse res;
-    StubbedGameRound gameRound = new StubbedGameRound();
+    StubbedGameRound stubGameRound = new StubbedGameRound();
 
     @Before
     public void setupGame() {
-        gamePlayerController.setGameRound(gameRound);
+        gamePlayerController.setGameRound(stubGameRound);
+        stubGameRound.setDistance(30);
     }
 
     @Test
-    public void returnDistance() throws Exception {
+    public void getGameRoundObj() throws Exception {
         JsonObject expectedResponse = new JsonObject();
-        expectedResponse.addProperty("distance", 20);
+        expectedResponse.addProperty("distance", 30);
+        expectedResponse.addProperty("playerPos", 0);
+        expectedResponse.addProperty("playerScar", 0);
+        expectedResponse.addProperty("dieResult", 0);
 
-        gameRound.setDistance(20);
-        assertEquals(expectedResponse.toString(), getPostResponse("distance", ""));
+        assertEquals(expectedResponse.toString(), getPostResponse("roll", ""));
     }
 
     @Test
     public void rollDice() throws Exception {
         JsonObject expectedResponse = new JsonObject();
-        expectedResponse.addProperty("dieResult", 6);
+        expectedResponse.addProperty("distance", 30);
         expectedResponse.addProperty("playerPos", 2);
+        expectedResponse.addProperty("playerScar", 0);
+        expectedResponse.addProperty("dieResult", 6);
 
-        gameRound.nextRandomNumber(6);
-        gameRound.movePlayerForNormalMode(2);
-        assertEquals(expectedResponse.toString(), getPostResponse("roll", ""));
+        stubGameRound.nextRandomNumber(6);
+        stubGameRound.getPlayerPosition(2);
 
-        expectedResponse = new JsonObject();
-        expectedResponse.addProperty("dieResult", 5);
-        expectedResponse.addProperty("playerPos", 1);
-
-        gameRound.nextRandomNumber(5);
-        gameRound.movePlayerForNormalMode(1);
         assertEquals(expectedResponse.toString(), getPostResponse("roll", ""));
     }
 
