@@ -15,7 +15,6 @@ import org.junit.Test;
 
 import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.Mail;
-import com.odde.massivemailer.service.MailService;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.mockito.Matchers.any;
@@ -34,30 +33,28 @@ public class GmailServiceTest {
 		return email;
 	}
 	
-	private MailService getEmailService(final Transport transport) {
-		SMTPConfiguration config = new SMTPConfiguration("myodde@gmail.com", "1234qwer@", "smtp.gmail.com", 587);
-		MailService emailService = new GMailService() {
+	private GMailService getGmailService(final Transport transport) {
+		SMTPConfiguration config = new SMTPConfiguration("fakeUser@gmail.com", "fakeUserPassword", "smtp.gmail.com", 587);
+		GMailService gmailService = new GMailService(config) {
 			@Override
 			protected Transport getTransport() throws NoSuchProviderException {
 				return transport;
 			} 
 		};
 
-		emailService.setConfiguration(config);
-
-		return emailService;
+		return gmailService;
 	}
    
 	
 	@Test
 	public void testSend_multipleRecipients() throws EmailException, MessagingException {
 		final Transport transport = mock(Transport.class);
-		MailService emailService = this.getEmailService(transport);
+        GMailService emailService = this.getGmailService(transport);
 		Mail email = createEmail();
 		email.setReceipts(Arrays.asList(RECIPIENTS));
 		emailService.send(email);
 		verify(transport, times(1)).connect(anyString(), anyInt(), anyString(), anyString());
-		verify(transport, times(2)).sendMessage(any(Message.class), any(Address[].class));
+		verify(transport, times(RECIPIENTS.length)).sendMessage(any(Message.class), any(Address[].class));
 		verify(transport, times(1)).close();
 
 	}
@@ -65,7 +62,7 @@ public class GmailServiceTest {
 	@Test(expected = EmailException.class)
 	public void testSend_failed() throws Exception {
 		Transport transport = null;
-		MailService emailService = this.getEmailService(transport);
+        GMailService emailService = this.getGmailService(transport);
 		Mail email = createEmail();
 		emailService.send(email);
 	}
@@ -77,11 +74,10 @@ public class GmailServiceTest {
 		greenMail.start();
 		SMTPConfiguration config = new SMTPConfiguration("fake@greenmail.com", "*******", "localhost", 3025);
 
-		MailService mailService = new GMailService();
+        GMailService mailService = new GMailService(config);
 
-		mailService.setConfiguration(config);
 
-		//Act
+        //Act
 		Mail email = createEmail();
 		mailService.send(email);
 

@@ -1,8 +1,5 @@
 package com.odde.massivemailer.service.impl;
 
-/**
- * Created by Cadet on 11/25/2015.
- */
 public class SMTPConfiguration {
 
     public String FROM;

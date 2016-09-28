@@ -3,7 +3,6 @@ package com.odde.massivemailer.controller;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -15,25 +14,30 @@ import javax.servlet.http.HttpServletResponse;
 import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Mail;
-import com.odde.massivemailer.service.MailService;
 import com.odde.massivemailer.service.impl.GMailService;
 import com.odde.massivemailer.service.impl.SMTPConfiguration;
 
 import com.odde.massivemailer.service.impl.SqliteContact;
-import com.odde.massivemailer.startup.MassiveMailerServletContextListener;
 
 public class SendMailController extends HttpServlet {
 
-	private SqliteContact sqliteContact;
-	
-	@Override
+    private SqliteContact sqliteContact;
+
+    private static final String SMTP_ADDR = "smtp.gmail.com";
+    private static final int PORT = 587;
+    public static final String EMAIL_USERID = "MM_EMAIL_USERID";
+    public static final String EMAIL_PASSWORD = "MM_EMAIL_PASSWORD";
+    private GMailService gmailService;
+
+    @Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		try {
 			Mail email = processRequest(req);
-			MailService mailService = new GMailService();
-			mailService.setConfiguration(new SMTPConfiguration(System.getenv(MassiveMailerServletContextListener.EMAIL_USERID), System.getenv(MassiveMailerServletContextListener.EMAIL_PASSWORD), "smtp.gmail.com", 587));
+
+            GMailService mailService = createGmailService();
 			mailService.send(email);
+
 			resp.sendRedirect("sendemail.jsp?status=success&msg=Email successfully sent&repcnt="+email.getReceipts().size());
 		} catch (EmailException e) {
 			resp.sendRedirect("sendemail.jsp?status=failed&msg=Unable to send");
@@ -45,7 +49,16 @@ public class SendMailController extends HttpServlet {
 		}
 	}
 
-	public Mail processRequest(HttpServletRequest req) throws SQLException {
+    private GMailService createGmailService() {
+        if (null == gmailService) {
+            SMTPConfiguration config = new SMTPConfiguration(System.getenv(EMAIL_USERID), System.getenv(EMAIL_PASSWORD), SMTP_ADDR, PORT);
+            gmailService = new GMailService(config);
+        }
+
+        return gmailService;
+    }
+
+    public Mail processRequest(HttpServletRequest req) throws SQLException {
 
 		Mail email = new Mail();
 		String tempRecipient = req.getParameter("recipient");
@@ -56,21 +69,22 @@ public class SendMailController extends HttpServlet {
 			if (recipient.startsWith("company:")) {
 
 				String[] aaa = recipient.split(":");
-				List<ContactPerson> contactList;				
 				String company = aaa[1].toString();
+                List<ContactPerson> contactList;
 
-				if(company.startsWith("\"") && company.endsWith("\"") && countCharOccurrence(company, '"') == 2){ 
+				if(company.startsWith("\"") && company.endsWith("\"") && countCharOccurrence(company, '"') == 2){
 					company = company.substring(1, company.length()-1); 				
 				} else if (company.startsWith("\"") && countCharOccurrence(company, '"') == 1) {
 					company = company.substring(1, company.length());
 				}
+
 				SqliteContact contactService = getSqliteContact();
-				contactList = contactService.getContactListFromCompany(company);
+                contactList = contactService.getContactListFromCompany(company);
 				if (contactList.isEmpty()) {
-					throw new SQLException() ;
+					throw new SQLException();
 				}
 				for (ContactPerson contactPerson : contactList) {
-					recipientList.add(contactPerson.getEmail());
+                    recipientList.add(contactPerson.getEmail());
 				}
 			}
 			else{
@@ -85,8 +99,7 @@ public class SendMailController extends HttpServlet {
 	}
 
 	public SqliteContact getSqliteContact() {
-		
-		return (sqliteContact == null) ? sqliteContact = new SqliteContact() : sqliteContact;
+        return (sqliteContact == null) ? sqliteContact = new SqliteContact() : sqliteContact;
 	}
 	
 	public void setSqliteContact(SqliteContact contactService)
@@ -95,15 +108,17 @@ public class SendMailController extends HttpServlet {
 	}
 	
 	
-	private int countCharOccurrence(String input, char countedChar)
-	{
-		int counter = 0;
-		for( int i=0; i < input.length(); i++ ) {
-		    if( input.charAt(i) == countedChar ) {
-		        counter++;
-		    } 
-		}
-		return counter;
+	private int countCharOccurrence(String input, char countedChar) {
+        int counter = 0;
+        for( int i=0; i < input.length(); i++ ) {
+            if( input.charAt(i) == countedChar ) {
+                counter++;
+            }
+        }
+        return counter;
 	}
 
+    public void setGmailService(GMailService gmailService) {
+        this.gmailService = gmailService;
+    }
 }

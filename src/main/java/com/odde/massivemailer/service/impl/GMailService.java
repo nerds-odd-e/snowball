@@ -11,15 +11,16 @@ import javax.mail.Transport;
 
 import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.Mail;
-import com.odde.massivemailer.service.MailService;
 
-public class GMailService implements MailService {
+public class GMailService{
 
 	private SMTPConfiguration configuration;
 
 	public static Session session;
 
-	public GMailService() {
+	public GMailService(SMTPConfiguration config) {
+
+        configuration = config;
 
 		Properties props = System.getProperties();
 		props.put("mail.smtp.starttls.enable", "true");
@@ -28,7 +29,6 @@ public class GMailService implements MailService {
 		session = Session.getDefaultInstance(props);
 	}
 
-	@Override
 	public void send(Mail email) throws EmailException {
 		List<Message> msg;
 		try {
@@ -39,7 +39,6 @@ public class GMailService implements MailService {
 		this.sendEmailViaGmail(msg);
 	}
 
-	@Override
 	public void setConfiguration(SMTPConfiguration config) {
 		this.configuration = config;
 	}
