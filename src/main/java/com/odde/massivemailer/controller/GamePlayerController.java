@@ -3,6 +3,7 @@ package com.odde.massivemailer.controller;
 import com.google.gson.JsonObject;
 import com.odde.emersonsgame.GameRound;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
@@ -26,6 +27,13 @@ public class GamePlayerController extends HttpServlet {
         }
         outputStream.print(game.getGameRound());
     }
+
+    @Override
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        RequestDispatcher rq = req.getRequestDispatcher("game_player.jsp");
+        rq.forward(req,resp);
+    }
+
 
     public void setGameRound(GameRound game) {
         this.game = game;

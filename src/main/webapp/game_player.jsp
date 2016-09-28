@@ -19,25 +19,42 @@
 <link
 	href="resources/lib/bootstrap/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
+
+	<style>
+	    .rollBtn {
+	        width: 100%;
+	        font-size: 150%;
+	        margin-top: 5px;
+	    }
+
+	    .distance {
+	        font-size: 120%;
+	        margin: 0;
+	    }
+
+	    #dice {
+	        text-align:center;
+	        color:#FFF;
+	        font-size:100px
+	    }
+
+	    #currentDistance {
+	        color: red;
+	    }
+	</style>
 </head>
 <body>
-	<div id="wrapper">
+    <div id="page-wrapper">
+        <p class="distance">Total Distance: <% request.getAttribute("distance"); %></p>
+        <p class="distance">Current Distance: <span id="currentDistance">0</span></p>
+    </div>
 
-		<div id="page-wrapper">
+    <h1 id="dice">Dice: <b>6</b><h1>
 
-            <div class="container-fluid">
-
-                <!-- Page Heading -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        Distance: <% request.getAttribute("distance"); %>
-
-                    </div>
-                </div>
-
-            </div>
-
-		</div>
+    <div>
+        <button class="btn btn-default rollBtn" type="button" id="normalButton">Normal Roll</button></div>
+        <button class="btn btn-default rollBtn" type="button" id="superButton">Super Roll</button></div>
+    </div>
 </body>
 <!-- jQuery -->
 <script type="text/javascript"
