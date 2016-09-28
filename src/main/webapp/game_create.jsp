@@ -20,7 +20,7 @@
 	rel="stylesheet" type="text/css">
 </head>
 <body>
-	<form class="col-md-offset-4 col-md-4 center-form" method="post" action="GameSpectator">
+	<form class="col-md-offset-4 col-md-4 center-form" method="post" action="gameSpectator">
 	    <label for="inputDistance">Distance</label>
         <input id="distance" name="distance" class="form-control" type="number" />
         <br />
