@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import com.google.gson.JsonObject;
 import com.odde.emersonsgame.stubs.StubbedGameRound;
+import com.odde.massivemailer.model.Player;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,9 +19,11 @@ public class GamePlayerControllerTest {
     MockHttpServletRequest req;
     MockHttpServletResponse res;
     StubbedGameRound stubGameRound = new StubbedGameRound();
+    Player player;
 
     @Before
     public void setupGame() {
+        player = new Player();
         gamePlayerController.setGameRound(stubGameRound);
         stubGameRound.setDistance(30);
     }
@@ -34,22 +37,19 @@ public class GamePlayerControllerTest {
     @Test
     public void rollDice() throws Exception {
         // normal roll without any scar
-        JsonObject expectedResponse = createJsonObj(30, 2, 0, 6);
         stubGameRound.nextRandomNumber(6);
-        stubGameRound.getNormalPlayerPosition(1);
-        assertEquals(expectedResponse.toString(), getPostResponse("roll", "normal"));
+        player.getNormalPlayerPosition(1);
+        assertEquals(createJsonObj(30, 2, 0, 6).toString(), getPostResponse("roll", "normal"));
 
         // super roll without any scar
-        expectedResponse = createJsonObj(30, 8, 1, 6);
         stubGameRound.nextRandomNumber(6);
-        stubGameRound.getSuperPlayerPosition(1);
-        assertEquals(expectedResponse.toString(), getPostResponse("roll", "super"));
+        player.getSuperPlayerPosition(6);
+        assertEquals(createJsonObj(30, 8, 1, 6).toString(), getPostResponse("roll", "super"));
 
         // normal roll with 1 scar
-        expectedResponse = createJsonObj(30, 8, 1, 3);
         stubGameRound.nextRandomNumber(3);
-        stubGameRound.getNormalPlayerPosition(1);
-        assertEquals(expectedResponse.toString(), getPostResponse("roll", "normal"));
+        player.getNormalPlayerPosition(1);
+        assertEquals(createJsonObj(30, 8, 1, 3).toString(), getPostResponse("roll", "normal"));
     }
 
     private JsonObject createJsonObj(int dist, int playerPos, int playerScars, int dieResult) {

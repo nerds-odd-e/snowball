@@ -1,17 +1,17 @@
 package com.odde.emersonsgame;
 
 public interface GameRound {
+
+    void init();
+
     int getDistance();
 
     void setDistance(int t_Dist);
 
-    void rollDieForPlayer(int playerID, String rollType);
+    int computeNormalSteps(int dieResult, int scars);
 
-    int getNormalPlayerPosition(int playerID);
+    int computeSuperSteps(int dieResult, int scars);
 
-    int getSuperPlayerPosition(int playerID);
+    int rollDie();
 
-    String toString();
-
-    String getGameRound();
 }
