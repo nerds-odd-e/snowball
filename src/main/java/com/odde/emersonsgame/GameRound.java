@@ -14,4 +14,5 @@ public interface GameRound {
 
     int rollDie();
 
+    void setRandomGeneratedNumber(int num);
 }

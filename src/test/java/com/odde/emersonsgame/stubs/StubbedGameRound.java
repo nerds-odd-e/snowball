@@ -45,6 +45,11 @@ public class StubbedGameRound implements GameRound {
         return nextRand;
     }
 
+    @Override
+    public void setRandomGeneratedNumber(int num) {
+        
+    }
+
     public void nextRandomNumber(int num) {
         nextRand = num;
     }

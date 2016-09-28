@@ -3,7 +3,8 @@ package com.odde.massivemailer.controller;
 import static org.junit.Assert.assertEquals;
 
 import com.google.gson.JsonObject;
-import com.odde.emersonsgame.stubs.StubbedGameRound;
+import com.odde.emersonsgame.GameRound;
+import com.odde.emersonsgame.implement.GameRoundImplementation;
 import com.odde.massivemailer.model.Player;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,14 +19,15 @@ public class GamePlayerControllerTest {
     GamePlayerController gamePlayerController = new GamePlayerController();
     MockHttpServletRequest req;
     MockHttpServletResponse res;
-    StubbedGameRound stubGameRound = new StubbedGameRound();
     Player player;
+    GameRound gameRound;
 
     @Before
     public void setupGame() {
+        gameRound = new GameRoundImplementation();
+        gameRound.setDistance(30);
         player = new Player();
-        gamePlayerController.setGameRound(stubGameRound);
-        stubGameRound.setDistance(30);
+        gamePlayerController.setGameRound(gameRound);
     }
 
     @Test
@@ -37,18 +39,15 @@ public class GamePlayerControllerTest {
     @Test
     public void rollDice() throws Exception {
         // normal roll without any scar
-        stubGameRound.nextRandomNumber(6);
-        player.getNormalPlayerPosition(1);
+        gameRound.setRandomGeneratedNumber(6);
         assertEquals(createJsonObj(30, 2, 0, 6).toString(), getPostResponse("roll", "normal"));
 
         // super roll without any scar
-        stubGameRound.nextRandomNumber(6);
-        player.getSuperPlayerPosition(6);
+        gameRound.setRandomGeneratedNumber(6);
         assertEquals(createJsonObj(30, 8, 1, 6).toString(), getPostResponse("roll", "super"));
 
         // normal roll with 1 scar
-        stubGameRound.nextRandomNumber(3);
-        player.getNormalPlayerPosition(1);
+        gameRound.setRandomGeneratedNumber(3);
         assertEquals(createJsonObj(30, 8, 1, 3).toString(), getPostResponse("roll", "normal"));
     }
 

@@ -1,11 +1,11 @@
 package com.odde.emersonsgame.implement;
 
 import com.odde.emersonsgame.GameRound;
-import java.util.Random;
 
 public class GameRoundImplementation implements GameRound {
 
     private int distance;
+    private int randomNum = 0;
 
     public GameRoundImplementation() {
         init();
@@ -40,6 +40,14 @@ public class GameRoundImplementation implements GameRound {
 
     @Override
     public int rollDie() {
-        return (1 + (int)(Math.random() * 6));
+        if(randomNum == 0)
+            return 1 + (int)(Math.random() * 6);
+        return randomNum;
     }
+
+    @Override
+    public void setRandomGeneratedNumber(int num) {
+        randomNum = num;
+    }
+
 }
