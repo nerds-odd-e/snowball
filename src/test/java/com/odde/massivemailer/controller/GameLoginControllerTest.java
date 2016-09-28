@@ -1,6 +1,7 @@
 package com.odde.massivemailer.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
@@ -41,8 +42,14 @@ public class GameLoginControllerTest {
 
         verify(contactService).addContact(argument.capture());
         assertEquals("john@gmail.com",argument.getValue().getEmail());
+        assertEquals("EmersonsGame", res.getRedirectedUrl());
+    }
 
-        assertEquals("game_player.jsp", res.getRedirectedUrl());
+    @Test
+    public void testLoginPlayerWithID() throws Exception {
+        req.setParameter("email", "john@gmail.com");
+        gameLoginController.doPost(req, res);
+        assertTrue("Should contain email", req.getSession().getAttribute("email").equals("john@gmail.com"));
     }
 
     @Test

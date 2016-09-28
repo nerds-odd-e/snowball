@@ -31,7 +31,8 @@ public class GameLoginController extends HttpServlet {
         try {
             contact = new ContactPerson("todo name", email, "todo last name", "todo company");
             contactService.addContact(contact);
-            resp.sendRedirect("game_player.jsp");
+            req.getSession().setAttribute("email", email);
+            resp.sendRedirect("EmersonsGame");
         } catch(InvalidEmailException ex) {
             resp.sendRedirect("game_login.jsp?error=Invalid+email+provided!");
         }

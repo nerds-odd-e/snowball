@@ -9,6 +9,7 @@ import com.odde.massivemailer.model.Player;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.mockito.Mockito;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
@@ -21,6 +22,9 @@ public class GamePlayerControllerTest {
     MockHttpServletResponse res;
     Player player;
     GameRound gameRound;
+
+
+
 
     @Before
     public void setupGame() {
@@ -58,10 +62,6 @@ public class GamePlayerControllerTest {
         jsonObject.addProperty("playerScar", playerScars);
         jsonObject.addProperty("dieResult", dieResult);
         return jsonObject;
-    }
-
-    @Test
-    public void testPlayer2() throws Exception {
     }
 
     private String getPostResponse(String name, String value) throws ServletException, IOException {
