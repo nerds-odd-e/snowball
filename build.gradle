@@ -65,6 +65,19 @@ task cucumber() {
     }
 }
 
+task cucumberNow() {
+    dependsOn assemble, testClasses, 'appBeforeIntegrationTest'
+    finalizedBy 'appAfterIntegrationTest'
+    doLast {
+        appAfterIntegrationTest
+        javaexec {
+            main = "cucumber.api.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'json:build/cucumber-json-report.json', '--glue', 'gradle.cucumber', '--tags', '@now', 'src/test/features']
+        }
+    }
+}
+
 check.dependsOn(['karmaRun', cucumber])
 
 dependencies {

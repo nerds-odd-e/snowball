@@ -7,5 +7,7 @@ public interface UiElement {
 
     String getText();
 
+    String getAttribute(String attrName);
+
     void click();
 }

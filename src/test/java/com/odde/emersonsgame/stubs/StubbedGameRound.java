@@ -1,6 +1,7 @@
 package com.odde.emersonsgame.stubs;
 
 
+import com.google.gson.JsonObject;
 import com.odde.emersonsgame.GameRound;
 import com.odde.massivemailer.model.Player;
 
@@ -10,12 +11,12 @@ public class StubbedGameRound implements GameRound {
 
     private int distance;
     private int nextRand;
-    private int player1Pos;
-    private ArrayList<Player> players;
+    Player player;
 
     public StubbedGameRound() {
-        players = new ArrayList<Player>();
         this.distance = 0;
+        nextRand = 0;
+        player = new Player();
     }
 
     @Override
@@ -32,30 +33,25 @@ public class StubbedGameRound implements GameRound {
         nextRand = num;
     }
 
-    public void movePlayerForNormalMode(int position) {
-        player1Pos = position;
+    public String getGameRound() {
+        JsonObject currentGameRound = new JsonObject();
+        currentGameRound.addProperty("distance",   distance);
+        currentGameRound.addProperty("playerPos",  player.getPosition());
+        currentGameRound.addProperty("playerScar", player.getScars());
+        currentGameRound.addProperty("dieResult",  nextRand);
+        return currentGameRound.toString();
     }
 
-    @Override
-    public int rollDice(int playerID) {
-        return nextRand;
-    }
- 
     @Override
     public int getPlayerPosition(int playerID) {
-        return player1Pos;
+        player.updatePosition((nextRand%2==0) ? 2 : 1);
+        return player.getPosition();
     }
 
-    public void movePlayerForSuperMode(int playerIndex) {
-        player1Pos = nextRand - players.get(playerIndex).getScars();
+    @Override
+    public void rollDieForPlayer(int playerID, String rollType) {
+        return;
     }
 
-    public Player getPlayerAtIndex(int playerIndex) {
-        return players.get(playerIndex);
-    }
 
-    public int addPlayer() {
-        players.add(new Player());
-        return players.size() - 1;
-    }
 }

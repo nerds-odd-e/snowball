@@ -1,5 +1,6 @@
 package com.odde.massivemailer.controller;
 
+import com.google.gson.JsonObject;
 import com.odde.emersonsgame.GameRound;
 
 import javax.servlet.ServletException;
@@ -15,16 +16,14 @@ public class GamePlayerController extends HttpServlet {
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletOutputStream outputStream = resp.getOutputStream();
-        if(req.getParameter("roll").equals("normal")) {
-            outputStream.print("{" + game.rollDice(1) + "," + game.getPlayerPosition(1) + "}");
-        } else if(req.getParameter("roll").equals("super")) {
-            outputStream.print("{" + game.rollDice(1) + "," + game.getPlayerPosition(1) + "}");
-        } else {
-            outputStream.print(game.getDistance());
+
+        if(null != req.getParameter("roll")) {
+            game.rollDieForPlayer(1, req.getParameter("roll"));
         }
+        outputStream.print(game.getGameRound());
     }
 
-    public void setGame(GameRound game) {
+    public void setGameRound(GameRound game) {
         this.game = game;
     }
 }
