@@ -43,8 +43,19 @@ public class StubbedGameRound implements GameRound {
     }
 
     @Override
-    public int getPlayerPosition(int playerID) {
-        player.updatePosition((nextRand%2==0) ? 2 : 1);
+    public int getNormalPlayerPosition(int playerID) {
+        int numOfSteps = ((nextRand%2 == 0) ? 2 : 1) - player.getScars();
+        if(numOfSteps < 0) {
+            numOfSteps = 0;
+        }
+
+        player.updatePosition(numOfSteps);
+        return player.getPosition();
+    }
+
+    public int getSuperPlayerPosition(int playerID) {
+        player.updatePosition(nextRand-player.getScars());
+        player.addScar();
         return player.getPosition();
     }
 

@@ -7,7 +7,9 @@ public interface GameRound {
 
     void rollDieForPlayer(int playerID, String rollType);
 
-    int getPlayerPosition(int playerID);
+    int getNormalPlayerPosition(int playerID);
+
+    int getSuperPlayerPosition(int playerID);
 
     String toString();
 

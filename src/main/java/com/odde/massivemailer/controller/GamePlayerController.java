@@ -18,7 +18,11 @@ public class GamePlayerController extends HttpServlet {
         ServletOutputStream outputStream = resp.getOutputStream();
 
         if(null != req.getParameter("roll")) {
-            game.rollDieForPlayer(1, req.getParameter("roll"));
+            if(req.getParameter("roll") == "normal") {
+                game.rollDieForPlayer(1, req.getParameter("roll"));
+            } else {
+                game.rollDieForPlayer(1, req.getParameter("roll"));
+            }
         }
         outputStream.print(game.getGameRound());
     }
