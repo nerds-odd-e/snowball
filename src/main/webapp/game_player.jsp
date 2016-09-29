@@ -18,9 +18,10 @@
 <link href="resources/lib/bootstrap/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <div id="page-wrapper">
-        <p class="distance">Total Distance: <% request.getAttribute("distance"); %></p>
-        <p class="distance">Current Distance: <span id="currentDistance">0</span></p>
+    <div id="page-wrapper" class="playerStatus">
+        <p>Total Distance: <% request.getAttribute("distance"); %></p>
+        <p>Current Distance: <span id="currentDistance">0</span></p>
+        <p>Scars: <span id="scars">0</span></p>
     </div>
 
     <div class="diceStyle">Dice: <span id="dice">6</span></div>
