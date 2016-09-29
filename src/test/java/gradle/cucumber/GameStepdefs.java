@@ -9,6 +9,8 @@ import gradle.cucumber.driver.SingleDrive;
 import gradle.cucumber.driver.UiElement;
 import gradle.cucumber.driver.WebDriverWrapper;
 
+import java.util.concurrent.TimeUnit;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -74,8 +76,11 @@ public class GameStepdefs {
 
     @Then("^The spectator should see two cars on the screen$")
     public void theSpectatorShouldSeeTwoCarsOnTheScreen() throws Throwable {
-        driver.visit(new MyStepdefs().BASE_URL + "gameSpectator");
-        assertEquals(2, driver.countElementWithClass("car"));
+        driver.visit(new MyStepdefs().BASE_URL + "game_create.jsp");
+        driver.text_field("distance", "5");
+        driver.click_button("btnCreate");
+        TimeUnit.SECONDS.sleep(4);
+        assertEquals(1, driver.countElementWithClass("racer"));
     }
 
     @Given("^a player joins the game on a separate window$")
