@@ -73,6 +73,12 @@ public class GamePlayerControllerTest {
     }
 
     @Test
+    public void testKickPlayerWithoutEmail() throws Exception {
+        gamePlayerController.doGet(req, res);
+        assertEquals("game_login.jsp", res.getRedirectedUrl());
+    }
+
+    @Test
     public void testPlayerStatesWithPost() throws Exception {
         Player[] players = { new Player() };
         gamePlayerController.setPlayers(players);

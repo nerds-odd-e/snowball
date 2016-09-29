@@ -50,10 +50,17 @@ public class GamePlayerController extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher rq = req.getRequestDispatcher("game_player.jsp");
         HttpSession session = req.getSession();
-        session.setAttribute("ID", generateID(session.getAttribute("email").toString()));
         req.setAttribute("distance", game.getDistance());
+        String nextPagePath = "game_login.jsp";
+
+        if (null != session.getAttribute("email")){
+            session.setAttribute("ID", generateID(session.getAttribute("email").toString()));
+            req.setAttribute("gameState", createResponse(game, players[0]).toString());
+            nextPagePath = "game_player.jsp";
+        }
+
+        RequestDispatcher rq = req.getRequestDispatcher(nextPagePath);
         rq.forward(req, resp);
     }
 
