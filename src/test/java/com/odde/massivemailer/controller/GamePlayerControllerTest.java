@@ -1,6 +1,8 @@
 package com.odde.massivemailer.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.*;
 
 import com.google.gson.JsonObject;
 import com.odde.emersonsgame.GameRound;
@@ -13,12 +15,14 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class GamePlayerControllerTest {
+    public static final String SESSION_EMAIL = "email";
     GamePlayerController gamePlayerController = new GamePlayerController();
-    MockHttpServletRequest req;
-    MockHttpServletResponse res;
+    MockHttpServletRequest req = new MockHttpServletRequest();
+    MockHttpServletResponse res = new MockHttpServletResponse();
     Player player;
     GameRound gameRound;
 
@@ -32,13 +36,13 @@ public class GamePlayerControllerTest {
     }
 
     @Test
-    public void getGameRoundObj() throws Exception {
+    public void testGetGameRoundObj() throws Exception {
         JsonObject expectedResponse = createJsonObj(30, 0, 0, 0);
         assertEquals(expectedResponse.toString(), getPostResponse("roll", ""));
     }
 
     @Test
-    public void rollDice() throws Exception {
+    public void testValidMove() throws Exception {
         // normal roll without any scar
         gameRound.setRandomGeneratedNumber(6);
         assertEquals(createJsonObj(30, 2, 0, 6).toString(), getPostResponse("roll", "normal"));
@@ -52,6 +56,21 @@ public class GamePlayerControllerTest {
         assertEquals(createJsonObj(30, 8, 1, 3).toString(), getPostResponse("roll", "normal"));
     }
 
+    @Test
+    public void testGetPlayerWithID() throws Exception {
+        // Given email addr
+        HttpSession mockSession = mock(HttpSession.class);
+        when(mockSession.getAttribute(SESSION_EMAIL)).thenReturn("abc@gmail.com");
+        req.setSession(mockSession);
+
+        // When player login to page
+        gamePlayerController.doGet(req, res);
+
+        // Then should redirect with ID in session?
+        verify(mockSession).setAttribute(eq("ID"), anyString());
+    }
+
+
     private JsonObject createJsonObj(int dist, int playerPos, int playerScars, int dieResult) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("distance", dist);
@@ -62,8 +81,6 @@ public class GamePlayerControllerTest {
     }
 
     private String getPostResponse(String name, String value) throws ServletException, IOException {
-        req = new MockHttpServletRequest();
-        res = new MockHttpServletResponse();
         req.setParameter(name, value);
         gamePlayerController.doPost(req, res);
         return res.getContentAsString();
