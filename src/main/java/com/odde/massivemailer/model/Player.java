@@ -1,7 +1,5 @@
 package com.odde.massivemailer.model;
 
-import com.odde.emersonsgame.GameRound;
-
 public class Player {
 
     private int scars;

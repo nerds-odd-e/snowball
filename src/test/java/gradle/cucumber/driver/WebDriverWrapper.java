@@ -82,5 +82,7 @@ public class WebDriverWrapper {
     public int countElementWithClass(String cssClass) {
         return driver.findElements(By.className(cssClass)).size();
     }
+
+    public String getElementMarginWithClass(String cssClass) { return driver.findElement(By.className(cssClass)).getCssValue("margin-left"); }
 }
 

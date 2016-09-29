@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%
+ if (null == request.getSession().getAttribute("email")){
+   response.sendRedirect("game_login.jsp");
+ }
+ %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -18,9 +23,10 @@
 <link href="resources/lib/bootstrap/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+
     <div id="page-wrapper" class="playerStatus">
         <p>Email: <span id="email"> <%=request.getSession().getAttribute("email") %></span></p>
-        <p>Total Distance: <%=request.getAttribute("distance") %></p>
+        <p>Total Distance: <span id="distance"><%=request.getAttribute("distance") %></p>
         <p>Current Distance: <span id="currentDistance">0</span></p>
         <p>Scars: <span id="scars">0</span></p>
     </div>

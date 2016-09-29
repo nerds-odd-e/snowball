@@ -1,6 +1,6 @@
 package com.odde.massivemailer.controller;
 
-import static org.junit.Assert.assertArrayEquals;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
@@ -18,8 +18,10 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class GamePlayerControllerTest {
     public static final String SESSION_EMAIL = "email";
@@ -40,8 +42,7 @@ public class GamePlayerControllerTest {
 
     @Test
     public void testGetGameRoundObj() throws Exception {
-        JsonObject expectedResponse = createJsonObj(30, 0, 0, 0);
-        assertEquals(expectedResponse.toString(), getGetRequest());
+        assertEquals(30, getGetRequest().getAttribute("distance"));
     }
 
     @Test
@@ -64,6 +65,7 @@ public class GamePlayerControllerTest {
         HttpSession mockSession = mock(HttpSession.class);
         when(mockSession.getAttribute(SESSION_EMAIL)).thenReturn("abc@gmail.com");
         req.setSession(mockSession);
+        req.setRequestURI("EmersonsGame");
 
         // When player login to page
         gamePlayerController.doGet(req, res);
@@ -73,23 +75,21 @@ public class GamePlayerControllerTest {
     }
 
     @Test
-    public void testPlayerStatesWithPost() throws Exception {
-        Player[] players = { new Player() };
-        gamePlayerController.setPlayers(players);
+    public void testPlayerGetsAdded() throws Exception {
+        //GIVEN: No Players
+        gamePlayerController.setPlayers(new ArrayList<Player>());
 
-        req.setParameter("players", "");
-        gamePlayerController.doPost(req, res);
+        //WHEN: Player log in
+        req.setRequestURI("EmersonsGame");
+        req.getSession().setAttribute("email", "some@email.com");
+        gamePlayerController.doGet(req,res);
+
+        //THEN: /Players should return 1 player info
+        req.setRequestURI("EmersonsGame/Players");
+        gamePlayerController.doGet(req, res);
+        Player[] players = { new Player() };
         assertEquals(new Gson().toJson(players), res.getContentAsString());
     }
-
-//    @Test
-//    public void testOneRoundOnlyOneMove() throws Exception {
-//        JsonObject firstMoveResponse = (JsonObject) new JsonParser().parse(makeMove(6, "normal"));
-//        JsonObject secondMoveResponse = (JsonObject) new JsonParser().parse(makeMove(6, "normal"));
-//        assertEquals(firstMoveResponse.get("playerPos"), secondMoveResponse.get("playerPos"));
-//        assertEquals(firstMoveResponse.get("status"), "ACCEPTING_ROLLS");
-//        assertEquals(firstMoveResponse.get("status"), "ACCEPTING_ROLLS");
-//    }
 
     private JsonObject createJsonObj(int dist, int playerPos, int playerScars, int dieResult) {
         JsonObject jsonObject = new JsonObject();
@@ -100,6 +100,17 @@ public class GamePlayerControllerTest {
         return jsonObject;
     }
 
+    @Test
+    public void testGetPlayerStates() throws Exception {
+        ArrayList<Player> players = new ArrayList<Player>() {{
+            add(new Player());
+        }};
+
+        gamePlayerController.setPlayers(players);
+        req.setRequestURI("/EmersonsGame/Players");
+        gamePlayerController.doGet(req, res);
+        assertEquals(new Gson().toJson(players), res.getContentAsString());
+    }
 
     public String makeMove(int num, String type) throws ServletException, IOException {
         gameRound.setRandomGeneratedNumber(num);
@@ -112,12 +123,11 @@ public class GamePlayerControllerTest {
         return res.getContentAsString();
     }
 
-    private String getGetRequest() throws ServletException, IOException {
-        req = new MockHttpServletRequest();
-        res = new MockHttpServletResponse();
+    private HttpServletRequest getGetRequest() throws ServletException, IOException {
         HttpSession session = req.getSession();
         session.setAttribute("email", "test@test.com");
+        req.setRequestURI("EmersonsGame");
         gamePlayerController.doGet(req, res);
-        return req.getAttribute("gameState").toString();
+        return req;
     }
 }
