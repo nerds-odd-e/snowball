@@ -70,7 +70,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>GamePlayerController</servlet-name>
-		<url-pattern>/emersonsGame</url-pattern>
+		<url-pattern>/EmersonsGame</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
