@@ -63,14 +63,12 @@ public class GamePlayerController extends HttpServlet {
 
     public void handlePlayerRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        if (null != session.getAttribute("email")){
-            if (null == session.getAttribute("ID")) {
-                // New player
-                session.setAttribute("ID", generateID(session.getAttribute("email").toString()));
-                // Add to player array
-            }
-            req.setAttribute("gameState", createResponse(game, players[0]).toString());
+        if (null == session.getAttribute("ID")) {
+            // New player
+            session.setAttribute("ID", generateID(session.getAttribute("email").toString()));
+            // Add to player array
         }
+        req.setAttribute("gameState", createResponse(game, players[0]).toString());
 
         RequestDispatcher rq = req.getRequestDispatcher("game_player.jsp");
         rq.forward(req, resp);
