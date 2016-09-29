@@ -26,11 +26,7 @@
 
     <div id="page-wrapper" class="playerStatus">
         <p>Email: <span id="email"> <%=request.getSession().getAttribute("email") %></span></p>
-<<<<<<< 6fcc566934fb933fed62e1ac10681a291b3bfeba
         <p>Total Distance: <span id="distance"><%=request.getAttribute("distance") %></p>
-=======
-        <p>Total Distance: <%= request.getAttribute("distance") %></p>
->>>>>>> kick player without email
         <p>Current Distance: <span id="currentDistance">0</span></p>
         <p>Scars: <span id="scars">0</span></p>
     </div>
