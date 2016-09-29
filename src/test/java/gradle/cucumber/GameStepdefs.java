@@ -80,7 +80,7 @@ public class GameStepdefs {
         driver.text_field("distance", "5");
         driver.click_button("btnCreate");
         TimeUnit.SECONDS.sleep(4);
-        assertEquals(1, driver.countElementWithClass("racer"));
+        assertEquals(2, driver.countElementWithClass("racer"));
     }
 
     @Given("^a player joins the game on a separate window$")
