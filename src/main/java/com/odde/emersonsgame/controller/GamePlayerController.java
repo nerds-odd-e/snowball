@@ -48,20 +48,32 @@ public class GamePlayerController extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
         req.setAttribute("distance", game.getDistance());
         if (req.getRequestURI().endsWith("EmersonsGame")) {
-            if (null != session.getAttribute("email")){
-                session.setAttribute("ID", generateID(session.getAttribute("email").toString()));
-                req.setAttribute("gameState", createResponse(game, players[0]).toString());
-            }
-
-            RequestDispatcher rq = req.getRequestDispatcher("game_player.jsp");
-            rq.forward(req, resp);
+            handlePlayerRequest(req, resp);
         } else if (req.getRequestURI().endsWith("EmersonsGame/Players")) {
-            String jsonResponse = new Gson().toJson(players);
-            resp.getOutputStream().print(jsonResponse);
+            handleListPlayers(resp);
         }
+    }
+
+    public void handleListPlayers(HttpServletResponse resp) throws IOException {
+        String jsonResponse = new Gson().toJson(players);
+        resp.getOutputStream().print(jsonResponse);
+    }
+
+    public void handlePlayerRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        if (null != session.getAttribute("email")){
+            if (null == session.getAttribute("ID")) {
+                // New player
+                session.setAttribute("ID", generateID(session.getAttribute("email").toString()));
+                // Add to player array
+            }
+            req.setAttribute("gameState", createResponse(game, players[0]).toString());
+        }
+
+        RequestDispatcher rq = req.getRequestDispatcher("game_player.jsp");
+        rq.forward(req, resp);
     }
 
     private String generateID(String email){
