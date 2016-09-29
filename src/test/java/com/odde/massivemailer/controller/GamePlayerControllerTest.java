@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.odde.emersonsgame.GameRound;
 import com.odde.emersonsgame.implement.GameRoundImplementation;
 import com.odde.massivemailer.model.Player;
@@ -42,18 +43,12 @@ public class GamePlayerControllerTest {
     }
 
     @Test
-    public void testValidMove() throws Exception {
-        // normal roll without any scar
-        gameRound.setRandomGeneratedNumber(6);
-        assertEquals(createJsonObj(30, 2, 0, 6).toString(), getPostResponse("roll", "normal"));
-
-        // super roll without any scar
-        gameRound.setRandomGeneratedNumber(6);
-        assertEquals(createJsonObj(30, 8, 1, 6).toString(), getPostResponse("roll", "super"));
-
-        // normal roll with 1 scar
-        gameRound.setRandomGeneratedNumber(3);
-        assertEquals(createJsonObj(30, 8, 1, 3).toString(), getPostResponse("roll", "normal"));
+    public void testGetMoveResult() throws Exception {
+        JsonObject responseObj = (JsonObject) new JsonParser().parse(makeMove(6, "normal"));
+        assertNotNull(responseObj.get("distance"));
+        assertNotNull(responseObj.get("playerPos"));
+        assertNotNull(responseObj.get("playerScar"));
+        assertEquals(responseObj.get("dieResult").getAsInt(), 6);
     }
 
     @Test
@@ -70,7 +65,6 @@ public class GamePlayerControllerTest {
         verify(mockSession).setAttribute(eq("ID"), anyString());
     }
 
-
     private JsonObject createJsonObj(int dist, int playerPos, int playerScars, int dieResult) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("distance", dist);
@@ -78,6 +72,12 @@ public class GamePlayerControllerTest {
         jsonObject.addProperty("playerScar", playerScars);
         jsonObject.addProperty("dieResult", dieResult);
         return jsonObject;
+    }
+
+
+    public String makeMove(int num, String type) throws ServletException, IOException {
+        gameRound.setRandomGeneratedNumber(num);
+        return getPostResponse("roll", type);
     }
 
     private String getPostResponse(String name, String value) throws ServletException, IOException {
