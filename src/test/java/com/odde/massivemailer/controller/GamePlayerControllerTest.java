@@ -82,6 +82,15 @@ public class GamePlayerControllerTest {
         assertEquals(new Gson().toJson(players), res.getContentAsString());
     }
 
+//    @Test
+//    public void testOneRoundOnlyOneMove() throws Exception {
+//        JsonObject firstMoveResponse = (JsonObject) new JsonParser().parse(makeMove(6, "normal"));
+//        JsonObject secondMoveResponse = (JsonObject) new JsonParser().parse(makeMove(6, "normal"));
+//        assertEquals(firstMoveResponse.get("playerPos"), secondMoveResponse.get("playerPos"));
+//        assertEquals(firstMoveResponse.get("status"), "ACCEPTING_ROLLS");
+//        assertEquals(firstMoveResponse.get("status"), "ACCEPTING_ROLLS");
+//    }
+
     private JsonObject createJsonObj(int dist, int playerPos, int playerScars, int dieResult) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("distance", dist);
