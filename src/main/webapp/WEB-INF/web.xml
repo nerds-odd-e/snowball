@@ -73,7 +73,12 @@
 		<url-pattern>/EmersonsGame</url-pattern>
 	</servlet-mapping>
 
-	<servlet>
+    <servlet-mapping>
+        <servlet-name>GamePlayerController</servlet-name>
+        <url-pattern>/EmersonsGame/Players</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
 		<servlet-name>GameSpectatorController</servlet-name>
 		<servlet-class>com.odde.massivemailer.controller.GameSpectatorController</servlet-class>
 	</servlet>

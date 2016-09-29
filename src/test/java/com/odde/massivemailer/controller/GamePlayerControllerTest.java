@@ -75,16 +75,22 @@ public class GamePlayerControllerTest {
     @Test
     public void testKickPlayerWithoutEmail() throws Exception {
         gamePlayerController.doGet(req, res);
-        assertEquals("game_login.jsp", res.getRedirectedUrl());
+        assertEquals("game_login.jsp", res.getForwardedUrl());
     }
 
     @Test
-    public void testPlayerStatesWithPost() throws Exception {
+    public void testPlayersGetAdded() throws Exception {
+
+
+    }
+
+    @Test
+    public void testGetPlayerStates() throws Exception {
         Player[] players = { new Player() };
         gamePlayerController.setPlayers(players);
 
-        req.setParameter("players", "");
-        gamePlayerController.doPost(req, res);
+        req.setRequestURI("/EmersonsGame/Players");
+        gamePlayerController.doGet(req, res);
         assertEquals(new Gson().toJson(players), res.getContentAsString());
     }
 

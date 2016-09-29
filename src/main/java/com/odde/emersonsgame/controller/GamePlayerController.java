@@ -26,9 +26,7 @@ public class GamePlayerController extends HttpServlet {
         ServletOutputStream outputStream = resp.getOutputStream();
         String jsonResponse = "{}";
 
-        if (null != req.getParameter("players")) {
-            jsonResponse = new Gson().toJson(players);
-        } else if (null != req.getParameter("roll")) {
+       if (null != req.getParameter("roll")) {
             try {
                 players[0] = game.play(req.getParameter("roll"), players[0]);
                 jsonResponse = createResponse(game, players[0]).toString();
@@ -52,16 +50,18 @@ public class GamePlayerController extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         req.setAttribute("distance", game.getDistance());
-        String nextPagePath = "game_login.jsp";
+        if (req.getRequestURI().endsWith("EmersonsGame")) {
+            if (null != session.getAttribute("email")){
+                session.setAttribute("ID", generateID(session.getAttribute("email").toString()));
+                req.setAttribute("gameState", createResponse(game, players[0]).toString());
+            }
 
-        if (null != session.getAttribute("email")){
-            session.setAttribute("ID", generateID(session.getAttribute("email").toString()));
-            req.setAttribute("gameState", createResponse(game, players[0]).toString());
-            nextPagePath = "game_player.jsp";
+            RequestDispatcher rq = req.getRequestDispatcher("game_player.jsp");
+            rq.forward(req, resp);
+        } else if (req.getRequestURI().endsWith("EmersonsGame/Players")) {
+            String jsonResponse = new Gson().toJson(players);
+            resp.getOutputStream().print(jsonResponse);
         }
-
-        RequestDispatcher rq = req.getRequestDispatcher(nextPagePath);
-        rq.forward(req, resp);
     }
 
     private String generateID(String email){

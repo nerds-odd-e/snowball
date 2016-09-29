@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%
+ if (null == request.getSession().getAttribute("email")){
+   response.sendRedirect("game_login.jsp");
+ }
+ %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -21,7 +26,11 @@
 
     <div id="page-wrapper" class="playerStatus">
         <p>Email: <span id="email"> <%=request.getSession().getAttribute("email") %></span></p>
+<<<<<<< 6fcc566934fb933fed62e1ac10681a291b3bfeba
         <p>Total Distance: <span id="distance"><%=request.getAttribute("distance") %></p>
+=======
+        <p>Total Distance: <%= request.getAttribute("distance") %></p>
+>>>>>>> kick player without email
         <p>Current Distance: <span id="currentDistance">0</span></p>
         <p>Scars: <span id="scars">0</span></p>
     </div>
