@@ -78,5 +78,9 @@ public class WebDriverWrapper {
         List<WebElement> elements = driver.findElements(By.xpath("//*[contains(text(),'"+text+"')]"));
         assertEquals(elements.size(), count);
     }
+
+    public int countElementWithClass(String cssClass) {
+        return driver.findElements(By.className(cssClass)).size();
+    }
 }
 

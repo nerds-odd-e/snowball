@@ -12,7 +12,7 @@ import gradle.cucumber.driver.WebDriverWrapper;
 public class MyStepdefs {
 
     private WebDriverWrapper driver = SingleDrive.getDriver();
-    private String BASE_URL = "http://localhost:8070/massive_mailer/";
+    public String BASE_URL = "http://localhost:8070/massive_mailer/";
 
     @When("^Add A Contact \"([^\"]*)\"$")
     public void addAContact(String email) throws Throwable {

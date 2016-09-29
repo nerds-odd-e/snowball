@@ -54,14 +54,21 @@ public class GameStepdefs {
 
     @Given("^a player joins the game$")
     public void aPlayerJoinsTheGame() throws Throwable {
-
-        throw new PendingException();
+        new MyStepdefs().loginWithEmail("terry@odd-e.com");
     }
 
     @Given("^a game is started$")
     public void aGameIsStarted() throws Throwable {
-        // driver needs to go to emersonsgame
-        // driver needs to input distance
-        // driver at spectator page, it's ok now
+    }
+
+    @When("^another player joins the game$")
+    public void anotherPlayerJoinsTheGame() throws Throwable {
+        new MyStepdefs().loginWithEmail("another_terry@odd-e.com");
+    }
+
+    @Then("^The spectator should see two cars on the screen$")
+    public void theSpectatorShouldSeeTwoCarsOnTheScreen() throws Throwable {
+        driver.visit(new MyStepdefs().BASE_URL + "gameSpectator");
+        assertEquals(2, driver.countElementWithClass("car"));
     }
 }
