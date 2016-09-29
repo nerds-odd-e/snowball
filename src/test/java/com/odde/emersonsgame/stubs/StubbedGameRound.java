@@ -1,6 +1,7 @@
 package com.odde.emersonsgame.stubs;
 
 import com.odde.emersonsgame.GameRound;
+import com.odde.massivemailer.model.Player;
 
 
 public class StubbedGameRound implements GameRound {
@@ -29,18 +30,6 @@ public class StubbedGameRound implements GameRound {
     }
 
     @Override
-    public int computeNormalSteps(int dieResult, int scars) {
-        int steps =  (dieResult % 2 == 0) ? 2 : 1 - scars;
-        return (steps > 0) ? steps : 0;
-    }
-
-    @Override
-    public int computeSuperSteps(int dieResult, int scars) {
-        int steps = dieResult - scars;
-        return (steps > 0) ? steps : 0;
-    }
-
-    @Override
     public int rollDie() {
         return nextRand;
     }
@@ -48,6 +37,11 @@ public class StubbedGameRound implements GameRound {
     @Override
     public void setRandomGeneratedNumber(int num) {
         
+    }
+
+    @Override
+    public Player play(String roll, Player player) {
+        return null;
     }
 
     public void nextRandomNumber(int num) {

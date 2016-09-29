@@ -1,8 +1,9 @@
-package com.odde.massivemailer.controller;
+package com.odde.emersonsgame.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.odde.emersonsgame.GameRound;
+import com.odde.emersonsgame.exception.GameException;
 import com.odde.massivemailer.model.Player;
 
 import javax.servlet.RequestDispatcher;
@@ -27,22 +28,19 @@ public class GamePlayerController extends HttpServlet {
         if (null != req.getParameter("players")) {
             jsonResponse = new Gson().toJson(players);
         } else if (null != req.getParameter("roll")) {
-            if (req.getParameter("roll") == "normal") {
-                players[0].playNormal(game);
-            } else if (req.getParameter("roll") == "super") {
-                players[0].playSuper(game);
+            try {
+                players[0] = game.play(req.getParameter("roll"), players[0]);
+                jsonResponse = createResponse(game, players[0]).toString();
+            } catch (GameException e) {
+                jsonResponse = e.getMessage();
             }
-
-            jsonResponse = createResponse(game.getDistance(), players[0]).toString();
         }
-
         outputStream.print(jsonResponse);
     }
 
-
-    private JsonObject createResponse(int dist, Player player) {
+    private JsonObject createResponse(GameRound game, Player player) {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("distance", dist);
+        jsonObject.addProperty("distance", game.getDistance());
         jsonObject.addProperty("playerPos", player.getPosition());
         jsonObject.addProperty("playerScar", player.getScars());
         jsonObject.addProperty("dieResult", player.getDieResult());
@@ -51,11 +49,10 @@ public class GamePlayerController extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("distance", req.getParameter("distance"));
         RequestDispatcher rq = req.getRequestDispatcher("game_player.jsp");
-
         HttpSession session = req.getSession();
         session.setAttribute("ID", generateID(session.getAttribute("email").toString()));
+        req.setAttribute("gameState", createResponse(game, players[0]).toString());
         rq.forward(req, resp);
     }
 

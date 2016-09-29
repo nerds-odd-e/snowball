@@ -7,6 +7,8 @@ import static org.mockito.Mockito.*;
 
 import com.google.gson.*;
 import com.odde.emersonsgame.GameRound;
+import com.odde.emersonsgame.controller.GamePlayerController;
+import com.odde.emersonsgame.exception.GameException;
 import com.odde.emersonsgame.implement.GameRoundImplementation;
 import com.odde.massivemailer.model.Player;
 import org.junit.Before;
@@ -39,7 +41,12 @@ public class GamePlayerControllerTest {
     @Test
     public void testGetGameRoundObj() throws Exception {
         JsonObject expectedResponse = createJsonObj(30, 0, 0, 0);
-        assertEquals(expectedResponse.toString(), getPostResponse("roll", ""));
+        assertEquals(expectedResponse.toString(), getGetRequest());
+    }
+
+    @Test
+    public void getGameException() throws Exception {
+        assertEquals(GameException.INVALID_MOVE, getPostResponse("roll", "Expected exception"));
     }
 
     @Test
@@ -94,5 +101,14 @@ public class GamePlayerControllerTest {
         req.setParameter(name, value);
         gamePlayerController.doPost(req, res);
         return res.getContentAsString();
+    }
+
+    private String getGetRequest() throws ServletException, IOException {
+        req = new MockHttpServletRequest();
+        res = new MockHttpServletResponse();
+        HttpSession session = req.getSession();
+        session.setAttribute("email", "test@test.com");
+        gamePlayerController.doGet(req, res);
+        return req.getAttribute("gameState").toString();
     }
 }

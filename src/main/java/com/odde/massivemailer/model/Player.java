@@ -22,7 +22,8 @@ public class Player {
         return scars;
     }
 
-    public void updatePosition(int numOfSteps) {
+    public void makeMove(int numOfSteps, int dieResult) {
+        this.dieResult = dieResult;
         position += numOfSteps;
     }
 
@@ -32,26 +33,5 @@ public class Player {
 
     public int getDieResult() {
         return dieResult;
-    }
-
-    public int getNormalPlayerPosition(int numOfSteps) {
-        updatePosition(numOfSteps);
-        return getPosition();
-    }
-
-    public int getSuperPlayerPosition(int numOfSteps) {
-        updatePosition(numOfSteps);
-        addScar();
-        return getPosition();
-    }
-
-    public void playNormal(GameRound game) {
-        dieResult = game.rollDie();
-        getNormalPlayerPosition(game.computeNormalSteps(dieResult, getScars()));
-    }
-
-    public void playSuper(GameRound game) {
-        dieResult = game.rollDie();
-        getSuperPlayerPosition(game.computeSuperSteps(dieResult, getScars()));
     }
 }

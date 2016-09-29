@@ -1,5 +1,8 @@
 package com.odde.emersonsgame;
 
+import com.odde.emersonsgame.exception.GameException;
+import com.odde.massivemailer.model.Player;
+
 public interface GameRound {
 
     void init();
@@ -8,11 +11,9 @@ public interface GameRound {
 
     void setDistance(int t_Dist);
 
-    int computeNormalSteps(int dieResult, int scars);
-
-    int computeSuperSteps(int dieResult, int scars);
-
     int rollDie();
 
     void setRandomGeneratedNumber(int num);
+
+    Player play(String roll, Player player) throws GameException;
 }
