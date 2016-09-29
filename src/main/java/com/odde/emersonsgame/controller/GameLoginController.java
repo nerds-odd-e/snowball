@@ -1,4 +1,4 @@
-package com.odde.massivemailer.controller;
+package com.odde.emersonsgame.controller;
 
 import java.io.IOException;
 

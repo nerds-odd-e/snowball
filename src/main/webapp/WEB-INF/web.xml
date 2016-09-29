@@ -21,7 +21,7 @@
 
 	<servlet>
 		<servlet-name>GameLoginController</servlet-name>
-		<servlet-class>com.odde.massivemailer.controller.GameLoginController</servlet-class>
+		<servlet-class>com.odde.emersonsgame.controller.GameLoginController</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>GameLoginController</servlet-name>

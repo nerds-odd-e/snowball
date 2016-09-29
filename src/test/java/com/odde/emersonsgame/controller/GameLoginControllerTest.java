@@ -1,4 +1,4 @@
-package com.odde.massivemailer.controller;
+package com.odde.emersonsgame.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -41,14 +41,8 @@ public class GameLoginControllerTest {
         gameLoginController.doPost(req, res);
 
         verify(contactService).addContact(argument.capture());
-        assertEquals("john@gmail.com",argument.getValue().getEmail());
+        assertEquals("john@gmail.com", argument.getValue().getEmail());
         assertEquals("EmersonsGame", res.getRedirectedUrl());
-    }
-
-    @Test
-    public void testLoginPlayerWithID() throws Exception {
-        req.setParameter("email", "john@gmail.com");
-        gameLoginController.doPost(req, res);
         assertTrue("Should contain email", req.getSession().getAttribute("email").equals("john@gmail.com"));
     }
 

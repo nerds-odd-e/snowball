@@ -9,7 +9,6 @@ import com.odde.massivemailer.model.Player;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.mockito.Mockito;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
@@ -22,8 +21,6 @@ public class GamePlayerControllerTest {
     MockHttpServletResponse res;
     Player player;
     GameRound gameRound;
-
-
 
 
     @Before

@@ -20,31 +20,30 @@ public class GamePlayerController extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletOutputStream outputStream = resp.getOutputStream();
 
-        if(null != req.getParameter("roll")) {
-            if(req.getParameter("roll") == "normal") {
+        if (null != req.getParameter("roll")) {
+            if (req.getParameter("roll") == "normal") {
                 player.playNormal(game);
-            } else if(req.getParameter("roll") == "super")  {
+            } else if (req.getParameter("roll") == "super") {
                 player.playSuper(game);
             }
         }
-        outputStream.print(createResponse(game.getDistance(), player.getPosition(), player.getScars(), player.getDieResult()).toString());
+        outputStream.print(createResponse(game.getDistance(), player).toString());
     }
 
 
-
-    private JsonObject createResponse(int dist, int playerPos, int playerScars, int dieResult) {
+    private JsonObject createResponse(int dist, Player player) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("distance", dist);
-        jsonObject.addProperty("playerPos", playerPos);
-        jsonObject.addProperty("playerScar", playerScars);
-        jsonObject.addProperty("dieResult", dieResult);
+        jsonObject.addProperty("playerPos", player.getPosition());
+        jsonObject.addProperty("playerScar", player.getScars());
+        jsonObject.addProperty("dieResult", player.getDieResult());
         return jsonObject;
     }
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher rq = req.getRequestDispatcher("game_player.jsp");
-        rq.forward(req,resp);
+        rq.forward(req, resp);
     }
 
 
