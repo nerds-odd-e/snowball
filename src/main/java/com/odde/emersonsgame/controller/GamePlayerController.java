@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.odde.emersonsgame.GameRound;
 import com.odde.emersonsgame.exception.GameException;
+import com.odde.emersonsgame.implement.GameRoundImplementation;
 import com.odde.massivemailer.model.Player;
 
 import javax.servlet.RequestDispatcher;
@@ -18,7 +19,7 @@ import java.util.Date;
 
 public class GamePlayerController extends HttpServlet {
 
-    private GameRound game;
+    private GameRound game = new GameRoundImplementation();
     private Player[] players = { new Player() };
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
