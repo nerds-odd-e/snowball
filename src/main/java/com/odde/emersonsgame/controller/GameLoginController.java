@@ -2,6 +2,7 @@ package com.odde.emersonsgame.controller;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +33,7 @@ public class GameLoginController extends HttpServlet {
             contact = new ContactPerson("todo name", email, "todo last name", "todo company");
             contactService.addContact(contact);
             req.getSession().setAttribute("email", email);
-            resp.sendRedirect("EmersonsGame");
+            resp.sendRedirect("emersonsGame");
         } catch(InvalidEmailException ex) {
             resp.sendRedirect("game_login.jsp?error=Invalid+email+provided!");
         }
