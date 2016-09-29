@@ -59,6 +59,9 @@ public class GameStepdefs {
     }
 
     @Given("^a game is started$")
-    public void aGameIsStarted() throws Throwable { 
+    public void aGameIsStarted() throws Throwable {
+        // driver needs to go to emersonsgame
+        // driver needs to input distance
+        // driver at spectator page, it's ok now
     }
 }
