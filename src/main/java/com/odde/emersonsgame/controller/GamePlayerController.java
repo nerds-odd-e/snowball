@@ -34,7 +34,7 @@ public class GamePlayerController extends HttpServlet {
                 players.set(0, game.play(req.getParameter("roll"), players.get(0)));
                 jsonResponse = createResponse(game, players.get(0)).toString();
             } catch (GameException e) {
-                jsonResponse = e.getMessage();
+                jsonResponse = "{\"error\":\"" + e.getLocalizedMessage() + "\"}";
             }
         }
         outputStream.print(jsonResponse);

@@ -47,7 +47,9 @@ public class GamePlayerControllerTest {
 
     @Test
     public void getGameException() throws Exception {
-        assertEquals(GameException.INVALID_MOVE, getPostResponse("roll", "Expected exception"));
+        JsonObject expectedObj = new JsonObject();
+        expectedObj.addProperty("error", GameException.INVALID_MOVE);
+        assertEquals(expectedObj.toString(), getPostResponse("roll", "Expected exception"));
     }
 
     @Test

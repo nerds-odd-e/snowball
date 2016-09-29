@@ -34,8 +34,8 @@
     <div class="diceStyle">Dice: <span id="dice">6</span></div>
 
     <div>
-        <button class="btn btn-default rollBtn" type="button" id="normalRollButton">Normal Roll</button></div>
-        <button class="btn btn-default rollBtn" type="button" id="superRollButton">Super Roll</button></div>
+        <button class="btn btn-default rollBtn" type="button" id="normalRollButton" onclick="onRollBtnClick('normal')">Normal Roll</button></div>
+        <button class="btn btn-default rollBtn" type="button" id="superRollButton" onclick="onRollBtnClick('super')">Super Roll</button></div>
     </div>
 </body>
 <!-- jQuery -->
