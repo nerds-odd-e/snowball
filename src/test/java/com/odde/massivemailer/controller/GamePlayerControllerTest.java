@@ -1,11 +1,11 @@
 package com.odde.massivemailer.controller;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import com.odde.emersonsgame.GameRound;
 import com.odde.emersonsgame.implement.GameRoundImplementation;
 import com.odde.massivemailer.model.Player;
@@ -63,6 +63,16 @@ public class GamePlayerControllerTest {
 
         // Then should redirect with ID in session?
         verify(mockSession).setAttribute(eq("ID"), anyString());
+    }
+
+    @Test
+    public void testPlayerStatesWithPost() throws Exception {
+        Player[] players = { new Player() };
+        gamePlayerController.setPlayers(players);
+
+        req.setParameter("players", "");
+        gamePlayerController.doPost(req, res);
+        assertEquals(new Gson().toJson(players), res.getContentAsString());
     }
 
     private JsonObject createJsonObj(int dist, int playerPos, int playerScars, int dieResult) {

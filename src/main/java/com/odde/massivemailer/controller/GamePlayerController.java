@@ -1,5 +1,6 @@
 package com.odde.massivemailer.controller;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.odde.emersonsgame.GameRound;
 import com.odde.massivemailer.model.Player;
@@ -17,19 +18,25 @@ import java.util.Date;
 public class GamePlayerController extends HttpServlet {
 
     private GameRound game;
-    private Player player = new Player();
+    private Player[] players = { new Player() };
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletOutputStream outputStream = resp.getOutputStream();
+        String jsonResponse = "{}";
 
-        if (null != req.getParameter("roll")) {
+        if (null != req.getParameter("players")) {
+            jsonResponse = new Gson().toJson(players);
+        } else if (null != req.getParameter("roll")) {
             if (req.getParameter("roll") == "normal") {
-                player.playNormal(game);
+                players[0].playNormal(game);
             } else if (req.getParameter("roll") == "super") {
-                player.playSuper(game);
+                players[0].playSuper(game);
             }
+
+            jsonResponse = createResponse(game.getDistance(), players[0]).toString();
         }
-        outputStream.print(createResponse(game.getDistance(), player).toString());
+
+        outputStream.print(jsonResponse);
     }
 
 
@@ -56,8 +63,11 @@ public class GamePlayerController extends HttpServlet {
         return email + new Date().getTime();
     }
 
-
     public void setGameRound(GameRound game) {
         this.game = game;
+    }
+
+    public void setPlayers(Player[] players) {
+        this.players = players;
     }
 }
