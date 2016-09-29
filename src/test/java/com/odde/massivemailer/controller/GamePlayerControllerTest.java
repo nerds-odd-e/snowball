@@ -1,6 +1,6 @@
 package com.odde.massivemailer.controller;
 
-import static org.junit.Assert.assertArrayEquals;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
@@ -64,18 +64,13 @@ public class GamePlayerControllerTest {
         HttpSession mockSession = mock(HttpSession.class);
         when(mockSession.getAttribute(SESSION_EMAIL)).thenReturn("abc@gmail.com");
         req.setSession(mockSession);
+        req.setRequestURI("EmersonsGame");
 
         // When player login to page
         gamePlayerController.doGet(req, res);
 
         // Then should redirect with ID in session?
         verify(mockSession).setAttribute(eq("ID"), anyString());
-    }
-
-    @Test
-    public void testKickPlayerWithoutEmail() throws Exception {
-        gamePlayerController.doGet(req, res);
-        assertEquals("game_login.jsp", res.getForwardedUrl());
     }
 
     @Test
