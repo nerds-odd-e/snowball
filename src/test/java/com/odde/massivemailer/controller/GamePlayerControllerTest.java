@@ -91,7 +91,7 @@ public class GamePlayerControllerTest {
         req.setRequestURI("EmersonsGame/Players");
         gamePlayerController.doGet(req, res);
 
-        ArrayList<Player> players = makePlayersWithEmails(new String[] {PLAYER1_EMAIL});
+        ArrayList<Player> players = makePlayersWithEmails(new String[]{PLAYER1_EMAIL});
         assertEquals(new Gson().toJson(players), res.getContentAsString());
     }
 
@@ -118,9 +118,8 @@ public class GamePlayerControllerTest {
 
     @Test
     public void testGetPlayerStates() throws Exception {
-        ArrayList<Player> players = new ArrayList<Player>() {{
-            add(new Player());
-        }};
+        ArrayList<Player> players = new ArrayList<Player>();
+        players.add(new Player());
 
         gamePlayerController.setPlayers(players);
         req.setRequestURI("/EmersonsGame/Players");
