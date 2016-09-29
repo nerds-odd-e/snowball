@@ -18,6 +18,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
@@ -40,8 +41,7 @@ public class GamePlayerControllerTest {
 
     @Test
     public void testGetGameRoundObj() throws Exception {
-        JsonObject expectedResponse = createJsonObj(30, 0, 0, 0);
-        assertEquals(expectedResponse.toString(), getGetRequest());
+        assertEquals(30, getGetRequest().getAttribute("distance"));
     }
 
     @Test
@@ -82,16 +82,6 @@ public class GamePlayerControllerTest {
         assertEquals(new Gson().toJson(players), res.getContentAsString());
     }
 
-    private JsonObject createJsonObj(int dist, int playerPos, int playerScars, int dieResult) {
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("distance", dist);
-        jsonObject.addProperty("playerPos", playerPos);
-        jsonObject.addProperty("playerScar", playerScars);
-        jsonObject.addProperty("dieResult", dieResult);
-        return jsonObject;
-    }
-
-
     public String makeMove(int num, String type) throws ServletException, IOException {
         gameRound.setRandomGeneratedNumber(num);
         return getPostResponse("roll", type);
@@ -103,12 +93,12 @@ public class GamePlayerControllerTest {
         return res.getContentAsString();
     }
 
-    private String getGetRequest() throws ServletException, IOException {
+    private HttpServletRequest getGetRequest() throws ServletException, IOException {
         req = new MockHttpServletRequest();
         res = new MockHttpServletResponse();
         HttpSession session = req.getSession();
         session.setAttribute("email", "test@test.com");
         gamePlayerController.doGet(req, res);
-        return req.getAttribute("gameState").toString();
+        return req;
     }
 }
