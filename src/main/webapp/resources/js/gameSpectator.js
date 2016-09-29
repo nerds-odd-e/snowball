@@ -56,7 +56,6 @@ function emptyCanvas(){
 }
 
 function updatePlayerCount(){
-//    console.log('called', $('#player-count'));
     $('#player-count').html('1');
 }
 
