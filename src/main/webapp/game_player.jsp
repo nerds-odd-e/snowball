@@ -18,9 +18,10 @@
 <link href="resources/lib/bootstrap/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+
     <div id="page-wrapper" class="playerStatus">
         <p>Email: <span id="email"> <%=request.getSession().getAttribute("email") %></span></p>
-        <p>Total Distance: <%=request.getAttribute("distance") %></p>
+        <p>Total Distance: <span id="distance"><%=request.getAttribute("distance") %></p>
         <p>Current Distance: <span id="currentDistance">0</span></p>
         <p>Scars: <span id="scars">0</span></p>
     </div>

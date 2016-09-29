@@ -53,7 +53,7 @@ public class GamePlayerController extends HttpServlet {
         RequestDispatcher rq = req.getRequestDispatcher("game_player.jsp");
         HttpSession session = req.getSession();
         session.setAttribute("ID", generateID(session.getAttribute("email").toString()));
-        req.setAttribute("gameState", createResponse(game, players[0]).toString());
+        req.setAttribute("distance", game.getDistance());
         rq.forward(req, resp);
     }
 
