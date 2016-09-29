@@ -21,6 +21,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class GamePlayerControllerTest {
     public static final String SESSION_EMAIL = "email";
@@ -74,14 +75,28 @@ public class GamePlayerControllerTest {
     }
 
     @Test
-    public void testPlayersGetAdded() throws Exception {
+    public void testPlayerGetsAdded() throws Exception {
+        //GIVEN: No Players
+        gamePlayerController.setPlayers(new ArrayList<Player>());
 
+        //WHEN: Player log in
+        req.setRequestURI("EmersonsGame");
+        req.getSession().setAttribute("email", "some@email.com");
+        gamePlayerController.doGet(req,res);
 
+        //THEN: /Players should return 1 player info
+        req.setRequestURI("EmersonsGame/Players");
+        gamePlayerController.doGet(req, res);
+        Player[] players = { new Player() };
+        assertEquals(new Gson().toJson(players), res.getContentAsString());
     }
 
     @Test
     public void testGetPlayerStates() throws Exception {
-        Player[] players = { new Player() };
+        ArrayList<Player> players = new ArrayList<Player>() {{
+            add(new Player());
+        }};
+
         gamePlayerController.setPlayers(players);
 
         req.setRequestURI("/EmersonsGame/Players");
@@ -101,10 +116,9 @@ public class GamePlayerControllerTest {
     }
 
     private HttpServletRequest getGetRequest() throws ServletException, IOException {
-        req = new MockHttpServletRequest();
-        res = new MockHttpServletResponse();
         HttpSession session = req.getSession();
         session.setAttribute("email", "test@test.com");
+        req.setRequestURI("EmersonsGame");
         gamePlayerController.doGet(req, res);
         return req;
     }
