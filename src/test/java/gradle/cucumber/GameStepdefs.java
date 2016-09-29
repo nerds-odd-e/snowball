@@ -1,5 +1,6 @@
 package gradle.cucumber;
 
+import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -49,5 +50,15 @@ public class GameStepdefs {
     @Then("^Scanner should return \"([^\"]*)\"$")
     public void qrCodeShouldReturn(String expected) throws Throwable {
         driver.pageShouldContain(expected);
+    }
+
+    @Given("^a player joins the game$")
+    public void aPlayerJoinsTheGame() throws Throwable {
+
+        throw new PendingException();
+    }
+
+    @Given("^a game is started$")
+    public void aGameIsStarted() throws Throwable { 
     }
 }
