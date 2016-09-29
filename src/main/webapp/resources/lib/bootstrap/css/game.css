@@ -55,3 +55,24 @@ body {
     flex: 0 0 15%;
     min-width: 150px;
 }
+
+.rollBtn {
+    width: 100%;
+    font-size: 200%;
+    margin-top: 5px;
+}
+
+.distance {
+    font-size: 120%;
+    margin: 0;
+}
+
+.diceStyle {
+    text-align:center;
+    color:#FFF;
+    font-size:100px
+}
+
+#currentDistance {
+    color: red;
+}

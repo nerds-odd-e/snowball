@@ -42,6 +42,7 @@ public class GamePlayerController extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("distance", req.getParameter("distance"));
         RequestDispatcher rq = req.getRequestDispatcher("game_player.jsp");
         rq.forward(req, resp);
     }
