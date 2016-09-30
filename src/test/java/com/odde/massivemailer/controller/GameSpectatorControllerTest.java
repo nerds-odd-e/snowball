@@ -19,7 +19,7 @@ import java.io.IOException;
 
 public class GameSpectatorControllerTest {
     @Test
-    public void redirectToSpectatorViewTest() throws ServletException, IOException {
+    public void doPostRedirectsToSpecView() throws ServletException, IOException {
         MockHttpServletRequest req = new MockHttpServletRequest();
         MockHttpServletResponse resp = new MockHttpServletResponse();
 
@@ -32,5 +32,16 @@ public class GameSpectatorControllerTest {
 
         assertEquals("game_spectator.jsp", resp.getForwardedUrl());
         assertEquals("15", req.getParameter("distance"));
+    }
+
+    @Test
+    public void doGetReturnsJson() throws ServletException, IOException{
+        MockHttpServletRequest req = new MockHttpServletRequest();
+        MockHttpServletResponse resp = new MockHttpServletResponse();
+
+        GameSpectatorController gsc = new GameSpectatorController();
+        gsc.doGet(req, resp);
+        assertEquals("\"{distance: 30}\"",resp.getContentAsString());
+        assertEquals("application/json", resp.getContentType());
     }
 }

@@ -6,10 +6,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
 import com.google.gson.*;
-import com.odde.emersonsgame.GameRound;
 import com.odde.emersonsgame.controller.GamePlayerController;
 import com.odde.emersonsgame.exception.GameException;
-import com.odde.emersonsgame.implement.GameRoundImplementation;
+import com.odde.emersonsgame.implement.GameRound;
 import com.odde.massivemailer.model.Player;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +20,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class GamePlayerControllerTest {
@@ -37,7 +35,7 @@ public class GamePlayerControllerTest {
 
     @Before
     public void setupGame() {
-        gameRound = new GameRoundImplementation();
+        gameRound = new GameRound();
         gameRound.setDistance(30);
         player = new Player();
         gamePlayerController.setGameRound(gameRound);
