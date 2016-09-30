@@ -29,30 +29,38 @@ public class GamePlayerController extends HttpServlet {
         ServletOutputStream outputStream = resp.getOutputStream();
         String jsonResponse = "{}";
 
-        if (null != req.getParameter("roll")) {
-            // get current Player alan
-            String playerID = req.getSession().getAttribute("ID").toString();
-            for (int i = 0; i < players.size(); ++i) {
-                if (players.get(i).getID().equals(playerID)) {
-                    if (hasPlayerMoved(players.get(i))) {
-                        jsonResponse = createErrorResponse("Invalid turn");
+        if (req.getRequestURI().endsWith("emersonsgame/nextround")) {
+            startNextRound();
+        } else {
+            if (null != req.getParameter("roll")) {
+                // get current Player alan
+                String playerID = req.getSession().getAttribute("ID").toString();
+                for (int i = 0; i < players.size(); ++i) {
+                    if (players.get(i).getID().equals(playerID)) {
+                        if (hasPlayerMoved(players.get(i))) {
+                            jsonResponse = createErrorResponse("Invalid turn");
+                            break;
+                        }
+
+                        if ("normal".equals(req.getParameter("roll"))) {
+                            players.set(i, game.playNormal(players.get(i)));
+                            jsonResponse = createResponse(game, players.get(i)).toString();
+                        } else if ("super".equals(req.getParameter(""))) {
+                            players.set(i, game.playSuper(players.get(i)));
+                            jsonResponse = createResponse(game, players.get(i)).toString();
+                        } else {
+                            jsonResponse = createErrorResponse("Invalid move");
+                        }
                         break;
                     }
-
-                    if ("normal".equals(req.getParameter("roll"))) {
-                        players.set(i, game.playNormal(players.get(i)));
-                        jsonResponse = createResponse(game, players.get(i)).toString();
-                    } else if ("super".equals(req.getParameter(""))) {
-                        players.set(i, game.playSuper(players.get(i)));
-                        jsonResponse = createResponse(game, players.get(i)).toString();
-                    } else {
-                        jsonResponse = createErrorResponse("Invalid move");
-                    }
-                    break;
                 }
+                outputStream.print(jsonResponse);
             }
-            outputStream.print(jsonResponse);
         }
+    }
+
+    private void startNextRound() {
+        playersMovedList.clear();
     }
 
     public void addToPlayerMovedList(String playerId) {
