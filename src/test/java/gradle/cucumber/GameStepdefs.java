@@ -94,7 +94,6 @@ public class GameStepdefs {
 
     @When("^the player roll the die$")
     public void thePlayerRollTheDie() throws Throwable {
-        Thread.sleep(5000);
         separateDriver.click_button("normalRollButton");
     }
 
