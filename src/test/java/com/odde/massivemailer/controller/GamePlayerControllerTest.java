@@ -1,10 +1,7 @@
 package com.odde.massivemailer.controller;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import com.google.gson.*;
@@ -176,6 +173,34 @@ public class GamePlayerControllerTest {
         gamePlayerController.doPost(req, res);
 
         assertTrue(res.getContentAsString().contains("error"));
+    }
+
+    @Test
+    public void testPlayerCanMoveAfterNextRound() throws Exception {
+        final String testID = "testID";
+
+        ArrayList<Player> players = new ArrayList<Player>();
+        Player testPlayer = new Player();
+        testPlayer.setID(testID);
+        players.add(testPlayer);
+        gamePlayerController.setPlayers(players);
+
+        ArrayList<String> playerIDs = new ArrayList<String>() {{
+            add(testID);
+        }};
+        gamePlayerController.setPlayersMoved(playerIDs);
+
+        req.setRequestURI("emersonsgame/nextround");
+        gamePlayerController.doPost(req, res);
+
+        HttpSession mockSession = new MockHttpSession();
+        mockSession.setAttribute(SESSION_ID, testID);
+        req.setSession(mockSession);
+        req.setRequestURI("emersonsgame");
+        req.setParameter("roll", "normal");
+        gamePlayerController.doPost(req, res);
+
+        assertFalse(res.getContentAsString().contains("error"));
     }
 
     @Test
