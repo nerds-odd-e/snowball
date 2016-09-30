@@ -24,7 +24,9 @@ public class GamePlayerController extends HttpServlet {
     private ArrayList<Player> players = new ArrayList<Player>() {{
         add(new Player());
     }};
-    
+
+    private ArrayList<String> playersMovedList = new ArrayList<String>();
+
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletOutputStream outputStream = resp.getOutputStream();
         String jsonResponse = "{}";
@@ -69,11 +71,13 @@ public class GamePlayerController extends HttpServlet {
         req.setAttribute("distance", game.getDistance());
         if (null == session.getAttribute("ID")) {
             // New player
-            session.setAttribute("ID", generateID(session.getAttribute("email").toString()));
+            String playerID = generateID(session.getAttribute("email").toString());
+            session.setAttribute("ID", playerID);
             // Add to player array
             Player p = new Player();
             p.setEmail(session.getAttribute("email").toString());
             players.add(p);
+            playersMovedList.add(playerID);
         }
 
         RequestDispatcher rq = req.getRequestDispatcher("game_player.jsp");
