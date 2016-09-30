@@ -34,22 +34,25 @@ public class GamePlayerController extends HttpServlet {
             String playerID = req.getSession().getAttribute("ID").toString();
             for (int i = 0; i < players.size(); ++i) {
                 if (players.get(i).getID().equals(playerID)) {
-
-                    if(hasPlayerMoved(players.get(i))) {
-                        jsonResponse = createErrorResponse(GameException.INVALID_TURN);
+                    if (hasPlayerMoved(players.get(0))) {
+                        jsonResponse = createErrorResponse("Invalid turn");
                         break;
                     }
-                    try {
-                        players.set(i, game.play(req.getParameter("roll"), players.get(i)));
-                        jsonResponse = createResponse(game, players.get(i)).toString();
-                    } catch (GameException e) {
-                        jsonResponse = "{\"error\":\"" + e.getLocalizedMessage() + "\"}";
+
+                    if ("normal".equals(req.getParameter("roll"))) {
+                        players.set(0, game.playNormal(players.get(0)));
+                        jsonResponse = createResponse(game, players.get(0)).toString();
+                    } else if ("super".equals(req.getParameter(""))) {
+                        players.set(0, game.playSuper(players.get(0)));
+                        jsonResponse = createResponse(game, players.get(0)).toString();
+                    } else {
+                        jsonResponse = createErrorResponse("Invalid move");
                     }
                     break;
                 }
             }
+            outputStream.print(jsonResponse);
         }
-        outputStream.print(jsonResponse);
     }
 
     public void addToPlayerMovedList(String playerId) {

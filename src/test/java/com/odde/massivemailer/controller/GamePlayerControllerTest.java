@@ -59,7 +59,7 @@ public class GamePlayerControllerTest {
         loginWithEmail(PLAYER1_EMAIL);
 
         JsonObject expectedObj = new JsonObject();
-        expectedObj.addProperty("error", GameException.INVALID_MOVE);
+        expectedObj.addProperty("error", "Invalid move");
         assertEquals(expectedObj.toString(), getPostResponse("roll", "Expected exception"));
     }
 
