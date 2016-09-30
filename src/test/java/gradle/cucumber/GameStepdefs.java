@@ -15,45 +15,45 @@ import static org.junit.Assert.assertTrue;
 
 public class GameStepdefs {
 
-    private WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
-    private WebDriverWrapper separateDriver;
+    private WebDriverWrapper spectatorViewDriver = WebDriverFactory.getDefaultDriver();
+    private WebDriverWrapper playerViewDriver;
 
     private String BASE_URL = "http://localhost:8070/massive_mailer/";
 
     @Given("^I am at Emerson's landing page$")
     public void iAmAtEmersonsLandingPage() throws Throwable {
-        driver.visit(BASE_URL + "game_create.jsp");
-        driver.findElementById("distance");
-        driver.findElementById("btnCreate");
+        spectatorViewDriver.visit(BASE_URL + "game_create.jsp");
+        spectatorViewDriver.findElementById("distance");
+        spectatorViewDriver.findElementById("btnCreate");
     }
 
     @When("^I submit a distance of (\\d+)$")
     public void submitValidDistance(int dist) throws Throwable {
-        driver.text_field("distance", Integer.toString(dist));
-        driver.click_button("btnCreate");
+        spectatorViewDriver.text_field("distance", Integer.toString(dist));
+        spectatorViewDriver.click_button("btnCreate");
     }
 
     @And("^Distance should be (\\d+)$")
     public void checkDistance(int dist) throws Throwable {
-      assertEquals(Integer.toString(dist), driver.findElementById("inputDistance").getAttribute("value"));
+      assertEquals(Integer.toString(dist), spectatorViewDriver.findElementById("inputDistance").getAttribute("value"));
     }
 
     @When("^Open QR Code Scanner$")
     public void openQRCodeScanner() throws Throwable {
-        driver.visit("https://zxing.org/w/decode.jspx");
+        spectatorViewDriver.visit("https://zxing.org/w/decode.jspx");
 
     }
 
     @When("^Scanner checks \"(.*)\"")
     public void scannerCheckUrl(String url) throws Throwable {
-        UiElement text_field = driver.findElementByName("u");
+        UiElement text_field = spectatorViewDriver.findElementByName("u");
         text_field.sendKeys(url);
-        driver.clickXPath("//*[@id='upload']/tbody/tr[1]/td[3]/input");
+        spectatorViewDriver.clickXPath("//*[@id='upload']/tbody/tr[1]/td[3]/input");
     }
 
     @Then("^Scanner should return \"([^\"]*)\"$")
     public void qrCodeShouldReturn(String expected) throws Throwable {
-        driver.pageShouldContain(expected);
+        spectatorViewDriver.pageShouldContain(expected);
     }
 
     @Given("^a player joins the game$")
@@ -69,39 +69,39 @@ public class GameStepdefs {
 
     @When("^another player joins the game$")
     public void anotherPlayerJoinsTheGame() throws Throwable {
-        separateDriver = new WebDriverWrapper();
-        separateDriver.visit(BASE_URL + "game_login.jsp");
-        separateDriver.text_field("email", "new_terry@odd-e.com");
-        separateDriver.click_button("add_button");
+        playerViewDriver = new WebDriverWrapper();
+        playerViewDriver.visit(BASE_URL + "game_login.jsp");
+        playerViewDriver.text_field("email", "new_terry@odd-e.com");
+        playerViewDriver.click_button("add_button");
     }
 
     @Then("^The spectator should see two cars on the screen$")
     public void theSpectatorShouldSeeTwoCarsOnTheScreen() throws Throwable {
-        driver.visit(new MyStepdefs().BASE_URL + "game_create.jsp");
-        driver.text_field("distance", "5");
-        driver.click_button("btnCreate");
+        spectatorViewDriver.visit(new MyStepdefs().BASE_URL + "game_create.jsp");
+        spectatorViewDriver.text_field("distance", "5");
+        spectatorViewDriver.click_button("btnCreate");
         TimeUnit.SECONDS.sleep(4);
-        assertEquals(2, driver.countElementWithClass("racer"));
+        assertEquals(2, spectatorViewDriver.countElementWithClass("racer"));
     }
 
     @Given("^a player joins the game on a separate window$")
     public void aPlayerJoinsTheGameOnASeparateWindow() throws Throwable {
-        separateDriver = WebDriverFactory.getAdditionalDriver();
-        separateDriver.visit(BASE_URL + "game_login.jsp");
-        separateDriver.text_field("email", "terry@odd-e.com");
-        separateDriver.click_button("add_button");
+        playerViewDriver = WebDriverFactory.getAdditionalDriver();
+        playerViewDriver.visit(BASE_URL + "game_login.jsp");
+        playerViewDriver.text_field("email", "terry@odd-e.com");
+        playerViewDriver.click_button("add_button");
     }
 
     @When("^the player roll the die$")
     public void thePlayerRollTheDie() throws Throwable {
-        separateDriver.click_button("normalRollButton");
+        playerViewDriver.click_button("normalRollButton");
     }
 
     @Then("^the player's move should be displayed on the spectator view$")
     public void thePlayerSMoveShouldBeDisplayedOnTheSpectatorView() throws Throwable {
-        assertEquals(1, driver.countElementWithClass("car"));
-        int carPos = Integer.parseInt(driver.findElementById("carPos").getText());
-        assertEquals(carPos * 20, driver.getElementMarginWithClass("car"));
+        assertEquals(1, spectatorViewDriver.countElementWithClass("car"));
+        int carPos = Integer.parseInt(spectatorViewDriver.findElementById("carPos").getText());
+        assertEquals(carPos * 20, spectatorViewDriver.getElementMarginWithClass("car"));
     }
 
     @When("^another player with the same email joins the game$")
