@@ -1,18 +1,35 @@
 package gradle.cucumber.driver;
 
-public class SingleDrive {
-    private static WebDriverWrapper driver;
-    private static WebDriverWrapper[] drivers;
+import java.util.ArrayList;
 
-    public static WebDriverWrapper getDriver() {
-        if (driver == null)
+public class WebDriverFactory {
+//    private static WebDriverWrapper driver;
+    private static ArrayList<WebDriverWrapper> drivers = new ArrayList();
+
+    public static WebDriverWrapper getDefaultDriver() {
+        WebDriverWrapper driver;
+        if(drivers.size()==0){
             driver = new WebDriverWrapper();
+            drivers.add(driver);
+        }
+
+        else{
+            driver = drivers.get(0);
+        }
+
         return driver;
     }
 
-    public static void reset() {
-        if (driver != null)
+    public static WebDriverWrapper getAdditionalDriver() {
+        WebDriverWrapper driver = new WebDriverWrapper();
+        drivers.add(driver);
+        return driver;
+    }
+
+    public static void resetAll() {
+        for (WebDriverWrapper driver : drivers) {
             driver.closeAll();
-        driver = null;
+        }
+        drivers = new ArrayList();
     }
 }

@@ -1,11 +1,10 @@
 package gradle.cucumber;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import gradle.cucumber.driver.SingleDrive;
+import gradle.cucumber.driver.WebDriverFactory;
 import gradle.cucumber.driver.UiElement;
 import gradle.cucumber.driver.WebDriverWrapper;
 
@@ -16,7 +15,7 @@ import static org.junit.Assert.assertTrue;
 
 public class GameStepdefs {
 
-    private WebDriverWrapper driver = SingleDrive.getDriver();
+    private WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
     private WebDriverWrapper separateDriver;
 
     private String BASE_URL = "http://localhost:8070/massive_mailer/";
@@ -87,7 +86,7 @@ public class GameStepdefs {
 
     @Given("^a player joins the game on a separate window$")
     public void aPlayerJoinsTheGameOnASeparateWindow() throws Throwable {
-        separateDriver = new WebDriverWrapper();
+        separateDriver = WebDriverFactory.getAdditionalDriver();
         separateDriver.visit(BASE_URL + "game_login.jsp");
         separateDriver.text_field("email", "terry@odd-e.com");
         separateDriver.click_button("add_button");
@@ -95,8 +94,8 @@ public class GameStepdefs {
 
     @When("^the player roll the die$")
     public void thePlayerRollTheDie() throws Throwable {
+        Thread.sleep(5000);
         separateDriver.click_button("normalRollButton");
-        separateDriver.closeAll();
     }
 
     @Then("^the player's move should be displayed on the spectator view$")
