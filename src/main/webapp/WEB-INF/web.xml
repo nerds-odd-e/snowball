@@ -76,6 +76,10 @@
         <servlet-name>GamePlayerController</servlet-name>
         <url-pattern>/emersonsgame/Players</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GamePlayerController</servlet-name>
+        <url-pattern>/emersonsgame/Players/reset</url-pattern>
+    </servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>GamePlayerController</servlet-name>
 		<url-pattern>/emersonsgame/nextround</url-pattern>
