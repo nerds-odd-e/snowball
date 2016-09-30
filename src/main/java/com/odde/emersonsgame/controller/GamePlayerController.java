@@ -137,4 +137,8 @@ public class GamePlayerController extends HttpServlet {
     public void setPlayers(ArrayList<Player> players) {
         this.players = players;
     }
+
+    public void setPlayersMoved(ArrayList<String> playerIDList) {
+        this.playersMovedList = playerIDList;
+    }
 }
