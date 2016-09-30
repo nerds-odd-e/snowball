@@ -17,8 +17,9 @@ $(document).ready(function(){
 
     $("#startSpecBtn").on("click", function() {
         $("#startSpecBtn").text("Next");
+
         if (interval){
-            stopInterval(interval);
+            clearInterval(interval);
         }
         checkGameState();
     });
