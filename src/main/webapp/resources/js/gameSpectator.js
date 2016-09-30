@@ -20,7 +20,6 @@ $(document).ready(function(){
 function checkGameState(){
     // make API call -> check game state
     //if game ended -> set toPoll = false
-
     var results = this.mockMultiplePlayersAjaxCall();
 
     if(results.status == "ENDED"){

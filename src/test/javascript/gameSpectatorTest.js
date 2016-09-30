@@ -23,9 +23,7 @@ describe('gameSpectator',function(){
             expect(document.getElementById("racerName").innerHTML).toBe("bPlayer");
             expect(document.getElementById("racerDist").innerHTML).toBe("Dist: 0");
             expect(document.getElementById("scar").innerHTML).toBe("Scar: 0");
-
         });
-
     });
 
 });
