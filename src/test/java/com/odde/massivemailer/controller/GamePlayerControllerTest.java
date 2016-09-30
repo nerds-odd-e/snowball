@@ -76,6 +76,16 @@ public class GamePlayerControllerTest {
     }
 
     @Test
+    public void testSetDistance() throws Exception {
+        GameRound game = mock(GameRound.class);
+        gamePlayerController.setGameRound(game);
+
+        req.setParameter("distance", "45");
+        gamePlayerController.doPost(req, res);
+        verify(game).setDistance(45);
+    }
+
+    @Test
     public void testPlayerRoll() throws Exception {
         // GIVEN: Game has 1 player
         gamePlayerController.setPlayers(makePlayersWithEmails(new String[]{PLAYER1_EMAIL}));

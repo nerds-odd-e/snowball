@@ -31,31 +31,42 @@ public class GamePlayerController extends HttpServlet {
 
         if (req.getRequestURI().endsWith("emersonsgame/nextround")) {
             startNextRound();
-        } else {
-            if (null != req.getParameter("roll")) {
-                // get current Player alan
-                String playerID = req.getSession().getAttribute("ID").toString();
-                for (int i = 0; i < players.size(); ++i) {
-                    if (players.get(i).getID().equals(playerID)) {
-                        if (hasPlayerMoved(players.get(i))) {
-                            jsonResponse = createErrorResponse("Invalid turn");
-                            break;
-                        }
-                        if ("normal".equals(req.getParameter("roll"))) {
-                            players.set(i, game.playNormal(players.get(i)));
-                            jsonResponse = createResponse(game, players.get(i)).toString();
-                        } else if ("super".equals(req.getParameter("roll"))) {
-                            players.set(i, game.playSuper(players.get(i)));
-                            jsonResponse = createResponse(game, players.get(i)).toString();
-                        } else {
-                            jsonResponse = createErrorResponse("Invalid move");
-                        }
+        }
+
+        if (null != req.getParameter("roll")) {
+            // get current Player alan
+            String playerID = req.getSession().getAttribute("ID").toString();
+            for (int i = 0; i < players.size(); ++i) {
+                if (players.get(i).getID().equals(playerID)) {
+                    if (hasPlayerMoved(players.get(i))) {
+                        jsonResponse = createErrorResponse(GameException.INVALID_TURN);
                         break;
                     }
+
+                    if ("normal".equals(req.getParameter("roll"))) {
+                        players.set(i, game.playNormal(players.get(i)));
+                        jsonResponse = createResponse(game, players.get(i)).toString();
+                    } else if ("super".equals(req.getParameter(""))) {
+                        players.set(i, game.playSuper(players.get(i)));
+                        jsonResponse = createResponse(game, players.get(i)).toString();
+                    } else {
+                        jsonResponse = createErrorResponse("Invalid move");
+                    }
+                    break;
                 }
-                outputStream.print(jsonResponse);
             }
         }
+
+        if (null!=req.getParameter("distance")) {
+            try {
+                int distance = Integer.parseInt(req.getParameter("distance"));
+                game.setDistance(distance);
+            } catch(NumberFormatException nfe) {
+                jsonResponse = "{\"error\":\"" + nfe.getLocalizedMessage() + "\"}";
+            }
+
+        }
+        outputStream.print(jsonResponse);
     }
 
     private void startNextRound() {
