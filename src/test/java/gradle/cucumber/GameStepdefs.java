@@ -19,7 +19,6 @@ public class GameStepdefs {
     private WebDriverWrapper driver = SingleDrive.getDriver();
     private WebDriverWrapper separateDriver;
 
-
     private String BASE_URL = "http://localhost:8070/massive_mailer/";
 
     @Given("^I am at Emerson's landing page$")
@@ -71,7 +70,10 @@ public class GameStepdefs {
 
     @When("^another player joins the game$")
     public void anotherPlayerJoinsTheGame() throws Throwable {
-        new MyStepdefs().loginWithEmail("another_terry@odd-e.com");
+        separateDriver = new WebDriverWrapper();
+        separateDriver.visit(BASE_URL + "game_login.jsp");
+        separateDriver.text_field("email", "new_terry@odd-e.com");
+        separateDriver.click_button("add_button");
     }
 
     @Then("^The spectator should see two cars on the screen$")
@@ -102,5 +104,10 @@ public class GameStepdefs {
         assertEquals(1, driver.countElementWithClass("car"));
         int carPos = Integer.parseInt(driver.findElementById("carPos").getText());
         assertEquals(carPos * 20, driver.getElementMarginWithClass("car"));
+    }
+
+    @When("^another player with the same email joins the game$")
+    public void anotherPlayerWithTheSameEmailJoinsTheGame() throws Throwable {
+        new MyStepdefs().loginWithEmail("terry@odd-e.com");
     }
 }
