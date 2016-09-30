@@ -31,13 +31,29 @@ public class GamePlayerController extends HttpServlet {
 
        if (null != req.getParameter("roll")) {
             try {
-                players.set(0, game.play(req.getParameter("roll"), players.get(0)));
-                jsonResponse = createResponse(game, players.get(0)).toString();
+                if(hasPlayerMoved()) {
+                    jsonResponse = createErrorResponse("Invalid turn");
+                } else {
+                    players.set(0, game.play(req.getParameter("roll"), players.get(0)));
+                    jsonResponse = createResponse(game, players.get(0)).toString();
+                }
             } catch (GameException e) {
-                jsonResponse = "{\"error\":\"" + e.getLocalizedMessage() + "\"}";
+                jsonResponse = createErrorResponse(e.getLocalizedMessage());
             }
         }
         outputStream.print(jsonResponse);
+    }
+
+    public void addToPlayerMovedList(String playerId) {
+        playerMovedList.add(playerId);
+    }
+
+    private boolean hasPlayerMoved() {
+        return playerMovedList.contains(players.get(0).getID());
+    }
+
+    private String createErrorResponse(String errMsg) {
+        return "{\"error\":\"" + errMsg + "\"}";
     }
 
     private JsonObject createResponse(GameRound game, Player player) {

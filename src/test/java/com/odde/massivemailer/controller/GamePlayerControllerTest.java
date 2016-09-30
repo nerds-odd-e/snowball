@@ -26,7 +26,9 @@ public class GamePlayerControllerTest {
     public static final String SESSION_EMAIL = "email";
     public static final String PLAYER2_EMAIL = "test@test.com";
     public static final String PLAYER1_EMAIL = "some@gmail.com";
+
     GamePlayerController gamePlayerController = new GamePlayerController();
+
     MockHttpServletRequest req = new MockHttpServletRequest();
     MockHttpServletResponse res = new MockHttpServletResponse();
     Player player;
@@ -123,6 +125,13 @@ public class GamePlayerControllerTest {
         req.setRequestURI("/emersonsgame/Players");
         gamePlayerController.doGet(req, res);
         assertEquals(new Gson().toJson(players), res.getContentAsString());
+    }
+
+    @Test
+    public void testGetErrorMessageWhenPlayerHasMadeMove() throws Exception {
+        gamePlayerController.addToPlayerMovedList("id");
+        String expectedResponse = "{\"error\":\"Invalid turn\"}";
+        assertEquals(expectedResponse, getPostResponse("roll", "normal"));
     }
 
     public String makeMove(int num, String type) throws ServletException, IOException {
