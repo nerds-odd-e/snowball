@@ -29,7 +29,7 @@ public class GamePlayerControllerTest {
     public static final String SESSION_EMAIL = "email";
     public static final String SESSION_ID = "ID";
     public static final String PLAYER2_EMAIL = "test@test.com";
-    public static final String PLAYER1_EMAIL = "alvin";
+    public static final String PLAYER1_EMAIL = "player1@email.com";
 
     GamePlayerController gamePlayerController = new GamePlayerController();
 
@@ -112,7 +112,7 @@ public class GamePlayerControllerTest {
 
         String contentAsString = res.getContentAsString();
         JsonArray playersObject = (JsonArray) new JsonParser().parse(contentAsString);
-        JsonObject alvinObject = (JsonObject) playersObject.get(1);
+        JsonObject alvinObject = (JsonObject) playersObject.get(0);
         assertEquals("alvin", alvinObject.get("email").getAsString());
         assertNotEquals(0, alvinObject.get("position").getAsInt());
     }
