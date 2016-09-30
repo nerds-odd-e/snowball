@@ -32,16 +32,25 @@ public class GamePlayerController extends HttpServlet {
         if (req.getRequestURI().endsWith("emersonsgame/nextround")) {
             startNextRound();
         } else {
+
             if (null != req.getParameter("roll")) {
-                try {
-                    if (hasPlayerMoved(players.get(0))) {
-                        jsonResponse = createErrorResponse("Invalid turn");
-                    } else {
-                        players.set(0, game.play(req.getParameter("roll"), players.get(0)));
-                        jsonResponse = createResponse(game, players.get(0)).toString();
+                // get current Player alan
+                String playerID = req.getSession().getAttribute("ID").toString();
+                for (int i = 0; i < players.size(); ++i) {
+                    if (players.get(i).getID().equals(playerID)) {
+
+                        if (hasPlayerMoved(players.get(i))) {
+                            jsonResponse = createErrorResponse(GameException.INVALID_TURN);
+                            break;
+                        }
+                        try {
+                            players.set(i, game.play(req.getParameter("roll"), players.get(i)));
+                            jsonResponse = createResponse(game, players.get(i)).toString();
+                        } catch (GameException e) {
+                            jsonResponse = "{\"error\":\"" + e.getLocalizedMessage() + "\"}";
+                        }
+                        break;
                     }
-                } catch (GameException e) {
-                    jsonResponse = createErrorResponse(e.getLocalizedMessage());
                 }
             }
         }
@@ -78,14 +87,8 @@ public class GamePlayerController extends HttpServlet {
         if (req.getRequestURI().endsWith("emersonsgame")) {
             handlePlayerRequest(req, resp);
         } else if (req.getRequestURI().endsWith("emersonsgame/Players")) {
-            System.out.println(new Gson().toJson(players.toArray()));
             handleListPlayers(resp);
         }
-    }
-
-    public void handleListPlayers(HttpServletResponse resp) throws IOException {
-        String jsonResponse = new Gson().toJson(players.toArray());
-        resp.getOutputStream().print(jsonResponse);
     }
 
     public void handlePlayerRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -93,17 +96,24 @@ public class GamePlayerController extends HttpServlet {
         req.setAttribute("distance", game.getDistance());
         if (null == session.getAttribute("ID")) {
             // New player
+
             String playerID = generateID(session.getAttribute("email").toString());
             session.setAttribute("ID", playerID);
             // Add to player array
             Player p = new Player();
+            p.setID(playerID);
             p.setEmail(session.getAttribute("email").toString());
             players.add(p);
-            playersMovedList.add(playerID);
+//            playersMovedList.add(playerID);
         }
 
         RequestDispatcher rq = req.getRequestDispatcher("game_player.jsp");
         rq.forward(req, resp);
+    }
+    
+    public void handleListPlayers(HttpServletResponse resp) throws IOException {
+        String jsonResponse = new Gson().toJson(players.toArray());
+        resp.getOutputStream().print(jsonResponse);
     }
 
     private String generateID(String email) {

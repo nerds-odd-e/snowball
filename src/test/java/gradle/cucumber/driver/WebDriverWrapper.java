@@ -79,7 +79,7 @@ public class WebDriverWrapper {
     }
 
     public void expectElementWithIdToContainTextInXSeconds(String id, String value, int seconds) {
-        WebDriverWait wait = new WebDriverWait(driver, seconds * 1000);
+        WebDriverWait wait = new WebDriverWait(driver, seconds);
         wait.until(ExpectedConditions.attributeToBe(By.id(id), "innerHTML", value));
     }
 

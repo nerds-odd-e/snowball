@@ -104,21 +104,3 @@ function emptyCanvas(){
 function updatePlayerCount(totalPlayers){
     $('#player-count').html(totalPlayers);
 }
-
-function mockMultiplePlayersAjaxCall(){
-    return {
-        status: "PLAYING",
-        players: [
-            {
-                id: 'id',
-                dist: 0,
-                scars: 0
-            },
-            {  id: 'id2',
-               dist: 0,
-               scars: 0
-            }
-
-        ]
-    }
-}
