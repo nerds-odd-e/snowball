@@ -38,21 +38,22 @@ public class GameRound {
         randomNum = num;
     }
 
-    public Player play(String rollType, Player player) throws GameException {
-        if (!ROLL_NORMAL.equals(rollType) && !ROLL_SUPER.equals(rollType)) {
-            throw new GameException(GameException.INVALID_MOVE);
-        }
-
+    public Player playNormal(Player player) {
         int die = rollDie();
         int steps = -player.getScars();
 
-        if(ROLL_NORMAL.equals(rollType)) {
-            steps = Math.max(0, steps + ((die % 2 == 0) ? 2 : 1));
-        }
-        if (ROLL_SUPER.equals(rollType)) {
-            steps = Math.max(0, steps + die);
-            player.addScar();
-        }
+        steps = Math.max(0, steps + ((die % 2 == 0) ? 2 : 1));
+
+        player.makeMove(steps, die);
+        return player;
+    }
+
+    public Player playSuper(Player player) {
+        int die = rollDie();
+        int steps = -player.getScars();
+
+        steps = Math.max(0, steps + die);
+        player.addScar();
 
         player.makeMove(steps, die);
         return player;
