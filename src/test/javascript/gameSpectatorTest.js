@@ -10,17 +10,18 @@ describe('gameSpectator',function(){
 
     describe('Single player', function() {
         it('should show 1 racer on screen when server responds with 1 player',function() {
-            var racerData = {   status: "PLAYING",
-                                players: [{
-                                    id: "bPlayer",
-                                    dist: 0,
-                                    scars: 0
-                                }],
-                                distance: 20
+            var racerData = {
+                                    ID:        "aaa",
+                                    position :  0,
+                                    scars:      0,
+                                    email:      "aaa@gmail.com"
                             };
-            updateScreenWithPlayerData(racerData);
-            console.log(document.getElementById("canvas"));
-            expect(document.getElementById("racerName").innerHTML).toBe("bPlayer");
+            //updateScreenWithPlayerData(racerData);
+            //console.log(document.getElementById("canvas"));
+
+            $('#canvas').html(updatePlayerPosition(racerData));
+            expect(document.getElementById("racerName").innerHTML).toBe("ID: aaa");
+            expect(document.getElementById("racerEmail").innerHTML).toBe("Email: aaa@gmail.com");
             expect(document.getElementById("racerDist").innerHTML).toBe("Dist: 0");
             expect(document.getElementById("scar").innerHTML).toBe("Scar: 0");
         });
