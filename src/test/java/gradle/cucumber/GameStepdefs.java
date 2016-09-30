@@ -80,6 +80,11 @@ public class GameStepdefs {
         playerViewDriver.expectElementWithIdToContainValue(elementId, value);
     }
 
+    @Then("^the player UI should display \"([^\"]*)\" of at least (\\d+)$")
+    public void playerUIShouldDisplayElementAtLeast(String elementId, int value){
+        playerViewDriver.expectElementWithIdGreaterThanOrEqualsValue(elementId, value);
+    }
+
     @Then("^the spectator UI \"([^\"]*)\" should display that (\\d+) player joined within (\\d+) seconds")
     public void spectatorUIShouldDisplayXinYSeconds(String elementId, int value, int seconds){
         spectatorViewDriver.expectElementWithIdToContainTextInXSeconds(elementId, Integer.toString(value), seconds);
@@ -95,16 +100,22 @@ public class GameStepdefs {
         assertEquals(2, spectatorViewDriver.countElementWithClass("racer"));
     }
 
-    @When("^the player roll the die$")
-    public void thePlayerRollTheDie() throws Throwable {
+    @When("^the player makes a normal move$")
+    public void thePlayerMakesANormalMove() throws Throwable {
         playerViewDriver.click_button("normalRollButton");
     }
 
-    @Then("^the player's move should be displayed on the spectator view$")
-    public void thePlayerSMoveShouldBeDisplayedOnTheSpectatorView() throws Throwable {
-        assertEquals(1, spectatorViewDriver.countElementWithClass("car"));
-        int carPos = Integer.parseInt(spectatorViewDriver.findElementById("carPos").getText());
-        assertEquals(carPos * 20, spectatorViewDriver.getElementMarginWithClass("car"));
+    @When("^the admin clicks on next in the spectator view")
+    public void adminAdvancesRound() throws Throwable {
+        spectatorViewDriver.click_button("startSpecBtn");
+    }
+
+    @Then("^the position of the player should move from the last round$")
+    public void playerPositionShouldMove() throws Throwable {
+        Thread.sleep(5000);
+        assertEquals(1, spectatorViewDriver.countElementWithClass("racer"));
+        int carPos = Integer.parseInt(spectatorViewDriver.findElementById("racerDist").getText());
+        assertEquals(carPos * 10, spectatorViewDriver.getElementMarginWithClass("racer"));
     }
 
     @When("^another player with the same email joins the game$")

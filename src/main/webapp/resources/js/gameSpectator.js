@@ -7,13 +7,19 @@ var player = {
     scars: 0
 };
 
+function sendGameDistance() {
+  $.post('/massive_mailer/emersonsgame', {distance: $("#inputDistance").val()}, function(){}, 'json');
+}
+
 $(document).ready(function(){
+    sendGameDistance();
     var interval = setInterval(function() { checkGameState(); }, 1000);
 
     $("#startSpecBtn").on("click", function() {
         $("#startSpecBtn").text("Next");
+
         if (interval){
-            stopInterval(interval);
+            clearInterval(interval);
         }
         checkGameState();
     });

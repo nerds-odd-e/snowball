@@ -60,7 +60,7 @@ public class GamePlayerControllerTest {
         loginWithEmail(PLAYER1_EMAIL);
 
         JsonObject expectedObj = new JsonObject();
-        expectedObj.addProperty("error", "Invalid move");
+        expectedObj.addProperty("error", GameException.INVALID_MOVE);
         assertEquals(expectedObj.toString(), getPostResponse("roll", "Expected exception"));
     }
 
@@ -73,6 +73,16 @@ public class GamePlayerControllerTest {
         assertNotNull(responseObj.get("playerPos"));
         assertNotNull(responseObj.get("playerScar"));
         assertEquals(6, responseObj.get("dieResult").getAsInt());
+    }
+
+    @Test
+    public void testSetDistance() throws Exception {
+        GameRound game = mock(GameRound.class);
+        gamePlayerController.setGameRound(game);
+
+        req.setParameter("distance", "45");
+        gamePlayerController.doPost(req, res);
+        verify(game).setDistance(45);
     }
 
     @Test
