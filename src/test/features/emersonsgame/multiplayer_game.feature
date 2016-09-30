@@ -8,7 +8,7 @@ Feature: Multiplayer game
   @wip @now
   Scenario: More than one player join the game with different emails
     Given a player joins the game
-    When another player joins the game
+    When another player joins the game on a separate window
     Then The spectator should see two cars on the screen
 
   @wip
