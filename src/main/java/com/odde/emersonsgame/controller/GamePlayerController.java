@@ -20,9 +20,7 @@ import java.util.Date;
 public class GamePlayerController extends HttpServlet {
 
     private GameRound game = new GameRound();
-    private ArrayList<Player> players = new ArrayList<Player>() {{
-        add(new Player());
-    }};
+    private ArrayList<Player> players = new ArrayList<Player>();
     private ArrayList<String> playersMovedList = new ArrayList<String>();
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -46,11 +44,11 @@ public class GamePlayerController extends HttpServlet {
                     if ("normal".equals(req.getParameter("roll"))) {
                         players.set(i, game.playNormal(players.get(i)));
                         jsonResponse = createResponse(game, players.get(i)).toString();
-                    } else if ("super".equals(req.getParameter(""))) {
+                    } else if ("super".equals(req.getParameter("roll"))) {
                         players.set(i, game.playSuper(players.get(i)));
                         jsonResponse = createResponse(game, players.get(i)).toString();
                     } else {
-                        jsonResponse = createErrorResponse("Invalid move");
+                        jsonResponse = createErrorResponse(GameException.INVALID_MOVE);
                     }
                     break;
                 }
