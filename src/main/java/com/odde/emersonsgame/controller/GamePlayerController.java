@@ -51,9 +51,9 @@ public class GamePlayerController extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getRequestURI().endsWith("EmersonsGame")) {
+        if (req.getRequestURI().endsWith("emersonsgame")) {
             handlePlayerRequest(req, resp);
-        } else if (req.getRequestURI().endsWith("EmersonsGame/Players")) {
+        } else if (req.getRequestURI().endsWith("emersonsgame/Players")) {
             System.out.println(new Gson().toJson(players.toArray()));
             handleListPlayers(resp);
         }

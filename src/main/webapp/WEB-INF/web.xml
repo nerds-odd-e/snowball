@@ -70,12 +70,12 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>GamePlayerController</servlet-name>
-		<url-pattern>/emersonsGame</url-pattern>
+		<url-pattern>/emersonsgame</url-pattern>
 	</servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>GamePlayerController</servlet-name>
-        <url-pattern>/EmersonsGame/Players</url-pattern>
+        <url-pattern>/emersonsgame/Players</url-pattern>
     </servlet-mapping>
 
     <servlet>

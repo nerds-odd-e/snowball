@@ -43,7 +43,7 @@ public class GameLoginControllerTest {
 
         verify(contactService).addContact(argument.capture());
         assertEquals("john@gmail.com", argument.getValue().getEmail());
-        assertEquals("EmersonsGame", res.getRedirectedUrl());
+        assertEquals("emersonsgame", res.getRedirectedUrl());
         assertTrue("Should contain email", req.getSession().getAttribute("email").equals("john@gmail.com"));
     }
 

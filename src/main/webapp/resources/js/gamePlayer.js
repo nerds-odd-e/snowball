@@ -1,7 +1,7 @@
 function onRollBtnClick(rolltype) {
     $.ajax({
         method: "POST",
-        url: "emersonsGame",
+        url: "emersonsgame",
         data: {
             "roll": rolltype
         },

@@ -70,7 +70,7 @@ public class GamePlayerControllerTest {
         HttpSession mockSession = mock(HttpSession.class);
         when(mockSession.getAttribute(SESSION_EMAIL)).thenReturn(PLAYER1_EMAIL);
         req.setSession(mockSession);
-        req.setRequestURI("EmersonsGame");
+        req.setRequestURI("emersonsgame");
 
         // When player login to page
         gamePlayerController.doGet(req, res);
@@ -88,7 +88,7 @@ public class GamePlayerControllerTest {
         loginWithEmail(PLAYER1_EMAIL);
 
         //THEN: /Players should return 1 player info
-        req.setRequestURI("EmersonsGame/Players");
+        req.setRequestURI("emersonsgame/Players");
         gamePlayerController.doGet(req, res);
 
         ArrayList<Player> players = makePlayersWithEmails(new String[]{PLAYER1_EMAIL});
@@ -101,7 +101,7 @@ public class GamePlayerControllerTest {
 
         loginWithEmail(PLAYER2_EMAIL);
 
-        req.setRequestURI("EmersonsGame/Players");
+        req.setRequestURI("emersonsgame/Players");
         gamePlayerController.doGet(req, res);
         ArrayList<Player> players = makePlayersWithEmails(new String[] {PLAYER1_EMAIL, PLAYER2_EMAIL});
         assertEquals(new Gson().toJson(players), res.getContentAsString());
@@ -122,7 +122,7 @@ public class GamePlayerControllerTest {
         players.add(new Player());
 
         gamePlayerController.setPlayers(players);
-        req.setRequestURI("/EmersonsGame/Players");
+        req.setRequestURI("/emersonsgame/Players");
         gamePlayerController.doGet(req, res);
         assertEquals(new Gson().toJson(players), res.getContentAsString());
     }
@@ -156,7 +156,7 @@ public class GamePlayerControllerTest {
     }
 
     public void loginWithEmail(String email) throws ServletException, IOException {
-        req.setRequestURI("EmersonsGame");
+        req.setRequestURI("emersonsgame");
         req.getSession().setAttribute("email", email);
         gamePlayerController.doGet(req, res);
     }
