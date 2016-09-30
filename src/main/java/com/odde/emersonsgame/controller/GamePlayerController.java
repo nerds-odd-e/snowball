@@ -23,7 +23,7 @@ public class GamePlayerController extends HttpServlet {
     private ArrayList<Player> players = new ArrayList<Player>() {{
         add(new Player());
     }};
-    private ArrayList<String> playerMovedList = new ArrayList<String>();
+    private ArrayList<String> playersMovedList = new ArrayList<String>();
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletOutputStream outputStream = resp.getOutputStream();
@@ -31,13 +31,29 @@ public class GamePlayerController extends HttpServlet {
 
        if (null != req.getParameter("roll")) {
             try {
-                players.set(0, game.play(req.getParameter("roll"), players.get(0)));
-                jsonResponse = createResponse(game, players.get(0)).toString();
+                if(hasPlayerMoved(players.get(0))) {
+                    jsonResponse = createErrorResponse("Invalid turn");
+                } else {
+                    players.set(0, game.play(req.getParameter("roll"), players.get(0)));
+                    jsonResponse = createResponse(game, players.get(0)).toString();
+                }
             } catch (GameException e) {
-                jsonResponse = "{\"error\":\"" + e.getLocalizedMessage() + "\"}";
+                jsonResponse = createErrorResponse(e.getLocalizedMessage());
             }
         }
         outputStream.print(jsonResponse);
+    }
+
+    public void addToPlayerMovedList(String playerId) {
+        playersMovedList.add(playerId);
+    }
+
+    private boolean hasPlayerMoved(Player player) {
+        return playersMovedList.contains(player.getID());
+    }
+
+    private String createErrorResponse(String errMsg) {
+        return "{\"error\":\"" + errMsg + "\"}";
     }
 
     private JsonObject createResponse(GameRound game, Player player) {
@@ -69,11 +85,13 @@ public class GamePlayerController extends HttpServlet {
         req.setAttribute("distance", game.getDistance());
         if (null == session.getAttribute("ID")) {
             // New player
-            session.setAttribute("ID", generateID(session.getAttribute("email").toString()));
+            String playerID = generateID(session.getAttribute("email").toString());
+            session.setAttribute("ID", playerID);
             // Add to player array
             Player p = new Player();
             p.setEmail(session.getAttribute("email").toString());
             players.add(p);
+            playersMovedList.add(playerID);
         }
 
         RequestDispatcher rq = req.getRequestDispatcher("game_player.jsp");

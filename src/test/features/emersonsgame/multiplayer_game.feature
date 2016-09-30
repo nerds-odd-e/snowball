@@ -3,7 +3,7 @@ Feature: Multiplayer game
   and uniquely identify each player
 
   Background:
-    Given a game is started
+    Given a game of distance 20 is created
 
   @wip
   Scenario: More than one player join the game with different emails

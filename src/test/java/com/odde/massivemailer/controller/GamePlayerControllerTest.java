@@ -3,6 +3,7 @@ package com.odde.massivemailer.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 import com.google.gson.*;
@@ -11,8 +12,10 @@ import com.odde.emersonsgame.exception.GameException;
 import com.odde.emersonsgame.implement.GameRound;
 import com.odde.massivemailer.model.Player;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
+import org.mockito.ArgumentCaptor;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
@@ -24,9 +27,12 @@ import java.util.ArrayList;
 
 public class GamePlayerControllerTest {
     public static final String SESSION_EMAIL = "email";
+    public static final String SESSION_ID = "ID";
     public static final String PLAYER2_EMAIL = "test@test.com";
     public static final String PLAYER1_EMAIL = "some@gmail.com";
+
     GamePlayerController gamePlayerController = new GamePlayerController();
+
     MockHttpServletRequest req = new MockHttpServletRequest();
     MockHttpServletResponse res = new MockHttpServletResponse();
     Player player;
@@ -105,6 +111,28 @@ public class GamePlayerControllerTest {
         assertEquals(new Gson().toJson(players), res.getContentAsString());
     }
 
+    @Ignore
+    @Test
+    public void testNewlyAddedPlayerCannotMove() throws Exception {
+        ArgumentCaptor<String> capturedID = ArgumentCaptor.forClass(String.class);
+
+        HttpSession mockSession = mock(HttpSession.class);
+        verify(mockSession).setAttribute(SESSION_ID, capturedID.capture());
+        when(mockSession.getAttribute(SESSION_ID)).thenReturn(capturedID.getValue());
+
+        req.setSession(mockSession);
+        req.setRequestURI("emersonsgame");
+        req.setParameter("email", PLAYER1_EMAIL);
+
+        gamePlayerController.doGet(req, res);
+
+        req.setParameter("ID", capturedID.getValue());
+        req.setParameter("roll", "normal");
+        gamePlayerController.doPost(req, res);
+
+        assertTrue(res.getContentAsString().contains("error"));
+    }
+
     private JsonObject createJsonObj(int dist, int playerPos, int playerScars, int dieResult) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("distance", dist);
@@ -123,6 +151,14 @@ public class GamePlayerControllerTest {
         req.setRequestURI("/emersonsgame/Players");
         gamePlayerController.doGet(req, res);
         assertEquals(new Gson().toJson(players), res.getContentAsString());
+    }
+
+    @Ignore
+    @Test
+    public void testGetErrorMessageWhenPlayerHasMadeMove() throws Exception {
+        gamePlayerController.addToPlayerMovedList("id");
+        String expectedResponse = "{\"error\":\"Invalid turn\"}";
+        assertEquals(expectedResponse, getPostResponse("roll", "normal"));
     }
 
     public String makeMove(int num, String type) throws ServletException, IOException {

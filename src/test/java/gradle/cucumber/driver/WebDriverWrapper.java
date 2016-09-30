@@ -74,6 +74,15 @@ public class WebDriverWrapper {
         assertTrue("Text not found!", findElementById(id).getText().contains(text));
     }
 
+    public void expectElementWithIdToContainValue(String id, int value) {
+        assertEquals(Integer.toString(value), findElementById(id).getText());
+    }
+
+    public void expectElementWithIdToContainTextInXSeconds(String id, String value, int seconds) {
+        WebDriverWait wait = new WebDriverWait(driver, seconds * 1000);
+        wait.until(ExpectedConditions.attributeToBe(By.id(id), "innerHTML", value));
+    }
+
     public void expectPageToContainExactlyNElements(String text, int count) {
         List<WebElement> elements = driver.findElements(By.xpath("//*[contains(text(),'"+text+"')]"));
         assertEquals(elements.size(), count);
