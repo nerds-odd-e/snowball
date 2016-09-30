@@ -70,14 +70,8 @@ public class GamePlayerController extends HttpServlet {
         if (req.getRequestURI().endsWith("emersonsgame")) {
             handlePlayerRequest(req, resp);
         } else if (req.getRequestURI().endsWith("emersonsgame/Players")) {
-            System.out.println(new Gson().toJson(players.toArray()));
             handleListPlayers(resp);
         }
-    }
-
-    public void handleListPlayers(HttpServletResponse resp) throws IOException {
-        String jsonResponse = new Gson().toJson(players.toArray());
-        resp.getOutputStream().print(jsonResponse);
     }
 
     public void handlePlayerRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -89,6 +83,8 @@ public class GamePlayerController extends HttpServlet {
             session.setAttribute("ID", playerID);
             // Add to player array
             Player p = new Player();
+            p.setID(playerID);
+
             p.setEmail(session.getAttribute("email").toString());
             players.add(p);
             playersMovedList.add(playerID);
@@ -98,7 +94,12 @@ public class GamePlayerController extends HttpServlet {
         rq.forward(req, resp);
     }
 
-    private String generateID(String email){
+    public void handleListPlayers(HttpServletResponse resp) throws IOException {
+        String jsonResponse = new Gson().toJson(players.toArray());
+        resp.getOutputStream().print(jsonResponse);
+    }
+
+    private String generateID(String email) {
         return email + new Date().getTime();
     }
 

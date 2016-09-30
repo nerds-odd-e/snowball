@@ -2,6 +2,7 @@ package com.odde.massivemailer.controller;
 
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
@@ -95,8 +96,9 @@ public class GamePlayerControllerTest {
         req.setRequestURI("emersonsgame/Players");
         gamePlayerController.doGet(req, res);
 
-        ArrayList<Player> players = makePlayersWithEmails(new String[]{PLAYER1_EMAIL});
-        assertEquals(new Gson().toJson(players), res.getContentAsString());
+        JsonArray playersObject = (JsonArray) new JsonParser().parse(res.getContentAsString());
+        assertEquals(PLAYER1_EMAIL, ((JsonObject) playersObject.get(0)).get("email").getAsString());
+        assertNotEquals("", ((JsonObject) playersObject.get(0)).get("ID").getAsString());
     }
 
     @Test
