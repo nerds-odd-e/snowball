@@ -1,10 +1,9 @@
 package com.odde.emersonsgame.implement;
 
-import com.odde.emersonsgame.GameRound;
 import com.odde.emersonsgame.exception.GameException;
 import com.odde.massivemailer.model.Player;
 
-public class GameRoundImplementation implements GameRound {
+public class GameRound {
 
     public static final String ROLL_NORMAL = "normal";
     public static final String ROLL_SUPER = "super";
@@ -13,38 +12,32 @@ public class GameRoundImplementation implements GameRound {
     private int distance;
     private int randomNum = 0;
 
-    public GameRoundImplementation() {
+    public GameRound() {
         init();
     }
 
-    @Override
     public void init() {
         distance = 0;
     }
 
-    @Override
     public int getDistance() {
         return this.distance;
     }
 
-    @Override
     public void setDistance(int t_Dist) {
         this.distance = t_Dist;
     }
 
-    @Override
     public int rollDie() {
         if(randomNum == 0)
             return DIE_MINROLL + (int)(Math.random() * DIE_MAXROLL);
         return randomNum;
     }
 
-    @Override
     public void setRandomGeneratedNumber(int num) {
         randomNum = num;
     }
 
-    @Override
     public Player play(String rollType, Player player) throws GameException {
         if (!ROLL_NORMAL.equals(rollType) && !ROLL_SUPER.equals(rollType)) {
             throw new GameException(GameException.INVALID_MOVE);
