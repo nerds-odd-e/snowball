@@ -120,6 +120,8 @@ public class GamePlayerControllerTest {
         verify(mockSession).setAttribute(SESSION_ID, capturedID.capture());
         when(mockSession.getAttribute(SESSION_ID)).thenReturn(capturedID.getValue());
 
+
+
         req.setSession(mockSession);
         req.setRequestURI("emersonsgame");
         req.setParameter("email", PLAYER1_EMAIL);

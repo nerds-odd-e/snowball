@@ -30,19 +30,27 @@ public class GamePlayerController extends HttpServlet {
         ServletOutputStream outputStream = resp.getOutputStream();
         String jsonResponse = "{}";
 
-       if (null != req.getParameter("roll")) {
-            try {
-                if(hasPlayerMoved()) {
-                    jsonResponse = createErrorResponse("Invalid turn");
-                } else {
-                    players.set(0, game.play(req.getParameter("roll"), players.get(0)));
-                    jsonResponse = createResponse(game, players.get(0)).toString();
+        if (req.getRequestURI().endsWith("emersonsgame/nextround")) {
+            startNextRound();
+        } else {
+            if (null != req.getParameter("roll")) {
+                try {
+                    if (hasPlayerMoved()) {
+                        jsonResponse = createErrorResponse("Invalid turn");
+                    } else {
+                        players.set(0, game.play(req.getParameter("roll"), players.get(0)));
+                        jsonResponse = createResponse(game, players.get(0)).toString();
+                    }
+                } catch (GameException e) {
+                    jsonResponse = createErrorResponse(e.getLocalizedMessage());
                 }
-            } catch (GameException e) {
-                jsonResponse = createErrorResponse(e.getLocalizedMessage());
             }
         }
         outputStream.print(jsonResponse);
+    }
+
+    private void startNextRound() {
+        playersMovedList.clear();
     }
 
     public void addToPlayerMovedList(String playerId) {
@@ -99,7 +107,7 @@ public class GamePlayerController extends HttpServlet {
         rq.forward(req, resp);
     }
 
-    private String generateID(String email){
+    private String generateID(String email) {
         return email + new Date().getTime();
     }
 
