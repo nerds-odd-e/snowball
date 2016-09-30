@@ -24,9 +24,7 @@ public class GamePlayerController extends HttpServlet {
     private ArrayList<Player> players = new ArrayList<Player>() {{
         add(new Player());
     }};
-
-    private ArrayList<String> playersMovedList = new ArrayList<String>();
-
+    
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletOutputStream outputStream = resp.getOutputStream();
         String jsonResponse = "{}";
