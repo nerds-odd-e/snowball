@@ -100,6 +100,8 @@ public class GamePlayerController extends HttpServlet {
             handlePlayerRequest(req, resp);
         } else if (req.getRequestURI().endsWith("emersonsgame/Players")) {
             handleListPlayers(resp);
+        } else if (req.getRequestURI().endsWith("emersonsgame/Players/reset")){
+            players = new ArrayList<Player>();
         }
     }
 

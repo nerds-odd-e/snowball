@@ -1,5 +1,8 @@
 package gradle.cucumber;
 
+import com.odde.emersonsgame.controller.GamePlayerController;
+import com.odde.massivemailer.model.Player;
+import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -8,6 +11,7 @@ import gradle.cucumber.driver.WebDriverFactory;
 import gradle.cucumber.driver.UiElement;
 import gradle.cucumber.driver.WebDriverWrapper;
 
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
@@ -67,12 +71,14 @@ public class GameStepdefs {
         submitValidDistance(dist);
     }
 
-    @Given("^a player joins the game on a separate window$")
-    public void aPlayerJoinsTheGameOnASeparateWindow() throws Throwable {
-        playerViewDriver = WebDriverFactory.getAdditionalDriver();
-        playerViewDriver.visit(BASE_URL + "game_login.jsp");
-        playerViewDriver.text_field("email", "terry@odd-e.com");
-        playerViewDriver.click_button("add_button");
+    @Given("^(\\d+) player\\(s\\) joins the game on a separate window$")
+    public void nPlayersJoinsTheGameOnASeparateWindow(int numPlayers) throws Throwable {
+        for(int i=1;i<=numPlayers;i++){
+            playerViewDriver = WebDriverFactory.getAdditionalDriver();
+            playerViewDriver.visit(BASE_URL + "game_login.jsp");
+            playerViewDriver.text_field("email", "terry"+i+"@odd-e.com");
+            playerViewDriver.click_button("add_button");
+        }
     }
 
     @Then("^the player UI should display \"([^\"]*)\" of (\\d+)$")
@@ -125,6 +131,11 @@ public class GameStepdefs {
 
     @When("^another player joins the game on a separate window$")
     public void anotherPlayerJoinsTheGameOnASeparateWindow() throws Throwable {
-        aPlayerJoinsTheGameOnASeparateWindow();
+        nPlayersJoinsTheGameOnASeparateWindow(1);
+    }
+
+    @Given("^no players has been added$")
+    public void no_players_has_been_added() throws Throwable {
+        spectatorViewDriver.visit(new MyStepdefs().BASE_URL + "emersonsgame/Players/reset");
     }
 }
