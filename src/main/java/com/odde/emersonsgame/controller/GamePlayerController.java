@@ -46,11 +46,11 @@ public class GamePlayerController extends HttpServlet {
     }
 
     public void addToPlayerMovedList(String playerId) {
-        playerMovedList.add(playerId);
+        playersMovedList.add(playerId);
     }
 
     private boolean hasPlayerMoved() {
-        return playerMovedList.contains(players.get(0).getID());
+        return playersMovedList.contains(players.get(0).getID());
     }
 
     private String createErrorResponse(String errMsg) {
