@@ -18,6 +18,7 @@ import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.mock.web.MockHttpSession;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -114,13 +115,7 @@ public class GamePlayerControllerTest {
     @Ignore
     @Test
     public void testNewlyAddedPlayerCannotMove() throws Exception {
-        ArgumentCaptor<String> capturedID = ArgumentCaptor.forClass(String.class);
-
-        HttpSession mockSession = mock(HttpSession.class);
-        verify(mockSession).setAttribute(SESSION_ID, capturedID.capture());
-        when(mockSession.getAttribute(SESSION_ID)).thenReturn(capturedID.getValue());
-
-
+        HttpSession mockSession = new MockHttpSession();
 
         req.setSession(mockSession);
         req.setRequestURI("emersonsgame");
@@ -128,7 +123,7 @@ public class GamePlayerControllerTest {
 
         gamePlayerController.doGet(req, res);
 
-        req.setParameter("ID", capturedID.getValue());
+        req.setParameter(SESSION_ID, mockSession.getAttribute(SESSION_ID).toString());
         req.setParameter("roll", "normal");
         gamePlayerController.doPost(req, res);
 
