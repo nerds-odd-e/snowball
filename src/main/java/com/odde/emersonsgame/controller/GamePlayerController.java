@@ -41,11 +41,10 @@ public class GamePlayerController extends HttpServlet {
                             jsonResponse = createErrorResponse("Invalid turn");
                             break;
                         }
-
                         if ("normal".equals(req.getParameter("roll"))) {
                             players.set(i, game.playNormal(players.get(i)));
                             jsonResponse = createResponse(game, players.get(i)).toString();
-                        } else if ("super".equals(req.getParameter(""))) {
+                        } else if ("super".equals(req.getParameter("roll"))) {
                             players.set(i, game.playSuper(players.get(i)));
                             jsonResponse = createResponse(game, players.get(i)).toString();
                         } else {
