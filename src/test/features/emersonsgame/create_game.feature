@@ -21,6 +21,7 @@ Feature: Create Game
     And 1 player(s) joins the game on a separate window
     Then the spectator UI "player-count" should display that 1 player joined within 2 seconds
 
+@wip
   Scenario: Admin sees that 3 players join the game
     Given a game of distance 50 is created
     And 50 player(s) joins the game on a separate window
