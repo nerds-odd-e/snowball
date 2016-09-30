@@ -54,12 +54,15 @@ body {
 
 .racer{
     background-color: #fff;
+    overflow: hidden;
     border: 2px solid darkcyan;
     height: 100%;
     position: relative;
     flex: 0 0 15%;
     max-width: 150px;
 }
+
+
 
 .rollBtn {
     width: 100%;
