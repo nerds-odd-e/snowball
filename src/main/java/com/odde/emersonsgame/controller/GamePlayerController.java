@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 public class GamePlayerController extends HttpServlet {
@@ -126,6 +127,7 @@ public class GamePlayerController extends HttpServlet {
     }
 
     public void handleListPlayers(HttpServletResponse resp) throws IOException {
+        Collections.sort(players);
         String jsonResponse = new Gson().toJson(players.toArray());
         resp.getOutputStream().print(jsonResponse);
     }

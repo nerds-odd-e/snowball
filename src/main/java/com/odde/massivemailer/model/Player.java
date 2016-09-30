@@ -1,6 +1,7 @@
 package com.odde.massivemailer.model;
 
-public class Player {
+
+public class Player implements Comparable<Player>{
 
     private int scars;
     private int position;
@@ -51,5 +52,11 @@ public class Player {
 
     public String getID() {
         return ID;
+    }
+
+
+    @Override
+    public int compareTo(Player o) {
+        return o.getPosition() - position;
     }
 }

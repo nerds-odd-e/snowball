@@ -29,7 +29,7 @@ public class GamePlayerControllerTest {
     public static final String SESSION_EMAIL = "email";
     public static final String SESSION_ID = "ID";
     public static final String PLAYER2_EMAIL = "test@test.com";
-    public static final String PLAYER1_EMAIL = "some@gmail.com";
+    public static final String PLAYER1_EMAIL = "alvin";
 
     GamePlayerController gamePlayerController = new GamePlayerController();
 
