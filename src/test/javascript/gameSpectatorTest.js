@@ -21,7 +21,7 @@ describe('gameSpectator',function(){
                                  scars:      0,
                                  email:      "aaa@gmail.com"
                             };
-            $('#canvas').html(updatePlayerPosition(racerData));
+            $('#canvas').html(createPlayerDiv(racerData));
             emptyCanvas();
             expect($('#canvas').html()).toBe("");
         });
@@ -36,7 +36,7 @@ describe('gameSpectator',function(){
                                  email:      "aaa@gmail.com"
                             };
 
-            $('#canvas').html(updatePlayerPosition(racerData));
+            $('#canvas').html(createPlayerDiv(racerData));
             expect(document.getElementById("racerName").innerHTML).toBe("ID: aaa");
             expect(document.getElementById("racerEmail").innerHTML).toBe("Email: aaa@gmail.com");
             expect(document.getElementById("racerDist").innerHTML).toBe("Dist: 0");
@@ -47,32 +47,30 @@ describe('gameSpectator',function(){
 
     describe('Multi player', function (){
         it('should show correct details for 2 players when server responds', function(){
-            var racerData = {
-                status: "PLAYING",
-                players:[
-                {
-                    id: 'player1',
-                    dist: 0,
-                    scars: 0
-                },
-                {
-                    id: 'player2',
-                    dist: 1,
-                    scars: 1
-                }],
-                distance: 20
-            };
+            var racerData =  [{
+                                ID:        "player1",
+                                position :  0,
+                                scars:      0,
+                                email:      "p1@gmail.com"
+                            },{
+                                ID:        "player2",
+                                position :  1,
+                                scars:      1,
+                                email:      "p2@gmail.com"
+                            }];
 
-            updateScreenWithPlayerData(racerData);
+            updateCanvas(racerData);
 
             $('.racer').each(function(key, value){
                 var racerName = $(this).find('#racerName').text();
                 var racerDist = $(this).find('#racerDist').text();
                 var racerScars = $(this).find('#scar').text();
+                var racerEmail = $(this).find('#racerEmail').text();
 
-                expect(racerName).toBe(racerData.players[key].id);
-                expect(racerDist).toBe("Dist: " + racerData.players[key].dist);
-                expect(racerScars).toBe("Scar: " + racerData.players[key].scars);
+                expect(racerName).toBe('ID: ' + racerData[key].ID);
+                expect(racerDist).toBe('Dist: ' + racerData[key].position);
+                expect(racerScars).toBe('Scar: ' + racerData[key].scars);
+                expect(racerEmail).toBe('Email: ' + racerData[key].email);
             });
 
         });

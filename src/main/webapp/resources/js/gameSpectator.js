@@ -8,73 +8,48 @@ var player = {
 };
 
 $(document).ready(function(){
-    var interval = setInterval(function() { waitForPlayers(); }, 1000);
+    var interval = setInterval(function() { checkGameState(); }, 1000);
 
     $("#startSpecBtn").on("click", function() {
-        checkGameState();
         $("#startSpecBtn").text("Next");
-        $("#startSpecBtn").unbind("click");
-
-        $("#startSpecBtn").on("click", function() { checkGameState(); });
-        clearInterval(interval);
+        if (interval){
+            stopInterval(interval);
+        }
+        checkGameState();
     });
 })
 
-function updateAndDrawPlayer(playerList) {
+function updateCanvas(playerList) {
     var html = '';
     for (var p in playerList) {
-        html += updatePlayerPosition(playerList[p]);
+        html += createPlayerDiv(playerList[p]);
     }
     $('#canvas').html(html);
 }
 
-function waitForPlayers() {
-    // single player 
-    var playerInfo = getPlayerInfo();
-    var playerList = JSON.parse(playerInfo);
-    updatePlayerCount(playerList.length);
-    updateAndDrawPlayer(playerList);
-}
 
 function checkGameState(){
-    // make API call -> check game state
-    //if game ended -> set toPoll = false
-    /*(var results = this.mockMultiplePlayersAjaxCall();
-
-    if(results.status == "ENDED"){
-        this.toPoll = false;
-        return;
-    }
-    emptyCanvas();
-    updateScreenWithPlayerData(results);
-    */
-
-    // single player 
-    var playerInfo = getPlayerInfo();
-    var playerList = JSON.parse(playerInfo);
-    updateAndDrawPlayer(playerList);
+    var playersInfo = getPlayersInfo();
+    var playersList = JSON.parse(playersInfo);
+    updatePlayerCount(playersList.length);
+    updateCanvas(playersList);
 }
 
-function updatePlayerPosition(player){
-    var html = '';
-
-    if(player != undefined || player != null) {
-        html = '<div class="race-track">'+
-                    '<div class="racer" style="margin-left:'+player.position*10+'px">' +
-                        '<div id="racerName">ID: '    + player.ID+
-                    '</div>'+
-                    '<div id="racerEmail">Email: '+ player.email     + '</div>'+
-                    '<div id="racerDist">Dist: ' + player.position + '</div>'+
-                    '<div id="scar">Scar: '      + player.scars     + '</div>' +
+function createPlayerDiv(player){
+    var indentation = player.position * 10;
+    return '<div class="race-track">'+
+                    '<div class="racer" style="margin-left:' + indentation +   'px">' +
+                        '<div id="racerName">ID: '      + player.ID         + '</div>'+
+                    '<div id="racerEmail">Email: '      + player.email      + '</div>'+
+                    '<div id="racerDist">Dist: '        + player.position   + '</div>'+
+                    '<div id="scar">Scar: '             + player.scars      + '</div>' +
                 '</div>'+
             '</div>';
-    }
-
-    return html;
 }
 
-function getPlayerInfo() {
-    var r = "";
+function getPlayersInfo() {
+    var r = "[]";
+
     $.ajax({
         type:           "GET",
         async:          false,
@@ -87,14 +62,8 @@ function getPlayerInfo() {
             console.log(err);
         }
     });
-    return r;
-}
 
-function updateScreenWithPlayerData(results){
-    for (var index in results.players) {
-        this.updatePlayerPosition(results.players[index]);
-        this.updatePlayerCount();
-    }
+    return r;
 }
 
 function emptyCanvas(){
@@ -104,3 +73,4 @@ function emptyCanvas(){
 function updatePlayerCount(totalPlayers){
     $('#player-count').html(totalPlayers);
 }
+
