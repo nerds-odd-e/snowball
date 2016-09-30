@@ -29,7 +29,7 @@
                 <input type="text" class="form-control" id="inputType" value="Roll Last" disabled>
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-default">NEXT</button>
+                <div id="startSpecBtn" class="btn btn-default">Start</div>
             </div>
         </form>
     </div>

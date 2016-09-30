@@ -13,7 +13,7 @@ public class Player {
         position = 0;
         dieResult = 0;
         email = "";
-        ID = "id";
+        ID = "";
     }
 
     public void addScar() {

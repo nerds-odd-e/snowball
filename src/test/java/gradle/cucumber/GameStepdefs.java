@@ -61,10 +61,28 @@ public class GameStepdefs {
         new MyStepdefs().loginWithEmail("terry2@odd-e.com");
     }
 
-    @Given("^a game is started$")
-    public void aGameIsStarted() throws Throwable {
+    @When("^a game of distance (\\d+) is created$")
+    public void createGameWithDistX(int dist) throws Throwable {
         iAmAtEmersonsLandingPage();
-        submitValidDistance(30);
+        submitValidDistance(dist);
+    }
+
+    @Given("^a player joins the game on a separate window$")
+    public void aPlayerJoinsTheGameOnASeparateWindow() throws Throwable {
+        playerViewDriver = WebDriverFactory.getAdditionalDriver();
+        playerViewDriver.visit(BASE_URL + "game_login.jsp");
+        playerViewDriver.text_field("email", "terry@odd-e.com");
+        playerViewDriver.click_button("add_button");
+    }
+
+    @Then("^the player UI should display \"([^\"]*)\" of (\\d+)$")
+    public void playerUIShouldDisplay(String elementId, int value){
+        playerViewDriver.expectElementWithIdToContainValue(elementId, value);
+    }
+
+    @Then("^the spectator UI \"([^\"]*)\" should display that (\\d+) player joined within (\\d+) seconds")
+    public void spectatorUIShouldDisplayXinYSeconds(String elementId, int value, int seconds){
+        spectatorViewDriver.expectElementWithIdToContainTextInXSeconds(elementId, Integer.toString(value), seconds);
     }
 
 
@@ -75,14 +93,6 @@ public class GameStepdefs {
         spectatorViewDriver.click_button("btnCreate");
         TimeUnit.SECONDS.sleep(4);
         assertEquals(2, spectatorViewDriver.countElementWithClass("racer"));
-    }
-
-    @Given("^a player joins the game on a separate window$")
-    public void aPlayerJoinsTheGameOnASeparateWindow() throws Throwable {
-        playerViewDriver = WebDriverFactory.getAdditionalDriver();
-        playerViewDriver.visit(BASE_URL + "game_login.jsp");
-        playerViewDriver.text_field("email", "terry@odd-e.com");
-        playerViewDriver.click_button("add_button");
     }
 
     @When("^the player roll the die$")

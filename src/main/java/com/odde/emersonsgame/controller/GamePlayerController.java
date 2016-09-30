@@ -25,7 +25,6 @@ public class GamePlayerController extends HttpServlet {
     }};
     private ArrayList<String> playersMovedList = new ArrayList<String>();
 
-
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletOutputStream outputStream = resp.getOutputStream();
         String jsonResponse = "{}";
@@ -35,7 +34,7 @@ public class GamePlayerController extends HttpServlet {
         } else {
             if (null != req.getParameter("roll")) {
                 try {
-                    if (hasPlayerMoved()) {
+                    if (hasPlayerMoved(players.get(0))) {
                         jsonResponse = createErrorResponse("Invalid turn");
                     } else {
                         players.set(0, game.play(req.getParameter("roll"), players.get(0)));
@@ -57,8 +56,8 @@ public class GamePlayerController extends HttpServlet {
         playersMovedList.add(playerId);
     }
 
-    private boolean hasPlayerMoved() {
-        return playersMovedList.contains(players.get(0).getID());
+    private boolean hasPlayerMoved(Player player) {
+        return playersMovedList.contains(player.getID());
     }
 
     private String createErrorResponse(String errMsg) {
