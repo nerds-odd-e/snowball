@@ -5,7 +5,7 @@ Feature: Multiplayer game
   Background:
     Given a game is started
 
-  @wip @now
+  @wip
   Scenario: More than one player join the game with different emails
     Given a player joins the game
     When another player joins the game on a separate window
