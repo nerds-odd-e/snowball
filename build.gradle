@@ -60,7 +60,7 @@ task cucumber() {
         javaexec {
             main = "cucumber.api.cli.Main"
             classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
-            args = ['--plugin', 'json:build/cucumber-json-report.json', '--glue', 'gradle.cucumber', '--t /ags', '~@wip', 'src/test/features']
+            args = ['--plugin', 'json:build/cucumber-json-report.json', '--glue', 'gradle.cucumber', '--tags', '~@wip', 'src/test/features']
         }
     }
 }
