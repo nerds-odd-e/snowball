@@ -58,7 +58,7 @@ public class GameStepdefs {
 
     @Given("^a player joins the game$")
     public void aPlayerJoinsTheGame() throws Throwable {
-        new MyStepdefs().loginWithEmail("terry@odd-e.com");
+        new MyStepdefs().loginWithEmail("terry2@odd-e.com");
     }
 
     @Given("^a game is started$")
@@ -67,13 +67,6 @@ public class GameStepdefs {
         submitValidDistance(30);
     }
 
-    @When("^another player joins the game$")
-    public void anotherPlayerJoinsTheGame() throws Throwable {
-        playerViewDriver = new WebDriverWrapper();
-        playerViewDriver.visit(BASE_URL + "game_login.jsp");
-        playerViewDriver.text_field("email", "new_terry@odd-e.com");
-        playerViewDriver.click_button("add_button");
-    }
 
     @Then("^The spectator should see two cars on the screen$")
     public void theSpectatorShouldSeeTwoCarsOnTheScreen() throws Throwable {
@@ -107,5 +100,10 @@ public class GameStepdefs {
     @When("^another player with the same email joins the game$")
     public void anotherPlayerWithTheSameEmailJoinsTheGame() throws Throwable {
         new MyStepdefs().loginWithEmail("terry@odd-e.com");
+    }
+
+    @When("^another player joins the game on a separate window$")
+    public void anotherPlayerJoinsTheGameOnASeparateWindow() throws Throwable {
+        aPlayerJoinsTheGameOnASeparateWindow();
     }
 }

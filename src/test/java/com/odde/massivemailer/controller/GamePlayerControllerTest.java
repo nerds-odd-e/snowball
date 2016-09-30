@@ -7,10 +7,9 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 import com.google.gson.*;
-import com.odde.emersonsgame.GameRound;
 import com.odde.emersonsgame.controller.GamePlayerController;
 import com.odde.emersonsgame.exception.GameException;
-import com.odde.emersonsgame.implement.GameRoundImplementation;
+import com.odde.emersonsgame.implement.GameRound;
 import com.odde.massivemailer.model.Player;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -24,7 +23,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class GamePlayerControllerTest {
@@ -32,7 +30,9 @@ public class GamePlayerControllerTest {
     public static final String SESSION_ID = "ID";
     public static final String PLAYER2_EMAIL = "test@test.com";
     public static final String PLAYER1_EMAIL = "some@gmail.com";
+
     GamePlayerController gamePlayerController = new GamePlayerController();
+
     MockHttpServletRequest req = new MockHttpServletRequest();
     MockHttpServletResponse res = new MockHttpServletResponse();
     Player player;
@@ -41,7 +41,7 @@ public class GamePlayerControllerTest {
 
     @Before
     public void setupGame() {
-        gameRound = new GameRoundImplementation();
+        gameRound = new GameRound();
         gameRound.setDistance(30);
         player = new Player();
         gamePlayerController.setGameRound(gameRound);
@@ -151,6 +151,13 @@ public class GamePlayerControllerTest {
         req.setRequestURI("/emersonsgame/Players");
         gamePlayerController.doGet(req, res);
         assertEquals(new Gson().toJson(players), res.getContentAsString());
+    }
+
+    @Test
+    public void testGetErrorMessageWhenPlayerHasMadeMove() throws Exception {
+        gamePlayerController.addToPlayerMovedList("id");
+        String expectedResponse = "{\"error\":\"Invalid turn\"}";
+        assertEquals(expectedResponse, getPostResponse("roll", "normal"));
     }
 
     public String makeMove(int num, String type) throws ServletException, IOException {
