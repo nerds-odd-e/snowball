@@ -56,18 +56,47 @@ public class GamePlayerControllerTest {
 
     @Test
     public void getGameException() throws Exception {
+        loginWithEmail(PLAYER1_EMAIL);
+
         JsonObject expectedObj = new JsonObject();
-        expectedObj.addProperty("error", GameException.INVALID_MOVE);
+        expectedObj.addProperty("error", GameException.INVALID_TURN);
         assertEquals(expectedObj.toString(), getPostResponse("roll", "Expected exception"));
     }
 
     @Test
     public void testGetMoveResult() throws Exception {
+        loginWithEmail(PLAYER1_EMAIL);
+
         JsonObject responseObj = (JsonObject) new JsonParser().parse(makeMove(6, "normal"));
         assertNotNull(responseObj.get("distance"));
         assertNotNull(responseObj.get("playerPos"));
         assertNotNull(responseObj.get("playerScar"));
-        assertEquals(responseObj.get("dieResult").getAsInt(), 6);
+        assertEquals(6, responseObj.get("dieResult").getAsInt());
+    }
+
+    @Test
+    public void testPlayerRoll() throws Exception {
+        // GIVEN: Game has 1 player
+        gamePlayerController.setPlayers(makePlayersWithEmails(new String[]{PLAYER1_EMAIL}));
+        // AND: Alvin logs in
+        loginWithEmail("alvin");
+        String playerID = req.getSession().getAttribute("ID").toString();
+
+        // WHEN: Alvin rolls,
+        req.setParameter("roll", "normal");
+        req.setParameter("id", playerID);
+        gamePlayerController.doPost(req, res);
+
+        res = new MockHttpServletResponse();
+        // THEN: return updated game state for alvin
+        req.setRequestURI("emersonsgame/Players");
+        gamePlayerController.doGet(req, res);
+
+        String contentAsString = res.getContentAsString();
+        JsonArray playersObject = (JsonArray) new JsonParser().parse(contentAsString);
+        JsonObject alvinObject = (JsonObject) playersObject.get(1);
+        assertEquals("alvin", alvinObject.get("email").getAsString());
+        assertNotEquals(0, alvinObject.get("position").getAsInt());
     }
 
     @Test
@@ -97,7 +126,7 @@ public class GamePlayerControllerTest {
         req.setRequestURI("emersonsgame/Players");
         gamePlayerController.doGet(req, res);
 
-        assertPlayerObject(0, PLAYER1_EMAIL);
+        assertPlayerID(0, PLAYER1_EMAIL);
     }
 
     @Test
@@ -109,7 +138,7 @@ public class GamePlayerControllerTest {
         req.setRequestURI("emersonsgame/Players");
         gamePlayerController.doGet(req, res);
 
-        assertPlayerObject(1, PLAYER2_EMAIL);
+        assertPlayerID(1, PLAYER2_EMAIL);
     }
 
     @Ignore
@@ -132,12 +161,6 @@ public class GamePlayerControllerTest {
         gamePlayerController.doPost(req, res);
 
         assertTrue(res.getContentAsString().contains("error"));
-    }
-
-    public void assertPlayerObject(int index, String email) throws UnsupportedEncodingException {
-        JsonArray playersObject = (JsonArray) new JsonParser().parse(res.getContentAsString());
-        assertEquals(email, ((JsonObject) playersObject.get(index)).get("email").getAsString());
-        assertNotEquals("", ((JsonObject) playersObject.get(index)).get("ID").getAsString());
     }
 
     @Test
@@ -178,13 +201,19 @@ public class GamePlayerControllerTest {
     public ArrayList<Player> makePlayersWithEmails(String[] emails) {
         ArrayList<Player> players = new ArrayList<>();
 
-        for (String e: emails) {
+        for (String e : emails) {
             Player player = new Player();
             player.setEmail(e);
             players.add(player);
         }
 
         return players;
+    }
+
+    public void assertPlayerID(int index, String email) throws UnsupportedEncodingException {
+        JsonArray playersObject = (JsonArray) new JsonParser().parse(res.getContentAsString());
+        assertEquals(email, ((JsonObject) playersObject.get(index)).get("email").getAsString());
+        assertNotEquals("", ((JsonObject) playersObject.get(index)).get("ID").getAsString());
     }
 
     public void loginWithEmail(String email) throws ServletException, IOException {
