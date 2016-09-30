@@ -87,6 +87,7 @@ public class GamePlayerController extends HttpServlet {
         req.setAttribute("distance", game.getDistance());
         if (null == session.getAttribute("ID")) {
             // New player
+
             String playerID = generateID(session.getAttribute("email").toString());
             session.setAttribute("ID", playerID);
             // Add to player array
@@ -94,7 +95,7 @@ public class GamePlayerController extends HttpServlet {
             p.setID(playerID);
             p.setEmail(session.getAttribute("email").toString());
             players.add(p);
-            playersMovedList.add(playerID);
+//            playersMovedList.add(playerID);
         }
 
         RequestDispatcher rq = req.getRequestDispatcher("game_player.jsp");

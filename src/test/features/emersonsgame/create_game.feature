@@ -14,6 +14,7 @@ Feature: Create Game
     Then the player UI should display "currentDistance" of 0
     And the player UI should display "scars" of 0
 
+  @wip
   Scenario: Admin sees that a player has joined the game
     Given a game of distance 20 is created
     And a player joins the game on a separate window
