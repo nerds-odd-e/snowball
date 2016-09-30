@@ -78,6 +78,10 @@ public class WebDriverWrapper {
         assertEquals(Integer.toString(value), findElementById(id).getText());
     }
 
+    public void expectElementWithIdGreaterThanOrEqualsValue(String id, int value) {
+        assertTrue(Integer.parseInt(findElementById(id).getText()) >= value);
+    }
+
     public void expectElementWithIdToContainTextInXSeconds(String id, String value, int seconds) {
         WebDriverWait wait = new WebDriverWait(driver, seconds);
         wait.until(ExpectedConditions.attributeToBe(By.id(id), "innerHTML", value));
