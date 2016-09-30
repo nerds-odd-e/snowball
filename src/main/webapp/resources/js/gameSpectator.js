@@ -21,9 +21,25 @@ $(document).ready(function(){
         if (interval){
             clearInterval(interval);
         }
+
+        proceedToNextRound();
         checkGameState();
     });
 })
+
+function proceedToNextRound() {
+    $.ajax({
+        type:           "POST",
+        async:          false,
+        contentType:    "application/json",
+        url:            "/massive_mailer/emersonsgame/nextround",
+        success: function(data) {
+        },
+        error: function(err) {
+            console.log(err);
+        }
+    });
+}
 
 function updateCanvas(playerList) {
     var html = '';
