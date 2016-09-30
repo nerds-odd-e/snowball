@@ -68,7 +68,7 @@ public class GmailServiceTest {
 		emailService.send(email);
 	}
 
-	@Test @Ignore
+	@Test
 	public void sendEmailViaGreenMailSMTP() throws EmailException {
 		//Arrange
 		GreenMail greenMail = new GreenMail(new ServerSetup(3025, null, "smtp"));
