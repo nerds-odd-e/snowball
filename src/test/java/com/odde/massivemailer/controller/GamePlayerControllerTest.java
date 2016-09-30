@@ -142,18 +142,26 @@ public class GamePlayerControllerTest {
         assertPlayerID(1, PLAYER2_EMAIL);
     }
 
-    @Ignore
+
     @Test
     public void testNewlyAddedPlayerCannotMove() throws Exception {
-        HttpSession mockSession = new MockHttpSession();
+        final String testID = "testID";
 
+        ArrayList<Player> players = new ArrayList<Player>();
+        Player testPlayer = new Player();
+        testPlayer.setID(testID);
+        players.add(testPlayer);
+        gamePlayerController.setPlayers(players);
+
+        ArrayList<String> playerIDs = new ArrayList<String>() {{
+            add(testID);
+        }};
+        gamePlayerController.setPlayersMoved(playerIDs);
+
+        HttpSession mockSession = new MockHttpSession();
+        mockSession.setAttribute(SESSION_ID, testID);
         req.setSession(mockSession);
         req.setRequestURI("emersonsgame");
-        req.setParameter("email", PLAYER1_EMAIL);
-
-        gamePlayerController.doGet(req, res);
-
-        req.setParameter(SESSION_ID, mockSession.getAttribute(SESSION_ID).toString());
         req.setParameter("roll", "normal");
         gamePlayerController.doPost(req, res);
 
