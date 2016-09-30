@@ -114,7 +114,7 @@ public class GamePlayerController extends HttpServlet {
             p.setID(playerID);
             p.setEmail(session.getAttribute("email").toString());
             players.add(p);
-//            playersMovedList.add(playerID);
+            playersMovedList.add(playerID);
         }
 
         RequestDispatcher rq = req.getRequestDispatcher("game_player.jsp");

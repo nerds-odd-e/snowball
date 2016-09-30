@@ -57,7 +57,7 @@ public class GamePlayerControllerTest {
         loginWithEmail(PLAYER1_EMAIL);
 
         JsonObject expectedObj = new JsonObject();
-        expectedObj.addProperty("error", GameException.INVALID_MOVE);
+        expectedObj.addProperty("error", GameException.INVALID_TURN);
         assertEquals(expectedObj.toString(), getPostResponse("roll", "Expected exception"));
     }
 
@@ -65,7 +65,14 @@ public class GamePlayerControllerTest {
     public void testGetMoveResult() throws Exception {
         loginWithEmail(PLAYER1_EMAIL);
 
-        JsonObject responseObj = (JsonObject) new JsonParser().parse(makeMove(6, "normal"));
+        req.setRequestURI("emersonsgame/nextround");
+        gamePlayerController.doPost(req, res);
+
+        String makemoveString = makeMove(6, "normal");
+        System.out.println(makemoveString);
+        JsonObject responseObj = (JsonObject) new JsonParser().parse(makemoveString);
+
+        System.out.println(responseObj.toString());
         assertNotNull(responseObj.get("distance"));
         assertNotNull(responseObj.get("playerPos"));
         assertNotNull(responseObj.get("playerScar"));
@@ -89,6 +96,9 @@ public class GamePlayerControllerTest {
         // AND: Alvin logs in
         loginWithEmail("alvin");
         String playerID = req.getSession().getAttribute("ID").toString();
+
+        req.setRequestURI("emersonsgame/nextround");
+        gamePlayerController.doPost(req, res);
 
         // WHEN: Alvin rolls,
         req.setParameter("roll", "normal");
@@ -229,8 +239,9 @@ public class GamePlayerControllerTest {
 
     private String getPostResponse(String name, String value) throws ServletException, IOException {
         req.setParameter(name, value);
-        gamePlayerController.doPost(req, res);
-        return res.getContentAsString();
+        MockHttpServletResponse resp = new MockHttpServletResponse();
+        gamePlayerController.doPost(req, resp);
+        return resp.getContentAsString();
     }
 
     private HttpServletRequest getGetRequest() throws ServletException, IOException {
