@@ -43,9 +43,11 @@ public class GamePlayerController extends HttpServlet {
 
                     if ("normal".equals(req.getParameter("roll"))) {
                         players.set(i, game.playNormal(players.get(i)));
+                        playersMovedList.add(playerID);
                         jsonResponse = createResponse(game, players.get(i)).toString();
                     } else if ("super".equals(req.getParameter("roll"))) {
                         players.set(i, game.playSuper(players.get(i)));
+                        playersMovedList.add(playerID);
                         jsonResponse = createResponse(game, players.get(i)).toString();
                     } else {
                         jsonResponse = createErrorResponse(GameException.INVALID_MOVE);
