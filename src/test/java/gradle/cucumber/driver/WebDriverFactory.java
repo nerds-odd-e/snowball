@@ -2,6 +2,7 @@ package gradle.cucumber.driver;
 
 public class SingleDrive {
     private static WebDriverWrapper driver;
+    private static WebDriverWrapper[] drivers;
 
     public static WebDriverWrapper getDriver() {
         if (driver == null)
