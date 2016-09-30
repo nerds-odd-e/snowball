@@ -24,6 +24,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 public class GamePlayerControllerTest {
@@ -96,21 +97,19 @@ public class GamePlayerControllerTest {
         req.setRequestURI("emersonsgame/Players");
         gamePlayerController.doGet(req, res);
 
-        JsonArray playersObject = (JsonArray) new JsonParser().parse(res.getContentAsString());
-        assertEquals(PLAYER1_EMAIL, ((JsonObject) playersObject.get(0)).get("email").getAsString());
-        assertNotEquals("", ((JsonObject) playersObject.get(0)).get("ID").getAsString());
+        assertPlayerObject(0, PLAYER1_EMAIL);
     }
 
     @Test
     public void testSecondPlayerGetsAdded() throws Exception {
-        gamePlayerController.setPlayers(makePlayersWithEmails(new String[] {PLAYER1_EMAIL}));
+        gamePlayerController.setPlayers(makePlayersWithEmails(new String[]{PLAYER1_EMAIL}));
 
         loginWithEmail(PLAYER2_EMAIL);
 
         req.setRequestURI("emersonsgame/Players");
         gamePlayerController.doGet(req, res);
-        ArrayList<Player> players = makePlayersWithEmails(new String[] {PLAYER1_EMAIL, PLAYER2_EMAIL});
-        assertEquals(new Gson().toJson(players), res.getContentAsString());
+
+        assertPlayerObject(1, PLAYER2_EMAIL);
     }
 
     @Ignore
@@ -135,13 +134,10 @@ public class GamePlayerControllerTest {
         assertTrue(res.getContentAsString().contains("error"));
     }
 
-    private JsonObject createJsonObj(int dist, int playerPos, int playerScars, int dieResult) {
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("distance", dist);
-        jsonObject.addProperty("playerPos", playerPos);
-        jsonObject.addProperty("playerScar", playerScars);
-        jsonObject.addProperty("dieResult", dieResult);
-        return jsonObject;
+    public void assertPlayerObject(int index, String email) throws UnsupportedEncodingException {
+        JsonArray playersObject = (JsonArray) new JsonParser().parse(res.getContentAsString());
+        assertEquals(email, ((JsonObject) playersObject.get(index)).get("email").getAsString());
+        assertNotEquals("", ((JsonObject) playersObject.get(index)).get("ID").getAsString());
     }
 
     @Test
