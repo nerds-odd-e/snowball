@@ -1,6 +1,5 @@
 
 plugins {
-    id 'com.craigburke.karma' version '1.4.3'
     id "org.roboscratch.robot" version "0.1.1"
 }
 apply plugin: 'java'
@@ -32,24 +31,6 @@ repositories {
 
 gretty {
     port = 8070
-}
-
-karma {
-    basePath = '../src/main/'
-    colors = true
-    profile('default'){
-        libraryBases = ['webapp/resources/lib/**/']
-        libraryFiles = ['jquery.js', 'bootstrap.js'] // <1>
-
-        sourceBases = ['webapp/resources/js/']
-        sourceFiles = ['**/*.js'] // <2>
-
-        testBases = ['../test/javascript/']
-        testFiles = ['**/*Test.js'] // <3>
-    }
-
-    browsers = ['PhantomJS']
-    frameworks = ['jasmine']
 }
 
 task cucumber() {
