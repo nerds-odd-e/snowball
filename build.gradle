@@ -59,8 +59,6 @@ task cucumberNow() {
     }
 }
 
-check.dependsOn(['karmaRun', cucumber])
-
 dependencies {
 
     compile group: 'com.sun.mail', name: 'javax.mail', version: '1.5.4'
