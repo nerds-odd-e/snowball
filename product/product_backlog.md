@@ -21,6 +21,7 @@
 | single player no admin | 5  | |
 | single player | 3  | |
 | *Sprint 3 TeamBuk2*                                                                       |   |   |
+| | | |
 | Save template                                                                           | 3    |   |
 | Step types | 1  | |
 | Change distance | 1  | |
