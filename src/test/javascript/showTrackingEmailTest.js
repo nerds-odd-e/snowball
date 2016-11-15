@@ -2,7 +2,7 @@ describe('test show tracking function', function() {
 
 	var rootId = "testContainer";
 	var markup = "<table id='trackingTable'><tbody></tbody></table>";
-	var mock_json = [{"subject":"test","date":"2016-11-14"},{"subject":"test2","date":"2016-11-14"}];
+	var mock_json = [{"subject":"test","sentdate":"2016-11-14"},{"subject":"test2","sentdate":"2016-11-14"}];
 
 	beforeEach(function(){
 		var container = document.createElement('div');
@@ -21,7 +21,7 @@ describe('test show tracking function', function() {
 
 	    $.each(mock_json, function(idx, item) {
 		    expect($("#trackingTable .subject").eq(idx).text()).toBe(item.subject);
-            expect($("#trackingTable .date").eq(idx).text()).toBe(item.date);
+            expect($("#trackingTable .sentdate").eq(idx).text()).toBe(item.sentdate);
 		});
 	});
 

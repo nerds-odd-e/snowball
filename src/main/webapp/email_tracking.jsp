@@ -130,14 +130,12 @@
 <!-- Bootstrap Core JavaScript -->
 <script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="resources/js/showTrackedEmail.js"></script>
-$(document).ready(function() {
-	var msg = getParameterByName('msg');
-	if(msg) {
-		alert(msg);
-	}
-	var trackingList = retrieveTrackingEmailListFromServer();
-	renderEmailTrackingList(trackingList, $('#trackingTable'));
-});
 <script type="text/javascript">
+$(document).ready(function() {
+
+	var trackingList = retrieveTrackingEmailListFromServer();
+
+	renderTrackingEmailList(trackingList, $('#trackingTable'));
+});
 </script>
 </html>
