@@ -9,6 +9,7 @@ launchctl setenv MM_EMAIL_PASSWORD $MM_EMAIL_PASSWORD
 ```
 * Reboot your IDE.
 
+<<<<<<< HEAD:README.md
 * Make sure firefox binary is in the path export PATH=$PATH:/Applications/Firefox.app/Contents/MacOS
 
 ##### Run Junit tests
@@ -25,3 +26,6 @@ launchctl setenv MM_EMAIL_PASSWORD $MM_EMAIL_PASSWORD
 npm install
 npm test
 ```
+=======
+* Make sure firefox binary is in the path export PATH=$PATH:/Applications/Firefox.app/Contents/MacOS˜
+>>>>>>> Create new classes to retrieve email data.:README.MD
