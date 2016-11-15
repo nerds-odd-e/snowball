@@ -13,15 +13,6 @@ public class SqliteContact  extends SqliteBase implements ContactService {
 
 	private String selectMailFromCompanySql = "SELECT id, name, email, lastname, company FROM mail where company = ";
 
-	public SqliteContact() {
-		try {
-			openConnection();
-			createIfNotExistTable();
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
 	@Override
 	public List<ContactPerson> getContactList() {
 		ResultSet resultSet = null;
@@ -36,25 +27,6 @@ public class SqliteContact  extends SqliteBase implements ContactService {
 			closeConnection();
 		}
 		return contactList;
-	}
-
-	private void createIfNotExistTable() throws SQLException {
-
-		//if(!isTableExists("mail"))
-			statement
-				.executeUpdate("CREATE TABLE IF NOT EXISTS mail (id INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL, name VARCHAR(50), email VARCHAR(50) NOT NULL, lastname VARCHAR(50), company VARCHAR(50))");
-	}
-
-	private boolean isTableExists(String name)
-	{
-		try {
-			DatabaseMetaData md = connection.getMetaData();
-			ResultSet rs = md.getTables(null, null, name, null);
-			return (rs.next());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
 	}
 
 	/*
@@ -201,7 +173,6 @@ public class SqliteContact  extends SqliteBase implements ContactService {
 		ResultSet resultSet = null;
 		try {
 			openConnection();
-			createIfNotExistTable();
 
 			resultSet = statement.executeQuery(this.selectMailFromCompanySql + "'" + company + "'");
 			populateContactList(resultSet);

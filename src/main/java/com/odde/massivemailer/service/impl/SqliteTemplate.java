@@ -13,26 +13,6 @@ public class SqliteTemplate extends SqliteBase implements TemplateService{
 
     private static String selectTemplateListSql = "SELECT * FROM TEMPLATE ORDER BY TEMPLATENAME";
 
-    public SqliteTemplate() {
-        try {
-            openConnection();
-            createIfNotExistTable();
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void createIfNotExistTable() {
-        try {
-            statement.executeUpdate("CREATE TABLE Template (Id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, TemplateName VARCHAR(255) NOT NULL, Subject VARCHAR(255), Content NVARCHAR(5000))");
-            statement.executeUpdate("INSERT INTO Template (TemplateName,Subject,Content) VALUES ('Default Template 1', 'Greeting {FirstName}', 'Hi, {FirstName} {LastName} from {Company}')");
-        }
-        catch (SQLException ex)
-        {
-
-        }
-    }
-
     @Override
     public List<Template> getTemplateList() {
         ResultSet resultSet;
