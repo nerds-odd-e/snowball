@@ -15,7 +15,7 @@ public class SqliteBase {
     protected Statement statement;
     protected Connection connection;
 
-    protected Statement openConnection() throws ClassNotFoundException,
+    public Statement openConnection() throws ClassNotFoundException,
             SQLException {
 
         this.connectDB(dbName);
@@ -23,7 +23,7 @@ public class SqliteBase {
         return statement;
     }
 
-    protected void closeConnection() {
+    public void closeConnection() {
         try {
             if( statement != null)
             {
