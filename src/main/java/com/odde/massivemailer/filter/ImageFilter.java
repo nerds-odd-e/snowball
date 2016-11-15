@@ -14,6 +14,7 @@ public class ImageFilter implements Filter{
             throws ServletException{
 
     }
+
     public void  doFilter(ServletRequest request,
                           ServletResponse response,
                           FilterChain chain)
@@ -24,6 +25,7 @@ public class ImageFilter implements Filter{
         getSqliteTracking().updateViewCount(messageId, userId);
         chain.doFilter(request,response);
     }
+
     public void destroy( ){
     }
 
