@@ -27,7 +27,7 @@ public class SqliteBase {
         this.statement = statement;
     }
 
-    protected void closeConnection() {
+    public void closeConnection() {
         try {
             if( statement != null)
             {
