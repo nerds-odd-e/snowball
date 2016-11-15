@@ -4,6 +4,7 @@ import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Mail;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Matchers;
@@ -36,19 +37,13 @@ public class SqliteEmailTest extends SqliteBase {
 		
 	}
 
-
 	@After
 	public void tearDown() throws Exception{
 		statement.execute("delete from  mail ;");
 //		sqliteContact.closeConnection();
 	}
 
-	@Test
-	public void testIsTableExists() {
-
-	}
-
-	@Test
+	@Test @Ignore
 	public void testGetEmailList() throws SQLException{
 
 		// Act
