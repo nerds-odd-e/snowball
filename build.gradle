@@ -40,14 +40,11 @@ karma {
     profile('default'){
         libraryBases = ['webapp/resources/lib/**/']
         libraryFiles = ['jquery.js', 'bootstrap.js'] // <1>
-
-        sourceBases = ['webapp/resources/js/']
-        sourceFiles = ['**/*.js'] // <2>
-
-        testBases = ['../test/javascript/']
-        testFiles = ['**/*Test.js'] // <3>
+        sourceBases = ['webapp/resources/js/']        
+        sourceFiles = ['**/*.js'] // <2>        
+        testBases = ['../test/javascript/']        
+        testFiles = ['**/*Test.js'] // <3>        
     }
-
     browsers = ['PhantomJS']
     frameworks = ['jasmine']
 }
@@ -77,8 +74,6 @@ task cucumberNow() {
         }
     }
 }
-
-check.dependsOn(['karmaRun', cucumber])
 
 dependencies {
 

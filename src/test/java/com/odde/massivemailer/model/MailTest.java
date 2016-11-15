@@ -56,7 +56,7 @@ public class MailTest {
 
 
 		verify(mockSqliteContact).getContactByEmail(anyString());
-		assertEquals("content TestName, CompanyName", messages.get(0).getContent());
+		assertEquals("<html><body>content TestName, CompanyName</body></html>", messages.get(0).getContent());
 		assertEquals("subject LastName - EmailName", messages.get(0).getSubject());
 	}
 	

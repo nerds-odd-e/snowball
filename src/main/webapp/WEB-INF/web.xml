@@ -93,4 +93,14 @@
 		<servlet-name>GameSpectatorController</servlet-name>
 		<url-pattern>/gameSpectator</url-pattern>
 	</servlet-mapping>
+
+	<filter>
+		<filter-name>ImageFilter</filter-name>
+		<filter-class>com.odde.massivemailer.filter.ImageFilter</filter-class>
+
+	</filter>
+	<filter-mapping>
+		<filter-name>ImageFilter</filter-name>
+		<url-pattern>/resources/images/*</url-pattern>
+	</filter-mapping>
 </web-app>
