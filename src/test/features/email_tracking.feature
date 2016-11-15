@@ -9,7 +9,7 @@ Feature: Email Tracking
   Scenario Outline: Verify email tracking to people
     Given I sent an email and store "<subject>"
     When Visit Email Tracking Page
-    Then I should get an element "<subject>, <date>"
+    Then I should get an element "<subject>" and "<date>"
 
     Examples:
       | subject                                        | date                              |
