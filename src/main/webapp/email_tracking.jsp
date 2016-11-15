@@ -70,7 +70,7 @@
 				<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
 					<ul class="nav navbar-nav side-nav">
-						<li class="active"><a href="sendemail.jsp"><span
+						<li><a href="sendemail.jsp"><span
 								class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
 								Send Mail</a></li>
 						<li><a href="add_contact.jsp"><span
@@ -82,7 +82,7 @@
                         <li><a href="game_create.jsp"><span
                                 class="glyphicon glyphicon-user" aria-hidden="true"></span>
                                 Emerson's Game</a></li>
-                        <li><a href="email_tracking.jsp"><span
+                        <li class="active"><a href="email_tracking.jsp"><span
                                 class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                                 Email Tracking</a></li>
 					</ul>
@@ -97,76 +97,34 @@
 					<!-- Page Heading -->
 					<div class="row">
 						<div class="col-lg-12">
-							<h1 class="page-header">Send Mail</h1>
+							<h1 class="page-header">Email Tracking</h1>
 						</div>
 					</div>
 					<!-- /.row -->
-					<%
-						if (request.getParameter("status") != null) {
-							out.println(
-									"<div class='row'><div class='col-lg-12'><div class='alert alert-info alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><i class='fa fa-info-circle'></i>&nbsp;<b><span id='email_result'>"
-											+ request.getParameter("status") + " : " + request.getParameter("msg")
-											+ "</span></b></div> </div></div>");
-						}
-					%>
-					<input type="hidden" id="msg_sent_cnt" value="${param.repcnt}" />
-					<div class="row">
-						<div class="col-lg-12">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h3 class="panel-title">Send Email</h3>
-								</div>
-								<div class="panel-body">
-									<div class="row">
-										<div class="col-lg-1">Template:</div>
-										<div class="col-lg-11">
-											<select name="templateList" id="templateList"></select>
-											
-										</div>
-									</div>
 
-									<br />
-									<div class="row">
-										<div class="col-lg-1">To:</div>
-										<div class="col-lg-11">
-											<input type="text" class="form-control" name="recipient"
-												id="recipient"> 
-											<span id="select_contact" data-toggle="modal" data-target="#selectContactModal"
-											class="glyphicon glyphicon-plus add-contact-button"
-											aria-hidden="true"></span>
-											
-										</div>
-									</div>
-									<br />
-									<div class="row">
-										<div class="col-lg-1">Subject:</div>
-										<div class="col-lg-11">
-											<input type="text" class="form-control" name="subject"
-												id="subject">
-										</div>
-									</div>
-									<br />
-									<div class="row">
-										<div class="col-lg-12">
-											<textarea class="form-control" rows="20" name="content"
-												id="content"></textarea>
-										</div>
-									</div>
-									<br />
-									<div class="row">
-										<div class="col-lg-12">
-											<button type="button" class="btn btn-default"
-												id="send_button" value="send" disabled="disabled">Send</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+                    <!-- table -->
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                      <th>Subject</th>
+                                      <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                      <td id="subject1"></td>
+                                      <td id="date1"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 				</div>
 			</div>
 		</div>
-		<%@ include file="select_contact.jsp" %>
 	</form>
 </body>
 
@@ -181,21 +139,5 @@
 <script type="text/javascript" src="resources/js/showTemplate.js"></script>
 
 <script type="text/javascript">
-	$(document).ready(function(){
-		$('#select_contact').click(function () {
-			var contactList = retrieveContactListFromServer();
-			selectedContact = '';
-			renderContactSelectionList(contactList, $('#selectContactTable'));
-		});
-
-		$('#add_contact_button').click(function () {
-			whenAddButtonIsClicked();
-		});
-
-
-
-
-
-	});
 </script>
 </html>
