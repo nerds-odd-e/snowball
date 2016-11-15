@@ -9,4 +9,4 @@ launchctl setenv MM_EMAIL_PASSWORD $MM_EMAIL_PASSWORD
 ```
 * Reboot your IDE.
 
-* Make sure firefox binary is in the path export PATH=$PATH:/Applications/Firefox.app/Contents/MacOS
+* Make sure firefox binary is in the path export PATH=$PATH:/Applications/Firefox.app/Contents/MacOS˜

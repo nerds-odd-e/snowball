@@ -3,6 +3,7 @@ package com.odde.massivemailer.model;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.mail.Message;
@@ -25,6 +26,8 @@ public class Mail {
 	private String subject;
 	private String content;
 	private SqliteContact sqliteContact;
+	private String key;
+	private Date sentDate;
 
 	public Mail() {
 		this.sqliteContact = new SqliteContact();
@@ -143,5 +146,21 @@ public class Mail {
 		} catch (MessagingException ex) {
 			throw new EmailException("Unable to send an email: " + ex);
 		}
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
+	public Date getSentDate() {
+		return sentDate;
+	}
+
+	public void setSentDate(Date sentDate) {
+		this.sentDate = sentDate;
 	}
 }
