@@ -3,7 +3,6 @@ package com.odde.massivemailer.controller;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +16,6 @@ import com.odde.massivemailer.service.ContactService;
 import com.odde.massivemailer.service.impl.SqliteContact;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
-
-import javax.servlet.ServletException;
 
 public class ContactsControllerTest {
     ContactsController contactsController;

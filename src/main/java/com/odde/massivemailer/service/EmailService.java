@@ -8,7 +8,8 @@ import java.util.List;
 
 public interface EmailService {
 
-	List<Mail> getSentEmailList() throws SQLException;
+	List<Mail> getSentEmailList();
+ 	void setSentEmailList(List<Mail> emailList);
 
 	void destroyAll();
 }

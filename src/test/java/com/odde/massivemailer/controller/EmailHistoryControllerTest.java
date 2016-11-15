@@ -1,61 +1,47 @@
 package com.odde.massivemailer.controller;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.gson.Gson;
-import com.odde.massivemailer.controller.ContactsController;
+import com.odde.massivemailer.model.ContactPerson;
+import com.odde.massivemailer.model.Mail;
+import com.odde.massivemailer.service.EmailService;
+import com.odde.massivemailer.service.impl.SqliteContact;
+import com.odde.massivemailer.service.impl.SqliteEmail;
 import org.junit.Before;
 import org.junit.Test;
-
-import com.odde.massivemailer.model.ContactPerson;
-import com.odde.massivemailer.service.ContactService;
-import com.odde.massivemailer.service.impl.SqliteContact;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import javax.servlet.ServletException;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ContactsControllerTest {
-    ContactsController contactsController;
-    ContactService contactService;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.*;
+
+public class EmailHistoryControllerTest {
+    EmailHistoryController emailHistoryController;
+    EmailService emailService;
     MockHttpServletRequest req = new MockHttpServletRequest();
     MockHttpServletResponse res = new MockHttpServletResponse();
-    List<ContactPerson> contacts = new ArrayList<ContactPerson>();
+    List<Mail> sentEmails = new ArrayList<>();
 
-    @Before
+    //@Before
     public void setUpMockService() {
-        contactService = mock(SqliteContact.class);
-        contactsController = new ContactsController(contactService);
+        emailService = mock(EmailService.class);
+        emailHistoryController = new EmailHistoryController(emailService);
+        Mail mail1 = new Mail();
+        mail1.setKey("1");
+        mail1.setSubject("Promotional test");
+        mail1.setSentDate(null);
+        sentEmails.add(mail1);
 
-        contacts.add(new ContactPerson("John", "john@gmail.com", "Doe", "ComA"));
-        contacts.add(new ContactPerson("Peter", "peter@gmail.com", "Toh", "ComA"));
     }
 
-    @Test
+    //@Test
     public void returnContactsInJSON() throws Exception {
-        when(contactService.getContactList()).thenReturn(contacts);
-        contactsController.doGet(req, res);
-        assertEquals(new Gson().toJson(contacts),res.getContentAsString());
+        emailService.setSentEmailList(sentEmails);
+        when(emailService.getSentEmailList()).thenReturn(sentEmails);
+        emailHistoryController.doGet(req, res);
+        assertEquals(new Gson().toJson(sentEmails),res.getContentAsString());
     }
 
-    @Test
-    public void addAnExistingContact() throws Exception {
-        req.setParameter("email", "john@gmail.com");
-        when(contactService.addContact(any(ContactPerson.class))).thenReturn(false);
-        contactsController.doPost(req, res);
-        assertEquals("contactlist.jsp?status=failed&msg=Email john@gmail.com is already exist", res.getRedirectedUrl());
-    }
-
-    @Test
-    public void addNewContact() throws Exception {
-        req.setParameter("email", "newbie@gmail.com");
-        when(contactService.addContact(any(ContactPerson.class))).thenReturn(true);
-        contactsController.doPost(req, res);
-        assertEquals("contactlist.jsp?status=success&msg=Add contact successfully", res.getRedirectedUrl());
-    }
 }

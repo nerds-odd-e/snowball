@@ -19,6 +19,16 @@
 		<url-pattern>/sendMail</url-pattern>
 	</servlet-mapping>
 
+	<servlet-mapping>
+		<servlet-name>emailHistoryController</servlet-name>
+		<url-pattern>/listEmails</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>emailHistoryController</servlet-name>
+		<servlet-class>com.odde.massivemailer.controller.EmailHistoryController</servlet-class>
+	</servlet>
+
 	<servlet>
 		<servlet-name>GameLoginController</servlet-name>
 		<servlet-class>com.odde.emersonsgame.controller.GameLoginController</servlet-class>

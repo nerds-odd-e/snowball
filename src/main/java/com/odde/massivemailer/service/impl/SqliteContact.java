@@ -211,7 +211,7 @@ public class SqliteContact  extends SqliteBase implements ContactService {
 			closeConnection();
 		}
 		return contactList;	
-	
+
 	}
 
 }

@@ -13,8 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SqliteEmail extends SqliteBase implements EmailService {
-	private String selectSentEmailSql = "SELECT key, subject, sentdate FROM mail order by sentdate DESC";
+	private String selectSentEmailSql = "SELECT id, subject, sentdate FROM mail order by sentdate DESC";
 	private List<Mail> sentEmailList;
+
+	public void setSentEmailList(List<Mail> sentEmailList) {
+		this.sentEmailList = sentEmailList;
+	}
 
 	private String selectMailFromCompanySql = "SELECT id, name, email, lastname, company FROM mail where company = ";
 
@@ -30,11 +34,10 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 
 
 	@Override
-	public List<Mail> getSentEmailList() throws SQLException {
+	public List<Mail> getSentEmailList()  {
 		ResultSet resultSet = null;
 		try {
 			openConnection();
-
 			resultSet = statement.executeQuery(this.selectSentEmailSql);
 			populateSentEmailList(resultSet);
 		} catch (ClassNotFoundException | SQLException e) {
@@ -51,7 +54,7 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 		while (resultSet.next()) {
 			Mail mail = new Mail();
 
-			mail.setKey(resultSet.getString("key"));
+			mail.setKey(resultSet.getString("id"));
 			mail.setSubject(resultSet.getString("subject"));
 			mail.setSentDate(resultSet.getTimestamp("sentdate"));
 			sentEmailList.add(mail);
@@ -59,11 +62,12 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 	}
 
 
-	private void createIfNotExistTable() throws SQLException {
+	public void createIfNotExistTable() throws SQLException {
 
 		//if(!isTableExists("mail"))
 			statement
-				.executeUpdate("CREATE TABLE IF NOT EXISTS mail (id INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL, name VARCHAR(50), email VARCHAR(50) NOT NULL, lastname VARCHAR(50), company VARCHAR(50))");
+				.executeUpdate("CREATE TABLE IF NOT EXISTS mail (id INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL, subject VARCHAR(50), " +
+						"name VARCHAR(50), sentdate timestamp, email VARCHAR(50) NOT NULL, lastname VARCHAR(50), company VARCHAR(50))");
 	}
 
 	private boolean isTableExists(String name)

@@ -23,6 +23,10 @@ public class SqliteBase {
         return statement;
     }
 
+    public void setStatement(Statement statement) {
+        this.statement = statement;
+    }
+
     protected void closeConnection() {
         try {
             if( statement != null)

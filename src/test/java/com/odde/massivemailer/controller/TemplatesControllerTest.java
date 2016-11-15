@@ -41,7 +41,7 @@ public class TemplatesControllerTest {
 		expectedTemplates.add(template);
 
 		when(templateService.getTemplateList()).thenReturn(expectedTemplates);
-
+g
 		String convertedContactToJSON = new Gson().toJson(expectedTemplates);
 
 		templateCtrl.doGet(req, res);
