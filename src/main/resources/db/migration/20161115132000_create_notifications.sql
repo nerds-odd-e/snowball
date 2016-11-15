@@ -1,6 +1,3 @@
-DROP TABLE IF EXISTS notifications;
-DROP TABLE IF EXISTS notification_details;
-
 CREATE TABLE IF NOT EXISTS notifications (
     id          INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     template_id INTEGER NOT NULL,

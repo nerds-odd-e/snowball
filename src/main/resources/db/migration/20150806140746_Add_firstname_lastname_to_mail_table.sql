@@ -1,6 +1,4 @@
-DROP TABLE IF EXISTS mail;
-
-CREATE TABLE mail (
+CREATE TABLE IF NOT EXISTS mail (
     id          INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     name        VARCHAR(50),
     email       VARCHAR(50),
