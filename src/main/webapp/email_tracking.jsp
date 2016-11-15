@@ -106,7 +106,7 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <table class="table">
+                            <table id="trackingTable" class="table">
                                 <thead>
                                     <tr>
                                       <th>Subject</th>
@@ -114,10 +114,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                      <td id="subject1"></td>
-                                      <td id="date1"></td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -133,11 +129,15 @@
 <script type="text/javascript" src="resources/lib/jquery-template/jquery.loadTemplate-1.4.4.js"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="resources/js/sendemail.js"></script>
-<script type="text/javascript" src="resources/js/showContact.js"></script>
-<script type="text/javascript" src="resources/js/selectContact.js"></script>
-<script type="text/javascript" src="resources/js/showTemplate.js"></script>
-
+<script type="text/javascript" src="resources/js/showTrackedEmail.js"></script>
+$(document).ready(function() {
+	var msg = getParameterByName('msg');
+	if(msg) {
+		alert(msg);
+	}
+	var trackingList = retrieveTrackingEmailListFromServer();
+	renderEmailTrackingList(trackingList, $('#trackingTable'));
+});
 <script type="text/javascript">
 </script>
 </html>
