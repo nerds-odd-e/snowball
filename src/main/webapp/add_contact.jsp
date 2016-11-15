@@ -64,6 +64,9 @@
 				<li><a href="game_create.jsp"><span
                         class="glyphicon glyphicon-user" aria-hidden="true"></span>
                         Emerson's Game</a></li>
+                <li><a href="email_tracking.jsp"><span
+                        class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        Email Tracking</a></li>
 			</ul>
 		</div>
 		<!-- /.navbar-collapse --> </nav>
