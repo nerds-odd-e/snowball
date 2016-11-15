@@ -92,6 +92,7 @@ public class SendMailController extends HttpServlet {
 		}
 		email.setContent(req.getParameter("content"));
 		email.setSubject(req.getParameter("subject"));
+
 		email.setReceipts(recipientList);
 
 		return email;

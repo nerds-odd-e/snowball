@@ -55,7 +55,11 @@ public class Mail {
 	}
 
 	public void setContent(String content) {
-		this.content = content;
+
+		this.content ="<html><body>"+content+"</body></html>";
+		//this.content = content;
+
+		System.out.print("content [" +this.content +"]");
 	}
 
 	private MimeMessage setMessageProperty(Session session, String recipient)
@@ -74,9 +78,11 @@ public class Mail {
 			}
 
 			message = new MimeMessage(session);
+
 			message.setFrom(new InternetAddress(FROM, DISPLAY_NAME));
 			message.setSubject(subject);
 			message.setText(content);
+			message.setContent(content, "text/html; charset=utf-8");
 
 		} catch (UnsupportedEncodingException | SQLException e) {
 			// TODO Auto-generated catch block

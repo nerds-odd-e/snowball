@@ -33,6 +33,7 @@ public class GMailService{
 		List<Message> msg;
 		try {
 			msg = email.createMessages(session);
+
 		} catch (MessagingException ex) {
 			throw new EmailException("Unable to send an email: " + ex);
 		}

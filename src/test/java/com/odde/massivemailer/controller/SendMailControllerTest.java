@@ -69,7 +69,7 @@ public class SendMailControllerTest {
         List<String> repList = mail.getReceipts();
         assertEquals("name1@gmail.com", repList.get(0));
         assertEquals("name2@gmail.com", repList.get(1));
-        assertEquals("content-na-ka", mail.getContent());
+        assertEquals("<html><body>content-na-ka</body></html>", mail.getContent());
     }
 
 

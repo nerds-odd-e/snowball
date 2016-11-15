@@ -83,8 +83,8 @@ public class GmailServiceTest {
 		mailService.send(email);
 
 		//Assert
-		assertEquals("Hi Dude", GreenMailUtil.getBody(greenMail.getReceivedMessages()[0]));
-		assertEquals("Hi Dude", GreenMailUtil.getBody(greenMail.getReceivedMessages()[1]));
+		assertEquals("<html><body>Hi Dude</body></html>", GreenMailUtil.getBody(greenMail.getReceivedMessages()[0]));
+		assertEquals("<html><body>Hi Dude</body></html>", GreenMailUtil.getBody(greenMail.getReceivedMessages()[1]));
 		greenMail.stop();
 	}
 
