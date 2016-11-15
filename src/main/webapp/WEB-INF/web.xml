@@ -7,6 +7,10 @@
 		<listener-class>com.odde.massivemailer.startup.MassiveMailerServletContextListener</listener-class>
 	</listener>
 
+	<listener>
+		<listener-class>com.odde.massivemailer.startup.PrepareDatabaseStartupListener</listener-class>
+	</listener>
+
 	<welcome-file-list>
 		<welcome-file>sendemail.jsp</welcome-file>
 	</welcome-file-list>
