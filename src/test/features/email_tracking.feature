@@ -2,16 +2,11 @@ Feature: Email Tracking
   User should be able to tracking email
   if email address sent are valid
 
-  Background:
-    Given Visit Send Mail Page
 
   @email @wip @now
-  Scenario Outline: Verify email tracking to people
-    Given I sent an email and store "<subject>"
+  Scenario: Archive sent email
+    Given I send an email with subject "hello" to "terry@odd-e.com"
     When Visit Email Tracking Page
-    Then I should get an element "<subject>" and "<date>"
-
-    Examples:
-      | subject                                        | date                              |
-      | gadget@mailinator.com                          | success : Email successfully sent |
-      | inspector@mailinator.com;gadget@mailinator.com | success : Email successfully sent |
+    Then I should see the email with subject "hello" in the list with the sent date
+    When I click the email subject "hello"
+    Then I should see a list of recipients including "terry@odd-e.com"

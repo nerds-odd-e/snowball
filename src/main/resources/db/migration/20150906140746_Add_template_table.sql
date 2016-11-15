@@ -1,6 +1,4 @@
-DROP TABLE IF EXISTS Template;
-
-CREATE TABLE Template (
+CREATE TABLE IF NOT EXISTS Template (
     Id              INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     TemplateName    VARCHAR(255) NOT NULL,
     Subject         VARCHAR(255),

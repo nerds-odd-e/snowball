@@ -15,7 +15,7 @@ public class SqliteBase {
     protected Statement statement;
     protected Connection connection;
 
-    protected Statement openConnection() throws ClassNotFoundException,
+    public Statement openConnection() throws ClassNotFoundException,
             SQLException {
 
         this.connectDB(dbName);

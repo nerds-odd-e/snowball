@@ -90,6 +90,7 @@ public class SendMailController extends HttpServlet {
 				recipientList.add(recipient);
 			}
 		}
+		email.setMessageId(System.currentTimeMillis());
 		email.setContent(req.getParameter("content"));
 		email.setSubject(req.getParameter("subject"));
 
