@@ -12,7 +12,8 @@ public class PrepareDatabaseStartupListener implements ServletContextListener {
     private static final String[] MIGRATION_FILES = {
             "20150806140746_Add_firstname_lastname_to_mail_table.sql",
             "20150906140746_Add_template_table.sql",
-            "20161115132000_create_notifications.sql"
+            "20161115132000_create_notifications.sql",
+            "20161115151100_create_unique_index_template_templatename.sql"
     };
 
     @Override
