@@ -23,14 +23,14 @@ public class SqliteTracking extends SqliteBase implements TrackingService
     public void updateViewCount(String notificationId, String emailId) {
         System.out.println("Update for :"+ notificationId + " , " + emailId);
 
-        //TODO - Implement update view count bse on notification id and email id
-        //try {
-           // statement.executeUpdate("Update xxxx set xxx = xxx+1 where notification_id = '" + notificationId + "' and emailId = '" + emailId + "'" );
-        //} catch (SQLException e) {
-        //    e.printStackTrace();
-        //} finally {
-         //   closeConnection();
-        //}
+
+        /**try {
+            statement.executeUpdate("Update xxxx set xxx = xxx+1 where notification_id = '" + notificationId + "' and emailId = '" + emailId + "'" );
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }**/
     }
 
     private void createIfNotExistTable() throws SQLException {
