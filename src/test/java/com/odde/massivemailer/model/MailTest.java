@@ -48,6 +48,7 @@ public class MailTest {
 		when(mockSqliteContact.getContactByEmail(anyString())).thenReturn(contactPerson);
 
 		Mail mail = new Mail(mockSqliteContact);
+		mail.setMessageId(System.currentTimeMillis());
 		mail.setContent("content {FirstName}, {Company}");
 		mail.setSubject("subject {LastName} - {Email}");
 		mail.setReceipts(Arrays.asList("test@gmail.com"));
@@ -56,7 +57,7 @@ public class MailTest {
 
 
 		verify(mockSqliteContact).getContactByEmail(anyString());
-		assertEquals("<html><body>content TestName, CompanyName</body></html>", messages.get(0).getContent());
+		assertEquals("<html><body>content TestName, CompanyName<img src=\"http://192.168.1.90:8070/massive_mailer/resources/images/qrcode.png?messageId=" + mail.getMessageId() + "\">Test.gif</img></body></html>", messages.get(0).getContent());
 		assertEquals("subject LastName - EmailName", messages.get(0).getSubject());
 	}
 	
@@ -76,6 +77,4 @@ public class MailTest {
 		
 		assertEquals("Inspector Gadget", address[0].trim());
 	}
-
-
 }

@@ -79,12 +79,12 @@ public class GmailServiceTest {
 
 
         //Act
-		Mail email = createEmail();
-		mailService.send(email);
+		Mail mail = createEmail();
+		mailService.send(mail);
 
 		//Assert
-		assertEquals("<html><body>Hi Dude</body></html>", GreenMailUtil.getBody(greenMail.getReceivedMessages()[0]));
-		assertEquals("<html><body>Hi Dude</body></html>", GreenMailUtil.getBody(greenMail.getReceivedMessages()[1]));
+		assertEquals("<html><body>Hi Dude<img src=\"http://192.168.1.90:8070/massive_mailer/resources/images/qrcode.png?messageId=0\">Test.gif</img></body></html>", GreenMailUtil.getBody(greenMail.getReceivedMessages()[0]));
+		assertEquals("<html><body>Hi Dude<img src=\"http://192.168.1.90:8070/massive_mailer/resources/images/qrcode.png?messageId=0\">Test.gif</img></body></html>", GreenMailUtil.getBody(greenMail.getReceivedMessages()[1]));
 		greenMail.stop();
 	}
 
