@@ -11,15 +11,13 @@ import java.sql.SQLException;
 public class NotificationServiceSqlite extends SqliteBase implements NotificationService {
     @Override
     public Notification save(final Notification notification) {
-        Notification savedNotification = null;
-
         try {
             openConnection();
 
-            savedNotification = saveNotification(notification);
+            saveNotification(notification);
 
             for (NotificationDetail notificationDetail : notification.getNotificationDetails()) {
-                savedNotification.addNotificationDetail(saveNotificationDetail(notificationDetail, savedNotification));
+                saveNotificationDetail(notificationDetail, notification);
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -29,15 +27,11 @@ public class NotificationServiceSqlite extends SqliteBase implements Notificatio
             closeConnection();
         }
 
-        return savedNotification;
+        return notification;
     }
 
-    private Notification saveNotification(final Notification notification) {
+    private void saveNotification(final Notification notification) {
         String sql = "INSERT INTO notifications (subject, notification_id, sent_at) VALUES (?, ?, datetime('now'))";
-
-        Notification savedNotification = new Notification();
-        savedNotification.setSubject(notification.getSubject());
-        savedNotification.setNotificationId(notification.getNotificationId());
 
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -53,7 +47,7 @@ public class NotificationServiceSqlite extends SqliteBase implements Notificatio
             rs = ps.getGeneratedKeys();
 
             if (rs.next()) {
-                savedNotification.setId(rs.getLong(1));
+                notification.setId(rs.getLong(1));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -65,16 +59,10 @@ public class NotificationServiceSqlite extends SqliteBase implements Notificatio
                 e.printStackTrace();
             }
         }
-
-        return savedNotification;
     }
 
-    private NotificationDetail saveNotificationDetail(final NotificationDetail notificationDetail,
-                                                      final Notification notification) {
+    private void saveNotificationDetail(final NotificationDetail notificationDetail, final Notification notification) {
         String sql = "INSERT INTO notification_details (notification_id, email_address) VALUES (?, ?)";
-
-        NotificationDetail savedNotificationDetail = new NotificationDetail();
-        savedNotificationDetail.setEmailAddress(notificationDetail.getEmailAddress());
 
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -90,7 +78,7 @@ public class NotificationServiceSqlite extends SqliteBase implements Notificatio
             rs = ps.getGeneratedKeys();
 
             if (rs.next()) {
-                savedNotificationDetail.setId(rs.getLong(1));
+                notificationDetail.setId(rs.getLong(1));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -102,7 +90,5 @@ public class NotificationServiceSqlite extends SqliteBase implements Notificatio
                 e.printStackTrace();
             }
         }
-
-        return savedNotificationDetail;
     }
 }
