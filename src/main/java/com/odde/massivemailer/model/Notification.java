@@ -17,6 +17,10 @@ public class Notification {
         NotificationDetail notificationDetail = new NotificationDetail();
         notificationDetail.setEmailAddress(emailAddress);
 
+        addNotificationDetail(notificationDetail);
+    }
+
+    public void addNotificationDetail(final NotificationDetail notificationDetail) {
         notificationDetails.add(notificationDetail);
     }
 
