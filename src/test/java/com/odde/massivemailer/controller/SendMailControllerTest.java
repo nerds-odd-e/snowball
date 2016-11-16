@@ -8,53 +8,62 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.odde.massivemailer.exception.EmailException;
+import com.odde.massivemailer.service.ContactService;
 import com.odde.massivemailer.service.impl.GMailService;
 
+import com.odde.massivemailer.service.impl.SqliteContact;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Mail;
-import com.odde.massivemailer.service.impl.SqliteContact;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.*;
 
 
 public class SendMailControllerTest {
+    private SendMailController controller;
+    private SqliteContact contactService;
+    private GMailService gmailService;
 
-    HttpServletRequest httpReq = Mockito.mock(HttpServletRequest.class);
-    HttpServletResponse httpResp = Mockito.mock(HttpServletResponse.class);
-    SqliteContact mockedContact = Mockito.mock(SqliteContact.class);
-    SendMailController mailController = new SendMailController();
-
+    private HttpServletRequest request;
+    private HttpServletResponse response;
 
     @Before
-    public void setup() {
-        Mockito.when(httpReq.getParameter("content")).thenReturn("content-na-ka");
-        Mockito.when(httpReq.getParameter("subject")).thenReturn("subject for test");
+    public void setUp() {
+        controller = new SendMailController();
+
+        contactService = mock(SqliteContact.class);
+        controller.setSqliteContact(contactService);
+
+        gmailService = mock(GMailService.class);
+        controller.setGmailService(gmailService);
+
+        request = mock(HttpServletRequest.class);
+        response = mock(HttpServletResponse.class);
+
+        when(request.getParameter("content")).thenReturn("content-na-ka");
+        when(request.getParameter("subject")).thenReturn("subject for test");
     }
 
     @Test
     public void testPostSuccessful() throws Exception {
-        GMailService mockGmailService = Mockito.mock(GMailService.class);
-        mailController.setGmailService(mockGmailService);
         mockRecipient("whatever");
 
-        mailController.doPost(httpReq, httpResp);
-        Mockito.verify(mockGmailService).send(any(Mail.class));
+        controller.doPost(request, response);
+        verify(gmailService).send(any(Mail.class));
     }
 
     @Test
     public void testPostEmailException() throws Exception {
-        GMailService mockGmailService = Mockito.mock(GMailService.class);
-        mailController.setGmailService(mockGmailService);
         mockRecipient("whatever");
 
-        Mockito.doThrow(new EmailException("")).when(mockGmailService).send(any(Mail.class));
-        mailController.doPost(httpReq, httpResp);
-        Mockito.verify(httpResp).sendRedirect("sendemail.jsp?status=failed&msg=Unable to send");
+        doThrow(new EmailException("")).when(gmailService).send(any(Mail.class));
+        controller.doPost(request, response);
+        verify(response).sendRedirect("sendemail.jsp?status=failed&msg=Unable to send");
     }
 
 
@@ -63,7 +72,7 @@ public class SendMailControllerTest {
     public void testProcessRequest() throws SQLException {
 
         mockRecipient("name1@gmail.com;name2@gmail.com");
-        Mail mail = mailController.processRequest(httpReq);
+        Mail mail = controller.processRequest(request);
 
         assertEquals("subject for test", mail.getSubject());
         List<String> repList = mail.getReceipts();
@@ -84,10 +93,9 @@ public class SendMailControllerTest {
             contactPersonList.add(new ContactPerson("", companyRecipients[i], "", "abc"));
         }
 
-        Mockito.when(mockedContact.getContactListFromCompany("abc")).thenReturn(contactPersonList);
+        when(contactService.getContactListFromCompany("abc")).thenReturn(contactPersonList);
 
-        mailController.setSqliteContact(mockedContact);
-        Mail mail = mailController.processRequest(httpReq);
+        Mail mail = controller.processRequest(request);
 
         List<String> repList = mail.getReceipts();
         for (int i = 0; i < repList.size(); ++i) {
@@ -97,6 +105,6 @@ public class SendMailControllerTest {
     }
 
     private void mockRecipient(String recipient){
-        Mockito.when(httpReq.getParameter("recipient")).thenReturn(recipient);
+        when(request.getParameter("recipient")).thenReturn(recipient);
     }
 }
