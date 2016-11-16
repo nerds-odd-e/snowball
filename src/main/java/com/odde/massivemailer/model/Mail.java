@@ -34,6 +34,7 @@ public class Mail {
 
     public Mail() {
         this.sqliteContact = new SqliteContact();
+        receipts = new ArrayList<>();
     }
 
     public Mail(SqliteContact sqliteContact) {
@@ -163,6 +164,10 @@ public class Mail {
         Notification notification = new Notification();
         notification.setSubject(getSubject());
         notification.setNotificationId(getMessageId());
+
+        for (String receipt : getReceipts()) {
+            notification.addEmailAddress(receipt);
+        }
 
         return notification;
     }

@@ -1,5 +1,12 @@
 package com.odde.massivemailer.model;
 
+import com.odde.massivemailer.service.impl.SqliteContact;
+import org.junit.Test;
+
+import javax.mail.Message;
+import javax.mail.Session;
+import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
@@ -8,16 +15,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import javax.mail.Message;
-import javax.mail.Session;
-
-import com.odde.massivemailer.service.impl.SqliteContact;
-import org.junit.Test;
-import java.net.InetAddress;
+import static org.mockito.Mockito.*;
 
 public class MailTest {
 	
@@ -93,4 +91,44 @@ public class MailTest {
 		assertThat(notification.getSubject(), is("subject"));
 		assertThat(notification.getNotificationId(), is(123456789L));
 	}
+
+	@Test
+	public void AsNotificationWithOneReceipt() {
+        Mail mail = new Mail();
+        mail.setContent("content");
+        mail.setSubject("subject");
+        mail.setMessageId(123456789L);
+
+        List<String> receipts = new ArrayList<>();
+        receipts.add("terry@odd-e.com");
+        mail.setReceipts(receipts);
+
+        Notification notification = mail.asNotification();
+
+        List<NotificationDetail> notificationDetails = notification.getNotificationDetails();
+
+        assertThat(notification.getNotificationDetails().size(), is(1));
+        assertThat(notification.getNotificationDetails().get(0).getEmailAddress(), is("terry@odd-e.com"));
+    }
+
+    @Test
+    public void AsNotificationWithMultipleReceipts() {
+        Mail mail = new Mail();
+        mail.setContent("content");
+        mail.setSubject("subject");
+        mail.setMessageId(123456789L);
+
+        List<String> receipts = new ArrayList<>();
+        receipts.add("terry@odd-e.com");
+        receipts.add("terry2@odd-e.com");
+        receipts.add("terry3@odd-e.com");
+        mail.setReceipts(receipts);
+
+        Notification notification = mail.asNotification();
+
+        assertThat(notification.getNotificationDetails().size(), is(3));
+        assertThat(notification.getNotificationDetails().get(0).getEmailAddress(), is("terry@odd-e.com"));
+        assertThat(notification.getNotificationDetails().get(1).getEmailAddress(), is("terry2@odd-e.com"));
+        assertThat(notification.getNotificationDetails().get(2).getEmailAddress(), is("terry3@odd-e.com"));
+    }
 }
