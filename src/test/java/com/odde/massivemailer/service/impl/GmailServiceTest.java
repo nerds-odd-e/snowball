@@ -1,5 +1,7 @@
 package com.odde.massivemailer.service.impl;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Arrays;
 
 import javax.mail.Address;
@@ -69,7 +71,7 @@ public class GmailServiceTest {
 	}
 
 	@Test
-	public void sendEmailViaGreenMailSMTP() throws EmailException {
+	public void sendEmailViaGreenMailSMTP() throws EmailException, UnknownHostException {
 		//Arrange
 		GreenMail greenMail = new GreenMail(new ServerSetup(3025, null, "smtp"));
 		greenMail.start();
@@ -83,8 +85,8 @@ public class GmailServiceTest {
 		mailService.send(mail);
 
 		//Assert
-		assertEquals("<html><body>Hi Dude<img src=\"http://192.168.1.90:8070/massive_mailer/resources/images/qrcode.png?messageId=0&userId=myodde@gmail.com\">Test.gif</img></body></html>", GreenMailUtil.getBody(greenMail.getReceivedMessages()[0]));
-		assertEquals("<html><body>Hi Dude<img src=\"http://192.168.1.90:8070/massive_mailer/resources/images/qrcode.png?messageId=0&userId=kit.sumate@gmail.com\">Test.gif</img></body></html>", GreenMailUtil.getBody(greenMail.getReceivedMessages()[1]));
+		assertEquals("<html><body>Hi Dude<img src=\"http://"+InetAddress.getLocalHost().getHostAddress()+":8070/massive_mailer/resources/images/qrcode.png?messageId=0&userId=myodde@gmail.com\">Test.gif</img></body></html>", GreenMailUtil.getBody(greenMail.getReceivedMessages()[0]));
+		assertEquals("<html><body>Hi Dude<img src=\"http://"+InetAddress.getLocalHost().getHostAddress()+":8070/massive_mailer/resources/images/qrcode.png?messageId=0&userId=kit.sumate@gmail.com\">Test.gif</img></body></html>", GreenMailUtil.getBody(greenMail.getReceivedMessages()[1]));
 		greenMail.stop();
 	}
 
