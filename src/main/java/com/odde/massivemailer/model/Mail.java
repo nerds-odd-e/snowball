@@ -1,6 +1,8 @@
 package com.odde.massivemailer.model;
 
 import java.io.UnsupportedEncodingException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -81,11 +83,14 @@ public class Mail {
 
             message.setFrom(new InternetAddress(FROM, DISPLAY_NAME));
             message.setSubject(subject);
-            String messageContent = "<html><body>" + content + "<img src=\"http://192.168.1.90:8070/massive_mailer/resources/images/qrcode.png?messageId="+messageId+"&userId="+recipient+"\">Test.gif</img></body></html>";
+
+            InetAddress ip = InetAddress.getLocalHost();
+
+            String messageContent = "<html><body>" + content + "<img src=\"http://"+ip.getHostAddress()+":8070/massive_mailer/resources/images/qrcode.png?messageId="+messageId+"&userId="+recipient+"\">Test.gif</img></body></html>";
             message.setText(messageContent);
             message.setContent(messageContent, "text/html; charset=utf-8");
 
-        } catch (UnsupportedEncodingException | SQLException e) {
+        } catch (UnsupportedEncodingException | SQLException | UnknownHostException e) {
             e.printStackTrace();
         }
 
