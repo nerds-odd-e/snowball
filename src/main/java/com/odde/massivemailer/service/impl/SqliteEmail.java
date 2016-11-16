@@ -156,6 +156,7 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 	private void add(int email_id, String recipient_email) {
 
 		NotificationDetail notification_detail = new NotificationDetail();
+        notification_detail.setEmailAddress(recipient_email);
 		notifications.add(notification_detail);
 	}
 

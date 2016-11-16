@@ -21,7 +21,7 @@ public class NotificationDetail {
     }
 
     public String toJSON() {
-        return "{'email': 'someone1@somewhere.com'; 'count': 1}";
+        return "{'email': '" + emailAddress + "'; 'count': 1}";
 
     }
 }
