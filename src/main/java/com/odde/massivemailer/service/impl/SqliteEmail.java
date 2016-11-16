@@ -4,27 +4,28 @@ import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.model.Notification;
 import com.odde.massivemailer.model.NotificationDetail;
 import com.odde.massivemailer.service.EmailService;
-import com.odde.massivemailer.service.NotificationService;
-import com.sun.xml.internal.xsom.impl.scd.Iterators;
 
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.*;
 
 public class SqliteEmail extends SqliteBase implements EmailService {
-	private String selectSentEmailSql = "SELECT id, subject, sentdate FROM mail order by sentdate DESC";
-	private List<Mail> sentEmailList;
-	private NotificationService notifications;
-	private String selectOpenedEmailCounterSQL ="select " ;
-	private List<Mail> openedEmailCounterList;
+	private String selectSentEmailSql = "SELECT notification_id, subject, sent_at FROM notifications order by sent_at DESC";
+	private List<Notification> sentEmailList;
+    private static Logger emailLogger = Logger.getLogger(SqliteEmail.class.getName());
 
-	public void setSentEmailList(List<Mail> sentEmailList) {
+	private String selectOpenedEmailCounterSQL ="select " ;
+	private List<Notification> openedEmailCounterList;
+	private ArrayList<NotificationDetail> notifications;
+
+	public void setSentEmailList(List<Notification> sentEmailList) {
 		this.sentEmailList = sentEmailList;
 	}
-
-	public void setOpenedEmailCounterList(List<Mail> openedEmailCounterList) {
+	
+	public void setOpenedEmailCounterList(List<Notification> openedEmailCounterList) {
 		this.openedEmailCounterList = openedEmailCounterList;
 	}
 
@@ -33,17 +34,17 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 	public SqliteEmail() {
 		try {
 			openConnection();
-			createIfNotExistTable();
+			//createIfNotExistTable();
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
-		notifications = new NotificationServiceSqlite();
+		notifications = new ArrayList<NotificationDetail>();
 	}
 
 
 
 	@Override
-	public List<Mail> getSentEmailList()  {
+	public List<Notification> getSentEmailList()  {
 		ResultSet resultSet = null;
 		try {
 			openConnection();
@@ -59,19 +60,23 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 
 
 	private void populateSentEmailList(ResultSet resultSet) throws SQLException {
-		sentEmailList = new ArrayList<Mail>();
+		sentEmailList = new ArrayList<Notification>();
 		while (resultSet.next()) {
-			Mail mail = new Mail();
+			Notification mail = new Notification();
 
-			mail.setKey(resultSet.getString("id"));
+			mail.setId(resultSet.getLong("notification_id"));
 			mail.setSubject(resultSet.getString("subject"));
-			mail.setSentDate(resultSet.getTimestamp("sentdate"));
+			mail.setSentDate(resultSet.getTimestamp("sent_at"));
+			emailLogger.info("notification id =" + mail.getId());
+			emailLogger.info("subject =" + mail.getSubject());
+			//emailLogger.info("sent_at =" + mail.getSentDate());
+
 			sentEmailList.add(mail);
 		}
 	}
 
 	@Override
-	public List<Mail> getOpenedEmailCountList()  {
+	public List<Notification> getOpenedEmailCountList()  {
 		ResultSet resultSet = null;
 		try {
 			openConnection();
@@ -86,11 +91,11 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 	}
 
 	private void populateOpenedEmailCounterList(ResultSet resultSet) throws SQLException {
-		openedEmailCounterList = new ArrayList<Mail>();
+		openedEmailCounterList = new ArrayList<Notification>();
 		while (resultSet.next()) {
-			Mail mail = new Mail();
+			Notification mail = new Notification();
 
-			mail.setKey(resultSet.getString("id"));
+			mail.setNotificationId(resultSet.getLong("notification_id"));
 			mail.setSubject(resultSet.getString("subject"));
 			mail.setSentDate(resultSet.getTimestamp("sentdate"));
 			sentEmailList.add(mail);
@@ -120,18 +125,7 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 
 	@Override
 	public void destroyAll() {
-		try {
-			openConnection();
-			statement.execute("DELETE FROM mail;");
-			statement.executeUpdate("drop table if exists Template;CREATE TABLE Template (Id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, TemplateName VARCHAR(255) NOT NULL, Subject VARCHAR(255), Content NVARCHAR(5000))");
-			statement.executeUpdate("INSERT INTO Template (TemplateName,Subject,Content) VALUES ('Default Template 1', 'Greeting {FirstName}', 'Hi, {FirstName} {LastName} from {Company}')");
-			statement.execute("INSERT INTO Template (TemplateName,Subject,Content) VALUES ('RTA Default Template', 'Greeting {FirstName}', 'Hi, {FirstName} {LastName} from {Company}');");
-
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		} finally {
-			closeConnection();
-		}
+	    //Not required
 	}
 
 	@Override
@@ -142,7 +136,7 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 	@Override
 	public String getEmailCounterJson(int sender_email_id) {
 
-		ArrayList<NotificationDetail> array = notifications.getReceipentOfEmail(sender_email_id);
+		ArrayList<NotificationDetail> array = getReceipentOfEmail(sender_email_id);
 		if (array.isEmpty())
 		      return "[]";
 		else
@@ -156,6 +150,16 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 
 	@Override
 	public void increaseCounterOfEmailByOne(int email_id, String recipient_email) {
-		notifications.add(email_id, recipient_email);
+		add(email_id, recipient_email);
+	}
+
+	private void add(int email_id, String recipient_email) {
+
+		NotificationDetail notification_detail = new NotificationDetail();
+		notifications.add(notification_detail);
+	}
+
+	private ArrayList<NotificationDetail> getReceipentOfEmail(int email_id) {
+		return notifications;
 	}
 }

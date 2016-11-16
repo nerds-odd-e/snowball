@@ -3,6 +3,7 @@ package com.odde.massivemailer.controller;
 import com.google.gson.Gson;
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Mail;
+import com.odde.massivemailer.model.Notification;
 import com.odde.massivemailer.service.ContactService;
 import com.odde.massivemailer.service.EmailService;
 import com.odde.massivemailer.service.impl.SqliteContact;
@@ -42,7 +43,7 @@ public class EmailHistoryController extends HttpServlet {
         outputStream.print(convertEmailListToJSON);
     }
 
-    private List<Mail> getSentEmailList() {
+    private List<Notification> getSentEmailList() {
         return emailService.getSentEmailList();
     }
 

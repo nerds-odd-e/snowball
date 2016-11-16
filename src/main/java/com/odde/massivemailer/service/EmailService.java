@@ -1,15 +1,16 @@
 package com.odde.massivemailer.service;
 
 import com.odde.massivemailer.model.Mail;
+import com.odde.massivemailer.model.Notification;
 
 import java.util.List;
 
 public interface EmailService {
 
-	List<Mail> getSentEmailList();
- 	void setSentEmailList(List<Mail> emailList);
+	List<Notification> getSentEmailList();
+ 	void setSentEmailList(List<Notification> emailList);
 
-	List<Mail> getOpenedEmailCountList();
+	List<Notification> getOpenedEmailCountList();
 
 
 

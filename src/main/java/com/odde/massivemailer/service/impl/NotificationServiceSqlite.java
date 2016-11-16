@@ -10,21 +10,35 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class NotificationServiceSqlite extends SqliteBase implements NotificationService {
-    private ArrayList<NotificationDetail> notifications;
-
-    public NotificationServiceSqlite() {
-        notifications = new ArrayList<NotificationDetail>();
-    }
 
     @Override
     public Notification save(final Notification notification) {
-        PreparedStatement ps = null;
-
         try {
             openConnection();
 
-            String sql = "INSERT INTO notifications (subject, notification_id, sent_at) VALUES (?, ?, datetime('now'))";
+            saveNotification(notification);
 
+            for (NotificationDetail notificationDetail : notification.getNotificationDetails()) {
+                saveNotificationDetail(notificationDetail, notification);
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+
+        return notification;
+    }
+
+    private void saveNotification(final Notification notification) {
+        String sql = "INSERT INTO notifications (subject, notification_id, sent_at) VALUES (?, ?, datetime('now'))";
+
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
             ps = getConnection().prepareStatement(sql);
 
             ps.setString(1, notification.getSubject());
@@ -32,37 +46,53 @@ public class NotificationServiceSqlite extends SqliteBase implements Notificatio
 
             ps.executeUpdate();
 
-            ResultSet rs = ps.getGeneratedKeys();
+            rs = ps.getGeneratedKeys();
 
             if (rs.next()) {
                 notification.setId(rs.getLong(1));
             }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             try {
+                rs.close();
                 ps.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
-            closeConnection();
         }
-
-        return notification;
     }
 
-    @Override
-    public void add(int email_id, String recipient_email) {
+    private void saveNotificationDetail(final NotificationDetail notificationDetail, final Notification notification) {
+        String sql = "INSERT INTO notification_details (notification_id, email_address) VALUES (?, ?)";
 
-        NotificationDetail notification_detail = new NotificationDetail();
-        notifications.add(notification_detail);
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            ps = getConnection().prepareStatement(sql);
+
+            ps.setLong(1, notification.getNotificationId());
+            ps.setString(2, notificationDetail.getEmailAddress());
+
+            ps.executeUpdate();
+
+            rs = ps.getGeneratedKeys();
+
+            if (rs.next()) {
+                notificationDetail.setId(rs.getLong(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                rs.close();
+                ps.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    @Override
-    public ArrayList<NotificationDetail> getReceipentOfEmail(int email_id) {
-        return notifications;
-    }
+
 }

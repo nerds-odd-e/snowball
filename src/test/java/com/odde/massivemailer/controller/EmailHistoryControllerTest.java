@@ -3,6 +3,7 @@ package com.odde.massivemailer.controller;
 import com.google.gson.Gson;
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Mail;
+import com.odde.massivemailer.model.Notification;
 import com.odde.massivemailer.service.EmailService;
 import com.odde.massivemailer.service.impl.SqliteContact;
 import com.odde.massivemailer.service.impl.SqliteEmail;
@@ -22,14 +23,14 @@ public class EmailHistoryControllerTest {
     EmailService emailService;
     MockHttpServletRequest req = new MockHttpServletRequest();
     MockHttpServletResponse res = new MockHttpServletResponse();
-    List<Mail> sentEmails = new ArrayList<>();
+    List<Notification> sentEmails = new ArrayList<>();
 
     //@Before
     public void setUpMockService() {
         emailService = mock(EmailService.class);
         emailHistoryController = new EmailHistoryController(emailService);
-        Mail mail1 = new Mail();
-        mail1.setKey("1");
+        Notification mail1 = new Notification();
+        mail1.setId(1L);
         mail1.setSubject("Promotional test");
         mail1.setSentDate(null);
         sentEmails.add(mail1);

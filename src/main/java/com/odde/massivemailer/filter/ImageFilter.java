@@ -24,7 +24,7 @@ public class ImageFilter implements Filter {
         String userId = request.getParameter("userId");
 
         if (messageId != null && userId != null)
-            getSqliteTracking().updateViewCount(Integer.parseInt(messageId), userId);
+            getSqliteTracking().updateViewCount(Long.parseLong(messageId), userId);
 
         chain.doFilter(request, response);
     }

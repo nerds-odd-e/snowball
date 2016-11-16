@@ -6,7 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<%@ page import="com.odde.massivemailer.model.ContactPerson"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
 
@@ -31,16 +30,6 @@
 	height: 25px;
 	overflow: hidden;
 	text-overflow: ellipsis;
-}
-
-tr:hover {
-   background: #efefef;
-   cursor: pointer;
-}
-td a {
-   display: block;
-   border: 1px solid black;
-   padding: 16px;
 }
 </style>
 </head>
@@ -107,7 +96,7 @@ td a {
 					<!-- Page Heading -->
 					<div class="row">
 						<div class="col-lg-12">
-							<h1 class="page-header">Email Tracking</h1>
+							<h1 class="page-header">Email Tracking Detail</h1>
 						</div>
 					</div>
 					<!-- /.row -->
@@ -116,11 +105,27 @@ td a {
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <table id="trackingTable" class="table">
+                            Summary
+                            <table id="summarySection" class="table">
                                 <thead>
                                     <tr>
                                       <th>Subject</th>
-                                      <th>Date</th>
+                                      <th>SentDate</th>
+                                      <th>TotalOpened</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="col-lg-12">
+                            Detail
+                            <table id="listTable" class="table">
+                                <thead>
+                                    <tr>
+                                      <th>Email</th>
+                                      <th>TotalOpened</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -139,17 +144,14 @@ td a {
 <script type="text/javascript" src="resources/lib/jquery-template/jquery.loadTemplate-1.4.4.js"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="resources/js/showTrackedEmail.js"></script>
+<script type="text/javascript" src="resources/js/showEmailDetails.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 
-	var trackingList = retrieveTrackingEmailListFromServer();
+	var emailDetailsList = retrieveEmailDetailsListFromServer();
 
-	renderTrackingEmailList(trackingList, $('#trackingTable tbody'));
-
-	$(".clickable-row").click(function() {
-            window.document.location = $(this).data("href");
-     });
+	renderEmailDetailsSummary(emailDetailsList, $('#summarySection tbody'));
+	renderEmailDetailsList(emailDetailsList, $('#listTable tbody'));
 });
 </script>
 </html>
