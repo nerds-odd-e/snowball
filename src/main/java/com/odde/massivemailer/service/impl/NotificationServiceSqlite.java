@@ -20,7 +20,7 @@ public class NotificationServiceSqlite extends SqliteBase implements Notificatio
             ps = getConnection().prepareStatement(sql);
 
             ps.setString(1, notification.getSubject());
-            ps.setInt(2, notification.getNotificationId());
+            ps.setLong(2, notification.getNotificationId());
 
             ps.executeUpdate();
 

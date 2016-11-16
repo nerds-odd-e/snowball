@@ -3,7 +3,7 @@ package com.odde.massivemailer.model;
 public class Notification {
     private Long id;
     private String subject;
-    private Integer notificationId;
+    private Long notificationId;
 
     public Notification() {
     }
@@ -16,7 +16,7 @@ public class Notification {
         return subject;
     }
 
-    public Integer getNotificationId() {
+    public Long getNotificationId() {
         return notificationId;
     }
 
@@ -28,7 +28,7 @@ public class Notification {
         this.subject = subject;
     }
 
-    public void setNotificationId(final Integer notificationId) {
+    public void setNotificationId(final Long notificationId) {
         this.notificationId = notificationId;
     }
 }

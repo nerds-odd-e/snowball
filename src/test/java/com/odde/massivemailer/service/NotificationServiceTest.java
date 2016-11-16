@@ -21,7 +21,7 @@ public class NotificationServiceTest {
     public void NotificationMustBeSaved() {
         Notification notification = new Notification();
         notification.setSubject("Subject");
-        notification.setNotificationId(123456789);
+        notification.setNotificationId(123456789L);
 
         Notification savedNotification = service.save(notification);
 
@@ -29,6 +29,6 @@ public class NotificationServiceTest {
         assertNotNull(savedNotification.getId());
 
         assertThat(savedNotification.getSubject(), is("Subject"));
-        assertThat(savedNotification.getNotificationId(), is(123456789));
+        assertThat(savedNotification.getNotificationId(), is(123456789L));
     }
 }
