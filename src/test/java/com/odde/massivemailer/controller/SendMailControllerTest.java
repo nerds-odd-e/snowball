@@ -1,23 +1,22 @@
 package com.odde.massivemailer.controller;
 
-import java.sql.SQLException;
-
-import java.util.ArrayList;
-import java.util.List;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.odde.massivemailer.exception.EmailException;
-import com.odde.massivemailer.service.ContactService;
+import com.odde.massivemailer.model.ContactPerson;
+import com.odde.massivemailer.model.Mail;
+import com.odde.massivemailer.model.Notification;
+import com.odde.massivemailer.service.NotificationService;
 import com.odde.massivemailer.service.impl.GMailService;
-
 import com.odde.massivemailer.service.impl.SqliteContact;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
-import com.odde.massivemailer.model.ContactPerson;
-import com.odde.massivemailer.model.Mail;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
@@ -28,6 +27,7 @@ public class SendMailControllerTest {
     private SendMailController controller;
     private SqliteContact contactService;
     private GMailService gmailService;
+    private NotificationService notificationService;
 
     private HttpServletRequest request;
     private HttpServletResponse response;
@@ -41,6 +41,9 @@ public class SendMailControllerTest {
 
         gmailService = mock(GMailService.class);
         controller.setGmailService(gmailService);
+
+        notificationService = mock(NotificationService.class);
+        controller.setNotificationService(notificationService);
 
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
@@ -102,6 +105,15 @@ public class SendMailControllerTest {
             assertEquals(companyRecipients[i], repList.get(i));
         }
 
+    }
+
+    @Test
+    public void SendMailMustSaveNotification() throws ServletException, IOException {
+        mockRecipient("terry@odd-e.com");
+
+        controller.doPost(request, response);
+
+        verify(notificationService).save(any(Notification.class));
     }
 
     private void mockRecipient(String recipient){

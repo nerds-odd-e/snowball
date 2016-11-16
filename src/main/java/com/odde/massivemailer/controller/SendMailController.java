@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Mail;
+import com.odde.massivemailer.model.Notification;
+import com.odde.massivemailer.service.NotificationService;
 import com.odde.massivemailer.service.impl.GMailService;
 import com.odde.massivemailer.service.impl.SMTPConfiguration;
 
@@ -27,13 +29,17 @@ public class SendMailController extends HttpServlet {
     private static final int PORT = 587;
     public static final String EMAIL_USERID = "MM_EMAIL_USERID";
     public static final String EMAIL_PASSWORD = "MM_EMAIL_PASSWORD";
+
     private GMailService gmailService;
+	private NotificationService notificationService;
 
     @Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		try {
 			Mail email = processRequest(req);
+
+			notificationService.save(new Notification());
 
             GMailService mailService = createGmailService();
 			mailService.send(email);
@@ -122,4 +128,8 @@ public class SendMailController extends HttpServlet {
     public void setGmailService(GMailService gmailService) {
         this.gmailService = gmailService;
     }
+
+    public void setNotificationService(final NotificationService notificationService) {
+		this.notificationService = notificationService;
+	}
 }
