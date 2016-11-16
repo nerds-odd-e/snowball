@@ -1,6 +1,7 @@
 package com.odde.massivemailer.service.impl;
 
 import com.odde.massivemailer.model.Mail;
+import com.odde.massivemailer.model.Notification;
 import com.odde.massivemailer.service.EmailService;
 
 import java.sql.DatabaseMetaData;
@@ -12,18 +13,18 @@ import java.util.logging.*;
 
 public class SqliteEmail extends SqliteBase implements EmailService {
 	private String selectSentEmailSql = "SELECT notification_id, subject, sent_at FROM notifications order by sent_at DESC";
-	private List<Mail> sentEmailList;
+	private List<Notification> sentEmailList;
     private static Logger emailLogger = Logger.getLogger(SqliteEmail.class.getName());
 
 
 	private String selectOpenedEmailCounterSQL ="select " ;
-	private List<Mail> openedEmailCounterList;
+	private List<Notification> openedEmailCounterList;
 
-	public void setSentEmailList(List<Mail> sentEmailList) {
+	public void setSentEmailList(List<Notification> sentEmailList) {
 		this.sentEmailList = sentEmailList;
 	}
 	
-	public void setOpenedEmailCounterList(List<Mail> openedEmailCounterList) {
+	public void setOpenedEmailCounterList(List<Notification> openedEmailCounterList) {
 		this.openedEmailCounterList = openedEmailCounterList;
 	}
 
@@ -41,7 +42,7 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 
 
 	@Override
-	public List<Mail> getSentEmailList()  {
+	public List<Notification> getSentEmailList()  {
 		ResultSet resultSet = null;
 		try {
 			openConnection();
@@ -57,23 +58,23 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 
 
 	private void populateSentEmailList(ResultSet resultSet) throws SQLException {
-		sentEmailList = new ArrayList<Mail>();
+		sentEmailList = new ArrayList<Notification>();
 		while (resultSet.next()) {
-			Mail mail = new Mail();
+			Notification mail = new Notification();
 
-			mail.setKey(resultSet.getString("notification_id"));
+			mail.setId(resultSet.getLong("notification_id"));
 			mail.setSubject(resultSet.getString("subject"));
 			mail.setSentDate(resultSet.getTimestamp("sent_at"));
-			emailLogger.info("notification id =" + mail.getKey());
+			emailLogger.info("notification id =" + mail.getId());
 			emailLogger.info("subject =" + mail.getSubject());
-			emailLogger.info("sent_at =" + mail.getSentDate());
+			//emailLogger.info("sent_at =" + mail.getSentDate());
 
 			sentEmailList.add(mail);
 		}
 	}
 
 	@Override
-	public List<Mail> getOpenedEmailCountList()  {
+	public List<Notification> getOpenedEmailCountList()  {
 		ResultSet resultSet = null;
 		try {
 			openConnection();
@@ -88,11 +89,11 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 	}
 
 	private void populateOpenedEmailCounterList(ResultSet resultSet) throws SQLException {
-		openedEmailCounterList = new ArrayList<Mail>();
+		openedEmailCounterList = new ArrayList<Notification>();
 		while (resultSet.next()) {
-			Mail mail = new Mail();
+			Notification mail = new Notification();
 
-			mail.setKey(resultSet.getString("id"));
+			mail.setNotificationId(resultSet.getLong("notification_id"));
 			mail.setSubject(resultSet.getString("subject"));
 			mail.setSentDate(resultSet.getTimestamp("sentdate"));
 			sentEmailList.add(mail);

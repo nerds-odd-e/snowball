@@ -1,6 +1,7 @@
 package com.odde.massivemailer.controller;
 
 import com.odde.massivemailer.model.Mail;
+import com.odde.massivemailer.model.Notification;
 import com.odde.massivemailer.service.EmailService;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,17 +44,17 @@ public class EmailOpenedCounterControllerTest {
 
     private class EmailServiceForTest implements EmailService {
         @Override
-        public List<Mail> getSentEmailList() {
+        public List<Notification> getSentEmailList() {
             return null;
         }
 
         @Override
-        public void setSentEmailList(List<Mail> emailList) {
+        public void setSentEmailList(List<Notification> emailList) {
 
         }
 
         @Override
-        public List<Mail> getOpenedEmailCountList() {
+        public List<Notification> getOpenedEmailCountList() {
             return null;
         }
 

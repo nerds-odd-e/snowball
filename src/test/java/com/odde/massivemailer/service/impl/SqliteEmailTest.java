@@ -2,6 +2,7 @@ package com.odde.massivemailer.service.impl;
 
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Mail;
+import com.odde.massivemailer.model.Notification;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -47,9 +48,9 @@ public class SqliteEmailTest extends SqliteBase {
 	public void testGetEmailList() throws SQLException{
 
 		// Act
-		List<Mail> emailList = sqliteEmail.getSentEmailList();
+		List<Notification> emailList = sqliteEmail.getSentEmailList();
 		assertEquals(1, emailList.size());
-		assertEquals("1", emailList.get(0).getKey());
+		assertEquals("1", emailList.get(0).getNotificationId());
 		assertEquals("Promotional test", emailList.get(0).getSubject());
 		assertNull(emailList.get(0).getSentDate());
 	}
