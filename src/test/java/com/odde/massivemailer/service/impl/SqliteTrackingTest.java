@@ -10,6 +10,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.sql.*;
 
 import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -35,8 +36,12 @@ public class SqliteTrackingTest {
 
     @Test
     public void updateViewCountByOne() throws SQLException {
-        int result= sqliteTracking.updateViewCount(100900, 900123);
+        int result= sqliteTracking.updateViewCount(100900, "terry@gmail.com");
         verify(mockPreparedStatement).executeUpdate();
         assertEquals(1, result);
+    }
+    @Test
+    public void ensureIncrement() throws SQLException {
+        assertTrue(sqliteTracking.sql.replaceAll(" ", "").contains("read_count+1"));
     }
 }

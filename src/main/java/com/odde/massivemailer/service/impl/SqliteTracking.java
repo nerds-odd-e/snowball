@@ -5,8 +5,8 @@ import com.odde.massivemailer.service.TrackingService;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class SqliteTracking extends SqliteBase implements TrackingService
-{
+public class SqliteTracking extends SqliteBase implements TrackingService {
+    String sql = "Update notification_details set read_count = read_count + 1 where notification_id = ? and email_address = ?";
 
     public SqliteTracking() {
         try {
@@ -17,15 +17,12 @@ public class SqliteTracking extends SqliteBase implements TrackingService
     }
 
     @Override
-    public int updateViewCount(int messageId, int userId) {
+    public int updateViewCount(int messageId, String userId) {
 
-        try {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
 
-            String sql = "Update notification_details set mail_read_count = mail_read_count+1 where notification_id = ? and contact_id = ?";
-
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, messageId);
-            preparedStatement.setInt(2, userId);
+            preparedStatement.setString(2, userId);
 
             return preparedStatement.executeUpdate();
         } catch (SQLException e) {

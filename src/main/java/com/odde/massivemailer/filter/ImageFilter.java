@@ -5,31 +5,31 @@ import com.odde.massivemailer.service.impl.SqliteTracking;
 import javax.servlet.*;
 
 
-public class ImageFilter implements Filter{
+public class ImageFilter implements Filter {
 
     private SqliteTracking sqliteTracking;
 
 
-    public void  init(FilterConfig config)
-            throws ServletException{
+    public void init(FilterConfig config)
+            throws ServletException {
 
     }
 
-    public void  doFilter(ServletRequest request,
-                          ServletResponse response,
-                          FilterChain chain)
+    public void doFilter(ServletRequest request,
+                         ServletResponse response,
+                         FilterChain chain)
             throws java.io.IOException, ServletException {
 
         String messageId = request.getParameter("messageId");
         String userId = request.getParameter("userId");
 
-        if(messageId != null && userId != null)
-            getSqliteTracking().updateViewCount(Integer.parseInt(messageId), Integer.parseInt(userId));
+        if (messageId != null && userId != null)
+            getSqliteTracking().updateViewCount(Integer.parseInt(messageId), userId);
 
-        chain.doFilter(request,response);
+        chain.doFilter(request, response);
     }
 
-    public void destroy( ){
+    public void destroy() {
     }
 
     public SqliteTracking getSqliteTracking() {
