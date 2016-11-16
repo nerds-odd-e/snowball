@@ -17,7 +17,8 @@ function renderTrackingEmailList(json, selector)
 {
 	$.each(json, function(idx, item) {
 		var subject = item.subject===undefined?'':item.subject;
-		var sentdate = item.sentdate===undefined?'':item.sentdate;
-		selector.append('<tr><td class="subject">'+subject+'</td><td class="sentdate">'+sentdate+'</td></tr>');
+		var sent_at = item.sent_at===undefined?'':item.sent_at;
+		var notification_id = item.notification_id===undefined?'':item.notification_id;
+		selector.append('<tr class="clickable-row" data-href="email_tracking_details.jsp?notification_id='+notification_id+'"><td class="subject">'+subject+'</td><td class="sent_at">'+sent_at+'</td></tr></a>');
 	})
 }

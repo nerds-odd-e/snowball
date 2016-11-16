@@ -8,10 +8,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.*;
 
 public class SqliteEmail extends SqliteBase implements EmailService {
-	private String selectSentEmailSql = "SELECT id, subject, sentdate FROM mail order by sentdate DESC";
+	private String selectSentEmailSql = "SELECT notification_id, subject, sent_at FROM notifications order by sent_at DESC";
 	private List<Mail> sentEmailList;
+    private static Logger emailLogger = Logger.getLogger(SqliteEmail.class.getName());
+
 
 	private String selectOpenedEmailCounterSQL ="select " ;
 	private List<Mail> openedEmailCounterList;
@@ -19,7 +22,7 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 	public void setSentEmailList(List<Mail> sentEmailList) {
 		this.sentEmailList = sentEmailList;
 	}
-
+	
 	public void setOpenedEmailCounterList(List<Mail> openedEmailCounterList) {
 		this.openedEmailCounterList = openedEmailCounterList;
 	}
@@ -29,7 +32,7 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 	public SqliteEmail() {
 		try {
 			openConnection();
-			createIfNotExistTable();
+			//createIfNotExistTable();
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
@@ -58,9 +61,13 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 		while (resultSet.next()) {
 			Mail mail = new Mail();
 
-			mail.setKey(resultSet.getString("id"));
+			mail.setKey(resultSet.getString("notification_id"));
 			mail.setSubject(resultSet.getString("subject"));
-			mail.setSentDate(resultSet.getTimestamp("sentdate"));
+			mail.setSentDate(resultSet.getTimestamp("sent_at"));
+			emailLogger.info("notification id =" + mail.getKey());
+			emailLogger.info("subject =" + mail.getSubject());
+			emailLogger.info("sent_at =" + mail.getSentDate());
+
 			sentEmailList.add(mail);
 		}
 	}
@@ -115,18 +122,7 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 
 	@Override
 	public void destroyAll() {
-		try {
-			openConnection();
-			statement.execute("DELETE FROM mail;");
-			statement.executeUpdate("drop table if exists Template;CREATE TABLE Template (Id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, TemplateName VARCHAR(255) NOT NULL, Subject VARCHAR(255), Content NVARCHAR(5000))");
-			statement.executeUpdate("INSERT INTO Template (TemplateName,Subject,Content) VALUES ('Default Template 1', 'Greeting {FirstName}', 'Hi, {FirstName} {LastName} from {Company}')");
-			statement.execute("INSERT INTO Template (TemplateName,Subject,Content) VALUES ('RTA Default Template', 'Greeting {FirstName}', 'Hi, {FirstName} {LastName} from {Company}');");
-
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		} finally {
-			closeConnection();
-		}
+	    //Not required
 	}
 
 	@Override
