@@ -81,7 +81,7 @@ public class Mail {
 
             message.setFrom(new InternetAddress(FROM, DISPLAY_NAME));
             message.setSubject(subject);
-            String messageContent = "<html><body>" + content + "<img src=\"http://192.168.1.90:8070/massive_mailer/resources/images/qrcode.png?messageId="+messageId+"\">Test.gif</img></body></html>";
+            String messageContent = "<html><body>" + content + "<img src=\"http://192.168.1.90:8070/massive_mailer/resources/images/qrcode.png?messageId="+messageId+"&userId="+recipient+"\">Test.gif</img></body></html>";
             message.setText(messageContent);
             message.setContent(messageContent, "text/html; charset=utf-8");
 

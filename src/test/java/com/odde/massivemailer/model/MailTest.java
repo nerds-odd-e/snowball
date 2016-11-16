@@ -57,7 +57,7 @@ public class MailTest {
 
 
 		verify(mockSqliteContact).getContactByEmail(anyString());
-		assertEquals("<html><body>content TestName, CompanyName<img src=\"http://192.168.1.90:8070/massive_mailer/resources/images/qrcode.png?messageId=" + mail.getMessageId() + "\">Test.gif</img></body></html>", messages.get(0).getContent());
+		assertEquals("<html><body>content TestName, CompanyName<img src=\"http://192.168.1.90:8070/massive_mailer/resources/images/qrcode.png?messageId=" + mail.getMessageId() + "&userId="+"test@gmail.com"+"\">Test.gif</img></body></html>", messages.get(0).getContent());
 		assertEquals("subject LastName - EmailName", messages.get(0).getSubject());
 	}
 	
