@@ -159,6 +159,14 @@ public class Mail {
 		}
 	}
 
+	public Notification asNotification() {
+        Notification notification = new Notification();
+        notification.setSubject(getSubject());
+        notification.setNotificationId(getMessageId());
+
+        return notification;
+    }
+
 	public String getKey() {
 		return key;
 	}

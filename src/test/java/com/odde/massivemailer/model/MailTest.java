@@ -4,7 +4,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -77,5 +79,18 @@ public class MailTest {
 		String[] address = messages.get(0).getFrom()[0].toString().split("<");
 		
 		assertEquals("Inspector Gadget", address[0].trim());
+	}
+
+	@Test
+	public void AsNotification() {
+		Mail mail = new Mail();
+		mail.setContent("content");
+		mail.setSubject("subject");
+		mail.setMessageId(123456789L);
+
+		Notification notification = mail.asNotification();
+
+		assertThat(notification.getSubject(), is("subject"));
+		assertThat(notification.getNotificationId(), is(123456789L));
 	}
 }
