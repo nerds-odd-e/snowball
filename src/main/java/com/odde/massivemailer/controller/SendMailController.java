@@ -44,11 +44,7 @@ public class SendMailController extends HttpServlet {
 		try {
 			Mail email = processRequest(req);
 
-			Notification notification = new Notification();
-			notification.setSubject(email.getSubject());
-			notification.setNotificationId(email.getMessageId());
-
-			notificationService.save(notification);
+			notificationService.save(email.asNotification());
 
             GMailService mailService = createGmailService();
 			mailService.send(email);

@@ -127,7 +127,7 @@ public class SendMailControllerTest {
 
         Notification capturedNotification = notificationCaptor.getValue();
 
-        assertEquals("subject for test", capturedNotification.getSubject());
+        assertThat(capturedNotification.getSubject(), is("subject for test"));
         assertNotNull(capturedNotification.getNotificationId());
     }
 
