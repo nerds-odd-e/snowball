@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import javax.servlet.ServletException;
@@ -29,11 +30,20 @@ import static org.mockito.Mockito.*;
 
 public class SendMailControllerTest {
     private SendMailController controller;
+
+    @Mock
     private SqliteContact contactService;
+
+    @Mock
     private GMailService gmailService;
+
+    @Mock
     private NotificationService notificationService;
 
+    @Mock
     private HttpServletRequest request;
+
+    @Mock
     private HttpServletResponse response;
 
     @Captor
@@ -44,18 +54,9 @@ public class SendMailControllerTest {
         MockitoAnnotations.initMocks(this);
 
         controller = new SendMailController();
-
-        contactService = mock(SqliteContact.class);
         controller.setSqliteContact(contactService);
-
-        gmailService = mock(GMailService.class);
         controller.setGmailService(gmailService);
-
-        notificationService = mock(NotificationService.class);
         controller.setNotificationService(notificationService);
-
-        request = mock(HttpServletRequest.class);
-        response = mock(HttpServletResponse.class);
 
         when(request.getParameter("content")).thenReturn("content-na-ka");
         when(request.getParameter("subject")).thenReturn("subject for test");
