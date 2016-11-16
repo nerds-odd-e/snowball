@@ -32,47 +32,75 @@ public class NotificationServiceSqlite extends SqliteBase implements Notificatio
         return savedNotification;
     }
 
-    private Notification saveNotification(final Notification notification) throws SQLException {
+    private Notification saveNotification(final Notification notification) {
         String sql = "INSERT INTO notifications (subject, notification_id, sent_at) VALUES (?, ?, datetime('now'))";
-
-        PreparedStatement ps = getConnection().prepareStatement(sql);
-
-        ps.setString(1, notification.getSubject());
-        ps.setLong(2, notification.getNotificationId());
-
-        ps.executeUpdate();
-
-        ResultSet rs = ps.getGeneratedKeys();
 
         Notification savedNotification = new Notification();
         savedNotification.setSubject(notification.getSubject());
         savedNotification.setNotificationId(notification.getNotificationId());
 
-        if (rs.next()) {
-            savedNotification.setId(rs.getLong(1));
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            ps = getConnection().prepareStatement(sql);
+
+            ps.setString(1, notification.getSubject());
+            ps.setLong(2, notification.getNotificationId());
+
+            ps.executeUpdate();
+
+            rs = ps.getGeneratedKeys();
+
+            if (rs.next()) {
+                savedNotification.setId(rs.getLong(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                rs.close();
+                ps.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         return savedNotification;
     }
 
     private NotificationDetail saveNotificationDetail(final NotificationDetail notificationDetail,
-                                                      final Notification notification) throws SQLException {
+                                                      final Notification notification) {
         String sql = "INSERT INTO notification_details (notification_id, email_address) VALUES (?, ?)";
-
-        PreparedStatement ps = getConnection().prepareStatement(sql);
-
-        ps.setLong(1, notification.getId());
-        ps.setString(2, notificationDetail.getEmailAddress());
-
-        ps.executeUpdate();
 
         NotificationDetail savedNotificationDetail = new NotificationDetail();
         savedNotificationDetail.setEmailAddress(notificationDetail.getEmailAddress());
 
-        ResultSet rs = ps.getGeneratedKeys();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
-        if (rs.next()) {
-            savedNotificationDetail.setId(rs.getLong(1));
+        try {
+            ps = getConnection().prepareStatement(sql);
+
+            ps.setLong(1, notification.getId());
+            ps.setString(2, notificationDetail.getEmailAddress());
+
+            ps.executeUpdate();
+
+            rs = ps.getGeneratedKeys();
+
+            if (rs.next()) {
+                savedNotificationDetail.setId(rs.getLong(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                rs.close();
+                ps.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         return savedNotificationDetail;
