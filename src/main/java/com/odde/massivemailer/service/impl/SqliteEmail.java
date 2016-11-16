@@ -1,12 +1,9 @@
 package com.odde.massivemailer.service.impl;
 
-import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Mail;
-import com.odde.massivemailer.service.ContactService;
 import com.odde.massivemailer.service.EmailService;
 
 import java.sql.DatabaseMetaData;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,8 +13,15 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 	private String selectSentEmailSql = "SELECT id, subject, sentdate FROM mail order by sentdate DESC";
 	private List<Mail> sentEmailList;
 
+	private String selectOpenedEmailCounterSQL ="select " ;
+	private List<Mail> openedEmailCounterList;
+
 	public void setSentEmailList(List<Mail> sentEmailList) {
 		this.sentEmailList = sentEmailList;
+	}
+
+	public void setOpenedEmailCounterList(List<Mail> openedEmailCounterList) {
+		this.openedEmailCounterList = openedEmailCounterList;
 	}
 
 	private String selectMailFromCompanySql = "SELECT id, name, email, lastname, company FROM mail where company = ";
@@ -61,6 +65,32 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 		}
 	}
 
+	@Override
+	public List<Mail> getOpenedEmailCountList()  {
+		ResultSet resultSet = null;
+		try {
+			openConnection();
+			resultSet = statement.executeQuery(this.selectSentEmailSql);
+			populateSentEmailList(resultSet);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection();
+		}
+		return sentEmailList;
+	}
+
+	private void populateOpenedEmailCounterList(ResultSet resultSet) throws SQLException {
+		openedEmailCounterList = new ArrayList<Mail>();
+		while (resultSet.next()) {
+			Mail mail = new Mail();
+
+			mail.setKey(resultSet.getString("id"));
+			mail.setSubject(resultSet.getString("subject"));
+			mail.setSentDate(resultSet.getTimestamp("sentdate"));
+			sentEmailList.add(mail);
+		}
+	}
 
 	public void createIfNotExistTable() throws SQLException {
 
@@ -97,5 +127,15 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 		} finally {
 			closeConnection();
 		}
+	}
+
+	@Override
+	public void setOpenedEmailCountList(int i) {
+
+	}
+
+	@Override
+	public String getEmailCounterJson(int email_id) {
+		return null;
 	}
 }
