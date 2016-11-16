@@ -17,11 +17,11 @@ public class SqliteTracking extends SqliteBase implements TrackingService {
     }
 
     @Override
-    public int updateViewCount(int messageId, String userId) {
+    public int updateViewCount(long messageId, String userId) {
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
 
-            preparedStatement.setInt(1, messageId);
+            preparedStatement.setLong(1, messageId);
             preparedStatement.setString(2, userId);
 
             return preparedStatement.executeUpdate();
