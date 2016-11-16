@@ -17,6 +17,7 @@ import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.model.Notification;
 import com.odde.massivemailer.service.NotificationService;
 import com.odde.massivemailer.service.impl.GMailService;
+import com.odde.massivemailer.service.impl.NotificationServiceSqlite;
 import com.odde.massivemailer.service.impl.SMTPConfiguration;
 
 import com.odde.massivemailer.service.impl.SqliteContact;
@@ -33,13 +34,21 @@ public class SendMailController extends HttpServlet {
     private GMailService gmailService;
 	private NotificationService notificationService;
 
+    public SendMailController() {
+        notificationService = new NotificationServiceSqlite();
+    }
+
     @Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		try {
 			Mail email = processRequest(req);
 
-			notificationService.save(new Notification());
+			Notification notification = new Notification();
+			notification.setSubject(email.getSubject());
+			notification.setNotificationId(email.getMessageId());
+
+			notificationService.save(notification);
 
             GMailService mailService = createGmailService();
 			mailService.send(email);

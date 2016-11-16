@@ -9,6 +9,9 @@ import com.odde.massivemailer.service.impl.GMailService;
 import com.odde.massivemailer.service.impl.SqliteContact;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.MockitoAnnotations;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +21,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
@@ -32,8 +36,13 @@ public class SendMailControllerTest {
     private HttpServletRequest request;
     private HttpServletResponse response;
 
+    @Captor
+    private ArgumentCaptor<Notification> notificationCaptor;
+
     @Before
     public void setUp() {
+        MockitoAnnotations.initMocks(this);
+
         controller = new SendMailController();
 
         contactService = mock(SqliteContact.class);
@@ -113,7 +122,12 @@ public class SendMailControllerTest {
 
         controller.doPost(request, response);
 
-        verify(notificationService).save(any(Notification.class));
+        verify(notificationService).save(notificationCaptor.capture());
+
+        Notification capturedNotification = notificationCaptor.getValue();
+
+        assertEquals("subject for test", capturedNotification.getSubject());
+        assertNotNull(capturedNotification.getNotificationId());
     }
 
     private void mockRecipient(String recipient){
