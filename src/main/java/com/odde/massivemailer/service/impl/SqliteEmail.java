@@ -1,7 +1,11 @@
 package com.odde.massivemailer.service.impl;
 
 import com.odde.massivemailer.model.Mail;
+import com.odde.massivemailer.model.Notification;
+import com.odde.massivemailer.model.NotificationDetail;
 import com.odde.massivemailer.service.EmailService;
+import com.odde.massivemailer.service.NotificationService;
+import com.sun.xml.internal.xsom.impl.scd.Iterators;
 
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -12,7 +16,7 @@ import java.util.List;
 public class SqliteEmail extends SqliteBase implements EmailService {
 	private String selectSentEmailSql = "SELECT id, subject, sentdate FROM mail order by sentdate DESC";
 	private List<Mail> sentEmailList;
-
+	private NotificationService notifications;
 	private String selectOpenedEmailCounterSQL ="select " ;
 	private List<Mail> openedEmailCounterList;
 
@@ -33,6 +37,7 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
+		notifications = new NotificationServiceSqlite();
 	}
 
 
@@ -135,7 +140,22 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 	}
 
 	@Override
-	public String getEmailCounterJson(int email_id) {
-		return null;
+	public String getEmailCounterJson(int sender_email_id) {
+
+		ArrayList<NotificationDetail> array = notifications.getReceipentOfEmail(sender_email_id);
+		if (array.isEmpty())
+		      return "[]";
+		else
+			return "["+array.get(0).toJSON()+"]";
+	}
+
+	@Override
+	public void addEmail(int i, String subject) {
+
+	}
+
+	@Override
+	public void increaseCounterOfEmailByOne(int email_id, String recipient_email) {
+		notifications.add(email_id, recipient_email);
 	}
 }

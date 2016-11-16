@@ -1,13 +1,21 @@
 package com.odde.massivemailer.service.impl;
 
 import com.odde.massivemailer.model.Notification;
+import com.odde.massivemailer.model.NotificationDetail;
 import com.odde.massivemailer.service.NotificationService;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class NotificationServiceSqlite extends SqliteBase implements NotificationService {
+    private ArrayList<NotificationDetail> notifications;
+
+    public NotificationServiceSqlite() {
+        notifications = new ArrayList<NotificationDetail>();
+    }
+
     @Override
     public Notification save(final Notification notification) {
         PreparedStatement ps = null;
@@ -44,5 +52,17 @@ public class NotificationServiceSqlite extends SqliteBase implements Notificatio
         }
 
         return notification;
+    }
+
+    @Override
+    public void add(int email_id, String recipient_email) {
+
+        NotificationDetail notification_detail = new NotificationDetail();
+        notifications.add(notification_detail);
+    }
+
+    @Override
+    public ArrayList<NotificationDetail> getReceipentOfEmail(int email_id) {
+        return notifications;
     }
 }

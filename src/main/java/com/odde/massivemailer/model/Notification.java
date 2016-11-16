@@ -31,4 +31,6 @@ public class Notification {
     public void setNotificationId(final Long notificationId) {
         this.notificationId = notificationId;
     }
+
+
 }
