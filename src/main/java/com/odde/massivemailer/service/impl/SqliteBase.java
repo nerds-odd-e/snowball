@@ -1,9 +1,12 @@
 package com.odde.massivemailer.service.impl;
 
+import org.sqlite.SQLiteConfig;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 
 /**
  * Created by Cadet on 11/26/2015.
@@ -60,7 +63,11 @@ public class SqliteBase {
             SQLException {
         if (connection == null ) {
             Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection(url);
+            SQLiteConfig sqLiteConfig = new SQLiteConfig();
+            Properties properties = sqLiteConfig.toProperties();
+            properties.setProperty(SQLiteConfig.Pragma.DATE_STRING_FORMAT.pragmaName, "yyyy-MM-dd HH:mm:ss");
+            connection = DriverManager.getConnection(url, properties);
+
         }
     }
 }

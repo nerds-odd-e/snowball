@@ -7,7 +7,10 @@ import com.odde.massivemailer.service.EmailService;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.*;
 
@@ -59,17 +62,30 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 
 	private void populateSentEmailList(ResultSet resultSet) throws SQLException {
 		sentEmailList = new ArrayList<Notification>();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+
 		while (resultSet.next()) {
-			Notification mail = new Notification();
 
-			mail.setId(resultSet.getLong("notification_id"));
-			mail.setSubject(resultSet.getString("subject"));
-			mail.setSentDate(resultSet.getTimestamp("sent_at"));
-			emailLogger.info("notification id =" + mail.getId());
-			emailLogger.info("subject =" + mail.getSubject());
-			//emailLogger.info("sent_at =" + mail.getSentDate());
+			try {
+				Notification mail = new Notification();
 
-			sentEmailList.add(mail);
+				mail.setNotificationId(resultSet.getLong("notification_id"));
+				mail.setSubject(resultSet.getString("subject"));
+
+				String sentDate = resultSet.getTimestamp("sent_at").toString();
+				System.out.print("senTDate"+sentDate);
+				mail.setSentDate(dateFormat.parse(sentDate));
+				emailLogger.info("notifmnmkmnknknn id =" + mail.getSentDate());
+				emailLogger.info("notification id =" + mail.getId());
+				emailLogger.info("subject =" + mail.getSubject());
+				//emailLogger.info("sent_at =" + mail.getSentDate());
+
+				sentEmailList.add(mail);
+			}catch (Exception exp) {
+				exp.printStackTrace();
+				emailLogger.info(exp.getMessage());
+			}
 		}
 	}
 
