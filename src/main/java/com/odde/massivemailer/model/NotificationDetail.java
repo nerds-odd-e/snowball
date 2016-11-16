@@ -19,4 +19,9 @@ public class NotificationDetail {
     public void setEmailAddress(final String emailAddress) {
         this.emailAddress = emailAddress;
     }
+
+    public String toJSON() {
+        return "{'email': '" + emailAddress + "'; 'count': 1}";
+
+    }
 }

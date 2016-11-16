@@ -7,8 +7,10 @@ import com.odde.massivemailer.service.NotificationService;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class NotificationServiceSqlite extends SqliteBase implements NotificationService {
+
     @Override
     public Notification save(final Notification notification) {
         try {
@@ -70,7 +72,7 @@ public class NotificationServiceSqlite extends SqliteBase implements Notificatio
         try {
             ps = getConnection().prepareStatement(sql);
 
-            ps.setLong(1, notification.getId());
+            ps.setLong(1, notification.getNotificationId());
             ps.setString(2, notificationDetail.getEmailAddress());
 
             ps.executeUpdate();
@@ -91,4 +93,6 @@ public class NotificationServiceSqlite extends SqliteBase implements Notificatio
             }
         }
     }
+
+
 }

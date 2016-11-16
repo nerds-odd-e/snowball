@@ -19,4 +19,8 @@ public interface EmailService {
     void setOpenedEmailCountList(int i);
 
 	String getEmailCounterJson(int email_id);
+
+	void addEmail(int i, String subject);
+
+    void increaseCounterOfEmailByOne(int i, String s);
 }
