@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.Gson;
-import com.odde.massivemailer.controller.ContactsController;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,17 +17,23 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 public class ContactsControllerTest {
-    ContactsController contactsController;
-    ContactService contactService;
-    MockHttpServletRequest req = new MockHttpServletRequest();
-    MockHttpServletResponse res = new MockHttpServletResponse();
-    List<ContactPerson> contacts = new ArrayList<ContactPerson>();
+    private ContactsController controller;
+    private ContactService contactService;
+
+    private MockHttpServletRequest request;
+    private MockHttpServletResponse response;
+    private List<ContactPerson> contacts;
 
     @Before
     public void setUpMockService() {
         contactService = mock(SqliteContact.class);
-        contactsController = new ContactsController(contactService);
 
+        controller = new ContactsController(contactService);
+
+        request = new MockHttpServletRequest();
+        response = new MockHttpServletResponse();
+
+        contacts = new ArrayList<>();
         contacts.add(new ContactPerson("John", "john@gmail.com", "Doe", "ComA"));
         contacts.add(new ContactPerson("Peter", "peter@gmail.com", "Toh", "ComA"));
     }
@@ -36,23 +41,29 @@ public class ContactsControllerTest {
     @Test
     public void returnContactsInJSON() throws Exception {
         when(contactService.getContactList()).thenReturn(contacts);
-        contactsController.doGet(req, res);
-        assertEquals(new Gson().toJson(contacts),res.getContentAsString());
+
+        controller.doGet(request, response);
+
+        assertEquals(new Gson().toJson(contacts), response.getContentAsString());
     }
 
     @Test
     public void addAnExistingContact() throws Exception {
-        req.setParameter("email", "john@gmail.com");
         when(contactService.addContact(any(ContactPerson.class))).thenReturn(false);
-        contactsController.doPost(req, res);
-        assertEquals("contactlist.jsp?status=failed&msg=Email john@gmail.com is already exist", res.getRedirectedUrl());
+
+        request.setParameter("email", "john@gmail.com");
+        controller.doPost(request, response);
+
+        assertEquals("contactlist.jsp?status=failed&msg=Email john@gmail.com is already exist", response.getRedirectedUrl());
     }
 
     @Test
     public void addNewContact() throws Exception {
-        req.setParameter("email", "newbie@gmail.com");
         when(contactService.addContact(any(ContactPerson.class))).thenReturn(true);
-        contactsController.doPost(req, res);
-        assertEquals("contactlist.jsp?status=success&msg=Add contact successfully", res.getRedirectedUrl());
+
+        request.setParameter("email", "newbie@gmail.com");
+        controller.doPost(request, response);
+
+        assertEquals("contactlist.jsp?status=success&msg=Add contact successfully", response.getRedirectedUrl());
     }
 }
