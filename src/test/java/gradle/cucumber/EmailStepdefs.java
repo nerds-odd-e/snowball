@@ -47,4 +47,7 @@ public class EmailStepdefs {
     public void addEmailContent(String content) throws Throwable {
         driver.text_field("content", content);
     }
+
+
+
 }

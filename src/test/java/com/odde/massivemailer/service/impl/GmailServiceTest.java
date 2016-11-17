@@ -73,6 +73,9 @@ public class GmailServiceTest {
 	@Test
 	public void sendEmailViaGreenMailSMTP() throws EmailException, UnknownHostException {
 		//Arrange
+
+
+
 		GreenMail greenMail = new GreenMail(new ServerSetup(3025, null, "smtp"));
 		greenMail.start();
 		SMTPConfiguration config = new SMTPConfiguration("fake@greenmail.com", "*******", "localhost", 3025);
