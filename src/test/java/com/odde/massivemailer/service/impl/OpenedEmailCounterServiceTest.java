@@ -27,4 +27,19 @@ public class OpenedEmailCounterServiceTest {
         service. increaseCounterOfEmailByOne(email_id, "someone@somewhere.com");
         assertEquals("[{'email': 'someone@somewhere.com'; 'count': 1}]", service.getEmailCounterJson(123));
     }
+
+    @Test
+    public void shouldReturnRecordWithCountWhenOnePersonOpenedTheEmailTwice() {
+        service.increaseCounterOfEmailByOne(email_id, "someone@somewhere.com");
+        service.increaseCounterOfEmailByOne(email_id, "someone@somewhere.com");
+        assertEquals("[{'email': 'someone@somewhere.com'; 'count': 2}]", service.getEmailCounterJson(123));
+    }
+
+    public void checkEmailCounterIsNotNull(){
+        service.
+
+
+    }
+
+
 }

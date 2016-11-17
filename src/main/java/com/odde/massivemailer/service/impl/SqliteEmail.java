@@ -178,5 +178,6 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 
 	private ArrayList<NotificationDetail> getReceipentOfEmail(int email_id) {
 		return notifications;
+
 	}
 }
