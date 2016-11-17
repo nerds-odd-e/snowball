@@ -1,6 +1,5 @@
 package com.odde.massivemailer.controller;
 
-import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.model.Notification;
 import com.odde.massivemailer.service.EmailService;
 import org.junit.Before;
@@ -32,7 +31,7 @@ public class EmailOpenedCounterControllerTest {
     public void returnEmailSubject() throws Exception {
         req.setAttribute("id", email_id);
         emailOpenedCounterController.doGet(req, res);
-        assertEquals(emailService.getEmailCounterJson(email_id), res.getContentAsString());
+        assertEquals(emailService.getEmailCounterJson((long) email_id), res.getContentAsString());
     }
 
     @Test
@@ -68,7 +67,7 @@ public class EmailOpenedCounterControllerTest {
         }
 
         @Override
-        public String getEmailCounterJson(int email_id) {
+        public String getEmailCounterJson(Long email_id) {
             return "fake jason of" + String.valueOf(email_id);
         }
 
@@ -78,7 +77,7 @@ public class EmailOpenedCounterControllerTest {
         }
 
         @Override
-        public void increaseCounterOfEmailByOne(int i, String s) {
+        public void increaseCounterOfEmailByOne(Long i, String s) {
 
         }
 

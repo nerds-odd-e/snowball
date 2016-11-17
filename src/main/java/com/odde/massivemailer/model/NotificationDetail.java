@@ -3,6 +3,7 @@ package com.odde.massivemailer.model;
 public class NotificationDetail {
     private Long id;
     private String emailAddress;
+    private int read_count;
 
     public Long getId() {
         return id;
@@ -21,7 +22,15 @@ public class NotificationDetail {
     }
 
     public String toJSON() {
-        return "{'email': '" + emailAddress + "'; 'count': 1}";
+        return "{'email': '" + emailAddress + "'; 'count': 0}";
 
+    }
+
+    public int getRead_count() {
+        return read_count;
+    }
+
+    public void setRead_count(int read_count) {
+        this.read_count = read_count;
     }
 }

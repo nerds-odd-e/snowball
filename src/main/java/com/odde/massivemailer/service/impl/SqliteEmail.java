@@ -1,17 +1,15 @@
 package com.odde.massivemailer.service.impl;
 
-import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.model.Notification;
 import com.odde.massivemailer.model.NotificationDetail;
 import com.odde.massivemailer.service.EmailService;
+import com.odde.massivemailer.service.NotificationService;
 
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.*;
 
@@ -141,7 +139,16 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 
 	@Override
 	public void destroyAll() {
-	    //Not required
+		try {
+			openConnection();
+			statement.execute("DELETE FROM notification_details;");
+			statement.execute("DELETE FROM notifications;");
+
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection();
+		}
 	}
 
 	@Override
@@ -150,9 +157,9 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 	}
 
 	@Override
-	public String getEmailCounterJson(int sender_email_id) {
+	public String getEmailCounterJson(Long sender_email_id) {
 
-		ArrayList<NotificationDetail> array = getReceipentOfEmail(sender_email_id);
+		List<NotificationDetail> array = getReceipentOfEmail(sender_email_id);
 		if (array.isEmpty())
 		      return "[]";
 		else
@@ -165,19 +172,19 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 	}
 
 	@Override
-	public void increaseCounterOfEmailByOne(int email_id, String recipient_email) {
+	public void increaseCounterOfEmailByOne(Long email_id, String recipient_email) {
 		add(email_id, recipient_email);
 	}
 
-	private void add(int email_id, String recipient_email) {
+	private void add(Long email_id, String recipient_email) {
 
 		NotificationDetail notification_detail = new NotificationDetail();
         notification_detail.setEmailAddress(recipient_email);
 		notifications.add(notification_detail);
 	}
 
-	private ArrayList<NotificationDetail> getReceipentOfEmail(int email_id) {
-		return notifications;
-
+	private List<NotificationDetail> getReceipentOfEmail(Long email_id) {
+		NotificationService ns = new NotificationServiceSqlite();
+		return ns.getNotificationDetails(email_id);
 	}
 }
