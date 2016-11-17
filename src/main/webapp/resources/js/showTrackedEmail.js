@@ -20,9 +20,20 @@ function retrieveTrackingEmailListFromServer()
 function renderTrackingEmailList(json, selector)
 {
 	$.each(json, function(idx, item) {
-		var subject = item.subject===undefined?'':item.subject;
-		var sentDate = item.sentDate===undefined?'':item.sentDate;
-		var notificationId = item.notificationId===undefined?'':item.notificationId;
-		selector.append('<tr class="clickable-row" data-href="email_tracking_details.jsp?notification_id='+notificationId+'"><td class="subject">'+subject+'</td><td class="sentDate">'+sentDate+'</td></tr></a>');
+		selector.append(new Notification(item).createRow());
 	})
+}
+
+function Notification(item) {
+    this.getString = function(attr) {
+        return attr===undefined?'':attr;
+    };
+
+    this.createRow = function() {
+        return '<tr class="clickable-row" data-href="email_tracking_details.jsp?notification_id='+this.notificationId+'"><td class="subject">'+this.subject+'</td><td class="sentDate">'+this.sentDate+'</td></tr></a>';
+    }
+
+    this.subject = this.getString(item.subject);
+    this.sentDate = this.getString(item.sentDate);
+    this.notificationId = this.getString(item.notificationId);
 }
