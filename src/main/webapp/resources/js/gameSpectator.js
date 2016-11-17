@@ -59,13 +59,11 @@ function checkGameState(){
 
 function createPlayerDiv(player){
     var indentation = player.position * 10;
+    var scar = "scar" + (player.scars < 7 ? player.scars : 6) ;
     return '<div class="race-track">'+
-                    '<div class="racer" style="margin-left:' + indentation +   'px">' +
-                        '<div id="racerName">ID: '      + player.ID         + '</div>'+
-                    '<div id="racerEmail">Email: '      + player.email      + '</div>'+
-                    '<div id="racerDist">Dist: '        + player.position   + '</div>'+
-                    '<div id="scar">Scar: '             + player.scars      + '</div>' +
+                '<div class="racer ' + scar + '" style="display: inline-block; margin-left:' + indentation +   'px">' +
                 '</div>'+
+                '<div id="racerEmail" style="display: inline-block; margin-left: 8px;">Email: '      + player.email      + '</div>'+
             '</div>';
 }
 
