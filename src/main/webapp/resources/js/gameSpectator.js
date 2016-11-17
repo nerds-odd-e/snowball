@@ -13,8 +13,7 @@ function sendGameDistance() {
 
 $(document).ready(function(){
     sendGameDistance();
-//    var interval = setInterval(function() { checkGameState(); }, 1000);
-checkGameState();
+    var interval = setInterval(function() { checkGameState(); }, 1000);
 
     $("#startSpecBtn").on("click", function() {
         $("#startSpecBtn").text("Next");
