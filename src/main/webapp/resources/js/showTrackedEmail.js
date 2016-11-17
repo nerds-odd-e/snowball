@@ -23,6 +23,6 @@ function renderTrackingEmailList(json, selector)
 		var subject = item.subject===undefined?'':item.subject;
 		var sentDate = item.sentDate===undefined?'':item.sentDate;
 		var notificationId = item.notificationId===undefined?'':item.notificationId;
-		selector.append('<tr class="clickable-row" data-href="email_tracking_details.jsp?notification_id='+notificationId+'"><td class="subject">'+subject+'</td><td class="sent_at">'+sentDate+'</td></tr></a>');
+		selector.append('<tr class="clickable-row" data-href="email_tracking_details.jsp?notification_id='+notificationId+'"><td class="subject">'+subject+'</td><td class="sentDate">'+sentDate+'</td></tr></a>');
 	})
 }
