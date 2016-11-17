@@ -37,10 +37,7 @@ describe('gameSpectator',function(){
                             };
 
             $('#canvas').html(createPlayerDiv(racerData));
-            expect(document.getElementById("racerName").innerHTML).toBe("ID: aaa");
             expect(document.getElementById("racerEmail").innerHTML).toBe("Email: aaa@gmail.com");
-            expect(document.getElementById("racerDist").innerHTML).toBe("Dist: 0");
-            expect(document.getElementById("scar").innerHTML).toBe("Scar: 0");
         });
     });
 
@@ -67,9 +64,6 @@ describe('gameSpectator',function(){
                 var racerScars = $(this).find('#scar').text();
                 var racerEmail = $(this).find('#racerEmail').text();
 
-                expect(racerName).toBe('ID: ' + racerData[key].ID);
-                expect(racerDist).toBe('Dist: ' + racerData[key].position);
-                expect(racerScars).toBe('Scar: ' + racerData[key].scars);
                 expect(racerEmail).toBe('Email: ' + racerData[key].email);
             });
 

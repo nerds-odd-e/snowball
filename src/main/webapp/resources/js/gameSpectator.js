@@ -13,7 +13,8 @@ function sendGameDistance() {
 
 $(document).ready(function(){
     sendGameDistance();
-    var interval = setInterval(function() { checkGameState(); }, 1000);
+//    var interval = setInterval(function() { checkGameState(); }, 1000);
+checkGameState();
 
     $("#startSpecBtn").on("click", function() {
         $("#startSpecBtn").text("Next");
@@ -61,9 +62,10 @@ function createPlayerDiv(player){
     var indentation = player.position * 10;
     var scar = "scar" + (player.scars < 7 ? player.scars : 6) ;
     return '<div class="race-track">'+
-                '<div class="racer ' + scar + '" style="display: inline-block; margin-left:' + indentation +   'px">' +
+                '<div class="racer" style="margin-left:' + indentation +   'px">' +
+                    '<div class="racerCar ' + scar + '" style="display: inline-block;"></div>'+
+                    '<div id="racerEmail" style="display: inline-block; margin-left: 8px;">Email: ' + player.email      + '</div>'+
                 '</div>'+
-                '<div id="racerEmail" style="display: inline-block; margin-left: 8px;">Email: '      + player.email      + '</div>'+
             '</div>';
 }
 

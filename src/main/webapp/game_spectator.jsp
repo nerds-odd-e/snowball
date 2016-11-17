@@ -12,6 +12,9 @@
 <link href="resources/lib/bootstrap/css/plugins/morris.css" rel="stylesheet">
 <style>
     .racer {
+        height: 68px;
+    }
+    .racerCar {
         width: 170px;
         height: 68px;
     }
