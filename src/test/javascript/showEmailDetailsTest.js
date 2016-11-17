@@ -2,7 +2,9 @@ describe('test show email details function', function() {
 
 	var rootId = "testContainer";
 	var markup = "<table id='summarySection'><tbody></tbody></table><table id='listTable'><tbody></tbody></table>";
-	var mock_json = {"subject":"Hello!", "sent_at": "2016-11-16", "total_open_count": 8, "emails": [{"email": "test@t","open_count": 5}, {"email": "test2@t","open_count": 3}]};
+	var firstNotificationDetail = {"email": "test@t","open_count": 5};
+
+	var mock_json = {"subject":"Hello!", "sent_at": "2016-11-16", "total_open_count": 8, "emails": [firstNotificationDetail, {"email": "test2@t","open_count": 3}]};
 
 	beforeEach(function(){
 		var container = document.createElement('div');
@@ -35,4 +37,19 @@ describe('test show email details function', function() {
         })
     });
 
+    describe("NotificationDetail", function() {
+        it('should return corret table row', function() {
+            var row = new NotificationDetail(firstNotificationDetail).createRow();
+            var test=$(row).find(".open_count").text();
+            expect(test).toBe(''+firstNotificationDetail.open_count);
+        });
+    });
+
+    describe("NotificationSummary", function() {
+        it('should return Notification summary', function() {
+            var row = new NotificationSummary(mock_json).createRow();
+            var test=$(row).find(".total_open_count").text();
+            expect(test).toBe(''+mock_json.total_open_count);
+        });
+    });
 });

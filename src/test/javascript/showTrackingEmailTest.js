@@ -36,8 +36,7 @@ describe('test show tracking function', function() {
 
 	describe("Notifiction", function() {
 	    it('should return corret table row', function() {
-	        var row;
-	        row = new Notification(firstNotification).createRow();
+	        var row = new Notification(firstNotification).createRow();
 	        expect(row.indexOf("notification_id="+firstNotification.notificationId) > 0).toBe(true);
 	    });
 	});
