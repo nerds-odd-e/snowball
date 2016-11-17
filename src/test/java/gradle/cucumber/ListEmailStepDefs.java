@@ -19,12 +19,11 @@ import gradle.cucumber.driver.WebDriverWrapper;
 public class ListEmailStepDefs {
 
     private WebDriverWrapper emailListDriverViewer = WebDriverFactory.getDefaultDriver();
-    EmailStepdefs emailSteps = new EmailStepdefs();
+    TrackEmailSteps emailSteps = new TrackEmailSteps();
 
     @Given("^Terry sends an email$")
     public void terry_sends_an_email() throws Throwable {
-        emailSteps.visitSendMailPage();
-        emailSteps.clickSendEmail();
+        emailSteps.sendEmail("test@example.com","hello");
     }
 
     @When("^Terry clicks on the email track link$")
@@ -39,9 +38,7 @@ public class ListEmailStepDefs {
 
     @Given("^Terry send an email with subject \"([^\"]*)\"$")
     public void terry_send_an_email_with_subject_on(String subject) throws Throwable {
-        emailSteps.visitSendMailPage();
-        emailSteps.addEmailSubject(subject);
-        emailSteps.clickSendEmail();
+        emailSteps.sendEmail("test@example.com", subject);
     }
 
     @Then("^Terry should see the email with subject \"([^\"]*)\" in the list with date$")

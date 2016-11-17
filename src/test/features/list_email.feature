@@ -9,7 +9,6 @@ Feature: List email with email subject details
     Then Terry can see the email list page
 
 
-  @wip
   Scenario: check sent email in the list
     Given Terry send an email with subject "hello"
     When  Terry clicks on the email track link

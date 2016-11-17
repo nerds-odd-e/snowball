@@ -24,9 +24,13 @@ public class TrackEmailSteps {
 
     @Given("^I send an email to \"(.*)\"$")
     public void i_send_an_email_to_Terry(String recipient) throws Throwable {
+        sendEmail(recipient, "Subject");
+    }
+
+    public void sendEmail(String recipient, String subject) {
         driver.visit(BASE_URL);
         driver.text_field("recipient", recipient);
-        driver.text_field("subject", "Subject");
+        driver.text_field("subject", subject);
         driver.text_field("content", "Hello!");
 
         driver.click_button("send_button");
