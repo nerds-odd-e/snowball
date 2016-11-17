@@ -68,7 +68,8 @@ public class SqliteContact  extends SqliteBase implements ContactService {
 			statement.executeUpdate("drop table if exists Template;CREATE TABLE Template (Id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, TemplateName VARCHAR(255) NOT NULL, Subject VARCHAR(255), Content NVARCHAR(5000))");
 			statement.executeUpdate("INSERT INTO Template (TemplateName,Subject,Content) VALUES ('Default Template 1', 'Greeting {FirstName}', 'Hi, {FirstName} {LastName} from {Company}')");
 			statement.execute("INSERT INTO Template (TemplateName,Subject,Content) VALUES ('RTA Default Template', 'Greeting {FirstName}', 'Hi, {FirstName} {LastName} from {Company}');");
-
+			statement.execute("DELETE FROM notification_details");
+			statement.execute("DELETE FROM notifications");
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		} finally {
