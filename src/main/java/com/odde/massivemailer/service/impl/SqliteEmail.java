@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.*;
 
@@ -158,12 +159,11 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 
 	@Override
 	public String getEmailCounterJson(Long sender_email_id) {
-
-		List<NotificationDetail> array = getReceipentOfEmail(sender_email_id);
-		if (array.isEmpty())
-		      return "[]";
-		else
-			return "["+array.get(0).toJSON()+"]";
+		ArrayList<String> sarray = new ArrayList<String>();
+		for (NotificationDetail notif: getReceipentOfEmail(sender_email_id)) {
+			 sarray.add(notif.toJSON());
+		}
+		return "["+String.join(", ", sarray)+"]";
 	}
 
 	@Override

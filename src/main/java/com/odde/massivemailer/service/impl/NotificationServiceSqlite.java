@@ -96,16 +96,17 @@ public class NotificationServiceSqlite extends SqliteBase implements Notificatio
     }
 
     private void saveNotificationDetail(final NotificationDetail notificationDetail, final Notification notification) {
-        String sql = "INSERT INTO notification_details (notification_id, email_address) VALUES (?, ?)";
 
         PreparedStatement ps = null;
         ResultSet rs = null;
 
         try {
+            String sql = "INSERT INTO notification_details (notification_id, email_address, read_count) VALUES (?, ?, ?)";
             ps = getConnection().prepareStatement(sql);
 
             ps.setLong(1, notification.getNotificationId());
             ps.setString(2, notificationDetail.getEmailAddress());
+            ps.setInt(3, notificationDetail.getRead_count());
 
             ps.executeUpdate();
 
