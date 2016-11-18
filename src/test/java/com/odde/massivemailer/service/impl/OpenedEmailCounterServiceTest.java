@@ -31,7 +31,9 @@ public class OpenedEmailCounterServiceTest {
 
     @Test
     public void shouldReturnEmptyJasonWhenNobodyOpenedTheEmail() {
-        assertEquals("{\"subject\":\"null\", \"sent_at\":\"null\", \"total_open_count\":0, \"emails\":[]}", service.getEmailCounterJson(email_id));
+        Notification notification = new Notification();
+        String json = service.extract(notification);
+        assertEquals("{\"subject\":\"null\", \"sent_at\":\"null\", \"total_open_count\":0, \"emails\":[]}", json);
     }
 
     @Test
@@ -40,7 +42,7 @@ public class OpenedEmailCounterServiceTest {
         addRecipient(notification, "terry@odd-e.com");
         String json = service.extract(notification);
 
-        assertEquals("{\"subject\":\"test subject\", \"sent_at\":\"Fri Nov 18 03:19:03 SGT 2016\", \"total_open_count\":4, \"emails\":[{\"email\": \"terry@odd-e.com\", \"open_count\": 4}]}", json);
+        assertEquals("{\"subject\":\"test subject\", \"sent_at\":\"2016-11-18\", \"total_open_count\":4, \"emails\":[{\"email\": \"terry@odd-e.com\", \"open_count\": 4}]}", json);
     }
 
     @Test
@@ -50,7 +52,7 @@ public class OpenedEmailCounterServiceTest {
         addRecipient(notification, "trump@odd-e.com");
 
         String json = service.extract(notification);
-        assertEquals("{\"subject\":\"test subject\", \"sent_at\":\"Fri Nov 18 03:19:03 SGT 2016\", \"total_open_count\":8, \"emails\":[{\"email\": \"terry@odd-e.com\", \"open_count\": 4}, {\"email\": \"trump@odd-e.com\", \"open_count\": 4}]}", json);
+        assertEquals("{\"subject\":\"test subject\", \"sent_at\":\"2016-11-18\", \"total_open_count\":8, \"emails\":[{\"email\": \"terry@odd-e.com\", \"open_count\": 4}, {\"email\": \"trump@odd-e.com\", \"open_count\": 4}]}", json);
     }
 
     private Notification createNotification() {

@@ -173,7 +173,12 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 			count += detail.getRead_count();
 			sarray.add(detail.toJSON());
 		}
-		return "{\"subject\":\""+noti.getSubject()+"\", \"sent_at\":\""+noti.getSentDate()+"\", \"total_open_count\":"+count+", \"emails\":["+String.join(", ", sarray)+"]}";
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String date = null;
+		if (noti.getSentDate() != null) {
+			date = dateFormat.format(noti.getSentDate());
+		}
+		return "{\"subject\":\""+noti.getSubject()+"\", \"sent_at\":\""+date+"\", \"total_open_count\":"+count+", \"emails\":["+String.join(", ", sarray)+"]}";
 	}
 
 	@Override
