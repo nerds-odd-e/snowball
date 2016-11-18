@@ -22,7 +22,7 @@ public class NotificationDetail {
     }
 
     public String toJSON() {
-        return "{'email': '" + emailAddress + "'; 'count': " + read_count + "}";
+        return "{\"email\": \"" + emailAddress + "\", \"open_count\": " + read_count + "}";
     }
 
     public int getRead_count() {

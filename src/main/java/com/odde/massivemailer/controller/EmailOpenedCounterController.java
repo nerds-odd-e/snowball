@@ -30,7 +30,7 @@ public class EmailOpenedCounterController extends HttpServlet{
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletOutputStream outputStream = resp.getOutputStream();
-        Object email_id = req.getAttribute("id");
+        Object email_id = req.getParameter("id");
         if(email_id == null) {
             outputStream.print("{'error': 'null id'}");
             return;

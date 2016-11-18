@@ -28,10 +28,26 @@
 		<url-pattern>/listEmails</url-pattern>
 	</servlet-mapping>
 
+
+
 	<servlet>
 		<servlet-name>emailHistoryController</servlet-name>
 		<servlet-class>com.odde.massivemailer.controller.EmailHistoryController</servlet-class>
 	</servlet>
+
+
+	<servlet-mapping>
+		<servlet-name>emailOpenedCounterController</servlet-name>
+		<url-pattern>/listEmailDetails</url-pattern>
+	</servlet-mapping>
+
+
+
+	<servlet>
+		<servlet-name>emailOpenedCounterController</servlet-name>
+		<servlet-class>com.odde.massivemailer.controller.EmailOpenedCounterController</servlet-class>
+	</servlet>
+
 
 	<servlet>
 		<servlet-name>GameLoginController</servlet-name>

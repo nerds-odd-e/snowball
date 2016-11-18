@@ -160,10 +160,12 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 	@Override
 	public String getEmailCounterJson(Long sender_email_id) {
 		ArrayList<String> sarray = new ArrayList<String>();
+		int count = 0;
 		for (NotificationDetail notif: getReceipentOfEmail(sender_email_id)) {
-			 sarray.add(notif.toJSON());
+			count += notif.getRead_count();
+			sarray.add(notif.toJSON());
 		}
-		return "["+String.join(", ", sarray)+"]";
+		return "{\"subject\":\"\", \"sent_at\":\"\", \"total_open_count\":"+count+", \"emails\":["+String.join(", ", sarray)+"]}";
 	}
 
 	@Override
