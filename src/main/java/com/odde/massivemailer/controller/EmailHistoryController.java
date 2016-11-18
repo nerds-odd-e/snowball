@@ -1,12 +1,8 @@
 package com.odde.massivemailer.controller;
 
 import com.google.gson.Gson;
-import com.odde.massivemailer.model.ContactPerson;
-import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.model.Notification;
-import com.odde.massivemailer.service.ContactService;
 import com.odde.massivemailer.service.EmailService;
-import com.odde.massivemailer.service.impl.SqliteContact;
 import com.odde.massivemailer.service.impl.SqliteEmail;
 
 import javax.servlet.ServletException;
@@ -17,9 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * Created by csd11 on 14/11/16.
- */
 public class EmailHistoryController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private EmailService emailService;
@@ -30,7 +23,6 @@ public class EmailHistoryController extends HttpServlet {
 
     public EmailHistoryController(EmailService emailService) {
         this.emailService = emailService;
-
     }
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

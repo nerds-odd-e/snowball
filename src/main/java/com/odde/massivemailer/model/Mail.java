@@ -62,7 +62,6 @@ public class Mail {
     }
 
     public void setContent(String content) {
-        //this.content ="<html><body>"+content+ "<img src=\"http://192.168.1.90:8070/massive_mailer/resources/images/qrcode.png?messageId="+messageId+"\">Test.gif</img></body></html>";
         this.content = content;
     }
 
@@ -117,36 +116,16 @@ public class Mail {
             AddressException, MessagingException {
 
         List<String> recipients = getReceipts();
-
         List<Message> returnMsg = new ArrayList<Message>();
 
         for (String recipient : recipients) {
             MimeMessage message = setMessageProperty(session, recipient);
-
             composeMessage(recipient, message);
-            long messageId = System.currentTimeMillis();
-
             returnMsg.add(message);
         }
 
         return returnMsg;
     }
-
-    // public void composeMessage(List<String> recipients, MimeMessage message)
-    // throws EmailException {
-    // try {
-    //
-    // InternetAddress[] toAddress = new InternetAddress[recipients.size()];
-    //
-    // for (int i = 0; i < recipients.size(); i++) {
-    // toAddress[i] = new InternetAddress(recipients.get(i));
-    // message.addRecipient(Message.RecipientType.TO, toAddress[i]);
-    // }
-    //
-    // } catch (MessagingException ex) {
-    // throw new EmailException("Unable to send an email: " + ex);
-    // }
-    // }
 
     public void composeMessage(String recipient, MimeMessage message)
             throws EmailException {
@@ -187,7 +166,6 @@ public class Mail {
 	public void setSentDate(Date sentDate) {
 		this.sentDate = sentDate;
 	}
-
 
     public void setMessageId(long messageId) {
         this.messageId = messageId;
