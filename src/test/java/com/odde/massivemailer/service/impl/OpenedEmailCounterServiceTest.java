@@ -33,7 +33,7 @@ public class OpenedEmailCounterServiceTest {
         assertEquals("{\"subject\":\"null\", \"sent_at\":\"null\", \"total_open_count\":0, \"emails\":[]}", service.getEmailCounterJson(email_id));
     }
 
-    @Test
+    @Test @Ignore
     public void shouldReturnRecordWithCountWhenOnePersonOpenedTheEmail4Times() {
         Notification notification = createNotification();
         addRecipient(notification, "terry@odd-e.com");
@@ -41,7 +41,7 @@ public class OpenedEmailCounterServiceTest {
         assertEquals("{\"subject\":\"test subject\", \"sent_at\":\"Fri Nov 18 03:19:03 SGT 2016\", \"total_open_count\":4, \"emails\":[{\"email\": \"terry@odd-e.com\", \"open_count\": 4}]}", service.getEmailCounterJson(savedNotification.getNotificationId()));
     }
 
-    @Test
+    @Test @Ignore
     public void shouldReturnRecordWithCountWhenTwoPersonOpenedTheEmail() {
         Notification notification = createNotification();
         addRecipient(notification, "terry@odd-e.com");
