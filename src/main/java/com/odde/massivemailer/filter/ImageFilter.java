@@ -7,6 +7,7 @@ import javax.servlet.*;
 
 
 public class ImageFilter implements Filter {
+    static final String TOKEN = "token";
 
     private TrackingService sqliteTracking;
 
@@ -20,12 +21,11 @@ public class ImageFilter implements Filter {
                          ServletResponse response,
                          FilterChain chain)
             throws java.io.IOException, ServletException {
+        String token = request.getParameter(TOKEN);
 
-        String messageId = request.getParameter("messageId");
-        String userId = request.getParameter("userId");
-
-        if (messageId != null && userId != null)
-            getSqliteTracking().updateViewCount(Long.parseLong(messageId), userId);
+        if (token != null) {
+            getSqliteTracking().updateViewCount(Long.parseLong(token));
+        }
 
         chain.doFilter(request, response);
     }

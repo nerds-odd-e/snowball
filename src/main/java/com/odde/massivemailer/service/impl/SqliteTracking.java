@@ -29,4 +29,9 @@ public class SqliteTracking extends SqliteBase implements TrackingService {
         return 0;
     }
 
+    @Override
+    public void updateViewCount(final Long token) {
+
+    }
+
 }

@@ -16,11 +16,7 @@ import java.io.IOException;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.argThat;
-import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class ImageFilterTest {
     private ImageFilter filter;
@@ -47,37 +43,23 @@ public class ImageFilterTest {
 
     @Test
     public void FilterMustUpdateNotificationDetailMatchingToken() throws IOException, ServletException {
-        when(request.getParameter("messageId")).thenReturn("1");
-        when(request.getParameter("userId")).thenReturn("terry@odd-e.com");
+        when(request.getParameter(ImageFilter.TOKEN)).thenReturn("123456");
 
         filter.doFilter(request, response, chain);
 
-        ArgumentCaptor<Long> messageIdCaptor = ArgumentCaptor.forClass(Long.class);
-        ArgumentCaptor<String> emailAddressCaptor = ArgumentCaptor.forClass(String.class);
+        ArgumentCaptor<Long> tokenCaptor = ArgumentCaptor.forClass(Long.class);
 
-        verify(trackingService).updateViewCount(messageIdCaptor.capture(), emailAddressCaptor.capture());
+        verify(trackingService).updateViewCount(tokenCaptor.capture());
 
-        assertThat(messageIdCaptor.getValue(), is(1L));
-        assertThat(emailAddressCaptor.getValue(), is("terry@odd-e.com"));
+        assertThat(tokenCaptor.getValue(), is(123456L));
     }
 
     @Test
-    public void FilterMustNotUpdateNotificationDetailIfNoMessageId() throws IOException, ServletException {
-        when(request.getParameter("messageId")).thenReturn(null);
-        when(request.getParameter("userId")).thenReturn("terry@odd-e.com");
+    public void FilterMustNotUpdateNotificationDetailIfNoToken() throws IOException, ServletException {
+        when(request.getParameter(ImageFilter.TOKEN)).thenReturn(null);
 
         filter.doFilter(request, response, chain);
 
-        verify(trackingService, never()).updateViewCount(any(Long.class), any(String.class));
-    }
-
-    @Test
-    public void FilterMustNotUpdateNotificationDetailIfNoUserId() throws IOException, ServletException {
-        when(request.getParameter("messageId")).thenReturn("1");
-        when(request.getParameter("userId")).thenReturn(null);
-
-        filter.doFilter(request, response, chain);
-
-        verify(trackingService, never()).updateViewCount(any(Long.class), any(String.class));
+        verify(trackingService, never()).updateViewCount(any(Long.class));
     }
 }
