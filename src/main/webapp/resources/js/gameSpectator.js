@@ -62,7 +62,7 @@ function createPlayerDiv(player){
     var scar = "scar" + (player.scars < 7 ? player.scars : 6) ;
     return '<div class="race-track">'+
                 '<div class="racer" style="margin-left:' + indentation +   'px">' +
-                    '<div class="racerCar ' + scar + '" style="display: inline-block;"></div>'+
+                    '<div id="racerScar" class="racerCar ' + scar + '" style="display: inline-block;"></div>'+
                     '<div id="racerEmail" style="display: inline-block; margin-left: 8px;">Email: ' + player.email      + '</div>'+
                 '</div>'+
             '</div>';

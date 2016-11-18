@@ -41,6 +41,22 @@ describe('gameSpectator',function(){
         });
     });
 
+    describe('Display car with 1 scar', function() {
+            it('should show car with 1 scar image',function() {
+                var racerData = {
+                                     ID:        "aaa",
+                                     position :  0,
+                                     scars:      0,
+                                     email:      "aaa@gmail.com"
+                                };
+
+                $('#canvas').html(createPlayerDiv(racerData));
+                expect(document.getElementById("racerScar").className).toBe("racerCar scar0");
+            });
+        });
+
+
+
 
     describe('Multi player', function (){
         it('should show correct details for 2 players when server responds', function(){
