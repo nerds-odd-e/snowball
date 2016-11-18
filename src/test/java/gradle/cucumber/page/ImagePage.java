@@ -21,19 +21,19 @@ public class ImagePage {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        Long notificationId = 0L;
+        Long token = 0L;
 
         try {
             base.openConnection();
 
-            String sql = "SELECT notification_id FROM notification_details WHERE email_address = ?";
+            String sql = "SELECT id FROM notification_details WHERE email_address = ?";
 
             ps = base.getConnection().prepareStatement(sql);
             ps.setString(1, recipient);
             rs = ps.executeQuery();
 
             if (rs.next()) {
-                notificationId = rs.getLong(1);
+                token = rs.getLong(1);
             } else {
                 fail("No result?");
             }
@@ -43,7 +43,7 @@ public class ImagePage {
             base.closeConnection();
         }
 
-        String url = BASE_URL+"resources/images/qrcode.png?messageId="+notificationId+"&userId="+ recipient;
+        String url = BASE_URL+"resources/images/qrcode.png?token=" + token;
         driver.visit(url);
     }
 }

@@ -1,6 +1,5 @@
 package gradle.cucumber;
 
-import com.odde.massivemailer.service.impl.SqliteBase;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -8,14 +7,9 @@ import gradle.cucumber.driver.WebDriverFactory;
 import gradle.cucumber.driver.WebDriverWrapper;
 import gradle.cucumber.page.ImagePage;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import static gradle.cucumber.page.Notifications.getNotificationDetailCount;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
 
 public class TrackEmailSteps {
     private static final String BASE_URL = "http://localhost:8070/massive_mailer/";
