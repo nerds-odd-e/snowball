@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.logging.*;
 
 public class SqliteEmail extends SqliteBase implements EmailService {
@@ -174,6 +175,8 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 			sarray.add(detail.toJSON());
 		}
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		TimeZone tz = TimeZone.getTimeZone("Asia/Singapore");
+		dateFormat.setTimeZone(tz);
 		String date = null;
 		if (noti.getSentDate() != null) {
 			date = dateFormat.format(noti.getSentDate());
