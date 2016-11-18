@@ -13,6 +13,7 @@ import javax.mail.Transport;
 import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.GreenMailUtil;
 import com.icegreen.greenmail.util.ServerSetup;
+import com.odde.massivemailer.util.NotificationUtil;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -33,6 +34,7 @@ public class GmailServiceTest {
 		email.setContent("Hi Dude");
 		email.setSubject("test subject");
 		email.setReceipts(Arrays.asList(RECIPIENTS));
+		NotificationUtil.addNotification(email);
 		return email;
 	}
 	
@@ -88,8 +90,8 @@ public class GmailServiceTest {
 		mailService.send(mail);
 
 		//Assert
-		assertEquals("<html><body>Hi Dude<img height=\"42\" width=\"42\" src=\"http://"+InetAddress.getLocalHost().getHostAddress()+":8070/massive_mailer/resources/images/qrcode.png?messageId=0&userId=myodde@gmail.com\"></img></body></html>", GreenMailUtil.getBody(greenMail.getReceivedMessages()[0]));
-		assertEquals("<html><body>Hi Dude<img height=\"42\" width=\"42\" src=\"http://"+InetAddress.getLocalHost().getHostAddress()+":8070/massive_mailer/resources/images/qrcode.png?messageId=0&userId=kit.sumate@gmail.com\"></img></body></html>", GreenMailUtil.getBody(greenMail.getReceivedMessages()[1]));
+		assertEquals("<html><body>Hi Dude<img height=\"42\" width=\"42\" src=\"http://"+InetAddress.getLocalHost().getHostAddress()+":8070/massive_mailer/resources/images/qrcode.png?token="+mail.getNotification().getNotificationDetails().get(0).getId()+"\"></img></body></html>", GreenMailUtil.getBody(greenMail.getReceivedMessages()[0]));
+		assertEquals("<html><body>Hi Dude<img height=\"42\" width=\"42\" src=\"http://"+InetAddress.getLocalHost().getHostAddress()+":8070/massive_mailer/resources/images/qrcode.png?token="+mail.getNotification().getNotificationDetails().get(1).getId()+"\"></img></body></html>", GreenMailUtil.getBody(greenMail.getReceivedMessages()[1]));
 		greenMail.stop();
 	}
 

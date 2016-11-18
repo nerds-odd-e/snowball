@@ -31,6 +31,10 @@ public class Mail {
 	private String key;
 	private Date sentDate;
     private long messageId;
+    private Notification notification;
+
+
+
 
     public Mail() {
         this.sqliteContact = new SqliteContact();
@@ -65,11 +69,11 @@ public class Mail {
         this.content = content;
     }
 
-    private MimeMessage setMessageProperty(Session session, String recipient)
+    private MimeMessage setMessageProperty(Session session, NotificationDetail notificationDetail)
             throws AddressException, MessagingException {
 
         try {
-            ContactPerson contact = sqliteContact.getContactByEmail(recipient);
+            ContactPerson contact = sqliteContact.getContactByEmail(notificationDetail.getEmailAddress());
             String subject, content;
             if (contact != null) {
                 subject = ReplaceAttibute(this.getSubject(), contact);
@@ -86,7 +90,7 @@ public class Mail {
 
             InetAddress ip = InetAddress.getLocalHost();
 
-            String messageContent = "<html><body>" + content + "<img height=\"42\" width=\"42\" src=\"http://"+ip.getHostAddress()+":8070/massive_mailer/resources/images/qrcode.png?messageId="+messageId+"&userId="+recipient+"\"></img></body></html>";
+            String messageContent = "<html><body>" + content + "<img height=\"42\" width=\"42\" src=\"http://"+ip.getHostAddress()+":8070/massive_mailer/resources/images/qrcode.png?token="+notificationDetail.getId()+"\"></img></body></html>";
             message.setText(messageContent);
             message.setContent(messageContent, "text/html; charset=utf-8");
 
@@ -118,10 +122,13 @@ public class Mail {
         List<String> recipients = getReceipts();
         List<Message> returnMsg = new ArrayList<Message>();
 
-        for (String recipient : recipients) {
-            MimeMessage message = setMessageProperty(session, recipient);
-            composeMessage(recipient, message);
+        List<NotificationDetail> notificationDetails = notification.getNotificationDetails();
+
+        for(NotificationDetail notificationDetail:notificationDetails){
+            MimeMessage message = setMessageProperty(session, notificationDetail);
+            composeMessage(notificationDetail.getEmailAddress(), message);
             returnMsg.add(message);
+
         }
 
         return returnMsg;
@@ -173,5 +180,13 @@ public class Mail {
 
     public long getMessageId() {
         return messageId;
+    }
+
+    public void setNotification(Notification notification) {
+        this.notification = notification;
+    }
+
+    public Notification getNotification() {
+        return notification;
     }
 }

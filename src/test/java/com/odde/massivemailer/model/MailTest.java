@@ -1,6 +1,7 @@
 package com.odde.massivemailer.model;
 
 import com.odde.massivemailer.service.impl.SqliteContact;
+import com.odde.massivemailer.util.NotificationUtil;
 import org.junit.Test;
 
 import javax.mail.Message;
@@ -28,7 +29,8 @@ public class MailTest {
 		mail.setContent("content");
 		mail.setSubject("subject");
 		mail.setReceipts(Arrays.asList("test@gmail.com"));
-		
+		NotificationUtil.addNotification(mail);
+
 		List<Message> messages = mail.createMessages(session);
 		
 		assertEquals(1, messages.size());
@@ -39,7 +41,6 @@ public class MailTest {
 	public void testCreateMessageWithTemplate() throws Exception {
 		Properties props = System.getProperties();
 		Session session = Session.getDefaultInstance(props);
-
 		SqliteContact mockSqliteContact = mock(SqliteContact.class);
 		ContactPerson contactPerson = new ContactPerson();
 		contactPerson.setName("TestName");
@@ -54,14 +55,19 @@ public class MailTest {
 		mail.setSubject("subject {LastName} - {Email}");
 		mail.setReceipts(Arrays.asList("test@gmail.com"));
 
+		NotificationUtil.addNotification(mail);
+
 		List<Message> messages = mail.createMessages(session);
 
 
 		verify(mockSqliteContact).getContactByEmail(anyString());
-		assertEquals("<html><body>content TestName, CompanyName<img height=\"42\" width=\"42\" src=\"http://"+ InetAddress.getLocalHost().getHostAddress()+":8070/massive_mailer/resources/images/qrcode.png?messageId=" + mail.getMessageId() + "&userId="+"test@gmail.com"+"\"></img></body></html>", messages.get(0).getContent());
+
+		assertEquals("<html><body>content TestName, CompanyName<img height=\"42\" width=\"42\" src=\"http://"+ InetAddress.getLocalHost().getHostAddress()+":8070/massive_mailer/resources/images/qrcode.png?token=" + mail.getNotification().getNotificationDetails().get(0).getId() + "\"></img></body></html>", messages.get(0).getContent());
 		assertEquals("subject LastName - EmailName", messages.get(0).getSubject());
 	}
-	
+
+
+
 	@Test
 	public void testDisplayName() throws Exception {
 
@@ -72,7 +78,7 @@ public class MailTest {
 		mail.setContent("content");
 		mail.setSubject("subject");
 		mail.setReceipts(Arrays.asList("test@gmail.com"));
-		
+		NotificationUtil.addNotification(mail);
 		List<Message> messages = mail.createMessages(session);
 		String[] address = messages.get(0).getFrom()[0].toString().split("<");
 		
