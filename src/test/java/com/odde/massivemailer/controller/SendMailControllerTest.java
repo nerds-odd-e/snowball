@@ -118,6 +118,118 @@ public class SendMailControllerTest {
     }
 
     @Test
+    public void ProcessRequestMustHandleCompany() throws SQLException {
+        String company = "abc";
+
+        List<ContactPerson> contactPeople = new ContactPeopleBuilder(company)
+                .add("ab1@abc.com")
+                .add("ab2@abc.com")
+                .add("ab3@abc.com")
+                .build();
+
+        when(contactService.getContactListFromCompany(company)).thenReturn(contactPeople);
+
+        mockRecipient("company:" + company);
+
+        Mail mail = controller.processRequest(request);
+
+        List<String> recipients = mail.getReceipts();
+
+        assertThat(recipients.get(0), is("ab1@abc.com"));
+        assertThat(recipients.get(1), is("ab2@abc.com"));
+        assertThat(recipients.get(2), is("ab3@abc.com"));
+    }
+
+    @Test
+    public void ProcessRequestMustHandleCompanyWithSpace() throws SQLException {
+        String company = "abc def";
+
+        List<ContactPerson> contactPeople = new ContactPeopleBuilder(company)
+                .add("ab1@abc.com")
+                .add("ab2@abc.com")
+                .add("ab3@abc.com")
+                .build();
+
+        when(contactService.getContactListFromCompany(company)).thenReturn(contactPeople);
+
+        mockRecipient("company:\"" + company + "\"");
+
+        Mail mail = controller.processRequest(request);
+
+        List<String> recipients = mail.getReceipts();
+
+        assertThat(recipients.get(0), is("ab1@abc.com"));
+        assertThat(recipients.get(1), is("ab2@abc.com"));
+        assertThat(recipients.get(2), is("ab3@abc.com"));
+    }
+
+    private class ContactPeopleBuilder {
+        private List<ContactPerson> contactPeople;
+        private String company;
+
+        public ContactPeopleBuilder(final String company) {
+            this.contactPeople = new ArrayList<>();
+            this.company = company;
+        }
+
+        public ContactPeopleBuilder add(final String email) {
+            contactPeople.add(new ContactPerson("", email, "", company));
+
+            return this;
+        }
+
+        public List<ContactPerson> build() {
+            return contactPeople;
+        }
+    }
+
+    @Test
+    public void ProcessRequestMustHandleCompanyWithSpaceButWtf() throws SQLException {
+        String company = "abc def";
+
+        List<ContactPerson> contactPeople = new ContactPeopleBuilder(company)
+                .add("ab1@abc.com")
+                .add("ab2@abc.com")
+                .add("ab3@abc.com")
+                .build();
+
+        when(contactService.getContactListFromCompany(company)).thenReturn(contactPeople);
+
+        mockRecipient("company:\"" + company);
+
+        Mail mail = controller.processRequest(request);
+
+        List<String> recipients = mail.getReceipts();
+
+        assertThat(recipients.get(0), is("ab1@abc.com"));
+        assertThat(recipients.get(1), is("ab2@abc.com"));
+        assertThat(recipients.get(2), is("ab3@abc.com"));
+    }
+
+    @Test
+    public void ProcessRequestMustHandleCompanyWithSpaceButNoQuotesWtf() throws SQLException {
+        String company = "abc def";
+
+        List<ContactPerson> contactPeople = new ContactPeopleBuilder(company)
+                .add("ab1@abc.com")
+                .add("ab2@abc.com")
+                .add("ab3@abc.com")
+                .build();
+
+        when(contactService.getContactListFromCompany(company)).thenReturn(contactPeople);
+
+        mockRecipient("company:" + company);
+
+        Mail mail = controller.processRequest(request);
+
+        List<String> recipients = mail.getReceipts();
+
+        assertThat(recipients.get(0), is("ab1@abc.com"));
+        assertThat(recipients.get(1), is("ab2@abc.com"));
+        assertThat(recipients.get(2), is("ab3@abc.com"));
+    }
+
+    @Test
     public void SendMailMustSaveNotification() throws ServletException, IOException {
         mockRecipient("terry@odd-e.com");
 

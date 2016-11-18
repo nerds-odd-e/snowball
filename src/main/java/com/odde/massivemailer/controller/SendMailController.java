@@ -32,32 +32,32 @@ public class SendMailController extends HttpServlet {
     public static final String EMAIL_PASSWORD = "MM_EMAIL_PASSWORD";
 
     private GMailService gmailService;
-	private NotificationService notificationService;
+    private NotificationService notificationService;
 
     public SendMailController() {
         notificationService = new NotificationServiceSqlite();
     }
 
     @Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		try {
-			Mail email = processRequest(req);
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        try {
+            Mail email = processRequest(req);
 
-			notificationService.save(email.asNotification());
+            notificationService.save(email.asNotification());
 
             GMailService mailService = createGmailService();
-			mailService.send(email);
+            mailService.send(email);
 
-			resp.sendRedirect("sendemail.jsp?status=success&msg=Email successfully sent&repcnt="+email.getReceipts().size());
-		} catch (EmailException e) {
-			resp.sendRedirect("sendemail.jsp?status=failed&msg=Unable to send");
-			e.printStackTrace();
-		} catch (SQLException e) {
-			resp.sendRedirect("sendemail.jsp?status=failed&msg=Fail");
-			e.printStackTrace();
-		}
-	}
+            resp.sendRedirect("sendemail.jsp?status=success&msg=Email successfully sent&repcnt=" + email.getReceipts().size());
+        } catch (EmailException e) {
+            resp.sendRedirect("sendemail.jsp?status=failed&msg=Unable to send");
+            e.printStackTrace();
+        } catch (SQLException e) {
+            resp.sendRedirect("sendemail.jsp?status=failed&msg=Fail");
+            e.printStackTrace();
+        }
+    }
 
     private GMailService createGmailService() {
         if (null == gmailService) {
@@ -70,71 +70,59 @@ public class SendMailController extends HttpServlet {
 
     public Mail processRequest(HttpServletRequest req) throws SQLException {
 
-		Mail email = new Mail();
-		String tempRecipient = req.getParameter("recipient");
-		StringTokenizer st = new StringTokenizer(tempRecipient, ";");
-		ArrayList<String> recipientList = new ArrayList<String>();
-		while (st.hasMoreTokens()) {
-			String recipient = st.nextToken();
-			if (recipient.startsWith("company:")) {
+        Mail email = new Mail();
+        String tempRecipient = req.getParameter("recipient");
+        StringTokenizer st = new StringTokenizer(tempRecipient, ";");
+        ArrayList<String> recipientList = new ArrayList<String>();
+        while (st.hasMoreTokens()) {
+            String recipient = st.nextToken();
+            if (recipient.startsWith("company:")) {
 
-				String[] aaa = recipient.split(":");
-				String company = aaa[1].toString();
-                List<ContactPerson> contactList;
-
-				if(company.startsWith("\"") && company.endsWith("\"") && countCharOccurrence(company, '"') == 2){
-					company = company.substring(1, company.length()-1); 				
-				} else if (company.startsWith("\"") && countCharOccurrence(company, '"') == 1) {
-					company = company.substring(1, company.length());
-				}
-
-				SqliteContact contactService = getSqliteContact();
-                contactList = contactService.getContactListFromCompany(company);
-				if (contactList.isEmpty()) {
-					throw new SQLException();
-				}
-				for (ContactPerson contactPerson : contactList) {
+                String[] aaa = recipient.split(":");
+                String company = aaa[1].toString();
+                List<ContactPerson> contactList = getContactPersons(company);
+                if (contactList.isEmpty()) {
+                    throw new SQLException();
+                }
+                for (ContactPerson contactPerson : contactList) {
                     recipientList.add(contactPerson.getEmail());
-				}
-			}
-			else{
-				recipientList.add(recipient);
-			}
-		}
-		email.setMessageId(System.currentTimeMillis());
-		email.setContent(req.getParameter("content"));
-		email.setSubject(req.getParameter("subject"));
-
-		email.setReceipts(recipientList);
-
-		return email;
-	}
-
-	public SqliteContact getSqliteContact() {
-        return (sqliteContact == null) ? sqliteContact = new SqliteContact() : sqliteContact;
-	}
-	
-	public void setSqliteContact(SqliteContact contactService)
-	{
-		sqliteContact = contactService;
-	}
-	
-	
-	private int countCharOccurrence(String input, char countedChar) {
-        int counter = 0;
-        for( int i=0; i < input.length(); i++ ) {
-            if( input.charAt(i) == countedChar ) {
-                counter++;
+                }
+            } else {
+                recipientList.add(recipient);
             }
         }
-        return counter;
-	}
+        email.setMessageId(System.currentTimeMillis());
+        email.setContent(req.getParameter("content"));
+        email.setSubject(req.getParameter("subject"));
+
+        email.setReceipts(recipientList);
+
+        return email;
+    }
+
+    private List<ContactPerson> getContactPersons(String company) throws SQLException {
+        List<ContactPerson> contactList;
+
+        company = company.replaceAll("\"", "");
+
+        SqliteContact contactService = getSqliteContact();
+        contactList = contactService.getContactListFromCompany(company);
+        return contactList;
+    }
+
+    public SqliteContact getSqliteContact() {
+        return (sqliteContact == null) ? sqliteContact = new SqliteContact() : sqliteContact;
+    }
+
+    public void setSqliteContact(SqliteContact contactService) {
+        sqliteContact = contactService;
+    }
 
     public void setGmailService(GMailService gmailService) {
         this.gmailService = gmailService;
     }
 
     public void setNotificationService(final NotificationService notificationService) {
-		this.notificationService = notificationService;
-	}
+        this.notificationService = notificationService;
+    }
 }

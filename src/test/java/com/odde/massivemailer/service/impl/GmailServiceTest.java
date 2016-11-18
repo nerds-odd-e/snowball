@@ -88,8 +88,8 @@ public class GmailServiceTest {
 		mailService.send(mail);
 
 		//Assert
-		assertEquals("<html><body>Hi Dude<img src=\"http://"+InetAddress.getLocalHost().getHostAddress()+":8070/massive_mailer/resources/images/qrcode.png?messageId=0&userId=myodde@gmail.com\">Test.gif</img></body></html>", GreenMailUtil.getBody(greenMail.getReceivedMessages()[0]));
-		assertEquals("<html><body>Hi Dude<img src=\"http://"+InetAddress.getLocalHost().getHostAddress()+":8070/massive_mailer/resources/images/qrcode.png?messageId=0&userId=kit.sumate@gmail.com\">Test.gif</img></body></html>", GreenMailUtil.getBody(greenMail.getReceivedMessages()[1]));
+		assertEquals("<html><body>Hi Dude<img height=\"42\" width=\"42\" src=\"http://"+InetAddress.getLocalHost().getHostAddress()+":8070/massive_mailer/resources/images/qrcode.png?messageId=0&userId=myodde@gmail.com\"></img></body></html>", GreenMailUtil.getBody(greenMail.getReceivedMessages()[0]));
+		assertEquals("<html><body>Hi Dude<img height=\"42\" width=\"42\" src=\"http://"+InetAddress.getLocalHost().getHostAddress()+":8070/massive_mailer/resources/images/qrcode.png?messageId=0&userId=kit.sumate@gmail.com\"></img></body></html>", GreenMailUtil.getBody(greenMail.getReceivedMessages()[1]));
 		greenMail.stop();
 	}
 
