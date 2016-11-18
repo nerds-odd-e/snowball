@@ -4,6 +4,7 @@ import com.odde.massivemailer.model.Notification;
 import com.odde.massivemailer.model.NotificationDetail;
 import com.odde.massivemailer.service.NotificationService;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -104,7 +105,7 @@ public class NotificationServiceSqlite extends SqliteBase implements Notificatio
     }
 
     private void saveNotification(final Notification notification) {
-        String sql = "INSERT INTO notifications (subject, notification_id, sent_at) VALUES (?, ?, datetime('now'))";
+        String sql = "INSERT INTO notifications (subject, notification_id, sent_at) VALUES (?, ?, ?)";
 
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -114,6 +115,8 @@ public class NotificationServiceSqlite extends SqliteBase implements Notificatio
 
             ps.setString(1, notification.getSubject());
             ps.setLong(2, notification.getNotificationId());
+            java.util.Date sentDate = notification.getSentDate() != null ? notification.getSentDate() : new java.util.Date();
+            ps.setDate(3, new Date(sentDate.getTime()));
 
             ps.executeUpdate();
 
