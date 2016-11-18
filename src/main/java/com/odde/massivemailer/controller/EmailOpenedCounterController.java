@@ -1,8 +1,5 @@
 package com.odde.massivemailer.controller;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.service.EmailService;
 import com.odde.massivemailer.service.impl.SqliteEmail;
 
@@ -12,8 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
-import java.util.StringTokenizer;
 
 public class EmailOpenedCounterController extends HttpServlet{
 

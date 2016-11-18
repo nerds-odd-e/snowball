@@ -12,9 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * Created by Cadet on 11/26/2015.
- */
 public class TemplatesController extends HttpServlet {
 
     private TemplateService service;
