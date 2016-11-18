@@ -5,26 +5,21 @@ import com.odde.massivemailer.service.impl.SqliteTracking;
 
 import javax.servlet.*;
 
-
 public class ImageFilter implements Filter {
     static final String TOKEN = "token";
 
-    private TrackingService sqliteTracking;
+    private TrackingService trackingService;
 
-
-    public void init(FilterConfig config)
-            throws ServletException {
-
+    public void init(FilterConfig config) throws ServletException {
+        trackingService = new SqliteTracking();
     }
 
-    public void doFilter(ServletRequest request,
-                         ServletResponse response,
-                         FilterChain chain)
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws java.io.IOException, ServletException {
         String token = request.getParameter(TOKEN);
 
         if (token != null) {
-            getSqliteTracking().updateViewCount(Long.parseLong(token));
+            trackingService.updateViewCount(Long.parseLong(token));
         }
 
         chain.doFilter(request, response);
@@ -33,11 +28,7 @@ public class ImageFilter implements Filter {
     public void destroy() {
     }
 
-    public TrackingService getSqliteTracking() {
-        return (sqliteTracking == null) ? sqliteTracking = new SqliteTracking() : sqliteTracking;
-    }
-
     public void setTrackingService(final TrackingService trackingService) {
-        this.sqliteTracking = trackingService;
+        this.trackingService = trackingService;
     }
 }
