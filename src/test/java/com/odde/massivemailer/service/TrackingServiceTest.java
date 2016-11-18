@@ -6,47 +6,19 @@ import com.odde.massivemailer.service.impl.NotificationServiceSqlite;
 import com.odde.massivemailer.service.impl.SqliteTracking;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-
-import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.verify;
 
-@RunWith(MockitoJUnitRunner.class)
 public class TrackingServiceTest {
     private TrackingService service;
 
     private NotificationService notificationService;
 
-    @Mock
-    private PreparedStatement mockPreparedStatement;
-
-    @Mock
-    private Connection mockConnection;
-
     @Before
     public void setUp() {
         service = new SqliteTracking();
         notificationService = new NotificationServiceSqlite();
-    }
-
-    @Test
-    public void updateViewCountByOne() throws SQLException {
-        //int result= service.updateViewCount(100900, "terry@gmail.com");
-        //verify(mockPreparedStatement).executeUpdate();
-        //assertEquals(1, result);
-    }
-    
-    @Test
-    public void ensureIncrement() throws SQLException {
-        //assertTrue(trackingService.sql.replaceAll(" ", "").contains("read_count+1"));
     }
 
     @Test
