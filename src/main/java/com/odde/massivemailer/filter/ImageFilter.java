@@ -1,5 +1,6 @@
 package com.odde.massivemailer.filter;
 
+import com.odde.massivemailer.service.TrackingService;
 import com.odde.massivemailer.service.impl.SqliteTracking;
 
 import javax.servlet.*;
@@ -7,7 +8,7 @@ import javax.servlet.*;
 
 public class ImageFilter implements Filter {
 
-    private SqliteTracking sqliteTracking;
+    private TrackingService sqliteTracking;
 
 
     public void init(FilterConfig config)
@@ -32,7 +33,11 @@ public class ImageFilter implements Filter {
     public void destroy() {
     }
 
-    public SqliteTracking getSqliteTracking() {
+    public TrackingService getSqliteTracking() {
         return (sqliteTracking == null) ? sqliteTracking = new SqliteTracking() : sqliteTracking;
+    }
+
+    public void setTrackingService(final TrackingService trackingService) {
+        this.sqliteTracking = trackingService;
     }
 }
