@@ -13,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 import static org.junit.Assert.assertEquals;
 
@@ -58,6 +59,8 @@ public class OpenedEmailCounterServiceTest {
         notification.setSubject("test subject");
         String input = "Fri Nov 18 03:19:03 SGT 2016";
         SimpleDateFormat parser = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
+        TimeZone tz = TimeZone.getTimeZone("Asia/Singapore");
+        parser.setTimeZone(tz);
         try {
             notification.setSentDate(parser.parse(input));
         } catch (ParseException e) {
