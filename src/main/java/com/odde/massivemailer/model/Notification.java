@@ -11,6 +11,7 @@ public class Notification {
     private Long notificationId;
     private Date sentDate;
 
+    private List<NotificationDetail> notificationDetails;
 
     public Date getSentDate() {
         return sentDate;
@@ -23,8 +24,6 @@ public class Notification {
     public void setNotificationDetails(List<NotificationDetail> notificationDetails) {
         this.notificationDetails = notificationDetails;
     }
-
-    private List<NotificationDetail> notificationDetails;
 
     public Notification() {
         notificationDetails = new ArrayList<>();

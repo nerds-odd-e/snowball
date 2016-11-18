@@ -35,6 +35,7 @@ public class EmailOpenedCounterController extends HttpServlet{
             outputStream.print("{'error': 'null id'}");
             return;
         }
+//        outputStream.print(emailService.getEmailCounterJson(Long.parseLong(String.valueOf(email_id))));
         outputStream.print(emailService.getEmailCounterJson(Long.parseLong(String.valueOf(email_id))));
     }
 

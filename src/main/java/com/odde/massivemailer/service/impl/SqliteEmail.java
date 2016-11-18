@@ -1,5 +1,7 @@
 package com.odde.massivemailer.service.impl;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.odde.massivemailer.model.Notification;
 import com.odde.massivemailer.model.NotificationDetail;
 import com.odde.massivemailer.service.EmailService;
@@ -160,12 +162,14 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 	@Override
 	public String getEmailCounterJson(Long sender_email_id) {
 		ArrayList<String> sarray = new ArrayList<String>();
+		Notification noti = getNotification(sender_email_id);
 		int count = 0;
-		for (NotificationDetail notif: getReceipentOfEmail(sender_email_id)) {
-			count += notif.getRead_count();
-			sarray.add(notif.toJSON());
+		for (NotificationDetail detail : noti.getNotificationDetails()) {
+			count += detail.getRead_count();
+			sarray.add(detail.toJSON());
 		}
-		return "{\"subject\":\"\", \"sent_at\":\"\", \"total_open_count\":"+count+", \"emails\":["+String.join(", ", sarray)+"]}";
+		return "{\"subject\":\""+noti.getSubject()+"\", \"sent_at\":\""+noti.getSentDate()+"\", \"total_open_count\":"+count+", \"emails\":["+String.join(", ", sarray)+"]}";
+//		return new Gson().toJson(noti);
 	}
 
 	@Override
@@ -188,5 +192,10 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 	private List<NotificationDetail> getReceipentOfEmail(Long email_id) {
 		NotificationService ns = new NotificationServiceSqlite();
 		return ns.getNotificationDetails(email_id);
+	}
+
+	private Notification getNotification(Long id) {
+		NotificationService ns = new NotificationServiceSqlite();
+		return ns.getNotification(id);
 	}
 }

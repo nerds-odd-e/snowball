@@ -9,4 +9,6 @@ public interface NotificationService {
     Notification save(Notification notification);
 
     List<NotificationDetail> getNotificationDetails(Long notificationId);
+
+    Notification getNotification(Long id);
 }

@@ -7,6 +7,8 @@ import com.odde.massivemailer.service.NotificationService;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +37,25 @@ public class NotificationServiceSqlite extends SqliteBase implements Notificatio
     }
 
     @Override
+    public Notification getNotification(Long id) {
+        String sql = "SELECT notification_id, subject, sent_at FROM notifications WHERE notification_id = ?";
+        Notification noti = null;
+        try {
+            openConnection();
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ps.setString(1, Long.toString(id));
+            ResultSet resultSet = ps.executeQuery();
+            noti = populateNotification(resultSet);
+            noti.setNotificationDetails(getNotificationDetails(id));
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return noti;
+    }
+
+    @Override
     public List<NotificationDetail> getNotificationDetails(Long notificationId) {
         String sql = "SELECT * from notification_details where notification_id = ?";
 
@@ -50,6 +71,24 @@ public class NotificationServiceSqlite extends SqliteBase implements Notificatio
             closeConnection();
         }
         return notificationDetailList;
+    }
+
+    private Notification populateNotification(ResultSet resultSet) throws SQLException {
+        Notification noti = new Notification();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        while (resultSet.next()) {
+            noti.setId(resultSet.getLong("notification_id"));
+            noti.setSubject(resultSet.getString("subject"));
+            String sentDate = resultSet.getTimestamp("sent_at").toString();
+            try {
+                noti.setSentDate(dateFormat.parse(sentDate));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            noti.setNotificationId((long) resultSet.getInt("notification_id"));
+            break;
+        }
+        return noti;
     }
 
     private void populateNotificationDetailsList(ResultSet resultSet) throws SQLException {
