@@ -4,8 +4,7 @@ Feature: Track Email
     Given I send an email to "terry1@odd-e.com"
     When  "terry1@odd-e.com" does not open the email
     Then  I should see that "terry1@odd-e.com" has not opened the email
-
-  @now
+    
   Scenario: Email is opened
     Given I send an email to "terry2@odd-e.com"
     When  "terry2@odd-e.com" open the email
