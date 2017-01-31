@@ -1,6 +1,6 @@
 Feature: Add Event
   As the admin I want to add events
-  so that I can send newsletters of events to contacts later
+  so that I can send notifications of events to contacts later
 
   Scenario: Verify Add New Event To Event List
     When Add an event "CSD training"
