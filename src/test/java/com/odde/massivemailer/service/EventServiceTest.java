@@ -8,6 +8,10 @@ import static org.junit.Assert.*;
 import com.odde.massivemailer.service.impl.EventServiceImpl;
 import org.junit.Test;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 public class EventServiceTest {
 
     @Test
@@ -57,4 +61,35 @@ public class EventServiceTest {
             assertEquals(e.getMessage(), "Event title is mandatory");
         }
     }
+
+    @Test
+    public void returnEmptyEventListWhenEventsAreNotAvailable() {
+        EventService eventService = new EventServiceImpl();
+
+        List<Event> events = eventService.getAll();
+        assertTrue(events.isEmpty());
+    }
+
+    @Test
+    public void returnEventListWhenEventsAreAvailable() {
+        EventService eventService = new EventServiceImpl();
+
+        Event e1 = new Event("Test event 1");
+
+        eventService.addEvent(e1);
+
+        List<Event> events = eventService.getAll();
+
+        assertEquals(1, events.size());
+        assertEquals(e1, events.get(0));
+
+        Event e2 = new Event("Test event 2");
+        eventService.addEvent(e2);
+
+        events = eventService.getAll();
+
+        assertEquals(2, events.size());
+        assertEquals(e2, events.get(1));
+    }
+
 }
