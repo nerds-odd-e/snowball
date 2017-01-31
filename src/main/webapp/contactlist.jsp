@@ -190,11 +190,12 @@ $(document).ready(function() {
 	}
 	var contactList = retrieveContactListFromServer();
 	renderContactList(contactList, $('#contactTable'));
-	
+
 	$("#save_button").click(function() {
 		submitEditContact();
 	});
 });
 </script>
 </html>
+
 
