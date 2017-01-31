@@ -75,7 +75,7 @@ public class EventsControllerTest {
 
         Mockito.when(eventService.addEvent(e)).thenReturn(1);
 
-        request.setParameter("title", "Test event 1");
+        request.setParameter("evtTitle", "Test event 1");
         request.setParameter("content", "Test content 1");
 
         eventsController.doPost(request, response);
@@ -90,7 +90,7 @@ public class EventsControllerTest {
         Mockito.when(eventService.addEvent(e)).thenThrow(
                 new EventAlreadyExistsException("Event 'Test event 1' is already exist"));
 
-        request.setParameter("title", "Test event 1");
+        request.setParameter("evtTitle", "Test event 1");
         request.setParameter("content", "Test content 1");
 
         eventsController.doPost(request, response);

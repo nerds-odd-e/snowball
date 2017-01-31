@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.odde.massivemailer.exception.EventAlreadyExistsException;
 import com.odde.massivemailer.model.Event;
 import com.odde.massivemailer.service.EventService;
+import com.odde.massivemailer.service.impl.EventServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -14,6 +15,10 @@ import java.io.IOException;
 
 public class EventsController extends HttpServlet {
     private EventService eventService;
+
+    public EventsController(){
+        this.eventService = new EventServiceImpl();
+    }
 
     public EventsController(EventService eventService) {
         setEventService(eventService);
@@ -48,7 +53,7 @@ public class EventsController extends HttpServlet {
     }
 
     private Event buildEventObject(HttpServletRequest req) {
-        String title = req.getParameter("title");
+        String title = req.getParameter("evtTitle");
         String content = req.getParameter("content");
 
         return new Event(title, content);
