@@ -6,12 +6,26 @@ import java.util.Objects;
 public class Event implements Serializable {
     private String title;
 
+    private String content;
+
     public Event(String title) {
-        this.title = title;
+        setTitle(title);
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getTitle() {
         return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     @Override

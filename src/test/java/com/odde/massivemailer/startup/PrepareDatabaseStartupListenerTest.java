@@ -38,7 +38,7 @@ public class PrepareDatabaseStartupListenerTest {
     public void TemplateTableMustExist() throws SQLException {
         listener.contextInitialized(null);
 
-        assertTableExists("Template");
+        assertTableExists("template");
     }
 
     @Test
@@ -53,6 +53,13 @@ public class PrepareDatabaseStartupListenerTest {
         listener.contextInitialized(null);
 
         assertTableExists("notification_details");
+    }
+
+    @Test
+    public void EventTableMustExist() throws SQLException {
+        listener.contextInitialized(null);
+
+        assertTableExists("event");
     }
 
     private void assertTableExists(String tableName) throws SQLException {
