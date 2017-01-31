@@ -12,6 +12,11 @@ public class Event implements Serializable {
         setTitle(title);
     }
 
+    public Event(String title, String content) {
+        setTitle(title);
+        setContent(content);
+    }
+
     public String getContent() {
         return content;
     }
