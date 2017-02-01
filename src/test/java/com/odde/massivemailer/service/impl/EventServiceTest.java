@@ -1,12 +1,8 @@
 package com.odde.massivemailer.service.impl;
 
 
-import com.odde.massivemailer.exception.EventAlreadyExistsException;
 import com.odde.massivemailer.model.Event;
 import com.odde.massivemailer.service.EventService;
-import static org.junit.Assert.*;
-
-import com.odde.massivemailer.service.impl.EventServiceImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,10 +12,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class EventServiceTest {
 
@@ -46,20 +43,6 @@ public class EventServiceTest {
         assertEquals(true, eventService.addEvent(new Event("Test event 1")));
         assertEquals(true, eventService.addEvent(new Event("Test event 2")));
     }
-
-//    @Test
-//    public void returnErrorWhenEventWithSameTitleAlreadyExists() {
-//        EventService eventService = new EventServiceImpl();
-//
-//        assertEquals(1, eventService.addEvent(new Event("Test event 1")));
-//
-//        try {
-//            eventService.addEvent(new Event("Test event 1"));
-//        } catch (Exception e) {
-//            assertTrue(e instanceof EventAlreadyExistsException);
-//            assertEquals(e.getMessage(), "Event 'Test event 1' is already exist");
-//        }
-//    }
 
     @Test
     public void returnErrorWhenEventTitleIsEmpty() {
