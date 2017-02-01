@@ -1,7 +1,5 @@
 package com.odde.massivemailer.controller;
 
-import com.google.gson.Gson;
-import com.odde.massivemailer.exception.EventAlreadyExistsException;
 import com.odde.massivemailer.model.Event;
 import com.odde.massivemailer.service.EventService;
 import org.junit.Before;
