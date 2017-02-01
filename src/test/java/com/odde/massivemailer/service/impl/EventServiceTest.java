@@ -7,13 +7,37 @@ import com.odde.massivemailer.service.EventService;
 import static org.junit.Assert.*;
 
 import com.odde.massivemailer.service.impl.EventServiceImpl;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+import org.sqlite.SQLiteConfig;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
 
 public class EventServiceTest {
+
+    Statement statement;
+
+    @Before
+    public void setUp() throws SQLException, ClassNotFoundException {
+        statement = getStatement();
+    }
+
+    @After
+    public void tearDown() {
+        try {
+            statement.executeUpdate("DELETE FROM Event");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Test
     public void returnEventObjectWhenAddEventIsCalled() {
@@ -91,4 +115,15 @@ public class EventServiceTest {
         assertEquals(e2, events.get(1));
     }
 
+    public Statement getStatement() throws ClassNotFoundException,
+            SQLException {
+
+        Class.forName("org.sqlite.JDBC");
+        SQLiteConfig sqLiteConfig = new SQLiteConfig();
+        Properties properties = sqLiteConfig.toProperties();
+        properties.setProperty(SQLiteConfig.Pragma.DATE_STRING_FORMAT.pragmaName, "yyyy-MM-dd HH:mm:ss");
+        Connection connection = DriverManager.getConnection("jdbc:sqlite:oddemail.db", properties);
+
+        return connection.createStatement();
+    }
 }
