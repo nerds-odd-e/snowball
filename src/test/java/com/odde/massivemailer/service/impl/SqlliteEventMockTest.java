@@ -14,7 +14,10 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.*;
+import java.util.List;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -41,10 +44,20 @@ public class SqlliteEventMockTest {
 
     @Test
     public void shouldReturnFalseWhenAddNewEventThrowsDatabaseFailure() throws SQLException {
-        sqliteEvent.setStatement(mockStatement);
         String sql = "INSERT INTO Event (Title, Description) VALUES ('CSD Training', 'null')";
 
         when(mockStatement.executeUpdate(sql)).thenThrow(new SQLException());
         Assert.assertFalse(sqliteEvent.addNewEvent(new Event(EVENT_NAME)));
+    }
+
+    @Test
+    public void shouldReturnEmptyEventListWhenDatabaseFailure() throws SQLException {
+        String sql = "SELECT * FROM Event";
+
+        when(mockStatement.executeQuery(sql)).thenThrow(new SQLException());
+
+        List<Event> events = sqliteEvent.getAll();
+
+        assertTrue(events.isEmpty());
     }
 }

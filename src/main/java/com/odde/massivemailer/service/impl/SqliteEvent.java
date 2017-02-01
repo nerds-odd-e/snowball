@@ -1,15 +1,12 @@
 package com.odde.massivemailer.service.impl;
 
-import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Event;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.*;
 
 public class SqliteEvent extends SqliteBase {
-    private Map<Integer, Event> events = new LinkedHashMap<>();
 
     public boolean addNewEvent(Event event) {
         int rowAffected = 0;
@@ -22,10 +19,6 @@ public class SqliteEvent extends SqliteBase {
                             event.getTitle(),
                             event.getContent());
             rowAffected = statement.executeUpdate(sqlStatement);
-
-            if (rowAffected == 1) {
-                events.put(events.size() + 1, event);
-            }
 
             return (rowAffected == 1);
         } catch (ClassNotFoundException | SQLException e) {

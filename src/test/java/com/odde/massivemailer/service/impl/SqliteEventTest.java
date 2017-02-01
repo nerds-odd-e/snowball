@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Properties;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 
 public class SqliteEventTest {
 
@@ -29,7 +30,7 @@ public class SqliteEventTest {
     @After
     public void tearDown() {
         try {
-            statement.executeUpdate("DELETE FROM Event WHERE Title = '" + EVENT_NAME + "'");
+            statement.executeUpdate("DELETE FROM Event WHERE Title Like '" + EVENT_NAME + "%'");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -61,13 +62,34 @@ public class SqliteEventTest {
     }
 
     @Test
-    public void shouldReturnEventListWhenEventIsAlreadySaved() {
+    public void shouldReturnEmptyEventListWhenNoEventIsSaved() {
+        List<Event> events = sqliteEvent.getAll();
+
+        assertTrue(events.isEmpty());
+    }
+
+    @Test
+    public void shouldReturnSingleEventListWhenEventIsAlreadySaved() {
         Event event = new Event(EVENT_NAME);
         sqliteEvent.addNewEvent(event);
 
         List<Event> events = sqliteEvent.getAll();
 
         assertEquals(1, events.size());
+    }
+
+    @Test
+    public void shouldReturnMultipleEventsListWhenEventIsAlreadySaved() {
+        int count = 10;
+
+        for (int i = 0; i < count; i++) {
+            Event event = new Event(EVENT_NAME + " #" + i);
+            sqliteEvent.addNewEvent(event);
+        }
+
+        List<Event> events = sqliteEvent.getAll();
+
+        assertEquals(10, events.size());
     }
 
     public Statement getStatement() throws ClassNotFoundException,
