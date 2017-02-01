@@ -7,34 +7,37 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
 import java.sql.*;
+import java.util.List;
 import java.util.Properties;
+
 import static junit.framework.Assert.assertEquals;
 
 public class SqliteEventTest {
 
-	private SqliteEvent sqliteEvent = new SqliteEvent();
+    private SqliteEvent sqliteEvent = new SqliteEvent();
     private Statement statement;
 
     private static String EVENT_NAME = "CSD Training";
 
-	@Before
-	public void setUp() throws SQLException, ClassNotFoundException {
-         statement = getStatement();
-	}
+    @Before
+    public void setUp() throws SQLException, ClassNotFoundException {
+        statement = getStatement();
+    }
 
-	@After
-	public void tearDown() {
+    @After
+    public void tearDown() {
         try {
             statement.executeUpdate("DELETE FROM Event WHERE Title = '" + EVENT_NAME + "'");
         } catch (SQLException e) {
             e.printStackTrace();
         }
         sqliteEvent.closeConnection();
-	}
+    }
 
-	@Test
-	public void shouldReturnTrueWhenAddNewEventIsSuccessful() throws SQLException {
+    @Test
+    public void shouldReturnTrueWhenAddNewEventIsSuccessful() throws SQLException {
         Event event = new Event(EVENT_NAME);
         boolean returnedValue = sqliteEvent.addNewEvent(event);
 
@@ -49,7 +52,7 @@ public class SqliteEventTest {
 
         ResultSet rs = statement.executeQuery(
                 "SELECT COUNT(*) FROM Event WHERE Title = '" + EVENT_NAME + "'"
-            );
+        );
 
         rs.next();
         int returnedValue = rs.getInt(1);
@@ -57,6 +60,15 @@ public class SqliteEventTest {
         Assert.assertEquals(1, returnedValue);
     }
 
+    @Test
+    public void shouldReturnEventListWhenEventIsAlreadySaved() {
+        Event event = new Event(EVENT_NAME);
+        sqliteEvent.addNewEvent(event);
+
+        List<Event> events = sqliteEvent.getAll();
+
+        assertEquals(1, events.size());
+    }
 
     public Statement getStatement() throws ClassNotFoundException,
             SQLException {
@@ -69,6 +81,4 @@ public class SqliteEventTest {
 
         return connection.createStatement();
     }
-
-
 }
