@@ -32,7 +32,7 @@ repositories {
 }
 
 gretty {
-    port = 8070
+    httpPort = 8070
 }
 
 karma {
