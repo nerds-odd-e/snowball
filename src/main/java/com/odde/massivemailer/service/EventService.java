@@ -6,7 +6,7 @@ import com.odde.massivemailer.model.Event;
 import java.util.List;
 
 public interface EventService {
-    int addEvent(Event event) throws EventAlreadyExistsException;
+    boolean addEvent(Event event);
 
     List<Event> getAll();
 }
