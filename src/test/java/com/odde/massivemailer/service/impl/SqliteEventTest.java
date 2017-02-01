@@ -34,11 +34,11 @@ public class SqliteEventTest {
 	}
 
 	@Test
-	public void shouldReturn1WhenAddNewEventIsSuccessful() throws SQLException {
+	public void shouldReturnTrueWhenAddNewEventIsSuccessful() throws SQLException {
         Event event = new Event(EVENT_NAME);
-        int returnedValue = sqliteEvent.addNewEvent(event);
+        boolean returnedValue = sqliteEvent.addNewEvent(event);
 
-        Assert.assertEquals(1, returnedValue);
+        Assert.assertEquals(true, returnedValue);
     }
 
     @Test
