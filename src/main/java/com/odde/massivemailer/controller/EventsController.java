@@ -12,10 +12,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 public class EventsController extends HttpServlet {
     private EventService eventService;
+
+    public EventsController(){
+        this.eventService = new EventServiceImpl();
+    }
 
     public EventsController(EventService eventService) {
         setEventService(eventService);
@@ -35,6 +38,24 @@ public class EventsController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+        String resultMsg = "";
+
+        Event event = buildEventObject(req);
+        try {
+            if (eventService.addEvent(event) > 0) {
+                resultMsg = "status=success&msg=Add event successfully";
+            }
+        } catch (EventAlreadyExistsException e) {
+            resultMsg = "status=failed&msg=" + e.getMessage();
+        }
+
+        resp.sendRedirect("eventlist.jsp?" + resultMsg);
+    }
+
+    private Event buildEventObject(HttpServletRequest req) {
+        String title = req.getParameter("evtTitle");
+        String content = req.getParameter("content");
+
+        return new Event(title, content);
     }
 }

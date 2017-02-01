@@ -1,6 +1,7 @@
 package com.odde.massivemailer.controller;
 
 import com.google.gson.Gson;
+import com.odde.massivemailer.exception.EventAlreadyExistsException;
 import com.odde.massivemailer.model.Event;
 import com.odde.massivemailer.service.EventService;
 import org.junit.Before;
@@ -65,5 +66,34 @@ public class EventsControllerTest {
 
         eventsController.doGet(request, response);
         assertEquals("[{\"title\":\"Test event 1\"},{\"title\":\"Test event 2\"}]", response.getContentAsString());
+    }
+
+    @Test
+    public void addNewEvent() throws Exception {
+        Event e = new Event("Test event 1");
+        events.add(e);
+
+        Mockito.when(eventService.addEvent(e)).thenReturn(1);
+
+        request.setParameter("evtTitle", "Test event 1");
+        request.setParameter("content", "Test content 1");
+
+        eventsController.doPost(request, response);
+        assertEquals("eventlist.jsp?status=success&msg=Add event successfully", response.getRedirectedUrl());
+    }
+
+    @Test
+    public void addExistingEvent() throws Exception {
+        Event e = new Event("Test event 1");
+        events.add(e);
+
+        Mockito.when(eventService.addEvent(e)).thenThrow(
+                new EventAlreadyExistsException("Event 'Test event 1' is already exist"));
+
+        request.setParameter("evtTitle", "Test event 1");
+        request.setParameter("content", "Test content 1");
+
+        eventsController.doPost(request, response);
+        assertEquals("eventlist.jsp?status=failed&msg=Event 'Test event 1' is already exist", response.getRedirectedUrl());
     }
 }
