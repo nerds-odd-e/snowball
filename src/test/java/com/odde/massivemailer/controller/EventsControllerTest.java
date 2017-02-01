@@ -51,7 +51,7 @@ public class EventsControllerTest {
         Mockito.when(eventService.getAll()).thenReturn(events);
 
         eventsController.doGet(request, response);
-        assertEquals("[{\"title\":\"Test event 1\"}]", response.getContentAsString());
+        assertEquals("[{\"attributes\":{\"Title\":\"Test event 1\"}}]", response.getContentAsString());
     }
 
 
@@ -63,7 +63,7 @@ public class EventsControllerTest {
         Mockito.when(eventService.getAll()).thenReturn(events);
 
         eventsController.doGet(request, response);
-        assertEquals("[{\"title\":\"Test event 1\"},{\"title\":\"Test event 2\"}]", response.getContentAsString());
+        assertEquals("[{\"attributes\":{\"Title\":\"Test event 1\"}},{\"attributes\":{\"Title\":\"Test event 2\"}}]", response.getContentAsString());
     }
 
     @Test

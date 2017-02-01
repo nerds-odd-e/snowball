@@ -16,9 +16,9 @@ function retrieveEventListFromServer()
 function renderEventList(json, selector)
 {
 	$.each(json, function(idx, item) {
-		var title = item.attributes.title===undefined?'':item.attributes.title;
-		var content = item.attributes.content===undefined?'':item.attributes.content;
-		selector.append('<li class="col-md-6" style="text-align: left">'+event+'</li>');
+		var title = item.attributes.Title===undefined?'':item.attributes.Title;
+		var content = (item.attributes.Content===undefined || item.attributes.Content==='')?'&nbsp;':item.attributes.Content;
+		selector.append('<li class="col-md-6" style="text-align: left">'+title+'</li>');
 		selector.append('<li class="col-md-6" style="text-align: left">'+content+'</li>');
 	})
 }

@@ -54,7 +54,6 @@
 
 								</ul>
 							</div>
-							<div></div>
 						</div>
 					</div>
 				</div>
@@ -82,7 +81,7 @@ $(document).ready(function() {
 	if(msg) {
 		alert(msg);
 	}
-	var contactList = retrieveEventListFromServer();
+	var eventList = retrieveEventListFromServer();
 	renderEventList(eventList, $('#eventTable'));
 
 });
