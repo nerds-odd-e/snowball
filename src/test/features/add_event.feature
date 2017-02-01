@@ -7,12 +7,6 @@ Feature: Add Event
     Then I should get an alert dialog with message "Add event successfully"
     And Event list page should contain "CSD training"
 
-  Scenario: Verify Add Existing Event To Event List
-    Given "CSD training"is an event already
-    When Add an event "CSD training"
-    Then I should get an alert dialog with message "Event 'CSD training' is already exist"
-    And Event list page should contain one event with title "CSD training"
-
   Scenario: Verify Event Title Is Empty
     When Add an event without Title
     Then I should get an alert dialog with message "Event title is mandatory"
