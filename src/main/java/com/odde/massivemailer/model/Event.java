@@ -1,12 +1,19 @@
 package com.odde.massivemailer.model;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 public class Event implements Serializable {
     private String title;
 
     private String content;
+
+    public Map<String, String> attributes = new HashMap<>();
+    public static final String TITLE = "Title";
+    public static final String CONTENT = "Content";
 
     public Event(String title) {
         setTitle(title);
@@ -17,21 +24,18 @@ public class Event implements Serializable {
         setContent(content);
     }
 
-    public String getContent() {
-        return content;
-    }
+    public String getContent() { return getAttribute(CONTENT); }
 
     public void setContent(String content) {
-        this.content = content;
+        if (content == null) {
+            content = "";
+        }
+        setAttribute(CONTENT, content);
     }
 
-    public String getTitle() {
-        return title;
-    }
+    public String getTitle(){ return getAttribute(TITLE); }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    public void setTitle(String title) { setAttribute(TITLE, title); }
 
     @Override
     public boolean equals(Object o) {
@@ -45,5 +49,17 @@ public class Event implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(title);
+    }
+
+    private void setAttribute(String name, String value)
+    {
+        attributes.put(name, value);
+    }
+
+    public String getAttribute(String name) { return attributes.containsKey(name) ? attributes.get(name) : ""; }
+
+    public Set<String> getAttributeKeys()
+    {
+        return attributes.keySet();
     }
 }
