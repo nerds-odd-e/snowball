@@ -69,31 +69,56 @@ public class EventsControllerTest {
     }
 
     @Test
-    public void addNewEvent() throws Exception {
-        Event e = new Event("Test event 1");
+    public void shouldAddNewEventWhenTitleIsValid() throws Exception {
+        Event e = new Event("Test event 1 from Controller");
         events.add(e);
 
-        Mockito.when(eventService.addEvent(e)).thenReturn(1);
+        Mockito.when(eventService.addEvent(e)).thenReturn(true);
 
-        request.setParameter("evtTitle", "Test event 1");
-        request.setParameter("content", "Test content 1");
+        request.setParameter("evtTitle", e.getTitle());
 
         eventsController.doPost(request, response);
         assertEquals("eventlist.jsp?status=success&msg=Add event successfully", response.getRedirectedUrl());
     }
 
     @Test
-    public void addExistingEvent() throws Exception {
-        Event e = new Event("Test event 1");
+    public void shouldShowErrorWhenTitleIsEmpty() throws Exception {
+        Event e = new Event("");
         events.add(e);
 
-        Mockito.when(eventService.addEvent(e)).thenThrow(
-                new EventAlreadyExistsException("Event 'Test event 1' is already exist"));
+        Mockito.when(eventService.addEvent(e)).thenThrow(new IllegalArgumentException("Event title is mandatory"));
 
-        request.setParameter("evtTitle", "Test event 1");
-        request.setParameter("content", "Test content 1");
+        request.setParameter("evtTitle", "");
 
         eventsController.doPost(request, response);
-        assertEquals("eventlist.jsp?status=failed&msg=Event 'Test event 1' is already exist", response.getRedirectedUrl());
+        assertEquals("eventlist.jsp?status=failed&msg=Event title is mandatory", response.getRedirectedUrl());
     }
+
+    @Test
+    public void shouldShowErrorWhenTitleIsNull() throws Exception {
+        Event e = new Event(null);
+        events.add(e);
+
+        Mockito.when(eventService.addEvent(e)).thenThrow(new IllegalArgumentException("Event title is mandatory"));
+
+        request.setParameter("evtTitle", e.getTitle());
+
+        eventsController.doPost(request, response);
+        assertEquals("eventlist.jsp?status=failed&msg=Event title is mandatory", response.getRedirectedUrl());
+    }
+
+//    @Test
+//    public void addExistingEvent() throws Exception {
+//        Event e = new Event("Test event 1");
+//        events.add(e);
+//
+//        Mockito.when(eventService.addEvent(e)).thenThrow(
+//                new EventAlreadyExistsException("Event 'Test event 1' is already exist"));
+//
+//        request.setParameter("evtTitle", "Test event 1");
+//        request.setParameter("content", "Test content 1");
+//
+//        eventsController.doPost(request, response);
+//        assertEquals("eventlist.jsp?status=failed&msg=Event 'Test event 1' is already exist", response.getRedirectedUrl());
+//    }
 }

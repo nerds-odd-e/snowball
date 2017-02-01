@@ -42,10 +42,10 @@ public class EventsController extends HttpServlet {
 
         Event event = buildEventObject(req);
         try {
-            if (eventService.addEvent(event) > 0) {
+            if (eventService.addEvent(event)) {
                 resultMsg = "status=success&msg=Add event successfully";
             }
-        } catch (EventAlreadyExistsException e) {
+        } catch (Exception e) {
             resultMsg = "status=failed&msg=" + e.getMessage();
         }
 

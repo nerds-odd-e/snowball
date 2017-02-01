@@ -9,23 +9,22 @@ import java.util.*;
 public class EventServiceImpl implements EventService {
     private Map<Integer, Event> events = new LinkedHashMap<>();
 
-    public int addEvent(Event event)
-            throws EventAlreadyExistsException {
+    private SqliteEvent eventDao = new SqliteEvent();
+
+    public boolean addEvent(Event event) {
 
         if (event.getTitle() == null ||
                 event.getTitle().isEmpty())
             throw new IllegalArgumentException("Event title is mandatory");
 
-        if (events.containsValue(event))
-            throw new EventAlreadyExistsException(
-                    String.format("Event '%s' is already exist", event.getTitle()));
+        boolean status = eventDao.addNewEvent(event);
 
-        events.put(events.size() + 1, event);
-        return events.size();
+        return status;
     }
 
     @Override
     public List<Event> getAll() {
-        return new ArrayList<>(events.values());
+
+        return eventDao.getAll();
     }
 }
