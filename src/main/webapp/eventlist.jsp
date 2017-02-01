@@ -43,8 +43,8 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<ul class="list-inline">
-									<li class="col-md-3" style="text-align: left">Title</li>
-									<li class="col-md-2" style="text-align: left">Content</li>
+									<li class="col-md-6" style="text-align: left">Title</li>
+									<li class="col-md-6" style="text-align: left">Content</li>
 								</ul>
 							</div>
 

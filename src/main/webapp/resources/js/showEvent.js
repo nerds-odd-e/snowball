@@ -18,8 +18,8 @@ function renderEventList(json, selector)
 	$.each(json, function(idx, item) {
 		var title = item.attributes.title===undefined?'':item.attributes.title;
 		var content = item.attributes.content===undefined?'':item.attributes.content;
-		selector.append('<li class="col-md-3" style="text-align: left">'+event+'</li>');
-		selector.append('<li class="col-md-2" style="text-align: left">'+content+'</li>');
+		selector.append('<li class="col-md-6" style="text-align: left">'+event+'</li>');
+		selector.append('<li class="col-md-6" style="text-align: left">'+content+'</li>');
 	})
 }
 
