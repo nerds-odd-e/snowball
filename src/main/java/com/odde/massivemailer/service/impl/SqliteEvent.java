@@ -21,7 +21,7 @@ public class SqliteEvent extends SqliteBase {
                     String.format("INSERT INTO Event (Title, Description) VALUES ('%s', '%s')",
                             event.getTitle(),
                             event.getContent());
-            rowAffected = getStatement().executeUpdate(sqlStatement);
+            rowAffected = statement.executeUpdate(sqlStatement);
 
             if (rowAffected == 1) {
                 events.put(events.size() + 1, event);
@@ -45,11 +45,9 @@ public class SqliteEvent extends SqliteBase {
         try {
             openConnection();
 
-            String sqlStatement = "SELECT * FROM Event";
+            String selectSql = "SELECT * FROM Event";
 
-            Statement statement = getStatement();
-            resultSet = statement.executeQuery(sqlStatement);
-
+            resultSet = statement.executeQuery(selectSql);
             eventList = populateEventList(resultSet);
 
             resultSet.close();
