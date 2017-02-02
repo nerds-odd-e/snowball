@@ -11,9 +11,9 @@ public class Event implements Serializable {
 
     private String content;
 
-    public Map<String, String> attributes = new HashMap<>();
-    public static final String TITLE = "Title";
-    public static final String CONTENT = "Content";
+    private Map<String, String> attributes = new HashMap<>();
+    private static final String TITLE = "Title";
+    private static final String CONTENT = "Content";
 
     public Event(String title) {
         setTitle(title);
