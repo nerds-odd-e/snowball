@@ -64,4 +64,9 @@ public class GMailService{
 		return session.getTransport("smtp");
 	}
 
+//	public long getDistance(double srcLat, double srcLong, double destLat, double destLong) {
+//
+//
+//	}
+
 }

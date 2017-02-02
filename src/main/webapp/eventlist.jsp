@@ -53,6 +53,8 @@
 								<ul id="eventTable" class="list-inline">
 
 								</ul>
+								<input type="submit" id="send_button" value="Send" />
+								<div id="message">N/A emails contain N/A events sent.</div>
 							</div>
 						</div>
 					</div>

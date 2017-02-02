@@ -95,4 +95,11 @@ public class GmailServiceTest {
 		greenMail.stop();
 	}
 
+//	@Test
+//	public void checkDistanceBetweenJapanAndSydneyIsCorrect() {
+//		GMailService service = new GMailService();
+//		double distanceInMiles = service.getDistance();
+//		assertEquals();
+//	}
+
 }
