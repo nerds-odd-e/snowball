@@ -9,6 +9,7 @@ public class EventTests {
 
     private WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
     private String BASE_URL = "http://localhost:8070/massive_mailer/add_event.jsp";
+    private String EVENTLIST_BASE_URL = "http://localhost:8070/massive_mailer/eventlist.jsp";
 
     @Given("^I am on Add Event page$")
     public void visitAddEventPage() throws Throwable {
@@ -20,6 +21,9 @@ public class EventTests {
         driver.text_field("evtTitle", eventTitle);
         driver.click_button("register_button");
         driver.expectAlert("Add event successfully");
+
+        driver.expectRedirect(EVENTLIST_BASE_URL);
+        driver.expectElementWithIdToContainText("title", eventTitle);
     }
 
 }
