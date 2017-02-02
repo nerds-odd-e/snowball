@@ -23,7 +23,6 @@ public class EventTests {
         driver.expectAlert("Add event successfully");
 
         driver.expectRedirect(EVENTLIST_BASE_URL);
-        driver.expectElementWithIdToContainText("title", eventTitle);
+        driver.pageShouldContain(eventTitle);
     }
-
 }
