@@ -53,8 +53,10 @@
 								<ul id="eventTable" class="list-inline">
 
 								</ul>
-								<input type="submit" id="send_button" value="Send" />
-								<div id="message">N/A emails contain N/A events sent.</div>
+								<form action="sendAllEvents" method="post">
+								    <input type="submit" id="send_button" value="Send" />
+								    <div id="message" style=""><%= request.getParameter("email_sent") == null? "" : request.getParameter("email_sent") + " emails contain " + request.getParameter("event_in_email") + " events sent." %></div>
+								</form>
 							</div>
 						</div>
 					</div>

@@ -85,6 +85,17 @@
 		<url-pattern>/events</url-pattern>
 	</servlet-mapping>
 
+
+	<servlet>
+		<servlet-name>sendAllEventsController</servlet-name>
+		<servlet-class>com.odde.massivemailer.controller.SendAllEventsController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>sendAllEventsController</servlet-name>
+		<url-pattern>/sendAllEvents</url-pattern>
+	</servlet-mapping>
+
+
 	<servlet>
 		<servlet-name>TemplatesController</servlet-name>
 		<servlet-class>com.odde.massivemailer.controller.TemplatesController</servlet-class>
