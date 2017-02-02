@@ -1,10 +1,12 @@
 package com.odde.massivemailer.controller;
 
 import com.google.gson.Gson;
+import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Event;
 import com.odde.massivemailer.service.ContactService;
 import com.odde.massivemailer.service.EventService;
 import com.odde.massivemailer.service.impl.EventServiceImpl;
+import com.odde.massivemailer.service.impl.SqliteContact;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -21,15 +23,21 @@ public class SendAllEventsController extends HttpServlet {
         EventServiceImpl eventService = new EventServiceImpl();
         List<Event> eventList = eventService.getAll();
 
-        System.out.println("Number of Event:" + eventList.size());
+        SqliteContact contactService = new SqliteContact();
+        List<ContactPerson> contactList = contactService.getContactList();
 
-        if (eventList.isEmpty())
+        if (eventList.isEmpty() || contactList.isEmpty())
         {
             resp.sendRedirect("eventlist.jsp?email_sent=N/A&event_in_email=N/A");
             return;
         }
 
-        resp.sendRedirect("eventlist.jsp?email_sent=N/A&event_in_email=N/A");
+        String redirectUrl = String.format("eventlist.jsp?email_sent=%s&event_in_email=%s",
+                contactList.size(),
+                eventList.size()
+        );
+
+        resp.sendRedirect(redirectUrl);
     }
 
 }

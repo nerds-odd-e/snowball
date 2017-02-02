@@ -25,7 +25,7 @@ Feature: Send all events to all contacts
 
   Examples: Normal case
     | number of events | number of contacts | number of events in an email | number of email recipients |
-#    |                1 |                  1 |                            1 |                          1 |
-#    |                1 |                  2 |                            1 |                          2 |
-#    |                2 |                  1 |                            2 |                          1 |
-#    |                2 |                  2 |                            2 |                          2 |
+    |                1 |                  1 |                            1 |                          1 |
+    |                1 |                  2 |                            1 |                          2 |
+    |                2 |                  1 |                            2 |                          1 |
+    |                2 |                  2 |                            2 |                          2 |
