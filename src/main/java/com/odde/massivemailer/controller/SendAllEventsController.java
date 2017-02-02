@@ -1,22 +1,28 @@
 package com.odde.massivemailer.controller;
 
-import com.google.gson.Gson;
+import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Event;
-import com.odde.massivemailer.service.ContactService;
-import com.odde.massivemailer.service.EventService;
-import com.odde.massivemailer.service.impl.EventServiceImpl;
-import com.odde.massivemailer.service.impl.SqliteContact;
+import com.odde.massivemailer.model.Mail;
+import com.odde.massivemailer.model.Notification;
+import com.odde.massivemailer.service.NotificationService;
+import com.odde.massivemailer.service.impl.*;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class SendAllEventsController extends HttpServlet {
+
+    private static final String SMTP_ADDR = "smtp.gmail.com";
+    private static final int PORT = 587;
+    private static final String EMAIL_USERID = "MM_EMAIL_USERID";
+    private static final String EMAIL_PASSWORD = "MM_EMAIL_PASSWORD";
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -32,12 +38,54 @@ public class SendAllEventsController extends HttpServlet {
             return;
         }
 
+        NotificationService notificationService = new NotificationServiceSqlite();
+
+        Mail mail = createMailEvents(eventList);
+
+        Notification notification = notificationService.save(mail.asNotification());
+        mail.setNotification(notification);
+
+        GMailService mailService = new GMailService(getSmtpConfiguration());
+
+        int mailSent = 0;
+        for (ContactPerson person : contactList) {
+            mail.setReceipts(Collections.singletonList(person.getEmail()));
+
+            try {
+                mailService.send(mail);
+
+                ++mailSent;
+            } catch (EmailException e) {
+                e.printStackTrace();
+            }
+        }
+
+
         String redirectUrl = String.format("eventlist.jsp?email_sent=%s&event_in_email=%s",
-                contactList.size(),
+                mailSent,
                 eventList.size()
         );
 
         resp.sendRedirect(redirectUrl);
     }
 
+    private Mail createMailEvents(List<Event> eventList) {
+        String content = eventList.stream()
+                .map(e -> e.getTitle())
+                .collect(Collectors.joining("\n"));
+
+        Mail mail = new Mail();
+        mail.setSubject("Event Invitation");
+        mail.setContent(content);
+        mail.setMessageId(System.currentTimeMillis());
+
+        return mail;
+    }
+
+    private SMTPConfiguration getSmtpConfiguration() {
+        return new SMTPConfiguration(
+                    System.getenv(EMAIL_USERID),
+                    System.getenv(EMAIL_PASSWORD),
+                    SMTP_ADDR, PORT);
+    }
 }
