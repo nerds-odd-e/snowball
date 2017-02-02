@@ -70,6 +70,7 @@ public class SqliteContact  extends SqliteBase implements ContactService {
 			statement.execute("INSERT INTO Template (TemplateName,Subject,Content) VALUES ('RTA Default Template', 'Greeting {FirstName}', 'Hi, {FirstName} {LastName} from {Company}');");
 			statement.execute("DELETE FROM notification_details");
 			statement.execute("DELETE FROM notifications");
+			statement.execute("DELETE FROM event");
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		} finally {
