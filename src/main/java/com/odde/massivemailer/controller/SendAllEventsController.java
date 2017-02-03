@@ -25,28 +25,11 @@ public class SendAllEventsController extends HttpServlet {
     private static final String EMAIL_USERID = "MM_EMAIL_USERID";
     private static final String EMAIL_PASSWORD = "MM_EMAIL_PASSWORD";
 
-    private GMailService mailService = null;
-
-    private NotificationService notificationService;
-
-    public SendAllEventsController() {
-        mailService = new GMailService(getSmtpConfiguration());
-        notificationService = new NotificationServiceSqlite();
-
-    }
-
-    public void setMailService(GMailService mailService) {
-        this.mailService = mailService;
-    }
-
-    public void setNotificationService(NotificationService notificationService) {
-        this.notificationService = notificationService;
-    }
-
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         EventService eventService = new EventServiceImpl();
+        GMailService mailService = new GMailService(getSmtpConfiguration());
+        NotificationService notificationService = new NotificationServiceSqlite();
 
         List<Event> eventList = eventService.getAll();
 
@@ -68,13 +51,11 @@ public class SendAllEventsController extends HttpServlet {
                 Notification notification = notificationService.save(mail.asNotification());
                 mail.setNotification(notification);
 
-                SMTPConfiguration config = getSmtpConfiguration();
-                GMailService mailService = new GMailService(config);
                 mailService.send(mail);
 
                 ++mailSent;
             } catch (EmailException e) {
-                e.printStackTrace();
+                throw new IOException(e);
             }
         }
 
@@ -86,7 +67,7 @@ public class SendAllEventsController extends HttpServlet {
         resp.sendRedirect(redirectUrl);
     }
 
-    protected Mail createMailWithEvents(List<Event> eventList) {
+    private Mail createMailWithEvents(List<Event> eventList) {
         String content = eventList.stream()
                 .map(e -> e.getTitle())
                 .collect(Collectors.joining("\n"));
