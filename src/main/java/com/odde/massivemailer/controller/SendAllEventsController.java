@@ -5,6 +5,7 @@ import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Event;
 import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.model.Notification;
+import com.odde.massivemailer.service.EventService;
 import com.odde.massivemailer.service.NotificationService;
 import com.odde.massivemailer.service.impl.*;
 
@@ -24,21 +25,38 @@ public class SendAllEventsController extends HttpServlet {
     private static final String EMAIL_USERID = "MM_EMAIL_USERID";
     private static final String EMAIL_PASSWORD = "MM_EMAIL_PASSWORD";
 
+    private GMailService mailService = null;
+
+    private NotificationService notificationService;
+
+    public SendAllEventsController() {
+        mailService = new GMailService(getSmtpConfiguration());
+        notificationService = new NotificationServiceSqlite();
+
+    }
+
+    public void setMailService(GMailService mailService) {
+        this.mailService = mailService;
+    }
+
+    public void setNotificationService(NotificationService notificationService) {
+        this.notificationService = notificationService;
+    }
+
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        EventServiceImpl eventService = new EventServiceImpl();
+        EventService eventService = new EventServiceImpl();
+
         List<Event> eventList = eventService.getAll();
 
         SqliteContact contactService = new SqliteContact();
         List<ContactPerson> contactList = contactService.getContactList();
 
-        if (eventList.isEmpty() || contactList.isEmpty())
-        {
+        if (eventList.isEmpty() || contactList.isEmpty()) {
             resp.sendRedirect("eventlist.jsp?email_sent=N/A&event_in_email=N/A");
             return;
         }
-
-        NotificationService notificationService = new NotificationServiceSqlite();
 
         Mail mail = createMailWithEvents(eventList);
 
@@ -60,7 +78,6 @@ public class SendAllEventsController extends HttpServlet {
             }
         }
 
-
         String redirectUrl = String.format("eventlist.jsp?email_sent=%s&event_in_email=%s",
                 mailSent,
                 eventList.size()
@@ -69,7 +86,7 @@ public class SendAllEventsController extends HttpServlet {
         resp.sendRedirect(redirectUrl);
     }
 
-    private Mail createMailWithEvents(List<Event> eventList) {
+    protected Mail createMailWithEvents(List<Event> eventList) {
         String content = eventList.stream()
                 .map(e -> e.getTitle())
                 .collect(Collectors.joining("\n"));
@@ -84,8 +101,8 @@ public class SendAllEventsController extends HttpServlet {
 
     private SMTPConfiguration getSmtpConfiguration() {
         return new SMTPConfiguration(
-                    System.getenv(EMAIL_USERID),
-                    System.getenv(EMAIL_PASSWORD),
-                    SMTP_ADDR, PORT);
+                System.getenv(EMAIL_USERID),
+                System.getenv(EMAIL_PASSWORD),
+                SMTP_ADDR, PORT);
     }
 }
