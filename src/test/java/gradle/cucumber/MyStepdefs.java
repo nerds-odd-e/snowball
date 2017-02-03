@@ -18,11 +18,6 @@ public class MyStepdefs {
         loginToPage(BASE_URL  + "add_contact.jsp", email);
     }
 
-    @Then("^I should get an alert dialog with message \"([^\"]*)\"$")
-    public void iShouldGetAnAlertDialogWithMessage(String msg) throws Throwable {
-        driver.expectAlert(msg);
-    }
-
     @And("^Page Should Contain \"([^\"]*)\"$")
     public void pageShouldContain(String text) throws Throwable {
         driver.pageShouldContain(text);
@@ -41,7 +36,6 @@ public class MyStepdefs {
     @Given("^\"([^\"]*)\" is a contact already$")
     public void is_a_contact_already(String email) throws Throwable {
         addAContact(email);
-        iShouldGetAnAlertDialogWithMessage("Add contact successfully");
     }
 
     @When("^Login with email \"([^\"]*)\"$")

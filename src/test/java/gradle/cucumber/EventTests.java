@@ -21,7 +21,6 @@ public class EventTests {
     public void clickRegisterEvent(String eventTitle) throws Throwable {
         driver.text_field("evtTitle", eventTitle);
         driver.click_button("register_button");
-        driver.expectAlert("Add event successfully");
     }
 
     @Then("^Event list page should contain \"([^\"]*)\"$")

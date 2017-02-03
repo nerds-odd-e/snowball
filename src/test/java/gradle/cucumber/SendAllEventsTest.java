@@ -24,7 +24,6 @@ public class SendAllEventsTest {
         MyStepdefs contactTests = new MyStepdefs();
         for (int i=0;i<this.numberOfContacts;i++) {
             contactTests.addAContact("test@test"+i+".com");
-            contactTests.iShouldGetAnAlertDialogWithMessage("Add contact successfully");
         }
     }
 

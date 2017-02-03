@@ -81,10 +81,6 @@
 <script type="text/javascript" src="resources/js/showEvent.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-	var msg = getParameterByName('msg');
-	if(msg) {
-		alert(msg);
-	}
 	var eventList = retrieveEventListFromServer();
 	renderEventList(eventList, $('#eventTable'));
 
