@@ -2,6 +2,7 @@ package gradle.cucumber;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
+import cucumber.api.java.en.Then;
 import gradle.cucumber.driver.WebDriverFactory;
 import gradle.cucumber.driver.WebDriverWrapper;
 
@@ -21,7 +22,10 @@ public class EventTests {
         driver.text_field("evtTitle", eventTitle);
         driver.click_button("register_button");
         driver.expectAlert("Add event successfully");
+    }
 
+    @Then("^Event list page should contain \"([^\"]*)\"$")
+    public void eventListPageShouldContain(String eventTitle) throws Throwable {
         driver.expectRedirect(EVENTLIST_BASE_URL);
         driver.pageShouldContain(eventTitle);
     }

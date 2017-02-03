@@ -70,7 +70,7 @@ public class SendAllEventsController extends HttpServlet {
     private Mail createMailWithEvents(List<Event> eventList) {
         String content = eventList.stream()
                 .map(e -> e.getTitle())
-                .collect(Collectors.joining("\n"));
+                .collect(Collectors.joining("<br/>\n"));
 
         Mail mail = new Mail();
         mail.setSubject("Event Invitation");
