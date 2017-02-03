@@ -42,16 +42,16 @@ public class SendAllEventsController extends HttpServlet {
 
         Mail mail = createMailWithEvents(eventList);
 
-        Notification notification = notificationService.save(mail.asNotification());
-        mail.setNotification(notification);
-
-        GMailService mailService = new GMailService(getSmtpConfiguration());
-
         int mailSent = 0;
         for (ContactPerson person : contactList) {
             mail.setReceipts(Collections.singletonList(person.getEmail()));
 
             try {
+                Notification notification = notificationService.save(mail.asNotification());
+                mail.setNotification(notification);
+
+                SMTPConfiguration config = getSmtpConfiguration();
+                GMailService mailService = new GMailService(config);
                 mailService.send(mail);
 
                 ++mailSent;
