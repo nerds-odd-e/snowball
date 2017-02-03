@@ -67,7 +67,7 @@ public class SendAllEventsControllerTest {
     public void send1EventTo1ContactsAsMail() throws Exception {
         contactService.destroyAll();
         eventService.addEvent(new Event("Testing-1"));
-        contactService.addContact(new ContactPerson("testName", "nsgnofficial@gmail.com", "testLastName"));
+        contactService.addContact(new ContactPerson("testName", "test1@gmail.com", "testLastName"));
         sendAllEventsController.doPost(request, response);
         assertEquals("eventlist.jsp?email_sent=1&event_in_email=1", response.getRedirectedUrl());
     }
