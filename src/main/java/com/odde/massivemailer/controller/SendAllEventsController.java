@@ -40,7 +40,7 @@ public class SendAllEventsController extends HttpServlet {
 
         NotificationService notificationService = new NotificationServiceSqlite();
 
-        Mail mail = createMailEvents(eventList);
+        Mail mail = createMailWithEvents(eventList);
 
         Notification notification = notificationService.save(mail.asNotification());
         mail.setNotification(notification);
@@ -69,7 +69,7 @@ public class SendAllEventsController extends HttpServlet {
         resp.sendRedirect(redirectUrl);
     }
 
-    private Mail createMailEvents(List<Event> eventList) {
+    private Mail createMailWithEvents(List<Event> eventList) {
         String content = eventList.stream()
                 .map(e -> e.getTitle())
                 .collect(Collectors.joining("\n"));
