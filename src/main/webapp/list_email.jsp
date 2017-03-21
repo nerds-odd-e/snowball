@@ -61,9 +61,6 @@
 				<li><a href="contactlist.jsp"><span
 						class="glyphicon glyphicon-user" aria-hidden="true"></span>
 						Contact List</a></li>
-				<li><a href="game_create.jsp"><span
-                        class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                        Emerson's Game</a></li>
 			</ul>
 		</div>
 		<!-- /.navbar-collapse --> </nav>

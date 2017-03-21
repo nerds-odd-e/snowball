@@ -1,4 +1,4 @@
-<!-- Contains the header and left pane which was common across the Send Email, Add Contact, Add Event, Contact List, Emersons game and Email Tracking -->
+<!-- Contains the header and left pane which was common across the Send Email, Add Contact, Add Event, Contact List, and Email Tracking -->
 <div id="wrapper">
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -44,9 +44,6 @@
                 <li><a href="eventlist.jsp"><span
                         class="glyphicon glyphicon-user" aria-hidden="true"></span>
                         Event List</a></li>
-                <li><a href="game_create.jsp"><span
-                        class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                        Emerson's Game</a></li>
                 <li><a id="emailtracking" href="email_tracking.jsp"><span
                         class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                         Email Tracking</a></li>
