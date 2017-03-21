@@ -66,7 +66,6 @@ public class SendAllEventsControllerTest {
     }
 
     @Test
-    @Ignore
     public void send1EventTo1ContactsAsMail() throws Exception {
         contactService.destroyAll();
         eventService.addEvent(new Event("Testing-1"));
@@ -76,7 +75,6 @@ public class SendAllEventsControllerTest {
     }
 
     @Test
-    @Ignore
     public void send1EventTo2ContactsAsMail() throws Exception {
         contactService.destroyAll();
         eventService.addEvent(new Event("Testing-1"));
