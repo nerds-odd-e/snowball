@@ -1,22 +1,40 @@
-package gradle.cucumber.driver;
+package steps.driver;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriverService;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.SystemClock;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class WebDriverWrapper {
-    private WebDriver driver = new FirefoxDriver();
+    private WebDriver driver;
 
+    public WebDriverWrapper() {
+        DesiredCapabilities dcap = new DesiredCapabilities();
+        String[] phantomArgs = new  String[] {
+                "--webdriver-loglevel=NONE"
+        };
+        dcap.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);
+        driver = new PhantomJSDriver(dcap);
+        //driver = new ChromeDriver();
+        Logger.getLogger(PhantomJSDriverService.class.getName()).setLevel(Level.OFF);
+        driver.manage().window().maximize();
+
+    }
     public void visit(String url) {
         driver.get(url);
     }

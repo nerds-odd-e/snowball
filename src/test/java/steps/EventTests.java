@@ -1,10 +1,10 @@
-package gradle.cucumber;
+package steps;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.Then;
-import gradle.cucumber.driver.WebDriverFactory;
-import gradle.cucumber.driver.WebDriverWrapper;
+import steps.driver.WebDriverFactory;
+import steps.driver.WebDriverWrapper;
 
 public class EventTests {
 

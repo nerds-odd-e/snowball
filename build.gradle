@@ -1,12 +1,40 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "com.github.samueltbrown:gradle-cucumber-plugin:0.8"
+
+        // if you use the version of cucumber-jvm that the plugin was built with
+        classpath "info.cukes:cucumber-core:1.2.2"
+    }
+}
 
 plugins {
     id 'com.craigburke.karma' version '1.4.3'
     id "org.roboscratch.robot" version "0.1.1"
 }
+
+ext {
+    groovyVersion = '2.4.5'
+    gebVersion = '1.1.1'
+    seleniumVersion = '2.53.1'
+    cucumberJvmVersion = '1.2.4'
+    chromeDriverVersion = '2.24'
+    phantomJsVersion = '1.9.8'
+
+    ciBuild = System.getenv('SNAP_CI')
+}
+
+apply plugin: "groovy"
+apply plugin: "com.github.samueltbrown.cucumber"
 apply plugin: 'java'
 apply plugin: 'war'
 apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
-apply plugin: 'idea'
+apply from: "gradle/idea/idea.gradle"
+apply from: "gradle/osSpecificDownloads.gradle"
 
 group = 'com.odde'
 version = '0.0.1-SNAPSHOT'
@@ -16,9 +44,6 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 war.baseName = 'massive_mailer'
 
-ext {
-    seleniumVersion = '2.53.1'
-}
 
 configurations {
     cucumberRuntime {
@@ -50,7 +75,33 @@ karma {
     frameworks = ['jasmine']
 }
 
-task cucumber() {
+cucumber {
+    formats = [
+            'pretty', // prints nice format out to the console
+            'html:build/reports/cucumber', // html
+            'junit:build/cucumber.xml' // junit format for integration with CI tool etc
+    ]
+    // src/cucumber/resources is included automatically
+    glueDirs = [
+            "classpath:io.jdev.geb.cucumber.steps.groovy.en", 'classpath:steps'
+    ]
+}
+
+tasks.cucumber {
+    dependsOn unzipChromeDriver, unzipPhantomJs, assemble, testClasses, 'appBeforeIntegrationTest'
+    finalizedBy 'appAfterIntegrationTest'
+
+    def chromeDriverFilename = Os.isFamily(Os.FAMILY_WINDOWS) ? "chromedriver.exe" : "chromedriver"
+    def phantomJsFilename = Os.isFamily(Os.FAMILY_WINDOWS) ? "phantomjs.exe" : "bin/phantomjs"
+
+    jvmOptions.systemProperties([
+            "webdriver.chrome.driver": new File(unzipChromeDriver.outputs.files.singleFile, chromeDriverFilename).absolutePath,
+            "phantomjs.binary.path": '/usr/local/bin/phantomjs', //new File(unzipPhantomJs.outputs.files.singleFile, phantomJsFilename).absolutePath,
+            "geb.cucumber.step.packages": "pages",
+            "geb.env": System.getProperty("geb.env")
+    ])
+}
+task cucumber1() {
     dependsOn assemble, testClasses, 'appBeforeIntegrationTest'
     finalizedBy 'appAfterIntegrationTest'
     doLast {
@@ -90,13 +141,29 @@ dependencies {
     compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
     compile group: 'org.javalite', name: 'db-migrator-maven-plugin', version: '1.4.11'
 
-    testCompile 'info.cukes:cucumber-java:1.2.4'
-    testCompile 'info.cukes:cucumber-junit:1.2.4'
-    compile 'org.flywaydb:flyway-core:3.2.1'
-
+    testCompile "org.codehaus.groovy:groovy-all:$groovyVersion"
+    testCompile "org.gebish:geb-core:$gebVersion"
+    testCompile "org.seleniumhq.selenium:selenium-api:$seleniumVersion"
     testCompile "org.seleniumhq.selenium:selenium-java:$seleniumVersion"
     testCompile "org.seleniumhq.selenium:selenium-server:$seleniumVersion"
+    testCompile "info.cukes:cucumber-core:$cucumberJvmVersion"
+    testCompile "info.cukes:cucumber-groovy:$cucumberJvmVersion"
+    testCompile "info.cukes:cucumber-java:$cucumberJvmVersion"
+    testCompile "info.cukes:cucumber-junit:$cucumberJvmVersion"
+    testCompile "io.jdev.geb:geb-cucumber:0.3"
+    compile 'org.flywaydb:flyway-core:3.2.1'
+    // pick whichever drivers you want. We test against most of them here.
+    // see src/test/resources/GebConfig.groovy for how to switch between them
     cucumberRuntime "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
+    cucumberRuntime "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"
+    //cucumberRuntime "org.seleniumhq.selenium:selenium-phantomjs-driver:$seleniumVersion"
+    // using a custom version of phantomjs driver for now as the original one does not support WebDriver > 2.43.1
+    cucumberRuntime("com.codeborne:phantomjsdriver:1.2.1") {
+        // phantomjs driver pulls in a different selenium version
+        transitive = false
+    }
+    testCompile "com.github.detro.ghostdriver:phantomjsdriver:1.1.0"
 
 }
 
+apply from: "gradle/ci.gradle"

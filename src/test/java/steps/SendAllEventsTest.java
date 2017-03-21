@@ -1,10 +1,10 @@
-package gradle.cucumber;
+package steps;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import gradle.cucumber.driver.WebDriverFactory;
-import gradle.cucumber.driver.WebDriverWrapper;
+import steps.driver.WebDriverFactory;
+import steps.driver.WebDriverWrapper;
 
 public class SendAllEventsTest {
     private static final String BASE_URL = "http://localhost:8070/massive_mailer/eventlist.jsp";

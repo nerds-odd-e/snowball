@@ -1,13 +1,13 @@
-package gradle.cucumber;
+package steps;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import gradle.cucumber.driver.WebDriverFactory;
-import gradle.cucumber.driver.WebDriverWrapper;
-import gradle.cucumber.page.ImagePage;
+import steps.driver.WebDriverFactory;
+import steps.driver.WebDriverWrapper;
+import steps.page.ImagePage;
 
-import static gradle.cucumber.page.Notifications.getNotificationDetailCount;
+import static steps.page.Notifications.getNotificationDetailCount;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 

@@ -1,8 +1,8 @@
-package gradle.cucumber.page;
+package steps.page;
 
 import com.odde.massivemailer.service.impl.SqliteBase;
-import gradle.cucumber.driver.WebDriverFactory;
-import gradle.cucumber.driver.WebDriverWrapper;
+import steps.driver.WebDriverFactory;
+import steps.driver.WebDriverWrapper;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

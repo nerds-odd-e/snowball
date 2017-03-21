@@ -1,4 +1,4 @@
-package gradle.cucumber.page;
+package steps.page;
 
 import com.odde.massivemailer.service.impl.SqliteBase;
 

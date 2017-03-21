@@ -1,4 +1,4 @@
-package gradle.cucumber;
+package steps;
 
 /**
  * Created by csd11 on 15/11/16.

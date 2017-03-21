@@ -1,4 +1,4 @@
-package gradle.cucumber;
+package steps;
 
 import com.odde.emersonsgame.controller.GamePlayerController;
 import com.odde.massivemailer.model.Player;
@@ -7,9 +7,9 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import gradle.cucumber.driver.WebDriverFactory;
-import gradle.cucumber.driver.UiElement;
-import gradle.cucumber.driver.WebDriverWrapper;
+import steps.driver.WebDriverFactory;
+import steps.driver.UiElement;
+import steps.driver.WebDriverWrapper;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
