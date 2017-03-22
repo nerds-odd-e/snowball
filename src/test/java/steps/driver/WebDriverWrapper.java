@@ -30,9 +30,9 @@ public class WebDriverWrapper {
         };
         dcap.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);
         driver = new PhantomJSDriver(dcap);
-        //driver = new ChromeDriver();
-        Logger.getLogger(PhantomJSDriverService.class.getName()).setLevel(Level.OFF);
-        driver.manage().window().maximize();
+        driver = new ChromeDriver();
+        //Logger.getLogger(PhantomJSDriverService.class.getName()).setLevel(Level.OFF);
+        //driver.manage().window().maximize();
 
     }
     public void visit(String url) {
