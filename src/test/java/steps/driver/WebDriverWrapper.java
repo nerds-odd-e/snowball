@@ -29,7 +29,7 @@ public class WebDriverWrapper {
                 "--webdriver-loglevel=NONE"
         };
         dcap.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);
-        driver = new PhantomJSDriver(dcap);
+        //driver = new PhantomJSDriver(dcap);
         driver = new ChromeDriver();
         //Logger.getLogger(PhantomJSDriverService.class.getName()).setLevel(Level.OFF);
         //driver.manage().window().maximize();
