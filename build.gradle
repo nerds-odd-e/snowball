@@ -96,7 +96,7 @@ tasks.cucumber {
 
     jvmOptions.systemProperties([
             "webdriver.chrome.driver": new File(unzipChromeDriver.outputs.files.singleFile, chromeDriverFilename).absolutePath,
-            "phantomjs.binary.path": '/usr/local/bin/phantomjs', //new File(unzipPhantomJs.outputs.files.singleFile, phantomJsFilename).absolutePath,
+            "phantomjs.binary.path": new File(unzipPhantomJs.outputs.files.singleFile, phantomJsFilename).absolutePath,
             "geb.cucumber.step.packages": "pages",
             "geb.env": System.getProperty("geb.env")
     ])
