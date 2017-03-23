@@ -14,6 +14,8 @@ import java.util.Properties;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
+import org.javalite.activejdbc.Base;
+
 
 public class SqliteEventTest {
 
@@ -25,6 +27,7 @@ public class SqliteEventTest {
     @Before
     public void setUp() throws SQLException, ClassNotFoundException {
         statement = getStatement();
+        Base.open("org.sqlite.JDBC", "jdbc:sqlite:oddemail.db", "", "");
     }
 
     @After
@@ -35,6 +38,7 @@ public class SqliteEventTest {
             e.printStackTrace();
         }
         sqliteEvent.closeConnection();
+        Base.close();
     }
 
     @Test
