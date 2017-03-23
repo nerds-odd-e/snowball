@@ -1,12 +1,14 @@
 package com.odde.massivemailer.model;
 
 import org.javalite.activejdbc.Model;
+
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-public class Event extends Model {
+public class Event  implements Serializable{
     private String title;
 
     private String content;

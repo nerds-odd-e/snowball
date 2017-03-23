@@ -1,12 +1,11 @@
 package com.odde.massivemailer.service.impl;
 
+import com.odde.TestWithDB;
+import org.junit.*;
+import org.junit.runner.RunWith;
 import org.sqlite.SQLiteConfig;
 
 import com.odde.massivemailer.model.Event;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 import java.sql.*;
 import java.util.List;
@@ -17,6 +16,7 @@ import static junit.framework.Assert.assertTrue;
 import org.javalite.activejdbc.Base;
 
 
+@RunWith(TestWithDB.class)
 public class SqliteEventTest {
 
     private SqliteEvent sqliteEvent = new SqliteEvent();
@@ -27,7 +27,6 @@ public class SqliteEventTest {
     @Before
     public void setUp() throws SQLException, ClassNotFoundException {
         statement = getStatement();
-        Base.open("org.sqlite.JDBC", "jdbc:sqlite:oddemail.db", "", "");
     }
 
     @After
@@ -38,14 +37,12 @@ public class SqliteEventTest {
             e.printStackTrace();
         }
         sqliteEvent.closeConnection();
-        Base.close();
     }
 
     @Test
     public void shouldReturnTrueWhenAddNewEventIsSuccessful() throws SQLException {
         Event event = new Event(EVENT_NAME);
         boolean returnedValue = sqliteEvent.addNewEvent(event);
-
         Assert.assertEquals(true, returnedValue);
     }
 

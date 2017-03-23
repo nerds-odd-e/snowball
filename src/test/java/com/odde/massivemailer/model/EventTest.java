@@ -1,11 +1,11 @@
 package com.odde.massivemailer.model;
 
+import com.odde.TestWithDB;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
-/**
- * Created by csd on 2017/01/31.
- */
+@RunWith(TestWithDB.class)
 public class EventTest {
 
     @Test

@@ -1,5 +1,6 @@
 package com.odde.massivemailer.controller;
 
+import com.odde.TestWithDB;
 import com.odde.massivemailer.model.Event;
 import com.odde.massivemailer.service.EventService;
 import org.junit.Before;
@@ -8,12 +9,14 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 import static org.junit.Assert.assertEquals;
 
+@RunWith(TestWithDB.class)
 public class EventsControllerTest {
     private EventsController eventsController;
 

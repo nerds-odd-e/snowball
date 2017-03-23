@@ -1,5 +1,6 @@
 package com.odde.massivemailer.controller;
 
+import com.odde.TestWithDB;
 import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Event;
@@ -13,6 +14,7 @@ import cucumber.api.java.ca.I;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -26,6 +28,7 @@ import static org.mockito.Mockito.doThrow;
 /**
  * Created by csd11 on 3/2/17.
  */
+@RunWith(TestWithDB.class)
 public class SendAllEventsControllerTest {
 
     private SendAllEventsController sendAllEventsController;

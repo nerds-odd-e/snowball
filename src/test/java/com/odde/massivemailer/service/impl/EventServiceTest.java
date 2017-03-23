@@ -1,11 +1,13 @@
 package com.odde.massivemailer.service.impl;
 
 
+import com.odde.TestWithDB;
 import com.odde.massivemailer.model.Event;
 import com.odde.massivemailer.service.EventService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.sqlite.SQLiteConfig;
 
 import java.sql.Connection;
@@ -18,6 +20,7 @@ import java.util.Properties;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+@RunWith(TestWithDB.class)
 public class EventServiceTest {
 
     Statement statement;
