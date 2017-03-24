@@ -15,8 +15,7 @@ public class EventsController extends AppController {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Gson gson = new GsonBuilder().registerTypeAdapter(Event.class, new EventSerialiser()).create();
-        String convertedContactToJSON = gson.toJson(Event.findAll());
+        String convertedContactToJSON = getGson().toJson(Event.findAll());
         ServletOutputStream outputStream = resp.getOutputStream();
         outputStream.print(convertedContactToJSON);
     }

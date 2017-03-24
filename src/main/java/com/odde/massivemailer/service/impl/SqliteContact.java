@@ -29,13 +29,6 @@ public class SqliteContact  extends SqliteBase implements ContactService {
 		return contactList;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.odde.massivemailer.service.ContactService#addNewContact(java.lang
-	 * .String)
-	 */
 	@Override
 	public int addNewContact(String name, String email ) {
 		return addNewContact(name, email, "");
@@ -80,6 +73,7 @@ public class SqliteContact  extends SqliteBase implements ContactService {
 
 	private int saveContactToDatabase(String name, String email, String lastname, String company)
 			throws SQLException {
+		ContactPerson.createIt("name", name, "email", email, "lastname", lastname, "company", company);
 		int rowAffected = 0;
 		if (!contactExisted(email))
 			rowAffected = statement

@@ -39,7 +39,7 @@ public class ContactsController extends AppController {
     }
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String convertedContactToJSON = new Gson().toJson(contactService.getContactList());
+        String convertedContactToJSON = getGson().toJson(contactService.getContactList());
         ServletOutputStream outputStream = resp.getOutputStream();
         outputStream.print(convertedContactToJSON);
     }

@@ -1,6 +1,8 @@
 package com.odde.massivemailer.model;
 
 import com.odde.massivemailer.exception.InvalidEmailException;
+import org.javalite.activejdbc.Model;
+import org.javalite.activejdbc.annotations.Table;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +11,8 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
 
-public class ContactPerson {
+@Table("contact_people")
+public class ContactPerson extends Model {
 	private int id;
 	private String name;
 	private String email;
@@ -46,12 +49,6 @@ public class ContactPerson {
 		setCompany(company);
 	}
 
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	public String getName() { return getAttribute(FIRSTNAME); }
 	public void setName(String name) {
 		setAttribute(FIRSTNAME, name);
@@ -80,6 +77,7 @@ public class ContactPerson {
 	private void setAttribute(String name, String value)
 	{
 		attributes.put(name, value);
+		set(name.toLowerCase(), value);
 	}
 
 	public String getAttribute(String name)

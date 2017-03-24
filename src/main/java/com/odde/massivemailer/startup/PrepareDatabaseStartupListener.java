@@ -19,6 +19,7 @@ public class PrepareDatabaseStartupListener implements ServletContextListener {
             "20161115175300_add_notification_id_to_notifications.sql",
             "20170130141000_create_event_table.sql",
             "20170323170300_create_events_table.sql",
+            "20170324174300_create_contact_people.sql",
     };
 
     @Override

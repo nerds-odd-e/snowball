@@ -1,5 +1,11 @@
 package com.odde.massivemailer.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.odde.massivemailer.model.ContactPerson;
+import com.odde.massivemailer.model.Event;
+import com.odde.massivemailer.serialiser.ContactPersonSerialiser;
+import com.odde.massivemailer.serialiser.EventSerialiser;
 import com.odde.massivemailer.service.impl.GMailService;
 import com.odde.massivemailer.service.impl.SMTPConfiguration;
 import org.javalite.activejdbc.Base;
@@ -35,4 +41,10 @@ public class AppController extends HttpServlet {
         return gmailService;
     }
 
+    protected Gson getGson() {
+        return new GsonBuilder()
+                .registerTypeAdapter(Event.class, new EventSerialiser())
+                .registerTypeAdapter(ContactPerson.class, new ContactPersonSerialiser())
+                .create();
+    }
 }
