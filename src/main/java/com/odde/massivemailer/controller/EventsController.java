@@ -4,13 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.odde.massivemailer.model.Event;
 import com.odde.massivemailer.serialiser.EventSerialiser;
-import com.odde.massivemailer.service.EventService;
-import com.odde.massivemailer.service.impl.EventServiceImpl;
-import org.javalite.activejdbc.Base;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
