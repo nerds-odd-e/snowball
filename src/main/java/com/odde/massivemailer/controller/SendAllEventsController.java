@@ -18,20 +18,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SendAllEventsController extends HttpServlet {
-
-    private static final String SMTP_ADDR = "smtp.gmail.com";
-    private static final int PORT = 587;
-    private static final String EMAIL_USERID = "MM_EMAIL_USERID";
-    private static final String EMAIL_PASSWORD = "MM_EMAIL_PASSWORD";
+public class SendAllEventsController extends AppController {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        EventService eventService = new EventServiceImpl();
-        GMailService mailService = new GMailService(getSmtpConfiguration());
+        GMailService mailService = createGmailService();
         NotificationService notificationService = new NotificationServiceSqlite();
 
-        List<Event> eventList = eventService.getAll();
+        List<Event> eventList = Event.findAll();
 
         SqliteContact contactService = new SqliteContact();
         List<ContactPerson> contactList = contactService.getContactList();
@@ -78,12 +72,5 @@ public class SendAllEventsController extends HttpServlet {
         mail.setMessageId(System.currentTimeMillis());
 
         return mail;
-    }
-
-    private SMTPConfiguration getSmtpConfiguration() {
-        return new SMTPConfiguration(
-                System.getenv(EMAIL_USERID),
-                System.getenv(EMAIL_PASSWORD),
-                SMTP_ADDR, PORT);
     }
 }

@@ -8,15 +8,20 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
-/**
- * Created by Cadet on 11/26/2015.
- */
 public class SqliteBase {
 
     protected String dbName = "jdbc:sqlite:oddemail.db";
 
     protected Statement statement;
     protected Connection connection;
+
+    public SqliteBase(String dbLink) {
+        dbName = dbLink;
+    }
+
+    public SqliteBase() {
+
+    }
 
     public Statement openConnection() throws ClassNotFoundException,
             SQLException {

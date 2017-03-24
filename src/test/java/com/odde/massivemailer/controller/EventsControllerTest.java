@@ -3,25 +3,27 @@ package com.odde.massivemailer.controller;
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.Event;
 import com.odde.massivemailer.service.EventService;
+import org.hamcrest.CoreMatchers;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import org.junit.matchers.JUnitMatchers;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(TestWithDB.class)
 public class EventsControllerTest {
     private EventsController eventsController;
-
-    private EventService eventService;
-
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
 
@@ -29,9 +31,7 @@ public class EventsControllerTest {
 
     @Before
     public void setUpMockService() {
-        eventService = Mockito.mock(EventService.class);
-
-        eventsController = new EventsController(eventService);
+        eventsController = new EventsController();
 
         events = new ArrayList<>();
 
@@ -41,85 +41,44 @@ public class EventsControllerTest {
 
     @Test
     public void returnEmptyEventsListAsJson() throws Exception {
-        Mockito.when(eventService.getAll()).thenReturn(events);
-
         eventsController.doGet(request, response);
         assertEquals("[]", response.getContentAsString());
     }
 
     @Test
     public void returnSingleEventsListAsJson() throws Exception {
-        events.add(new Event("Test event 1"));
-
-        Mockito.when(eventService.getAll()).thenReturn(events);
-
+        new Event("Test event 1").saveIt();
         eventsController.doGet(request, response);
-        assertEquals("[{\"attributes\":{\"Title\":\"Test event 1\"}}]", response.getContentAsString());
+        assertThat(response.getContentAsString(), containsString("\"title\":\"Test event 1\""));
     }
 
 
     @Test
     public void returnMultipleEventsListAsJson() throws Exception {
-        events.add(new Event("Test event 1"));
-        events.add(new Event("Test event 2"));
-
-        Mockito.when(eventService.getAll()).thenReturn(events);
-
+        new Event("Test event 1").saveIt();
+        new Event("Test event 2").saveIt();
         eventsController.doGet(request, response);
-        assertEquals("[{\"attributes\":{\"Title\":\"Test event 1\"}},{\"attributes\":{\"Title\":\"Test event 2\"}}]", response.getContentAsString());
+        assertThat(response.getContentAsString(), containsString("\"title\":\"Test event 1\""));
+        assertThat(response.getContentAsString(), containsString("\"title\":\"Test event 2\""));
     }
 
     @Test
     public void shouldAddNewEventWhenTitleIsValid() throws Exception {
-        Event e = new Event("Test event 1 from Controller");
-        events.add(e);
-
-        Mockito.when(eventService.addEvent(e)).thenReturn(true);
-
-        request.setParameter("evtTitle", e.getTitle());
-
+        request.setParameter("evtTitle", "title");
         eventsController.doPost(request, response);
         assertEquals("eventlist.jsp?status=success&msg=Add event successfully", response.getRedirectedUrl());
     }
 
     @Test
     public void shouldShowErrorWhenTitleIsEmpty() throws Exception {
-        Event e = new Event("");
-        events.add(e);
-
-        Mockito.when(eventService.addEvent(e)).thenThrow(new IllegalArgumentException("Event title is mandatory"));
-
         request.setParameter("evtTitle", "");
-
         eventsController.doPost(request, response);
-        assertEquals("eventlist.jsp?status=failed&msg=Event title is mandatory", response.getRedirectedUrl());
+        assertEquals("eventlist.jsp?status=failed&msg={ title=<value is missing> }", response.getRedirectedUrl());
     }
 
     @Test
     public void shouldShowErrorWhenTitleIsNull() throws Exception {
-        Event e = new Event(null);
-        events.add(e);
-
-        Mockito.when(eventService.addEvent(e)).thenThrow(new IllegalArgumentException("Event title is mandatory"));
-
-        request.setParameter("evtTitle", e.getTitle());
-
         eventsController.doPost(request, response);
-        assertEquals("eventlist.jsp?status=failed&msg=Event title is mandatory", response.getRedirectedUrl());
+        assertEquals("eventlist.jsp?status=failed&msg={ title=<value is missing> }", response.getRedirectedUrl());
     }
-
-//    @Test
-//    public void addExistingEvent() throws Exception {
-//        Event e = new Event("Test event 1");
-//        events.add(e);
-//
-//        Mockito.when(eventService.addEvent(e)).thenThrow(
-//                new EventAlreadyExistsException("Event 'Test event 1' is already exist"));
-//
-//        request.setParameter("evtTitle", "Test event 1");
-//        request.setParameter("content", "Test content 1");
-//
-//        eventsController.doPost(request, response);
-//        assertEquals("eventlist.jsp?status=failed&msg=Event 'Test event 1' is already exist", response.getRedirectedUrl());
-//    }
 }

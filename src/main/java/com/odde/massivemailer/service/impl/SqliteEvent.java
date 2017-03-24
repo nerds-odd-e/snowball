@@ -12,12 +12,14 @@ public class SqliteEvent extends SqliteBase {
         int rowAffected = 0;
 
         try {
+            event.saveIt();
             openConnection();
 
             String sqlStatement =
                     String.format("INSERT INTO Event (Title, Description) VALUES ('%s', '%s')",
                             event.getTitle(),
                             event.getContent());
+            System.err.println(sqlStatement);
             rowAffected = statement.executeUpdate(sqlStatement);
 
             return (rowAffected == 1);
@@ -32,26 +34,7 @@ public class SqliteEvent extends SqliteBase {
     }
 
     public List<Event> getAll() {
-        List<Event> eventList = Collections.emptyList();
-
-        ResultSet resultSet = null;
-        try {
-            openConnection();
-
-            String selectSql = "SELECT * FROM Event";
-
-            resultSet = statement.executeQuery(selectSql);
-            eventList = populateEventList(resultSet);
-
-            resultSet.close();
-        } catch (ClassNotFoundException | SQLException e) {
-            System.err.println("Error while listing event");
-            e.printStackTrace();
-        } finally {
-            closeConnection();
-        }
-
-        return eventList;
+        return Event.findAll();
     }
 
     private List<Event> populateEventList(ResultSet resultSet) throws SQLException {

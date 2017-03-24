@@ -1,9 +1,12 @@
 package com.odde.massivemailer.controller;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.odde.massivemailer.model.Event;
+import com.odde.massivemailer.serialiser.EventSerialiser;
 import com.odde.massivemailer.service.EventService;
 import com.odde.massivemailer.service.impl.EventServiceImpl;
+import org.javalite.activejdbc.Base;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -12,24 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class EventsController extends HttpServlet {
-    private EventService eventService;
-
-    public EventsController(){
-        this.eventService = new EventServiceImpl();
-    }
-
-    public EventsController(EventService eventService) {
-        setEventService(eventService);
-    }
-
-    public void setEventService(EventService eventService) {
-        this.eventService = eventService;
-    }
+public class EventsController extends AppController {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String convertedContactToJSON = new Gson().toJson(eventService.getAll());
+        Gson gson = new GsonBuilder().registerTypeAdapter(Event.class, new EventSerialiser()).create();
+        String convertedContactToJSON = gson.toJson(Event.findAll());
         ServletOutputStream outputStream = resp.getOutputStream();
         outputStream.print(convertedContactToJSON);
     }
@@ -40,7 +31,7 @@ public class EventsController extends HttpServlet {
 
         Event event = buildEventObject(req);
         try {
-            if (eventService.addEvent(event)) {
+            if (event.saveIt()) {
                 resultMsg = "status=success&msg=Add event successfully";
             }
         } catch (Exception e) {

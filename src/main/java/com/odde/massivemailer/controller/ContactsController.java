@@ -11,8 +11,9 @@ import com.google.gson.Gson;
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.service.ContactService;
 import com.odde.massivemailer.service.impl.SqliteContact;
+import org.javalite.activejdbc.Base;
 
-public class ContactsController extends HttpServlet {
+public class ContactsController extends AppController {
     private static final long serialVersionUID = 1L;
     private ContactService contactService;
 

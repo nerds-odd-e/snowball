@@ -1,5 +1,6 @@
 package com.odde.massivemailer.model;
 
+import com.google.gson.annotations.Expose;
 import org.javalite.activejdbc.Model;
 
 import java.io.Serializable;
@@ -8,14 +9,20 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-public class Event  implements Serializable{
+public class Event extends Model implements Serializable{
+    static {
+        validatePresenceOf("title");
+    }
     private String title;
 
     private String content;
 
-    private Map<String, String> attributes = new HashMap<>();
+    @Expose
+    private Map<String, String> attributes_dep = new HashMap<>();
     private static final String TITLE = "Title";
     private static final String CONTENT = "Content";
+
+    public Event() { }
 
     public Event(String title) {
         setTitle(title);
@@ -26,18 +33,22 @@ public class Event  implements Serializable{
         setContent(content);
     }
 
-    public String getContent() { return getAttribute(CONTENT); }
+    public String getContent() { return getAttribute("description"); }
 
     public void setContent(String content) {
         if (content == null) {
             content = "";
         }
         setAttribute(CONTENT, content);
+        set("description", content);
     }
 
     public String getTitle(){ return getAttribute(TITLE); }
 
-    public void setTitle(String title) { setAttribute(TITLE, title); }
+    public void setTitle(String title) {
+        setAttribute(TITLE, title);
+        set(TITLE, title);
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -55,13 +66,15 @@ public class Event  implements Serializable{
 
     private void setAttribute(String name, String value)
     {
-        attributes.put(name, value);
+        attributes_dep.put(name, value);
     }
 
-    public String getAttribute(String name) { return attributes.containsKey(name) ? attributes.get(name) : ""; }
+    public String getAttribute(String name) {
+        return (String) get(name);
+    }
 
     public Set<String> getAttributeKeys()
     {
-        return attributes.keySet();
+        return attributes_dep.keySet();
     }
 }

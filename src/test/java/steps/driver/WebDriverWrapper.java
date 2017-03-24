@@ -24,15 +24,19 @@ public class WebDriverWrapper {
     private WebDriver driver;
 
     public WebDriverWrapper() {
-        DesiredCapabilities dcap = new DesiredCapabilities();
-        String[] phantomArgs = new  String[] {
-                "--webdriver-loglevel=NONE"
-        };
-        dcap.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);
-        driver = new PhantomJSDriver(dcap);
-        //driver = new ChromeDriver();
-        Logger.getLogger(PhantomJSDriverService.class.getName()).setLevel(Level.OFF);
-        driver.manage().window().maximize();
+        System.out.println("here's the property:" + System.getProperty("webdriver"));
+        if (System.getProperty("webdriver").equals("chrome"))
+            driver = new ChromeDriver();
+        else {
+            DesiredCapabilities dcap = new DesiredCapabilities();
+            String[] phantomArgs = new  String[] {
+                    "--webdriver-loglevel=NONE"
+            };
+            dcap.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);
+            driver = new PhantomJSDriver(dcap);
+            Logger.getLogger(PhantomJSDriverService.class.getName()).setLevel(Level.OFF);
+            driver.manage().window().maximize();
+        }
 
     }
     public void visit(String url) {

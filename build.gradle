@@ -87,6 +87,8 @@ cucumber {
     glueDirs = [
             "classpath:io.jdev.geb.cucumber.steps.groovy.en", 'classpath:steps'
     ]
+
+    tags = ['~@system']
 }
 
 tasks.cucumber {
@@ -100,7 +102,8 @@ tasks.cucumber {
             "webdriver.chrome.driver": new File(unzipChromeDriver.outputs.files.singleFile, chromeDriverFilename).absolutePath,
             "phantomjs.binary.path": Os.isFamily(Os.FAMILY_MAC) ? '/usr/local/bin/phantomjs' : new File(unzipPhantomJs.outputs.files.singleFile, phantomJsFilename).absolutePath,
             "geb.cucumber.step.packages": "pages",
-            "geb.env": System.getProperty("geb.env")
+            "geb.env": System.getProperty("geb.env"),
+            "webdriver": System.getProperty("webdriver")
     ])
 }
 
@@ -121,12 +124,14 @@ dependencies {
 
     compile group: 'com.sun.mail', name: 'javax.mail', version: '1.5.4'
     compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.8.11.2'
-    compile group: 'org.mockito', name: 'mockito-all', version: '1.9.5'
     compile group: 'com.google.code.gson', name: 'gson', version: '1.7.1'
     compile group: 'com.icegreen', name: 'greenmail', version: '1.4.1'
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'org.hamcrest', name: 'hamcrest-core', version: '1.3'
+    testCompile group: 'org.hamcrest', name: 'hamcrest-library', version: '1.3'
     testCompile group: 'org.springframework', name: 'spring-mock', version: '2.0.8'
     testCompile group: 'org.springframework', name: 'spring-core', version: '2.0.8'
+    testCompile group: 'org.mockito', name: 'mockito-all', version: '1.9.5'
 
     compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
     compile group: 'org.javalite', name: 'db-migrator-maven-plugin', version: '1.4.11'

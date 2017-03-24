@@ -5,7 +5,7 @@ Feature: Send all events to all contacts
   Background:
     Given visit event list page
 
-  @wip @email @now
+  @email
   Scenario Outline: Send all events to all contacts
     When number of contact is "<number of contacts>"
      And number of event is "<number of events>"

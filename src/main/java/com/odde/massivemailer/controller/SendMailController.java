@@ -22,16 +22,11 @@ import com.odde.massivemailer.service.impl.SMTPConfiguration;
 
 import com.odde.massivemailer.service.impl.SqliteContact;
 
-public class SendMailController extends HttpServlet {
+public class SendMailController extends AppController {
 
     private SqliteContact sqliteContact;
 
-    private static final String SMTP_ADDR = "smtp.gmail.com";
-    private static final int PORT = 587;
-    public static final String EMAIL_USERID = "MM_EMAIL_USERID";
-    public static final String EMAIL_PASSWORD = "MM_EMAIL_PASSWORD";
 
-    private GMailService gmailService;
     private NotificationService notificationService;
 
     public SendMailController() {
@@ -58,15 +53,6 @@ public class SendMailController extends HttpServlet {
             resp.sendRedirect("sendemail.jsp?status=failed&msg=Fail");
             e.printStackTrace();
         }
-    }
-
-    private GMailService createGmailService() {
-        if (null == gmailService) {
-            SMTPConfiguration config = new SMTPConfiguration(System.getenv(EMAIL_USERID), System.getenv(EMAIL_PASSWORD), SMTP_ADDR, PORT);
-            gmailService = new GMailService(config);
-        }
-
-        return gmailService;
     }
 
     public Mail processRequest(HttpServletRequest req) throws SQLException {
@@ -117,10 +103,6 @@ public class SendMailController extends HttpServlet {
 
     public void setSqliteContact(SqliteContact contactService) {
         sqliteContact = contactService;
-    }
-
-    public void setGmailService(GMailService gmailService) {
-        this.gmailService = gmailService;
     }
 
     public void setNotificationService(final NotificationService notificationService) {

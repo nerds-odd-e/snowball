@@ -15,7 +15,9 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
@@ -39,13 +41,18 @@ public class SendAllEventsControllerTest {
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
 
+    @Mock
+    private GMailService gmailService;
+
     private List<Event> events;
 
     @Before
     public void setUpMockService() {
+        MockitoAnnotations.initMocks(this);
         eventService = new EventServiceImpl();
         contactService = new SqliteContact();
         sendAllEventsController = new SendAllEventsController();
+        sendAllEventsController.setGmailService(gmailService);
 
         events = new ArrayList<>();
 

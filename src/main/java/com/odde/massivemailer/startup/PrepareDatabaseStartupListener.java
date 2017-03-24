@@ -23,10 +23,18 @@ public class PrepareDatabaseStartupListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        System.out.println("Preparing database...");
+        getDBReady("jdbc:sqlite:oddemail.db");
+        getDBReady("jdbc:sqlite:testdb.db");
+    }
 
-        SqliteBase base = new SqliteBase();
+    @Override
+    public void contextDestroyed(ServletContextEvent sce) {
 
+    }
+
+    private void getDBReady(String dbLink) {
+        System.out.println("Preparing database... " + dbLink);
+        SqliteBase base = new SqliteBase(dbLink);
         try (Statement statement = base.openConnection()) {
             for (String migration : MIGRATION_FILES) {
                 statement.executeUpdate(loadMigration(migration));
@@ -38,11 +46,6 @@ public class PrepareDatabaseStartupListener implements ServletContextListener {
         } finally {
             base.closeConnection();
         }
-    }
-
-    @Override
-    public void contextDestroyed(ServletContextEvent sce) {
-
     }
 
     private String loadMigration(String name) {
