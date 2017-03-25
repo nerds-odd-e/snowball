@@ -3,7 +3,7 @@ package com.odde.massivemailer.controller;
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Event;
-import com.odde.massivemailer.service.impl.*;
+import com.odde.massivemailer.service.GMailService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

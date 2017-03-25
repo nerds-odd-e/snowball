@@ -14,7 +14,7 @@ import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.model.Notification;
-import com.odde.massivemailer.service.impl.GMailService;
+import com.odde.massivemailer.service.GMailService;
 
 public class SendMailController extends AppController {
 

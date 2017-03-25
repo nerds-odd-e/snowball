@@ -5,7 +5,7 @@ import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Event;
 import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.model.Notification;
-import com.odde.massivemailer.service.impl.*;
+import com.odde.massivemailer.service.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

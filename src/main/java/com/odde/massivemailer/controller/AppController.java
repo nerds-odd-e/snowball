@@ -10,10 +10,8 @@ import com.odde.massivemailer.serialiser.ContactPersonSerialiser;
 import com.odde.massivemailer.serialiser.EventSerialiser;
 import com.odde.massivemailer.serialiser.NotificationSerialiser;
 import com.odde.massivemailer.serialiser.TemplateSerialiser;
-import com.odde.massivemailer.service.impl.GMailService;
-import com.odde.massivemailer.service.impl.SMTPConfiguration;
-import com.sun.tools.corba.se.idl.constExpr.Not;
-import org.javalite.activejdbc.Base;
+import com.odde.massivemailer.service.GMailService;
+import com.odde.massivemailer.service.SMTPConfiguration;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

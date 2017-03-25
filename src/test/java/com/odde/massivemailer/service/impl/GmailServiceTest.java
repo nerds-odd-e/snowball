@@ -13,6 +13,8 @@ import javax.mail.Transport;
 import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.GreenMailUtil;
 import com.icegreen.greenmail.util.ServerSetup;
+import com.odde.massivemailer.service.GMailService;
+import com.odde.massivemailer.service.SMTPConfiguration;
 import com.odde.massivemailer.util.NotificationUtil;
 import org.junit.Ignore;
 import org.junit.Test;

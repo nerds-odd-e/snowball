@@ -1,4 +1,4 @@
-package com.odde.massivemailer.service.impl;
+package com.odde.massivemailer.service;
 
 import java.util.List;
 import java.util.Properties;
@@ -11,6 +11,7 @@ import javax.mail.Transport;
 
 import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.Mail;
+import com.odde.massivemailer.service.SMTPConfiguration;
 
 public class GMailService{
 

@@ -22,7 +22,6 @@ public class TestWithDB extends BlockJUnit4ClassRunner {
     public void run(RunNotifier notifier) {
         Base.open("org.sqlite.JDBC", "jdbc:sqlite:testdb.db", "", "");
         Base.openTransaction();
-        Base.exec("delete from sqlite_sequence;");
         super.run(notifier);
         Base.rollbackTransaction();
         Base.close();

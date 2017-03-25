@@ -1,4 +1,4 @@
-package com.odde.massivemailer.service.impl;
+package com.odde.massivemailer.service;
 
 public class SMTPConfiguration {
 
