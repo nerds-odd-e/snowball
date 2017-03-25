@@ -23,51 +23,39 @@ import org.springframework.mock.web.MockHttpServletResponse;
 @RunWith(TestWithDB.class)
 public class ContactsControllerTest {
     private ContactsController controller;
-    private ContactService contactService;
-
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
-    private List<ContactPerson> contacts;
-
     @Before
     public void setUpMockService() {
-        contactService = mock(SqliteContact.class);
-
-        controller = new ContactsController(contactService);
+        controller = new ContactsController();
 
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
-
-        contacts = new ArrayList<>();
-        contacts.add(new ContactPerson("John", "john@gmail.com", "Doe", "ComA"));
-        contacts.add(new ContactPerson("Peter", "peter@gmail.com", "Toh", "ComA"));
     }
 
     @Test
     public void returnContactsInJSON() throws Exception {
-        when(contactService.getContactList()).thenReturn(contacts);
+        new ContactPerson("John", "john@gmail.com", "Doe", "ComA").saveIt();
+        new ContactPerson("Peter", "peter@gmail.com", "Toh", "ComA").saveIt();
 
         controller.doGet(request, response);
 
-        assertEquals(controller.getGson().toJson(contacts), response.getContentAsString());
         assertThat(response.getContentAsString(), containsString("\"email\":\"john@gmail.com\""));
         assertThat(response.getContentAsString(), containsString("\"firstname\":\"Peter\""));
     }
 
     @Test
     public void addAnExistingContact() throws Exception {
-        when(contactService.addContact(any(ContactPerson.class))).thenReturn(false);
-
+        new ContactPerson("John", "john@gmail.com", "Doe", "ComA").saveIt();
+        assertEquals(1, (long) ContactPerson.count());
         request.setParameter("email", "john@gmail.com");
         controller.doPost(request, response);
-
-        assertEquals("contactlist.jsp?status=failed&msg=Email john@gmail.com is already exist", response.getRedirectedUrl());
+        assertEquals(1, (long) ContactPerson.count());
+        assertEquals("contactlist.jsp?status=failed&msg={ email=<should be unique> }", response.getRedirectedUrl());
     }
 
     @Test
     public void addNewContact() throws Exception {
-        when(contactService.addContact(any(ContactPerson.class))).thenReturn(true);
-
         request.setParameter("email", "newbie@gmail.com");
         controller.doPost(request, response);
 

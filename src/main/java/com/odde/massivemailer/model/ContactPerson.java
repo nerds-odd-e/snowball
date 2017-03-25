@@ -1,8 +1,12 @@
 package com.odde.massivemailer.model;
 
-import com.odde.massivemailer.exception.InvalidEmailException;
+import org.javalite.activejdbc.DB;
+import org.javalite.activejdbc.MetaModel;
 import org.javalite.activejdbc.Model;
+import org.javalite.activejdbc.ModelDelegate;
 import org.javalite.activejdbc.annotations.Table;
+import com.odde.massivemailer.model.validator.UniquenessValidator;
+import org.javalite.activejdbc.validation.ValidatorAdapter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +17,10 @@ import javax.mail.internet.InternetAddress;
 
 @Table("contact_people")
 public class ContactPerson extends Model {
+	static {
+		validatePresenceOf("email");
+		validateWith(new UniquenessValidator("email"));
+	}
 	private int id;
 	private String name;
 	private String email;
@@ -40,7 +48,6 @@ public class ContactPerson extends Model {
 		try {
 			new InternetAddress(email).validate();
 		}catch(AddressException ae){
-			throw new InvalidEmailException("Invalid email", ae);
 		}
 
 		setEmail(email);

@@ -14,7 +14,12 @@ public class ContactPersonSerialiser implements JsonSerializer {
     public JsonElement serialize(Object src, Type typeOfSrc, JsonSerializationContext context) {
         final ContactPerson contact = (ContactPerson) src;
         final JsonObject jsonObject = new JsonObject();
-        ContactPerson.attributeNames().stream().forEach((f)-> jsonObject.addProperty(f, (String) contact.get(f)));
+        for(String f : ContactPerson.attributeNames()) {
+            if(contact.get(f) != null) {
+                jsonObject.addProperty(f, contact.get(f).toString());
+            }
+        }
+
         return jsonObject;
     }
 }

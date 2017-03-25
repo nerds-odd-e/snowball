@@ -26,9 +26,8 @@ public class EventsController extends AppController {
 
         Event event = buildEventObject(req);
         try {
-            if (event.saveIt()) {
-                resultMsg = "status=success&msg=Add event successfully";
-            }
+            event.saveIt();
+            resultMsg = "status=success&msg=Add event successfully";
         } catch (Exception e) {
             resultMsg = "status=failed&msg=" + e.getMessage();
         }
