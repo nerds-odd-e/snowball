@@ -38,5 +38,6 @@ public class NotificationDetail extends Model {
 
     public void updateViewCount() {
         setRead_count(getRead_count()+1);
+        saveIt();
     }
 }

@@ -1,17 +1,13 @@
 package com.odde.massivemailer.filter;
 
-import com.odde.massivemailer.service.TrackingService;
-import com.odde.massivemailer.service.impl.SqliteTracking;
+import com.odde.massivemailer.model.NotificationDetail;
 
 import javax.servlet.*;
 
 public class ImageFilter implements Filter {
     static final String TOKEN = "token";
 
-    private TrackingService trackingService;
-
     public void init(FilterConfig config) throws ServletException {
-        trackingService = new SqliteTracking();
     }
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -19,16 +15,13 @@ public class ImageFilter implements Filter {
         String token = request.getParameter(TOKEN);
 
         if (token != null) {
-            trackingService.updateViewCount(Integer.parseInt(token));
+            NotificationDetail nd = NotificationDetail.findById(Integer.parseInt(token));
+            nd.updateViewCount();
         }
 
         chain.doFilter(request, response);
     }
 
     public void destroy() {
-    }
-
-    public void setTrackingService(final TrackingService trackingService) {
-        this.trackingService = trackingService;
     }
 }
