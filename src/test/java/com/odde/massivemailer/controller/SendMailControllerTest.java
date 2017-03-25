@@ -1,14 +1,15 @@
 package com.odde.massivemailer.controller;
 
+import com.odde.TestWithDB;
 import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.model.Notification;
 import com.odde.massivemailer.service.NotificationService;
 import com.odde.massivemailer.service.impl.GMailService;
-import com.odde.massivemailer.service.impl.SqliteContact;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
@@ -19,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -28,11 +28,9 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 
+@RunWith(TestWithDB.class)
 public class SendMailControllerTest {
     private SendMailController controller;
-
-    @Mock
-    private SqliteContact contactService;
 
     @Mock
     private GMailService gmailService;
@@ -54,7 +52,6 @@ public class SendMailControllerTest {
         MockitoAnnotations.initMocks(this);
 
         controller = new SendMailController();
-        controller.setSqliteContact(contactService);
         controller.setGmailService(gmailService);
         controller.setNotificationService(notificationService);
 
@@ -101,12 +98,9 @@ public class SendMailControllerTest {
         mockRecipient("company:abc");
         String[] companyRecipients = {"ab1@abc.com", "ab2@abc.com", "ab3@abc.com"};
 
-        List<ContactPerson> contactPersonList = new ArrayList<>();
         for (int i = 0; i < companyRecipients.length; ++i) {
-            contactPersonList.add(new ContactPerson("", companyRecipients[i], "", "abc"));
+            new ContactPerson("", companyRecipients[i], "", "abc").saveIt();
         }
-
-        when(contactService.getContactListFromCompany("abc")).thenReturn(contactPersonList);
 
         Mail mail = controller.processRequest(request);
 
@@ -121,13 +115,10 @@ public class SendMailControllerTest {
     public void ProcessRequestMustHandleCompany() throws SQLException {
         String company = "abc";
 
-        List<ContactPerson> contactPeople = new ContactPeopleBuilder(company)
+        new ContactPeopleBuilder(company)
                 .add("ab1@abc.com")
                 .add("ab2@abc.com")
-                .add("ab3@abc.com")
-                .build();
-
-        when(contactService.getContactListFromCompany(company)).thenReturn(contactPeople);
+                .add("ab3@abc.com");
 
         mockRecipient("company:" + company);
 
@@ -144,13 +135,10 @@ public class SendMailControllerTest {
     public void ProcessRequestMustHandleCompanyWithSpace() throws SQLException {
         String company = "abc def";
 
-        List<ContactPerson> contactPeople = new ContactPeopleBuilder(company)
+        new ContactPeopleBuilder(company)
                 .add("ab1@abc.com")
                 .add("ab2@abc.com")
-                .add("ab3@abc.com")
-                .build();
-
-        when(contactService.getContactListFromCompany(company)).thenReturn(contactPeople);
+                .add("ab3@abc.com");
 
         mockRecipient("company:\"" + company + "\"");
 
@@ -158,42 +146,32 @@ public class SendMailControllerTest {
 
         List<String> recipients = mail.getReceipts();
 
+        assertThat(recipients.size(), is(3));
         assertThat(recipients.get(0), is("ab1@abc.com"));
         assertThat(recipients.get(1), is("ab2@abc.com"));
         assertThat(recipients.get(2), is("ab3@abc.com"));
     }
 
     private class ContactPeopleBuilder {
-        private List<ContactPerson> contactPeople;
         private String company;
 
         public ContactPeopleBuilder(final String company) {
-            this.contactPeople = new ArrayList<>();
             this.company = company;
         }
 
         public ContactPeopleBuilder add(final String email) {
-            contactPeople.add(new ContactPerson("", email, "", company));
-
+            new ContactPerson("", email, "", company).saveIt();
             return this;
-        }
-
-        public List<ContactPerson> build() {
-            return contactPeople;
         }
     }
 
     @Test
     public void ProcessRequestMustHandleCompanyWithSpaceButWtf() throws SQLException {
         String company = "abc def";
-
-        List<ContactPerson> contactPeople = new ContactPeopleBuilder(company)
+        new ContactPeopleBuilder(company)
                 .add("ab1@abc.com")
                 .add("ab2@abc.com")
-                .add("ab3@abc.com")
-                .build();
-
-        when(contactService.getContactListFromCompany(company)).thenReturn(contactPeople);
+                .add("ab3@abc.com");
 
         mockRecipient("company:\"" + company);
 
@@ -210,13 +188,10 @@ public class SendMailControllerTest {
     public void ProcessRequestMustHandleCompanyWithSpaceButNoQuotesWtf() throws SQLException {
         String company = "abc def";
 
-        List<ContactPerson> contactPeople = new ContactPeopleBuilder(company)
+        new ContactPeopleBuilder(company)
                 .add("ab1@abc.com")
                 .add("ab2@abc.com")
-                .add("ab3@abc.com")
-                .build();
-
-        when(contactService.getContactListFromCompany(company)).thenReturn(contactPeople);
+                .add("ab3@abc.com");
 
         mockRecipient("company:" + company);
 

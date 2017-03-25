@@ -1,9 +1,10 @@
 package com.odde.massivemailer.model;
 
-import com.odde.massivemailer.service.impl.SqliteContact;
+import com.odde.TestWithDB;
 import com.odde.massivemailer.util.NotificationUtil;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import javax.mail.Message;
 import javax.mail.Session;
@@ -16,9 +17,8 @@ import java.util.Properties;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
 
+@RunWith(TestWithDB.class)
 public class MailTest {
 	
 	@Test @Ignore
@@ -38,19 +38,18 @@ public class MailTest {
 		assertEquals(mail.getSubject(), messages.get(0).getSubject());
 	}
 
-	@Test @Ignore
+	@Test
 	public void testCreateMessageWithTemplate() throws Exception {
 		Properties props = System.getProperties();
 		Session session = Session.getDefaultInstance(props);
-		SqliteContact mockSqliteContact = mock(SqliteContact.class);
 		ContactPerson contactPerson = new ContactPerson();
 		contactPerson.setName("TestName");
 		contactPerson.setLastname("LastName");
-		contactPerson.setEmail("EmailName");
+		contactPerson.setEmail("test@gmail.com");
 		contactPerson.setCompany("CompanyName");
-		when(mockSqliteContact.getContactByEmail(anyString())).thenReturn(contactPerson);
+		contactPerson.saveIt();
 
-		Mail mail = new Mail(mockSqliteContact);
+		Mail mail = new Mail();
 		mail.setMessageId(System.currentTimeMillis());
 		mail.setContent("content {FirstName}, {Company}");
 		mail.setSubject("subject {LastName} - {Email}");
@@ -60,11 +59,8 @@ public class MailTest {
 
 		List<Message> messages = mail.createMessages(session);
 
-
-		verify(mockSqliteContact).getContactByEmail(anyString());
-
 		assertEquals("<html><body>content TestName, CompanyName<img height=\"42\" width=\"42\" src=\"http://"+ InetAddress.getLocalHost().getHostAddress()+":8070/massive_mailer/resources/images/qrcode.png?token=" + mail.getNotification().getNotificationDetails().get(0).getId() + "\"></img></body></html>", messages.get(0).getContent());
-		assertEquals("subject LastName - EmailName", messages.get(0).getSubject());
+		assertEquals("subject LastName - test@gmail.com", messages.get(0).getSubject());
 	}
 
 

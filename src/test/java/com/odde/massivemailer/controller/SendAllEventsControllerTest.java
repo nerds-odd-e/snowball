@@ -24,8 +24,6 @@ public class SendAllEventsControllerTest {
 
     private SendAllEventsController sendAllEventsController;
 
-    private ContactService contactService;
-
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
 
@@ -35,7 +33,6 @@ public class SendAllEventsControllerTest {
     @Before
     public void setUpMockService() {
         MockitoAnnotations.initMocks(this);
-        contactService = new SqliteContact();
         sendAllEventsController = new SendAllEventsController();
         sendAllEventsController.setGmailService(gmailService);
 
@@ -45,14 +42,12 @@ public class SendAllEventsControllerTest {
 
     @Test
     public void sendNoEventsToNoContactsAsMail() throws Exception {
-        contactService.destroyAll();
         sendAllEventsController.doPost(request, response);
         assertEquals("eventlist.jsp?email_sent=N/A&event_in_email=N/A", response.getRedirectedUrl());
     }
 
     @Test
     public void send1EventToNoContactsAsMail() throws Exception {
-        contactService.destroyAll();
         new Event("Testing-1").saveIt();
         sendAllEventsController.doPost(request, response);
         assertEquals("eventlist.jsp?email_sent=N/A&event_in_email=N/A", response.getRedirectedUrl());
@@ -60,19 +55,17 @@ public class SendAllEventsControllerTest {
 
     @Test
     public void send1EventTo1ContactsAsMail() throws Exception {
-        contactService.destroyAll();
         new Event("Testing-1").saveIt();
-        contactService.addContact(new ContactPerson("testName", "test1@gmail.com", "testLastName"));
+        new ContactPerson("testName", "test1@gmail.com", "testLastName").saveIt();
         sendAllEventsController.doPost(request, response);
         assertEquals("eventlist.jsp?email_sent=1&event_in_email=1", response.getRedirectedUrl());
     }
 
     @Test
     public void send1EventTo2ContactsAsMail() throws Exception {
-        contactService.destroyAll();
         new Event("Testing-1").saveIt();
-        contactService.addContact(new ContactPerson("testName1", "test1@gmail.com", "test1LastName"));
-        contactService.addContact(new ContactPerson("testName2", "test2@gmail.com", "test2LastName"));
+        new ContactPerson("testName1", "test1@gmail.com", "test1LastName").saveIt();
+        new ContactPerson("testName2", "test2@gmail.com", "test2LastName").saveIt();
         sendAllEventsController.doPost(request, response);
         assertEquals("eventlist.jsp?email_sent=2&event_in_email=1", response.getRedirectedUrl());
     }

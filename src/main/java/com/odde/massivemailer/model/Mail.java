@@ -3,7 +3,6 @@ package com.odde.massivemailer.model;
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,33 +15,24 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import com.odde.massivemailer.exception.EmailException;
-import com.odde.massivemailer.service.impl.SqliteContact;
 
 public class Mail {
 
     private static final String FROM = "myodde@gmail.com";
     private static final String DISPLAY_NAME = "Inspector Gadget";
 
-	private MimeMessage message;
-	private List<String> receipts;
-	private String subject;
-	private String content;
-	private SqliteContact sqliteContact;
-	private String key;
-	private Date sentDate;
+    private MimeMessage message;
+    private List<String> receipts;
+    private String subject;
+    private String content;
+    private String key;
+    private Date sentDate;
     private long messageId;
     private Notification notification;
 
 
-
-
     public Mail() {
-        this.sqliteContact = new SqliteContact();
         receipts = new ArrayList<>();
-    }
-
-    public Mail(SqliteContact sqliteContact) {
-        this.sqliteContact = sqliteContact;
     }
 
     public List<String> getReceipts() {
@@ -73,7 +63,7 @@ public class Mail {
             throws AddressException, MessagingException {
 
         try {
-            ContactPerson contact = sqliteContact.getContactByEmail(notificationDetail.getEmailAddress());
+            ContactPerson contact = ContactPerson.getContactByEmail(notificationDetail.getEmailAddress());
             String subject, content;
             if (contact != null) {
                 subject = ReplaceAttibute(this.getSubject(), contact);
@@ -90,11 +80,11 @@ public class Mail {
 
             InetAddress ip = InetAddress.getLocalHost();
 
-            String messageContent = "<html><body>" + content + "<img height=\"42\" width=\"42\" src=\"http://"+ip.getHostAddress()+":8070/massive_mailer/resources/images/qrcode.png?token="+notificationDetail.getId()+"\"></img></body></html>";
+            String messageContent = "<html><body>" + content + "<img height=\"42\" width=\"42\" src=\"http://" + ip.getHostAddress() + ":8070/massive_mailer/resources/images/qrcode.png?token=" + notificationDetail.getId() + "\"></img></body></html>";
             message.setText(messageContent);
             message.setContent(messageContent, "text/html; charset=utf-8");
 
-        } catch (UnsupportedEncodingException | SQLException | UnknownHostException e) {
+        } catch (UnsupportedEncodingException | UnknownHostException e) {
             e.printStackTrace();
         }
 
@@ -104,7 +94,7 @@ public class Mail {
     public String ReplaceAttibute(String template, ContactPerson contact) {
 
         for (String attr : contact.getAttributeKeys()) {
-            String regexp = "(^|[^\\{])(\\{" + attr + "\\})([^\\}]|$)";
+            String regexp = "(?i)(^|[^\\{])(\\{" + attr + "\\})([^\\}]|$)";
 
             template = template.replaceAll(regexp, "$1" + contact.getAttribute(attr) + "$3");
         }
@@ -119,12 +109,11 @@ public class Mail {
     public List<Message> createMessages(Session session) throws EmailException,
             AddressException, MessagingException {
 
-        List<String> recipients = getReceipts();
         List<Message> returnMsg = new ArrayList<Message>();
 
         List<NotificationDetail> notificationDetails = notification.getNotificationDetails();
 
-        for(NotificationDetail notificationDetail:notificationDetails){
+        for (NotificationDetail notificationDetail : notificationDetails) {
             MimeMessage message = setMessageProperty(session, notificationDetail);
             composeMessage(notificationDetail.getEmailAddress(), message);
             returnMsg.add(message);
@@ -141,12 +130,12 @@ public class Mail {
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(
                     recipient));
 
-		} catch (MessagingException ex) {
-			throw new EmailException("Unable to send an email: " + ex);
-		}
-	}
+        } catch (MessagingException ex) {
+            throw new EmailException("Unable to send an email: " + ex);
+        }
+    }
 
-	public Notification asNotification() {
+    public Notification asNotification() {
         Notification notification = new Notification();
         notification.setSubject(getSubject());
         notification.setNotificationId(getMessageId());
@@ -158,21 +147,21 @@ public class Mail {
         return notification;
     }
 
-	public String getKey() {
-		return key;
-	}
+    public String getKey() {
+        return key;
+    }
 
-	public void setKey(String key) {
-		this.key = key;
-	}
+    public void setKey(String key) {
+        this.key = key;
+    }
 
-	public Date getSentDate() {
-		return sentDate;
-	}
+    public Date getSentDate() {
+        return sentDate;
+    }
 
-	public void setSentDate(Date sentDate) {
-		this.sentDate = sentDate;
-	}
+    public void setSentDate(Date sentDate) {
+        this.sentDate = sentDate;
+    }
 
     public void setMessageId(long messageId) {
         this.messageId = messageId;

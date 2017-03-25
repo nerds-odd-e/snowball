@@ -2,9 +2,17 @@ package com.odde.massivemailer.model;
 
 import static org.junit.Assert.*;
 
+import com.odde.TestWithDB;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
 
+@RunWith(TestWithDB.class)
 public class ContactPersonTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
 	@Test
 	public void testCreateContactObjectWithoutCompany() {
@@ -40,10 +48,8 @@ public class ContactPersonTest {
 	@Test
 	public void testGetInvalidAttributeValue() throws Exception {
 		ContactPerson contact =  new ContactPerson("John", "john@gmail.com", "Doe");
-
-		String invalidKey = contact.getAttribute("Invalid");
-
-		assertEquals("", invalidKey);
+		thrown.expect(IllegalArgumentException.class);
+		contact.getAttribute("Invalid");
 	}
 
 

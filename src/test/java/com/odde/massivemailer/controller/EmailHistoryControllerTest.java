@@ -1,14 +1,8 @@
 package com.odde.massivemailer.controller;
 
 import com.google.gson.Gson;
-import com.odde.massivemailer.model.ContactPerson;
-import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.model.Notification;
 import com.odde.massivemailer.service.EmailService;
-import com.odde.massivemailer.service.impl.SqliteContact;
-import com.odde.massivemailer.service.impl.SqliteEmail;
-import org.junit.Before;
-import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 

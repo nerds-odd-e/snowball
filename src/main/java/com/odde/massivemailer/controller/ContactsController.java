@@ -3,15 +3,10 @@ package com.odde.massivemailer.controller;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
 import com.odde.massivemailer.model.ContactPerson;
-import com.odde.massivemailer.service.ContactService;
-import com.odde.massivemailer.service.impl.SqliteContact;
-import org.javalite.activejdbc.Base;
 
 public class ContactsController extends AppController {
     private static final long serialVersionUID = 1L;

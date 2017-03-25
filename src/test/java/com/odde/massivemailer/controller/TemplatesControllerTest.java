@@ -1,18 +1,11 @@
 package com.odde.massivemailer.controller;
 
 import com.google.gson.Gson;
-import com.odde.massivemailer.controller.ContactsController;
-import com.odde.massivemailer.controller.TemplatesController;
 import com.odde.massivemailer.model.Template;
-import com.odde.massivemailer.service.impl.SqliteContact;
 import com.odde.massivemailer.service.impl.SqliteTemplate;
-import org.junit.Assert;
 import org.junit.Test;
-import org.mockito.Mockito;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
 import java.util.List;

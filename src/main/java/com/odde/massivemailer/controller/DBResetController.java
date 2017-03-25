@@ -1,23 +1,23 @@
 package com.odde.massivemailer.controller;
 
-import com.odde.massivemailer.service.ContactService;
-import com.odde.massivemailer.service.impl.SqliteContact;
+import org.javalite.activejdbc.Base;
+
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class DBResetController extends HttpServlet {
+public class DBResetController extends AppController {
     private static final long serialVersionUID = 1L;
-    private ContactService contactService;
-
-    public DBResetController() {
-        contactService = new SqliteContact();
-    }
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        contactService.destroyAll();
+        Base.exec("DELETE FROM mail;");
+        Base.exec("drop table if exists Template;CREATE TABLE Template (Id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, TemplateName VARCHAR(255) NOT NULL, Subject VARCHAR(255), Content NVARCHAR(5000))");
+        Base.exec("INSERT INTO Template (TemplateName,Subject,Content) VALUES ('Default Template 1', 'Greeting {FirstName}', 'Hi, {FirstName} {LastName} from {Company}')");
+        Base.exec("INSERT INTO Template (TemplateName,Subject,Content) VALUES ('RTA Default Template', 'Greeting {FirstName}', 'Hi, {FirstName} {LastName} from {Company}');");
+        Base.exec("DELETE FROM notification_details");
+        Base.exec("DELETE FROM notifications");
+        Base.exec("DELETE FROM event");
         resp.getWriter().write("db is reset");
 
     }

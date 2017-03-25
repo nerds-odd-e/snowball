@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,14 +17,8 @@ import com.odde.massivemailer.model.Notification;
 import com.odde.massivemailer.service.NotificationService;
 import com.odde.massivemailer.service.impl.GMailService;
 import com.odde.massivemailer.service.impl.NotificationServiceSqlite;
-import com.odde.massivemailer.service.impl.SMTPConfiguration;
-
-import com.odde.massivemailer.service.impl.SqliteContact;
 
 public class SendMailController extends AppController {
-
-    private SqliteContact sqliteContact;
-
 
     private NotificationService notificationService;
 
@@ -92,17 +85,8 @@ public class SendMailController extends AppController {
 
         company = company.replaceAll("\"", "");
 
-        SqliteContact contactService = getSqliteContact();
-        contactList = contactService.getContactListFromCompany(company);
+        contactList = ContactPerson.getContactListFromCompany(company);
         return contactList;
-    }
-
-    public SqliteContact getSqliteContact() {
-        return (sqliteContact == null) ? sqliteContact = new SqliteContact() : sqliteContact;
-    }
-
-    public void setSqliteContact(SqliteContact contactService) {
-        sqliteContact = contactService;
     }
 
     public void setNotificationService(final NotificationService notificationService) {

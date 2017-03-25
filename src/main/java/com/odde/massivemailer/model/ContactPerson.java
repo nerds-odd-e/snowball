@@ -1,14 +1,12 @@
 package com.odde.massivemailer.model;
 
-import org.javalite.activejdbc.DB;
-import org.javalite.activejdbc.MetaModel;
-import org.javalite.activejdbc.Model;
-import org.javalite.activejdbc.ModelDelegate;
+import org.javalite.activejdbc.*;
 import org.javalite.activejdbc.annotations.Table;
 import com.odde.massivemailer.model.validator.UniquenessValidator;
 import org.javalite.activejdbc.validation.ValidatorAdapter;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.mail.internet.AddressException;
@@ -17,91 +15,108 @@ import javax.mail.internet.InternetAddress;
 
 @Table("contact_people")
 public class ContactPerson extends Model {
-	static {
-		validatePresenceOf("email");
-		validateWith(new UniquenessValidator("email"));
-	}
-	private int id;
-	private String name;
-	private String email;
-	private String lastname;
-	private String company;
+    static {
+        validatePresenceOf("email");
+        validateWith(new UniquenessValidator("email"));
+    }
 
-	public static final String FIRSTNAME = "FirstName";
-	public static final String LASTNAME = "LastName";
-	public static final String EMAIL = "Email";
-	public static final String COMPANY = "Company";
+    private int id;
+    private String name;
+    private String email;
+    private String lastname;
+    private String company;
 
-	public Map<String, String> attributes = new HashMap<>();
+    public static final String FIRSTNAME = "FirstName";
+    public static final String LASTNAME = "LastName";
+    public static final String EMAIL = "Email";
+    public static final String COMPANY = "Company";
 
-	public ContactPerson(){
+    public Map<String, String> attributes = new HashMap<>();
 
-	}
+    public ContactPerson() {
 
-	public ContactPerson(String name, String email, String lastname) {
-		this(name, email, lastname, "");
-	}
+    }
 
-	public ContactPerson(String name, String email, String lastname, String company) {
-		setName(name);
+    public ContactPerson(String name, String email, String lastname) {
+        this(name, email, lastname, "");
+    }
 
-		try {
-			new InternetAddress(email).validate();
-		}catch(AddressException ae){
-		}
+    public ContactPerson(String name, String email, String lastname, String company) {
+        setName(name);
 
-		setEmail(email);
+        try {
+            new InternetAddress(email).validate();
+        } catch (AddressException ae) {
+        }
 
-		setLastname(lastname);
-		setCompany(company);
-	}
+        setEmail(email);
 
-	public String getName() { return getAttribute(FIRSTNAME); }
-	public void setName(String name) {
-		setAttribute(FIRSTNAME, name);
-	}
-	public String getEmail() {
-		return getAttribute(EMAIL);
-	}
-	public void setEmail(String email) {
-		setAttribute(EMAIL, email);
-	}
-	public String getLastname() {
-		return getAttribute(LASTNAME);
-	}
-	public void setLastname(String lastname) {
-		setAttribute(LASTNAME, lastname);
-	}
+        setLastname(lastname);
+        setCompany(company);
+    }
 
-	public String getCompany() {
-		return getAttribute(COMPANY);
-	}
+    public String getName() {
+        return getAttribute(FIRSTNAME);
+    }
 
-	public void setCompany(String company) {
-		setAttribute(COMPANY, company);
-	}
+    public void setName(String name) {
+        setAttribute(FIRSTNAME, name);
+    }
 
-	private void setAttribute(String name, String value)
-	{
-		attributes.put(name, value);
-		set(name.toLowerCase(), value);
-	}
+    public String getEmail() {
+        return getAttribute(EMAIL);
+    }
 
-	public String getAttribute(String name)
-	{
-		return attributes.containsKey(name) ? attributes.get(name) : "";
-	}
+    public void setEmail(String email) {
+        setAttribute(EMAIL, email);
+    }
 
-	public Set<String> getAttributeKeys()
-	{
-		return attributes.keySet();
-	}
+    public String getLastname() {
+        return getAttribute(LASTNAME);
+    }
 
+    public void setLastname(String lastname) {
+        setAttribute(LASTNAME, lastname);
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		ContactPerson otherContact = (ContactPerson)obj;
-		return name.equals(otherContact.name) && email.equals(otherContact.email) && lastname.equals(otherContact.lastname) && company.equals(otherContact.company);
-	}
+    public String getCompany() {
+        return getAttribute(COMPANY);
+    }
 
+    public void setCompany(String company) {
+        setAttribute(COMPANY, company);
+    }
+
+    private void setAttribute(String name, String value) {
+        attributes.put(name, value);
+        set(name.toLowerCase(), value);
+    }
+
+    public String getAttribute(String name) {
+        Object o = get(name);
+        if(o != null)
+            return o.toString();
+        return "";
+    }
+
+    public Set<String> getAttributeKeys() {
+        return getMetaModel().getAttributeNamesSkipId();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        ContactPerson otherContact = (ContactPerson) obj;
+        return name.equals(otherContact.name) && email.equals(otherContact.email) && lastname.equals(otherContact.lastname) && company.equals(otherContact.company);
+    }
+
+    public static List<ContactPerson> getContactListFromCompany(String company) {
+        return where("company = ?", company);
+    }
+
+    public static ContactPerson getContactByEmail(String emailAddress) {
+        LazyList<ContactPerson> list = where("email = ?", emailAddress);
+        if (list.size()> 0)
+            return list.get(0);
+        return null;
+    }
 }
