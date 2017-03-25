@@ -14,18 +14,12 @@ import static org.junit.Assert.assertEquals;
 
 public class OpenedEmailCounterServiceTest {
     long email_id = 123L;
-    SqliteEmail service = new SqliteEmail();
     EmailCounterTracking emailCounterTracking = new EmailCounterTracking();
-
-    @Before
-    public void setUp() {
-        service.destroyAll();
-    }
 
     @Test
     public void shouldReturnEmptyJasonWhenNobodyOpenedTheEmail() {
         Notification notification = new Notification();
-        String json = service.extract(notification);
+        String json = notification.extract();
         assertEquals("{\"subject\":\"null\", \"sent_at\":\"null\", \"total_open_count\":0, \"emails\":[]}", json);
     }
 
@@ -33,7 +27,7 @@ public class OpenedEmailCounterServiceTest {
     public void shouldReturnRecordWithCountWhenOnePersonOpenedTheEmail4Times() {
         Notification notification = createNotification();
         addRecipient(notification, "terry@odd-e.com");
-        String json = service.extract(notification);
+        String json = notification.extract();
 
         assertEquals("{\"subject\":\"test subject\", \"sent_at\":\"2016-11-18\", \"total_open_count\":4, \"emails\":[{\"email\": \"terry@odd-e.com\", \"open_count\": 4}]}", json);
     }
@@ -44,7 +38,7 @@ public class OpenedEmailCounterServiceTest {
         addRecipient(notification, "terry@odd-e.com");
         addRecipient(notification, "trump@odd-e.com");
 
-        String json = service.extract(notification);
+        String json = notification.extract();
         assertEquals("{\"subject\":\"test subject\", \"sent_at\":\"2016-11-18\", \"total_open_count\":8, \"emails\":[{\"email\": \"terry@odd-e.com\", \"open_count\": 4}, {\"email\": \"trump@odd-e.com\", \"open_count\": 4}]}", json);
     }
 

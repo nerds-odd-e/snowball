@@ -4,13 +4,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Event;
+import com.odde.massivemailer.model.Notification;
 import com.odde.massivemailer.model.Template;
 import com.odde.massivemailer.serialiser.ContactPersonSerialiser;
 import com.odde.massivemailer.serialiser.EventSerialiser;
+import com.odde.massivemailer.serialiser.NotificationSerialiser;
 import com.odde.massivemailer.serialiser.TemplateSerialiser;
 import com.odde.massivemailer.service.impl.GMailService;
 import com.odde.massivemailer.service.impl.SMTPConfiguration;
-import org.javalite.activejdbc.Base;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -48,6 +49,7 @@ public class AppController extends HttpServlet {
                 .registerTypeAdapter(Event.class, new EventSerialiser())
                 .registerTypeAdapter(ContactPerson.class, new ContactPersonSerialiser())
                 .registerTypeAdapter(Template.class, new TemplateSerialiser())
+                .registerTypeAdapter(Notification.class, new NotificationSerialiser())
                 .create();
     }
 }

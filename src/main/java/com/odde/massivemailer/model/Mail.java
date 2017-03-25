@@ -15,8 +15,11 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import com.odde.massivemailer.exception.EmailException;
+import org.javalite.activejdbc.Model;
+import org.javalite.activejdbc.annotations.Table;
 
-public class Mail {
+@Table("mail")
+public class Mail extends Model {
 
     private static final String FROM = "myodde@gmail.com";
     private static final String DISPLAY_NAME = "Inspector Gadget";

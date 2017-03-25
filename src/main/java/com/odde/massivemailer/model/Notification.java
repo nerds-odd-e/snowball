@@ -3,9 +3,11 @@ package com.odde.massivemailer.model;
 import org.javalite.activejdbc.Model;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 public class Notification extends Model {
     private Long id;
@@ -75,4 +77,20 @@ public class Notification extends Model {
     }
 
 
+    public String extract() {
+        ArrayList<String> sarray = new ArrayList<String>();
+        int count = 0;
+        for (NotificationDetail detail : getNotificationDetails()) {
+            count += detail.getRead_count();
+            sarray.add(detail.toJSON());
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        TimeZone tz = TimeZone.getTimeZone("Asia/Singapore");
+        dateFormat.setTimeZone(tz);
+        String date = null;
+        if (getSentDate() != null) {
+            date = dateFormat.format(getSentDate());
+        }
+        return "{\"subject\":\""+ getSubject()+"\", \"sent_at\":\""+date+"\", \"total_open_count\":"+count+", \"emails\":["+String.join(", ", sarray)+"]}";
+    }
 }

@@ -1,42 +1,35 @@
 package com.odde.massivemailer.controller;
 
-import com.google.gson.Gson;
+import com.odde.TestWithDB;
 import com.odde.massivemailer.model.Notification;
-import com.odde.massivemailer.service.EmailService;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
 
+@RunWith(TestWithDB.class)
 public class EmailHistoryControllerTest {
     EmailHistoryController emailHistoryController;
-    EmailService emailService;
     MockHttpServletRequest req = new MockHttpServletRequest();
     MockHttpServletResponse res = new MockHttpServletResponse();
-    List<Notification> sentEmails = new ArrayList<>();
 
-    //@Before
+    @Before
     public void setUpMockService() {
-        emailService = mock(EmailService.class);
-        emailHistoryController = new EmailHistoryController(emailService);
+        emailHistoryController = new EmailHistoryController();
         Notification mail1 = new Notification();
-        mail1.setId(1L);
         mail1.setSubject("Promotional test");
         mail1.setSentDate(null);
-        sentEmails.add(mail1);
+        mail1.saveIt();
 
     }
 
-    //@Test
+    @Test
     public void returnContactsInJSON() throws Exception {
-        emailService.setSentEmailList(sentEmails);
-        when(emailService.getSentEmailList()).thenReturn(sentEmails);
         emailHistoryController.doGet(req, res);
-        assertEquals(new Gson().toJson(sentEmails),res.getContentAsString());
+        assertEquals("[{\"id\":\"1\",\"notification_id\":\"0\",\"subject\":\"Promotional test\"}]",res.getContentAsString());
     }
 
 }
