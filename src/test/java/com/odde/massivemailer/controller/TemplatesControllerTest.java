@@ -1,25 +1,21 @@
 package com.odde.massivemailer.controller;
 
-import com.google.gson.Gson;
+import com.odde.TestWithDB;
 import com.odde.massivemailer.model.Template;
-import com.odde.massivemailer.service.impl.SqliteTemplate;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import java.util.ArrayList;
-import java.util.List;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.junit.Assert.assertThat;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
+@RunWith(TestWithDB.class)
 public class TemplatesControllerTest {
 
 	@Test
 	public void testProcessRequest() throws Exception {
-		SqliteTemplate templateService = mock(SqliteTemplate.class);
-		TemplatesController templateCtrl = new TemplatesController(templateService);
+		TemplatesController templateCtrl = new TemplatesController();
 
 		MockHttpServletRequest req = new MockHttpServletRequest();
 		MockHttpServletResponse res = new MockHttpServletResponse();
@@ -29,16 +25,10 @@ public class TemplatesControllerTest {
 		template.setTemplateName("Default");
 		template.setSubject("Greeting {FirstName}");
 		template.setContent("Hi There {Company}");
-
-		List<Template> expectedTemplates = new ArrayList<Template>();
-		expectedTemplates.add(template);
-
-		when(templateService.getTemplateList()).thenReturn(expectedTemplates);
-
-		String convertedContactToJSON = new Gson().toJson(expectedTemplates);
+		template.saveIt();
 
 		templateCtrl.doGet(req, res);
-		assertEquals(convertedContactToJSON, res.getContentAsString());
+		assertThat(res.getContentAsString(), containsString("\"subject\":\"Greeting {FirstName}"));
 
 	}
 	

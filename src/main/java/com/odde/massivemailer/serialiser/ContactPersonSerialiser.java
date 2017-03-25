@@ -6,20 +6,14 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Event;
+import org.javalite.activejdbc.Model;
 
 import java.lang.reflect.Type;
+import java.util.Set;
 
-public class ContactPersonSerialiser implements JsonSerializer {
+public class ContactPersonSerialiser extends ActiveSerialiser {
     @Override
-    public JsonElement serialize(Object src, Type typeOfSrc, JsonSerializationContext context) {
-        final ContactPerson contact = (ContactPerson) src;
-        final JsonObject jsonObject = new JsonObject();
-        for(String f : ContactPerson.attributeNames()) {
-            if(contact.get(f) != null) {
-                jsonObject.addProperty(f, contact.get(f).toString());
-            }
-        }
-
-        return jsonObject;
+    protected Set<String> getAttributeNames() {
+        return ContactPerson.attributeNames();
     }
 }

@@ -7,20 +7,12 @@ import javax.servlet.ServletContextListener;
 import java.io.*;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class PrepareDatabaseStartupListener implements ServletContextListener {
-    private static final String[] MIGRATION_FILES = {
-            "20150806140746_Add_firstname_lastname_to_mail_table.sql",
-            "20150906140746_Add_template_table.sql",
-            "20161115132000_create_notifications.sql",
-            "20161115151100_create_unique_index_template_templatename.sql",
-            "20161115151800_insert_default_template.sql",
-            "20161115153900_alter_notifications_and_notification_details.sql",
-            "20161115175300_add_notification_id_to_notifications.sql",
-            "20170130141000_create_event_table.sql",
-            "20170323170300_create_events_table.sql",
-            "20170324174300_create_contact_people.sql",
-    };
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
@@ -37,7 +29,7 @@ public class PrepareDatabaseStartupListener implements ServletContextListener {
         System.out.println("Preparing database... " + dbLink);
         SqliteBase base = new SqliteBase(dbLink);
         try (Statement statement = base.openConnection()) {
-            for (String migration : MIGRATION_FILES) {
+            for (String migration : migrationFiles()) {
                 statement.executeUpdate(loadMigration(migration));
             }
         } catch (ClassNotFoundException e) {
@@ -70,5 +62,26 @@ public class PrepareDatabaseStartupListener implements ServletContextListener {
         }
 
         return null;
+    }
+
+    private List<String> migrationFiles() {
+        return getResourceFiles("/db/migration");
+    }
+
+    private List<String> getResourceFiles(String path) {
+        List<String> filenames = new ArrayList<>();
+
+        try (
+            InputStream in = getClass().getResourceAsStream(path);
+            BufferedReader br = new BufferedReader(new InputStreamReader(in))) {
+            String resource;
+
+            while ((resource = br.readLine()) != null) {
+                filenames.add(resource);
+            }
+        } catch (IOException e) {
+        }
+
+        return filenames;
     }
 }

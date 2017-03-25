@@ -1,21 +1,14 @@
 package com.odde.massivemailer.model;
 
-/**
- * Created by Cadet on 11/26/2015.
- */
-public class Template {
+import org.javalite.activejdbc.Model;
+import org.javalite.activejdbc.annotations.Table;
+
+@Table("templates")
+public class Template extends Model {
     private int Id;
     private String TemplateName;
     private String Subject;
     private String Content;
-
-    public int getId() {
-        return Id;
-    }
-
-    public void setId(int id) {
-        this.Id = id;
-    }
 
     public String getTemplateName() {
         return TemplateName;
@@ -23,6 +16,7 @@ public class Template {
 
     public void setTemplateName(String templateName) {
         this.TemplateName = templateName;
+        set("template_name", templateName);
     }
 
     public String getSubject() {
@@ -31,6 +25,7 @@ public class Template {
 
     public void setSubject(String subject) {
         this.Subject = subject;
+        set("subject", subject);
     }
 
     public String getContent() {
@@ -39,6 +34,7 @@ public class Template {
 
     public void setContent(String content) {
         this.Content = content;
+        set("content", content);
     }
 
 }
