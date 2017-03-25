@@ -21,14 +21,10 @@ public class ContactsController extends AppController {
 
         ContactPerson contact = new ContactPerson("todo name", req.getParameter("email"), "todo last name", "todo company");
         try {
-            contact.validate();
-                if (contact.saveIt())
-                    resultMsg = "status=success&msg=Add contact successfully";
-            else {
-                resultMsg = "status=failed&msg1=" + contact.errors();
-            }
+            contact.saveIt();
+            resultMsg = "status=success&msg=Add contact successfully";
         } catch (Exception e) {
-                resultMsg = "status=failed&msg=" + e.getMessage();
+            resultMsg = "status=failed&msg=" + e.getMessage();
         }
 
         resp.sendRedirect("contactlist.jsp?" + resultMsg);
