@@ -1,18 +1,14 @@
 package com.odde.massivemailer.service.impl;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.odde.massivemailer.model.Notification;
 import com.odde.massivemailer.model.NotificationDetail;
 import com.odde.massivemailer.service.EmailService;
-import com.odde.massivemailer.service.NotificationService;
 
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.logging.*;
@@ -162,7 +158,7 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 
 	@Override
 	public String getEmailCounterJson(Long sender_email_id) {
-		Notification noti = getNotification(sender_email_id);
+		Notification noti = Notification.findById(sender_email_id);
 		return extract(noti);
 //		return new Gson().toJson(noti);
 	}
@@ -201,13 +197,4 @@ public class SqliteEmail extends SqliteBase implements EmailService {
 		notifications.add(notification_detail);
 	}
 
-	private List<NotificationDetail> getReceipentOfEmail(Long email_id) {
-		NotificationService ns = new NotificationServiceSqlite();
-		return ns.getNotificationDetails(email_id);
-	}
-
-	private Notification getNotification(Long id) {
-		NotificationService ns = new NotificationServiceSqlite();
-		return ns.getNotification(id);
-	}
 }

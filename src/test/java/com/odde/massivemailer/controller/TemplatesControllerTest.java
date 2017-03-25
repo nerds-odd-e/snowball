@@ -21,7 +21,6 @@ public class TemplatesControllerTest {
 		MockHttpServletResponse res = new MockHttpServletResponse();
 
 		Template template = new Template();
-		template.setId(1);
 		template.setTemplateName("Default");
 		template.setSubject("Greeting {FirstName}");
 		template.setContent("Hi There {Company}");

@@ -5,7 +5,6 @@ import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Event;
 import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.model.Notification;
-import com.odde.massivemailer.service.NotificationService;
 import com.odde.massivemailer.service.impl.*;
 
 import javax.servlet.ServletException;
@@ -21,7 +20,6 @@ public class SendAllEventsController extends AppController {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         GMailService mailService = createGmailService();
-        NotificationService notificationService = new NotificationServiceSqlite();
 
         List<Event> eventList = Event.findAll();
 
@@ -39,7 +37,7 @@ public class SendAllEventsController extends AppController {
             mail.setReceipts(Collections.singletonList(person.getEmail()));
 
             try {
-                Notification notification = notificationService.save(mail.asNotification());
+                Notification notification = mail.asNotification().saveAll();
                 mail.setNotification(notification);
 
                 mailService.send(mail);

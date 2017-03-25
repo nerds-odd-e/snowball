@@ -19,7 +19,7 @@ public class ImageFilter implements Filter {
         String token = request.getParameter(TOKEN);
 
         if (token != null) {
-            trackingService.updateViewCount(Long.parseLong(token));
+            trackingService.updateViewCount(Integer.parseInt(token));
         }
 
         chain.doFilter(request, response);

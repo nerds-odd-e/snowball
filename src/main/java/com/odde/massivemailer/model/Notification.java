@@ -1,11 +1,13 @@
 package com.odde.massivemailer.model;
 
+import org.javalite.activejdbc.Model;
+
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Notification {
+public class Notification extends Model {
     private Long id;
     private String subject;
     private Long notificationId;
@@ -19,6 +21,7 @@ public class Notification {
 
     public void setSentDate(Date sentDate) {
         this.sentDate = sentDate;
+        set("sent_at", sentDate);
     }
 
     public void setNotificationDetails(List<NotificationDetail> notificationDetails) {
@@ -40,32 +43,35 @@ public class Notification {
         notificationDetails.add(notificationDetail);
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public String getSubject() {
-        return subject;
+        return (String) get("subject");
     }
 
     public Long getNotificationId() {
-        return notificationId;
+        return (Long) get("notification_id");
     }
 
     public List<NotificationDetail> getNotificationDetails() {
         return notificationDetails;
     }
 
-    public void setId(final Long id) {
-        this.id = id;
-    }
-
     public void setSubject(final String subject) {
         this.subject = subject;
+        set("subject", subject);
     }
 
     public void setNotificationId(final Long notificationId) {
         this.notificationId = notificationId;
+        set("notification_id", notificationId);
+    }
+
+    public Notification saveAll() {
+        saveIt();
+        for (NotificationDetail notificationDetail : getNotificationDetails()) {
+            notificationDetail.setNotificationId(getNotificationId());
+            notificationDetail.saveIt();
+        }
+        return this;
     }
 
 

@@ -14,17 +14,9 @@ import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.model.Notification;
-import com.odde.massivemailer.service.NotificationService;
 import com.odde.massivemailer.service.impl.GMailService;
-import com.odde.massivemailer.service.impl.NotificationServiceSqlite;
 
 public class SendMailController extends AppController {
-
-    private NotificationService notificationService;
-
-    public SendMailController() {
-        notificationService = new NotificationServiceSqlite();
-    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -32,7 +24,7 @@ public class SendMailController extends AppController {
         try {
             Mail email = processRequest(req);
 
-            Notification notification = notificationService.save(email.asNotification());
+            Notification notification = email.asNotification().saveAll();
             email.setNotification(notification);
 
             GMailService mailService = createGmailService();
@@ -87,9 +79,5 @@ public class SendMailController extends AppController {
 
         contactList = ContactPerson.getContactListFromCompany(company);
         return contactList;
-    }
-
-    public void setNotificationService(final NotificationService notificationService) {
-        this.notificationService = notificationService;
     }
 }

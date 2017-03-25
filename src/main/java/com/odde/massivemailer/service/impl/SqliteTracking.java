@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class SqliteTracking extends SqliteBase implements TrackingService {
     @Override
-    public int updateViewCount(final Long token) {
+    public int updateViewCount(final Integer token) {
         String sql = "UPDATE notification_details SET read_count = read_count + 1 WHERE id = ?";
 
         try {
@@ -15,7 +15,7 @@ public class SqliteTracking extends SqliteBase implements TrackingService {
 
             PreparedStatement ps = connection.prepareStatement(sql);
 
-            ps.setLong(1, token);
+            ps.setInt(1, token);
 
             return ps.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {

@@ -5,8 +5,8 @@ import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.model.Notification;
-import com.odde.massivemailer.service.NotificationService;
 import com.odde.massivemailer.service.impl.GMailService;
+import org.javalite.activejdbc.LazyList;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,9 +36,6 @@ public class SendMailControllerTest {
     private GMailService gmailService;
 
     @Mock
-    private NotificationService notificationService;
-
-    @Mock
     private HttpServletRequest request;
 
     @Mock
@@ -53,7 +50,6 @@ public class SendMailControllerTest {
 
         controller = new SendMailController();
         controller.setGmailService(gmailService);
-        controller.setNotificationService(notificationService);
 
         when(request.getParameter("content")).thenReturn("content-na-ka");
         when(request.getParameter("subject")).thenReturn("subject for test");
@@ -210,12 +206,11 @@ public class SendMailControllerTest {
 
         controller.doPost(request, response);
 
-        verify(notificationService).save(notificationCaptor.capture());
+        LazyList<Notification> all = Notification.findAll();
+        Notification capturedNotification =  all.get(all.size() - 1);
 
-        Notification capturedNotification = notificationCaptor.getValue();
-
-        assertThat(capturedNotification.getSubject(), is("subject for test"));
         assertNotNull(capturedNotification.getNotificationId());
+        assertThat(capturedNotification.getSubject(), is("subject for test"));
     }
 
     private void mockRecipient(String recipient){

@@ -3,16 +3,11 @@ package com.odde.massivemailer.service.impl;
 
 import com.odde.massivemailer.model.Notification;
 import com.odde.massivemailer.model.NotificationDetail;
-import com.odde.massivemailer.service.EmailService;
-import com.odde.massivemailer.service.NotificationService;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.TimeZone;
 
 import static org.junit.Assert.assertEquals;
@@ -20,9 +15,7 @@ import static org.junit.Assert.assertEquals;
 public class OpenedEmailCounterServiceTest {
     long email_id = 123L;
     SqliteEmail service = new SqliteEmail();
-    NotificationServiceSqlite notificationServiceSqlite = new NotificationServiceSqlite();
     EmailCounterTracking emailCounterTracking = new EmailCounterTracking();
-    NotificationService notificationService = new NotificationServiceSqlite();
 
     @Before
     public void setUp() {

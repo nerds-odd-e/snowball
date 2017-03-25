@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import java.io.IOException;
+import java.io.InterruptedIOException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -47,11 +48,11 @@ public class ImageFilterTest {
 
         filter.doFilter(request, response, chain);
 
-        ArgumentCaptor<Long> tokenCaptor = ArgumentCaptor.forClass(Long.class);
+        ArgumentCaptor<Integer> tokenCaptor = ArgumentCaptor.forClass(Integer.class);
 
         verify(trackingService).updateViewCount(tokenCaptor.capture());
 
-        assertThat(tokenCaptor.getValue(), is(123456L));
+        assertThat(tokenCaptor.getValue(), is(123456));
     }
 
     @Test
@@ -60,6 +61,6 @@ public class ImageFilterTest {
 
         filter.doFilter(request, response, chain);
 
-        verify(trackingService, never()).updateViewCount(any(Long.class));
+        verify(trackingService, never()).updateViewCount(any(Integer.class));
     }
 }
