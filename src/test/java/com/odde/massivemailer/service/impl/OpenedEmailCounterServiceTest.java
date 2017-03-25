@@ -14,7 +14,6 @@ import static org.junit.Assert.assertEquals;
 
 public class OpenedEmailCounterServiceTest {
     long email_id = 123L;
-    EmailCounterTracking emailCounterTracking = new EmailCounterTracking();
 
     @Test
     public void shouldReturnEmptyJasonWhenNobodyOpenedTheEmail() {
