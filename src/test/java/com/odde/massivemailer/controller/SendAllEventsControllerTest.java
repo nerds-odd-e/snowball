@@ -3,7 +3,6 @@ package com.odde.massivemailer.controller;
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Event;
-import com.odde.massivemailer.service.ContactService;
 import com.odde.massivemailer.service.impl.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,9 +15,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.doThrow;
 
-/**
- * Created by csd11 on 3/2/17.
- */
+
 @RunWith(TestWithDB.class)
 public class SendAllEventsControllerTest {
 
