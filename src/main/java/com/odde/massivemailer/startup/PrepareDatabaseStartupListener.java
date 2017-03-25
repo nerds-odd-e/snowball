@@ -1,16 +1,12 @@
 package com.odde.massivemailer.startup;
 
-import com.odde.massivemailer.service.impl.SqliteBase;
+import org.javalite.activejdbc.Base;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import java.io.*;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PrepareDatabaseStartupListener implements ServletContextListener {
 
@@ -27,18 +23,11 @@ public class PrepareDatabaseStartupListener implements ServletContextListener {
 
     private void getDBReady(String dbLink) {
         System.out.println("Preparing database... " + dbLink);
-        SqliteBase base = new SqliteBase(dbLink);
-        try (Statement statement = base.openConnection()) {
-            for (String migration : migrationFiles()) {
-                statement.executeUpdate(loadMigration(migration));
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            base.closeConnection();
+        Base.open("org.sqlite.JDBC", dbLink, "", "");
+        for (String migration : migrationFiles()) {
+            Base.exec(loadMigration(migration));
         }
+        Base.close();
     }
 
     private String loadMigration(String name) {
@@ -72,8 +61,8 @@ public class PrepareDatabaseStartupListener implements ServletContextListener {
         List<String> filenames = new ArrayList<>();
 
         try (
-            InputStream in = getClass().getResourceAsStream(path);
-            BufferedReader br = new BufferedReader(new InputStreamReader(in))) {
+                InputStream in = getClass().getResourceAsStream(path);
+                BufferedReader br = new BufferedReader(new InputStreamReader(in))) {
             String resource;
 
             while ((resource = br.readLine()) != null) {

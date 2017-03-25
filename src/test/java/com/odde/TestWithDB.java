@@ -14,7 +14,6 @@ public class TestWithDB extends BlockJUnit4ClassRunner {
     @Override
     protected void runChild(FrameworkMethod method, RunNotifier notifier) {
         Base.openTransaction();
-        Base.exec("delete from sqlite_sequence;");
         super.runChild(method, notifier);
         Base.rollbackTransaction();
     }
