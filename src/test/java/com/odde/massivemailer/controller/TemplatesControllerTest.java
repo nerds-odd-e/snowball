@@ -27,7 +27,7 @@ public class TemplatesControllerTest {
 		template.saveIt();
 
 		templateCtrl.doGet(req, res);
-		assertThat(res.getContentAsString(), containsString("\"subject\":\"Greeting {FirstName}"));
+		assertThat(res.getContentAsString(), containsString("\"Subject\":\"Greeting {FirstName}"));
 
 	}
 	

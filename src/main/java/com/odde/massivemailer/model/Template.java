@@ -3,7 +3,7 @@ package com.odde.massivemailer.model;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
 
-@Table("templates")
+@Table("template")
 public class Template extends Model {
     private int Id;
     private String TemplateName;
@@ -16,7 +16,7 @@ public class Template extends Model {
 
     public void setTemplateName(String templateName) {
         this.TemplateName = templateName;
-        set("template_name", templateName);
+        set("templateName", templateName);
     }
 
     public String getSubject() {
