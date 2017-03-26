@@ -16,6 +16,7 @@ public class PrepareDatabaseStartupListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         getDBReady("jdbc:sqlite:oddemail.db");
         getDBReady("jdbc:sqlite:testdb.db");
+        getDBReady("jdbc:sqlite:cucumber_test.db");
     }
 
     @Override
