@@ -3,7 +3,6 @@ package com.odde.massivemailer.service.impl;
 
 import com.odde.massivemailer.model.Notification;
 import com.odde.massivemailer.model.NotificationDetail;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.text.ParseException;
@@ -60,7 +59,7 @@ public class OpenedEmailCounterServiceTest {
     private void addRecipient(Notification notification, String emailAddress) {
         NotificationDetail notificationDetail = new NotificationDetail();
         notificationDetail.setEmailAddress(emailAddress);
-        notificationDetail.setRead_count(4);
+        notificationDetail.setReadCount(4);
         notification.addNotificationDetail(notificationDetail);
     }
 }

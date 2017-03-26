@@ -3,7 +3,9 @@ package com.odde.massivemailer.filter;
 import com.odde.massivemailer.model.NotificationDetail;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 
+@WebFilter("/resources/images/*")
 public class ImageFilter implements Filter {
     static final String TOKEN = "token";
 

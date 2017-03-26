@@ -44,7 +44,7 @@ public class ImageFilterTest {
         filter.doFilter(request, response, chain);
         NotificationDetail nd1 = NotificationDetail.findById(nd.getLongId());
         nd.refresh();
-        assertEquals(1, nd1.getRead_count());
+        assertEquals(1, nd1.getReadCount());
 
     }
 }

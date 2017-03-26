@@ -4,11 +4,10 @@ import com.odde.massivemailer.controller.SendMailController;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
 
+@WebListener()
 public class MassiveMailerServletContextListener implements ServletContextListener {
-
-
-
     @Override
     public void contextDestroyed(ServletContextEvent arg0) {}
 

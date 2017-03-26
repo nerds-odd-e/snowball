@@ -12,7 +12,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Mail {
@@ -25,7 +24,6 @@ public class Mail {
     private String subject;
     private String content;
     private String key;
-    private Date sentDate;
     private long messageId;
     private Notification notification;
 
@@ -59,7 +57,7 @@ public class Mail {
     }
 
     private MimeMessage setMessageProperty(Session session, NotificationDetail notificationDetail)
-            throws AddressException, MessagingException {
+            throws MessagingException {
 
         try {
             ContactPerson contact = ContactPerson.getContactByEmail(notificationDetail.getEmailAddress());

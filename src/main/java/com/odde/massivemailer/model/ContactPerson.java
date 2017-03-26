@@ -1,16 +1,14 @@
 package com.odde.massivemailer.model;
 
-import org.javalite.activejdbc.*;
-import org.javalite.activejdbc.annotations.Table;
 import com.odde.massivemailer.model.validator.UniquenessValidator;
-import org.javalite.activejdbc.validation.ValidatorAdapter;
+import org.javalite.activejdbc.LazyList;
+import org.javalite.activejdbc.Model;
+import org.javalite.activejdbc.annotations.Table;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
 
 
 @Table("contact_people")
@@ -20,12 +18,6 @@ public class ContactPerson extends Model {
         validateWith(new UniquenessValidator("email"));
     }
 
-    private int id;
-    private String name;
-    private String email;
-    private String lastname;
-    private String company;
-
     public static final String FIRSTNAME = "FirstName";
     public static final String LASTNAME = "LastName";
     public static final String EMAIL = "Email";
@@ -33,9 +25,7 @@ public class ContactPerson extends Model {
 
     public Map<String, String> attributes = new HashMap<>();
 
-    public ContactPerson() {
-
-    }
+    public ContactPerson() { }
 
     public ContactPerson(String name, String email, String lastname) {
         this(name, email, lastname, "");
@@ -43,14 +33,7 @@ public class ContactPerson extends Model {
 
     public ContactPerson(String name, String email, String lastname, String company) {
         setName(name);
-
-        try {
-            new InternetAddress(email).validate();
-        } catch (AddressException ae) {
-        }
-
         setEmail(email);
-
         setLastname(lastname);
         setCompany(company);
     }
@@ -101,12 +84,6 @@ public class ContactPerson extends Model {
 
     public Set<String> getAttributeKeys() {
         return getMetaModel().getAttributeNamesSkipId();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        ContactPerson otherContact = (ContactPerson) obj;
-        return name.equals(otherContact.name) && email.equals(otherContact.email) && lastname.equals(otherContact.lastname) && company.equals(otherContact.company);
     }
 
     public static List<ContactPerson> getContactListFromCompany(String company) {

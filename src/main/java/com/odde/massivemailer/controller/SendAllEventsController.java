@@ -8,6 +8,7 @@ import com.odde.massivemailer.model.Notification;
 import com.odde.massivemailer.service.*;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@WebServlet("/sendAllEvents")
 public class SendAllEventsController extends AppController {
 
     @Override

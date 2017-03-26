@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,6 +17,7 @@ import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.model.Notification;
 import com.odde.massivemailer.service.MailService;
 
+@WebServlet("/sendMail")
 public class SendMailController extends AppController {
 
     @Override

@@ -2,7 +2,6 @@ package com.odde.massivemailer.model;
 
 import org.javalite.activejdbc.Model;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,10 +9,6 @@ import java.util.List;
 import java.util.TimeZone;
 
 public class Notification extends Model {
-    private Long id;
-    private String subject;
-    private Long notificationId;
-    private Date sentDate;
 
     private List<NotificationDetail> notificationDetails;
 
@@ -22,7 +17,6 @@ public class Notification extends Model {
     }
 
     public void setSentDate(Date sentDate) {
-        this.sentDate = sentDate;
         set("sent_at", sentDate);
     }
 
@@ -58,12 +52,10 @@ public class Notification extends Model {
     }
 
     public void setSubject(final String subject) {
-        this.subject = subject;
         set("subject", subject);
     }
 
     public void setNotificationId(final Long notificationId) {
-        this.notificationId = notificationId;
         set("notification_id", notificationId);
     }
 
@@ -81,7 +73,7 @@ public class Notification extends Model {
         ArrayList<String> sarray = new ArrayList<String>();
         int count = 0;
         for (NotificationDetail detail : getNotificationDetails()) {
-            count += detail.getRead_count();
+            count += detail.getReadCount();
             sarray.add(detail.toJSON());
         }
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

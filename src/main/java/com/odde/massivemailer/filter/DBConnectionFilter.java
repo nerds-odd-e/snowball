@@ -12,19 +12,14 @@ public class DBConnectionFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
         this.filterConfig = filterConfig;
     }
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
         ServletContext application = filterConfig.getServletContext();
-        Object dblink = application.getAttribute("dbLink");
-        String linkStr = "jdbc:sqlite:oddemail.db";
-        if (dblink != null)
-            linkStr = (String) dblink;
         try{
-            Base.open("org.sqlite.JDBC", linkStr, "", "");
+            Base.open("org.sqlite.JDBC", getDBLink(application), "", "");
             Base.openTransaction();
             chain.doFilter(req, resp);
             Base.commitTransaction();
@@ -38,13 +33,19 @@ public class DBConnectionFilter implements Filter {
             throw e;
         }
         finally{
-
             Base.close();
         }
     }
 
-    @Override
-    public void destroy() {
-
+    private String getDBLink(ServletContext application) {
+        String linkStr;
+        linkStr = "jdbc:sqlite:oddemail.db";
+        Object dblink = application.getAttribute("dbLink");
+        if (dblink != null)
+            linkStr = (String) dblink;
+        return linkStr;
     }
+
+    @Override
+    public void destroy() { }
 }
