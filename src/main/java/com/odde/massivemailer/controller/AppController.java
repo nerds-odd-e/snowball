@@ -11,6 +11,7 @@ import com.odde.massivemailer.serialiser.EventSerialiser;
 import com.odde.massivemailer.serialiser.NotificationSerialiser;
 import com.odde.massivemailer.serialiser.TemplateSerialiser;
 import com.odde.massivemailer.service.GMailService;
+import com.odde.massivemailer.service.MailService;
 import com.odde.massivemailer.service.MockMailService;
 import com.odde.massivemailer.service.SMTPConfiguration;
 
@@ -23,7 +24,7 @@ public class AppController extends HttpServlet {
     public static final String EMAIL_PASSWORD = "MM_EMAIL_PASSWORD";
     private static final String SMTP_ADDR = "smtp.gmail.com";
     private static final int PORT = 587;
-    protected GMailService gmailService;
+    protected MailService gmailService;
     @Override
     public void destroy() {
         super.destroy();
@@ -34,16 +35,16 @@ public class AppController extends HttpServlet {
         super.init();
     }
 
-    public void setGmailService(GMailService gmailService) {
+    public void setGmailService(MailService gmailService) {
         this.gmailService = gmailService;
     }
 
-    protected GMailService createGmailService() {
+    protected MailService createGmailService() {
         if (null == gmailService) {
             ServletContext application = getServletConfig().getServletContext();
             Object email_sender = application.getAttribute("email_sender");
             if (email_sender != null && ((String)email_sender).equals("mock")) {
-                gmailService = new MockMailService(null);
+                gmailService = new MockMailService();
             }
             else {
                 SMTPConfiguration config = new SMTPConfiguration(System.getenv(EMAIL_USERID), System.getenv(EMAIL_PASSWORD), SMTP_ADDR, PORT);

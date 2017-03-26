@@ -13,7 +13,7 @@ import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.service.SMTPConfiguration;
 
-public class GMailService{
+public class GMailService implements MailService {
 
 	private SMTPConfiguration configuration;
 
@@ -30,6 +30,7 @@ public class GMailService{
 		session = Session.getDefaultInstance(props);
 	}
 
+	@Override
 	public void send(Mail email) throws EmailException {
 		List<Message> msg;
 		try {

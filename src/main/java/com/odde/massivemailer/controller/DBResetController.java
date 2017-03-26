@@ -13,7 +13,7 @@ public class DBResetController extends AppController {
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletContext application = getServletConfig().getServletContext();
-        application.setAttribute("dbLink", "jdbc:sqlite:testdb.db");
+        application.setAttribute("dbLink", "jdbc:sqlite:cucumber_test.db");
         application.setAttribute("email_sender", "mock");
         Base.commitTransaction();
         Base.close();
@@ -25,7 +25,8 @@ public class DBResetController extends AppController {
         Base.exec("INSERT INTO Template (TemplateName,Subject,Content) VALUES ('RTA Default Template', 'Greeting {FirstName}', 'Hi, {FirstName} {LastName} from {Company}');");
         Base.exec("DELETE FROM notification_details");
         Base.exec("DELETE FROM notifications");
-        Base.exec("DELETE FROM event");
+        Base.exec("DELETE FROM events");
+        Base.exec("DELETE FROM contact_people");
         resp.getWriter().write("db is reset");
 
     }

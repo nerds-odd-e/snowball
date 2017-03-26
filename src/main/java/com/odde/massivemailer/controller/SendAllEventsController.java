@@ -19,7 +19,7 @@ public class SendAllEventsController extends AppController {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        GMailService mailService = createGmailService();
+        MailService mailService = createGmailService();
 
         List<Event> eventList = Event.findAll();
 

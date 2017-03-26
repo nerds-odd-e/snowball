@@ -15,6 +15,7 @@ import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.model.Notification;
 import com.odde.massivemailer.service.GMailService;
+import com.odde.massivemailer.service.MailService;
 
 public class SendMailController extends AppController {
 
@@ -27,7 +28,7 @@ public class SendMailController extends AppController {
             Notification notification = email.asNotification().saveAll();
             email.setNotification(notification);
 
-            GMailService mailService = createGmailService();
+            MailService mailService = createGmailService();
             mailService.send(email);
 
             resp.sendRedirect("sendemail.jsp?status=success&msg=Email successfully sent&repcnt=" + email.getReceipts().size());
