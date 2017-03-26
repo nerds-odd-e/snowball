@@ -8,7 +8,7 @@ buildscript {
     dependencies {
         classpath "com.github.samueltbrown:gradle-cucumber-plugin:0.8"
         classpath "info.cukes:cucumber-core:1.2.2"
-        classpath group: 'org.javalite', name: 'activejdbc-gradle-plugin', version: '1.4.12-SNAPSHOT'
+        classpath group: 'org.javalite', name: 'activejdbc-gradle-plugin', version: '1.4.13-SNAPSHOT'
     }
 }
 
