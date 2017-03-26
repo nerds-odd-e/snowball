@@ -4,19 +4,16 @@ import org.javalite.activejdbc.Base;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import javax.servlet.annotation.WebListener;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebListener()
 public class PrepareDatabaseStartupListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         getDBReady("jdbc:sqlite:oddemail.db");
         getDBReady("jdbc:sqlite:testdb.db");
-        getDBReady("jdbc:sqlite:cucumber_test.db");
     }
 
     @Override

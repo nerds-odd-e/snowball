@@ -65,10 +65,4 @@ public class GMailService implements MailService {
 	protected Transport getTransport() throws NoSuchProviderException {
 		return session.getTransport("smtp");
 	}
-
-//	public long getDistance(double srcLat, double srcLong, double destLat, double destLong) {
-//
-//
-//	}
-
 }
