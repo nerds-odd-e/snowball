@@ -1,6 +1,7 @@
 package com.odde.massivemailer.controller;
 
 import com.odde.massivemailer.model.Template;
+import com.odde.massivemailer.serialiser.AppGson;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +14,7 @@ public class TemplatesController extends AppController {
     }
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String convertedContactToJSON = getGson().toJson(Template.findAll());
+        String convertedContactToJSON = AppGson.getGson().toJson(Template.findAll());
         resp.getWriter().write(convertedContactToJSON);
     }
 }

@@ -1,9 +1,7 @@
 package com.odde.massivemailer.controller;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.odde.massivemailer.model.Event;
-import com.odde.massivemailer.serialiser.EventSerialiser;
+import com.odde.massivemailer.serialiser.AppGson;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -15,7 +13,7 @@ public class EventsController extends AppController {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String convertedContactToJSON = getGson().toJson(Event.findAll());
+        String convertedContactToJSON = AppGson.getGson().toJson(Event.findAll());
         ServletOutputStream outputStream = resp.getOutputStream();
         outputStream.print(convertedContactToJSON);
     }

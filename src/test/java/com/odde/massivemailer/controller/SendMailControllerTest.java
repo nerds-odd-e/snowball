@@ -49,7 +49,7 @@ public class SendMailControllerTest {
         MockitoAnnotations.initMocks(this);
 
         controller = new SendMailController();
-        controller.setGmailService(gmailService);
+        controller.setMailService(gmailService);
 
         when(request.getParameter("content")).thenReturn("content-na-ka");
         when(request.getParameter("subject")).thenReturn("subject for test");

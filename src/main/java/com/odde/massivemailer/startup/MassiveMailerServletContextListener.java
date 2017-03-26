@@ -15,7 +15,7 @@ public class MassiveMailerServletContextListener implements ServletContextListen
     @Override
     public void contextInitialized(ServletContextEvent arg0) {
         System.out.println("ServletContextListener started");
-        String emailUserID = System.getenv(SendMailController.EMAIL_USERID);
+        String emailUserID = System.getenv("MM_EMAIL_USERID");
         String emailPassword = System.getenv(SendMailController.EMAIL_PASSWORD);
 
         if(null == emailUserID || null == emailPassword){

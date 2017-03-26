@@ -31,7 +31,7 @@ public class SendAllEventsControllerTest {
     public void setUpMockService() {
         MockitoAnnotations.initMocks(this);
         sendAllEventsController = new SendAllEventsController();
-        sendAllEventsController.setGmailService(gmailService);
+        sendAllEventsController.setMailService(gmailService);
 
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();

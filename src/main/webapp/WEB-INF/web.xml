@@ -24,19 +24,6 @@
 	</servlet-mapping>
 
 	<servlet-mapping>
-		<servlet-name>emailHistoryController</servlet-name>
-		<url-pattern>/listEmails</url-pattern>
-	</servlet-mapping>
-
-
-
-	<servlet>
-		<servlet-name>emailHistoryController</servlet-name>
-		<servlet-class>com.odde.massivemailer.controller.EmailHistoryController</servlet-class>
-	</servlet>
-
-
-	<servlet-mapping>
 		<servlet-name>emailOpenedCounterController</servlet-name>
 		<url-pattern>/listEmailDetails</url-pattern>
 	</servlet-mapping>
@@ -48,16 +35,6 @@
 		<servlet-class>com.odde.massivemailer.controller.EmailOpenedCounterController</servlet-class>
 	</servlet>
 
-
-	<servlet>
-		<servlet-name>contactsController</servlet-name>
-		<servlet-class>com.odde.massivemailer.controller.ContactsController</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>contactsController</servlet-name>
-		<url-pattern>/contacts</url-pattern>
-	</servlet-mapping>	
-	
 	<servlet>
 		<servlet-name>updateContactController</servlet-name>
 		<servlet-class>com.odde.massivemailer.controller.UpdateContactController</servlet-class>
@@ -94,15 +71,6 @@
 	<servlet-mapping>
 		<servlet-name>TemplatesController</servlet-name>
 		<url-pattern>/templates</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>DBResetController</servlet-name>
-		<servlet-class>com.odde.massivemailer.controller.DBResetController</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>DBResetController</servlet-name>
-		<url-pattern>/reset</url-pattern>
 	</servlet-mapping>
 
 	<filter>
