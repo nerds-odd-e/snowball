@@ -24,7 +24,6 @@ public class WebDriverWrapper {
     private WebDriver driver;
 
     public WebDriverWrapper() {
-        System.out.println("here's the property:" + System.getProperty("webdriver"));
         if (System.getProperty("webdriver").equals("chrome"))
             driver = new ChromeDriver();
         else {

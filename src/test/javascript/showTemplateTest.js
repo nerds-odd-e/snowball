@@ -1,4 +1,4 @@
-var mock_json = [{"Id":1,"TemplateName":"Default Template 1","Subject":"Greeting {FirstName}","Content":"Hi, {FirstName} {LastName} from {Company}"},{"Id":2,"TemplateName":"Greeting Template","Subject":"Greeting {LastName}","Content":"Hello, {FirstName} {LastName} from {Company}"}];
+var mock_json = [{"id":1, "attributes":{"TemplateName":"Default Template 1","Subject":"Greeting {FirstName}","Content":"Hi, {FirstName} {LastName} from {Company}"}},{"id":2, "attributes":{"TemplateName":"Greeting Template","Subject":"Greeting {LastName}","Content":"Hello, {FirstName} {LastName} from {Company}"}}];
 
 describe('test show template function', function() {
 
@@ -40,8 +40,8 @@ describe('test show template function', function() {
 
 		$.each(mock_json, function(index, obj)
 		{
-			expect(selectObject.options[index+1].value).toBe(obj.Id.toString());
-			expect(selectObject.options[index+1].text).toBe(obj.TemplateName);
+			expect(selectObject.options[index+1].value).toBe(obj.id.toString());
+			expect(selectObject.options[index+1].text).toBe(obj.attributes.TemplateName);
 		})	
 
 	});

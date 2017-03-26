@@ -17,13 +17,19 @@ public abstract class ActiveSerialiser implements JsonSerializer {
 
     private JsonElement getJsonElement(Model src) {
         final JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id", src.getLongId());
+        jsonObject.add("attributes", getJsonAttributes(src));
+        return jsonObject;
+    }
+
+    private JsonObject getJsonAttributes(Model src) {
+        final JsonObject jsonAttributes = new JsonObject();
         for(String f : getAttributeNames()) {
             if(src.get(f) != null) {
-                jsonObject.addProperty(f, src.get(f).toString());
+                jsonAttributes.addProperty(f, src.get(f).toString());
             }
         }
-
-        return jsonObject;
+        return jsonAttributes;
     }
 
     protected abstract Set<String> getAttributeNames();

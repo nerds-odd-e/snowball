@@ -16,10 +16,10 @@ function retrieveContactListFromServer()
 function renderContactList(json, selector)
 {
 	$.each(json, function(idx, item) {
-		var firstName = item.attributes.FirstName===undefined?'':item.attributes.FirstName;
-		var lastName = item.attributes.LastName===undefined?'':item.attributes.LastName;
-		var company = item.attributes.Company===undefined?'':item.attributes.Company;
-		selector.append('<li class="col-md-3 email-address" style="text-align: left">'+item.attributes.Email+'</li>');
+		var firstName = item.attributes.firstname===undefined?'':item.attributes.firstname;
+		var lastName = item.attributes.lastname===undefined?'':item.attributes.lastname;
+		var company = item.attributes.company===undefined?'':item.attributes.company;
+		selector.append('<li class="col-md-3 email-address" style="text-align: left">'+item.attributes.email+'</li>');
 		selector.append('<li class="col-md-2" style="text-align: left">'+firstName+'</li>');
 		selector.append('<li class="col-md-3" style="text-align: left">'+lastName+'</li>');
 		selector.append('<li class="col-md-3" style="text-align: left">'+company+'</li>');
@@ -31,11 +31,11 @@ function renderContactSelectionList(json, selector)
 {
 	selector.html('');
 	$.each(json, function(idx, item) {
-		var firstName = item.attributes.FirstName===undefined?'':item.attributes.FirstName;
-		var lastName = item.attributes.LastName===undefined?'':item.attributes.LastName;
-		var company = item.attributes.Company===undefined?'':item.attributes.Company;
-		selector.append('<li class="col-md-1 email-checkbox" style="text-align: center"><input type="checkbox" onclick="whenContactIsSelected(' + idx + ')" id="' + idx + '" value="' + item.attributes.Email + '" /></li>');
-		selector.append('<li class="col-md-3 email-address" style="text-align: left">'+item.attributes.Email+'</li>');
+		var firstName = item.attributes.firstname===undefined?'':item.attributes.firstname;
+		var lastName = item.attributes.lastname===undefined?'':item.attributes.lastname;
+		var company = item.attributes.company===undefined?'':item.attributes.company;
+		selector.append('<li class="col-md-1 email-checkbox" style="text-align: center"><input type="checkbox" onclick="whenContactIsSelected(' + idx + ')" id="' + idx + '" value="' + item.attributes.email + '" /></li>');
+		selector.append('<li class="col-md-3 email-address" style="text-align: left">'+item.attributes.email+'</li>');
 		selector.append('<li class="col-md-2 contact-name" style="text-align: left">'+firstName+'</li>');
 		selector.append('<li class="col-md-3 contact-lname" style="text-align: left">'+lastName+'</li>');
 		selector.append('<li class="col-md-3 contact-cname" style="text-align: left">'+company+'</li>');
@@ -58,11 +58,11 @@ function showEditContactDetail(item)
 
 function insertDataIntoContactModal(item){
 
-	$('#name').val(item.attributes.FirstName);
-	$('#lastname').val(item.attributes.LastName);
-	$('#company').val(item.attributes.Company);
-	$('#email').val(item.attributes.Email);
-	$('#email_label').text(item.attributes.Email);
+	$('#name').val(item.attributes.firstname);
+	$('#lastname').val(item.attributes.lastname);
+	$('#company').val(item.attributes.company);
+	$('#email').val(item.attributes.email);
+	$('#email_label').text(item.attributes.email);
 }
 
 function openEditContactModal()

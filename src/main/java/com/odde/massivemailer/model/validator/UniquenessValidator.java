@@ -6,6 +6,14 @@ import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.ModelDelegate;
 import org.javalite.activejdbc.validation.ValidatorAdapter;
 
+/*
+ * Code forked from https://github.com/javalite/activejdbc/blob/master/activejdbc/src/main/java/org/javalite/activejdbc/validation/UniquenessValidator.java
+ * to fix a bug for SQLite.
+ *
+ * Issue has been reported to: https://github.com/javalite/activejdbc/issues/234
+ *
+ * This can be removed when the bug is fixed in ActiveJDBC.
+ */
 public class UniquenessValidator extends ValidatorAdapter {
     private final String attribute;
 

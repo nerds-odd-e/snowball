@@ -29,7 +29,7 @@ public class EmailHistoryControllerTest {
     @Test
     public void returnContactsInJSON() throws Exception {
         emailHistoryController.doGet(req, res);
-        assertEquals("[{\"id\":\"1\",\"notification_id\":\"0\",\"subject\":\"Promotional test\"}]",res.getContentAsString());
+        assertEquals("[{\"id\":1,\"attributes\":{\"id\":\"1\",\"notification_id\":\"0\",\"subject\":\"Promotional test\"}}]",res.getContentAsString());
     }
 
 }

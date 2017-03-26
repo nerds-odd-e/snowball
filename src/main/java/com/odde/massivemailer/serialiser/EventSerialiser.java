@@ -4,14 +4,11 @@ import com.google.gson.*;
 import com.odde.massivemailer.model.Event;
 
 import java.lang.reflect.Type;
+import java.util.Set;
 
-public class EventSerialiser implements JsonSerializer {
+public class EventSerialiser extends ActiveSerialiser {
     @Override
-        public JsonElement serialize(Object src, Type typeOfSrc, JsonSerializationContext context) {
-        final Event event = (Event) src;
-        final JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("title", event.getTitle());
-        jsonObject.addProperty("content", event.getContent());
-        return jsonObject;
+    protected Set<String> getAttributeNames() {
+        return Event.attributeNames();
     }
 }

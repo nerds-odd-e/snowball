@@ -4,8 +4,6 @@ describe("Add Firstname and Lastname to Existing Contact",function(){
 	var markup="";
 
 	beforeEach(function() {		
-
-		
 		var modal = document.createElement('div');
 		modal.setAttribute('id', "editContactModal");
 		document.body.appendChild(modal);
@@ -47,23 +45,23 @@ describe("Add Firstname and Lastname to Existing Contact",function(){
 
 	
 	it("should show email as the same as the one that was being clicked", function(){
-		var mock_json_contact_item = {"id":1,"attributes":{"Email":"john@gmail.com"}};
+		var mock_json_contact_item = {"id":1,"attributes":{"email":"john@gmail.com"}};
 		spyOn(window,'openEditContactModal');
 		showEditContactDetail(mock_json_contact_item);
 		expect($('#name').val()).toBe("");
 		expect($('#lastname').val()).toBe("");
-		expect($('#email').val()).toBe(mock_json_contact_item.attributes.Email);
-		expect($('#email_label').text()).toBe(mock_json_contact_item.attributes.Email);
+		expect($('#email').val()).toBe(mock_json_contact_item.attributes.email);
+		expect($('#email_label').text()).toBe(mock_json_contact_item.attributes.email);
 	});
 	
 	it("should show name and lastname as the same as the one that was being clicked", function(){
-		var mock_json_contact_item = {"id":1,"attributes":{"Company":"","Email":"john@gmail.com","FirstName":"John","LastName":"Winyu"}};
+		var mock_json_contact_item = {"id":1,"attributes":{"company":"","email":"john@gmail.com","firstname":"John","lastname":"Winyu"}};
 		spyOn(window,'openEditContactModal');
 		showEditContactDetail(mock_json_contact_item);
-		expect($('#name').val()).toBe(mock_json_contact_item.attributes.FirstName);
-		expect($('#lastname').val()).toBe(mock_json_contact_item.attributes.LastName);
-		expect($('#email').val()).toBe(mock_json_contact_item.attributes.Email);
-		expect($('#email_label').text()).toBe(mock_json_contact_item.attributes.Email);
+		expect($('#name').val()).toBe(mock_json_contact_item.attributes.firstname);
+		expect($('#lastname').val()).toBe(mock_json_contact_item.attributes.lastname);
+		expect($('#email').val()).toBe(mock_json_contact_item.attributes.email);
+		expect($('#email_label').text()).toBe(mock_json_contact_item.attributes.email);
 	});
 	
 });
