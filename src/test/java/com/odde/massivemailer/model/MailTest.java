@@ -16,6 +16,7 @@ import java.util.Properties;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThat;
 
 @RunWith(TestWithDB.class)
@@ -62,7 +63,6 @@ public class MailTest {
 		assertEquals("<html><body>content TestName, CompanyName<img height=\"42\" width=\"42\" src=\"http://"+ InetAddress.getLocalHost().getHostAddress()+":8070/massive_mailer/resources/images/qrcode.png?token=" + mail.getNotification().getNotificationDetails().get(0).getId() + "\"></img></body></html>", messages.get(0).getContent());
 		assertEquals("subject LastName - test@gmail.com", messages.get(0).getSubject());
 	}
-
 
 
 	@Test

@@ -18,7 +18,7 @@ public class Notification extends Model {
     private List<NotificationDetail> notificationDetails;
 
     public Date getSentDate() {
-        return sentDate;
+        return (Date) get("sent_at");
     }
 
     public void setSentDate(Date sentDate) {

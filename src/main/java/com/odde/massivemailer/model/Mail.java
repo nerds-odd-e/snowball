@@ -1,11 +1,6 @@
 package com.odde.massivemailer.model;
 
-import java.io.UnsupportedEncodingException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import com.odde.massivemailer.exception.EmailException;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -13,13 +8,14 @@ import javax.mail.Session;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.io.UnsupportedEncodingException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-import com.odde.massivemailer.exception.EmailException;
-import org.javalite.activejdbc.Model;
-import org.javalite.activejdbc.annotations.Table;
-
-@Table("mail")
-public class Mail extends Model {
+public class Mail {
 
     private static final String FROM = "myodde@gmail.com";
     private static final String DISPLAY_NAME = "Inspector Gadget";
@@ -156,14 +152,6 @@ public class Mail extends Model {
 
     public void setKey(String key) {
         this.key = key;
-    }
-
-    public Date getSentDate() {
-        return sentDate;
-    }
-
-    public void setSentDate(Date sentDate) {
-        this.sentDate = sentDate;
     }
 
     public void setMessageId(long messageId) {
