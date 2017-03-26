@@ -11,8 +11,10 @@ import com.odde.massivemailer.serialiser.EventSerialiser;
 import com.odde.massivemailer.serialiser.NotificationSerialiser;
 import com.odde.massivemailer.serialiser.TemplateSerialiser;
 import com.odde.massivemailer.service.GMailService;
+import com.odde.massivemailer.service.MockMailService;
 import com.odde.massivemailer.service.SMTPConfiguration;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
@@ -38,9 +40,17 @@ public class AppController extends HttpServlet {
 
     protected GMailService createGmailService() {
         if (null == gmailService) {
-            SMTPConfiguration config = new SMTPConfiguration(System.getenv(EMAIL_USERID), System.getenv(EMAIL_PASSWORD), SMTP_ADDR, PORT);
-            gmailService = new GMailService(config);
+            ServletContext application = getServletConfig().getServletContext();
+            Object email_sender = application.getAttribute("email_sender");
+            if (email_sender != null && ((String)email_sender).equals("mock")) {
+                gmailService = new MockMailService(null);
+            }
+            else {
+                SMTPConfiguration config = new SMTPConfiguration(System.getenv(EMAIL_USERID), System.getenv(EMAIL_PASSWORD), SMTP_ADDR, PORT);
+                gmailService = new GMailService(config);
+            }
         }
+
         return gmailService;
     }
 

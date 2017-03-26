@@ -9,15 +9,23 @@ import java.io.IOException;
 
 @WebFilter("/*")
 public class DBConnectionFilter implements Filter {
+    private FilterConfig filterConfig;
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
+        this.filterConfig = filterConfig;
     }
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
+        ServletContext application = filterConfig.getServletContext();
+        Object dblink = application.getAttribute("dbLink");
+        String linkStr = "jdbc:sqlite:oddemail.db";
+        if (dblink != null)
+            linkStr = (String) dblink;
         try{
-            Base.open("org.sqlite.JDBC", "jdbc:sqlite:oddemail.db", "", "");
+            Base.open("org.sqlite.JDBC", linkStr, "", "");
             Base.openTransaction();
             chain.doFilter(req, resp);
             Base.commitTransaction();
