@@ -13,6 +13,7 @@ import javax.mail.Transport;
 import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.GreenMailUtil;
 import com.icegreen.greenmail.util.ServerSetup;
+import com.odde.TestWithDB;
 import com.odde.massivemailer.service.GMailService;
 import com.odde.massivemailer.service.SMTPConfiguration;
 import com.odde.massivemailer.util.NotificationUtil;
@@ -21,11 +22,13 @@ import org.junit.Test;
 
 import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.Mail;
+import org.junit.runner.RunWith;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
+@RunWith(TestWithDB.class)
 public class GmailServiceTest {
 
 	private static String[] RECIPIENTS = new String[] { "myodde@gmail.com",
@@ -53,7 +56,7 @@ public class GmailServiceTest {
 	}
    
 	
-	@Test @Ignore
+	@Test
 	public void testSend_multipleRecipients() throws EmailException, MessagingException {
 		final Transport transport = mock(Transport.class);
         GMailService emailService = this.getGmailService(transport);
@@ -65,7 +68,6 @@ public class GmailServiceTest {
 		verify(transport, times(1)).close();
 
 	}
-	@Ignore
 	@Test(expected = EmailException.class)
 	public void testSend_failed() throws Exception {
 		Transport transport = null;
@@ -74,12 +76,9 @@ public class GmailServiceTest {
 		emailService.send(email);
 	}
 
-	@Test @Ignore
+	@Test
 	public void sendEmailViaGreenMailSMTP() throws EmailException, UnknownHostException {
 		//Arrange
-
-
-
 		GreenMail greenMail = new GreenMail(new ServerSetup(3025, null, "smtp"));
 		greenMail.start();
 		SMTPConfiguration config = new SMTPConfiguration("fake@greenmail.com", "*******", "localhost", 3025);

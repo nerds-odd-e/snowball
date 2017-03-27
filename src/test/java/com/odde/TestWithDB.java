@@ -1,7 +1,6 @@
 package com.odde;
 
 import com.odde.massivemailer.startup.DBMigrater;
-import com.odde.massivemailer.startup.PrepareDatabaseStartupListener;
 import org.javalite.activejdbc.Base;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.BlockJUnit4ClassRunner;

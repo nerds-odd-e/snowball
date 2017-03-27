@@ -26,5 +26,4 @@ public class PrepareDatabaseStartupListener implements ServletContextListener {
         new DBMigrater().migrate();
         Base.close();
     }
-
 }

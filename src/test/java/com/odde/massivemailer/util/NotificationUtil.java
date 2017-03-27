@@ -7,9 +7,6 @@ import com.odde.massivemailer.model.NotificationDetail;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by csd11 on 18/11/16.
- */
 public class NotificationUtil {
 
     private static void addNotificationDetail(Mail mail) {

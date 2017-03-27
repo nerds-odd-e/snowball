@@ -22,7 +22,7 @@ import static org.junit.Assert.assertThat;
 @RunWith(TestWithDB.class)
 public class MailTest {
 	
-	@Test @Ignore
+	@Test
 	public void testCreateMessage() throws Exception {
 
 		Properties props = System.getProperties();
