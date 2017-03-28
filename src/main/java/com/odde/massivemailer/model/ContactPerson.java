@@ -22,6 +22,7 @@ public class ContactPerson extends Model {
     public static final String LASTNAME = "LastName";
     public static final String EMAIL = "Email";
     public static final String COMPANY = "Company";
+    public static final String LOCATION = "Location";
 
     public Map<String, String> attributes = new HashMap<>();
 
@@ -95,5 +96,9 @@ public class ContactPerson extends Model {
         if (list.size()> 0)
             return list.get(0);
         return null;
+    }
+
+    public ContactPerson setLocation(String location) {
+        return this;
     }
 }

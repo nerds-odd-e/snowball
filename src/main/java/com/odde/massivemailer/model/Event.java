@@ -1,13 +1,8 @@
 package com.odde.massivemailer.model;
 
-import com.google.gson.annotations.Expose;
 import org.javalite.activejdbc.Model;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
 
 public class Event extends Model implements Serializable{
     static {
@@ -42,5 +37,9 @@ public class Event extends Model implements Serializable{
 
     public String getAttribute(String name) {
         return (String) get(name);
+    }
+
+    public Event setLocation(String location) {
+        return this;
     }
 }
