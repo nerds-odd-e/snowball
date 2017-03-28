@@ -22,6 +22,12 @@ public class Event extends Model implements Serializable{
         setLocation("Singapore");
     }
 
+    public Event(String title, String content, String location) {
+        setTitle(title);
+        setContent(content);
+        setLocation(location);
+    }
+
     public String getContent() { return getAttribute("description"); }
 
     public void setContent(String content) {
@@ -40,11 +46,17 @@ public class Event extends Model implements Serializable{
     public String getLocation() {
         return getAttribute("location");
     }
-    public Event setLocation(String location) {
-        set("location", location);
-        return this;
-    }
     public String getAttribute(String name) {
         return (String) get(name);
     }
+
+    public void setLocation(String location) {
+        set("location", location);
+    }
+
+    public String getLocation(){
+        return getAttribute("location");
+    }
+
+
 }

@@ -50,6 +50,7 @@ public class ContactsControllerTest {
     @Test
     public void addNewContact() throws Exception {
         request.setParameter("email", "newbie@gmail.com");
+        request.setParameter("location", "Singapore");
         controller.doPost(request, response);
 
         assertEquals("contactlist.jsp?status=success&msg=Add contact successfully", response.getRedirectedUrl());

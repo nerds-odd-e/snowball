@@ -44,7 +44,24 @@ public class ContactPersonTest {
 		assertEquals(company, person.getCompany());
 	}
 
- 
+
+	@Test
+	public void testCreateContactObjectWithLocation() {
+
+		String name = "name";
+		String email = "email@abc.com";
+		String lastname = "lastname";
+		String company = "myCompany";
+		String location = "Singapore";
+		ContactPerson person = new ContactPerson(name, email, lastname, company, location);
+
+		assertEquals(name, person.getName());
+		assertEquals(email, person.getEmail());
+		assertEquals(lastname, person.getLastname());
+		assertEquals(company, person.getCompany());
+		assertEquals(location, person.getLocation());
+	}
+
 	@Test
 	public void testGetInvalidAttributeValue() throws Exception {
 		ContactPerson contact =  new ContactPerson("John", "john@gmail.com", "Doe");

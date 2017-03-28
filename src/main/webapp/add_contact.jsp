@@ -53,6 +53,14 @@
 									</div>
 									<br> <br>
 									<div class="row">
+										<div class="col-lg-1">Location:</div>
+										<div class="col-lg-11">
+											<input type="text" class="form-control" name="location"
+												id="location">
+										</div>
+									</div>
+									<br> <br>
+									<div class="row">
 										<div class="col-lg-12">
 											<button type="button" class="btn btn-default"
 												id="add_button" value="add" disabled>Add</button>

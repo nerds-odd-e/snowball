@@ -19,6 +19,7 @@ public class ContactPerson extends Model {
     public static final String LASTNAME = "LastName";
     public static final String EMAIL = "Email";
     public static final String COMPANY = "Company";
+    public static final String LOCATION = "Location";
 
     public Map<String, String> attributes = new HashMap<>();
 
@@ -35,6 +36,13 @@ public class ContactPerson extends Model {
         setCompany(company);
     }
 
+    public ContactPerson(String name, String email, String lastname, String company,String location) {
+        setName(name);
+        setEmail(email);
+        setLastname(lastname);
+        setCompany(company);
+        setLocation(location);
+    }
     public String getName() {
         return getAttribute(FIRSTNAME);
     }
@@ -94,12 +102,12 @@ public class ContactPerson extends Model {
         return null;
     }
 
-    public ContactPerson setLocation(String location) {
-        setAttribute(COMPANY, location);
-        return this;
+    public void setLocation(String location) {
+        setAttribute(LOCATION, location);
     }
 
     public String getLocation() {
-        return getAttribute(COMPANY);
+        return getAttribute(LOCATION);
     }
+
 }

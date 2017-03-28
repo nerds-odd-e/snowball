@@ -14,9 +14,9 @@ public class MyStepdefs {
     private WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
     public String BASE_URL = "http://localhost:8070/massive_mailer/";
 
-    @When("^Add A Contact \"([^\"]*)\"$")
-    public void addAContact(String email) throws Throwable {
-        loginToPage(BASE_URL  + "add_contact.jsp", email);
+    @When("^Add A Contact \"([^\"]*)\" at \"([^\"]*)\"$")
+    public void addAContact(String email,String location) throws Throwable {
+        addContact(BASE_URL  + "add_contact.jsp", email, location);
     }
 
     @And("^Page Should Contain \"([^\"]*)\"$")
@@ -36,12 +36,12 @@ public class MyStepdefs {
 
     @Given("^\"([^\"]*)\" is a contact already$")
     public void is_a_contact_already(String email) throws Throwable {
-        addAContact(email);
+        addAContact(email,"");
     }
 
     @When("^Login with email \"([^\"]*)\"$")
     public void loginWithEmail(String email) throws Throwable{
-        loginToPage(BASE_URL + "game_login.jsp", email);
+        loginPage(BASE_URL + "game_login.jsp", email);
     }
 
     @Then("^Page should be redirected to \"([^\"]*)\"$")
@@ -61,12 +61,12 @@ public class MyStepdefs {
         pageShouldContainExactlyNElements(count, email);
     }
 
-    private void loginToPage(String url, String email) throws Throwable{
+    private void addContact(String url, String email, String location) throws Throwable{
         driver.visit(url);
         driver.text_field("email", email);
+        driver.text_field("location", location);
         driver.click_button("add_button");
     }
-
 
     @Given("^There is a contact \"([^\"]*)\"$")
     public void there_is_a_contact(String arg1) throws Throwable {
@@ -86,4 +86,9 @@ public class MyStepdefs {
         throw new PendingException();
     }
 
+    private void loginPage(String url, String email) throws Throwable{
+        driver.visit(url);
+        driver.text_field("email", email);
+        driver.click_button("add_button");
+    }
 }

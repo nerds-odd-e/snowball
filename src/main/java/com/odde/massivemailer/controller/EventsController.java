@@ -37,6 +37,8 @@ public class EventsController extends AppController {
     private Event buildEventObject(HttpServletRequest req) {
         String title = req.getParameter("evtTitle");
         String content = req.getParameter("content");
-        return new Event(title, content);
+        String location = req.getParameter("location");
+
+        return new Event(title, content,location);
     }
 }
