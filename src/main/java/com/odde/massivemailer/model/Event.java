@@ -37,7 +37,7 @@ public class Event extends Model implements Serializable{
         set("title", title);
     }
 
-    public String getLocation(String location) {
+    public String getLocation() {
         return getAttribute("location");
     }
     public Event setLocation(String location) {

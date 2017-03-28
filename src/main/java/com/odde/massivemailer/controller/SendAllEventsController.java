@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,29 +33,42 @@ public class SendAllEventsController extends AppController {
             return;
         }
 
-        Mail mail = createMailWithEvents(eventList);
 
         int mailSent = 0;
+        int eventsInMailSent = 0;
         for (ContactPerson person : contactList) {
             if(!person.getLocation().isEmpty()) {
-                mail.setReceipts(Collections.singletonList(person.getEmail()));
 
-                try {
-                    Notification notification = mail.asNotification().saveAll();
-                    mail.setNotification(notification);
+                List<Event> newEventList = new ArrayList<Event>();
+                for(Event event: eventList) {
+                    if(person.getLocation().equals(event.getLocation())) {
+                        newEventList.add(event);
+                        eventsInMailSent++;
+                    }
+                }
 
-                    mailService.send(mail);
+                if(newEventList.size() > 0) {
+                    Mail mail = createMailWithEvents(newEventList);
 
-                    ++mailSent;
-                } catch (EmailException e) {
-                    throw new IOException(e);
+                    mail.setReceipts(Collections.singletonList(person.getEmail()));
+
+                    try {
+                        Notification notification = mail.asNotification().saveAll();
+                        mail.setNotification(notification);
+
+                        mailService.send(mail);
+
+                        ++mailSent;
+                    } catch (EmailException e) {
+                        throw new IOException(e);
+                    }
                 }
             }
         }
 
         String redirectUrl = String.format("eventlist.jsp?email_sent=%s&event_in_email=%s",
                 mailSent,
-                eventList.size()
+                eventsInMailSent
         );
 
         resp.sendRedirect(redirectUrl);
