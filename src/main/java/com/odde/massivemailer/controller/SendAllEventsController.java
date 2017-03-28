@@ -36,17 +36,19 @@ public class SendAllEventsController extends AppController {
 
         int mailSent = 0;
         for (ContactPerson person : contactList) {
-            mail.setReceipts(Collections.singletonList(person.getEmail()));
+            if(!person.getLocation().isEmpty()) {
+                mail.setReceipts(Collections.singletonList(person.getEmail()));
 
-            try {
-                Notification notification = mail.asNotification().saveAll();
-                mail.setNotification(notification);
+                try {
+                    Notification notification = mail.asNotification().saveAll();
+                    mail.setNotification(notification);
 
-                mailService.send(mail);
+                    mailService.send(mail);
 
-                ++mailSent;
-            } catch (EmailException e) {
-                throw new IOException(e);
+                    ++mailSent;
+                } catch (EmailException e) {
+                    throw new IOException(e);
+                }
             }
         }
 

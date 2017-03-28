@@ -5,10 +5,7 @@ import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 
 @Table("contact_people")
@@ -99,6 +96,11 @@ public class ContactPerson extends Model {
     }
 
     public ContactPerson setLocation(String location) {
+        setAttribute(COMPANY, location);
         return this;
+    }
+
+    public String getLocation() {
+        return getAttribute(COMPANY);
     }
 }

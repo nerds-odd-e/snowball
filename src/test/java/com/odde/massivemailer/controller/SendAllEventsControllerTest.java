@@ -54,7 +54,7 @@ public class SendAllEventsControllerTest {
     @Test
     public void send1EventTo1ContactsAsMail() throws Exception {
         new Event("Testing-1").saveIt();
-        new ContactPerson("testName", "test1@gmail.com", "testLastName").saveIt();
+        new ContactPerson("testName", "test1@gmail.com", "testLastName").setLocation("Singapore").saveIt();
         sendAllEventsController.doPost(request, response);
         assertEquals("eventlist.jsp?email_sent=1&event_in_email=1", response.getRedirectedUrl());
     }
@@ -62,8 +62,8 @@ public class SendAllEventsControllerTest {
     @Test
     public void send1EventTo2ContactsAsMail() throws Exception {
         new Event("Testing-1").saveIt();
-        new ContactPerson("testName1", "test1@gmail.com", "test1LastName").saveIt();
-        new ContactPerson("testName2", "test2@gmail.com", "test2LastName").saveIt();
+        new ContactPerson("testName1", "test1@gmail.com", "test1LastName").setLocation("Singapore").saveIt();
+        new ContactPerson("testName2", "test2@gmail.com", "test2LastName").setLocation("Singapore").saveIt();
         sendAllEventsController.doPost(request, response);
         assertEquals("eventlist.jsp?email_sent=2&event_in_email=1", response.getRedirectedUrl());
     }
@@ -81,7 +81,7 @@ public class SendAllEventsControllerTest {
         new Event("Testing-1").setLocation("Singapore").saveIt();
         new ContactPerson("testName1", "test1@gmail.com", "test1LastName").saveIt();
         sendAllEventsController.doPost(request, response);
-        assertEquals("eventlist.jsp?email_sent=0&event_in_email=0", response.getRedirectedUrl());
+        assertEquals("eventlist.jsp?email_sent=0&event_in_email=1", response.getRedirectedUrl());
     }
 
     @Test @Ignore
