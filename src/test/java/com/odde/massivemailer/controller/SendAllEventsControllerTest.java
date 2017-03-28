@@ -135,10 +135,10 @@ public class SendAllEventsControllerTest {
      * Contact A in Singapore and Contact B in Singapore
      * Event A in Malaysia and Event B in Malaysia
      * Post-cond:
-     * Contact A will not receive Event A and B
-     * Contact B will not receive Event A and B
+     * Contact A will not receive mail
+     * Contact B will not receive mail
       */
-    public void bothContactsMustNotReceive1EventWhenHavingDifferentLocationAsEvents() throws Exception {
+    public void bothContactsMustNotReceiveEventsWhenHavingDifferentLocationAsEvents() throws Exception {
         new Event("Testing-1","","Malaysia").saveIt();
         new Event("Testing-2","","Malaysia").saveIt();
         new ContactPerson("testName1", "test1@gmail.com", "test1LastName","","Singapore").saveIt();
@@ -151,18 +151,37 @@ public class SendAllEventsControllerTest {
     /**
      * Pre-cond :
      * Contact A in Singapore and Contact B in Malaysia
+     * Events A and B are in Singapore, Event C in Malaysia
+     * Post-cond:
+     * Contact A will receive Events A and B, but not Event C
+     * Contact B will receive Event C, but not Events A and B
+     */
+    public void eachContactMustReceiveEventsCorrespondingToOnesLocation() throws Exception {
+        new Event("Testing-1","","Singapore").saveIt();
+        new Event("Testing-2","","Singapore").saveIt();
+        new Event("Testing-3","","Malaysia").saveIt();
+        new ContactPerson("testName1", "test1@gmail.com", "test1LastName","","Singapore").saveIt();
+        new ContactPerson("testName2", "test2@gmail.com", "test2LastName","", "Malaysia").saveIt();
+        sendAllEventsController.doPost(request, response);
+        assertEquals("eventlist.jsp?email_sent=2&event_in_email=3", response.getRedirectedUrl());
+    }
+
+    @Test
+    /**
+     * Pre-cond :
+     * Contact A in Singapore and Contact B has no location
      * Event A in Singapore and Event B in Malaysia
      * Post-cond:
-     * Contact A will not receive Event A
-     * Contact B will not receive Event B
+     * Contact A will receive Event A, but not Event B
+     * Contact B will not receive any mail
      */
-    public void eachContactMustReceive1EventCorrespondingToOnesLocation() throws Exception {
+    public void contactWWithNoLocationMustNotReceiveMail() throws Exception {
         new Event("Testing-1","","Singapore").saveIt();
         new Event("Testing-2","","Malaysia").saveIt();
         new ContactPerson("testName1", "test1@gmail.com", "test1LastName","","Singapore").saveIt();
-        new ContactPerson("testName2", "test2@gmail.com", "test2LastName","","Malaysia").saveIt();
+        new ContactPerson("testName2", "test2@gmail.com", "test2LastName","").saveIt();
         sendAllEventsController.doPost(request, response);
-        assertEquals("eventlist.jsp?email_sent=2&event_in_email=2", response.getRedirectedUrl());
+        assertEquals("eventlist.jsp?email_sent=1&event_in_email=1", response.getRedirectedUrl());
     }
 
 }
