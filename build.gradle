@@ -88,7 +88,7 @@ cucumber {
             "classpath:io.jdev.geb.cucumber.steps.groovy.en", 'classpath:steps'
     ]
 
-    tags = ['~@system']
+    tags = ['~@system'] + (System.getProperty("extra_tag") != null ? [System.getProperty("extra_tag")] : [])
 }
 
 tasks.cucumber {
