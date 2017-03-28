@@ -28,7 +28,6 @@ ext {
     ciBuild = System.getenv('SNAP_CI')
 }
 
-apply plugin: "groovy"
 apply plugin: "com.github.samueltbrown.cucumber"
 apply plugin: 'java'
 apply plugin: 'war'
@@ -137,16 +136,12 @@ dependencies {
     compile group: 'org.javalite', name: 'db-migrator-maven-plugin', version: '1.4.11'
     compile group: 'org.javalite', name: 'activejdbc', version: '1.4.12-SNAPSHOT'
 
-    testCompile "org.codehaus.groovy:groovy-all:$groovyVersion"
-    testCompile "org.gebish:geb-core:$gebVersion"
     testCompile "org.seleniumhq.selenium:selenium-api:$seleniumVersion"
     testCompile "org.seleniumhq.selenium:selenium-java:$seleniumVersion"
     testCompile "org.seleniumhq.selenium:selenium-server:$seleniumVersion"
     testCompile "info.cukes:cucumber-core:$cucumberJvmVersion"
-    testCompile "info.cukes:cucumber-groovy:$cucumberJvmVersion"
     testCompile "info.cukes:cucumber-java:$cucumberJvmVersion"
     testCompile "info.cukes:cucumber-junit:$cucumberJvmVersion"
-    testCompile "io.jdev.geb:geb-cucumber:0.3"
     compile 'org.flywaydb:flyway-core:3.2.1'
     // pick whichever drivers you want. We test against most of them here.
     // see src/test/resources/GebConfig.groovy for how to switch between them

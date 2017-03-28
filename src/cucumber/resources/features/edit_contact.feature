@@ -2,7 +2,7 @@ Feature: Edit Contact
   As the admin I want to edit contacts,
   so that I can sent newsletters to them later.
 
-  @developing
+  @developing @contact
   Scenario: Edit Location Information of Contact
     Given There is a contact "terry@odd-e.com"
     When I change the location information of contact to be "Singapore"

@@ -1,5 +1,6 @@
 package steps;
 
+import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -64,6 +65,25 @@ public class MyStepdefs {
         driver.visit(url);
         driver.text_field("email", email);
         driver.click_button("add_button");
+    }
+
+
+    @Given("^There is a contact \"([^\"]*)\"$")
+    public void there_is_a_contact(String arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @When("^I change the location information of contact to be \"([^\"]*)\"$")
+    public void i_change_the_location_information_of_contact_to_be(String arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Then("^contact \"([^\"]*)\"'s locations should be \"([^\"]*)\"$")
+    public void contact_s_locations_should_be(String arg1, String arg2) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
     }
 
 }
