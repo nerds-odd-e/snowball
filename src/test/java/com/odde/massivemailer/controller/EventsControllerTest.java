@@ -61,6 +61,8 @@ public class EventsControllerTest {
     @Test
     public void shouldAddNewEventWhenTitleIsValid() throws Exception {
         request.setParameter("evtTitle", "title");
+        request.setParameter("content", "content");
+        request.setParameter("location", "Singapore");
         eventsController.doPost(request, response);
         assertEquals("eventlist.jsp?status=success&msg=Add event successfully", response.getRedirectedUrl());
     }

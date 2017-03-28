@@ -1,10 +1,14 @@
 package steps;
 
+import com.odde.massivemailer.model.ContactPerson;
+import com.odde.massivemailer.model.Event;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import steps.driver.WebDriverFactory;
 import steps.driver.WebDriverWrapper;
+
+import java.util.List;
 
 public class SendAllEventsTest {
     private static final String BASE_URL = "http://localhost:8070/massive_mailer/eventlist.jsp";
@@ -19,7 +23,7 @@ public class SendAllEventsTest {
     }
 
 
-    @When("^\\d+ out of \\d+ contacts are in Singapore$")
+    @When("^(\\d+) out of (\\d+) contacts are in Singapore$")
     public void numberOfContactIs(int numberOfContactsInLocation, int numOfContacts) throws Throwable {
         this.numberOfContactsInLocation = numberOfContactsInLocation;
         this.numberOfContacts = numOfContacts;
@@ -29,14 +33,18 @@ public class SendAllEventsTest {
         }
     }
 
-    @When("^\\d+ out of \\d+ events are in Singapore$")
+    @When("^(\\d+) out of (\\d+) events are in Singapore$")
     public void numberOfEventIs(int numberOfEventsInLocation, int numberOfEvents) throws Throwable {
         this.numberOfEventsInLocation = numberOfEventsInLocation;
         this.numberOfEvents = numberOfEvents;
         EventTests eventTests = new EventTests();
-        for(int i=0;i<this.numberOfEvents;i++) {
+        for(int i=0;i<this.numberOfEventsInLocation;i++) {
             eventTests.visitAddEventPage();
-            eventTests.clickRegisterEvent("Event "+i);
+            eventTests.clickRegisterEvent("Event "+i,"Singapore");
+        }
+        for(int i=0;i<this.numberOfEvents-this.numberOfEventsInLocation;i++) {
+            eventTests.visitAddEventPage();
+            eventTests.clickRegisterEvent("Event "+i,"Not-Singapore");
         }
     }
 

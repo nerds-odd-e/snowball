@@ -17,14 +17,14 @@ public class EventTests {
         driver.visit(BASE_URL);
     }
 
-    @When("^Add an event \"([^\"]*)\"$")
-    public void clickRegisterEvent(String eventTitle) throws Throwable {
+    @When("^Add an event (\\d+) at (\\d+)$")
+    public void clickRegisterEvent(String eventTitle,String location) throws Throwable {
         driver.text_field("evtTitle", eventTitle);
         driver.click_button("register_button");
     }
 
-    @Then("^Event list page should contain \"([^\"]*)\"$")
-    public void eventListPageShouldContain(String eventTitle) throws Throwable {
+    @Then("^Event list page should contain (\\d+) at (\\d+)$")
+    public void eventListPageShouldContain(String eventTitle,String location) throws Throwable {
         driver.expectRedirect(EVENTLIST_BASE_URL);
         driver.pageShouldContain(eventTitle);
     }
