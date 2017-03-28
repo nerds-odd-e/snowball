@@ -5,7 +5,7 @@ Feature: Send all events to contacts with the same location as the event - Singa
   Background:
     Given visit event list page
 
-  @email
+  @email @developing
   Scenario Outline: Send all events to all contacts
     When <number of contacts in location> out of <number of contacts> contacts are in Singapore
      And <number of events in location> out of <number of events> events are in Singapore

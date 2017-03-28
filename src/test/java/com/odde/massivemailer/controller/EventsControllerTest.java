@@ -69,6 +69,7 @@ public class EventsControllerTest {
 
     @Test
     public void shouldShowErrorWhenTitleIsEmpty() throws Exception {
+        request.setParameter("location", "Singapore");
         request.setParameter("evtTitle", "");
         eventsController.doPost(request, response);
         assertEquals("eventlist.jsp?status=failed&msg={ title=<value is missing> }", response.getRedirectedUrl());
@@ -76,6 +77,7 @@ public class EventsControllerTest {
 
     @Test
     public void shouldShowErrorWhenTitleIsNull() throws Exception {
+        request.setParameter("location", "Singapore");
         eventsController.doPost(request, response);
         assertEquals("eventlist.jsp?status=failed&msg={ title=<value is missing> }", response.getRedirectedUrl());
     }
