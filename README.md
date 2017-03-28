@@ -9,9 +9,9 @@ launchctl setenv MM_EMAIL_PASSWORD $MM_EMAIL_PASSWORD
 ```
 * Reboot your IDE.
 
-##### Phantomjs
+##### Phantomjs and Firefox
 
-We use phantomjs for cucumber tests. Make sure it is installed and if it is in a path other than /usr/local/bin then please edit build.gradle file and update the path to phantomjs in the tasks.cucumber section.
+* We use phantomjs for cucumber tests. Make sure it is installed and if it is in a path other than /usr/local/bin then please edit build.gradle file and update the path to phantomjs in the tasks.cucumber section.
 
 * Make sure firefox binary is in the path export PATH=$PATH:/Applications/Firefox.app/Contents/MacOS˜
 
