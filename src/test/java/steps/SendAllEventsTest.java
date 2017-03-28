@@ -10,26 +10,29 @@ public class SendAllEventsTest {
     private static final String BASE_URL = "http://localhost:8070/massive_mailer/eventlist.jsp";
 
     private WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
-    private int numberOfEvents;
-    private int  numberOfContacts;
+    private int numberOfEvents, numberOfEventsInLocation;
+    private int  numberOfContacts, numberOfContactsInLocation;
 
     @Given("^visit event list page$")
     public void VisitEventListPage() throws Throwable {
         driver.visit(BASE_URL);
     }
 
-    @When("^number of contact is \"([^\"]*)\"$")
-    public void numberOfContactIs(String numberOfContacts) throws Throwable {
-        this.numberOfContacts = Integer.parseInt(numberOfContacts);
+
+    @When("^\\d+ out of \\d+ contacts are in Singapore$")
+    public void numberOfContactIs(int numberOfContactsInLocation, int numOfContacts) throws Throwable {
+        this.numberOfContactsInLocation = numberOfContactsInLocation;
+        this.numberOfContacts = numOfContacts;
         MyStepdefs contactTests = new MyStepdefs();
         for (int i=0;i<this.numberOfContacts;i++) {
             contactTests.addAContact("test@test"+i+".com");
         }
     }
 
-    @When("^number of event is \"([^\"]*)\"$")
-    public void numberOfEventIs(String numberOfEvents) throws Throwable {
-        this.numberOfEvents = Integer.parseInt(numberOfEvents);
+    @When("^\\d+ out of \\d+ events are in Singapore$")
+    public void numberOfEventIs(int numberOfEventsInLocation, int numberOfEvents) throws Throwable {
+        this.numberOfEventsInLocation = numberOfEventsInLocation;
+        this.numberOfEvents = numberOfEvents;
         EventTests eventTests = new EventTests();
         for(int i=0;i<this.numberOfEvents;i++) {
             eventTests.visitAddEventPage();
