@@ -103,10 +103,10 @@ public class SendAllEventsControllerTest {
      * Contact B will receive Event A and B
      */
     public void bothContactsMustReceive2EventsWhenHavingSameLocationAs2Events() throws Exception {
-        new Event("Testing-1").setLocation("Singapore").saveIt();
-        new Event("Testing-2").setLocation("Singapore").saveIt();
-        new ContactPerson("testName1", "test1@gmail.com", "test1LastName").setLocation("Singapore").saveIt();
-        new ContactPerson("testName2", "test2@gmail.com", "test2LastName").setLocation("Singapore").saveIt();
+        new Event("Testing-1","","Singapore").saveIt();
+        new Event("Testing-2","","Singapore").saveIt();
+        new ContactPerson("testName1", "test1@gmail.com", "test1LastName","","Singapore").saveIt();
+        new ContactPerson("testName2", "test2@gmail.com", "test2LastName","","Singapore").saveIt();
         sendAllEventsController.doPost(request, response);
         assertEquals("eventlist.jsp?email_sent=2&event_in_email=4", response.getRedirectedUrl());
     }
@@ -121,10 +121,10 @@ public class SendAllEventsControllerTest {
      * Contact B will receive Event A, not B
      */
     public void bothContactsMustReceive1EventWhenHavingSameLocationAs1Event() throws Exception {
-        new Event("Testing-1").setLocation("Singapore").saveIt();
-        new Event("Testing-2").setLocation("Malaysia").saveIt();
-        new ContactPerson("testName1", "test1@gmail.com", "test1LastName").setLocation("Singapore").saveIt();
-        new ContactPerson("testName2", "test2@gmail.com", "test2LastName").setLocation("Singapore").saveIt();
+        new Event("Testing-1","","Singapore").saveIt();
+        new Event("Testing-2","","Malaysia").saveIt();
+        new ContactPerson("testName1", "test1@gmail.com", "test1LastName","","Singapore").saveIt();
+        new ContactPerson("testName2", "test2@gmail.com", "test2LastName","","Singapore").saveIt();
         sendAllEventsController.doPost(request, response);
         assertEquals("eventlist.jsp?email_sent=2&event_in_email=2", response.getRedirectedUrl());
     }
@@ -139,10 +139,10 @@ public class SendAllEventsControllerTest {
      * Contact B will not receive Event A and B
       */
     public void bothContactsMustNotReceive1EventWhenHavingDifferentLocationAsEvents() throws Exception {
-        new Event("Testing-1").setLocation("Malaysia").saveIt();
-        new Event("Testing-2").setLocation("Malaysia").saveIt();
-        new ContactPerson("testName1", "test1@gmail.com", "test1LastName").setLocation("Singapore").saveIt();
-        new ContactPerson("testName2", "test2@gmail.com", "test2LastName").setLocation("Singapore").saveIt();
+        new Event("Testing-1","","Malaysia").saveIt();
+        new Event("Testing-2","","Malaysia").saveIt();
+        new ContactPerson("testName1", "test1@gmail.com", "test1LastName","","Singapore").saveIt();
+        new ContactPerson("testName2", "test2@gmail.com", "test2LastName","","Singapore").saveIt();
         sendAllEventsController.doPost(request, response);
         assertEquals("eventlist.jsp?email_sent=0&event_in_email=0", response.getRedirectedUrl());
     }
@@ -157,10 +157,10 @@ public class SendAllEventsControllerTest {
      * Contact B will not receive Event B
      */
     public void eachContactMustReceive1EventCorrespondingToOnesLocation() throws Exception {
-        new Event("Testing-1").setLocation("Singapore").saveIt();
-        new Event("Testing-2").setLocation("Malaysia").saveIt();
-        new ContactPerson("testName1", "test1@gmail.com", "test1LastName").setLocation("Singapore").saveIt();
-        new ContactPerson("testName2", "test2@gmail.com", "test2LastName").setLocation("Malaysia").saveIt();
+        new Event("Testing-1","","Singapore").saveIt();
+        new Event("Testing-2","","Malaysia").saveIt();
+        new ContactPerson("testName1", "test1@gmail.com", "test1LastName","","Singapore").saveIt();
+        new ContactPerson("testName2", "test2@gmail.com", "test2LastName","","Malaysia").saveIt();
         sendAllEventsController.doPost(request, response);
         assertEquals("eventlist.jsp?email_sent=2&event_in_email=2", response.getRedirectedUrl());
     }
