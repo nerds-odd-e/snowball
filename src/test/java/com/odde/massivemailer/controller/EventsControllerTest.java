@@ -21,7 +21,6 @@ public class EventsControllerTest {
     private EventsController eventsController;
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
-
     private List<Event> events;
 
     @Before
@@ -45,6 +44,7 @@ public class EventsControllerTest {
         new Event("Test event 1").saveIt();
         eventsController.doGet(request, response);
         assertThat(response.getContentAsString(), containsString("\"title\":\"Test event 1\""));
+        assertThat(response.getContentAsString(), containsString("\"location\":\"Singapore\""));
     }
 
 
@@ -55,6 +55,7 @@ public class EventsControllerTest {
         eventsController.doGet(request, response);
         assertThat(response.getContentAsString(), containsString("\"title\":\"Test event 1\""));
         assertThat(response.getContentAsString(), containsString("\"title\":\"Test event 2\""));
+        assertThat(response.getContentAsString(), containsString("\"location\":\"Singapore\""));
     }
 
     @Test

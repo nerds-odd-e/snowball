@@ -6,18 +6,20 @@ import java.io.Serializable;
 
 public class Event extends Model implements Serializable{
     static {
-        validatePresenceOf("title");
+        validatePresenceOf("title", "location");
     }
 
     public Event() { }
 
     public Event(String title) {
         setTitle(title);
+        setLocation("Singapore");
     }
 
     public Event(String title, String content) {
         setTitle(title);
         setContent(content);
+        setLocation("Singapore");
     }
 
     public String getContent() { return getAttribute("description"); }
@@ -35,11 +37,14 @@ public class Event extends Model implements Serializable{
         set("title", title);
     }
 
+    public String getLocation(String location) {
+        return getAttribute("location");
+    }
+    public Event setLocation(String location) {
+        set("location", location);
+        return this;
+    }
     public String getAttribute(String name) {
         return (String) get(name);
-    }
-
-    public Event setLocation(String location) {
-        return this;
     }
 }

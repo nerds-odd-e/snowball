@@ -12,7 +12,6 @@ import java.io.IOException;
 
 @WebServlet("/events")
 public class EventsController extends AppController {
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String convertedContactToJSON = AppGson.getGson().toJson(Event.findAll());
@@ -38,7 +37,6 @@ public class EventsController extends AppController {
     private Event buildEventObject(HttpServletRequest req) {
         String title = req.getParameter("evtTitle");
         String content = req.getParameter("content");
-
         return new Event(title, content);
     }
 }

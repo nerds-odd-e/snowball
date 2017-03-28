@@ -84,8 +84,8 @@ public class SendAllEventsControllerTest {
         assertEquals("eventlist.jsp?email_sent=0&event_in_email=1", response.getRedirectedUrl());
     }
 
-    @Test @Ignore
-    public void send2EventsTo1ContactSameLocation() throws Exception {
+    @Test
+    public void contactMustReceive2EventInEmailWhenHavingSameLocationAs2Events() throws Exception {
         new Event("Testing-1").setLocation("Singapore").saveIt();
         new Event("Testing-2").setLocation("Singapore").saveIt();
         new ContactPerson("testName1", "test1@gmail.com", "test1LastName").setLocation("Singapore").saveIt();
