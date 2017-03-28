@@ -76,7 +76,7 @@ public class SendAllEventsControllerTest {
         assertEquals("eventlist.jsp?email_sent=1&event_in_email=1", response.getRedirectedUrl());
     }
 
-    @Test @Ignore
+    @Test
     public void contactMustNotReceiveEventInEmailWhenContactHasNoLocation() throws Exception {
         new Event("Testing-1").setLocation("Singapore").saveIt();
         new ContactPerson("testName1", "test1@gmail.com", "test1LastName").saveIt();
