@@ -43,7 +43,6 @@ public class Event extends Model implements Serializable{
         set("title", title);
     }
 
-
     public String getAttribute(String name) {
         return (String) get(name);
     }
