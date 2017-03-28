@@ -25,6 +25,7 @@
 | List Sent emails | 3  | |
 | Email open tracking | 5  | |
 | *Sprint 5 TeamBuk2*                                                                       | *18*  |   |
+| | | |
 | Add events   | 2  | |
 | Send email about the events to every contacts  | 5  | |
 | *Sprint 6 Team Tokyo*                                                                       | *7*  |   |
