@@ -73,11 +73,7 @@ public class SendAllEventsController extends AppController {
                 .map(e -> e.getTitle())
                 .collect(Collectors.joining("<br/>\n"));
 
-        Mail mail = new Mail();
-        mail.setSubject("Event Invitation");
-        mail.setContent(content);
-        mail.setMessageId(System.currentTimeMillis());
-
+        Mail mail = new Mail(System.currentTimeMillis(), "Event Invitation", content);
         return mail;
     }
 
