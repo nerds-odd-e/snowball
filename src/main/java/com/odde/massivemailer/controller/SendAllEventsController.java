@@ -41,16 +41,11 @@ public class SendAllEventsController extends AppController {
 
             if(!location.isEmpty()) {
 
-                List<Event> newEventList = getEventsMatchingLocation(location, eventList);
+                List<Event> newEventList = getFilteredEvents(eventList, location);
                 eventsInMailSent += newEventList.size();
 
                 if(newEventList.size() > 0) {
-                    Mail mail = createMailWithEvents(newEventList);
-                    mail.setReceipts(Collections.singletonList(person.getEmail()));
-
-                    if(hasSentEmailForContact(mail)) {
-                        mailSent++;
-                    }
+                    mailSent = getMailSent(person, newEventList, mailSent);
                 }
             }
         }
@@ -61,6 +56,16 @@ public class SendAllEventsController extends AppController {
         );
 
         resp.sendRedirect(redirectUrl);
+    }
+
+    private int getMailSent(ContactPerson person, List<Event> newEventList, int numberOfMailsSent) throws IOException {
+        Mail mail = createMailWithEvents(newEventList);
+        mail.setReceipts(Collections.singletonList(person.getEmail()));
+
+        if(hasSentEmailForContact(mail)) {
+            numberOfMailsSent++;
+        }
+        return numberOfMailsSent;
     }
 
     private Mail createMailWithEvents(List<Event> eventList) {
@@ -76,7 +81,7 @@ public class SendAllEventsController extends AppController {
         return mail;
     }
 
-    private List<Event> getEventsMatchingLocation(String location, List<Event> eventList) {
+    private List<Event> getFilteredEvents(List<Event> eventList, String location) {
         List<Event> matchedEventsList = new ArrayList<Event>();
         for(Event event: eventList) {
             if(location.equals(event.getLocation())) {
