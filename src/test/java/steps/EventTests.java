@@ -24,9 +24,10 @@ public class EventTests {
         driver.click_button("register_button");
     }
 
-    @Then("^Event list page should contain \"([^\"]*)\"$")
-    public void eventListPageShouldContain(String eventTitle) throws Throwable {
+    @Then("^Event list page should contain \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void eventListPageShouldContain(String eventTitle,String eventLocation) throws Throwable {
         driver.expectRedirect(EVENTLIST_BASE_URL);
         driver.pageShouldContain(eventTitle);
+        driver.pageShouldContain(eventLocation);
     }
 }
