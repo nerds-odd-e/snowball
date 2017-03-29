@@ -64,9 +64,9 @@
 										<div class="col-lg-1">Location:</div>
 										<div class="col-lg-11">
 											<select id="locationdrp" class="form-control" name="location">
-											    <option value="KL">KL</option>
-											    <option value="SG">SG</option>
-											    <option value="BKG">BKG</option>
+											    <option value="Bangkok">Bangkok</option>
+											    <option value="Singapore">Singapore</option>
+											    <option value="Tokyo">Tokyo</option>
 
 											</select>
 										</div>

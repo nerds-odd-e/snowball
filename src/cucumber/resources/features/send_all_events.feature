@@ -47,7 +47,7 @@ Feature: Send all events to contacts with the same location as the event - Singa
     When We have below number of contacts at each location:
       |location | number of contacts|
       |Singapore|                  2|
-      |Japan    |                  5|
+      |Tokyo    |                  5|
     And We have below number of events at each location:
       |location | number of events  |
       |Singapore|                  3|
@@ -64,8 +64,8 @@ Feature: Send all events to contacts with the same location as the event - Singa
     And We have below number of events at each location:
       |location | number of events  |
       |Singapore|                  3|
-      |Japan    |                  7|
-      |Thailand |                  1|
+      |Tokyo    |                  7|
+      |Bangkok |                  1|
     And I click send button
     Then It should send out emails:
       |location | number of emails  | number of events in the email  |
@@ -76,12 +76,12 @@ Feature: Send all events to contacts with the same location as the event - Singa
     When We have below number of contacts at each location:
       |location | number of contacts|
       |Singapore|                  2|
-      |Japan    |                  5|
+      |Tokyo    |                  5|
     And We have below number of events at each location:
       |location | number of events  |
       |Singapore|                  3|
-      |Japan    |                  7|
-      |Thailand |                  1|
+      |Tokyo    |                  7|
+      |Bangkok |                  1|
     And I click send button
     Then It should send out emails:
       |location | number of emails  | number of events in the email  |

@@ -17,10 +17,14 @@ public class EventTests {
         driver.visit(BASE_URL);
     }
 
-    @When("^Add an event \"([^\"]*)\" at \"([^\"]*)\"$")
-    public void clickRegisterEvent(String eventTitle,String location) throws Throwable {
+    @When("^Add an event \"([^\"]*)\" in \"([^\"]*)\"$")
+    public void addEventAndSelectLocationFromDropdown(String eventTitle,String location) throws Throwable {
         driver.setTextField("evtTitle", eventTitle);
         driver.setDropdownValue("location", location);
+    }
+
+    @When("^I click the register button$")
+    public void clickRegisterEvent() throws Throwable {
         driver.clickButton("register_button");
     }
 

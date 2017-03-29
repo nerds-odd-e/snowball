@@ -57,11 +57,13 @@ public class SendAllEventsTest {
         EventTests eventTests = new EventTests();
         for(int i=0;i<this.numberOfEventsInLocation;i++) {
             eventTests.visitAddEventPage();
-            eventTests.clickRegisterEvent("Event "+i,"Singapore");
+            eventTests.addEventAndSelectLocationFromDropdown("Event "+i,"Singapore");
+            eventTests.clickRegisterEvent();
         }
         for(int i=0;i<this.numberOfEvents-this.numberOfEventsInLocation;i++) {
             eventTests.visitAddEventPage();
-            eventTests.clickRegisterEvent("Event "+i,"Not-Singapore");
+            eventTests.addEventAndSelectLocationFromDropdown("Event "+i,"Not-Singapore");
+            eventTests.clickRegisterEvent();
         }
     }
 
@@ -76,7 +78,8 @@ public class SendAllEventsTest {
             for (int i=0;i<this.numberOfEventsInLocation;i++) {
                 totalNumberOfEvent++;
                 eventTests.visitAddEventPage();
-                eventTests.clickRegisterEvent("Event "+totalNumberOfEvent,oneLocation.get(0));
+                eventTests.addEventAndSelectLocationFromDropdown("Event "+totalNumberOfEvent,oneLocation.get(0));
+                eventTests.clickRegisterEvent();
             }
         }
         this.numberOfEvents = totalNumberOfEvent;
@@ -100,7 +103,7 @@ public class SendAllEventsTest {
         List<List<String>> emails = dtEmails.raw();
         emails = emails.subList(1, emails.size());//skip header row
         for(List<String> oneLocation:emails) {
-            String expectedMessage = String.format("%s emails contain %s events sent.", oneLocation.get(1), oneLocation.get(2), oneLocation.get(0));
+            String expectedMessage = String.format("%s emails contain %s events sent.", oneLocation.get(1), oneLocation.get(2));
             driver.expectElementWithIdToContainText("message", expectedMessage);
         }
     }
