@@ -38,7 +38,9 @@ public class SendAllEventsController extends AppController {
 
         for (ContactPerson person : contactList) {
             String location = person.getLocation();
-
+            // assume get location returns some object
+            //location proximity checking-> location services has a getDistance function(userLocation, AllpossibleEventLocation)
+            //
             List<Event> newEventList = Event.where("location ='" + location + "'");
             eventsInMailSent += newEventList.size();
 
