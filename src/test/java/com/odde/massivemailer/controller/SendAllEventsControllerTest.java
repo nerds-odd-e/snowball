@@ -3,18 +3,24 @@ package com.odde.massivemailer.controller;
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Event;
+import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.service.GMailService;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 
 @RunWith(TestWithDB.class)
@@ -93,65 +99,56 @@ public class SendAllEventsControllerTest {
         assertEquals("eventlist.jsp?email_sent=1&event_in_email=2", response.getRedirectedUrl());
     }
 
-    @Test
-    /**
-     * Pre-cond :
-     * Contact A in Singapore and Contact B in Singapore
-     * Event A in Singapore and Event B in Singapore
-     * Post-cond:
-     * Contact A will receive Event A and B
-     * Contact B will receive Event A and B
-     */
-    public void bothContactsMustReceive2EventsWhenHavingSameLocationAs2Events() throws Exception {
+    @Test @Ignore
+    public void bothContactsReceive2EventsWhenHavingSameLocationAs2Events() throws Exception {
         new Event("Testing-1","","Singapore").saveIt();
         new Event("Testing-2","","Singapore").saveIt();
         new ContactPerson("testName1", "test1@gmail.com", "test1LastName","","Singapore").saveIt();
         new ContactPerson("testName2", "test2@gmail.com", "test2LastName","","Singapore").saveIt();
         sendAllEventsController.doPost(request, response);
-        assertEquals("eventlist.jsp?email_sent=2&event_in_email=4", response.getRedirectedUrl());
+        ArgumentCaptor<Mail> argument = ArgumentCaptor.forClass(Mail.class);
+        verify(gmailService, times(2)).send(argument.capture());
+        for (Mail mail: argument.getAllValues()) {
+            assertEquals("Testing-1<br/>\n" +
+                        "Testing-2", mail.getContent());
+        }
     }
 
-    @Test
-    /**
-     * Pre-cond :
-     * Contact A in Singapore and Contact B in Singapore
-     * Event A in Singapore and Event B in Malaysia
-     * Post-cond:
-     * Contact A will receive Event A, not B
-     * Contact B will receive Event A, not B
-     */
-    public void bothContactsMustReceive1EventWhenHavingSameLocationAs1Event() throws Exception {
-        new Event("Testing-1","","Singapore").saveIt();
-        new Event("Testing-2","","Malaysia").saveIt();
+    @Test @Ignore
+    public void bothContactsReceive2EventsInCloseProximity() throws Exception {
+        new Event("Scrum in Singapore","","Singapore").saveIt();
+        new Event("ATDD In Bangkok","","Bangkok").saveIt();
         new ContactPerson("testName1", "test1@gmail.com", "test1LastName","","Singapore").saveIt();
         new ContactPerson("testName2", "test2@gmail.com", "test2LastName","","Singapore").saveIt();
         sendAllEventsController.doPost(request, response);
-        assertEquals("eventlist.jsp?email_sent=2&event_in_email=2", response.getRedirectedUrl());
+        ArgumentCaptor<Mail> argument = ArgumentCaptor.forClass(Mail.class);
+        verify(gmailService, times(2)).send(argument.capture());
+        for (Mail mail: argument.getAllValues()) {
+            assertEquals("Scrum in Singapore<br/>\n" +
+                    "ATDD In Bangkok", mail.getContent());
+        }
     }
 
-    @Test
-    /**
-     * Pre-cond :
-     * Contact A in Singapore and Contact B in Singapore
-     * Event A in Malaysia and Event B in Malaysia
-     * Post-cond:
-     * Contact A will not receive mail
-     * Contact B will not receive mail
-      */
-    public void bothContactsMustNotReceiveEventsWhenHavingDifferentLocationAsEvents() throws Exception {
-        new Event("Testing-1","","Malaysia").saveIt();
-        new Event("Testing-2","","Malaysia").saveIt();
+    @Test @Ignore
+    public void bothContactsFromSingaporeReceiveOnlyEventInBangkok() throws Exception {
+        new Event("Testing-1","","Bangkok").saveIt();
+        new Event("Testing-2","","Tokyo").saveIt();
         new ContactPerson("testName1", "test1@gmail.com", "test1LastName","","Singapore").saveIt();
         new ContactPerson("testName2", "test2@gmail.com", "test2LastName","","Singapore").saveIt();
         sendAllEventsController.doPost(request, response);
-        assertEquals("eventlist.jsp?email_sent=0&event_in_email=0", response.getRedirectedUrl());
+        ArgumentCaptor<Mail> argument = ArgumentCaptor.forClass(Mail.class);
+        verify(gmailService, times(2)).send(argument.capture());
+
+        for (Mail mail: argument.getAllValues()) {
+            assertEquals("Testing-1", mail.getContent());
+        }
     }
 
     @Test
     /**
      * Pre-cond :
-     * Contact A in Singapore and Contact B in Malaysia
-     * Events A and B are in Singapore, Event C in Malaysia
+     * Contact A in Singapore and Contact B in Bangkok
+     * Events A and B are in Singapore, Event C in Bangkok
      * Post-cond:
      * Contact A will receive Events A and B, but not Event C
      * Contact B will receive Event C, but not Events A and B
@@ -159,9 +156,9 @@ public class SendAllEventsControllerTest {
     public void eachContactMustReceiveEventsCorrespondingToOnesLocation() throws Exception {
         new Event("Testing-1","","Singapore").saveIt();
         new Event("Testing-2","","Singapore").saveIt();
-        new Event("Testing-3","","Malaysia").saveIt();
+        new Event("Testing-3","","Bangkok").saveIt();
         new ContactPerson("testName1", "test1@gmail.com", "test1LastName","","Singapore").saveIt();
-        new ContactPerson("testName2", "test2@gmail.com", "test2LastName","", "Malaysia").saveIt();
+        new ContactPerson("testName2", "test2@gmail.com", "test2LastName","", "Bangkok").saveIt();
         sendAllEventsController.doPost(request, response);
         assertEquals("eventlist.jsp?email_sent=2&event_in_email=3", response.getRedirectedUrl());
     }
@@ -170,14 +167,14 @@ public class SendAllEventsControllerTest {
     /**
      * Pre-cond :
      * Contact A in Singapore and Contact B has no location
-     * Event A in Singapore and Event B in Malaysia
+     * Event A in Singapore and Event B in Bangkok
      * Post-cond:
      * Contact A will receive Event A, but not Event B
      * Contact B will not receive any mail
      */
     public void contactWWithNoLocationMustNotReceiveMail() throws Exception {
         new Event("Testing-1","","Singapore").saveIt();
-        new Event("Testing-2","","Malaysia").saveIt();
+        new Event("Testing-2","","Bangkok").saveIt();
         new ContactPerson("testName1", "test1@gmail.com", "test1LastName","","Singapore").saveIt();
         new ContactPerson("testName2", "test2@gmail.com", "test2LastName","").saveIt();
         sendAllEventsController.doPost(request, response);
