@@ -18,7 +18,7 @@ public class EmailStepdefs {
 
     @When("^I Click Send Email$")
     public void clickSendEmail() throws Throwable {
-        driver.click_button("send_button");
+        driver.clickButton("send_button");
     }
     @Then("^I should get an element with message \"([^\"]*)\"$")
     public void iShouldGetAnElementWithMessage(String msg) throws Throwable {
@@ -35,17 +35,17 @@ public class EmailStepdefs {
 
     @Given("^Add Email Recipient \"(.*)\"$")
     public void addEmailRecipient(String recipient) throws Throwable {
-        driver.text_field("recipient", recipient);
+        driver.setTextField("recipient", recipient);
     }
 
     @Given("^Email Subject is \"(.*)\"$")
     public void addEmailSubject(String content) throws Throwable {
-        driver.text_field("subject", content);
+        driver.setTextField("subject", content);
     }
 
     @Given("^Email Content is \"(.*)\"$")
     public void addEmailContent(String content) throws Throwable {
-        driver.text_field("content", content);
+        driver.setTextField("content", content);
     }
 
 

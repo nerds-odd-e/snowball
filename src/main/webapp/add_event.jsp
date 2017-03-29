@@ -63,8 +63,12 @@
 									<div class="row">
 										<div class="col-lg-1">Location:</div>
 										<div class="col-lg-11">
-											<input type="text" class="form-control" name="location"
-												id="location">
+											<select id="locationdrp" class="form-control" name="location">
+											    <option value="KL">KL</option>
+											    <option value="SG">SG</option>
+											    <option value="BKG">BKG</option>
+
+											</select>
 										</div>
 									</div>
 									<br> <br>

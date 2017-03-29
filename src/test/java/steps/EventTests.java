@@ -19,9 +19,9 @@ public class EventTests {
 
     @When("^Add an event \"([^\"]*)\" at \"([^\"]*)\"$")
     public void clickRegisterEvent(String eventTitle,String location) throws Throwable {
-        driver.text_field("evtTitle", eventTitle);
-        driver.text_field("location", location);
-        driver.click_button("register_button");
+        driver.setTextField("evtTitle", eventTitle);
+        driver.setDropdownValue("location", location);
+        driver.clickButton("register_button");
     }
 
     @Then("^Event list page should contain \"([^\"]*)\" and \"([^\"]*)\"$")

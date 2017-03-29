@@ -63,9 +63,9 @@ public class MyStepdefs {
 
     private void addContact(String url, String email, String location) throws Throwable{
         driver.visit(url);
-        driver.text_field("email", email);
-        driver.text_field("location", location);
-        driver.click_button("add_button");
+        driver.setTextField("email", email);
+        driver.setTextField("location", location);
+        driver.clickButton("add_button");
     }
 
     @Given("^There is a contact \"([^\"]*)\"$")
@@ -88,7 +88,7 @@ public class MyStepdefs {
 
     private void loginPage(String url, String email) throws Throwable{
         driver.visit(url);
-        driver.text_field("email", email);
-        driver.click_button("add_button");
+        driver.setTextField("email", email);
+        driver.clickButton("add_button");
     }
 }

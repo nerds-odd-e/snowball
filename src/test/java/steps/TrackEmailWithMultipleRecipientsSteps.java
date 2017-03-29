@@ -20,11 +20,11 @@ public class TrackEmailWithMultipleRecipientsSteps {
     @Given("^I send an email to multiple recipients$")
     public void i_send_an_email_to_multiple_recipients() throws Throwable {
         driver.visit(BASE_URL);
-        driver.text_field("recipient", "recipient@odd-e.com;recipient2@odd-e.com");
-        driver.text_field("subject", "Subject");
-        driver.text_field("content", "Hello!");
+        driver.setTextField("recipient", "recipient@odd-e.com;recipient2@odd-e.com");
+        driver.setTextField("subject", "Subject");
+        driver.setTextField("content", "Hello!");
 
-        driver.click_button("send_button");
+        driver.clickButton("send_button");
     }
 
     @When("^no recipient opens their email$")

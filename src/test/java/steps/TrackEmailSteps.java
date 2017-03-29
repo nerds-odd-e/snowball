@@ -23,11 +23,11 @@ public class TrackEmailSteps {
 
     public void sendEmail(String recipient, String subject) {
         driver.visit(BASE_URL);
-        driver.text_field("recipient", recipient);
-        driver.text_field("subject", subject);
-        driver.text_field("content", "Hello!");
+        driver.setTextField("recipient", recipient);
+        driver.setTextField("subject", subject);
+        driver.setTextField("content", "Hello!");
 
-        driver.click_button("send_button");
+        driver.clickButton("send_button");
     }
 
     @When("^\"(.*)\" does not open the email$")

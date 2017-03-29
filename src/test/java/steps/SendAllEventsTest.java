@@ -1,7 +1,5 @@
 package steps;
 
-import com.odde.massivemailer.model.ContactPerson;
-import com.odde.massivemailer.model.Event;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -88,7 +86,7 @@ public class SendAllEventsTest {
     @When("^I click send button$")
     public void ClickSendButton() throws Throwable {
         driver.visit(BASE_URL);
-        driver.click_button("send_button");
+        driver.clickButton("send_button");
     }
 
     @Then("^([^\"]*) contact\\(s\\) receive an email that contains ([^\"]*)$")

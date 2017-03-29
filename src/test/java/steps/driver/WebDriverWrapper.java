@@ -10,6 +10,7 @@ import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.SystemClock;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -55,12 +56,17 @@ public class WebDriverWrapper {
         return new SeleniumWebElement(driver.findElement(By.name(name)));
     }
 
-    public void text_field(String field_name, String text) {
+    public void setTextField(String field_name, String text) {
         UiElement e = findElementByName(field_name);
         e.sendKeys(text);
     }
 
-    public void click_button(String button_name) {
+    public void setDropdownValue(String dropdownName, String text) {
+        Select dropdown = new Select(driver.findElement(By.name(dropdownName)));
+        dropdown.selectByValue(text);
+    }
+
+    public void clickButton(String button_name) {
         UiElement e = findElementById(button_name);
         e.click();
     }

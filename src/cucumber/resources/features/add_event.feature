@@ -4,5 +4,5 @@ Feature: Add Event
 
   Scenario: Verify Add New Event To Event List
     Given I am on Add Event page
-    When Add an event "CSD training" at "Singapore"
-    Then Event list page should contain "CSD training" and "Singapore"
+    When Add an event "CSD training" at "SG"
+    Then Event list page should contain "CSD training" and "SG"
