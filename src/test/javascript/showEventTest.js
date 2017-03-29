@@ -3,7 +3,7 @@ describe('test show event function', function() {
 	
 	var rootId = "testContainer";
 	var markup = "<ul id='eventTable' class='list-inline' ></ul>";
-	var mock_json = [{"id":1, "attributes":{"title":"TestTitle1","description":"TestContent1"}},{"id":2,"attributes":{"title":"TestTitle2","description":"TestContent2"}}];
+	var mock_json = [{"id":1, "attributes":{"title":"TestTitle1","description":"TestContent1", "location" : "Singapore"}},{"id":2,"attributes":{"title":"TestTitle2","description":"TestContent2", "location" : "Singapore"}}];
 	
 	beforeEach(function(){
 		var container = document.createElement('div');
@@ -34,6 +34,7 @@ describe('test show event function', function() {
 		{
 			expect($("#eventTable .title").eq(index).text()).toBe(obj.attributes.title);
 			expect($("#eventTable .content").eq(index).text()).toBe(obj.attributes.description);
+			expect($("#eventTable .location").eq(index).text()).toBe(obj.attributes.location);
 		})	
 	});
 	

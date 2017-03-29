@@ -15,12 +15,16 @@ public class UpdateContactController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		ContactPerson contactPerson = new ContactPerson();
-		contactPerson.setName(req.getParameter("name"));
-		contactPerson.setEmail(req.getParameter("email"));
-		contactPerson.setLastname(req.getParameter("lastname"));
-		contactPerson.setCompany(req.getParameter("company"));
-        contactPerson.saveIt();
-		resp.sendRedirect("contactlist.jsp");
+		ContactPerson contactPerson = ContactPerson.getContactByEmail(req.getParameter("email"));
+		if (contactPerson != null) {
+			contactPerson.setName(req.getParameter("name"));
+			contactPerson.setLastname(req.getParameter("lastname"));
+			contactPerson.setCompany(req.getParameter("company"));
+			contactPerson.setLocation(req.getParameter("location"));
+			contactPerson.saveIt();
+			resp.sendRedirect("contactlist.jsp");
+
+		}
+
 	}
 }
