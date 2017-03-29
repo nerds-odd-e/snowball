@@ -4,10 +4,8 @@ Feature: Edit Contact
 
   @developing @contact
   Scenario: Edit Location Information of Contact
-    Given There is a contact "terry@odd-e.com"
+    Given "terry@odd-e.com" is a contact already
     When I change the location information of contact to be "Singapore"
     Then contact "terry@odd-e.com"'s locations should be "Singapore"
-
-
 
 

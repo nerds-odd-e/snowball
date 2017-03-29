@@ -33,35 +33,19 @@ public class SendAllEventsController extends AppController {
             return;
         }
 
-
         int mailSent = 0;
         int eventsInMailSent = 0;
-        for (ContactPerson person : contactList) {
-            if(!person.getLocation().isEmpty()) {
 
-                List<Event> newEventList = new ArrayList<Event>();
-                for(Event event: eventList) {
-                    if(person.getLocation().equals(event.getLocation())) {
-                        newEventList.add(event);
-                        eventsInMailSent++;
-                    }
-                }
+        for (ContactPerson person : contactList) {
+            String location = person.getLocation();
+
+            if(!location.isEmpty()) {
+
+                List<Event> newEventList = getFilteredEvents(eventList, location);
+                eventsInMailSent += newEventList.size();
 
                 if(newEventList.size() > 0) {
-                    Mail mail = createMailWithEvents(newEventList);
-
-                    mail.setReceipts(Collections.singletonList(person.getEmail()));
-
-                    try {
-                        Notification notification = mail.asNotification().saveAll();
-                        mail.setNotification(notification);
-
-                        mailService.send(mail);
-
-                        ++mailSent;
-                    } catch (EmailException e) {
-                        throw new IOException(e);
-                    }
+                    mailSent = getMailSent(person, newEventList, mailSent);
                 }
             }
         }
@@ -74,16 +58,45 @@ public class SendAllEventsController extends AppController {
         resp.sendRedirect(redirectUrl);
     }
 
+    private int getMailSent(ContactPerson person, List<Event> newEventList, int numberOfMailsSent) throws IOException {
+        Mail mail = createMailWithEvents(newEventList);
+        mail.setReceipts(Collections.singletonList(person.getEmail()));
+
+        if(hasSentEmailForContact(mail)) {
+            numberOfMailsSent++;
+        }
+        return numberOfMailsSent;
+    }
+
     private Mail createMailWithEvents(List<Event> eventList) {
         String content = eventList.stream()
                 .map(e -> e.getTitle())
                 .collect(Collectors.joining("<br/>\n"));
 
-        Mail mail = new Mail();
-        mail.setSubject("Event Invitation");
-        mail.setContent(content);
-        mail.setMessageId(System.currentTimeMillis());
-
+        Mail mail = new Mail(System.currentTimeMillis(), "Event Invitation", content);
         return mail;
+    }
+
+    private List<Event> getFilteredEvents(List<Event> eventList, String location) {
+        List<Event> matchedEventsList = new ArrayList<Event>();
+        for(Event event: eventList) {
+            if(location.equals(event.getLocation())) {
+                matchedEventsList.add(event);
+            }
+        }
+
+        return matchedEventsList;
+    }
+
+    private Boolean hasSentEmailForContact(Mail mail) throws IOException {
+        try {
+            Notification notification = mail.asNotification().saveAll();
+            mail.setNotification(notification);
+            mailService.send(mail);
+        } catch (EmailException e) {
+            throw new IOException(e);
+        }
+
+        return true;
     }
 }

@@ -32,6 +32,12 @@ public class Mail {
         receipts = new ArrayList<>();
     }
 
+    public Mail(long messageId, String subject, String content){
+        this.messageId = messageId;
+        this.subject = subject;
+        this.content = content;
+    }
+
     public List<String> getReceipts() {
         return receipts;
     }

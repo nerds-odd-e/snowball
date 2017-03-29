@@ -1,4 +1,3 @@
-DROP TABLE IF EXISTS contact_people;
 CREATE TABLE IF NOT EXISTS contact_people (
     id          INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     name        VARCHAR(50),
