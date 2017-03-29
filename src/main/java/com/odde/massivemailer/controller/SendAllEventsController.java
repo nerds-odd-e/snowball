@@ -24,11 +24,9 @@ public class SendAllEventsController extends AppController {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         MailService mailService = getMailService();
 
-        List<Event> eventList = Event.findAll();
-
         List<ContactPerson> contactList = ContactPerson.findAll();
 
-        if (eventList.isEmpty() || contactList.isEmpty()) {
+        if (contactList.isEmpty()) {
             resp.sendRedirect("eventlist.jsp?email_sent=N/A&event_in_email=N/A");
             return;
         }
@@ -36,17 +34,16 @@ public class SendAllEventsController extends AppController {
         int mailSent = 0;
         int eventsInMailSent = 0;
 
+        contactList = ContactPerson.where(ContactPerson.LOCATION + "<>''");
+
         for (ContactPerson person : contactList) {
             String location = person.getLocation();
 
-            if(!location.isEmpty()) {
+            List<Event> newEventList = Event.where("location ='" + location + "'");
+            eventsInMailSent += newEventList.size();
 
-                List<Event> newEventList = getFilteredEvents(eventList, location);
-                eventsInMailSent += newEventList.size();
-
-                if(newEventList.size() > 0) {
-                    mailSent = getMailSent(person, newEventList, mailSent);
-                }
+            if(newEventList.size() > 0) {
+                mailSent = getMailSent(person, newEventList, mailSent);
             }
         }
 

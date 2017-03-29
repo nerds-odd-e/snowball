@@ -25,12 +25,21 @@
 | List Sent emails | 3  | |
 | Email open tracking | 5  | |
 | *Sprint 5 TeamBuk2*                                                                       | *18*  |   |
+| | | |
 | Add events   | 2  | |
 | Send email about the events to every contacts  | 5  | |
 | *Sprint 6 Team Tokyo*                                                                       | *7*  |   |
 | | | |
 | **Done above this line.**                                                               |      |   |
 | ******************************************* | |
+| Send emial to single contact with the same location of the event (Singapore only) | 5 | |
+| Send email to multiple contact mactching contact location to event location | 8 | |
+| support 3 pre defined cities with known distance SG, TK, BKK | 5 | |
+| *Sprint 7 Team Slytherin *                                                                       | *7*  |   |
+| Support any city , get distance from maps API | 13 | |
+| Adding attributes when create new contact | 2 | |
+| Adding location tto contact event | 2 | |
+| send location base email | Huge | |
 | Send location based emails to contact about events | | |
 | Adding attributes when creating new contact                                             |      |   |
 | More detailed reason for not-able-to-send-mail                                          |      |   |
