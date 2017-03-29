@@ -23,8 +23,8 @@ function renderContactList(json, selector)
 		selector.append('<li class="col-md-2 email-address" style="text-align: left">'+item.attributes.email+'</li>');
 		selector.append('<li class="col-md-2" style="text-align: left">'+firstName+'</li>');
 		selector.append('<li class="col-md-2" style="text-align: left">'+lastName+'</li>');
-		selector.append('<li class="col-md-2" style="text-align: left">'+company+'</li>');
-		selector.append('<li class="col-md-2" style="text-align: left">'+location+'</li>');
+		selector.append('<li class="col-md-2 company" style="text-align: left">'+company+'</li>');
+		selector.append('<li class="col-md-2 location" style="text-align: left">'+location+'</li>');
 		selector.append('<li class="col-md-1" style="text-align: left; padding-bottom: 1%"><input id=\'edit_button\' type=\'button\' name=\'edit\' value=\'edit\' onclick=\'showEditContactDetail('+JSON.stringify(item)+')\'/></li>');
 	})
 }
@@ -42,7 +42,7 @@ function renderContactSelectionList(json, selector)
 		selector.append('<li class="col-md-2 contact-name" style="text-align: left">'+firstName+'</li>');
 		selector.append('<li class="col-md-3 contact-lname" style="text-align: left">'+lastName+'</li>');
 		selector.append('<li class="col-md-3 contact-cname" style="text-align: left">'+company+'</li>');
-		selector.append('<li class="col-md-3 contact-cname" style="text-align: left">'+location+'</li>');
+		selector.append('<li class="col-md-3 contact-location" style="text-align: left">'+location+'</li>');
 	})
 }
 
