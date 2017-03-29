@@ -1,5 +1,6 @@
 package com.odde.massivemailer.controller;
 
+import com.google.gson.Gson;
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.Event;
 import org.junit.Before;
@@ -22,6 +23,7 @@ public class EventsControllerTest {
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
     private List<Event> events;
+    private Gson json = new Gson();
 
     @Before
     public void setUpMockService() {
@@ -43,8 +45,9 @@ public class EventsControllerTest {
     public void returnSingleEventsListAsJson() throws Exception {
         new Event("Test event 1").saveIt();
         eventsController.doGet(request, response);
-        assertThat(response.getContentAsString(), containsString("\"title\":\"Test event 1\""));
-        assertThat(response.getContentAsString(), containsString("\"location\":\"Singapore\""));
+        Event actualEvents[] = json.fromJson(response.getContentAsString(),Event[].class);
+        assertEquals("Test event 1", actualEvents[0].getTitle());
+        assertEquals("Singapore", actualEvents[0].getLocation());
     }
 
 
@@ -53,9 +56,13 @@ public class EventsControllerTest {
         new Event("Test event 1").saveIt();
         new Event("Test event 2").saveIt();
         eventsController.doGet(request, response);
-        assertThat(response.getContentAsString(), containsString("\"title\":\"Test event 1\""));
-        assertThat(response.getContentAsString(), containsString("\"title\":\"Test event 2\""));
-        assertThat(response.getContentAsString(), containsString("\"location\":\"Singapore\""));
+
+        Event actualEvents[] = json.fromJson(response.getContentAsString(),Event[].class);
+        assertEquals("Test event 1", actualEvents[0].getTitle());
+        assertEquals("Singapore", actualEvents[0].getLocation());
+
+        assertEquals("Test event 2", actualEvents[1].getTitle());
+        assertEquals("Singapore", actualEvents[1].getLocation());
     }
 
     @Test
