@@ -6,20 +6,83 @@ Feature: Send all events to contacts with the same location as the event - Singa
     Given visit event list page
 
   @email @developing
-  Scenario Outline: Send all events to all contacts
-    When <number of contacts in location> out of <number of contacts> contacts are in Singapore
-     And <number of events in location> out of <number of events> events are in Singapore
-     And I click send button
-     Then <number of email recipients> contact(s) receive an email that contains <number of events in an email>
+  Scenario: Have events but have no events at same location
+    When We have below number of contacts at each location:
+      |location | number of contacts|
+      |Singapore|                  0|
+    And We have below number of events at each location:
+      |location | number of events  |
+      |Singapore|                  3|
+    And I click send button
+    Then It should send out emails:
+      |location | number of emails  | number of events in the email  |
 
+  @email @developing
+  Scenario: Have contacts but no event at same location
+    When We have below number of contacts at each location:
+      |location | number of contacts|
+      |Singapore|                  2|
+    And We have below number of events at each location:
+      |location | number of events  |
+      |Singapore|                  0|
+    And I click send button
+    Then It should send out emails:
+      |location | number of emails  | number of events in the email  |
 
-  Examples: All combinations
-    |number of events| number of events in location| number of contacts | number of contacts in location | number of events in an email | number of email recipients |
-    |               1|                           1 |                  1 |                               1|                            1 |                           1|
-    |               1|                           0 |                  1 |                               1|                          N/A |                         N/A|
-    |               1|                           1 |                  1 |                               0|                          N/A |                         N/A|
-    |               1|                           1 |                  1 |                               1|                            1 |                           1|
-    |               2|                           1 |                  1 |                               1|                            1 |                           1|
-    |               2|                           2 |                  1 |                               1|                            2 |                           1|
-    |               2|                           1 |                  2 |                               1|                            1 |                           1|
-    |               2|                           1 |                  2 |                               2|                            1 |                           2|
+  @email @developing
+  Scenario: Have both event and contacts at single location
+    When We have below number of contacts at each location:
+    |location | number of contacts|
+    |Singapore|                  2|
+    And We have below number of events at each location:
+    |location | number of events  |
+    |Singapore|                  3|
+    And I click send button
+    Then It should send out emails:
+    |location | number of emails  | number of events in the email  |
+    |Singapore|                  2|                               6|
+
+  @email @developing
+  Scenario: Contacts from multiple location, Events at single location
+    When We have below number of contacts at each location:
+      |location | number of contacts|
+      |Singapore|                  2|
+      |Japan    |                  5|
+    And We have below number of events at each location:
+      |location | number of events  |
+      |Singapore|                  3|
+    And I click send button
+    Then It should send out emails:
+      |location | number of emails  | number of events in the email  |
+      |Combined |                  2|                              6|
+
+  @email @developing
+  Scenario: Contacts from single location, events at multiple location
+    When We have below number of contacts at each location:
+      |location | number of contacts|
+      |Singapore|                  2|
+    And We have below number of events at each location:
+      |location | number of events  |
+      |Singapore|                  3|
+      |Japan    |                  7|
+      |Thailand |                  1|
+    And I click send button
+    Then It should send out emails:
+      |location | number of emails  | number of events in the email  |
+      |Combined |                  2|                              6|
+
+  @email @developing
+  Scenario: Have both event and contacts at multiple location
+    When We have below number of contacts at each location:
+      |location | number of contacts|
+      |Singapore|                  2|
+      |Japan    |                  5|
+    And We have below number of events at each location:
+      |location | number of events  |
+      |Singapore|                  3|
+      |Japan    |                  7|
+      |Thailand |                  1|
+    And I click send button
+    Then It should send out emails:
+      |location | number of emails  | number of events in the email  |
+      |Combined |                  7|                              41|

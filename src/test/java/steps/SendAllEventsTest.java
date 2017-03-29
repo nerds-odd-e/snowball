@@ -2,6 +2,7 @@ package steps;
 
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Event;
+import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -19,6 +20,8 @@ public class SendAllEventsTest {
 
     @Given("^visit event list page$")
     public void VisitEventListPage() throws Throwable {
+        this.numberOfEvents = 0;
+        this.numberOfContacts = 0;
         driver.visit(BASE_URL);
     }
 
@@ -31,6 +34,22 @@ public class SendAllEventsTest {
         for (int i=0;i<this.numberOfContacts;i++) {
             contactTests.addAContact("test@test"+i+".com","Singapore");
         }
+    }
+
+    @When("^We have below number of contacts at each location:$")
+    public void createContactsForLocations(DataTable dtContactsPerLocation) throws Throwable {
+        List<List<String>> contacts = dtContactsPerLocation.raw();
+        contacts = contacts.subList(1, contacts.size());//skip header row
+        int totalNumberOfContacts = 0;
+        for(List<String> location:contacts){
+            MyStepdefs contactTests = new MyStepdefs();
+            this.numberOfContactsInLocation = Integer.parseInt(location.get(1));
+            for (int i=0;i<this.numberOfContactsInLocation;i++) {
+                totalNumberOfContacts++;
+                contactTests.addAContact("test@test"+totalNumberOfContacts+".com",location.get(0));
+            }
+        }
+        this.numberOfContacts = totalNumberOfContacts;
     }
 
     @When("^(\\d+) out of (\\d+) events are in Singapore$")
@@ -48,6 +67,24 @@ public class SendAllEventsTest {
         }
     }
 
+    @When("^We have below number of events at each location:$")
+    public void createEventsForLocations(DataTable dtEventsPerLocation) throws Throwable {
+        List<List<String>> events = dtEventsPerLocation.raw();
+        events = events.subList(1, events.size());//skip header row
+        int totalNumberOfEvent = 0;
+        for(List<String> oneLocation:events){
+            EventTests eventTests = new EventTests();
+            this.numberOfEventsInLocation = Integer.parseInt(oneLocation.get(1));
+            for (int i=0;i<this.numberOfEventsInLocation;i++) {
+                totalNumberOfEvent++;
+                eventTests.visitAddEventPage();
+                eventTests.clickRegisterEvent("Event "+totalNumberOfEvent,oneLocation.get(0));
+            }
+        }
+        this.numberOfEvents = totalNumberOfEvent;
+    }
+
+
     @When("^I click send button$")
     public void ClickSendButton() throws Throwable {
         driver.visit(BASE_URL);
@@ -58,5 +95,15 @@ public class SendAllEventsTest {
     public void contactReceiveEmailContainsEvents(String numberOfEmailRecipients, String numberOfEventsInEmail) throws Throwable {
         String expectedMessage = String.format("%s emails contain %s events sent.", numberOfEmailRecipients, numberOfEventsInEmail);
         driver.expectElementWithIdToContainText("message", expectedMessage);
+    }
+
+    @Then("It should send out emails:")
+    public void shouldSendOutEmails(DataTable dtEmails){
+        List<List<String>> emails = dtEmails.raw();
+        emails = emails.subList(1, emails.size());//skip header row
+        for(List<String> oneLocation:emails) {
+            String expectedMessage = String.format("%s emails contain %s events sent.", oneLocation.get(1), oneLocation.get(2), oneLocation.get(0));
+            driver.expectElementWithIdToContainText("message", expectedMessage);
+        }
     }
 }
