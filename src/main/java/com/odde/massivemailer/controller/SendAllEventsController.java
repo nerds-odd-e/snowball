@@ -33,34 +33,23 @@ public class SendAllEventsController extends AppController {
             return;
         }
 
-
         int mailSent = 0;
         int eventsInMailSent = 0;
-        for (ContactPerson person : contactList) {
-            if(!person.getLocation().isEmpty()) {
 
-                List<Event> newEventList = new ArrayList<Event>();
-                for(Event event: eventList) {
-                    if(person.getLocation().equals(event.getLocation())) {
-                        newEventList.add(event);
-                        eventsInMailSent++;
-                    }
-                }
+        for (ContactPerson person : contactList) {
+            String location = person.getLocation();
+
+            if(!location.isEmpty()) {
+
+                List<Event> newEventList = getEventsMatchingLocation(location, eventList);
+                eventsInMailSent += newEventList.size();
 
                 if(newEventList.size() > 0) {
                     Mail mail = createMailWithEvents(newEventList);
-
                     mail.setReceipts(Collections.singletonList(person.getEmail()));
 
-                    try {
-                        Notification notification = mail.asNotification().saveAll();
-                        mail.setNotification(notification);
-
-                        mailService.send(mail);
-
-                        ++mailSent;
-                    } catch (EmailException e) {
-                        throw new IOException(e);
+                    if(hasSentEmailForContact(mail)) {
+                        mailSent++;
                     }
                 }
             }
@@ -85,5 +74,28 @@ public class SendAllEventsController extends AppController {
         mail.setMessageId(System.currentTimeMillis());
 
         return mail;
+    }
+
+    private List<Event> getEventsMatchingLocation(String location, List<Event> eventList) {
+        List<Event> matchedEventsList = new ArrayList<Event>();
+        for(Event event: eventList) {
+            if(location.equals(event.getLocation())) {
+                matchedEventsList.add(event);
+            }
+        }
+
+        return matchedEventsList;
+    }
+
+    private Boolean hasSentEmailForContact(Mail mail) throws IOException {
+        try {
+            Notification notification = mail.asNotification().saveAll();
+            mail.setNotification(notification);
+            mailService.send(mail);
+        } catch (EmailException e) {
+            throw new IOException(e);
+        }
+
+        return true;
     }
 }
