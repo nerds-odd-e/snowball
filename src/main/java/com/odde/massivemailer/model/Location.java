@@ -1,21 +1,45 @@
 package com.odde.massivemailer.model;
 
-public enum Location {
-    Singapore(1.35, 103),
-    Bangkok(13.75, 100.50),
-    Tokyo(35.69, 139.69);
+public class Location {
+    private String name;
+    private double lat;
+    private double lng;
 
-    Double latitude, longitude;
-    Location(double latitude, double longitude) {
-        this.latitude = latitude;
-        this.longitude = longitude;
+    public Location(String name, double lat, double lng) {
+        this.name = name;
+        this.lat = lat;
+        this.lng = lng;
     }
 
-    public Double getLatitude() {
-        return latitude;
+
+    private double toRadian (double x) {
+        return x * Math.PI / 180;
+    };
+
+    public int distanceFrom(Location location) {
+        int R = 6378137; // Earth’s mean radius in meter
+        double dLat = toRadian(location.lat - lat);
+        double dLong = toRadian(location.lng - lng);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(toRadian(location.lat)) * Math.cos(toRadian(lat)) *
+                        Math.sin(dLong / 2) * Math.sin(dLong / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        Double d = R * c/1000;
+        return d.intValue(); // returns the distance in meter
+    };
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Location location = (Location) o;
+
+        return name != null ? name.equals(location.name) : location.name == null;
     }
 
-    public Double getLongitude() {
-        return longitude;
+    @Override
+    public int hashCode() {
+        return name != null ? name.hashCode() : 0;
     }
 }
