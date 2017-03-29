@@ -107,4 +107,10 @@ public class SendAllEventsTest {
             driver.expectElementWithIdToContainText("message", expectedMessage);
         }
     }
+
+    @Then("It should not send out emails")
+    public void shouldNotSendOutEmails(){
+        String expectedMessage = String.format("0 emails contain 0 events sent.");
+        driver.expectElementWithIdToContainText("message", expectedMessage);
+    }
 }

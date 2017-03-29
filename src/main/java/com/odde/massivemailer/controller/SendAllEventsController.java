@@ -27,7 +27,7 @@ public class SendAllEventsController extends AppController {
         List<ContactPerson> contactList = ContactPerson.findAll();
 
         if (contactList.isEmpty()) {
-            resp.sendRedirect("eventlist.jsp?email_sent=N/A&event_in_email=N/A");
+            resp.sendRedirect("eventlist.jsp?email_sent=0&event_in_email=0");
             return;
         }
 
