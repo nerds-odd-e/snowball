@@ -68,17 +68,6 @@ public class SendAllEventsController extends AppController {
         return mail;
     }
 
-    private List<Event> getFilteredEvents(List<Event> eventList, String location) {
-        List<Event> matchedEventsList = new ArrayList<Event>();
-        for(Event event: eventList) {
-            if(location.equals(event.getLocation())) {
-                matchedEventsList.add(event);
-            }
-        }
-
-        return matchedEventsList;
-    }
-
     private Boolean hasSentEmailForContact(Mail mail) throws IOException {
         try {
             Notification notification = mail.asNotification().saveAll();
