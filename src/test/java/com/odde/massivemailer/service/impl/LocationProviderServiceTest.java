@@ -30,10 +30,12 @@ public class LocationProviderServiceTest {
 
     @Test
     public void getClosebyLocations() {
-        assertEquals("\"Bangkok\", \"Singapore\"", locationProviderService.getCloseByLocationStrings("Singapore"));
-        assertEquals("\"Bangkok\", \"Singapore\"", locationProviderService.getCloseByLocationStrings("Bangkok"));
-        assertEquals("\"Tokyo\"", locationProviderService.getCloseByLocationStrings("Tokyo"));
-        assertEquals("", locationProviderService.getCloseByLocationStrings("Jarkata"));
+        assertEquals("\"Bangkok\", \"Jarkata\", \"Kuala Lumpur\", \"Singapore\"", locationProviderService.getCloseByLocationStrings("Singapore"));
+        assertEquals("\"Bangkok\", \"Hanoi\", \"Kuala Lumpur\", \"Singapore\"", locationProviderService.getCloseByLocationStrings("Bangkok"));
+        assertEquals("\"Seoul\", \"Shanghai\", \"Tokyo\"", locationProviderService.getCloseByLocationStrings("Tokyo"));
+        assertEquals("\"Bangalore\", \"New Delhi\"", locationProviderService.getCloseByLocationStrings("Bangalore"));
+        assertEquals("\"Beijing\", \"Seoul\", \"Shanghai\"", locationProviderService.getCloseByLocationStrings("Beijing"));
+        assertEquals("", locationProviderService.getCloseByLocationStrings("Bukit Batok West Ave 6"));
     }
 
 }
