@@ -6,7 +6,6 @@ public class MockMailService implements MailService {
 
     @Override
     public void send(Mail email) {
-        System.out.println("hahaha");
         // do nothing
     }
 }
