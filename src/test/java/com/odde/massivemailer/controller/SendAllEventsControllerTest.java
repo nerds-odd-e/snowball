@@ -203,10 +203,12 @@ public class SendAllEventsControllerTest {
 
     @Test
     public void getClosebyLocations() {
-        assertEquals("\"Bangkok\", \"Singapore\"", sendAllEventsController.getCloseByLocationStrings("Singapore"));
-        assertEquals("\"Bangkok\", \"Singapore\"", sendAllEventsController.getCloseByLocationStrings("Bangkok"));
-        assertEquals("\"Tokyo\"", sendAllEventsController.getCloseByLocationStrings("Tokyo"));
-        assertEquals("", sendAllEventsController.getCloseByLocationStrings("Jarkata"));
+        assertEquals("\"Bangkok\", \"Jarkata\", \"Kuala Lumpur\", \"Singapore\"", sendAllEventsController.getCloseByLocationStrings("Singapore"));
+        assertEquals("\"Bangkok\", \"Hanoi\", \"Kuala Lumpur\", \"Singapore\"", sendAllEventsController.getCloseByLocationStrings("Bangkok"));
+        assertEquals("\"Seoul\", \"Shanghai\", \"Tokyo\"", sendAllEventsController.getCloseByLocationStrings("Tokyo"));
+        assertEquals("\"Bangalore\", \"New Delhi\"", sendAllEventsController.getCloseByLocationStrings("Bangalore"));
+        assertEquals("\"Beijing\", \"Seoul\", \"Shanghai\"", sendAllEventsController.getCloseByLocationStrings("Beijing"));
+        assertEquals("", sendAllEventsController.getCloseByLocationStrings("Bukit Batok West Ave 6"));
     }
 
 }
