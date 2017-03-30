@@ -44,7 +44,7 @@ public class SendAllEventsController extends AppController {
             List<Event> newEventList = Event.where("location ='" + location + "'");
             eventsInMailSent += newEventList.size();
 
-            if(newEventList.size() > 0) {
+            if(!newEventList.isEmpty()) {
                 mailSent = getMailSent(person, newEventList, mailSent);
             }
         }
