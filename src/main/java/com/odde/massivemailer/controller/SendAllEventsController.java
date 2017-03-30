@@ -41,7 +41,7 @@ public class SendAllEventsController extends AppController {
         for (ContactPerson person : contactList) {
             Location location = locations.get(person.getLocation());
 
-            List<Event> newEventList = Event.where("location in " + getLocationCloseBy(location.getName()));
+            List<Event> newEventList = Event.where("location in (" + getCloseByLocationStrings(location.getName())+")");
             eventsInMailSent += newEventList.size();
 
             if(!newEventList.isEmpty()) {
@@ -99,22 +99,18 @@ public class SendAllEventsController extends AppController {
         return true;
     }
 
-    public String getLocationCloseBy(String locationName) {
+    public String getCloseByLocationStrings(String locationName) {
         Location location = locations.get(locationName);
-        if (location == null) {
-            return "()";
-        }
-        String locationsString = "(";
+        String locationsString = "";
 
-        for (Location loc : locations.values()) {
-            if (loc.distanceFrom(location) <= CLOSE_BY_DISTANCE) {
-                locationsString += "\"" + loc.getName() + "\", ";
+        if(location != null){
+            for (Location loc : locations.values()) {
+                if (loc.distanceFrom(location) <= CLOSE_BY_DISTANCE) {
+                    locationsString += "\"" + loc.getName() + "\", ";
+                }
             }
+            locationsString = locationsString.substring(0, locationsString.length() - 2);
         }
-        locationsString = locationsString.substring(0, locationsString.length() - 2);
-
-        locationsString += ")";
-
         return locationsString;
     }
 }

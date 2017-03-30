@@ -3,11 +3,9 @@ package com.odde.massivemailer.controller;
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Event;
-import com.odde.massivemailer.model.Location;
 import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.service.GMailService;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -205,10 +203,10 @@ public class SendAllEventsControllerTest {
 
     @Test
     public void getClosebyLocations() {
-        assertEquals("(\"Bangkok\", \"Singapore\")", sendAllEventsController.getLocationCloseBy("Singapore"));
-        assertEquals("(\"Bangkok\", \"Singapore\")", sendAllEventsController.getLocationCloseBy("Bangkok"));
-        assertEquals("(\"Tokyo\")", sendAllEventsController.getLocationCloseBy("Tokyo"));
-        assertEquals("()", sendAllEventsController.getLocationCloseBy("Jarkata"));
+        assertEquals("\"Bangkok\", \"Singapore\"", sendAllEventsController.getCloseByLocationStrings("Singapore"));
+        assertEquals("\"Bangkok\", \"Singapore\"", sendAllEventsController.getCloseByLocationStrings("Bangkok"));
+        assertEquals("\"Tokyo\"", sendAllEventsController.getCloseByLocationStrings("Tokyo"));
+        assertEquals("", sendAllEventsController.getCloseByLocationStrings("Jarkata"));
     }
 
 }
