@@ -1,6 +1,7 @@
 package com.odde.massivemailer.model;
 
 import com.odde.massivemailer.exception.EmailException;
+import com.odde.massivemailer.service.MailService;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -12,6 +13,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Mail {
@@ -36,6 +38,12 @@ public class Mail {
         this.messageId = messageId;
         this.subject = subject;
         this.content = content;
+    }
+
+    public static Mail createEventMail(String content, String email) {
+        Mail mail = new Mail(System.currentTimeMillis(), "Event Invitation", content);
+        mail.setReceipts(Collections.singletonList(email));
+        return mail;
     }
 
     public List<String> getReceipts() {
@@ -172,5 +180,11 @@ public class Mail {
 
     public Notification getNotification() {
         return notification;
+    }
+
+    public void sendMailWith(MailService mailService) throws EmailException {
+        Notification notification = asNotification().saveAll();
+        setNotification(notification);
+        mailService.send(this);
     }
 }

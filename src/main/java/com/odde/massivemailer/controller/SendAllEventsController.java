@@ -33,7 +33,15 @@ public class SendAllEventsController extends AppController {
             totalEventsSent += eventsNearContact.size();
 
             if(!eventsNearContact.isEmpty()) {
-                totalMailsSent = getMailSent(person, eventsNearContact, totalMailsSent);
+                String content = eventsNearContact.stream()
+                        .map(e -> e.getTitle())
+                        .collect(Collectors.joining("<br/>\n"));
+                try {
+                    Mail.createEventMail(content, person.getEmail()).sendMailWith(getMailService());
+                } catch (EmailException e) {
+                    throw new IOException(e);
+                }
+                totalMailsSent++;
             }
         }
 
@@ -43,37 +51,6 @@ public class SendAllEventsController extends AppController {
         );
 
         resp.sendRedirect(redirectUrl);
-    }
-
-    private int getMailSent(ContactPerson person, List<Event> newEventList, int numberOfMailsSent) throws IOException {
-        Mail mail = createMailWithEvents(newEventList);
-        mail.setReceipts(Collections.singletonList(person.getEmail()));
-
-        if(hasSentEmailForContact(mail)) {
-            numberOfMailsSent++;
-        }
-        return numberOfMailsSent;
-    }
-
-    private Mail createMailWithEvents(List<Event> eventList) {
-        String content = eventList.stream()
-                .map(e -> e.getTitle())
-                .collect(Collectors.joining("<br/>\n"));
-
-        Mail mail = new Mail(System.currentTimeMillis(), "Event Invitation", content);
-        return mail;
-    }
-
-    private Boolean hasSentEmailForContact(Mail mail) throws IOException {
-        try {
-            Notification notification = mail.asNotification().saveAll();
-            mail.setNotification(notification);
-            mailService.send(mail);
-        } catch (EmailException e) {
-            throw new IOException(e);
-        }
-
-        return true;
     }
 
 }
