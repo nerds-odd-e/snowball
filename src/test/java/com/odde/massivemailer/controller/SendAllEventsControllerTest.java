@@ -55,14 +55,14 @@ public class SendAllEventsControllerTest {
     @Test
     public void sendNoEventsToNoContactsAsMail() throws Exception {
         sendAllEventsController.doPost(request, response);
-        assertEquals("eventlist.jsp?email_sent=N/A&event_in_email=N/A", response.getRedirectedUrl());
+        assertEquals("eventlist.jsp?email_sent=0&event_in_email=0", response.getRedirectedUrl());
     }
 
     @Test
     public void send1EventToNoContactsAsMail() throws Exception {
         new Event("Testing-1").saveIt();
         sendAllEventsController.doPost(request, response);
-        assertEquals("eventlist.jsp?email_sent=N/A&event_in_email=N/A", response.getRedirectedUrl());
+        assertEquals("eventlist.jsp?email_sent=0&event_in_email=0", response.getRedirectedUrl());
     }
 
     @Test
