@@ -182,7 +182,7 @@ public class Mail {
         return notification;
     }
 
-    public void sendMail(MailService mailService) throws EmailException {
+    public void sendMailWith(MailService mailService) throws EmailException {
         Notification notification = asNotification().saveAll();
         setNotification(notification);
         mailService.send(this);

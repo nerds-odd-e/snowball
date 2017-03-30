@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 public class SendAllEventsController extends AppController {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getMailService();
         LocationProviderService locationProviderService = new LocationProviderService();
 
         if (ContactPerson.count()==0) {
@@ -38,8 +37,7 @@ public class SendAllEventsController extends AppController {
                         .map(e -> e.getTitle())
                         .collect(Collectors.joining("<br/>\n"));
                 try {
-                    Mail mail = Mail.createEventMail(content, person.getEmail());
-                    mail.sendMail(mailService);
+                    Mail.createEventMail(content, person.getEmail()).sendMailWith(getMailService());
                 } catch (EmailException e) {
                     throw new IOException(e);
                 }
