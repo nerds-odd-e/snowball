@@ -113,7 +113,11 @@
 								<div class="row">
                                     <div class="col-md-2">Location</div>
                                     <div class="col-md-10">
-                                        <input type="text" class="form-control" name="location" id="location">
+                                        <select id="locationdrp" class="form-control" name="location">
+                                            <option value="Bangkok">Bangkok</option>
+                                            <option value="Singapore">Singapore</option>
+                                            <option value="Tokyo">Tokyo</option>
+                                        </select>
                                     </div>
                                 </div>
 							</div>

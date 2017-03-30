@@ -7,7 +7,7 @@ Feature: Add Contact
     And Page Should Contain "terry@odd-e.com"
 
   Scenario: Verify Add Existing Contact To Contact List
-    Given "terry@odd-e.com" is a contact already
+    Given "terry@odd-e.com" which in "Singapore" is a contact already
     When Add A Contact "terry@odd-e.com" at "Singapore"
     And Page Should Contain "terry@odd-e.com"
 

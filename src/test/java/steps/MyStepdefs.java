@@ -34,9 +34,9 @@ public class MyStepdefs {
         driver.expectPageToContainExactlyNElements(text, count);
     }
 
-    @Given("^\"([^\"]*)\" is a contact already$")
-    public void is_a_contact_already(String email) throws Throwable {
-        addAContact(email,"");
+    @Given("^\"([^\"]*)\" which in \"([^\"]*)\" is a contact already$")
+    public void is_a_contact_already(String email, String location) throws Throwable {
+        addAContact(email,location);
     }
 
     @When("^Login with email \"([^\"]*)\"$")
@@ -64,26 +64,26 @@ public class MyStepdefs {
     private void addContact(String url, String email, String location) throws Throwable{
         driver.visit(url);
         driver.setTextField("email", email);
-        driver.setTextField("location", location);
+        driver.setDropdownValue("location", location);
         driver.clickButton("add_button");
     }
 
     @Given("^There is a contact \"([^\"]*)\"$")
-    public void there_is_a_contact(String arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void there_is_a_contact(String email) throws Throwable {
+        driver.visit(BASE_URL + "contactlist.jsp");
+        pageShouldContain(email);
     }
 
     @When("^I change the location information of contact to be \"([^\"]*)\"$")
-    public void i_change_the_location_information_of_contact_to_be(String arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void i_change_the_location_information_of_contact_to_be(String location) throws Throwable {
+        driver.setDropdownValue("location", location);
+        driver.clickButton("save_button");
     }
 
     @Then("^contact \"([^\"]*)\"'s locations should be \"([^\"]*)\"$")
-    public void contact_s_locations_should_be(String arg1, String arg2) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void contact_s_locations_should_be(String email, String location) throws Throwable {
+        pageShouldContain(email);
+        pageShouldContain(location);
     }
 
     private void loginPage(String url, String email) throws Throwable{

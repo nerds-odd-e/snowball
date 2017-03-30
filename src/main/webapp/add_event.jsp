@@ -67,7 +67,6 @@
 											    <option value="Bangkok">Bangkok</option>
 											    <option value="Singapore">Singapore</option>
 											    <option value="Tokyo">Tokyo</option>
-
 											</select>
 										</div>
 									</div>
