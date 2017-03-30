@@ -38,6 +38,10 @@ public class Location {
         return name != null ? name.equals(location.name) : location.name == null;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public int hashCode() {
         return name != null ? name.hashCode() : 0;

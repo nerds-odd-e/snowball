@@ -1,10 +1,7 @@
 package com.odde.massivemailer.controller;
 
 import com.odde.massivemailer.exception.EmailException;
-import com.odde.massivemailer.model.ContactPerson;
-import com.odde.massivemailer.model.Event;
-import com.odde.massivemailer.model.Mail;
-import com.odde.massivemailer.model.Notification;
+import com.odde.massivemailer.model.*;
 import com.odde.massivemailer.service.*;
 
 import javax.servlet.ServletException;
@@ -12,14 +9,19 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @WebServlet("/sendAllEvents")
 public class SendAllEventsController extends AppController {
+    public static final int CLOSE_BY_DISTANCE = 2000;
+    private Map<String, Location> locations = new TreeMap<>();
 
+    {
+        locations.put("Singapore", new Location("Singapore", 1.3521,103.8198));
+        locations.put("Bangkok", new Location("Bangkok", 13.7563, 100.5018));
+        locations.put("Tokyo", new Location("Tokyo", 35.6895, 139.6917));
+    }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         MailService mailService = getMailService();
@@ -37,11 +39,9 @@ public class SendAllEventsController extends AppController {
         contactList = ContactPerson.where(ContactPerson.LOCATION + "<>''");
 
         for (ContactPerson person : contactList) {
-            String location = person.getLocation();
-            // assume get location returns some object
-            //location proximity checking-> location services has a getDistance function(userLocation, AllpossibleEventLocation)
-            //
-            List<Event> newEventList = Event.where("location ='" + location + "'");
+            Location location = locations.get(person.getLocation());
+
+            List<Event> newEventList = Event.where("location in " + getLocationCloseBy(location.getName()));
             eventsInMailSent += newEventList.size();
 
             if(!newEventList.isEmpty()) {
@@ -97,5 +97,24 @@ public class SendAllEventsController extends AppController {
         }
 
         return true;
+    }
+
+    public String getLocationCloseBy(String locationName) {
+        Location location = locations.get(locationName);
+        if (location == null) {
+            return "()";
+        }
+        String locationsString = "(";
+
+        for (Location loc : locations.values()) {
+            if (loc.distanceFrom(location) <= CLOSE_BY_DISTANCE) {
+                locationsString += "\"" + loc.getName() + "\", ";
+            }
+        }
+        locationsString = locationsString.substring(0, locationsString.length() - 2);
+
+        locationsString += ")";
+
+        return locationsString;
     }
 }

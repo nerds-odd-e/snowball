@@ -3,6 +3,7 @@ package com.odde.massivemailer.controller;
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Event;
+import com.odde.massivemailer.model.Location;
 import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.service.GMailService;
 import org.junit.Before;
@@ -30,6 +31,8 @@ public class SendAllEventsControllerTest {
 
     private final ContactPerson singaporeContact = new ContactPerson("testName1", "test1@gmail.com", "test1LastName", "", "Singapore");
     private final ContactPerson singaporeContactTwo = new ContactPerson("testName2", "test2@gmail.com", "test2LastName", "", "Singapore");
+    private final ContactPerson tokyoContact = new ContactPerson("testName3", "test3@gmail.com", "test3LastName", "", "Tokyo");
+    private final ContactPerson noLocContact= new ContactPerson("testName4", "test4@gmail.com", "test4LastName", "", null);
 
     private final ArgumentCaptor<Mail> mailArgument = ArgumentCaptor.forClass(Mail.class);
     private final String linebreak = "<br/>\n";
@@ -124,7 +127,7 @@ public class SendAllEventsControllerTest {
         }
     }
 
-    @Test @Ignore
+    @Test
     public void bothContactsReceive2EventsInCloseProximity() throws Exception {
         singaporeEvent.saveIt();
         bangkokEvent.saveIt();
@@ -140,13 +143,13 @@ public class SendAllEventsControllerTest {
         }
     }
 
-    @Test @Ignore
+    @Test
     public void bothContactsFromSingaporeReceiveOnlyEventInBangkok() throws Exception {
         bangkokEvent.saveIt();
         tokyoEvent.saveIt();
         singaporeContact.saveIt();
         singaporeContactTwo.saveIt();
-        
+
         sendAllEventsController.doPost(request, response);
 
         verify(gmailService, times(2)).send(mailArgument.capture());
@@ -156,40 +159,56 @@ public class SendAllEventsControllerTest {
     }
 
     @Test
-    /**
-     * Pre-cond :
-     * Contact A in Singapore and Contact B in Bangkok
-     * Events A and B are in Singapore, Event C in Bangkok
-     * Post-cond:
-     * Contact A will receive Events A and B, but not Event C
-     * Contact B will receive Event C, but not Events A and B
-     */
-    public void eachContactMustReceiveEventsCorrespondingToOnesLocation() throws Exception {
+    public void contactFromTokyoDoesNotReceiveEventInBangkokNorSingapore() throws Exception {
         singaporeEvent.saveIt();
-        singaporeEventTwo.saveIt();
-        new Event("Testing-3","","Bangkok").saveIt();
+        bangkokEvent.saveIt();
+        tokyoContact.saveIt();
         singaporeContact.saveIt();
-        new ContactPerson("testName2", "test2@gmail.com", "test2LastName","", "Bangkok").saveIt();
         sendAllEventsController.doPost(request, response);
-        assertEquals("eventlist.jsp?email_sent=2&event_in_email=3", response.getRedirectedUrl());
+
+        verify(gmailService, times(1)).send(mailArgument.capture());
+
+        for (Mail mail: mailArgument.getAllValues()) {
+            assertEquals(singaporeEvent.getTitle() + linebreak +
+                    bangkokEvent.getTitle(), mail.getContent());
+            assertEquals(singaporeContact.getEmail(), mail.getReceipts().get(0));
+            assertEquals(1, mail.getReceipts().size());
+        }
     }
 
     @Test
-    /**
-     * Pre-cond :
-     * Contact A in Singapore and Contact B has no location
-     * Event A in Singapore and Event B in Bangkok
-     * Post-cond:
-     * Contact A will receive Event A, but not Event B
-     * Contact B will not receive any mail
-     */
+    public void contactFromTokyoReceiveEventFromTokyoOnly() throws Exception {
+        singaporeEvent.saveIt();
+        bangkokEvent.saveIt();
+        tokyoEvent.saveIt();
+        tokyoContact.save();
+
+        sendAllEventsController.doPost(request, response);
+
+        verify(gmailService, times(1)).send(mailArgument.capture());
+
+        for (Mail mail: mailArgument.getAllValues()) {
+            assertEquals(tokyoEvent.getTitle(), mail.getContent());
+            assertEquals(tokyoContact.getEmail(), mail.getReceipts().get(0));
+            assertEquals(1, mail.getReceipts().size());
+        }
+
+    }
+
+    @Test
     public void contactWWithNoLocationMustNotReceiveMail() throws Exception {
         singaporeEvent.saveIt();
-        new Event("Testing-2","","Bangkok").saveIt();
-        singaporeContact.saveIt();
-        new ContactPerson("testName2", "test2@gmail.com", "test2LastName","").saveIt();
+        noLocContact.saveIt();
         sendAllEventsController.doPost(request, response);
-        assertEquals("eventlist.jsp?email_sent=1&event_in_email=1", response.getRedirectedUrl());
+        verify(gmailService, times(0)).send(mailArgument.capture());
+    }
+
+    @Test
+    public void getClosebyLocations() {
+        assertEquals("(\"Bangkok\", \"Singapore\")", sendAllEventsController.getLocationCloseBy("Singapore"));
+        assertEquals("(\"Bangkok\", \"Singapore\")", sendAllEventsController.getLocationCloseBy("Bangkok"));
+        assertEquals("(\"Tokyo\")", sendAllEventsController.getLocationCloseBy("Tokyo"));
+        assertEquals("()", sendAllEventsController.getLocationCloseBy("Jarkata"));
     }
 
 }
