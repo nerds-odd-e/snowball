@@ -59,6 +59,15 @@
                                                 <option value="Bangkok">Bangkok</option>
                                                 <option value="Singapore">Singapore</option>
                                                 <option value="Tokyo">Tokyo</option>
+                                                <option value="Kuala Lumpur">Kuala Lumpur</option>
+                                                <option value="Jakarta">Jakarta</option>
+                                                <option value="Seoul">Seoul</option>
+                                                <option value="New Delhi">New Delhi</option>
+                                                <option value="Bangalore">Bangalore</option>
+                                                <option value="Manila">Manila</option>
+                                                <option value="Beijing">Beijing</option>
+                                                <option value="Shanghai">Shanghai</option>
+                                                <option value="Hanoi">Hanoi</option>
                                             </select>
 										</div>
 									</div>
