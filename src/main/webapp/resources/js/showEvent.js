@@ -13,16 +13,11 @@ function retrieveEventListFromServer()
 	return eventList;
 }
 
-function renderEventList(json, selector)
-{
+function renderEventList(json, selector) {
 	$.each(json, function(idx, item) {
-		var title = item.attributes.title===undefined?'':item.attributes.title;
-		var content = (item.attributes.description===undefined || item.attributes.description==='')?'&nbsp;':item.attributes.description;
-		var location = (item.attributes.location===undefined || item.attributes.location==='')?'&nbsp;':item.attributes.location;
-
-		selector.append('<li class="col-md-4 title" id="title" style="text-align: left">'+title+'</li>');
-		selector.append('<li class="col-md-4 content" id="content" style="text-align: left">'+content+'</li>');
-		selector.append('<li class="col-md-4 location" id="location" style="text-align: left">'+location+'</li>');
+		selector.append(createListElement('title', 'title', getEventDetails(item.attributes.title, '')));
+		selector.append(createListElement('content', 'content', getEventDetails(item.attributes.description, '&nbsp;')));
+		selector.append(createListElement('location', 'location', getEventDetails(item.attributes.location, '&nbsp;')));
 	})
 }
 
@@ -31,5 +26,13 @@ function getParameterByName(name) {
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
         results = regex.exec(location.search);
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+function getEventDetails(value, defaultValue) {
+    return (value === undefined || value === '') ? defaultValue : value;
+}
+
+function createListElement(cssClass, id, value) {
+    return '<li class="col-md-4 ' + cssClass + '" id="' + id + '" style="text-align: left">' + value + '</li>';
 }
 
