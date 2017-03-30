@@ -11,21 +11,21 @@ public class Location {
         this.lng = lng;
     }
 
-
     private double toRadian (double x) {
         return x * Math.PI / 180;
     };
 
     public int distanceFrom(Location location) {
-        int R = 6378137; // Earth’s mean radius in meter
-        double dLat = toRadian(location.lat - lat);
-        double dLong = toRadian(location.lng - lng);
-        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        double earthRadiusInKm = 6378.137;
+        double differenceOfLatInRadian = toRadian(location.lat - lat);
+        double differenceOfLongInRadian = toRadian(location.lng - lng);
+        // a is the square of half the chord length between the points.
+        double a = Math.sin(differenceOfLatInRadian / 2) * Math.sin(differenceOfLatInRadian / 2) +
                 Math.cos(toRadian(location.lat)) * Math.cos(toRadian(lat)) *
-                        Math.sin(dLong / 2) * Math.sin(dLong / 2);
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        Double d = R * c/1000;
-        return d.intValue(); // returns the distance in kilometer
+                        Math.sin(differenceOfLongInRadian / 2) * Math.sin(differenceOfLongInRadian / 2);
+        double angularDistance = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        Double distance = earthRadiusInKm * angularDistance;
+        return distance.intValue(); // returns the distance in kilometers
     };
 
     public String getName() {
