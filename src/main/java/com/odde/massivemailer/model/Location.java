@@ -25,25 +25,6 @@ public class Location {
                         Math.sin(dLong / 2) * Math.sin(dLong / 2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         Double d = R * c/1000;
-        return d.intValue(); // returns the distance in meter
+        return d.intValue(); // returns the distance in kilometer
     };
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Location location = (Location) o;
-
-        return name != null ? name.equals(location.name) : location.name == null;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public int hashCode() {
-        return name != null ? name.hashCode() : 0;
-    }
 }
