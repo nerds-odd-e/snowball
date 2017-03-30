@@ -27,4 +27,8 @@ public class Location {
         Double d = R * c/1000;
         return d.intValue(); // returns the distance in kilometer
     };
+
+    public String getName() {
+        return this.name;
+    }
 }
