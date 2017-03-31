@@ -36,12 +36,19 @@ function renderContactList(json, selector)
         var contact = new Contact(item.attributes);
         var tr = $('<tr>');
         selector.append(tr);
-        tr.append(createTableData('email-address', contact.email));
-        tr.append(createTableData('', contact.firstName));
-        tr.append(createTableData('', contact.lastName));
-        tr.append(createTableData('company', contact.company));
-        tr.append(createTableData('location', contact.location));
-        tr.append(createTableData('', createButtonElement('edit_button', 'edit', 'showEditContactDetail(' + JSON.stringify(item) + ')')));
+
+        var contactTableRowContent = [
+          ['email-address', contact.email],
+          ['', contact.firstName],
+          ['', contact.lastName],
+          ['company', contact.company],
+          ['location', contact.location],
+          ['', createButtonElement('edit_button', 'edit', 'showEditContactDetail(' + JSON.stringify(item) + ')')],
+        ];
+
+        contactTableRowContent.forEach(function(element) {
+            tr.append(createTableData(element[0], element[1]));
+        });
     })
 }
 
