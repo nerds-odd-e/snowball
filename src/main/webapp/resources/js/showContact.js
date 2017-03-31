@@ -107,4 +107,3 @@ function openEditContactModal()
 function submitEditContact() {
 	$("#editContact").submit();
 }
-

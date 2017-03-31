@@ -110,18 +110,6 @@
                                     <div class="col-md-2">Location</div>
                                     <div class="col-md-10">
                                         <select id="locationdrp" class="form-control" name="location">
-                                            <option value="Bangkok">Bangkok</option>
-                                            <option value="Singapore">Singapore</option>
-                                            <option value="Tokyo">Tokyo</option>
-                                            <option value="Kuala Lumpur">Kuala Lumpur</option>
-                                            <option value="Jakarta">Jakarta</option>
-                                            <option value="Seoul">Seoul</option>
-                                            <option value="New Delhi">New Delhi</option>
-                                            <option value="Bangalore">Bangalore</option>
-                                            <option value="Manila">Manila</option>
-                                            <option value="Beijing">Beijing</option>
-                                            <option value="Shanghai">Shanghai</option>
-                                            <option value="Hanoi">Hanoi</option>
                                         </select>
                                     </div>
                                 </div>
@@ -152,6 +140,7 @@
 <script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
 <!-- <script type="text/javascript" src="resources/js/sendemail.js"></script> -->
 <script type="text/javascript" src="resources/js/showContact.js"></script>
+<script type="text/javascript" src="resources/js/populateLocationDropdown.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	var contactList = retrieveContactListFromServer();
@@ -160,6 +149,9 @@ $(document).ready(function() {
 	$("#save_button").click(function() {
 		submitEditContact();
 	});
+
+	//var locationList = retrieveLocationListFromServer();
+    //populateLocationListToDropdown(locationList);
 });
 </script>
 </html>

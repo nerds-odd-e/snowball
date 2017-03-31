@@ -64,18 +64,6 @@
 										<div class="col-lg-1">Location:</div>
 										<div class="col-lg-11">
 											<select id="locationdrp" class="form-control" name="location">
-											    <option value="Bangkok">Bangkok</option>
-											    <option value="Singapore">Singapore</option>
-											    <option value="Tokyo">Tokyo</option>
-											    <option value="Kuala Lumpur">Kuala Lumpur</option>
-											    <option value="Jakarta">Jakarta</option>
-											    <option value="Seoul">Seoul</option>
-											    <option value="New Delhi">New Delhi</option>
-											    <option value="Bangalore">Bangalore</option>
-											    <option value="Manila">Manila</option>
-											    <option value="Beijing">Beijing</option>
-											    <option value="Shanghai">Shanghai</option>
-											    <option value="Hanoi">Hanoi</option>
 											</select>
 										</div>
 									</div>
@@ -101,4 +89,7 @@
 <!-- Bootstrap Core JavaScript -->
 <script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="resources/js/addEvent.js"></script>
+<script type="text/javascript" src="resources/js/populateLocationDropdown.js"></script>
+</script>
+
 </html>
