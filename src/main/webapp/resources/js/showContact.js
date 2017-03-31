@@ -32,12 +32,10 @@ function createButtonElement(buttonId, buttonName, clickEvent) {
 
 function renderContactList(json, selector)
 {
+    selector.html('');
 	$.each(json, function(idx, item) {
         var contact = new Contact(item.attributes);
-        var tr = $('<tr>');
-        selector.append(tr);
-
-        var contactTableRowContent = [
+        var tableContent = [
           ['email-address', contact.email],
           ['', contact.firstName],
           ['', contact.lastName],
@@ -45,10 +43,7 @@ function renderContactList(json, selector)
           ['location', contact.location],
           ['', createButtonElement('edit_button', 'edit', 'showEditContactDetail(' + JSON.stringify(item) + ')')],
         ];
-
-        contactTableRowContent.forEach(function(element) {
-            tr.append(createTableData(element[0], element[1]));
-        });
+        generateTableRow(selector, tableContent);
     })
 }
 
@@ -57,10 +52,7 @@ function renderContactSelectionList(json, selector)
 	selector.html('');
 	$.each(json, function(idx, item) {
 		var contact = new Contact(item.attributes);
-        var tr = $('<tr>');
-        selector.append(tr);
-
-        var contactTableRowContent = [
+        var tableContent = [
             ['email-checkbox', "<input type=\"checkbox\" onclick=\"whenContactIsSelected(" + idx + ")\" id=\"" + idx + "\" value=\"" + item.attributes.email + "\" />"],
             ['email-address', contact.email],
             ['contact-name', contact.firstName],
@@ -68,11 +60,16 @@ function renderContactSelectionList(json, selector)
             ['contact-cname', contact.company],
             ['contact-location', contact.location]
         ];
-
-        contactTableRowContent.forEach(function(element) {
-            tr.append(createTableData(element[0], element[1]));
-        });
+        generateTableRow(selector, tableContent);
 	})
+}
+
+function generateTableRow(selector, content) {
+    var tr = $('<tr>');
+    selector.append(tr);
+    content.forEach(function(element) {
+        tr.append(createTableData(element[0], element[1]));
+    });
 }
 
 function getParameterByName(name) {
