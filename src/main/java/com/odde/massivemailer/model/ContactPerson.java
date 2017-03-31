@@ -43,6 +43,11 @@ public class ContactPerson extends Model {
         setCompany(company);
         setLocation(location);
     }
+
+    public static List<ContactPerson> whereHasLocation() {
+        return where(LOCATION + "<>''");
+    }
+
     public String getName() {
         return getAttribute(FIRSTNAME);
     }

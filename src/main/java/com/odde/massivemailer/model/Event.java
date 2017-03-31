@@ -1,8 +1,10 @@
 package com.odde.massivemailer.model;
 
+import com.odde.massivemailer.service.LocationProviderService;
 import org.javalite.activejdbc.Model;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Event extends Model implements Serializable{
     static {
@@ -26,6 +28,10 @@ public class Event extends Model implements Serializable{
         setTitle(title);
         setContent(content);
         setLocation(location);
+    }
+
+    public static List<Event> whereNearTo(LocationProviderService locationProviderService, String location) {
+        return where("location in (" + locationProviderService.getCloseByLocationStrings(location)+")");
     }
 
     public String getContent() { return getAttribute("description"); }

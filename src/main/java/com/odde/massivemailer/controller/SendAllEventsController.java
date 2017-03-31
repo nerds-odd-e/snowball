@@ -24,13 +24,10 @@ public class SendAllEventsController extends AppController {
         }
 
         int totalMailsSent = 0;
-        int totalEventsSent = 0;
 
-        List<ContactPerson> contactList = ContactPerson.where(ContactPerson.LOCATION + "<>''");
-
+        List<ContactPerson> contactList = ContactPerson.whereHasLocation();
         for (ContactPerson person : contactList) {
-            List<Event> eventsNearContact = Event.where("location in (" + locationProviderService.getCloseByLocationStrings(person.getLocation())+")");
-            totalEventsSent += eventsNearContact.size();
+            List<Event> eventsNearContact = Event.whereNearTo(locationProviderService, person.getLocation());
 
             if(!eventsNearContact.isEmpty()) {
                 String content = eventsNearContact.stream()
@@ -45,9 +42,16 @@ public class SendAllEventsController extends AppController {
             }
         }
 
+        int totalEventsSentx = 0;
+        List<ContactPerson> contactListx = ContactPerson.whereHasLocation();
+        for (ContactPerson person : contactListx) {
+            List<Event> eventsNearContact = Event.whereNearTo(locationProviderService, person.getLocation());
+            totalEventsSentx += eventsNearContact.size();
+        }
+
         String redirectUrl = String.format("eventlist.jsp?email_sent=%s&event_in_email=%s",
                 totalMailsSent,
-                totalEventsSent
+                totalEventsSentx
         );
 
         resp.sendRedirect(redirectUrl);
