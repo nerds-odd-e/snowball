@@ -141,19 +141,6 @@
 <!-- <script type="text/javascript" src="resources/js/sendemail.js"></script> -->
 <script type="text/javascript" src="resources/js/showContact.js"></script>
 <script type="text/javascript" src="resources/js/populateLocationDropdown.js"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-	var contactList = retrieveContactListFromServer();
-	renderContactList(contactList, $('#contactTable'));
-
-	$("#save_button").click(function() {
-		submitEditContact();
-	});
-
-	//var locationList = retrieveLocationListFromServer();
-    //populateLocationListToDropdown(locationList);
-});
-</script>
 </html>
 
 
