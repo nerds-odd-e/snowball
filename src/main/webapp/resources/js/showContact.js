@@ -59,12 +59,19 @@ function renderContactSelectionList(json, selector)
 		var contact = new Contact(item.attributes);
         var tr = $('<tr>');
         selector.append(tr);
-        tr.append(createTableData('email-checkbox', "<input type=\"checkbox\" onclick=\"whenContactIsSelected(" + idx + ")\" id=\"" + idx + "\" value=\"" + item.attributes.email + "\" />"));
-        tr.append(createTableData('email-address', contact.email));
-        tr.append(createTableData('contact-name', contact.firstName));
-        tr.append(createTableData('contact-lname', contact.lastName));
-        tr.append(createTableData('contact-cname', contact.company));
-        tr.append(createTableData('contact-location', contact.location));
+
+        var contactTableRowContent = [
+            ['email-checkbox', "<input type=\"checkbox\" onclick=\"whenContactIsSelected(" + idx + ")\" id=\"" + idx + "\" value=\"" + item.attributes.email + "\" />"],
+            ['email-address', contact.email],
+            ['contact-name', contact.firstName],
+            ['contact-lname', contact.lastName],
+            ['contact-cname', contact.company],
+            ['contact-location', contact.location]
+        ];
+
+        contactTableRowContent.forEach(function(element) {
+            tr.append(createTableData(element[0], element[1]));
+        });
 	})
 }
 
