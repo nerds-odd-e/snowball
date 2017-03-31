@@ -11,7 +11,6 @@ function setCurrentSelectedContactValue(data)
 }
 
 function whenContactIsSelected(checkBoxID) {
-	
 	var checkboxObj = $("#" + checkBoxID);
 	var email = checkboxObj.val();
 	var isChecked = checkboxObj.prop('checked');
@@ -27,7 +26,5 @@ function whenAddButtonIsClicked() {
 	
 	var existingContact = $('#recipient').val();
 	$('#recipient').val(existingContact + getCurrentSelectedContactValue());
-
-	//don't forget! modal dismiss
-	//$('#selectContactModal').modal('hide');
+	$('#selectContactModal').modal('hide');
 }

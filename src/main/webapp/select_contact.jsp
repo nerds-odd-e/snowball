@@ -12,21 +12,20 @@
         <div class="row">
 			<div class="col-lg-12">
 				<div class="panel panel-default">
-					<div class="panel-heading">
-						<ul class="list-inline">
-							<li class="col-md-1" style="text-align: center"><span></span></li>
-							<li class="col-md-3" style="text-align: center">Email</li>
-							<li class="col-md-2" style="text-align: center">Name</li>
-							<li class="col-md-3" style="text-align: center">Lastname</li>
-							<li class="col-md-3" style="text-align: center">Company</li>
-						</ul>
-					</div>
-
-					<div class="panel-body">
-						<ul id="selectContactTable" class="list-inline">
-						</ul>
-					</div>
-				</div>
+                    <table class="table table-responsive table-striped">
+                        <thead>
+                            <tr>
+                                <th>Select</th>
+                                <th>Email</th>
+                                <th>Name</th>
+                                <th>Last Name</th>
+                                <th>Company</th>
+                                <th>Location</th>
+                            </tr>
+                        </thead>
+                        <tbody id="selectContactTable">
+                        </tbody>
+                    </table>
 			</div>
 		</div>
       </div>

@@ -41,24 +41,20 @@
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="panel panel-default">
-							<div class="panel-heading">
-								<ul class="list-inline">
-									<li class="col-md-2" style="text-align: left">Email</li>
-									<li class="col-md-2" style="text-align: left">Name</li>
-									<li class="col-md-2" style="text-align: left">Last Name</li>
-									<li class="col-md-2" style="text-align: left">Company</li>
-									<li class="col-md-2" style="text-align: left">Location</li>
-									<li class="col-md-1" style="text-align: left; padding-bottom: 1%">Edit</li>
-								</ul>
-							</div>
-
-							<div class="panel-body">
-
-								<ul id="contactTable" class="list-inline">
-
-								</ul>
-							</div>
-							<div></div>
+                            <table class="table table-responsive table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Email</th>
+                                        <th>Name</th>
+                                        <th>Last Name</th>
+                                        <th>Company</th>
+                                        <th>Location</th>
+                                        <th>Edit</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="contactTable">
+                                </tbody>
+                            </table>
 						</div>
 					</div>
 				</div>

@@ -21,17 +21,27 @@ function Contact(attributes) {
     this.email = attributes.email===undefined?'':attributes.email;
 }
 
+function createTableData(cssClasses, value) {
+    var tableRow = $('<tr>');
+    return '<td class="' + cssClasses + '" style="text-align: left; line-height: 200%;">' + value + '</td>';
+}
+
+function createButtonElement(buttonId, buttonName, clickEvent) {
+    return '<button class="btn btn-default" id="' + buttonId + '" name="' + buttonName + '" onclick=\'' + clickEvent + '\'>' + buttonName +'</button>';
+}
+
 function renderContactList(json, selector)
 {
 	$.each(json, function(idx, item) {
         var contact = new Contact(item.attributes);
-
-		selector.append('<li class="col-md-2 email-address" style="text-align: left">'+contact.email+'</li>');
-		selector.append('<li class="col-md-2" style="text-align: left">'+contact.firstName+'</li>');
-		selector.append('<li class="col-md-2" style="text-align: left">'+contact.lastName+'</li>');
-		selector.append('<li class="col-md-2 company" style="text-align: left">'+contact.company+'</li>');
-		selector.append('<li class="col-md-2 location" style="text-align: left">'+contact.location+'</li>');
-		selector.append('<li class="col-md-1" style="text-align: left; padding-bottom: 1%"><input id=\'edit_button\' type=\'button\' name=\'edit\' value=\'edit\' onclick=\'showEditContactDetail('+JSON.stringify(item)+')\'/></li>');
+        var tr = $('<tr>');
+        selector.append(tr);
+        tr.append(createTableData('email-address', contact.email));
+        tr.append(createTableData('', contact.firstName));
+        tr.append(createTableData('', contact.lastName));
+        tr.append(createTableData('company', contact.company));
+        tr.append(createTableData('location', contact.location));
+        tr.append(createTableData('', createButtonElement('edit_button', 'edit', 'showEditContactDetail(' + JSON.stringify(item) + ')')));
     })
 }
 
@@ -40,13 +50,14 @@ function renderContactSelectionList(json, selector)
 	selector.html('');
 	$.each(json, function(idx, item) {
 		var contact = new Contact(item.attributes);
-
-		selector.append('<li class="col-md-1 email-checkbox" style="text-align: center"><input type="checkbox" onclick="whenContactIsSelected(' + idx + ')" id="' + idx + '" value="' + item.attributes.email + '" /></li>');
-		selector.append('<li class="col-md-3 email-address" style="text-align: left">'+contact.email+'</li>');
-		selector.append('<li class="col-md-2 contact-name" style="text-align: left">'+contact.firstName+'</li>');
-		selector.append('<li class="col-md-3 contact-lname" style="text-align: left">'+contact.lastName+'</li>');
-		selector.append('<li class="col-md-3 contact-cname" style="text-align: left">'+contact.company+'</li>');
-		selector.append('<li class="col-md-3 contact-location" style="text-align: left">'+contact.location+'</li>');
+        var tr = $('<tr>');
+        selector.append(tr);
+        tr.append(createTableData('email-checkbox', "<input type=\"checkbox\" onclick=\"whenContactIsSelected(" + idx + ")\" id=\"" + idx + "\" value=\"" + item.attributes.email + "\" />"));
+        tr.append(createTableData('email-address', contact.email));
+        tr.append(createTableData('contact-name', contact.firstName));
+        tr.append(createTableData('contact-lname', contact.lastName));
+        tr.append(createTableData('contact-cname', contact.company));
+        tr.append(createTableData('contact-location', contact.location));
 	})
 }
 
