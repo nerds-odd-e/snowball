@@ -42,11 +42,9 @@ public class SendAllEventsController extends AppController {
             }
         }
 
-        int numberOfEvents = Event.numberOfEventsNear(ContactPerson.getContactsLocation(), locationProvider);
-
         String redirectUrl = String.format("eventlist.jsp?email_sent=%s&event_in_email=%s",
                 totalMailsSent,
-                numberOfEvents
+                Event.numberOfEventsNear(ContactPerson.findValidLocations(), locationProvider)
         );
 
         resp.sendRedirect(redirectUrl);

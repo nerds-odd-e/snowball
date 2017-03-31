@@ -48,7 +48,7 @@ public class ContactPerson extends Model {
         return where(LOCATION + "<>''");
     }
 
-    public static List<String> getContactsLocation() {
+    public static List<String> findValidLocations() {
         List<String> loc = new ArrayList<>();
 
         for(ContactPerson person : whereHasLocation()) {
