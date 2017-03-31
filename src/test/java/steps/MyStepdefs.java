@@ -76,6 +76,8 @@ public class MyStepdefs {
 
     @When("^I change the location information of contact to be \"([^\"]*)\"$")
     public void i_change_the_location_information_of_contact_to_be(String location) throws Throwable {
+        driver.visit(BASE_URL + "contactlist.jsp");
+        driver.clickButton("edit_button");
         driver.setDropdownValue("location", location);
         driver.clickButton("save_button");
     }

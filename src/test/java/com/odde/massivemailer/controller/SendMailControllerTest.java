@@ -6,7 +6,6 @@ import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.model.Notification;
 import com.odde.massivemailer.service.GMailService;
-import com.odde.massivemailer.service.impl.GmailServiceTest;
 import org.javalite.activejdbc.LazyList;
 import org.junit.Before;
 import org.junit.Test;

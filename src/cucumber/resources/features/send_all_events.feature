@@ -54,7 +54,7 @@ Feature: Send all events to contacts with the same location as the event - Singa
       |location | number of emails  | number of events in the email |
       |Combined |                  2|                              6|
 
-  @email @developing
+  @email
   Scenario: Contacts from single location, events at multiple location with some within radius
     When We have below number of contacts at each location:
       |location | number of contacts|
@@ -69,7 +69,7 @@ Feature: Send all events to contacts with the same location as the event - Singa
       |location | number of emails  | number of events in the email |
       |Combined |                  2|                              8|
 
-  @email @developing
+  @email 
   Scenario: Have both event and contacts at multiple location
     When We have below number of contacts at each location:
       |location | number of contacts|
@@ -85,7 +85,7 @@ Feature: Send all events to contacts with the same location as the event - Singa
       |location | number of emails  | number of events in the email  |
       |Combined |                  7|                              43|
 
-  @email @developing
+  @email 
   Scenario: Contacts from multiple locations, events at single location with some within radius
     When We have below number of contacts at each location:
       |location | number of contacts|

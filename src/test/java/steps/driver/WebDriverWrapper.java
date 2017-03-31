@@ -4,14 +4,12 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.SystemClock;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
@@ -62,13 +60,14 @@ public class WebDriverWrapper {
     }
 
     public void setDropdownValue(String dropdownName, String text) {
-        Select dropdown = new Select(driver.findElement(By.name(dropdownName)));
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        Select dropdown = new Select(wait.until(ExpectedConditions.visibilityOfElementLocated(By.name(dropdownName))));
         dropdown.selectByValue(text);
     }
 
     public void clickButton(String button_name) {
-        UiElement e = findElementById(button_name);
-        e.click();
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(button_name))).click();
     }
 
     public void clickXPath(String xpath) {
