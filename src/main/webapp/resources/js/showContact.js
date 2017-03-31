@@ -100,7 +100,7 @@ function insertDataIntoContactModal(item){
 	$('#name').val(item.attributes.firstname);
 	$('#lastname').val(item.attributes.lastname);
 	$('#company').val(item.attributes.company);
-	$('#location').val(item.attributes.location);
+	$('#locationdrp').val(item.attributes.location);
 	$('#email').val(item.attributes.email);
 	$('#email_label').text(item.attributes.email);
 }

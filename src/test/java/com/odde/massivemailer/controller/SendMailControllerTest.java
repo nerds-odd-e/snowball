@@ -14,6 +14,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -35,11 +37,9 @@ public class SendMailControllerTest {
     @Mock
     private GMailService gmailService;
 
-    @Mock
-    private HttpServletRequest request;
+    private MockHttpServletRequest request;
 
-    @Mock
-    private HttpServletResponse response;
+    private MockHttpServletResponse response;
 
     @Captor
     private ArgumentCaptor<Notification> notificationCaptor;
@@ -52,8 +52,10 @@ public class SendMailControllerTest {
         controller = new SendMailController();
         controller.setMailService(gmailService);
 
-        when(request.getParameter("content")).thenReturn("content-na-ka");
-        when(request.getParameter("subject")).thenReturn("subject for test");
+        request = new MockHttpServletRequest();
+        response = new MockHttpServletResponse();
+        request.setParameter("content", "content-na-ka");
+        request.setParameter("subject", "subject for test");
     }
 
     @Test
@@ -70,7 +72,7 @@ public class SendMailControllerTest {
 
         doThrow(new EmailException("")).when(gmailService).send(any(Mail.class));
         controller.doPost(request, response);
-        verify(response).sendRedirect("sendemail.jsp?status=failed&msg=Unable to send");
+        assertEquals("sendemail.jsp?status=failed&msg=Unable to send", response.getRedirectedUrl());
     }
 
 
@@ -215,6 +217,6 @@ public class SendMailControllerTest {
     }
 
     private void mockRecipient(String recipient){
-        when(request.getParameter("recipient")).thenReturn(recipient);
+        request.setParameter("recipient", recipient);
     }
 }
