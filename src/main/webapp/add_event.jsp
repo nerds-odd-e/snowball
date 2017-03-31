@@ -90,6 +90,4 @@
 <script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="resources/js/addEvent.js"></script>
 <script type="text/javascript" src="resources/js/populateLocationDropdown.js"></script>
-</script>
-
 </html>
