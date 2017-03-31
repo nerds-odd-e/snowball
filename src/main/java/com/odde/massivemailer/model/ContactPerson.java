@@ -48,6 +48,16 @@ public class ContactPerson extends Model {
         return where(LOCATION + "<>''");
     }
 
+    public static List<String> getContactsLocation() {
+        List<String> loc = new ArrayList<>();
+
+        for(ContactPerson person : whereHasLocation()) {
+            loc.add(person.getLocation());
+        }
+
+        return loc;
+    }
+
     public String getName() {
         return getAttribute(FIRSTNAME);
     }

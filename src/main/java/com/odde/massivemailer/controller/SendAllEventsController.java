@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class SendAllEventsController extends AppController {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        LocationProviderService locationProviderService = new LocationProviderService();
+        LocationProviderService locationProvider = new LocationProviderService();
 
         if (ContactPerson.count()==0) {
             resp.sendRedirect("eventlist.jsp?email_sent=0&event_in_email=0");
@@ -27,7 +27,7 @@ public class SendAllEventsController extends AppController {
 
         List<ContactPerson> contactList = ContactPerson.whereHasLocation();
         for (ContactPerson person : contactList) {
-            List<Event> eventsNearContact = Event.whereNearTo(locationProviderService, person.getLocation());
+            List<Event> eventsNearContact = Event.whereNearTo(locationProvider, person.getLocation());
 
             if(!eventsNearContact.isEmpty()) {
                 String content = eventsNearContact.stream()
@@ -42,16 +42,11 @@ public class SendAllEventsController extends AppController {
             }
         }
 
-        int totalEventsSentx = 0;
-        List<ContactPerson> contactListx = ContactPerson.whereHasLocation();
-        for (ContactPerson person : contactListx) {
-            List<Event> eventsNearContact = Event.whereNearTo(locationProviderService, person.getLocation());
-            totalEventsSentx += eventsNearContact.size();
-        }
+        int numberOfEvents = Event.numberOfEventsNear(ContactPerson.getContactsLocation(), locationProvider);
 
         String redirectUrl = String.format("eventlist.jsp?email_sent=%s&event_in_email=%s",
                 totalMailsSent,
-                totalEventsSentx
+                numberOfEvents
         );
 
         resp.sendRedirect(redirectUrl);

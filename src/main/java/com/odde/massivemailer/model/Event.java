@@ -34,6 +34,14 @@ public class Event extends Model implements Serializable{
         return where("location in (" + locationProviderService.getCloseByLocationStrings(location)+")");
     }
 
+    public static int numberOfEventsNear(List<String> contactsLocation, LocationProviderService locationProviderService) {
+        int totalEventsNearContactLocation = 0;
+        for (String location : contactsLocation) {
+            totalEventsNearContactLocation += whereNearTo(locationProviderService, location).size();
+        }
+        return totalEventsNearContactLocation;
+    }
+
     public String getContent() { return getAttribute("description"); }
 
     public void setContent(String content) {
