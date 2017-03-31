@@ -33,6 +33,6 @@ function getEventDetails(value, defaultValue) {
 }
 
 function createListElement(cssClass, id, value) {
-    return '<li class="col-md-4 ' + cssClass + '" id="' + id + '" style="text-align: left">' + value + '</li>';
+    return '<li class="col-md-4 ' + cssClass + '" id="' + id + '" style="text-align: left;padding-bottom: 1.5%">' + value + '</li>';
 }
 

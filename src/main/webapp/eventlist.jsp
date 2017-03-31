@@ -45,7 +45,7 @@
 								<ul class="list-inline">
 									<li class="col-md-4" style="text-align: left">Title</li>
 									<li class="col-md-4" style="text-align: left">Content</li>
-									<li class="col-md-4" style="text-align: left">Location</li>
+									<li class="col-md-4" style="text-align: left;">Location</li>
 								</ul>
 							</div>
 
@@ -54,10 +54,12 @@
 								<ul id="eventTable" class="list-inline">
 
 								</ul>
+								<div>
 								<form action="sendAllEvents" method="post">
 								    <input type="submit" id="send_button" value="Send" />
 								    <div id="message" style=""><%= request.getParameter("email_sent") == null? "" : request.getParameter("email_sent") + " emails contain " + request.getParameter("event_in_email") + " events sent." %></div>
 								</form>
+								</div>
 							</div>
 						</div>
 					</div>
