@@ -23,7 +23,9 @@ public class EmailOpenedCounterController extends HttpServlet{
             return;
         }
         Notification noti = Notification.findById(email_id);
-        outputStream.print(noti.extract());
+        if(noti!=null){
+            outputStream.print(noti.extract());
+        }
     }
 
 
