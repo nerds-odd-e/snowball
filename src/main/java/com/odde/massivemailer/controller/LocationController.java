@@ -19,8 +19,8 @@ public class LocationController extends AppController {
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LocationProviderService locationProviderService = new LocationProviderService();
-        String convertedContactToJSON = AppGson.getGson().toJson(locationProviderService.getSupportedLocations());
+        String locationToJSON = AppGson.getGson().toJson(locationProviderService.getSupportedLocations());
         ServletOutputStream outputStream = resp.getOutputStream();
-        outputStream.print(convertedContactToJSON);
+        outputStream.print(locationToJSON);
     }
 }

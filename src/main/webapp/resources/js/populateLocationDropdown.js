@@ -13,10 +13,7 @@ function retrieveLocationListFromServer()
 	    type: 'GET',
 	    url: 'locations',
 	    dataType: 'json',
-	    success: function(data) {
-	        locationList = data;
-	        console.log(data);
-	     },
+	    success: function(data) { locationList = data },
 	    async: false
 	});
 
