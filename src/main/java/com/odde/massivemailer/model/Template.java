@@ -5,6 +5,7 @@ import org.javalite.activejdbc.annotations.Table;
 
 @Table("template")
 public class Template extends Model {
+
     public void setTemplateName(String templateName) {
         set("templateName", templateName);
     }
@@ -16,5 +17,6 @@ public class Template extends Model {
     public void setContent(String content) {
         set("content", content);
     }
+
 
 }

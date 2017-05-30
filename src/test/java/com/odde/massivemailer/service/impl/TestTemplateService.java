@@ -1,5 +1,6 @@
 package com.odde.massivemailer.service.impl;
 
+import com.odde.massivemailer.model.Template;
 import com.odde.massivemailer.service.TemplateService;
 import com.odde.massivemailer.startup.DBMigrater;
 import org.junit.Assert;
@@ -13,7 +14,7 @@ import org.junit.Test;
 public class TestTemplateService {
 
     TemplateService templateService;
-    String template;
+    Template template;
 
     @BeforeClass
     public static void updateTheDBWithSampleTemplate() {
@@ -36,7 +37,7 @@ public class TestTemplateService {
     @Test
     public void templateMustNotBeNull() throws Exception {
 
-        String templateActual = null;
+        Template templateActual = null;
         templateActual = templateService.getDefaultTemplate();
         Assert.assertNotNull(templateActual);
 
@@ -46,7 +47,7 @@ public class TestTemplateService {
 
     public void templateMustMatchDBValue() {
         String dbTemplate = "Hi, {FirstName} {LastName} from {Company}";
-        String templateActual = null;
+        Template templateActual = null;
         try {
             templateActual = templateService.getDefaultTemplate();
         }
@@ -61,49 +62,33 @@ public class TestTemplateService {
     @Test
     public void templateMustContainFirstName() throws Exception
     {
-         Assert.assertTrue(template.contains("{FirstName}"));
+        Assert.assertTrue(template.getString("Content").contains("{FirstName}"));
     }
 
     @Test
     public void templateMustContainLasttName() throws Exception
     {
-        Assert.assertTrue(template.contains("{LastName}"));
+        Assert.assertTrue(template.getString("Content").contains("{LastName}"));
     }
 
-    //@Test
+    @Test
     public void templateMustContainCourse() throws Exception
     {
-        Assert.assertTrue(template.contains("{CourseName}"));
+        Assert.assertTrue(template.getString("Content").contains("{CourseName}"));
     }
 
-    //@Test
-    public void templateMustContainDuration() throws Exception
-    {
-        Assert.assertTrue(template.contains("{Duration}"));
-    }
 
-    //@Test
-    public void templateMustContainStartDate() throws Exception
-    {
-        Assert.assertTrue(template.contains("{StartDate}"));
-    }
 
-    //@Test
-    public void templateMustContainEndDate() throws Exception
-    {
-        Assert.assertTrue(template.contains("{EndDate}"));
-    }
-
-    //@Test
+    @Test
     public void templateMustContainInstructor() throws Exception
     {
-        Assert.assertTrue(template.contains("{Instructor}"));
+        Assert.assertTrue(template.getString("Content").contains("{Instructor}"));
     }
 
-    //@Test
+    @Test
     public void templateMustContainLocation() throws Exception
     {
-        Assert.assertTrue(template.contains("{Location}"));
+        Assert.assertTrue(template.getString("Content").contains("{Location}"));
     }
 
 }
