@@ -1,29 +1,43 @@
+var needsCheckedElementIds = ['#coursename', '#courseDuration', '#courseStartDate', '#address', '#courseDetails','#instructor'];
 $(document).ready(function() {
 
-	disableRegisterButton();
+	disableSaveButton();
 
-	$("#evtTitle").keyup(function() {
-		checkRegisterInputElement();
+	$(needsCheckedElementIds.join(',')).keyup(function() {
+		needsCheckedElementIds.forEach(function(elementId){
+            checkSaveInputElement(elementId);
+        });
 	});
 
-	$("#register_button").click(function() {
-		$("#evtTitle").val($("#evtTitle").val().trim());
+	$("#save_button").click(function() {
+	    needsCheckedElementIds.forEach(function(elementId){
+	    	$(elementId).val($(elementId).val().trim());
+	    });
 		submitForm();
 	});
+
+	var status = getUrlParameter('status'),
+	    msg = getUrlParameter('msg');
+
+    if(status && msg){
+        $('#saveStatusLabel').text(status);
+        $('#saveStatusBody').text(msg);
+        $('#saveStatusModal').modal();
+    }
+
 });
 
 function submitForm() {
 	document.forms[0].submit();
-	$("#evtTitle").val("");
+	$(needsCheckedElementIds.join(',')).val("");
 }
 
+function checkSaveInputElement(domId) {
 
-function checkRegisterInputElement() {
-
-	if (isChange($("#evtTitle").val())) {
-		enableRegisterButton();
+	if (isChange($(domId).val())) {
+		enableSaveButton();
 	} else {
-		disableRegisterButton();
+		disableSaveButton();
 	}
 }
 
@@ -31,10 +45,26 @@ function isChange(value) {
 	return value.replace(/^\s+|\s+$/gm,'') !== "";
 }
 
-function enableRegisterButton() {
-	$("#register_button").removeAttr('disabled');
+function enableSaveButton() {
+	$("#save_button").removeAttr('disabled');
 }
 
-function disableRegisterButton() {
-	$("#register_button").attr('disabled', 'disabled');
+function disableSaveButton() {
+	$("#save_button").attr('disabled', 'disabled');
 }
+
+function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+};
+

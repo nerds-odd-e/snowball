@@ -1,10 +1,10 @@
-Feature: Add Event
-  As the admin I want to add events
-  so that I can send notifications of events to contacts later
+Feature: Create Course
+  As the admin I want to create course
+  so that I can send notifications of course to contacts later
 
-  @event
-  Scenario: Verify Add New Event To Event List
+  @event @developing
+  Scenario: Verify Create new Course To Course List
     Given I am on Add Event page
-    When Add an event "CSD training" in "Singapore"
-    And I click the register button
-    Then Event list page should contain "CSD training" and "Singapore"
+    When Create course "CSD training" in "Singapore"
+    And I click the save button
+    Then Course save page should display "successful message"

@@ -9,11 +9,11 @@ describe('isChange function',function(){
  });
 });
 
-describe('checkRegisterInputElement function', function(){
+describe('checkSaveInputElement function', function(){
 	var rootId = "testContainer";
-	var markup = "<input type='text' id='evtTitle' name='evtTitle'> " +
-	        "<input type='text' id='content' name='content'> " +
-			"<button type='button' id='register_button' value='Register' disabled>Register</button>";
+	var markup = "<input type='text' id='courseName' name='courseName'> " +
+	        "<input type='text' id='courseDuration' name='courseDuration'> " +
+			"<button type='button' id='save_button' value='Save' disabled>Save</button>";
 
 	beforeEach(function(){
 		var container = document.createElement('div');
@@ -27,17 +27,17 @@ describe('checkRegisterInputElement function', function(){
 		container.parentNode.removeChild(container);
 	});
 
-	it('should disable register event button when register event field is changed',function(){
-		checkRegisterInputElement();
-        expect(document.getElementById("register_button").disabled).toBe(true);
+	it('should disable save button when course name field is changed',function(){
+		checkSaveInputElement("#courseName");
+        expect(document.getElementById("save_button").disabled).toBe(true);
 	});
 
-	it('should enable register event button when field is not changed',function(){
-        document.getElementById("evtTitle").value = "Event Title";
+	it('should enable save button when field is not changed',function(){
+        document.getElementById("courseName").value = "Course Name";
 
-        checkRegisterInputElement();
+        checkSaveInputElement("#courseName");
 
-        expect(document.getElementById("register_button").disabled).toBe(false);
+        expect(document.getElementById("save_button").disabled).toBe(false);
 	});
 
 });

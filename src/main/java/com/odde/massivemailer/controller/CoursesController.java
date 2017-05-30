@@ -40,8 +40,9 @@ import javax.servlet.annotation.WebServlet;
                 resultMsg = "status=success&msg=Add course successfully";
             } catch (ParseException e) {
                 resultMsg = "status=failed&msg=" + e.getMessage();
+
             }
-            resp.sendRedirect("CreateCourse.jsp?" + resultMsg);
+            resp.sendRedirect("add_event.jsp?" + resultMsg);
         }
 
         public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -17,21 +17,19 @@ public class EventTests {
         driver.visit(BASE_URL);
     }
 
-    @When("^Add an event \"([^\"]*)\" in \"([^\"]*)\"$")
-    public void addEventAndSelectLocationFromDropdown(String eventTitle,String location) throws Throwable {
-        driver.setTextField("evtTitle", eventTitle);
+    @When("^Create course \"([^\"]*)\" in \"([^\"]*)\"$")
+    public void addEventAndSelectLocationFromDropdown(String courseName,String location) throws Throwable {
+        driver.setTextField("courseName", courseName);
         driver.setDropdownValue("location", location);
     }
 
-    @When("^I click the register button$")
+    @When("^I click the save button$")
     public void clickRegisterEvent() throws Throwable {
-        driver.clickButton("register_button");
+        driver.clickButton("save_button");
     }
 
-    @Then("^Event list page should contain \"([^\"]*)\" and \"([^\"]*)\"$")
-    public void eventListPageShouldContain(String eventTitle,String eventLocation) throws Throwable {
-        driver.expectRedirect(EVENTLIST_BASE_URL);
-        driver.pageShouldContain(eventTitle);
-        driver.pageShouldContain(eventLocation);
+    @Then("^Course save page should display \"([^\"]*)\"$")
+    public void eventListPageShouldContain(String message) throws Throwable {
+        driver.pageShouldContain(message);
     }
 }

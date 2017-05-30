@@ -36,7 +36,7 @@
                         class="glyphicon glyphicon-user" aria-hidden="true"></span> Add
                         Contact</a></li>
                 <li><a href="add_event.jsp"><span
-                        class="glyphicon glyphicon-user" aria-hidden="true"></span> Add Event
+                        class="glyphicon glyphicon-user" aria-hidden="true"></span> Create Course
                         </a></li>
                 <li><a href="contactlist.jsp"><span
                         class="glyphicon glyphicon-user" aria-hidden="true"></span>
