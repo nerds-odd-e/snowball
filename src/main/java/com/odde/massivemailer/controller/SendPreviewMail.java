@@ -50,6 +50,12 @@ public class SendPreviewMail extends AppController {
         Mail email = new Mail();
         String tempCourse = req.getParameter("course");
 
+        // Then return to send mail
+        List<String> contactEmails=null ;
+        // pass course to get the list of email Ids
+
+
+        email.setReceipts(contactEmails);
 
         return email;
     }
