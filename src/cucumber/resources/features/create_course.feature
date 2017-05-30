@@ -1,7 +1,7 @@
 Feature: Create Course
   As a admin I want to create courses
 
-  @courses
+  @courses @developing
   Scenario: Verify create new course
     Given I am on create new course page
     When Add a course with below details
@@ -11,7 +11,7 @@ Feature: Create Course
     Then Course should save and successfully saved message should appear
 
 
-  @courses
+  @courses @developing
   Scenario: Verify create new course
     Given I am on create new course page
     When Add a course with below details
@@ -26,7 +26,7 @@ Feature: Create Course
     And I click the Create button
     Then Course should not save and failure message should appears
 
-  @courses
+  @courses @developing
   Scenario: Verify create new course
     Given I am on create new course page
     When Add a course with below details
