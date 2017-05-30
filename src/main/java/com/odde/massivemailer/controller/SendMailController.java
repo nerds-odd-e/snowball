@@ -45,15 +45,7 @@ public class SendMailController extends AppController {
         }
     }
 
-    public Mail processMailRequest(HttpServletRequest req) throws SQLException{
-        Mail email = new Mail();
-
-        String eventName = req.getParameter("title");
-
-        return email;
-    }
-
-    public Mail processRequest(HttpServletRequest req) throws SQLException {
+        public Mail processRequest(HttpServletRequest req) throws SQLException {
 
         Mail email = new Mail();
         String tempRecipient = req.getParameter("recipient");
