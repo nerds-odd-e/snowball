@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.ContactPerson;
+import com.odde.massivemailer.model.Event;
 import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.model.Notification;
 import com.odde.massivemailer.service.MailService;
@@ -24,7 +25,7 @@ public class SendMailController extends AppController {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         try {
-            Mail email = processRequest(req);
+            Mail email = processMailRequest(req);
 
             Notification notification = email.asNotification().saveAll();
             email.setNotification(notification);
@@ -40,6 +41,14 @@ public class SendMailController extends AppController {
             resp.sendRedirect("sendemail.jsp?status=failed&msg=Fail");
             e.printStackTrace();
         }
+    }
+
+    public Mail processMailRequest(HttpServletRequest req) throws SQLException{
+        Mail email = new Mail();
+
+        String eventName = req.getParameter("title");
+
+        return email;
     }
 
     public Mail processRequest(HttpServletRequest req) throws SQLException {
@@ -82,4 +91,6 @@ public class SendMailController extends AppController {
         contactList = ContactPerson.getContactListFromCompany(company);
         return contactList;
     }
+
+
 }
