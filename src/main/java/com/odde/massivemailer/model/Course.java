@@ -5,6 +5,8 @@ import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -22,16 +24,19 @@ public class Course extends Model {
     private String instructor;
 
 
+
+
+
+
     public Course(CourseBuilder courseBuilder) {
 
-
-        this.coursename = courseBuilder.coursename;
-        this.duration= courseBuilder.duration;
-        this.location= courseBuilder.location;
-        this.startdate= courseBuilder.startdate;
-        this.address= courseBuilder.address;
-        this.coursedetails= courseBuilder.coursedetails;
-        this.instructor= courseBuilder.instructor;
+        setCoursename(courseBuilder.coursename);
+        setDuration(courseBuilder.duration);
+        setLocation(courseBuilder.location);
+        setStartdate(courseBuilder.startdate);
+        setAddress(courseBuilder.address);
+        setCoursedetails(courseBuilder.coursedetails);
+        setInstructor(courseBuilder.instructor);
 
     }
 
@@ -46,59 +51,71 @@ public class Course extends Model {
     }*/
 
     public String getCoursename() {
-        return coursename;
+        return getAttribute("coursename");
     }
 
     public String getDuration() {
-        return duration;
+        return getAttribute("duration");
     }
 
     public String getLocation() {
-        return location;
+        return getAttribute("location");
     }
 
-    public Date getStartdate() {
-        return startdate;
+    public Date getStartdate() throws ParseException {
+        System.out.println("++++++++++++++++++++++++++++" + getAttribute("startdate"));
+        return new SimpleDateFormat("yyyy-MM-dd").parse(getAttribute("startdate"));
     }
 
     public String getAddress() {
-        return address;
+        return getAttribute("address");
     }
 
     public String getCoursedetails() {
-        return coursedetails;
+        return getAttribute("coursedetails");
     }
 
     public String getInstructor() {
-        return instructor;
+        return getAttribute("instructor");
     }
 
     public void setCoursename(String coursename) {
-        this.coursename = coursename;
+        //this.coursename = coursename;
+        set("coursename", coursename);
     }
 
     public void setDuration(String duration) {
-        this.duration = duration;
+        //this.duration = duration;
+        set("duration", duration);
     }
 
     public void setLocation(String location) {
-        this.location = location;
+        //this.location = location;
+        set("location", location);
     }
 
     public void setStartdate(Date startdate) {
-        this.startdate = startdate;
+        //this.startdate = startdate;
+        set("startdate", startdate);
     }
 
     public void setAddress(String address) {
-        this.address = address;
+        //this.address = address;
+        set("address", address);
     }
 
     public void setCoursedetails(String coursedetails) {
-        this.coursedetails = coursedetails;
+        //this.coursedetails = coursedetails;
+        set("coursedetails", coursedetails);
     }
 
     public void setInstructor(String instructor) {
-        this.instructor = instructor;
+        //this.instructor = instructor;
+        set("instructor", instructor);
+    }
+
+    public String getAttribute(String name) {
+        return (String) get(name);
     }
 
     public static class CourseBuilder {
@@ -151,4 +168,5 @@ public class Course extends Model {
         }
 
     }
+
 }

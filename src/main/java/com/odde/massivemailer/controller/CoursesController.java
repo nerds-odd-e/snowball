@@ -33,7 +33,7 @@ import javax.servlet.annotation.WebServlet;
                                                 .setDuration(req.getParameter("duration"))
                                                 .setInstructor(req.getParameter("instructor"))
                                                 .setLocation(req.getParameter("location"))
-                                                .setStartdate(new SimpleDateFormat("dd/mm/yyyy").parse(req.getParameter("startdate")))
+                                                .setStartdate(new SimpleDateFormat("yyyy-MM-dd").parse(req.getParameter("startdate")))
                                                 .build();
 
                 course.saveIt();
