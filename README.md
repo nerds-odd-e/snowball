@@ -26,3 +26,4 @@ npm install
 npm test
 ```
 * Make sure firefox binary is in the path export PATH=$PATH:/Applications/Firefox.app/Contents/MacOS˜
+
