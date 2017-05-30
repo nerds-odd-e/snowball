@@ -9,6 +9,7 @@ import java.util.List;
 public class DBMigrater {
     public void migrate() {
         for (String migration : migrationFiles()) {
+            System.out.println("---->" + migration);
             Base.exec(loadMigration(migration));
         }
     }

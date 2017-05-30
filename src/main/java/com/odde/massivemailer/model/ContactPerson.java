@@ -124,5 +124,4 @@ public class ContactPerson extends Model {
     public String getLocation() {
         return getAttribute(LOCATION);
     }
-
 }

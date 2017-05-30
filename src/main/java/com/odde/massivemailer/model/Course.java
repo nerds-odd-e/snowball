@@ -23,11 +23,6 @@ public class Course extends Model {
     private String coursedetails;
     private String instructor;
 
-
-
-
-
-
     public Course(CourseBuilder courseBuilder) {
 
         setCoursename(courseBuilder.coursename);
@@ -163,10 +158,16 @@ public class Course extends Model {
             return this;
         }
 
-        public Course build(){
+        public Course build() {
             return new Course(this);
         }
+    }
 
+    public static Course getCourseByName(String name) {
+        LazyList<Course> list = where("coursename = ?", name);
+        if (list.size() > 0)
+            return list.get(0);
+        return null;
     }
 
 }

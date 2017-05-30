@@ -8,4 +8,3 @@ CREATE TABLE IF NOT EXISTS courses (
     coursedetails  VARCHAR(2000) NOT NULL DEFAULT '',
     instructor VARCHAR(255) NOT NULL DEFAULT ''
 );
-
