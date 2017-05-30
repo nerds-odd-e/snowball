@@ -25,7 +25,7 @@ public class SendMailController extends AppController {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         try {
-            Mail email = processMailRequest(req);
+            Mail email = processRequest(req);
 
             Notification notification = email.asNotification().saveAll();
             email.setNotification(notification);
@@ -34,9 +34,11 @@ public class SendMailController extends AppController {
             mailService.send(email);
 
             resp.sendRedirect("sendemail.jsp?status=success&msg=Email successfully sent&repcnt=" + email.getReceipts().size());
+
         } catch (EmailException e) {
             resp.sendRedirect("sendemail.jsp?status=failed&msg=Unable to send");
             e.printStackTrace();
+
         } catch (SQLException e) {
             resp.sendRedirect("sendemail.jsp?status=failed&msg=Fail");
             e.printStackTrace();
