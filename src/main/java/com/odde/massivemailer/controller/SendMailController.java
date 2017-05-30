@@ -27,16 +27,18 @@ public class SendMailController extends AppController {
         try {
             Mail email = processMailRequest(req);
 
-            Notification notification = email.asNotification().saveAll();
+           /* Notification notification = email.asNotification().saveAll();
             email.setNotification(notification);
 
             MailService mailService = getMailService();
             mailService.send(email);
 
             resp.sendRedirect("sendemail.jsp?status=success&msg=Email successfully sent&repcnt=" + email.getReceipts().size());
+
         } catch (EmailException e) {
             resp.sendRedirect("sendemail.jsp?status=failed&msg=Unable to send");
             e.printStackTrace();
+            */
         } catch (SQLException e) {
             resp.sendRedirect("sendemail.jsp?status=failed&msg=Fail");
             e.printStackTrace();
