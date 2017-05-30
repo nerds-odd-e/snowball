@@ -22,9 +22,20 @@ public class Course extends Model {
     private String instructor;
 
 
-    public Course() { }
+    public Course(CourseBuilder courseBuilder) {
 
-    public Course(String coursename, String duration, String location, Date startdate, String address, String coursedetails, String instructor) {
+
+        this.coursename = courseBuilder.coursename;
+        this.duration= courseBuilder.duration;
+        this.location= courseBuilder.location;
+        this.startdate= courseBuilder.startdate;
+        this.address= courseBuilder.address;
+        this.coursedetails= courseBuilder.coursedetails;
+        this.instructor= courseBuilder.instructor;
+
+    }
+
+    /*public Course(String coursename, String duration, String location, Date startdate, String address, String coursedetails, String instructor) {
         setCoursename(coursename);
         setDuration(duration);
         setLocation(location);
@@ -32,7 +43,7 @@ public class Course extends Model {
         setAddress(address);
         setCoursedetails(coursedetails);
         setInstructor(instructor);
-    }
+    }*/
 
     public String getCoursename() {
         return coursename;
@@ -88,5 +99,56 @@ public class Course extends Model {
 
     public void setInstructor(String instructor) {
         this.instructor = instructor;
+    }
+
+    public static class CourseBuilder {
+
+        private String coursename;
+        private String duration;
+        private String location;
+        private Date startdate;
+        private String address;
+        private String coursedetails;
+        private String instructor;
+
+        public CourseBuilder setCoursename(String coursename) {
+            this.coursename = coursename;
+            return this;
+        }
+
+        public CourseBuilder setDuration(String duration) {
+            this.duration = duration;
+            return this;
+        }
+
+        public CourseBuilder setLocation(String location) {
+            this.location = location;
+            return this;
+        }
+
+        public CourseBuilder setStartdate(Date startdate) {
+            this.startdate = startdate;
+            return this;
+        }
+
+        public CourseBuilder setAddress(String address) {
+            this.address = address;
+            return this;
+        }
+
+        public CourseBuilder setCoursedetails(String coursedetails) {
+            this.coursedetails = coursedetails;
+            return this;
+        }
+
+        public CourseBuilder setInstructor(String instructor) {
+            this.instructor = instructor;
+            return this;
+        }
+
+        public Course build(){
+            return new Course(this);
+        }
+
     }
 }

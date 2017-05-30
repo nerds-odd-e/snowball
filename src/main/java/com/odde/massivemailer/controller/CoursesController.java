@@ -23,13 +23,25 @@ import javax.servlet.annotation.WebServlet;
             String resultMsg = "";
 
             try {
-                Course course = new Course(req.getParameter("coursename"), req.getParameter("duration"), req.getParameter("location"), new SimpleDateFormat("dd/mm/yyyy").parse(req.getParameter("startdate")), req.getParameter("address"), req.getParameter("coursedetails"), req.getParameter("instructor"));
+
+                //Course course = new Course(req.getParameter("coursename"), req.getParameter("duration"), req.getParameter("location"), new SimpleDateFormat("dd/mm/yyyy").parse(req.getParameter("startdate")), req.getParameter("address"), req.getParameter("coursedetails"), req.getParameter("instructor"));
+
+                Course course = new Course.CourseBuilder()
+                                                .setAddress(req.getParameter("address"))
+                                                .setCoursedetails(req.getParameter("coursedetails"))
+                                                .setCoursename(req.getParameter("coursename"))
+                                                .setDuration(req.getParameter("duration"))
+                                                .setInstructor(req.getParameter("instructor"))
+                                                .setLocation(req.getParameter("location"))
+                                                .setStartdate(new SimpleDateFormat("dd/mm/yyyy").parse(req.getParameter("startdate")))
+                                                .build();
+
                 course.saveIt();
                 resultMsg = "status=success&msg=Add course successfully";
             } catch (ParseException e) {
                 resultMsg = "status=failed&msg=" + e.getMessage();
             }
-            resp.sendRedirect("course.jsp?" + resultMsg);
+            resp.sendRedirect("CreateCourse.jsp?" + resultMsg);
         }
 
         public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
