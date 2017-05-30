@@ -30,12 +30,19 @@
 | Send email about the events to every contacts  | 5  | |
 | *Sprint 6 Team Tokyo*                                                                       | *7*  |   |
 | | | |
-| **Done above this line.**                                                               |      |   |
 | ******************************************* | |
 | Send emial to single contact with the same location of the event (Singapore only) | 5 | |
 | Send email to multiple contact mactching contact location to event location | 8 | |
 | support 3 pre defined cities with known distance SG, TK, BKK | 5 | |
 | *Sprint 7 Team Slytherin *                                                                       | *7*  |   |
+| **Done above this line.**                                                               |      |   |
+| Delete Students                                                                         | 2 | |
+| sending post course email                                                               | 5 | |
+| Scheduled Sending                                                                       | 5 | |
+| Delete course                                                                           | 2 | |
+| Validate template                                                                       | 5 | |
+| Loading student via csv                                                                 | 5 | |
+| up coming courses based on lcation                                                      | 8 | |
 | Support any city , get distance from maps API | 13 | |
 | Adding attributes when create new contact | 2 | |
 | Adding location tto contact event | 2 | |
