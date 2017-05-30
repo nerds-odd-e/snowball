@@ -48,14 +48,23 @@ public class SendPreviewMail extends AppController {
     public Mail processRequest(HttpServletRequest req) throws SQLException {
 
         Mail email = new Mail();
+        List<String> contactEmails=null ;
         String tempCourse = req.getParameter("course");
 
-        // Then return to send mail
-        List<String> contactEmails=null ;
-        // pass course to get the list of email Ids
+        String action = req.getParameter("action");
+        if(action == "preview"){
+            contactEmails.add("gmmagtaniii@gmail.com");
 
+        }else{
+            // Then return to send mail
+
+            // pass course to get the list of email Ids
+
+        }
 
         email.setReceipts(contactEmails);
+        email.setContent("Test Content");
+        email.setSubject("Test Subject");
 
         return email;
     }
