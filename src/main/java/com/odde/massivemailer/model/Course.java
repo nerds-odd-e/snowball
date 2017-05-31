@@ -1,13 +1,11 @@
 package com.odde.massivemailer.model;
 
-import com.odde.massivemailer.model.validator.UniquenessValidator;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.sql.Date;
+
 
 /**
  * Created by csd on 30/5/17.
@@ -15,13 +13,6 @@ import java.sql.Date;
 @Table("courses")
 public class Course extends Model {
 
-    private String coursename;
-    private String duration;
-    private String location;
-    private String startdate;
-    private String address;
-    private String coursedetails;
-    private String instructor;
 
     public Course() {
 
@@ -50,10 +41,8 @@ public class Course extends Model {
         return getAttribute("location");
     }
 
-    public String getStartdate() throws ParseException {
-        //return new SimpleDateFormat("yyyy-MM-dd").parse(getAttribute("startdate"));
-        //java.sql.Date date = new java.sql.Date(utilDate.getTime(new SimpleDateFormat("yyyy-MM-dd").parse(getAttribute("startdate"))));
-        return startdate;
+    public String getStartdate() {
+        return getAttribute("startdate");
     }
 
     public String getAddress() {
