@@ -30,8 +30,8 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav side-nav">
                 <li><a href="sendemail.jsp"><span
-                        class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-                        Send Mail</a></li>
+                        class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        Edit Template</a></li>
                 <li><a href="add_contact.jsp"><span
                         class="glyphicon glyphicon-user" aria-hidden="true"></span> Add
                         Contact</a></li>

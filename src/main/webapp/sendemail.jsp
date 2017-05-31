@@ -45,7 +45,7 @@
 					<!-- Page Heading -->
 					<div class="row">
 						<div class="col-lg-12">
-							<h1 class="page-header">Send Mail</h1>
+							<h1 class="page-header">Edit Template</h1>
 						</div>
 					</div>
 					<!-- /.row -->
@@ -62,7 +62,7 @@
 						<div class="col-lg-12">
 							<div class="panel panel-default">
 								<div class="panel-heading">
-									<h3 class="panel-title">Send Email</h3>
+									<h3 class="panel-title">Edit Template</h3>
 								</div>
 								<div class="panel-body">
 									<div class="row">
