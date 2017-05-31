@@ -1,18 +1,22 @@
-var needsCheckedElementIds = ['#coursename', '#courseDuration', '#courseStartDate', '#address', '#courseDetails','#instructor'];
+
+var addEvents = {
+    allNotNullElementIds: ['#coursename', '#courseDuration', '#courseStartDate', '#address', '#courseDetails'],
+    allOptionalElementIds: ['#instructor']
+};
+
 $(document).ready(function() {
 
 	disableSaveButton();
 
-	$(needsCheckedElementIds.join(',')).keyup(function() {
-		needsCheckedElementIds.forEach(function(elementId){
+	$(addEvents.allNotNullElementIds.join(',')).keyup(function() {
+		addEvents.allNotNullElementIds.forEach(function(elementId){
             checkSaveInputElement(elementId);
         });
 	});
 
 	$("#save_button").click(function() {
-	    needsCheckedElementIds.forEach(function(elementId){
-	    	$(elementId).val($(elementId).val().trim());
-	    });
+	    addEvents.allNotNullElementIds.forEach(trimElemVal);
+	    addEvents.allOptionalElementIds.forEach(trimElemVal);
 		submitForm();
 	});
 
@@ -27,9 +31,14 @@ $(document).ready(function() {
 
 });
 
+function trimElemVal(elementId){
+	$(elementId).val($(elementId).val().trim());
+}
+
 function submitForm() {
 	document.forms[0].submit();
-	$(needsCheckedElementIds.join(',')).val("");
+	$(addEvents.allNotNullElementIds.join(',')).val("");
+	$(addEvents.allOptionalElementIds.join(',')).val("");
 }
 
 function checkSaveInputElement(domId) {

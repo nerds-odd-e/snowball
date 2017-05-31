@@ -19,7 +19,7 @@ public class EventTests {
 
     @When("^Create course \"([^\"]*)\" in \"([^\"]*)\"$")
     public void addEventAndSelectLocationFromDropdown(String courseName,String location) throws Throwable {
-        driver.setTextField("courseName", courseName);
+        driver.setTextField("coursename", courseName);
         driver.setDropdownValue("location", location);
     }
 

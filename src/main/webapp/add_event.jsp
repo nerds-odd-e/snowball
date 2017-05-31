@@ -75,7 +75,7 @@
                                             <div class="row">
                                                 <div class="col-lg-2">Duration:</div>
                                                 <div class="col-lg-10">
-                                                    <input type="number" class="form-control" name="duration" id="courseDuration">
+                                                    <input type="number" min="1" placeholder="number of days" class="form-control" name="duration" id="courseDuration">
                                                 </div>
                                             </div>
                                             <br> <br>
