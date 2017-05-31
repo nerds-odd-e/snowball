@@ -1,5 +1,7 @@
 package steps;
 
+import com.odde.massivemailer.model.Course;
+import com.odde.massivemailer.model.Participant;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -19,7 +21,7 @@ public class SendPreviewMailTest {
 
     @Given("^there is a course starting from \"([^\"]*)\"$")
     public void there_is_a_course_starting_from(String arg1) throws Throwable {
-
+        Course.CourseBuilder courseBuilder = new Course.CourseBuilder();
 
     }
 
@@ -27,10 +29,7 @@ public class SendPreviewMailTest {
     public void there_are_students_with_email_loaded_for_this_course() throws Throwable {
         ContactPerson contact = new ContactPerson("john","student@odd-e.com","kumar","","Singapore");
         contact.save();
-
             Assert.assertNull(contact.getEmail());
-
-
     }
 
     @When("^i send preview email for this course$")

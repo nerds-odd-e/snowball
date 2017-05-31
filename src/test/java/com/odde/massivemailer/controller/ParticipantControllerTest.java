@@ -19,7 +19,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
 
 @RunWith(TestWithDB.class)
-public class ParticipantControllerTest {
+public class  ParticipantControllerTest {
 
 
     private ParticipantController controller;
