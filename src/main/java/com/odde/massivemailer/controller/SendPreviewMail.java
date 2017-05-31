@@ -5,6 +5,7 @@ import com.odde.massivemailer.model.*;
 import com.odde.massivemailer.service.MailService;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-
+@WebServlet("/previewemail")
 public class SendPreviewMail extends AppController {
 
     @Override
@@ -21,41 +22,37 @@ public class SendPreviewMail extends AppController {
             throws ServletException, IOException {
         try {
             Mail email = processRequest(req);
-
+            Notification notification = email.asNotification().saveAll();
+            email.setNotification(notification);
             MailService mailService = getMailService();
             mailService.send(email);
 
-            resp.sendRedirect("sendemail.jsp?status=success&msg=Email successfully sent&repcnt=" + email.getReceipts().size());
+            //resp.sendRedirect("sendemail.jsp?status=success&msg=Email successfully sent&repcnt=" + email.getReceipts().size());
 
         } catch (EmailException e) {
-            resp.sendRedirect("sendemail.jsp?status=failed&msg=Unable to send");
+            //resp.sendRedirect("sendemail.jsp?status=failed&msg=Unable to send");
             e.printStackTrace();
 
         } catch (SQLException e) {
-            resp.sendRedirect("sendemail.jsp?status=failed&msg=Fail");
+            //resp.sendRedirect("sendemail.jsp?status=failed&msg=Fail");
             e.printStackTrace();
         }
     }
 
     private Mail processRequest(HttpServletRequest req) throws SQLException {
         Mail email = new Mail();
+        List<String> recipientEmailIds = new ArrayList();
         String courseId = req.getParameter("courseId");
-
-
         String action = req.getParameter("action");
-        if(action.equalsIgnoreCase( "preview")) {
-            ContactPerson contact = new ContactPerson("Admin","admin@odd-e.com","admin","odd-e","Singapore");
-            contact.save();
-            // pass course and contact person list to get the list of email
-
+        if("preview".equalsIgnoreCase(action)) {
+            ContactPerson admin = new ContactPerson("Admin","sujit7.symbi@gmail.com","admin","odd-e","Singapore");
+            recipientEmailIds.add(admin.getEmail());
         }else{
             List<Participant> partcipants = Participant.whereHasCourseId(courseId);
             List<ContactPerson> participantDetails = new ArrayList<>();
-
-
         }
-
-
+        email.setReceipts(recipientEmailIds);
+        email.setContent("le lo");
         return email;
     }
 

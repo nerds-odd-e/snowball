@@ -1,15 +1,6 @@
 $(document).ready(function() {
-//alert('1');
 	var courseList = retrieveCourseListFromServer();
 	renderCourseList(courseList, $('#courseTable'));
-
-	$("#send_button").click(function() {
-		sendEmailToCourseParticipant();
-	});
-
-	$("#preview_button").click(function() {
-    		sendEmailToAdmin();
-    });
 });
 
 function retrieveCourseListFromServer()
@@ -23,10 +14,23 @@ function retrieveCourseListFromServer()
 	    success: function(data) {courseList = data },
 	    async: false
 	});
-	//alert('2');
-	//alert(courseList);
-	//alert('3')
 	return courseList;
+}
+
+function sendEmail(courseId, actionId)
+{
+	var status = null;
+    var action = (actionId == 1)?'send':'preview';
+
+	$.ajax({
+	    type: 'POST',
+	    url: 'previewemail?courseId=' + courseId + '&action=' + action,
+	    dataType: 'text',
+	    success: function(data) {status = data },
+	    async: false
+	});
+
+	return status;
 }
 
 function Course(attributes) {
@@ -46,13 +50,14 @@ function createTableData(cssClasses, value) {
 function createButtonElement(buttonId, buttonName, clickEvent) {
     return '<button class="btn btn-default" id="' + buttonId + '" name="' + buttonName + '" onclick=\'' + clickEvent + '\'>' + buttonName +'</button>';
 }
-'aLERT(\'SEND\')'
+
 function renderCourseList(json, selector)
 {
     selector.html('');
 	$.each(json, function(idx, item) {
-	    var sendEvent = 'alert(\'Send\')';
         var course = new Course(item.attributes);
+	    var sendEvent = 'sendEmail(' + course.id + ', 1 )';
+	    var previewEvent = 'sendEmail(' + course.id + ', 2 )';
         var tableContent = [
           ['course name', course.id + ' - ' + course.coursename],
           ['duration', course.duration],
@@ -60,7 +65,7 @@ function renderCourseList(json, selector)
           ['startdate', course.startdate],
           ['instructor', course.instructor],
           ['', createButtonElement('send_button', 'Send Pre-Course Email', sendEvent)],
-          ['', createButtonElement('preview_button', 'Preview Pre-Course Email', sendEvent)],
+          ['', createButtonElement('preview_button', 'Preview Pre-Course Email', previewEvent)],
         ];
         generateTableRow(selector, tableContent);
     })
