@@ -124,5 +124,11 @@ public class WebDriverWrapper {
     }
 
     public String getElementMarginWithClass(String cssClass) { return driver.findElement(By.className(cssClass)).getCssValue("margin-left"); }
+
+    public void setDropdownByText(String dropdownName, String text) {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        Select dropdown = new Select(wait.until(ExpectedConditions.visibilityOfElementLocated(By.name(dropdownName))));
+        dropdown.selectByVisibleText(text);
+    }
 }
 

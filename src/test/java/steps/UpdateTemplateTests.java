@@ -14,8 +14,8 @@ public class UpdateTemplateTests {
     private WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
     private String BASE_URL = "http://localhost:8070/massive_mailer/sendemail.jsp";
 
-    @Given("^Visit Send Mail Page$")
-    public void visitSendEmailPage() throws Throwable {
+    @Given("^Visit Edit Template Page$")
+    public void visitEditTemplatePage() throws Throwable {
         driver.visit(BASE_URL);
     }
 
@@ -25,7 +25,7 @@ public class UpdateTemplateTests {
         List<List<String>> templates = templateDetails.raw();
         templates = templates.subList(1, templates.size());
         for(List<String> val:templates){
-            driver.setDropdownValue("templateList", val.get(0));
+            driver.setDropdownByText("templateList", val.get(0));
             driver.setTextField("content", val.get(1));
         }
     }
