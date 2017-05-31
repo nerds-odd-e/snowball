@@ -9,16 +9,11 @@ import java.util.List;
 @Table("COURSE_CONTACT_PERSON")
 public class Participant extends Model {
 
-    /*static {
-        validatePresenceOf("course_id", "contact_person_id");
-    }*/
-
     public Participant() {
-
     }
 
     public Participant(Integer _participantId, Integer _courseId) {
-        setCourseId(-_courseId);
+        setCourseId(_courseId);
         setContactPersonId(_participantId);
     }
 
@@ -39,7 +34,7 @@ public class Participant extends Model {
     }
 
     public static List<Participant> whereHasCourseId(String courseId) {
-        return where("course_id = " + courseId + " ) ");
+        return where("course_id = " + courseId );
     }
 
 

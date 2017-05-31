@@ -20,14 +20,14 @@ import static org.junit.Assert.assertThat;
 public class ParticipantControllerTest {
 
 
-    private ContactsController controller;
+    private ParticipantController controller;
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
 
 
     @Before
     public void setUpMockService() {
-        controller = new ContactsController();
+        controller = new ParticipantController();
 
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
@@ -48,10 +48,8 @@ public class ParticipantControllerTest {
         Assert.assertNotNull(savedPerson.getId());
         Assert.assertNotNull(savedCourse);
         Assert.assertNotNull(savedCourse.getId());
-        System.out.println(savedPerson.getId());
-        System.out.println(savedCourse.getId());
 
-        new Participant(1, 40).save();
+        new Participant((Integer)savedPerson.getId(), (Integer)savedCourse.getId()).save();
 
         request.setParameter("courseId", String.valueOf(savedCourse.getId()));
         controller.doGet(request, response);

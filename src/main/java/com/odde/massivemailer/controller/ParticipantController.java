@@ -17,7 +17,9 @@ import java.util.List;
 public class ParticipantController extends AppController {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String courseId = request.getParameter("courseId");
+        System.out.println("--------->"+courseId);
         List<Participant> partcipants = Participant.whereHasCourseId(courseId);
+        System.out.println("--------->"+partcipants);
         List<ContactPerson> participantDetails = new ArrayList<ContactPerson>();
         for (Participant partcipant:partcipants) {
             participantDetails.add(ContactPerson.findById(partcipant.getContactPersonId()));
