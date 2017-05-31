@@ -36,19 +36,19 @@
                         class="glyphicon glyphicon-user" aria-hidden="true"></span>
                         Contact List</a></li>
                 <ul><li><a href="add_contact.jsp"><span
-                                        class="glyphicon glyphicon-user" aria-hidden="true"></span> Add
+                                        class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add
                                         Contact</a></li></ul>
 
                 <li><a href="coursedlist.jsp"><span
-                        class="glyphicon glyphicon-user" aria-hidden="true"></span> Course List
+                        class="glyphicon glyphicon-file" aria-hidden="true"></span> Course List
                         </a></li>
                 <ul><li><a href="add_event.jsp"><span
-                                       class="glyphicon glyphicon-user" aria-hidden="true"></span> Add Course
+                                       class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Course
                                        </a></li></ul>
 
-                <li><a href="eventlist.jsp"><span
+                <!--<li><a href="eventlist.jsp"><span
                         class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                        Event List</a></li>
+                        Event List</a></li>-->
                 <li><a id="emailtracking" href="email_tracking.jsp"><span
                         class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                         Email Tracking</a></li>
