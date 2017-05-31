@@ -16,9 +16,6 @@ import java.util.Date;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
 
-/**
- * Created by csd on 30/5/17.
- */
 @RunWith(TestWithDB.class)
 public class ParticipantControllerTest {
 
@@ -38,21 +35,25 @@ public class ParticipantControllerTest {
 
     @Test
     public void returnParticipantsInCourse() throws Exception {
-        ContactPerson person = new ContactPerson("John", "john@gmail.com", "Doe", "ComA");
-        person.save();
+        ContactPerson newPerson = new ContactPerson("John", "john@gmail.com", "Doe", "ComA");
+        newPerson.save();
 
         Course newCourse = new Course.CourseBuilder().setCoursename("CSD_NEW").setAddress("roberts lane").setLocation("SG").setCoursedetails("CSD new course details").setDuration("5d").setInstructor(" roof ").setStartdate(new Date()).build();
         newCourse.save();
 
-        ContactPerson person1 = ContactPerson.getContactByEmail("john@gmail.com");
-        Course csdCourse = Course.getCourseByName("CSD_NEW");
+        ContactPerson savedPerson = ContactPerson.getContactByEmail("john@gmail.com");
+        Course savedCourse = Course.getCourseByName("CSD_NEW");
 
-        Participant participant = new Participant();
-        participant.setCourseId(String.valueOf(csdCourse.getId()));
-        participant.setContactPersonId(String.valueOf(person1.getId()));
-        participant.saveIt();
+        Assert.assertNotNull(savedPerson);
+        Assert.assertNotNull(savedPerson.getId());
+        Assert.assertNotNull(savedCourse);
+        Assert.assertNotNull(savedCourse.getId());
+        System.out.println(savedPerson.getId());
+        System.out.println(savedCourse.getId());
 
-        request.setParameter("courseId", String.valueOf(csdCourse.getId()));
+        new Participant(1, 40).save();
+
+        request.setParameter("courseId", String.valueOf(savedCourse.getId()));
         controller.doGet(request, response);
 
         assertThat(response.getContentAsString(), containsString("\"email\":\"john@gmail.com\""));

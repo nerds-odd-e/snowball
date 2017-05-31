@@ -23,6 +23,10 @@ public class Course extends Model {
     private String coursedetails;
     private String instructor;
 
+    public Course() {
+
+    }
+
     public Course(CourseBuilder courseBuilder) {
 
         setCoursename(courseBuilder.coursename);

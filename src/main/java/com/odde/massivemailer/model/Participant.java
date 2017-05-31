@@ -2,43 +2,40 @@ package com.odde.massivemailer.model;
 
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
+import org.omg.CORBA.BAD_CONTEXT;
 
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Table("COURSE_CONTACT_PERSON")
 public class Participant extends Model {
 
-    private String courseId;
-    private String contactPersonId;
-
-    public Map<String, String> attributes = new HashMap<>();
+    /*static {
+        validatePresenceOf("course_id", "contact_person_id");
+    }*/
 
     public Participant() {
 
     }
 
-    public Participant(String _participantId, String _courseId) {
-        this.contactPersonId = _participantId;
-        this.courseId = _courseId;
+    public Participant(Integer _participantId, Integer _courseId) {
+        setCourseId(-_courseId);
+        setContactPersonId(_participantId);
     }
 
-    public void setCourseId(String courseId) {
-        this.courseId = courseId;
+    public void setCourseId(Integer _courseId) {
+        set("course_id", _courseId);
     }
 
-    public String getCourseId() {
-        return this.courseId;
+    public Integer getCourseId() {
+        return (Integer) get("course_id");
     }
 
-    public void setContactPersonId(String contactPersonId) {
-        this.contactPersonId = contactPersonId;
+    public void setContactPersonId(Integer _contactPersonId) {
+        set("contact_person_id", _contactPersonId);
     }
 
-    public String getContactPersonId() {
-        return this.contactPersonId;
+    public Integer getContactPersonId() {
+        return (Integer) get("contact_person_id");
     }
 
     public static List<Participant> whereHasCourseId(String courseId) {
