@@ -38,7 +38,7 @@ public class ParticipantControllerTest {
         ContactPerson newPerson = new ContactPerson("John", "john@gmail.com", "Doe", "ComA");
         newPerson.save();
 
-        Course newCourse = new Course.CourseBuilder().setCoursename("CSD_NEW").setAddress("roberts lane").setLocation("SG").setCoursedetails("CSD new course details").setDuration("5d").setInstructor(" roof ").setStartdate(new Date()).build();
+        Course newCourse = new Course.CourseBuilder().setCoursename("CSD_NEW").setAddress("roberts lane").setLocation("SG").setCoursedetails("CSD new course details").setDuration("5d").setInstructor(" roof ").setStartdate("2017-05-15").build();
         newCourse.save();
 
         ContactPerson savedPerson = ContactPerson.getContactByEmail("john@gmail.com");
