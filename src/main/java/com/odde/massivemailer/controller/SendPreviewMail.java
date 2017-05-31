@@ -45,7 +45,8 @@ public class SendPreviewMail extends AppController {
         String courseId = req.getParameter("courseId");
         String action = req.getParameter("action");
         if("preview".equalsIgnoreCase(action)) {
-            ContactPerson admin = new ContactPerson("Admin","sujit7.symbi@gmail.com","admin","odd-e","Singapore");
+            ContactPerson admin = new ContactPerson("Admin","myodde@gmail.com","admin","odd-e","Singapore");
+
             recipientEmailIds.add(admin.getEmail());
         }else{
             List<Participant> partcipants = Participant.whereHasCourseId(courseId);
