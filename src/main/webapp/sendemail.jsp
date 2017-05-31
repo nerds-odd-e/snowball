@@ -102,9 +102,13 @@
 									</div>
 									<br />
 									<div class="row">
-										<div class="col-lg-12">
+										<div class="col-lg-1">
 											<button type="button" class="btn btn-default"
 												id="send_button" value="send" disabled="disabled">Send</button>
+										</div>
+										<div class="col-lg-2">
+											<button type="button" class="btn btn-default"
+												id="update_button" value="update">Update</button>
 										</div>
 									</div>
 								</div>
@@ -127,6 +131,7 @@
 <script type="text/javascript" src="resources/js/showContact.js"></script>
 <script type="text/javascript" src="resources/js/selectContact.js"></script>
 <script type="text/javascript" src="resources/js/showTemplate.js"></script>
+<script type="text/javascript" src="resources/js/updateTemplate.js"></script>
 
 <script type="text/javascript">
 	$(document).ready(function(){
