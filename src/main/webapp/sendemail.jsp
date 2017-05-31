@@ -35,7 +35,7 @@
 </style>
 </head>
 <body>
-	<form name="sendmail" id="sendmail" method="post" action="sendMail">
+	<form name="sendmail" id="sendmail" method="post">
             <jsp:include page="ui_common.jsp" />
 
 			<div id="page-wrapper">
@@ -108,7 +108,7 @@
 										</div>
 										<div class="col-lg-2">
 											<button type="button" class="btn btn-default"
-												id="update_button" value="update">Update</button>
+												id="update_button" value="update" >Update</button>
 										</div>
 									</div>
 								</div>

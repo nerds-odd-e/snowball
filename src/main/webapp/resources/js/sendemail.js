@@ -18,13 +18,14 @@ $(document).ready(function() {
 		submitForm();
 	});
 
+
 	$("#add_contact").click(function() {
 		//Do something
 	});
 });
 
 function submitForm() {
-	$("#sendmail").submit();
+	$("#sendmail").attr("action","sendMail").submit();
 }
 
 function checkSendEmailInputElement() {

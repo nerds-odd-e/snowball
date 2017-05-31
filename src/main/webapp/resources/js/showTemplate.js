@@ -14,6 +14,10 @@ $(document).ready(function() {
         checkUpdateTemplateInputElement();
     });
 
+    $("#update_button").click(function() {
+        $("#subject").val($("#subject").val().trim());
+        $("#sendmail").attr("action","templates").submit();
+    });
 
 });
 
@@ -73,3 +77,4 @@ function enableUpdateTemplateButton() {
 function disableUpdateTemplateButton() {
 	$("#update_button").attr('disabled', 'disabled');
 }
+
