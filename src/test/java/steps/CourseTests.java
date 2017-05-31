@@ -30,7 +30,7 @@ public class CourseTests {
 
     @When("^I click the Create button$")
     public void clickRegisterEvent() throws Throwable {
-        driver.clickButton("register_button");
+        driver.clickButton("save_button");
     }
 
     @Then("^Course should save and successfully saved message should appear$")
