@@ -3,33 +3,42 @@ package com.odde.massivemailer.controller;
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.Course;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 
+import javax.servlet.ServletException;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
+
+import static org.junit.Assert.assertThat;
 
 /**
  * Created by csd on 30/5/17.
  */
 @RunWith(TestWithDB.class)
 public class CoursesControllerTest {
+    private CoursesController controller = new CoursesController();
+    private MockHttpServletRequest request = new MockHttpServletRequest();
+    private MockHttpServletResponse response = new MockHttpServletResponse();
 
     @Test
-    public void testCourse() {
-        Course course = new Course.CourseBuilder().setStartdate("2017-05-07").setLocation("singapore").setInstructor("Terry").setDuration("12").setCoursename("csd").setAddress("Roberts lane").setCoursedetails("csd scrum developer").build();
-
-        Assert.assertEquals("singapore", course.getLocation());
+    public void shouldCreateACourseWithOnlyCourseName() throws ServletException, IOException {
+        request.setParameter("coursename", "test couree");
+        controller.doPost(request, response);
+        Assert.assertEquals("add_event.jsp?status=success&msg=Add course successfully",response.getRedirectedUrl());
+        Assert.assertEquals("test couree", Course.getCourseByName("test couree").getCoursename());
     }
 
     @Test
-    public void testSaveCourse() {
-        Course course = new Course.CourseBuilder().setStartdate("2017-05-07").setLocation("singapore1").setInstructor("Terry1").setDuration("15").setCoursename("csdTestCourse").setAddress("Roberts lane").setCoursedetails("csd scrum developer").build();
-
-        course.saveIt();
-
-        Course testCourse = Course.getCourseByName("csdTestCourse");
-
-        Assert.assertEquals("csdTestCourse", testCourse.getCoursename());
+    public void shouldCreateACourseWithCourseName_Location() throws ServletException, IOException {
+        request.setParameter("coursename", "test couree");
+        request.setParameter("location", "singapore");
+        controller.doPost(request, response);
+        Assert.assertEquals("singapore", Course.getCourseByName("test couree").getLocation());
     }
 }

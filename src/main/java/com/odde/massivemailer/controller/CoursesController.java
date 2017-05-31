@@ -3,6 +3,8 @@ package com.odde.massivemailer.controller;
 import com.odde.massivemailer.model.Course;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,16 +23,8 @@ import javax.servlet.annotation.WebServlet;
 
             try {
 
-                Course course = new Course.CourseBuilder()
-                                                .setAddress(req.getParameter("address"))
-                                                .setCoursedetails(req.getParameter("coursedetails"))
-                                                .setCoursename(req.getParameter("coursename"))
-                                                .setDuration(req.getParameter("duration"))
-                                                .setInstructor(req.getParameter("instructor"))
-                                                .setLocation(req.getParameter("location"))
-                                                .setStartdate(req.getParameter("startdate"))
-                                                .build();
-
+                Map map = getParameterFromRequest(req, new String[]{"coursename", "location", "address", "coursedetails", "duration", "instructor", "startdate"});
+                Course course = new Course(map);
                 course.saveIt();
 
                 resultMsg = "status=success&msg=Add course successfully";
@@ -41,7 +35,7 @@ import javax.servlet.annotation.WebServlet;
             resp.sendRedirect("add_event.jsp?" + resultMsg);
         }
 
-        public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         }
     }

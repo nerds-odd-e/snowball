@@ -12,6 +12,8 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
@@ -38,7 +40,17 @@ public class ParticipantControllerTest {
         ContactPerson newPerson = new ContactPerson("John", "john@gmail.com", "Doe", "ComA");
         newPerson.save();
 
-        Course newCourse = new Course.CourseBuilder().setCoursename("CSD_NEW").setAddress("roberts lane").setLocation("SG").setCoursedetails("CSD new course details").setDuration("5d").setInstructor(" roof ").setStartdate("2017-05-15").build();
+        Map<String, String> params = new HashMap<>();
+
+        params.put("coursename", "CSD_NEW");
+        params.put("location", "SG");
+        params.put("address", "roberts lane");
+        params.put("coursedetails", "CSD new course details");
+        params.put("duration", "5");
+        params.put("instructor", "ROOF");
+        params.put("startdate", "2017-05-15");
+
+        Course newCourse = new Course(params);
         newCourse.save();
 
         ContactPerson savedPerson = ContactPerson.getContactByEmail("john@gmail.com");

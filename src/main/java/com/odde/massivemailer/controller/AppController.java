@@ -8,6 +8,8 @@ import com.odde.massivemailer.service.SMTPConfiguration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 
 public class AppController extends HttpServlet {
     public static final String EMAIL_PASSWORD = "MM_EMAIL_PASSWORD";
@@ -52,4 +54,11 @@ public class AppController extends HttpServlet {
         return email_sender != null && ((String) email_sender).equals("mock");
     }
 
+    protected HashMap getParameterFromRequest(HttpServletRequest req, String[] reqFields) {
+        HashMap map = new HashMap();
+
+        for(String field: reqFields)
+            map.put( field, req.getParameter(field));
+        return map;
+    }
 }
