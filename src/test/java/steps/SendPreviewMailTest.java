@@ -21,7 +21,7 @@ public class SendPreviewMailTest {
 
     @Given("^there is a course starting from \"([^\"]*)\"$")
     public void there_is_a_course_starting_from(String arg1) throws Throwable {
-        Course.CourseBuilder courseBuilder = new Course.CourseBuilder();
+        //Course.CourseBuilder courseBuilder = new Course.CourseBuilder();
 
     }
 
