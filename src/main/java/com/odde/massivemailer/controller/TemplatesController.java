@@ -13,6 +13,17 @@ import java.io.IOException;
 public class TemplatesController extends AppController {
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String templateId = req.getParameter("templateList");
+        String resultMsg = "status=fail&msg=Update template failure";
+
+        Template updateTemplate = Template.findById(templateId);
+        if (templateId != null &&  updateTemplate != null) {
+            updateTemplate.setSubject(req.getParameter("subject"));
+            updateTemplate.setContent(req.getParameter("content"));
+            updateTemplate.saveIt();
+            resultMsg = "status=success&msg=Update template successfully";
+        }
+        resp.sendRedirect("sendemail.jsp?" + resultMsg);
     }
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
