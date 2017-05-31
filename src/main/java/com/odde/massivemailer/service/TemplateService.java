@@ -1,8 +1,6 @@
 package com.odde.massivemailer.service;
 
-import com.odde.massivemailer.model.ContactPerson;
-import com.odde.massivemailer.model.Event;
-import com.odde.massivemailer.model.Template;
+import com.odde.massivemailer.model.*;
 import org.javalite.activejdbc.Base;
 
 import java.sql.Connection;
@@ -14,9 +12,10 @@ import java.util.Map;
 /**
  * Created by csd on 30/5/17.
  */
+@Deprecated
 public class TemplateService {
 
-    public Template getDefaultTemplate() throws Exception
+    public Template getDefaultTemplate(String templateName) throws Exception
     {
         Template defaultTemplate = null;
         List<Template> templateList = new ArrayList<Template>();
@@ -24,7 +23,9 @@ public class TemplateService {
         Base.open("org.sqlite.JDBC", "jdbc:sqlite:oddemail.db", "", "");
 
         Connection conn = Base.connection();
-        List<Map> rowProcessor =  Base.findAll("Select Id, TemplateName, Subject, Content from Template");
+        List<Map> rowProcessor =  Base.findAll("Select Id, TemplateName, Subject, Content from Template where templateName='Default Template 1'");
+
+        if (rowProcessor == null || rowProcessor.size()<1) return template;
 
         for (Map rowTemplate : rowProcessor) {
             template = new Template();
@@ -39,25 +40,59 @@ public class TemplateService {
 
         Base.close();
 
+        //templateList =  Template.findByTemplateName(templateName);
+
+
         if (templateList.size() >= 1) {
-            defaultTemplate = templateList.get(0);
+            Template templateDB = templateList.get(0);
+            defaultTemplate = new Template((String) templateDB.get("templateName"), (String) templateDB.get("subject"), (String) templateDB.get("content"));
+
+            defaultTemplate.setId((String) templateDB.getId());
+            System.out.println(defaultTemplate);
         }
 
         return defaultTemplate;
     }
 
-
-    public List<String> populatePreviewEmailTemplate(String template, Event course) {
+    public Template getTemplateByName(String templateName) throws Exception{
         return null;
     }
 
-    public String populateTemplate(String template, Event course) {
+    public Mail getPreviewEmail(Template template, Course course)
+    {
         return null;
     }
+
+    static public List<Mail> populateTemplate(Template template, Course course, List<ContactPerson> courseParticipants)
+    {
+        List<Mail> mails = new ArrayList<Mail>();
+
+        String content;
+        String contactEmailId;
+
+        for (ContactPerson contactPerson : courseParticipants) {
+            content = getEmailContentFromTemplate(template, contactPerson, course);
+            contactEmailId = contactPerson.getEmail();
+
+            //
+            Mail mail = Mail.createEventMail(content, contactEmailId);
+            //
+            mails.add(mail);
+        }
+
+        return mails;
+    }
+
+    private static String getEmailContentFromTemplate(Template template, ContactPerson contactPerson, Course course) {
+
+        return null;
+    }
+
+
 
     public static void main(String[] args) throws Exception {
         TemplateService serv = new TemplateService();
-        serv.getDefaultTemplate();
+        //serv.getDefaultTemplate();
     }
 
 }

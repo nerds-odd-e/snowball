@@ -27,6 +27,18 @@ public class Course extends Model {
         }
     }
 
+    public void setCourseName(String courseName) {
+        set("coursename", courseName);
+    }
+
+    public void setInstructor(String instructor) {
+        set("instructor", instructor);
+    }
+
+    public void setLocation(String location) {
+        set("location", location);
+    }
+
     public String getCoursename() {
         return getAttribute("coursename");
     }
