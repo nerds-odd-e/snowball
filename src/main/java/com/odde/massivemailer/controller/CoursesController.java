@@ -25,7 +25,7 @@ import javax.servlet.annotation.WebServlet;
             String resultMsg = "";
 
             try {
-                java.sql.Date date = new java.sql.Date((new SimpleDateFormat("yyyy-MM-dd").parse(req.getParameter("startdate"))).getTime());
+
                 Course course = new Course.CourseBuilder()
                                                 .setAddress(req.getParameter("address"))
                                                 .setCoursedetails(req.getParameter("coursedetails"))
@@ -34,7 +34,6 @@ import javax.servlet.annotation.WebServlet;
                                                 .setInstructor(req.getParameter("instructor"))
                                                 .setLocation(req.getParameter("location"))
                                                 .setStartdate(req.getParameter("startdate"))
-                                                //.setStartdate(new SimpleDateFormat("yyyy-MM-dd").parse(req.getParameter("startdate")))
                                                 .build();
 
                 course.saveIt();

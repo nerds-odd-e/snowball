@@ -22,12 +22,14 @@ public class CoursesControllerTest {
         Assert.assertEquals("singapore", course.getLocation());
     }
 
-    /*@Test
+    @Test
     public void testSaveCourse() {
-        Course course = new Course.CourseBuilder().setStartdate("2017-05-07").setLocation("singapore1").setInstructor("Terry1").setDuration("15").setCoursename("csd").setAddress("Roberts lane").setCoursedetails("csd scrum developer").build();
+        Course course = new Course.CourseBuilder().setStartdate("2017-05-07").setLocation("singapore1").setInstructor("Terry1").setDuration("15").setCoursename("csdTestCourse").setAddress("Roberts lane").setCoursedetails("csd scrum developer").build();
 
         course.saveIt();
 
-        Assert.assertNotNull(course.getId());
-    }*/
+        Course testCourse = Course.getCourseByName("csdTestCourse");
+
+        Assert.assertEquals("csdTestCourse", testCourse.getCoursename());
+    }
 }
