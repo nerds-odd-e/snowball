@@ -22,3 +22,16 @@ Update template set "Content" ="Hi {FirstName} {LastName},
  {Instructor}
 
  " where templateName='Default Template 1';
+
+
+INSERT OR IGNORE INTO Template (TemplateName, Subject, Content)
+VALUES ('Pre Template', 'Hello {FirstName}', 'Hello {FirstName} {LastName},
+
+ Please find your course details below
+
+ Course: {CourseName}
+ Instructor: {Instructor}
+ Location: {Location}
+
+ Best Regards
+ {Instructor}');
