@@ -131,7 +131,6 @@
 <script type="text/javascript" src="resources/js/showContact.js"></script>
 <script type="text/javascript" src="resources/js/selectContact.js"></script>
 <script type="text/javascript" src="resources/js/showTemplate.js"></script>
-<script type="text/javascript" src="resources/js/updateTemplate.js"></script>
 
 <script type="text/javascript">
 	$(document).ready(function(){

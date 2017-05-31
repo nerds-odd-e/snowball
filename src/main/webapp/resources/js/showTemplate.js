@@ -1,7 +1,7 @@
 var templateList = [];
 
 $(document).ready(function() {
-
+	disableUpdateTemplateButton();
 	$("#templateList").change(function(evt) {
         ApplyTemplateToUI(evt.target.value);
 	});
@@ -10,6 +10,11 @@ $(document).ready(function() {
         templateList = data;
    		renderTemplateList(templateList, $('#templateList'));
     });
+    $("#content, #subject").keyup(function() {
+        checkUpdateTemplateInputElement();
+    });
+
+
 });
 
 function retrieveTemplateListFromServer(callback)
@@ -46,4 +51,25 @@ function ApplyTemplateToUI(templateID)
 
     $("#content").val('');
     $("#subject").val('');
+}
+function checkUpdateTemplateInputElement() {
+	var contentIsBlank = isBlank($("#content").val());
+	var subjectIsBlank = isBlank($("#subject").val());
+
+	if (contentIsBlank || subjectIsBlank) {
+		disableUpdateTemplateButton();
+	} else {
+		enableUpdateTemplateButton();
+	}
+}
+function isBlank(value) {
+	return value.replace(/^\s+|\s+$/gm,'') === "";
+}
+
+function enableUpdateTemplateButton() {
+	$("#update_button").removeAttr('disabled');
+}
+
+function disableUpdateTemplateButton() {
+	$("#update_button").attr('disabled', 'disabled');
 }
