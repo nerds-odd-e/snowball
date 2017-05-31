@@ -1,10 +1,7 @@
 package com.odde.massivemailer.controller;
 
 import com.odde.massivemailer.exception.EmailException;
-import com.odde.massivemailer.model.ContactPerson;
-import com.odde.massivemailer.model.Course;
-import com.odde.massivemailer.model.Mail;
-import com.odde.massivemailer.model.Notification;
+import com.odde.massivemailer.model.*;
 import com.odde.massivemailer.service.MailService;
 
 import javax.servlet.ServletException;
@@ -16,9 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-/**
- * Created by csd on 30/5/17.
- */
+
 public class SendPreviewMail extends AppController {
 
     @Override
@@ -26,9 +21,6 @@ public class SendPreviewMail extends AppController {
             throws ServletException, IOException {
         try {
             Mail email = processRequest(req);
-
-            Notification notification = email.asNotification().saveAll();
-            email.setNotification(notification);
 
             MailService mailService = getMailService();
             mailService.send(email);
@@ -45,26 +37,24 @@ public class SendPreviewMail extends AppController {
         }
     }
 
-    public Mail processRequest(HttpServletRequest req) throws SQLException {
-
+    private Mail processRequest(HttpServletRequest req) throws SQLException {
         Mail email = new Mail();
-        List<String> contactEmails=null ;
-        String tempCourse = req.getParameter("course");
+        String courseId = req.getParameter("courseId");
+
 
         String action = req.getParameter("action");
-        if(action == "preview"){
-            contactEmails.add("gmmagtaniii@gmail.com");
+        if(action.equalsIgnoreCase( "preview")) {
+            ContactPerson contact = new ContactPerson("Admin","admin@odd-e.com","admin","odd-e","Singapore");
+            contact.save();
+            // pass course and contact person list to get the list of email
 
         }else{
-            // Then return to send mail
+            List<Participant> partcipants = Participant.whereHasCourseId(courseId);
+            List<ContactPerson> participantDetails = new ArrayList<>();
 
-            // pass course to get the list of email Ids
 
         }
 
-        email.setReceipts(contactEmails);
-        email.setContent("Test Content");
-        email.setSubject("Test Subject");
 
         return email;
     }
