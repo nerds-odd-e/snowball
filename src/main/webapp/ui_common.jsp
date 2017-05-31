@@ -32,18 +32,20 @@
                 <li><a href="sendemail.jsp"><span
                         class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         Edit Template</a></li>
-                <li><a href="add_contact.jsp"><span
-                        class="glyphicon glyphicon-user" aria-hidden="true"></span> Add
-                        Contact</a></li>
-                <li><a href="add_event.jsp"><span
-                        class="glyphicon glyphicon-user" aria-hidden="true"></span> Create Course
-                        </a></li>
-                <li><a href="coursedlist.jsp"><span
-                        class="glyphicon glyphicon-user" aria-hidden="true"></span> View Course List
-                        </a></li>
                 <li><a href="contactlist.jsp"><span
                         class="glyphicon glyphicon-user" aria-hidden="true"></span>
                         Contact List</a></li>
+                <ul><li><a href="add_contact.jsp"><span
+                                        class="glyphicon glyphicon-user" aria-hidden="true"></span> Add
+                                        Contact</a></li></ul>
+
+                <li><a href="coursedlist.jsp"><span
+                        class="glyphicon glyphicon-user" aria-hidden="true"></span> Course List
+                        </a></li>
+                <ul><li><a href="add_event.jsp"><span
+                                       class="glyphicon glyphicon-user" aria-hidden="true"></span> Add Course
+                                       </a></li></ul>
+
                 <li><a href="eventlist.jsp"><span
                         class="glyphicon glyphicon-user" aria-hidden="true"></span>
                         Event List</a></li>
