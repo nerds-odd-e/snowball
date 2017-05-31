@@ -1,0 +1,1 @@
+insert OR IGNORE into course_contact_person(course_id, contact_person_id) values(1,2);

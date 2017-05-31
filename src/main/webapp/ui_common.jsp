@@ -38,6 +38,9 @@
                 <li><a href="add_event.jsp"><span
                         class="glyphicon glyphicon-user" aria-hidden="true"></span> Create Course
                         </a></li>
+                <li><a href="coursedlist.jsp"><span
+                        class="glyphicon glyphicon-user" aria-hidden="true"></span> View Course List
+                        </a></li>
                 <li><a href="contactlist.jsp"><span
                         class="glyphicon glyphicon-user" aria-hidden="true"></span>
                         Contact List</a></li>
