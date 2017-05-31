@@ -6,5 +6,3 @@ CREATE TABLE IF NOT EXISTS COURSE_CONTACT_PERSON (
     FOREIGN KEY (course_id)   REFERENCES courses(id),
     FOREIGN KEY (contact_person_id)   REFERENCES contact_people(id)
 );
-
---select * from COURSE_CONTACT_PERSON;

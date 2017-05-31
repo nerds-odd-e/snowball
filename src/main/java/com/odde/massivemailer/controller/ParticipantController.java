@@ -16,15 +16,16 @@ import java.util.List;
 @WebServlet("/courseparticipants")
 public class ParticipantController extends AppController {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        ServletOutputStream outputStream = response.getOutputStream();
         String courseId = request.getParameter("courseId");
         List<Participant> partcipants = Participant.whereHasCourseId(courseId);
         List<ContactPerson> participantDetails = new ArrayList<ContactPerson>();
         for (Participant partcipant:partcipants) {
             participantDetails.add(ContactPerson.findById(partcipant.getContactPersonId()));
         }
-        String convertedCourseToJSON = AppGson.getGson().toJson(participantDetails);
-        ServletOutputStream outputStream = response.getOutputStream();
-        outputStream.print(convertedCourseToJSON);
+        String jsonFormat = AppGson.getGson().toJson(participantDetails);
+        outputStream.println(jsonFormat);
+        outputStream.close();
     }
 }
 
