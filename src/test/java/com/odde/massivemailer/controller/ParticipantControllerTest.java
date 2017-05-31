@@ -53,7 +53,7 @@ public class ParticipantControllerTest {
 
         request.setParameter("courseId", String.valueOf(savedCourse.getId()));
         controller.doGet(request, response);
-
+        //System.out.println(response.getContentAsString());
         assertThat(response.getContentAsString(), containsString("\"email\":\"john@gmail.com\""));
     }
 }
