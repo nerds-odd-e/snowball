@@ -10,7 +10,7 @@ import steps.driver.WebDriverWrapper;
  */
 public class CourseListTest {
 
-    private static final String BASE_URL = "http://localhost:8070/massive_mailer/courselist";
+    private static final String BASE_URL = "http://localhost:8070/massive_mailer/coursedlist.jsp";
 
     private WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
 
@@ -21,7 +21,7 @@ public class CourseListTest {
 
     @Then("^list all courses$")
     public void list_all_courses() throws Throwable {
- 
+
     }
 
 }
