@@ -7,7 +7,7 @@ import org.javalite.activejdbc.annotations.Table;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.sql.Date;
 
 /**
  * Created by csd on 30/5/17.
@@ -18,7 +18,7 @@ public class Course extends Model {
     private String coursename;
     private String duration;
     private String location;
-    private Date startdate;
+    private String startdate;
     private String address;
     private String coursedetails;
     private String instructor;
@@ -38,17 +38,6 @@ public class Course extends Model {
         setInstructor(courseBuilder.instructor);
 
     }
-
-    /*public Course(String coursename, String duration, String location, Date startdate, String address, String coursedetails, String instructor) {
-        setCoursename(coursename);
-        setDuration(duration);
-        setLocation(location);
-        setStartdate(startdate);
-        setAddress(address);
-        setCoursedetails(coursedetails);
-        setInstructor(instructor);
-    }*/
-
     public String getCoursename() {
         return getAttribute("coursename");
     }
@@ -61,9 +50,10 @@ public class Course extends Model {
         return getAttribute("location");
     }
 
-    public Date getStartdate() throws ParseException {
-        System.out.println("++++++++++++++++++++++++++++" + getAttribute("startdate"));
-        return new SimpleDateFormat("yyyy-MM-dd").parse(getAttribute("startdate"));
+    public String getStartdate() throws ParseException {
+        //return new SimpleDateFormat("yyyy-MM-dd").parse(getAttribute("startdate"));
+        //java.sql.Date date = new java.sql.Date(utilDate.getTime(new SimpleDateFormat("yyyy-MM-dd").parse(getAttribute("startdate"))));
+        return startdate;
     }
 
     public String getAddress() {
@@ -79,37 +69,30 @@ public class Course extends Model {
     }
 
     public void setCoursename(String coursename) {
-        //this.coursename = coursename;
         set("coursename", coursename);
     }
 
     public void setDuration(String duration) {
-        //this.duration = duration;
         set("duration", duration);
     }
 
     public void setLocation(String location) {
-        //this.location = location;
         set("location", location);
     }
 
-    public void setStartdate(Date startdate) {
-        //this.startdate = startdate;
+    public void setStartdate(String startdate) {
         set("startdate", startdate);
     }
 
     public void setAddress(String address) {
-        //this.address = address;
         set("address", address);
     }
 
     public void setCoursedetails(String coursedetails) {
-        //this.coursedetails = coursedetails;
         set("coursedetails", coursedetails);
     }
 
     public void setInstructor(String instructor) {
-        //this.instructor = instructor;
         set("instructor", instructor);
     }
 
@@ -122,7 +105,7 @@ public class Course extends Model {
         private String coursename;
         private String duration;
         private String location;
-        private Date startdate;
+        private String startdate;
         private String address;
         private String coursedetails;
         private String instructor;
@@ -142,7 +125,7 @@ public class Course extends Model {
             return this;
         }
 
-        public CourseBuilder setStartdate(Date startdate) {
+        public CourseBuilder setStartdate(String startdate) {
             this.startdate = startdate;
             return this;
         }
