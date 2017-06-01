@@ -85,3 +85,38 @@ describe('checkOnChangeTemplate function', function(){
 
 
 });
+
+
+describe('checkUpdateTemplateInputElement function', function(){
+	var rootId = "testContainer";
+	var markup = "<input type='text' id='content'> " +
+	"<input type='text' id='subject'> " +
+            "<button type='button' id='update_button' value='update'>Update</button>";
+	beforeEach(function(){
+		var container = document.createElement('div');
+		container.setAttribute('id', rootId);
+		document.body.appendChild(container);
+		container.innerHTML = markup;
+	});
+
+	afterEach(function() {
+		var container = document.getElementById(rootId);
+		container.parentNode.removeChild(container);
+	});
+
+	it('should disable update button when all fields are blank',function(){
+	    document.getElementById("subject").value = "";
+        document.getElementById("content").value = "";
+	    spyOn(window,'disableUpdateTemplateButton');
+        checkUpdateTemplateInputElement();
+        expect(window.disableUpdateTemplateButton).toHaveBeenCalled();
+	});
+
+	it('should enable update button when all fields are not blank',function(){
+        document.getElementById("subject").value = "Greeting!!!";
+        document.getElementById("content").value = "Hello World.";
+        spyOn(window,'enableUpdateTemplateButton');
+        checkUpdateTemplateInputElement();
+        expect(window.enableUpdateTemplateButton).toHaveBeenCalled();
+	});
+});
