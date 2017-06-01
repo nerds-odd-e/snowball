@@ -4,6 +4,7 @@ import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.*;
 import com.odde.massivemailer.service.MailService;
 
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,43 +22,52 @@ public class SendPreviewMail extends AppController {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         try {
-            Mail email = processRequest(req);
-            Notification notification = email.asNotification().saveAll();
-            email.setNotification(notification);
-            MailService mailService = getMailService();
-            mailService.send(email);
+            List<Mail> emails = processRequest(req);
 
-            //resp.sendRedirect("sendemail.jsp?status=success&msg=Email successfully sent&repcnt=" + email.getReceipts().size());
+            for (Mail email:emails ) {
+                Notification notification = email.asNotification().saveAll();
+                email.setNotification(notification);
+                MailService mailService = getMailService();
+                mailService.send(email);
+            }
+
 
         } catch (EmailException e) {
-            //resp.sendRedirect("sendemail.jsp?status=failed&msg=Unable to send");
+
             e.printStackTrace();
 
         } catch (SQLException e) {
-            //resp.sendRedirect("sendemail.jsp?status=failed&msg=Fail");
+
             e.printStackTrace();
         }
     }
 
-    private Mail processRequest(HttpServletRequest req) throws SQLException {
-        Mail email = new Mail();
-        List<String> recipientEmailIds = new ArrayList();
+    private List<Mail> processRequest(HttpServletRequest req) throws SQLException {
+        List<Mail> emails = null;
+
+        List<ContactPerson> contactPerson = new ArrayList<ContactPerson>();
         String courseId = req.getParameter("courseId");
+        Course course = Course.getCourseById(new Integer(courseId));
         String action = req.getParameter("action");
+        List<Template> precourseTemplates =Template.findByTemplateName("Pre Template");
+
         if("preview".equalsIgnoreCase(action)) {
             ContactPerson admin = new ContactPerson("Admin","myodde@gmail.com","admin","odd-e","Singapore");
-List<Template> precourseTemplates =Template.findByTemplateName("Pre Template");
+            contactPerson.add(admin);
 
-Template defTemp = precourseTemplates.get(0);
-//defTemp.getPopulatedEmailTemplate()
-            recipientEmailIds.add(admin.getEmail());
+
         }else{
             List<Participant> partcipants = Participant.whereHasCourseId(courseId);
-            List<ContactPerson> participantDetails = new ArrayList<>();
+            for (Participant participant:partcipants) {
+                contactPerson.add(ContactPerson.getContactById(participant.getContactPersonId()));
+            }
+
         }
-        email.setReceipts(recipientEmailIds);
-        //`AER5T6Y78U76U5YHT4R32E32RED2Z234R567890345email.setContent("le lo");Pre Template
-        return email;
+        Template precourseTemplate = precourseTemplates.get(0);
+        emails=precourseTemplate.getPopulatedEmailTemplate(course,contactPerson);
+
+
+        return emails;
     }
 
 

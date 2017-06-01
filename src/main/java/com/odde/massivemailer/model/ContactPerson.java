@@ -124,4 +124,11 @@ public class ContactPerson extends Model {
     public String getLocation() {
         return getAttribute(LOCATION);
     }
+
+    public static ContactPerson getContactById(Integer contactId) {
+        LazyList<ContactPerson> list = where("id = ?", contactId.intValue());
+        if (list.size()> 0)
+            return list.get(0);
+        return null;
+    }
 }

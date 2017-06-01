@@ -78,4 +78,11 @@ public class Course extends Model {
         return null;
     }
 
+    public static Course getCourseById(Integer id) {
+        LazyList<Course> list = where("id = ?", id.intValue());
+        if (list.size() > 0)
+            return list.get(0);
+        return null;
+    }
+
 }
