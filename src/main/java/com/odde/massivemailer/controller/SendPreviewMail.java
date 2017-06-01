@@ -56,7 +56,7 @@ Template defTemp = precourseTemplates.get(0);
             List<ContactPerson> participantDetails = new ArrayList<>();
         }
         email.setReceipts(recipientEmailIds);
-        //email.setContent("le lo");Pre Template
+        //`AER5T6Y78U76U5YHT4R32E32RED2Z234R567890345email.setContent("le lo");Pre Template
         return email;
     }
 
