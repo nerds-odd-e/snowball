@@ -7,6 +7,7 @@ var addEvents = {
 $(document).ready(function() {
 
 	disableSaveButton();
+	disableAddButton();
 
 	$(addEvents.allNotNullElementIds.join(',')).keyup(function() {
 		addEvents.allNotNullElementIds.forEach(function(elementId){
@@ -60,6 +61,14 @@ function enableSaveButton() {
 
 function disableSaveButton() {
 	$("#save_button").attr('disabled', 'disabled');
+}
+
+function enableAddButton() {
+	$("#add_button").removeAttr('disabled');
+}
+
+function disableAddButton() {
+	$("#add_button").attr('disabled', 'disabled');
 }
 
 function getUrlParameter(sParam) {
