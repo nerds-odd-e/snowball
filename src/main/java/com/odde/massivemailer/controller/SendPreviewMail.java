@@ -30,11 +30,9 @@ public class SendPreviewMail extends AppController {
 
 
         try {
-            String courseId = req.getParameter("courseId");
-            Course course = Course.getCourseById(new Integer(courseId));
 
             ServletOutputStream outputStream = resp.getOutputStream();
-            List<Mail> emails = processRequest(req, course);
+            List<Mail> emails = processRequest(req);
             Mail sampleMail=null;
             if (emails.size()>0)
              sampleMail = emails.get(0);
@@ -69,10 +67,12 @@ public class SendPreviewMail extends AppController {
 
     }
 
-    private List<Mail>  processRequest(HttpServletRequest req, Course course) throws SQLException {
+    public List<Mail>  processRequest(HttpServletRequest req) throws SQLException {
         List<Mail> emails = new ArrayList<>();
 
         List<ContactPerson> contactPerson = new ArrayList<ContactPerson>();
+        String courseId = req.getParameter("courseId");
+        Course course = Course.getCourseById(new Integer(courseId));
 
         String action = req.getParameter("action");
         List<Template> precourseTemplates =Template.findByTemplateName("Pre Template");
