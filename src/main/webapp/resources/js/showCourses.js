@@ -26,7 +26,7 @@ function sendEmail(courseId, actionId)
 	    type: 'POST',
 	    url: 'previewemail?courseId=' + courseId + '&action=' + action,
 	    dataType: 'text',
-	    success: function(data) {status = data },
+	    success: function(data) { $("#div12").html(data); },
 	    async: false
 	});
 

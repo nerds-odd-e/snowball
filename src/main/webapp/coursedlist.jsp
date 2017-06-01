@@ -37,6 +37,9 @@
 				<!-- /.row -->
 
 				<input type="hidden" id="courseId" value="${param.repcnt}" />
+				<div id="div12">
+
+				</div>
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="panel panel-default">
@@ -58,6 +61,7 @@
 						</div>
 					</div>
 				</div>
+
 			</div>
 
 
