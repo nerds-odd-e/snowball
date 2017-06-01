@@ -130,5 +130,16 @@ public class ContactPerson extends Model {
         if (list.size()> 0)
             return list.get(0);
         return null;
+	}
+    public boolean AddToCourse(String courseId) {
+        int participantId = (int) getId();
+
+        Participant contactParticipant = new Participant(new Integer(participantId), new Integer(courseId));
+
+        return contactParticipant.save();
+    }
+
+    public String errorMessage() {
+        return "Unable to register participants";
     }
 }

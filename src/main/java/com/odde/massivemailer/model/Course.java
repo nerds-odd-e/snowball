@@ -4,6 +4,10 @@ import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
 
+
+import java.text.ParseException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -81,4 +85,7 @@ public class Course extends Model {
         return null;
     }
 
+    public List<Participant> participants() {
+        return Participant.where("course_id = ?", getId().toString());
+    }
 }

@@ -1,6 +1,7 @@
 package com.odde.massivemailer.controller;
 
 import com.odde.TestWithDB;
+import com.odde.massivemailer.CourseDataMother;
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Course;
 import com.odde.massivemailer.model.Participant;
@@ -11,20 +12,17 @@ import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
 
 @RunWith(TestWithDB.class)
 public class  ParticipantControllerTest {
 
-
     private ParticipantController controller;
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
+    CourseDataMother dataMother = new CourseDataMother();
+
 
 
     @Before
@@ -40,17 +38,7 @@ public class  ParticipantControllerTest {
         ContactPerson newPerson = new ContactPerson("John", "john@gmail.com", "Doe", "ComA");
         newPerson.save();
 
-        Map<String, String> params = new HashMap<>();
-
-        params.put("coursename", "CSD_NEW");
-        params.put("location", "SG");
-        params.put("address", "roberts lane");
-        params.put("coursedetails", "CSD new course details");
-        params.put("duration", "5");
-        params.put("instructor", "ROOF");
-        params.put("startdate", "2017-05-15");
-
-        Course newCourse = new Course(params);
+        Course newCourse = dataMother.build_csd_course();
         newCourse.save();
 
         ContactPerson savedPerson = ContactPerson.getContactByEmail("john@gmail.com");
@@ -68,4 +56,5 @@ public class  ParticipantControllerTest {
         //System.out.println(response.getContentAsString());
         assertThat(response.getContentAsString(), containsString("\"email\":\"john@gmail.com\""));
     }
+
 }
