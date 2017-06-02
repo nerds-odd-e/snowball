@@ -1,9 +1,9 @@
 package com.odde.massivemailer.model;
 
-import org.javalite.activejdbc.LazyList;
+
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
-import org.sqlite.util.StringUtils;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +25,6 @@ public class Template extends Model {
 
     public static List<Template> findByTemplateName(String templateName) {
         return where("templateName = ?", templateName);
-
-        //return templateList;
     }
 
     public Template() {
@@ -50,10 +48,9 @@ public class Template extends Model {
             content = getEmailContentFromTemplate(contactPerson, course);
             contactEmailId = contactPerson.getEmail();
 
-            //
             Mail mail = Mail.createEventMail(content, contactEmailId);
             mail.setSubject(getEmailSubjectFromTemplate(contactPerson));
-            //
+
             mails.add(mail);
         }
 
