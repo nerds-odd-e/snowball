@@ -11,9 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.annotation.WebServlet;
 
 
-/**
- * Created by csd on 30/5/17.
- */
     @WebServlet("/courses")
     public class CoursesController extends AppController {
         private static final long serialVersionUID = 1L;
@@ -24,7 +21,7 @@ import javax.servlet.annotation.WebServlet;
             try {
 
                 Map map = getParameterFromRequest(req, new String[]{"coursename", "location", "address", "coursedetails", "duration", "instructor", "startdate"});
-                Course course = new Course(map);
+                    Course course = new Course(map);
                 course.saveIt();
 
                 resultMsg = "status=success&msg=Add course successfully";
@@ -33,10 +30,6 @@ import javax.servlet.annotation.WebServlet;
 
             }
             resp.sendRedirect("add_event.jsp?" + resultMsg);
-        }
-
-    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         }
     }
 

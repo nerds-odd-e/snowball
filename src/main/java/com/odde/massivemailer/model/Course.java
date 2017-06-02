@@ -4,14 +4,10 @@ import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
 
-import java.text.ParseException;
-import java.util.HashMap;
 import java.util.Map;
 
 
-/**
- * Created by csd on 30/5/17.
- */
+
 @Table("courses")
 public class Course extends Model {
 
