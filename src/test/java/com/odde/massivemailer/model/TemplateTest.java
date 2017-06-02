@@ -3,7 +3,9 @@ package com.odde.massivemailer.model;
 import com.odde.TestWithDB;
 import com.odde.massivemailer.controller.TemplatesControllerTest;
 import edu.emory.mathcs.backport.java.util.Collections;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -13,34 +15,48 @@ import java.util.List;
 @RunWith(TestWithDB.class)
 public class TemplateTest {
 
+    private Template template = null;
+    private Course course = null;
+    private ContactPerson contactPerson = null;
+    private Template template2 = null;
+
+    @Before
+    public void setUp() {
+        template = new Template();
+        template.setSubject("Greeting {FirstName}");
+        template.setTemplateName("MyDefaultTemplate");
+        template.setContent("Hi {FirstName} {LastName}. Please find course details - {CourseName}");
+        //
+        course = new Course();
+        course.setCourseName("CSD");
+        course.setInstructor("Roof-TheExpert");
+        course.setLocation("18RobertsLane,Singapore");
+        //
+        contactPerson = new ContactPerson("Madhan", "Madhan@CS.com", "Karunakaran", "CS", "Singapore-Changi");
+        //
+
+        template2 = new Template("DefaultTestTemplate", "Greetings {FirstName}", "Dear {FirstName} {LastName}. Please find the details of the course {CourseName} {Location} {Instructor} ");
+
+    }
+
+    @After
+    public void tearDown() {
+        template = null;
+        course = null;
+        contactPerson = null;
+        template2.delete();
+        template2 = null;
+    }
+
     @Test
     public void mustReturnEmptyEmailWhenNOParticipantsInCourse() {
-
-        Template template = new Template();
-        template.setSubject("Hi {FirstName}");
-        template.setTemplateName("MyDefaultTemplate");
-        template.setContent("Hi {FirstName} {LastName}. Please ...");
-
-        Course course = new Course();
-        course.setCourseName("CSD");
 
         Assert.assertEquals(0, template.getPopulatedEmailTemplate(course, new ArrayList<ContactPerson>()).size());
     }
 
     @Test
     public void mustReturnValidEmailWith_1_CourseParticipant() {
-        Template template = new Template();
-        template.setSubject("Greeting {FirstName}");
-        template.setTemplateName("MyDefaultTemplate");
-        template.setContent("Hi {FirstName} {LastName}. Please find course details - {CourseName}");
 
-        Course course = new Course();
-        course.setCourseName("CSD");
-        course.setInstructor("Roof-TheExpert");
-        course.setLocation("Singapore-ParkRoyal");
-
-
-        ContactPerson contactPerson = new ContactPerson("Madhan", "Madhan@CS.com", "Karunakaran", "CS", "Singapore-Changi");
         List<Mail> mailList = template.<Mail>getPopulatedEmailTemplate(course, Collections.<ContactPerson>singletonList(contactPerson));
 
         Assert.assertNotNull(mailList);
@@ -53,18 +69,6 @@ public class TemplateTest {
 
     @Test
     public void mustReturnIncompleteEmailWith_1_CourseParticipant() {
-        Template template = new Template();
-        template.setSubject("Greeting {FirstName}");
-        template.setTemplateName("MyDefaultTemplate");
-        template.setContent("Hi {FirstName} {LastName}. Please find course details - {CourseName}");
-
-        Course course = new Course();
-        course.setCourseName("CSD");
-        course.setInstructor("Roof-TheExpert");
-        course.setLocation("Singapore-ParkRoyal");
-
-
-        ContactPerson contactPerson = new ContactPerson("Madhan", "Madhan@CS.com", "Karunakaran", "CS", "Singapore-Changi");
         List<Mail> mailList = template.<Mail>getPopulatedEmailTemplate(course, Collections.<ContactPerson>singletonList(contactPerson));
 
         Assert.assertNotNull(mailList);
@@ -77,8 +81,8 @@ public class TemplateTest {
 
     @Test
     public void mustContainFirstName() {
-        Template template = new Template("DefaultTestTemplate", "Greetings {FirstName}", "Dear {FirstName} {LastName}. Please find the details of the course {CourseName} {Location} {Instructor} ");
-        template.saveIt();
+        template2 = new Template("DefaultTestTemplate", "Greetings {FirstName}", "Dear {FirstName} {LastName}. Please find the details of the course {CourseName} {Location} {Instructor} ");
+        template2.saveIt();
 
         List<Template> tempList = Template.findByTemplateName("DefaultTestTemplate");
 
