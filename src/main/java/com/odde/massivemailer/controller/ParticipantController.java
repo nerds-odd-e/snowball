@@ -27,5 +27,13 @@ public class ParticipantController extends AppController {
         outputStream.println(jsonFormat);
         outputStream.close();
     }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        ServletOutputStream outputStream = response.getOutputStream();
+        String courseId = request.getParameter("courseId");
+        String participantId = request.getParameter("participantIdHidden");
+        new Participant(new Integer(participantId), new Integer(courseId)).save();
+        response.sendRedirect("enrollParticipant.jsp?courseId="+courseId);
+    }
 }
 

@@ -46,9 +46,9 @@
                                        class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Course
                                        </a></li></ul>
 
-                <!--<li><a href="eventlist.jsp"><span
+                <li><a href="enrollParticipant.jsp"><span
                         class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                        Event List</a></li>-->
+                        Enroll Participant</a></li>
                 <li><a id="emailtracking" href="email_tracking.jsp"><span
                         class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                         Email Tracking</a></li>

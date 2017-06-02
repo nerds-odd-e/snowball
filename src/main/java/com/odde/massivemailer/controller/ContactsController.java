@@ -29,7 +29,12 @@ public class ContactsController extends AppController {
     }
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String convertedContactToJSON = AppGson.getGson().toJson(ContactPerson.findAll());
+        String convertedContactToJSON = null;
+        if (req.getParameter("email") == null) {
+            convertedContactToJSON = AppGson.getGson().toJson(ContactPerson.findAll());
+        } else {
+            convertedContactToJSON = AppGson.getGson().toJson(ContactPerson.getContactByEmail(req.getParameter("email")));
+        }
         ServletOutputStream outputStream = resp.getOutputStream();
         outputStream.print(convertedContactToJSON);
     }

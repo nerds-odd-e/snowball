@@ -31,5 +31,24 @@ import javax.servlet.annotation.WebServlet;
             }
             resp.sendRedirect("add_event.jsp?" + resultMsg);
         }
+
+
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String resultMsg = "";
+
+        try {
+
+            Map map = getParameterFromRequest(req, new String[]{"coursename", "location", "address", "coursedetails", "duration", "instructor", "startdate"});
+            Course course = new Course(map);
+            course.saveIt();
+
+            resultMsg = "status=success&msg=Add course successfully";
+        } catch (Exception e) {
+            resultMsg = "status=failed&msg=" + e.getMessage();
+
+        }
+        //resp.sendRedirect("add_event.jsp?" + resultMsg);
+        }
+
     }
 

@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 import com.odde.TestWithDB;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -35,6 +36,17 @@ public class ContactsControllerTest {
 
         assertThat(response.getContentAsString(), containsString("\"email\":\"john@gmail.com\""));
         assertThat(response.getContentAsString(), containsString("\"firstname\":\"Peter\""));
+    }
+
+    @Test
+    public void searchContactsInJSON() throws Exception {
+        new ContactPerson("John", "john@gmail.com", "Doe", "ComA").saveIt();
+        new ContactPerson("Peter", "peter@gmail.com", "Toh", "ComA").saveIt();
+        request.setParameter("email", "john@gmail.com");
+        controller.doGet(request, response);
+
+        assertThat(response.getContentAsString(), containsString("\"email\":\"john@gmail.com\""));
+        Assert.assertTrue(response.getContentAsString().indexOf("\"email\":\"peter@gmail.com\"") < 0);
     }
 
     @Test

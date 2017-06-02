@@ -119,14 +119,6 @@
 										</div>
 									</div>
 									<br> <br>
-                                    <div class="row">
-                                        <div class="col-lg-1">Participants:</div>
-                                        <div class="col-lg-11">
-                                              <input type="text" class="form-control" name="email" id="email">
-                                              <button type="button" class="btn btn-default" id="add_button" value="Add" disabled>Add</button>
-                                        </div>
-                                    </div>
-									<br> <br>
 									<div class="row">
 										<div class="col-lg-12">
 											<button type="button" class="btn btn-default"
