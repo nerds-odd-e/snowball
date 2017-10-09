@@ -1,7 +1,7 @@
 Feature: send preview mail
   As a user I want to send preview mail to admin
 
-  @developing @now
+  @developing
   Scenario Outline: send precourse email
     Given there is a course starting from "17.05.2017"
     And there are students with email <student emails> loaded for this course

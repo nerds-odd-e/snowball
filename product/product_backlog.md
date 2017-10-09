@@ -31,7 +31,7 @@
 | *Sprint 6 Team Tokyo*                                                                       | *7*  |   |
 | | | |
 | ******************************************* | |
-| Send emial to single contact with the same location of the event (Singapore only) | 5 | |
+| Send email to single contact with the same location of the event (Singapore only) | 5 | |
 | Send email to multiple contact mactching contact location to event location | 8 | |
 | support 3 pre defined cities with known distance SG, TK, BKK | 5 | |
 | *Sprint 7 Team Slytherin *                                                                       | *7*  |   |

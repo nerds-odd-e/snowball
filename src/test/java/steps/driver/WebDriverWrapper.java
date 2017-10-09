@@ -92,13 +92,17 @@ public class WebDriverWrapper {
     }
 
     public void pageShouldContain(String text) {
-        String bodyText = driver.findElement(By.tagName("body")).getText();
+        String bodyText = getBodyText();
         assertTrue("Text not found!", bodyText.contains(text));
+    }
+
+    private String getBodyText() {
+        return driver.findElement(By.tagName("body")).getText();
     }
 
     public void expectElementWithIdToContainText(String id, String text) {
         String actualText = findElementById(id).getText();
-        assertTrue("Text not found! actual: "+ actualText+ ", expected:" + text, actualText.contains(text));
+        assertTrue("Text not found! actual: "+ actualText+ ", expected:`" + text + "` But got: `" + getBodyText() + "`", actualText.contains(text));
     }
 
     public void expectElementWithIdToContainValue(String id, int value) {
