@@ -27,3 +27,6 @@ npm test
 ```
 * Make sure firefox binary is in the path export PATH=$PATH:/Applications/Firefox.app/Contents/MacOS˜
 
+#### IntelliJ Integration
+
+http://javalite.io/intellij_idea_integration

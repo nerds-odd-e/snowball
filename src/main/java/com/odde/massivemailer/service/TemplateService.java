@@ -9,9 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 
-/**
- * Created by csd on 30/5/17.
- */
 @Deprecated
 public class TemplateService {
 
