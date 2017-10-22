@@ -27,11 +27,11 @@ public class SendAllEventsController extends AppController {
 
         List<ContactPerson> contactList = ContactPerson.whereHasLocation();
         for (ContactPerson person : contactList) {
-            List<Event> eventsNearContact = Event.whereNearTo(locationProvider, person.getLocation());
+            List<Course> eventsNearContact = Event.whereNearTo(locationProvider, person.getLocation());
 
             if(!eventsNearContact.isEmpty()) {
                 String content = eventsNearContact.stream()
-                        .map(e -> e.getTitle())
+                        .map(e -> e.getCoursename())
                         .collect(Collectors.joining("<br/>\n"));
                 try {
                     Mail.createEventMail(content, person.getEmail()).sendMailWith(getMailService());

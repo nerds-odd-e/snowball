@@ -5,7 +5,7 @@ Feature: Send all events to contacts with the same location as the event - Singa
   Background:
     Given visit event list page
 
-  @email @now
+  @email
   Scenario: Have events but have no events at same location
     When We have below number of contacts at each location:
       |location | number of contacts|
@@ -40,7 +40,7 @@ Feature: Send all events to contacts with the same location as the event - Singa
     |location | number of emails  | number of events in the email  |
     |Singapore|                  2|                               6|
 
-  @email @now
+  @email
   Scenario: Contacts from multiple location not within radius, Events at single location
     When We have below number of contacts at each location:
       |location | number of contacts|

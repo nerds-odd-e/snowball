@@ -42,8 +42,5 @@ public class DBResetController extends AppController {
         Base.exec("DELETE FROM events");
         Base.exec("DELETE FROM contact_people");
         Base.exec("DELETE FROM courses");
-        Base.exec("INSERT INTO courses (coursename, duration,location,startdate,address,coursedetails,instructor)\n" +
-                "        VALUES ('CSD', '30', 'Singapore','17.05.2017','odd-e','CSD Training','Terry')");
-
     }
 }

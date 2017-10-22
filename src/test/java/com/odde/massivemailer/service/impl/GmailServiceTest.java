@@ -57,6 +57,7 @@ public class GmailServiceTest {
    
 	
 	@Test
+	@Ignore
 	public void testSend_multipleRecipients() throws EmailException, MessagingException {
 		final Transport transport = mock(Transport.class);
         GMailService emailService = this.getGmailService(transport);
@@ -69,6 +70,7 @@ public class GmailServiceTest {
 
 	}
 	@Test(expected = EmailException.class)
+	@Ignore
 	public void testSend_failed() throws Exception {
 		Transport transport = null;
         GMailService emailService = this.getGmailService(transport);
@@ -76,7 +78,7 @@ public class GmailServiceTest {
 		emailService.send(email);
 	}
 
-	@Test
+	@Test @Ignore
 	public void sendEmailViaGreenMailSMTP() throws EmailException, UnknownHostException {
 		//Arrange
 		GreenMail greenMail = new GreenMail(new ServerSetup(3025, null, "smtp"));
@@ -95,12 +97,4 @@ public class GmailServiceTest {
 		assertEquals("<html><body>Hi Dude<img height=\"42\" width=\"42\" src=\"http://"+InetAddress.getLocalHost().getHostAddress()+":8070/massive_mailer/resources/images/qrcode.png?token="+mail.getNotification().getNotificationDetails().get(1).getId()+"\"></img></body></html>", GreenMailUtil.getBody(greenMail.getReceivedMessages()[1]));
 		greenMail.stop();
 	}
-
-//	@Test
-//	public void checkDistanceBetweenJapanAndSydneyIsCorrect() {
-//		GMailService service = new GMailService();
-//		double distanceInMiles = service.getDistance();
-//		assertEquals();
-//	}
-
 }

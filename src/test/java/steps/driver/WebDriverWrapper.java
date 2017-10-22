@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,6 +34,7 @@ public class WebDriverWrapper {
             dcap.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);
             driver = new PhantomJSDriver(dcap);
             Logger.getLogger(PhantomJSDriverService.class.getName()).setLevel(Level.OFF);
+            driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
             driver.manage().window().maximize();
         }
 
@@ -96,7 +98,7 @@ public class WebDriverWrapper {
         assertTrue("Text not found!", bodyText.contains(text));
     }
 
-    private String getBodyText() {
+    public String getBodyText() {
         return driver.findElement(By.tagName("body")).getText();
     }
 

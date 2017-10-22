@@ -30,8 +30,8 @@ public class Event extends Model implements Serializable{
         setLocation(location);
     }
 
-    public static List<Event> whereNearTo(LocationProviderService locationProviderService, String location) {
-        return where("location in (" + locationProviderService.getCloseByLocationStrings(location)+")");
+    public static List<Course> whereNearTo(LocationProviderService locationProviderService, String location) {
+        return Course.where("location in (" + locationProviderService.getCloseByLocationStrings(location)+")");
     }
 
     public static int numberOfEventsNear(List<String> contactsLocation, LocationProviderService locationProviderService) {

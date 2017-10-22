@@ -11,15 +11,10 @@ import static org.junit.Assert.assertEquals;
 @RunWith(TestWithDB.class)
 public class EventTest {
 
-    private final Event singaporeEvent = new Event("Scrum In Singapore", "", "Singapore");
-    private final Event singaporeEventTwo = new Event("A-TDD In Singapore", "", "Singapore");
-    private final Event bangkokEvent = new Event("Code Smells In Bangkok", "", "Bangkok");
-    private final Event tokyoEvent = new Event("Code Refactoring In Tokyo", "", "Tokyo");
+    private final Course singaporeEvent = new Course("Scrum In Singapore", "", "Singapore");
+    private final Course bangkokEvent = new Course("Code Smells In Bangkok", "", "Bangkok");
 
     private final ContactPerson singaporeContact = new ContactPerson("testName1", "test1@gmail.com", "test1LastName", "", "Singapore");
-    private final ContactPerson singaporeContactTwo = new ContactPerson("testName2", "test2@gmail.com", "test2LastName", "", "Singapore");
-    private final ContactPerson tokyoContact = new ContactPerson("testName3", "test3@gmail.com", "test3LastName", "", "Tokyo");
-    private final ContactPerson noLocContact= new ContactPerson("testName4", "test4@gmail.com", "test4LastName", "", null);
 
     @Test
     public void shouldCreateEventWithTitleAsTest() {

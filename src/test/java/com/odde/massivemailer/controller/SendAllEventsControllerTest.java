@@ -2,9 +2,11 @@ package com.odde.massivemailer.controller;
 
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.ContactPerson;
+import com.odde.massivemailer.model.Course;
 import com.odde.massivemailer.model.Event;
 import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.service.GMailService;
+import org.javalite.activejdbc.Base;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,10 +24,10 @@ import static org.mockito.Mockito.verify;
 @RunWith(TestWithDB.class)
 public class SendAllEventsControllerTest {
 
-    private final Event singaporeEvent = new Event("Scrum In Singapore", "", "Singapore");
-    private final Event singaporeEventTwo = new Event("A-TDD In Singapore", "", "Singapore");
-    private final Event bangkokEvent = new Event("Code Smells In Bangkok", "", "Bangkok");
-    private final Event tokyoEvent = new Event("Code Refactoring In Tokyo", "", "Tokyo");
+    private final Course singaporeEvent = new Course("Scrum In Singapore", "", "Singapore");
+    private final Course singaporeEventTwo = new Course("A-TDD In Singapore", "", "Singapore");
+    private final Course bangkokEvent = new Course("Code Smells In Bangkok", "", "Bangkok");
+    private final Course tokyoEvent = new Course("Code Refactoring In Tokyo", "", "Tokyo");
 
     private final ContactPerson singaporeContact = new ContactPerson("testName1", "test1@gmail.com", "test1LastName", "", "Singapore");
     private final ContactPerson singaporeContactTwo = new ContactPerson("testName2", "test2@gmail.com", "test2LastName", "", "Singapore");
@@ -68,7 +70,7 @@ public class SendAllEventsControllerTest {
 
     @Test
     public void send1EventTo1ContactsAsMail() throws Exception {
-        new Event("Testing-1").saveIt();
+        singaporeEvent.saveIt();
         new ContactPerson("testName", "test1@gmail.com", "testLastName","","Singapore").saveIt();
         sendAllEventsController.doPost(request, response);
         assertEquals("eventlist.jsp?email_sent=1&event_in_email=1", response.getRedirectedUrl());
@@ -76,7 +78,7 @@ public class SendAllEventsControllerTest {
 
     @Test
     public void send1EventTo2ContactsAsMail() throws Exception {
-        new Event("Testing-1").saveIt();
+        singaporeEvent.saveIt();
         singaporeContact.saveIt();
         singaporeContactTwo.saveIt();
         sendAllEventsController.doPost(request, response);
@@ -120,8 +122,8 @@ public class SendAllEventsControllerTest {
 
         verify(gmailService, times(2)).send(mailArgument.capture());
         for (Mail mail: mailArgument.getAllValues()) {
-            assertEquals(singaporeEvent.getTitle() + linebreak +
-                        singaporeEventTwo.getTitle(), mail.getContent());
+            assertEquals(singaporeEvent.getCoursename() + linebreak +
+                        singaporeEventTwo.getCoursename(), mail.getContent());
         }
     }
 
@@ -136,8 +138,8 @@ public class SendAllEventsControllerTest {
 
         verify(gmailService, times(2)).send(mailArgument.capture());
         for (Mail mail: mailArgument.getAllValues()) {
-            assertEquals(singaporeEvent.getTitle() + linebreak +
-                    bangkokEvent.getTitle(), mail.getContent());
+            assertEquals(singaporeEvent.getCoursename() + linebreak +
+                    bangkokEvent.getCoursename(), mail.getContent());
         }
     }
 
@@ -152,7 +154,7 @@ public class SendAllEventsControllerTest {
 
         verify(gmailService, times(2)).send(mailArgument.capture());
         for (Mail mail: mailArgument.getAllValues()) {
-            assertEquals(bangkokEvent.getTitle(), mail.getContent());
+            assertEquals(bangkokEvent.getCoursename(), mail.getContent());
         }
     }
 
@@ -167,8 +169,8 @@ public class SendAllEventsControllerTest {
         verify(gmailService, times(1)).send(mailArgument.capture());
 
         for (Mail mail: mailArgument.getAllValues()) {
-            assertEquals(singaporeEvent.getTitle() + linebreak +
-                    bangkokEvent.getTitle(), mail.getContent());
+            assertEquals(singaporeEvent.getCoursename() + linebreak +
+                    bangkokEvent.getCoursename(), mail.getContent());
             assertEquals(singaporeContact.getEmail(), mail.getReceipts().get(0));
             assertEquals(1, mail.getReceipts().size());
         }
@@ -186,7 +188,7 @@ public class SendAllEventsControllerTest {
         verify(gmailService, times(1)).send(mailArgument.capture());
 
         for (Mail mail: mailArgument.getAllValues()) {
-            assertEquals(tokyoEvent.getTitle(), mail.getContent());
+            assertEquals(tokyoEvent.getCoursename(), mail.getContent());
             assertEquals(tokyoContact.getEmail(), mail.getReceipts().get(0));
             assertEquals(1, mail.getReceipts().size());
         }

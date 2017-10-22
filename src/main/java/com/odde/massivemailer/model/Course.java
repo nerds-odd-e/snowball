@@ -20,7 +20,13 @@ public class Course extends Model {
 
     }
 
-     public Course(Map<String, String> map) {
+    public Course(String title, String content, String location) {
+        setCourseName(title);
+        setCourseDetails(content);
+        setLocation(location);
+    }
+
+    public Course(Map<String, String> map) {
 
         for (Map.Entry param :map.entrySet()) {
             set(param.getKey(), param.getValue());
@@ -37,6 +43,10 @@ public class Course extends Model {
 
     public void setLocation(String location) {
         set("location", location);
+    }
+
+    public void setCourseDetails(String details) {
+        set("coursedetails", details);
     }
 
     public String getCoursename() {

@@ -15,7 +15,6 @@ public class CourseTests {
 
     @Given("^I am on create new course page$")
     public void visitCreateCoursePage() throws Throwable {
-        System.out.println("Test Add Event");
         driver.visit(BASE_URL);
     }
 
