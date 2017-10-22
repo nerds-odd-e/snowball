@@ -108,7 +108,7 @@ tasks.cucumber {
 }
 
 task cucumberNow() {
-    //cucumber.tags += ['@now']
+    //cucumber.tags += ['@developing']
     finalizedBy 'cucumber'
 }
 

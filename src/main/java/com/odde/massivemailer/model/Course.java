@@ -1,5 +1,6 @@
 package com.odde.massivemailer.model;
 
+import com.odde.massivemailer.service.LocationProviderService;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
@@ -31,6 +32,18 @@ public class Course extends Model {
         for (Map.Entry param :map.entrySet()) {
             set(param.getKey(), param.getValue());
         }
+    }
+
+    public static List<Course> whereNearTo(LocationProviderService locationProviderService, String location) {
+        return where("location in (" + locationProviderService.getCloseByLocationStrings(location)+")");
+    }
+
+    public static int numberOfEventsNear(List<String> contactsLocation, LocationProviderService locationProviderService) {
+        int totalEventsNearContactLocation = 0;
+        for (String location : contactsLocation) {
+            totalEventsNearContactLocation += whereNearTo(locationProviderService, location).size();
+        }
+        return totalEventsNearContactLocation;
     }
 
     public void setCourseName(String courseName) {

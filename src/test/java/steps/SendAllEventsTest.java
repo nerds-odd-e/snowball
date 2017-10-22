@@ -10,11 +10,11 @@ import steps.driver.WebDriverWrapper;
 import java.util.List;
 
 public class SendAllEventsTest {
-    private static final String BASE_URL = "http://localhost:8070/massive_mailer/eventlist.jsp";
+    private static final String BASE_URL = "http://localhost:8070/massive_mailer/coursedlist.jsp";
 
     private WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
     private int numberOfEvents, numberOfEventsInLocation;
-    private int  numberOfContacts, numberOfContactsInLocation;
+    private int numberOfContacts, numberOfContactsInLocation;
 
     @Given("^visit event list page$")
     public void VisitEventListPage() throws Throwable {
@@ -29,8 +29,8 @@ public class SendAllEventsTest {
         this.numberOfContactsInLocation = numberOfContactsInLocation;
         this.numberOfContacts = numOfContacts;
         MyStepdefs contactTests = new MyStepdefs();
-        for (int i=0;i<this.numberOfContacts;i++) {
-            contactTests.addAContact("test@test"+i+".com","Singapore");
+        for (int i = 0; i < this.numberOfContacts; i++) {
+            contactTests.addAContact("test@test" + i + ".com", "Singapore");
         }
     }
 
@@ -39,12 +39,12 @@ public class SendAllEventsTest {
         List<List<String>> contacts = dtContactsPerLocation.raw();
         contacts = contacts.subList(1, contacts.size());//skip header row
         int totalNumberOfContacts = 0;
-        for(List<String> location:contacts){
+        for (List<String> location : contacts) {
             MyStepdefs contactTests = new MyStepdefs();
             this.numberOfContactsInLocation = Integer.parseInt(location.get(1));
-            for (int i=0;i<this.numberOfContactsInLocation;i++) {
+            for (int i = 0; i < this.numberOfContactsInLocation; i++) {
                 totalNumberOfContacts++;
-                contactTests.addAContact("test@test"+totalNumberOfContacts+".com",location.get(0));
+                contactTests.addAContact("test@test" + totalNumberOfContacts + ".com", location.get(0));
             }
         }
         this.numberOfContacts = totalNumberOfContacts;
@@ -55,15 +55,11 @@ public class SendAllEventsTest {
         this.numberOfEventsInLocation = numberOfEventsInLocation;
         this.numberOfEvents = numberOfEvents;
         EventTests eventTests = new EventTests();
-        for(int i=0;i<this.numberOfEventsInLocation;i++) {
-            eventTests.visitAddEventPage();
-            eventTests.addEventAndSelectLocationFromDropdown("Event "+i,"Singapore");
-            eventTests.clickRegisterEvent();
+        for (int i = 0; i < this.numberOfEventsInLocation; i++) {
+            eventTests.addCourse("Event " + i, "Singapore", "2017-05-17");
         }
-        for(int i=0;i<this.numberOfEvents-this.numberOfEventsInLocation;i++) {
-            eventTests.visitAddEventPage();
-            eventTests.addEventAndSelectLocationFromDropdown("Event "+i,"Not-Singapore");
-            eventTests.clickRegisterEvent();
+        for (int i = 0; i < this.numberOfEvents - this.numberOfEventsInLocation; i++) {
+            eventTests.addCourse("Event " + i, "Not-Singapore", "2017-05-17");
         }
     }
 
@@ -72,14 +68,12 @@ public class SendAllEventsTest {
         List<List<String>> events = dtEventsPerLocation.raw();
         events = events.subList(1, events.size());//skip header row
         int totalNumberOfEvent = 0;
-        for(List<String> oneLocation:events){
+        for (List<String> oneLocation : events) {
             EventTests eventTests = new EventTests();
             this.numberOfEventsInLocation = Integer.parseInt(oneLocation.get(1));
-            for (int i=0;i<this.numberOfEventsInLocation;i++) {
+            for (int i = 0; i < this.numberOfEventsInLocation; i++) {
                 totalNumberOfEvent++;
-                eventTests.visitAddEventPage();
-                eventTests.addEventAndSelectLocationFromDropdown("Event "+totalNumberOfEvent,oneLocation.get(0));
-                eventTests.clickRegisterEvent();
+                eventTests.addCourse("Event " + totalNumberOfEvent, oneLocation.get(0), "2017-05-17");
             }
         }
         this.numberOfEvents = totalNumberOfEvent;
@@ -99,17 +93,17 @@ public class SendAllEventsTest {
     }
 
     @Then("It should send out emails:")
-    public void shouldSendOutEmails(DataTable dtEmails){
+    public void shouldSendOutEmails(DataTable dtEmails) {
         List<List<String>> emails = dtEmails.raw();
         emails = emails.subList(1, emails.size());//skip header row
-        for(List<String> oneLocation:emails) {
+        for (List<String> oneLocation : emails) {
             String expectedMessage = String.format("%s emails contain %s events sent.", oneLocation.get(1), oneLocation.get(2));
             driver.expectElementWithIdToContainText("message", expectedMessage);
         }
     }
 
     @Then("It should not send out emails")
-    public void shouldNotSendOutEmails(){
+    public void shouldNotSendOutEmails() {
         String expectedMessage = String.format("0 emails contain 0 events sent.");
         driver.expectElementWithIdToContainText("message", expectedMessage);
     }

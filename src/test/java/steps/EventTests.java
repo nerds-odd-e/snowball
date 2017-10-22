@@ -18,10 +18,10 @@ public class EventTests {
     }
 
     @When("^Create course \"([^\"]*)\" in \"([^\"]*)\"$")
-    public void addEventAndSelectLocationFromDropdown(String courseName,String location) throws Throwable {
+    public void addEventAndSelectLocationFromDropdown(String courseName, String location, String date) throws Throwable {
         driver.setTextField("coursename", courseName);
         driver.setTextField("coursedetails", "nothing important");
-        driver.setTextField("startdate", "2017-07-21");
+        driver.setTextField("startdate", date);
         driver.setDropdownValue("location", location);
     }
 
@@ -33,5 +33,11 @@ public class EventTests {
     @Then("^Course save page should display \"([^\"]*)\"$")
     public void eventListPageShouldContain(String message) throws Throwable {
         driver.pageShouldContain(message);
+    }
+
+    void addCourse(String courseName, String location, String date) throws Throwable {
+        visitAddEventPage();
+        addEventAndSelectLocationFromDropdown(courseName, location, date);
+        clickRegisterEvent();
     }
 }

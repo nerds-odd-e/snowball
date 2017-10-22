@@ -78,7 +78,7 @@
                                         <div class="col-lg-11">
                                               <input type="text" name="email" id="email">
                                               <input type="hidden" name="participantIdHidden" value=""/>
-                                              <button type="button" class="btn btn-default" id="add_button" value="Add" disabled>Add</button>
+                                              <button type="button" name="add_button" class="btn btn-default" id="add_button" value="Add" disabled>Add</button>
                                         </div>
                                     </div>
 

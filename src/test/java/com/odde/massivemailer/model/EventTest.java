@@ -33,7 +33,7 @@ public class EventTest {
         bangkokEvent.saveIt();
         singaporeContact.saveIt();
 
-        assertEquals(2, Event.numberOfEventsNear(ContactPerson.findValidLocations(), new LocationProviderService()));
+        assertEquals(2, Course.numberOfEventsNear(ContactPerson.findValidLocations(), new LocationProviderService()));
 
 
     }

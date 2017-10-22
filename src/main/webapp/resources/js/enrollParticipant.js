@@ -59,7 +59,7 @@ function populateCourses(courseId)
 	                var selected = " ";
 	                var _course = new Course(item.attributes);
 	                if (_course.id === courseId) {selected = " selected=true";}
-                    $('#courses').append('<option value=' + _course.id + selected +'>' + _course.id + ' - ' + _course.coursename + '</option>');
+                    $('#courses').append('<option value=' + _course.id + selected +'>' + _course.coursename + '</option>');
                  });
 	     },
 	    async: false

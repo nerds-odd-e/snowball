@@ -8,6 +8,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -61,15 +62,12 @@ public class WebDriverWrapper {
         e.sendKeys(text);
     }
 
-    public void setDropdownValue(String dropdownName, String text) {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        Select dropdown = new Select(wait.until(ExpectedConditions.visibilityOfElementLocated(By.name(dropdownName))));
-        dropdown.selectByValue(text);
+    public void clickButton(String button_id) {
+        getWait().until(ExpectedConditions.presenceOfElementLocated(By.id(button_id))).click();
     }
 
-    public void clickButton(String button_name) {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(button_name))).click();
+    public void clickButtonByName(String button_name) {
+        getWait().until(ExpectedConditions.presenceOfElementLocated(By.name(button_name))).click();
     }
 
     public void clickXPath(String xpath) {
@@ -81,16 +79,14 @@ public class WebDriverWrapper {
     }
 
     public void expectAlert(String msg) {
-        WebDriverWait wait = new WebDriverWait(driver, 2);
-        wait.until(ExpectedConditions.alertIsPresent());
+        getWait().until(ExpectedConditions.alertIsPresent());
         Alert alert = driver.switchTo().alert();
         assertEquals(msg, alert.getText());
         alert.accept();
     }
 
     public void expectRedirect(String url) {
-        WebDriverWait wait = new WebDriverWait(driver, 2);
-        wait.until(ExpectedConditions.urlContains(url));
+        getWait().until(ExpectedConditions.urlContains(url));
     }
 
     public void pageShouldContain(String text) {
@@ -115,11 +111,6 @@ public class WebDriverWrapper {
         assertTrue(Integer.parseInt(findElementById(id).getText()) >= value);
     }
 
-    public void expectElementWithIdToContainTextInXSeconds(String id, String value, int seconds) {
-        WebDriverWait wait = new WebDriverWait(driver, seconds);
-        wait.until(ExpectedConditions.attributeToBe(By.id(id), "innerHTML", value));
-    }
-
     public void expectPageToContainExactlyNElements(String text, int count) {
         List<WebElement> elements = driver.findElements(By.xpath("//*[contains(text(),'"+text+"')]"));
         assertEquals(elements.size(), count);
@@ -132,9 +123,17 @@ public class WebDriverWrapper {
     public String getElementMarginWithClass(String cssClass) { return driver.findElement(By.className(cssClass)).getCssValue("margin-left"); }
 
     public void setDropdownByText(String dropdownName, String text) {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        Select dropdown = new Select(wait.until(ExpectedConditions.visibilityOfElementLocated(By.name(dropdownName))));
+        Select dropdown = new Select(getWait().until(ExpectedConditions.visibilityOfElementLocated(By.name(dropdownName))));
         dropdown.selectByVisibleText(text);
+    }
+
+    public void setDropdownValue(String dropdownName, String text) {
+        Select dropdown = new Select(getWait().until(ExpectedConditions.visibilityOfElementLocated(By.name(dropdownName))));
+        dropdown.selectByValue(text);
+    }
+
+    private WebDriverWait getWait() {
+        return new WebDriverWait(driver, 10);
     }
 }
 

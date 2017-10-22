@@ -64,8 +64,8 @@ function renderCourseList(json, selector)
           ['location', course.location],
           ['startdate', course.startdate],
           ['instructor', course.instructor],
-          ['', createButtonElement('send_button', 'Send Pre-Course Email', sendEvent)],
-          ['', createButtonElement('preview_button', 'Preview Pre-Course Email', previewEvent)],
+          ['', createButtonElement('send_button', 'precourse ' + course.coursename, sendEvent)],
+          ['', createButtonElement('preview_button', 'preview ' + course.coursename, previewEvent)],
         ];
         generateTableRow(selector, tableContent);
     })

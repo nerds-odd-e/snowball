@@ -19,7 +19,7 @@ public class SendAllEventsController extends AppController {
         LocationProviderService locationProvider = new LocationProviderService();
 
         if (ContactPerson.count()==0) {
-            resp.sendRedirect("eventlist.jsp?email_sent=0&event_in_email=0");
+            resp.sendRedirect("coursedlist.jsp?email_sent=0&event_in_email=0");
             return;
         }
 
@@ -27,7 +27,7 @@ public class SendAllEventsController extends AppController {
 
         List<ContactPerson> contactList = ContactPerson.whereHasLocation();
         for (ContactPerson person : contactList) {
-            List<Course> eventsNearContact = Event.whereNearTo(locationProvider, person.getLocation());
+            List<Course> eventsNearContact = Course.whereNearTo(locationProvider, person.getLocation());
 
             if(!eventsNearContact.isEmpty()) {
                 String content = eventsNearContact.stream()
@@ -42,9 +42,9 @@ public class SendAllEventsController extends AppController {
             }
         }
 
-        String redirectUrl = String.format("eventlist.jsp?email_sent=%s&event_in_email=%s",
+        String redirectUrl = String.format("coursedlist.jsp?email_sent=%s&event_in_email=%s",
                 totalMailsSent,
-                Event.numberOfEventsNear(ContactPerson.findValidLocations(), locationProvider)
+                Course.numberOfEventsNear(ContactPerson.findValidLocations(), locationProvider)
         );
 
         resp.sendRedirect(redirectUrl);
