@@ -4,10 +4,10 @@ Feature: Add Contact
 
   Scenario: Verify Add New Contact To Contact List
     When Add A Contact "terry@odd-e.com" at "Singapore"
-    And Page Should Contain "terry@odd-e.com"
+    Then Page Should Contain "terry@odd-e.com"
 
   Scenario: Verify Add Existing Contact To Contact List
     Given "terry@odd-e.com" which in "Singapore" is a contact already
     When Add A Contact "terry@odd-e.com" at "Singapore"
-    And Page Should Contain "terry@odd-e.com"
+    Then Page Should Contain "terry@odd-e.com"
 
