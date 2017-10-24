@@ -17,6 +17,7 @@ public class SendAllEventsController extends AppController {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LocationProviderService locationProvider = new LocationProviderService();
+        // MailLogService
 
         if (ContactPerson.count()==0) {
             resp.sendRedirect("coursedlist.jsp?email_sent=0&event_in_email=0");
