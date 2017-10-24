@@ -16,6 +16,7 @@ import java.util.Properties;
 import java.time.Instant;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(TestWithDB.class)
 public class MailLogTest {
@@ -90,19 +91,15 @@ public class MailLogTest {
         List<Map> list = MailLog.getReport();
         assertEquals(2, list.size());
 
-        Map ml = list.get(0);
-        if (ml.get("contact_person_id").equals(singaporeContact.getId())) {
-            assertEquals(2, ml.get("course_count"));
-        } else {
-            assertEquals(1, ml.get("course_count"));
-        }
-
-        ml = list.get(1);
-        if (ml.get("contact_person_id").equals(bangkokContact.getId())) {
-            assertEquals(1, ml.get("course_count"));
-        } else {
-            assertEquals(2, ml.get("course_count"));
-        }
+        list.forEach( m -> {
+            if (m.get("contact_person_id").equals(singaporeContact.getId())) {
+                assertEquals(2, m.get("course_count"));
+            } else if (m.get("contact_person_id").equals(bangkokContact.getId())) {
+                assertEquals(1, m.get("course_count"));
+            } else {
+                assertTrue("must not happen!!", true);
+            }
+        });
     }
 }
 
