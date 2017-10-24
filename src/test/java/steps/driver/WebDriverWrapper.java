@@ -53,6 +53,10 @@ public class WebDriverWrapper {
         assertTrue(driver.getCurrentUrl().equals(url));
     }
 
+    public String getCurrentUrl(){
+        return driver.getCurrentUrl();
+    }
+
     public UiElement findElementByName(String name) {
         return new SeleniumWebElement(driver.findElement(By.name(name)));
     }
