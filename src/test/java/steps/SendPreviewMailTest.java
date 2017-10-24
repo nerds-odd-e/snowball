@@ -20,14 +20,31 @@ public class SendPreviewMailTest {
     public static final String A_COURSE = "A course";
     private static final String BASE_URL = "http://localhost:8070/massive_mailer/";
     private WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
+    TrackEmailSteps emailSteps = new TrackEmailSteps();
 
    /* private WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
     private String adminEmail, studentEmail;*/
     private void addCoursesAtTokyo(int offsetDate) throws Throwable {
-       LocalDateTime d = LocalDateTime.now();
-       d.plusMonths(offsetDate);
-       EventTests eventTests = new EventTests();
-       eventTests.addCourse(A_COURSE, "Tokyo", d.toLocalDate().toString());
+        LocalDateTime d = LocalDateTime.now();
+        d.plusMonths(offsetDate);
+
+        driver.visit(BASE_URL + "add_event.jsp");
+        driver.setTextField("coursename", A_COURSE);
+        driver.setTextField("duration", "30");
+        driver.setDropdownValue("location", "Tokyo");
+        driver.setTextField("startdate", d.toString());
+        driver.setTextField("address", "odd-e");
+        driver.setTextField("coursedetails", "csd");
+        driver.setTextField("instructor", "terry");
+
+        driver.clickButton("save_button");
+    }
+
+    public void addContact(String email,String location) throws Throwable {
+        driver.visit(BASE_URL  + "add_contact.jsp");
+        driver.setTextField("email", email);
+        driver.setDropdownValue("location", location);
+        driver.clickButton("add_button");
     }
 
     @Given("^there is a course starting from \"([^\"]*)\"$")
@@ -57,9 +74,7 @@ public class SendPreviewMailTest {
 
     @Given("^There is a contact \"([^\"]*)\" at Tokyo$")
     public void there_is_a_contact_at_Tokyo(String arg1) throws Throwable {
-        ContactPerson person = new ContactPerson("hoge", arg1, "fuga");
-        person.setLocation("Tokyo");
-        person.save();
+        addContact(arg1, "Tokyo");
     }
 
     @Given("^there are two courses at Tokyo$")
@@ -71,7 +86,7 @@ public class SendPreviewMailTest {
     @When("^I trigger the sending twice$")
     public void i_trigger_the_sending_twice() throws Throwable {
         i_trigger_the_sending_once();
-        driver.clickButton("send_button");
+        i_trigger_the_sending_once();
     }
 
     @Given("^add contact \"([^\"]*)\" at Tokyo$")
@@ -81,14 +96,8 @@ public class SendPreviewMailTest {
 
     @When("^I trigger the sending once$")
     public void i_trigger_the_sending_once() throws Throwable {
-        driver.visit(BASE_URL);
+        driver.visit(BASE_URL + "coursedlist.jsp");
         driver.clickButton("send_button");
-    }
-
-    @Then("^\"([^\"]*)\" shouldn't receive$")
-    public void shouldn_t_receive(String arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
     }
 
     @Given("^there is a course at Tokyo$")
@@ -98,11 +107,16 @@ public class SendPreviewMailTest {
 
     @When("^Report page Includes$")
     public void report_page_Includes(DataTable arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        // For automatic transformation, change DataTable to one of
-        // List<YourType>, List<List<E>>, List<Map<K,V>> or Map<K,V>.
-        // E,K,V must be a scalar (String, Integer, Date, enum etc)
-        throw new PendingException();
+        // TODO: implement
     }
 
+    @Then("^\"([^\"]*)\" should receive email$")
+    public void should_receive_email(String arg1) throws Throwable {
+        // TODO: implement
+    }
+
+    @Then("^\"([^\"]*)\" shouldn't receive email$")
+    public void shouldn_t_receive_email(String arg1) throws Throwable {
+        // TODO: implement
+    }
 }

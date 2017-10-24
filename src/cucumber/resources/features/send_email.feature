@@ -16,26 +16,38 @@ Feature: Send Email
       | gadget@mailinator.com                          | success : Email successfully sent |
       | inspector@mailinator.com;gadget@mailinator.com | success : Email successfully sent |
 
-  Scenario: send email only one event
-    Given There is a contact "abc@odd-e.com" at Tokyo
+  Scenario Outline: send email only one event
+    Given There is a contact "<email>" at Tokyo
     And there are two courses at Tokyo
     When I trigger the sending twice
-    Then I should get an element with message "abc@odd-e.com is already sent"
+    Then "<email>" shouldn't receive email
 
-  Scenario: add new contact
-    Given There is a contact "abc@odd-e.com" at Tokyo
+   Examples:
+    | email |
+    | ivan@odd-e.com |
+
+  Scenario Outline: add new contact
+    Given There is a contact "<email1>" at Tokyo
     And there are two courses at Tokyo
     And I trigger the sending once
-    And add contact "xyz@odd-e.com" at Tokyo
+    And add contact "<email2>" at Tokyo
     When I trigger the sending once
-    Then I should get an element with message "Email successfully sent"
-    But "abc@odd-e.com" shouldn't receive
+    Then "<email2>" should receive email
+    But "<email1>" shouldn't receive email
 
-  Scenario: Even though there are multiple courses, one user receive only 1 email
-    Given: there is a contact "abc@odd-e.com" at Tokyo, Seoul
-    And: there are two courses at Tokyo, Souel
-    When: I trigger the sending twice
-    Then: contact "abc@odd-e.com" should receive only 1 email
+   Examples:
+    | email1               | email2                |
+    | ivan@odd-e.com       | terry@odd-e.com       |
+
+  Scenario Outline: Even though there are multiple courses, one user receive only 1 email
+    Given there is a contact "<email>" at Tokyo, Seoul
+    And there are two courses at Tokyo, Souel
+    When I trigger the sending twice
+    Then contact "<email>" should receive only 1 email
+
+   Examples:
+    | email                |
+    | ivan@odd-e.com       |
 
   Scenario: Report Page Includes
     Given There is a contact "abc@odd-e.com" at Tokyo
@@ -44,5 +56,3 @@ Feature: Send Email
     When Report page Includes
       | email         | course | SendDate |
       | abc@odd-e.com | 1      | *        |
-
-
