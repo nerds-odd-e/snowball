@@ -8,6 +8,9 @@ import steps.driver.WebDriverFactory;
 import steps.driver.WebDriverWrapper;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 public class CourseTests {
 
     private WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
@@ -27,6 +30,7 @@ public class CourseTests {
             driver.setTextField("coursename", val.get(0));
             driver.setTextField("duration", val.get(1));
             driver.setDropdownValue("location", val.get(2));
+            //driver.setTextField("city", val.get(3));
             driver.setTextField("startdate", val.get(3));
             driver.setTextField("address", val.get(4));
             driver.setTextField("coursedetails", val.get(5));
@@ -43,5 +47,13 @@ public class CourseTests {
     @Then("^Course should save and successfully saved message should appear$")
     public void eventListPageShouldContain() throws Throwable {
         driver.expectRedirect(BASE_URL);
+        assertTrue(driver.getCurrentUrl().contains("status=success&msg=Add%20course%20successfully"));
+
+    }
+
+    @Then("^Course should not save and show error messagea$")
+    public void eventShowErrorMassage() throws Throwable {
+        driver.expectRedirect(BASE_URL);
+        assertTrue(driver.getCurrentUrl().contains("status=failed&msg=CityName%20is%20invalid"));
     }
 }
