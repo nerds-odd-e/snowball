@@ -56,17 +56,3 @@ Feature: Send Email
     When Report page Includes
       | email         | course | SendDate |
       | abc@odd-e.com | 1      | *        |
-
-  Scenario: Send to the same contact again when there is a new course
-    Given There is a contact "abc@odd-e.com" at Tokyo
-    And Add a course with below details
-      |coursename|duration|country|city   |startdate  |address|coursedetails|instructor|
-      |    CSD-1 | 30     |Japan  |Tokyo  |2017-10-01 |odd-e  |CSD Training | Terry    |
-    And I click send button
-    And Add a course with below details
-      |coursename|duration|country|city   |startdate  |address|coursedetails|instructor|
-      |    CSD-2 | 30     |Japan  |Tokyo  |2017-10-23 |odd-e  |CSD Training | Terry    |
-    When I click send button
-    Then It should send out emails:
-      | location | number of emails | number of events in the email |
-      | Combined |                1 |                             2 |
