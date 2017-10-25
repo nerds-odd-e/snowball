@@ -58,7 +58,7 @@ Feature: Send Email
       | abc@odd-e.com | 1      | *        |
 
   Scenario: Send to the same contact again when there is a new course
-    Given There is a contact "abc@odd-e.com" at Tokyo
+    Given "terry@odd-e.com" which in "Tokyo" is a contact already
     And Add a course with below details
       |coursename|duration|country|city   |startdate  |address|coursedetails|instructor|
       |    CSD-1 | 30     |Japan  |Tokyo  |2017-10-01 |odd-e  |CSD Training | Terry    |
