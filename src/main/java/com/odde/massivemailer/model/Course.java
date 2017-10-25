@@ -29,11 +29,10 @@ public class Course extends Model {
 
     public Course(Map<String, String> map) throws Exception {
 
-
-
-        if (map.get("city") != null && map.get("city").equals("Foobar")) {
+        if (map.get("city").equals("Foobar")) {
             throw new Exception("CityName is invalid");
         }
+
 
         String[] keys = {"coursename", "address", "coursedetails", "duration", "instructor", "startdate"};
 
@@ -41,11 +40,7 @@ public class Course extends Model {
             set(key, map.get(key));
         }
 
-        if (map.get("city") == null) {
-            set("location", map.get("country"));
-        } else {
-            set("location", map.get("country") + "-" + map.get("city"));
-        }
+        set("location", map.get("country") + "-" + map.get("city"));
     }
 
     public static List<Course> whereNearTo(LocationProviderService locationProviderService, String location) {
