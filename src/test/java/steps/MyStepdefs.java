@@ -8,6 +8,8 @@ import cucumber.api.java.en.When;
 import steps.driver.WebDriverFactory;
 import steps.driver.WebDriverWrapper;
 
+import static org.junit.Assert.assertTrue;
+
 
 public class MyStepdefs {
 
@@ -19,9 +21,24 @@ public class MyStepdefs {
         addContact(BASE_URL  + "add_contact.jsp", email, location);
     }
 
+    @When("^Add A Contact \"([^\"]*)\" at \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void addAContact(String email,String country, String city) throws Throwable {
+        addContact(BASE_URL  + "add_contact.jsp", email, country, city);
+    }
+
     @And("^Page Should Contain \"([^\"]*)\"$")
     public void pageShouldContain(String text) throws Throwable {
         driver.pageShouldContain(text);
+    }
+
+    @And("^Page Should Success")
+    public void pageShouldSuccess() throws Throwable {
+        assertTrue(driver.getCurrentUrl().contains("status=success"));
+    }
+
+    @And("^Page Should Fail$")
+    public void pageShouldFail() throws Throwable {
+        assertTrue(driver.getCurrentUrl().contains("status=failed"));
     }
 
     @Then("^Element \"([^\"]*)\" Should Contain \"([^\"]*)\"$")
@@ -65,6 +82,14 @@ public class MyStepdefs {
         driver.visit(url);
         driver.setTextField("email", email);
         driver.setDropdownValue("location", location);
+        driver.clickButton("add_button");
+    }
+
+    private void addContact(String url, String email, String country, String city) throws Throwable{
+        driver.visit(url);
+        driver.setTextField("email", email);
+        driver.setDropdownValue("country", country);
+        driver.setTextField("city", city);
         driver.clickButton("add_button");
     }
 
