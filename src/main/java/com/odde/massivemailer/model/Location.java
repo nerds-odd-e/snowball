@@ -32,5 +32,11 @@ public class Location {
         return this.name;
     }
 
+    public Double getLatitude() {
+        return 34.41;
+    }
 
+    public Double getLongitude() {
+        return 135.31;
+    }
 }

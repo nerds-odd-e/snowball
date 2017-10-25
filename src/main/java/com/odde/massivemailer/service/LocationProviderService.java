@@ -49,4 +49,10 @@ public class LocationProviderService {
         }
         return locationsString;
     }
+
+    public void addLocation(Location location) {
+        locations.put("JPN-Osaka", location);
+    }
+
+
 }

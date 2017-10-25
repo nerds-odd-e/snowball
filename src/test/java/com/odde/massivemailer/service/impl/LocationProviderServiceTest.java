@@ -38,4 +38,13 @@ public class LocationProviderServiceTest {
         assertEquals("", locationProviderService.getCloseByLocationStrings("Bukit Batok West Ave 6"));
     }
 
+    @Test
+    public void addLocation() {
+        locationProviderService.addLocation(new Location("JPN-Osaka", 34.41, 135.31));
+        Location storedLocation = locationProviderService.getLocationForName("JPN-Osaka");
+        assertNotNull(storedLocation);
+        assertEquals(new Double(34.41), storedLocation.getLatitude());
+        assertEquals(new Double(135.31), storedLocation.getLongitude());
+    }
+
 }
