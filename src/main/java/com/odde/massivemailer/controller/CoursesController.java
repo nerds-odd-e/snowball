@@ -47,7 +47,6 @@ import javax.servlet.annotation.WebServlet;
             resultMsg = "status=failed&msg=" + e.getMessage();
 
         }
-        //resp.sendRedirect("add_event.jsp?" + resultMsg);
         }
 
     }
