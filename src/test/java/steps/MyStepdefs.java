@@ -56,11 +56,6 @@ public class MyStepdefs {
         addAContact(email,location);
     }
 
-    @Given("^\"([^\"]*)\" which in \"([^\"]*)\" and \"([^\"]*)\" is a contact already$")
-    public void is_a_contact_already(String email, String country, String city) throws Throwable {
-        addAContact(email,country,city);
-    }
-
     @When("^Login with email \"([^\"]*)\"$")
     public void loginWithEmail(String email) throws Throwable{
         loginPage(BASE_URL + "game_login.jsp", email);

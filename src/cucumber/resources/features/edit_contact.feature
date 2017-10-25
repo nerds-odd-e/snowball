@@ -5,7 +5,7 @@ Feature: Edit Contact
 
   @contact
   Scenario: Edit Location Information of Contact
-    Given "terry@odd-e.com" which in "China" and "Chengdu" is a contact already
+    Given "terry@odd-e.com" which in "Singapore" is a contact already
     When I change the location information of contact to be "Tokyo"
     Then contact "terry@odd-e.com"'s locations should be "Tokyo"
 

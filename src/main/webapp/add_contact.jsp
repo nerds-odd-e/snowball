@@ -53,17 +53,10 @@
 									</div>
 									<br> <br>
 									<div class="row">
-										<div class="col-lg-1">Country:</div>
+										<div class="col-lg-1">Location:</div>
 										<div class="col-lg-11">
-											<select id="countrydrp" class="form-control" name="country">
+											<select id="locationdrp" class="form-control" name="location">
                                             </select>
-										</div>
-									</div>
-									<br> <br>
-									<div class="row">
-										<div class="col-lg-1">City:</div>
-										<div class="col-lg-11">
-											<input id="city" class="form-control" name="city" />
 										</div>
 									</div>
 									<br> <br>
@@ -88,5 +81,5 @@
 <!-- Bootstrap Core JavaScript -->
 <script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="resources/js/addContact.js"></script>
-<script type="text/javascript" src="resources/js/populateCountriesDropdown.js"></script>
+<script type="text/javascript" src="resources/js/populateLocationDropdown.js"></script>
 </html>
