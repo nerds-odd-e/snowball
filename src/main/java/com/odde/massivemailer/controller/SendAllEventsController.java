@@ -31,17 +31,19 @@ public class SendAllEventsController extends AppController {
             List<Course> eventsNearContact = Course.whereNearTo(locationProvider, person.getLocation());
 
             if(!eventsNearContact.isEmpty()) {
-                String content = eventsNearContact.stream()
-                        .map(e -> e.getCoursename())
-                        .collect(Collectors.joining("<br/>\n"));
-                try {
-                    Mail.createEventMail(content, person.getEmail()).sendMailWith(getMailService());
-                    MailLogService.saveLogs(person.getId(), eventsNearContact);
-                } catch (EmailException e) {
-                    throw new IOException(e);
+                MailLog prevlog = MailLog.findFirst("contact_person_id = ?", person.getId());
+                if (prevlog == null) {
+                    String content = eventsNearContact.stream()
+                            .map(e -> e.getCoursename())
+                            .collect(Collectors.joining("<br/>\n"));
+                    try {
+                        Mail.createEventMail(content, person.getEmail()).sendMailWith(getMailService());
+                        MailLogService.saveLogs(person.getId(), eventsNearContact);
+                    } catch (EmailException e) {
+                        throw new IOException(e);
+                    }
+                    totalMailsSent++;
                 }
-
-                totalMailsSent++;
             }
         }
 

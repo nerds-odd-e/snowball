@@ -15,6 +15,7 @@ import steps.page.CourseListPage;
 import steps.page.EnrollParticipantPage;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class SendPreviewMailTest {
     public static final String A_COURSE = "A course";
@@ -26,13 +27,14 @@ public class SendPreviewMailTest {
     private String adminEmail, studentEmail;*/
     private void addCoursesAtTokyo(int offsetDate) throws Throwable {
         LocalDateTime d = LocalDateTime.now();
+        DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         d.plusMonths(offsetDate);
 
         driver.visit(BASE_URL + "add_event.jsp");
         driver.setTextField("coursename", A_COURSE);
         driver.setTextField("duration", "30");
         driver.setDropdownValue("location", "Tokyo");
-        driver.setTextField("startdate", d.toString());
+        driver.setTextField("startdate", d.format(f));
         driver.setTextField("address", "odd-e");
         driver.setTextField("coursedetails", "csd");
         driver.setTextField("instructor", "terry");
@@ -86,7 +88,9 @@ public class SendPreviewMailTest {
     @When("^I trigger the sending twice$")
     public void i_trigger_the_sending_twice() throws Throwable {
         i_trigger_the_sending_once();
+        driver.setWait(5);
         i_trigger_the_sending_once();
+        driver.setWait(5);
     }
 
     @Given("^add contact \"([^\"]*)\" at Tokyo$")
@@ -117,6 +121,6 @@ public class SendPreviewMailTest {
 
     @Then("^\"([^\"]*)\" shouldn't receive email$")
     public void shouldn_t_receive_email(String arg1) throws Throwable {
-        // TODO: implement
+        driver.expectElementWithIdToContainText("message", "0 emails contain 0 events sent.");
     }
 }

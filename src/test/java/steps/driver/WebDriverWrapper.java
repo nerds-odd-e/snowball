@@ -139,5 +139,9 @@ public class WebDriverWrapper {
     private WebDriverWait getWait() {
         return new WebDriverWait(driver, 10);
     }
+
+    public void setWait(long time) {
+        driver.manage().timeouts().implicitlyWait(time, TimeUnit.SECONDS);
+    }
 }
 
