@@ -8,6 +8,7 @@ public class AppGson {
     static public Gson getGson() {
         return new GsonBuilder()
                 .registerTypeAdapter(Event.class, new EventSerialiser())
+                .registerTypeAdapter(Course.class, new CourseSerialiser())
                 .registerTypeAdapter(ContactPerson.class, new ContactPersonSerialiser())
                 .registerTypeAdapter(Template.class, new TemplateSerialiser())
                 .registerTypeAdapter(Notification.class, new NotificationSerialiser())
