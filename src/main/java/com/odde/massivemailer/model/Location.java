@@ -2,6 +2,8 @@ package com.odde.massivemailer.model;
 
 public class Location {
     private String name;
+    private String countryCode;
+    private String countryName;
     private double lat;
     private double lng;
 
@@ -10,6 +12,8 @@ public class Location {
         this.lat = lat;
         this.lng = lng;
     }
+
+    public Location(){}
 
     private double toRadian (double x) {
         return x * Math.PI / 180;
@@ -38,5 +42,39 @@ public class Location {
 
     public Double getLongitude() {
         return 135.31;
+    }
+
+    public String getCountryCode() { return this.countryCode; }
+
+    public String getCountryName() {
+        return countryName;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
+    }
+
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
     }
 }
