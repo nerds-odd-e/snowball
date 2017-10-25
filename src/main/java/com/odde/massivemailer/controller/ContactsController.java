@@ -17,7 +17,8 @@ public class ContactsController extends AppController {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String resultMsg = "";
 
-        ContactPerson contact = new ContactPerson("todo name", req.getParameter("email"), "todo last name", "todo company",req.getParameter("location"));
+        String location = req.getParameter("country") + "/" + req.getParameter("city");
+        ContactPerson contact = new ContactPerson("todo name", req.getParameter("email"), "todo last name", "todo company",location);
         try {
             contact.saveIt();
             resultMsg = "status=success&msg=Add contact successfully";
