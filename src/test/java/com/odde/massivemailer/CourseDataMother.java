@@ -18,7 +18,8 @@ public class CourseDataMother {
         Map<String, String> params = new HashMap<>();
 
         params.put("coursename", "CSD_NEW");
-        params.put("location", "SG");
+        params.put("country", "singapore");
+        params.put("city", "singapore");
         params.put("address", "roberts lane");
         params.put("coursedetails", "CSD new course details");
         params.put("duration", "5");
