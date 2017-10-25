@@ -1,23 +1,45 @@
 package steps;
 
+import com.odde.massivemailer.model.MailLog;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.javalite.activejdbc.Base;
 import steps.driver.WebDriverFactory;
 import steps.driver.WebDriverWrapper;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class SendAllEventsTest {
     private static final String BASE_URL = "http://localhost:8070/massive_mailer/coursedlist.jsp";
+    private static final String ADD_CONTACT_URL = "http://localhost:8070/massive_mailer/add_contact.jsp";
 
     private WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
     private int numberOfEvents, numberOfEventsInLocation;
     private int numberOfContacts, numberOfContactsInLocation;
 
+
+    public void addContact(String email,String location) {
+        driver.visit(ADD_CONTACT_URL);
+        driver.setTextField("email", email);
+        driver.setDropdownValue("location", location);
+        driver.clickButton("add_button");
+    }
+
+    public void cleanReportTable() {
+        Base.open("org.sqlite.JDBC", "jdbc:sqlite:cucumber_test.db", "", "");
+        Base.openTransaction();
+        MailLog.deleteAll();
+        Base.close();
+    }
+
+
     @Given("^visit event list page$")
     public void VisitEventListPage() throws Throwable {
+        cleanReportTable();
         this.numberOfEvents = 0;
         this.numberOfContacts = 0;
         driver.visit(BASE_URL);
@@ -107,4 +129,16 @@ public class SendAllEventsTest {
         String expectedMessage = String.format("0 emails contain 0 events sent.");
         driver.expectElementWithIdToContainText("message", expectedMessage);
     }
+
+    @Given("^There is a contact \"([^\"]*)\" at \"([^\"]*)\"$")
+    public void there_is_a_contact_at(String arg1, String arg2) throws Throwable {
+        Stream<String> list = Stream.of(arg2.split(","));
+        list.map(i -> i.trim()).forEach(i -> addContact(arg1, i));
+    }
+
+    @Given("^add contact \"([^\"]*)\" at Tokyo$")
+    public void add_contact_at_Tokyo(String arg1) throws Throwable {
+        there_is_a_contact_at(arg1, "Tokyo");
+    }
+
 }

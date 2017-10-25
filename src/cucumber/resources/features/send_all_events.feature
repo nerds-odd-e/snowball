@@ -112,14 +112,19 @@ Feature: Send all events to contacts with the same location as the event - Singa
     And I click send button
     Then It should not send out emails
 
-  @ys
-  Scenario: send email only one event
-    Given There is a contact "ivan@odd-e.com" at Tokyo
+  @developing
+  Scenario Outline: send email event
+    Given There is a contact "ivan@odd-e.com" at "<location>"
     And there are two courses at Tokyo
     When I trigger the sending twice
-    Then Page Should Contain "0 emails contain 2 events sent."
+    Then Page Should Contain "<message>"
 
-    @developing
+   Examples:
+     | location        | message                         |
+     | Tokyo           | 0 emails contain 2 events sent. |
+     | Tokyo, Seoul    | 1 emails contain 2 events sent. |
+
+  @developing
   Scenario Outline: add new contact
     Given There is a contact "<email1>" at Tokyo
     And there are two courses at Tokyo
@@ -132,17 +137,6 @@ Feature: Send all events to contacts with the same location as the event - Singa
     Examples:
       | email1               | email2                |
       | ivan@odd-e.com       | terry@odd-e.com       |
-
-  @developing
-  Scenario Outline: Even though there are multiple courses, one user receive only 1 email
-    Given there is a contact "<email>" at Tokyo, Seoul
-    And there are two courses at Tokyo, Souel
-    When I trigger the sending twice
-    Then contact "<email>" should receive only 1 email
-
-    Examples:
-      | email                |
-      | ivan@odd-e.com       |
 
   @developing
   Scenario: Report Page Includes
