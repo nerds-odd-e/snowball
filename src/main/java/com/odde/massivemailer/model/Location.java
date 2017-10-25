@@ -1,6 +1,11 @@
 package com.odde.massivemailer.model;
 
+import com.google.maps.model.LatLng;
+
 public class Location {
+    public static double INVALID_LONGTITUDE = -1;
+    public static double INVALID_LATITUDE = -1;
+
     private String name;
     private String countryCode;
     private String countryName;
@@ -76,5 +81,10 @@ public class Location {
 
     public void setLng(double lng) {
         this.lng = lng;
+    }
+
+    public void setLatLong(LatLng latLng) {
+        setLat(latLng.lat);
+        setLng(latLng.lng);
     }
 }
