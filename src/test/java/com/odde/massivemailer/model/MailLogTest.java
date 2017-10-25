@@ -90,16 +90,8 @@ public class MailLogTest {
 
         List<Map> list = MailLog.getReport();
         assertEquals(2, list.size());
-
-        list.forEach( m -> {
-            if (m.get("contact_person_id").equals(singaporeContact.getId())) {
-                assertEquals(2, m.get("course_count"));
-            } else if (m.get("contact_person_id").equals(bangkokContact.getId())) {
-                assertEquals(1, m.get("course_count"));
-            } else {
-                assertTrue("must not happen!!", true);
-            }
-        });
+        assertEquals(2, list.get(0).get("course_count"));
+        assertEquals(1, list.get(1).get("course_count"));
     }
 }
 
