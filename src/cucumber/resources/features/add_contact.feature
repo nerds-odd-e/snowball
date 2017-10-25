@@ -3,10 +3,15 @@ Feature: Add Contact
   so that I can sent newsletters to them later.
 
   @contact
-  Scenario: Verify Add New Contact To Contact List
-    When Add A Contact "terry@odd-e.com" at "Singapore"
-    Then Page Should Contain "terry@odd-e.com"
+  Scenario Outline: Verify Add New Contact To Contact List
+    When Add A Contact "<email>" at "<location>"
+    Then Page Should Contain "<email>"
     And Page Should Success
+
+    Examples:
+      | email           | location  |
+      | terry@odd-e.com | Singapore |
+      | aki@odd-e.com   | Tokyo     |
 
   @contact
   Scenario: Verify Add Existing Contact To Contact List
@@ -16,9 +21,16 @@ Feature: Add Contact
     And Page Should Fail
 
   @contact @developing
-  Scenario: Verify Add New Contact To Contact List with Country And City
-    When Add A Contact "terry@odd-e.com" at "China" and "Chengdu"
-    Then Page Should Contain "terry@odd-e.com"
-    And  Page Should Contain "China"
-    And  Page Should Contain "Chengdu"
+  Scenario Outline: Verify Add New Contact To Contact List with Country And City
+    When Add A Contact "<email>" at "<country>" and "<city>"
+    Then Page Should Contain "<email>"
+    And  Page Should Contain "<country>"
+    And  Page Should Contain "<city>"
     And Page Should Success
+
+    Examples:
+      | email           | city    | country     |
+      | user1@odd-e.com | Chengdu | China       |
+      | user2@odd-e.com | Aigle   | switzerland |
+      | user3@odd-e.com | Bern    | Switzerland |
+      | user4@odd-e.com | Dubna   | Russia      |
