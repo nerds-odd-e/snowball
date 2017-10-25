@@ -25,13 +25,7 @@ public class CourseDataMother {
         params.put("instructor", "ROOF");
         params.put("startdate", "2017-05-15");
 
-        try {
-            return new Course(params);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
+        return new Course(params);
     }
 
     public Course csd_course() {

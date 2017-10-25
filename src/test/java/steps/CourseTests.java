@@ -29,12 +29,12 @@ public class CourseTests {
         for(List<String> val:courses){
             driver.setTextField("coursename", val.get(0));
             driver.setTextField("duration", val.get(1));
-            driver.setDropdownValue("country", val.get(2));
-            driver.setTextField("city", val.get(3));
-            driver.setTextField("startdate", val.get(4));
-            driver.setTextField("address", val.get(5));
-            driver.setTextField("coursedetails", val.get(6));
-            driver.setTextField("instructor", val.get(7));
+            driver.setDropdownValue("location", val.get(2));
+            //driver.setTextField("city", val.get(3));
+            driver.setTextField("startdate", val.get(3));
+            driver.setTextField("address", val.get(4));
+            driver.setTextField("coursedetails", val.get(5));
+            driver.setTextField("instructor", val.get(6));
         }
     }
 
@@ -47,7 +47,6 @@ public class CourseTests {
     @Then("^Course should save and successfully saved message should appear$")
     public void eventListPageShouldContain() throws Throwable {
         driver.expectRedirect(BASE_URL);
-        System.out.println(driver.getCurrentUrl());
         assertTrue(driver.getCurrentUrl().contains("status=success&msg=Add%20course%20successfully"));
 
     }

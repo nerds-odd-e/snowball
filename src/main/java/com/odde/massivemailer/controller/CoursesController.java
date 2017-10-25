@@ -20,8 +20,7 @@ public class CoursesController extends AppController {
 
         try {
 
-            Map map = getParameterFromRequest(req, new String[]{"coursename", "country", "city", "address", "coursedetails", "duration", "instructor", "startdate"});
-
+            Map map = getParameterFromRequest(req, new String[]{"coursename", "location", "address", "coursedetails", "duration", "instructor", "startdate"});
             Course course = new Course(map);
             course.saveIt();
 

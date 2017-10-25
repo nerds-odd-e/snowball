@@ -27,20 +27,11 @@ public class Course extends Model {
         setLocation(location);
     }
 
-    public Course(Map<String, String> map) throws Exception {
+    public Course(Map<String, String> map) {
 
-        if (map.get("city").equals("Foobar")) {
-            throw new Exception("CityName is invalid");
+        for (Map.Entry param :map.entrySet()) {
+            set(param.getKey(), param.getValue());
         }
-
-
-        String[] keys = {"coursename", "address", "coursedetails", "duration", "instructor", "startdate"};
-
-        for (String key :keys) {
-            set(key, map.get(key));
-        }
-
-        set("location", map.get("country") + "-" + map.get("city"));
     }
 
     public static List<Course> whereNearTo(LocationProviderService locationProviderService, String location) {
