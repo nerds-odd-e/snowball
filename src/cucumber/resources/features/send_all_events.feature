@@ -119,6 +119,7 @@ Feature: Send all events to contacts with the same location as the event - Singa
     When I trigger the sending twice
     Then Page Should Contain "0 emails contain 2 events sent."
 
+    @developing
   Scenario Outline: add new contact
     Given There is a contact "<email1>" at Tokyo
     And there are two courses at Tokyo
@@ -132,6 +133,7 @@ Feature: Send all events to contacts with the same location as the event - Singa
       | email1               | email2                |
       | ivan@odd-e.com       | terry@odd-e.com       |
 
+  @developing
   Scenario Outline: Even though there are multiple courses, one user receive only 1 email
     Given there is a contact "<email>" at Tokyo, Seoul
     And there are two courses at Tokyo, Souel
@@ -142,6 +144,7 @@ Feature: Send all events to contacts with the same location as the event - Singa
       | email                |
       | ivan@odd-e.com       |
 
+  @developing
   Scenario: Report Page Includes
     Given There is a contact "abc@odd-e.com" at Tokyo
     And there is a course at Tokyo
