@@ -81,4 +81,9 @@ public class Template extends Model {
         return subject;
     }
 
+    public void saveTemplate(String subject, String content) {
+        setSubject(subject);
+        setContent(content);
+        saveIt();
+    }
 }
