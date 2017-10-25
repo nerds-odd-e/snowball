@@ -1,10 +1,7 @@
 package com.odde.massivemailer.controller;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.model.ContactPerson;
-import com.odde.massivemailer.model.Course;
-import com.odde.massivemailer.model.Event;
-import com.odde.massivemailer.model.Mail;
+import com.odde.massivemailer.model.*;
 import com.odde.massivemailer.service.GMailService;
 import org.javalite.activejdbc.Base;
 import org.junit.Before;
@@ -203,5 +200,35 @@ public class SendAllEventsControllerTest {
         verify(gmailService, times(0)).send(mailArgument.capture());
     }
 
+    @Test
+    public void bothContactsReceive2EventsWhenHaving4MailLogs() throws Exception {
+        MailLog.findAll().forEach(e -> e.delete());
+
+        singaporeEvent.saveIt();
+        singaporeEventTwo.saveIt();
+        singaporeContact.saveIt();
+        singaporeContactTwo.saveIt();
+
+        sendAllEventsController.doPost(request, response);
+
+        verify(gmailService, times(2)).send(mailArgument.capture());
+
+        assertEquals(4, MailLog.findAll().size());
+    }
+
+    @Test
+    public void contactFromTokyoDoesNotReceiveEventInBangkokNorSingaporeThenHaving2MailLogs() throws Exception {
+        MailLog.findAll().forEach(e -> e.delete());
+
+        singaporeEvent.saveIt();
+        bangkokEvent.saveIt();
+        tokyoContact.saveIt();
+        singaporeContact.saveIt();
+        sendAllEventsController.doPost(request, response);
+
+        verify(gmailService, times(1)).send(mailArgument.capture());
+
+        assertEquals(2, MailLog.findAll().size());
+    }
 
 }

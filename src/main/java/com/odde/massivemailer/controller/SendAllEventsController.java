@@ -14,10 +14,10 @@ import java.util.stream.Collectors;
 
 @WebServlet("/sendAllEvents")
 public class SendAllEventsController extends AppController {
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LocationProviderService locationProvider = new LocationProviderService();
-        // MailLogService
 
         if (ContactPerson.count()==0) {
             resp.sendRedirect("coursedlist.jsp?email_sent=0&event_in_email=0");
@@ -36,9 +36,11 @@ public class SendAllEventsController extends AppController {
                         .collect(Collectors.joining("<br/>\n"));
                 try {
                     Mail.createEventMail(content, person.getEmail()).sendMailWith(getMailService());
+                    MailLogService.saveLogs(person.getId(), eventsNearContact);
                 } catch (EmailException e) {
                     throw new IOException(e);
                 }
+
                 totalMailsSent++;
             }
         }
