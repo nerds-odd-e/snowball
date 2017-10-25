@@ -92,14 +92,12 @@ cucumber {
 }
 
 tasks.cucumber {
-    dependsOn unzipChromeDriver, unzipPhantomJs, assemble, testClasses, 'appBeforeIntegrationTest'
+    dependsOn unzipPhantomJs, assemble, testClasses, 'appBeforeIntegrationTest'
     finalizedBy 'appAfterIntegrationTest'
 
-    def chromeDriverFilename = Os.isFamily(Os.FAMILY_WINDOWS) ? "chromedriver.exe" : "chromedriver"
     def phantomJsFilename = Os.isFamily(Os.FAMILY_WINDOWS) ? "phantomjs.exe" : "bin/phantomjs"
 
     jvmOptions.systemProperties([
-            //"webdriver.chrome.driver": new File(unzipChromeDriver.outputs.files.singleFile, chromeDriverFilename).absolutePath,
             "phantomjs.binary.path": Os.isFamily(Os.FAMILY_MAC) ? '/usr/local/bin/phantomjs' : new File(unzipPhantomJs.outputs.files.singleFile, phantomJsFilename).absolutePath,
             "geb.cucumber.step.packages": "pages",
             "geb.env": System.getProperty("geb.env"),
@@ -110,6 +108,10 @@ tasks.cucumber {
 task cucumberNow() {
     //cucumber.tags += ['@developing']
     finalizedBy 'cucumber'
+}
+
+if('test' in project.gradle.startParameter.taskNames) {
+    project.gradle.startParameter.excludedTaskNames = ['karmaRun']
 }
 
 dependencies {
