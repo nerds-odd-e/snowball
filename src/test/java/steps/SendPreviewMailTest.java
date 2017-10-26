@@ -85,11 +85,6 @@ public class SendPreviewMailTest {
         i_trigger_the_sending_once();
     }
 
-    @Given("^add contact \"([^\"]*)\" at Tokyo$")
-    public void add_contact_at_Tokyo(String arg1) throws Throwable {
-        there_is_a_contact_at_Tokyo(arg1);
-    }
-
     @When("^I trigger the sending once$")
     public void i_trigger_the_sending_once() throws Throwable {
         driver.visit(BASE_URL + "coursedlist.jsp");
