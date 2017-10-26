@@ -41,10 +41,6 @@ public class LocationProviderService {
         return locationsString;
     }
 
-    public void addLocation(Location location) {
-        locations.put("Japan/Osaka", location);
-    }
-
     public void addLocationByName(String name) {
         // TODO: get lat and lng dynamically
         Location location = new Location(name, 34.41, 135.31);
