@@ -47,7 +47,7 @@
                                     <th>Course Name</th>
                                 </tr>
                             </thead>
-                            <tbody id="courseTable">
+                            <tbody id="reportTable">
                             </tbody>
                         </table>
 					</div>
