@@ -125,49 +125,45 @@ Feature: Send all events to contacts with the same location as the event - Singa
       | location | number of emails | number of events in the email |
       | Combined | 2                | 6                             |
 
-  @ys
-  Scenario Outline: send email only one event
+  @developing
+  Scenario Outline: send email event
     Given There is a contact "ivan@odd-e.com" at Japan/Tokyo
-    And there are two courses at Japan/Tokyo
-    When I trigger the sending twice
+    And there are "<number>" courses at "<location>"
+    And I trigger the sending once
+    And Page Should Contain "1 emails contain 2 events sent."
+    When I trigger the sending once
     Then Page Should Contain "0 emails contain 2 events sent."
 
-  @developing
-  Scenario Outline: add new contact
-    Given There is a contact "<email1>" at Japan/Tokyo
-    And there are two courses at Japan/Tokyo
-    And I trigger the sending once
-    And add contact "<email2>" at Japan/Tokyo
-    When I trigger the sending once
-    Then "<email2>" should receive email
-    But "<email1>" shouldn't receive email
-
     Examples:
-      | email1         | email2          |
-      | ivan@odd-e.com | terry@odd-e.com |
+      | location                | number |
+      | Japan/Tokyo             | 2      |
+      | Japan/Tokyo,Japan/Osaka | 1      |
 
   @developing
-  Scenario Outline: Even though there are multiple courses, one user receive only 1 email
-    Given there is a contact "<email>" at Japan/Tokyo
-    And there are two courses at Japan/Tokyo, Souel
-    When I trigger the sending twice
-    Then contact "<email>" should receive only 1 email
-
+  Scenario: add new contact
+    Given There is a contact "ivan@odd-e.com" at Japan/Tokyo
+    And there are "2" courses at "Japan/Tokyo"
+    And I trigger the sending once
+    And Page Should Contain "1 emails contain 2 events sent."
+    And add contact "terry@odd-e.com" at Japan/Tokyo
+    When I trigger the sending once
+    Then Page Should Contain "1 emails contain 2 events sent."
 
   @developing
   Scenario: Report Page Includes
     Given There is a contact "abc@odd-e.com" at Japan/Tokyo
-    And there is a course at Japan/Tokyo
+    And there are "1" courses at "Japan/Tokyo"
     And I trigger the sending once
     When Report page Includes
       | email         | course | SendDate |
       | abc@odd-e.com | 1      | *        |
 
-  Scenario Outline: send email only one event
+  @developing
+  Scenario: send email only one event
     Given There is a contact "ivan@odd-e.com" at Japan/Tokyo
-    And there are one courses at "Japan/Tokyo"
+    And there are "1" courses at "Japan/Tokyo"
     And I trigger the sending once
-    And there are one courses at "Japan/Osaka"
+    And there are "1" courses at "Japan/Osaka"
     When I trigger the sending once
     Then Page Should Contain "1 emails contain 2 events sent."
 

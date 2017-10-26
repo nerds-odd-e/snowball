@@ -9,18 +9,19 @@ import org.javalite.activejdbc.Base;
 import steps.driver.WebDriverFactory;
 import steps.driver.WebDriverWrapper;
 
-import java.util.Arrays;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Stream;
 
 public class SendAllEventsTest {
     private static final String BASE_URL = "http://localhost:8070/massive_mailer/coursedlist.jsp";
     private static final String ADD_CONTACT_URL = "http://localhost:8070/massive_mailer/add_contact.jsp";
+    private static final String ADD_EVENT_URL = "http://localhost:8070/massive_mailer/add_event.jsp";
 
     private WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
     private int numberOfEvents, numberOfEventsInLocation;
     private int numberOfContacts, numberOfContactsInLocation;
-
 
     public void addContact(String email,String location) {
         driver.visit(ADD_CONTACT_URL);
@@ -36,6 +37,22 @@ public class SendAllEventsTest {
         Base.close();
     }
 
+    private void addCourses(int offsetDate, String location) {
+        LocalDateTime d = LocalDateTime.now();
+        DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        d.plusMonths(offsetDate);
+
+        driver.visit(ADD_EVENT_URL);
+        driver.setTextField("coursename", "A course");
+        driver.setTextField("duration", "30");
+        driver.setDropdownValue("location", location);
+        driver.setTextField("startdate", d.format(f));
+        driver.setTextField("address", "odd-e");
+        driver.setTextField("coursedetails", "csd");
+        driver.setTextField("instructor", "terry");
+
+        driver.clickButton("save_button");
+    }
 
     @Given("^visit event list page$")
     public void VisitEventListPage() throws Throwable {
@@ -136,9 +153,22 @@ public class SendAllEventsTest {
         list.map(i -> i.trim()).forEach(i -> addContact(arg1, i));
     }
 
-    @Given("^add contact \"([^\"]*)\" at Tokyo$")
-    public void add_contact_at_Tokyo(String arg1) throws Throwable {
-        there_is_a_contact_at(arg1, "Tokyo");
+    @Given("^There is a contact \"([^\"]*)\" at Japan/Tokyo$")
+    public void there_is_a_contact_at_Japan_Tokyo(String arg1) throws Throwable {
+        MyStepdefs contactTests = new MyStepdefs();
+        contactTests.addAContact(arg1, "Japan", "Tokyo");
     }
 
+    @Given("^there are \"([^\"]*)\" courses at \"([^\"]*)\"$")
+    public void there_are_courses_at(String arg1, String arg2) throws Throwable {
+        int number = Integer.parseInt(arg1);
+        for (int i = 0; i < number; i++) {
+            Stream.of(arg2.split(",")).forEach(s -> addCourses(30, s));
+        }
+    }
+
+    @Given("^add contact \"([^\"]*)\" at Japan/Tokyo$")
+    public void add_contact_at_Japan_Tokyo(String arg1) throws Throwable {
+        there_is_a_contact_at_Japan_Tokyo(arg1);
+    }
 }
