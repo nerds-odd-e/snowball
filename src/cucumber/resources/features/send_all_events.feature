@@ -11,8 +11,8 @@ Feature: Send all events to contacts with the same location as the event - Singa
       | location            | number of contacts |
       | Singapore/Singapore | 0                  |
     And We have below number of events at each location:
-      | location  | number of events |
-      | Singapore | 3                |
+      |country   |city     | number of events  |
+      |Singapore |Singapore|                  3|
     And I click send button
     Then It should not send out emails
 
@@ -22,8 +22,8 @@ Feature: Send all events to contacts with the same location as the event - Singa
       | location            | number of contacts |
       | Singapore/Singapore | 2                  |
     And We have below number of events at each location:
-      | location  | number of events |
-      | Singapore | 0                |
+      |country   |city     | number of events  |
+      |Singapore |Singapore|                  0|
     And I click send button
     Then It should not send out emails
 
@@ -33,12 +33,12 @@ Feature: Send all events to contacts with the same location as the event - Singa
       | location            | number of contacts |
       | Singapore/Singapore | 2                  |
     And We have below number of events at each location:
-      | location  | number of events |
-      | Singapore | 3                |
+    |country  |city     | number of events  |
+    |Singapore|Singapore|                  3|
     And I click send button
     Then It should send out emails:
-      | location  | number of emails | number of events in the email |
-      | Singapore | 2                | 6                             |
+    |location           | number of emails  | number of events in the email  |
+    |Singapore-Singapore|                  2|                               6|
 
   @email
   Scenario: Contacts from multiple location not within radius, Events at single location
@@ -47,8 +47,8 @@ Feature: Send all events to contacts with the same location as the event - Singa
       | Singapore/Singapore | 2                  |
       | Japan/Tokyo         | 5                  |
     And We have below number of events at each location:
-      | location  | number of events |
-      | Singapore | 3                |
+      |country  |city     | number of events  |
+      |Singapore|Singapore|                  3|
     And I click send button
     Then It should send out emails:
       | location | number of emails | number of events in the email |
@@ -60,10 +60,10 @@ Feature: Send all events to contacts with the same location as the event - Singa
       | location            | number of contacts |
       | Singapore/Singapore | 2                  |
     And We have below number of events at each location:
-      | location  | number of events |
-      | Singapore | 3                |
-      | Tokyo     | 7                |
-      | Bangkok   | 1                |
+      |country  |city     | number of events  |
+      |Singapore|Singapore|                  3|
+      |Japan    |Tokyo    |                  7|
+      |Thailand |Bangkok  |                  1|
     And I click send button
     Then It should send out emails:
       | location | number of emails | number of events in the email |
@@ -76,10 +76,10 @@ Feature: Send all events to contacts with the same location as the event - Singa
       | Singapore/Singapore | 2                  |
       | Japan/Tokyo         | 5                  |
     And We have below number of events at each location:
-      | location  | number of events |
-      | Singapore | 3                |
-      | Tokyo     | 7                |
-      | Bangkok   | 1                |
+      |country  |city     | number of events  |
+      |Singapore|Singapore|                  3|
+      |Japan    |Tokyo    |                  7|
+      |Thailand |Bangkok  |                  1|
     And I click send button
     Then It should send out emails:
       | location | number of emails | number of events in the email |
@@ -93,8 +93,8 @@ Feature: Send all events to contacts with the same location as the event - Singa
       | Japan/Tokyo         | 5                  |
       | Thailand/Bangkok    | 3                  |
     And We have below number of events at each location:
-      | location  | number of events |
-      | Singapore | 3                |
+      |country  |city     | number of events  |
+      |Singapore|Singapore|                  3|
     And I click send button
     Then It should send out emails:
       | location | number of emails | number of events in the email |
@@ -107,8 +107,8 @@ Feature: Send all events to contacts with the same location as the event - Singa
       | Singapore/Singapore | 2                  |
       | Thailand/Bangkok    | 3                  |
     And We have below number of events at each location:
-      | location | number of events |
-      | Tokyo    | 3                |
+      |country|city     | number of events  |
+      |Japan  |Tokyo    |                  3|
     And I click send button
     Then It should not send out emails
 

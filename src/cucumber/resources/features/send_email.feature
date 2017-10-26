@@ -16,3 +16,19 @@ Feature: Send Email
       | gadget@mailinator.com                          | success : Email successfully sent |
       | inspector@mailinator.com;gadget@mailinator.com | success : Email successfully sent |
 
+  # TODO: should implement "Send to the same contact again when there is a new course" tasks
+  @developing
+  Scenario: Send to the same contact again when there is a new course
+    When We have below number of contacts at each location:
+      |country  |city     |  number of contacts|
+      |Singapore|Singapore|                   1|
+    And We have below number of events at each location:
+      |country  |city     |  number of contacts|
+      |Singapore|Singapore|                   1|
+    And We have below number of events at each location:
+      |country  |city     |  number of contacts|
+      |Singapore|Singapore|                   1|
+    When I click send button
+    Then It should send out emails:
+      | location | number of emails | number of events in the email |
+      | Combined |                1 |                             2 |

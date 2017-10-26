@@ -78,10 +78,10 @@ public class SendAllEventsTest {
         this.numberOfEvents = numberOfEvents;
         EventTests eventTests = new EventTests();
         for (int i = 0; i < this.numberOfEventsInLocation; i++) {
-            eventTests.addCourse("Event " + i, "Singapore", "2017-05-17");
+            eventTests.addCourseWithCountryAndCity("Event " + i, "Singapore", "Singapore", "2017-05-17");
         }
         for (int i = 0; i < this.numberOfEvents - this.numberOfEventsInLocation; i++) {
-            eventTests.addCourse("Event " + i, "Not-Singapore", "2017-05-17");
+            eventTests.addCourseWithCountryAndCity("Event " + i, "Not-Singapore", "Not-Singapore", "2017-05-17");
         }
     }
 
@@ -92,10 +92,10 @@ public class SendAllEventsTest {
         int totalNumberOfEvent = 0;
         for (List<String> oneLocation : events) {
             EventTests eventTests = new EventTests();
-            this.numberOfEventsInLocation = Integer.parseInt(oneLocation.get(1));
+            this.numberOfEventsInLocation = Integer.parseInt(oneLocation.get(2));
             for (int i = 0; i < this.numberOfEventsInLocation; i++) {
                 totalNumberOfEvent++;
-                eventTests.addCourse("Event " + totalNumberOfEvent, oneLocation.get(0), "2017-05-17");
+                eventTests.addCourseWithCountryAndCity("Event " + totalNumberOfEvent, oneLocation.get(0), oneLocation.get(1), "2017-05-17");
             }
         }
         this.numberOfEvents = totalNumberOfEvent;

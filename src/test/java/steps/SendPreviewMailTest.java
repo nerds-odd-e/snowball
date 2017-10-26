@@ -45,7 +45,7 @@ public class SendPreviewMailTest {
     @Given("^there is a course starting from \"([^\"]*)\"$")
     public void there_is_a_course_starting_from(String date) throws Throwable {
         EventTests eventTests = new EventTests();
-        eventTests.addCourse(A_COURSE, "Singapore", date);
+        eventTests.addCourseWithCountryAndCity(A_COURSE, "Singapore","Singapore", date);
     }
 
     @Given("^there are students with email \"([^\"]*)\" loaded for this course$")

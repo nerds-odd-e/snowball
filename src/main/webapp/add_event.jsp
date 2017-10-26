@@ -109,6 +109,9 @@
                                     	<div class="col-lg-11">
                                     	    <select id="countrydrp" class="form-control" name="country">
                                     	        <option value="China">China</option>
+                                    	        <option value="Singapore">Singapore</option>
+                                    	        <option value="Japan">Japan</option>
+                                    	        <option value="Thailand">Thailand</option>
                                     	    </select>
                                         </div>
                                     </div>

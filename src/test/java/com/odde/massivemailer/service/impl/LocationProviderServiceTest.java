@@ -36,9 +36,9 @@ public class LocationProviderServiceTest {
 
     @Test
     public void getClosebyLocations() {
-        assertEquals("\"Bangkok\", \"Jarkata\", \"Kuala Lumpur\", \"Singapore\"", locationProviderService.getCloseByLocationStrings("Singapore"));
-        assertEquals("\"Bangkok\", \"Hanoi\", \"Kuala Lumpur\", \"Singapore\"", locationProviderService.getCloseByLocationStrings("Bangkok"));
-        assertEquals("\"Seoul\", \"Shanghai\", \"Tokyo\"", locationProviderService.getCloseByLocationStrings("Tokyo"));
+        assertEquals("\"Bangkok\", \"Jarkata\", \"Kuala Lumpur\", \"Singapore\", \"Singapore-Singapore\", \"Thailand-Bangkok\"", locationProviderService.getCloseByLocationStrings("Singapore"));
+        assertEquals("\"Bangkok\", \"Hanoi\", \"Kuala Lumpur\", \"Singapore\", \"Singapore-Singapore\", \"Thailand-Bangkok\"", locationProviderService.getCloseByLocationStrings("Bangkok"));
+        assertEquals("\"Japan-Tokyo\", \"Seoul\", \"Shanghai\", \"Tokyo\"", locationProviderService.getCloseByLocationStrings("Tokyo"));
         assertEquals("\"Bangalore\", \"New Delhi\"", locationProviderService.getCloseByLocationStrings("Bangalore"));
         assertEquals("\"Beijing\", \"Seoul\", \"Shanghai\"", locationProviderService.getCloseByLocationStrings("Beijing"));
         assertEquals("", locationProviderService.getCloseByLocationStrings("Bukit Batok West Ave 6"));
