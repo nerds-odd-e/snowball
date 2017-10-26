@@ -37,8 +37,9 @@ public class CoursesControllerTest {
     @Test
     public void shouldCreateACourseWithCourseName_Location() throws ServletException, IOException {
         request.setParameter("coursename", "test couree");
-        request.setParameter("location", "singapore");
+        request.setParameter("country", "singapore");
+        request.setParameter("city", "singapore");
         controller.doPost(request, response);
-        Assert.assertEquals("singapore", Course.getCourseByName("test couree").getLocation());
+        Assert.assertEquals("singapore-singapore", Course.getCourseByName("test couree").getLocation());
     }
 }
