@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import com.odde.massivemailer.model.Location;
 import com.odde.massivemailer.service.LocationProviderService;
+import org.junit.Before;
 import org.junit.Test;
 
 public class LocationProviderServiceTest {
@@ -12,6 +13,11 @@ public class LocationProviderServiceTest {
 
     public LocationProviderServiceTest(){
         locationProviderService = new LocationProviderService();
+    }
+
+    @Before
+    public void setUp() {
+        LocationProviderService.resetLocations();
     }
 
     @Test
@@ -40,8 +46,17 @@ public class LocationProviderServiceTest {
 
     @Test
     public void addLocation() {
-        locationProviderService.addLocation(new Location("JPN-Osaka", 34.41, 135.31));
-        Location storedLocation = locationProviderService.getLocationForName("JPN-Osaka");
+        locationProviderService.addLocation(new Location("Japan/Osaka", 34.41, 135.31));
+        Location storedLocation = locationProviderService.getLocationForName("Japan/Osaka");
+        assertNotNull(storedLocation);
+        assertEquals(new Double(34.41), storedLocation.getLatitude());
+        assertEquals(new Double(135.31), storedLocation.getLongitude());
+    }
+
+    @Test
+    public void addLocationByName() {
+        locationProviderService.addLocationByName("Japan/Osaka");
+        Location storedLocation = locationProviderService.getLocationForName("Japan/Osaka");
         assertNotNull(storedLocation);
         assertEquals(new Double(34.41), storedLocation.getLatitude());
         assertEquals(new Double(135.31), storedLocation.getLongitude());
