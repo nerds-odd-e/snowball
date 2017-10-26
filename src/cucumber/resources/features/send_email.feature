@@ -32,4 +32,3 @@ Feature: Send Email
     Then It should send out emails:
       | location | number of emails | number of events in the email |
       | Combined |                1 |                             2 |
-    
