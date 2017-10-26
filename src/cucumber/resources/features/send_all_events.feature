@@ -118,8 +118,8 @@ Feature: Send all events to contacts with the same location as the event - Singa
       | location    | number of contacts |
       | Japan/Osaka | 2                  |
     And We have below number of events at each location:
-      | location | number of events |
-      | Tokyo    | 3                |
+      | country | city  | number of events |
+      | Japan   | Tokyo | 3                |
     And I click send button
     Then It should send out emails:
       | location | number of emails | number of events in the email |
