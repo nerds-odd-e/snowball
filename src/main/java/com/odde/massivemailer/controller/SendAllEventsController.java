@@ -18,33 +18,34 @@ public class SendAllEventsController extends AppController {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LocationProviderService locationProvider = new LocationProviderService();
-        int totalMailsSent = 0;
+        resp.sendRedirect(String.format("coursedlist.jsp?email_sent=%s&event_in_email=%s",
+                doSendAllMails(locationProvider),
+                Course.numberOfEventsNear(ContactPerson.findValidLocations(), locationProvider)
+        ));
+    }
 
+    private int doSendAllMails(LocationProviderService locationProvider) throws IOException {
+        int totalMailsSent = 0;
         List<ContactPerson> contactList = ContactPerson.whereHasLocation();
         for (ContactPerson person : contactList) {
             List<Course> eventsNearContact = Course.whereNearTo(locationProvider, person.getLocation());
             if ( eventsNearContact.isEmpty() || person.isMailed() )
                 continue;
             String content = eventsNearContact.stream().map(Course::getCoursename).collect(Collectors.joining("<br/>\n"));
-            try {
-                Mail.createEventMail(content, person.getEmail()).sendMailWith(getMailService());
-                Date sent_at = new Date();
-                for(Course course : eventsNearContact){
-                    new MailLog().create(person.getId(), sent_at, course);
-                }
-            } catch (EmailException e) {
-                throw new IOException(e);
-                
-            }
+            doSendMail(person, eventsNearContact, content);
             totalMailsSent++;
         }
+        return totalMailsSent;
+    }
 
-        String redirectUrl = String.format("coursedlist.jsp?email_sent=%s&event_in_email=%s",
-                totalMailsSent,
-                Course.numberOfEventsNear(ContactPerson.findValidLocations(), locationProvider)
-        );
+    private void doSendMail(ContactPerson person, List<Course> eventsNearContact, String content) throws IOException {
+        try {
+            Mail.createEventMail(content, person.getEmail()).sendMailWith(getMailService());
+            eventsNearContact.stream().forEach(i -> new MailLog().create(person.getId(), new Date(), i));
+        } catch (EmailException e) {
+            throw new IOException(e);
 
-        resp.sendRedirect(redirectUrl);
+        }
     }
 
 }
