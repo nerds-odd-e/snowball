@@ -44,7 +44,6 @@ public class SendAllEventsController extends AppController {
             eventsNearContact.stream().forEach(i -> new MailLog().create(person.getId(), new Date(), i));
         } catch (EmailException e) {
             throw new IOException(e);
-
         }
     }
 

@@ -82,9 +82,7 @@ public class SendPreviewMailTest {
     @When("^I trigger the sending twice$")
     public void i_trigger_the_sending_twice() throws Throwable {
         i_trigger_the_sending_once();
-        driver.setWait(5);
         i_trigger_the_sending_once();
-        driver.setWait(5);
     }
 
     @Given("^add contact \"([^\"]*)\" at Tokyo$")
@@ -96,6 +94,7 @@ public class SendPreviewMailTest {
     public void i_trigger_the_sending_once() throws Throwable {
         driver.visit(BASE_URL + "coursedlist.jsp");
         driver.clickButton("send_button");
+        driver.waitforElement("message");
     }
 
     @Given("^there is a course at Tokyo$")
