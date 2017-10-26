@@ -5,6 +5,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.openqa.jetty.util.StringUtil;
 import steps.driver.WebDriverFactory;
 import steps.driver.WebDriverWrapper;
 
@@ -51,11 +52,6 @@ public class MyStepdefs {
         driver.expectPageToContainExactlyNElements(text, count);
     }
 
-    @Given("^\"([^\"]*)\" which in \"([^\"]*)\" is a contact already$")
-    public void is_a_contact_already(String email, String location) throws Throwable {
-        addAContact(email,location);
-    }
-
     @Given("^\"([^\"]*)\" which in \"([^\"]*)\" and \"([^\"]*)\" is a contact already$")
     public void is_a_contact_already(String email, String country, String city) throws Throwable {
         addAContact(email,country,city);
@@ -84,9 +80,11 @@ public class MyStepdefs {
     }
 
     private void addContact(String url, String email, String location) throws Throwable{
+        String[] location_parts = location.split("/");
         driver.visit(url);
         driver.setTextField("email", email);
-        driver.setDropdownValue("location", location);
+        driver.setDropdownValue("country", location_parts[0]);
+        driver.setTextField("city", location_parts[1]);
         driver.clickButton("add_button");
     }
 

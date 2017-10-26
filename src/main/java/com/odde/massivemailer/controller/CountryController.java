@@ -19,6 +19,6 @@ public class CountryController extends AppController {
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletOutputStream outputStream = resp.getOutputStream();
-        outputStream.print("[\"China\", \"Switzerland\", \"Russia\"]");
+        outputStream.print("[\"China\", \"Switzerland\", \"Russia\", \"Japan\", \"Singapore\", \"Thailand\"]");
     }
 }

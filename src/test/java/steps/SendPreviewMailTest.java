@@ -42,13 +42,6 @@ public class SendPreviewMailTest {
         driver.clickButton("save_button");
     }
 
-    public void addContact(String email,String location) throws Throwable {
-        driver.visit(BASE_URL  + "add_contact.jsp");
-        driver.setTextField("email", email);
-        driver.setDropdownValue("location", location);
-        driver.clickButton("add_button");
-    }
-
     @Given("^there is a course starting from \"([^\"]*)\"$")
     public void there_is_a_course_starting_from(String date) throws Throwable {
         EventTests eventTests = new EventTests();
@@ -75,8 +68,9 @@ public class SendPreviewMailTest {
     }
 
     @Given("^There is a contact \"([^\"]*)\" at Tokyo$")
-    public void there_is_a_contact_at_Tokyo(String arg1) throws Throwable {
-        addContact(arg1, "Tokyo");
+    public void there_is_a_contact_at_Tokyo(String email) throws Throwable {
+        MyStepdefs contactTests = new MyStepdefs();
+        contactTests.addAContact(email, "Japan", "Tokyo");
     }
 
     @Given("^there are two courses at Tokyo$")

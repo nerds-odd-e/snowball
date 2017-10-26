@@ -54,6 +54,8 @@ public class ContactsControllerTest {
         new ContactPerson("John", "john@gmail.com", "Doe", "ComA").saveIt();
         assertEquals(1, (long) ContactPerson.count());
         request.setParameter("email", "john@gmail.com");
+        request.setParameter("country", "Singapore");
+        request.setParameter("city", "Singapore");
         controller.doPost(request, response);
         assertEquals(1, (long) ContactPerson.count());
         assertEquals("contactlist.jsp?status=failed&msg={ email=<should be unique> }", response.getRedirectedUrl());
@@ -62,7 +64,8 @@ public class ContactsControllerTest {
     @Test
     public void addNewContact() throws Exception {
         request.setParameter("email", "newbie@gmail.com");
-        request.setParameter("location", "Singapore");
+        request.setParameter("country", "Singapore");
+        request.setParameter("city", "Singapore");
         controller.doPost(request, response);
 
         assertEquals("contactlist.jsp?status=success&msg=Add contact successfully", response.getRedirectedUrl());

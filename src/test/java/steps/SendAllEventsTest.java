@@ -30,7 +30,7 @@ public class SendAllEventsTest {
         this.numberOfContacts = numOfContacts;
         MyStepdefs contactTests = new MyStepdefs();
         for (int i = 0; i < this.numberOfContacts; i++) {
-            contactTests.addAContact("test@test" + i + ".com", "Singapore");
+            contactTests.addAContact("test@test" + i + ".com", "Singapore", "Singapore");
         }
     }
 
