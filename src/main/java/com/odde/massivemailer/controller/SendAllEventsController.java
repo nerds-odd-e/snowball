@@ -29,22 +29,16 @@ public class SendAllEventsController extends AppController {
         List<ContactPerson> contactList = ContactPerson.whereHasLocation();
         for (ContactPerson person : contactList) {
             List<Course> eventsNearContact = Course.whereNearTo(locationProvider, person.getLocation());
-
-            if(!eventsNearContact.isEmpty()) {
-                MailLog prevlog = MailLog.findFirst("contact_person_id = ?", person.getId());
-                if (prevlog == null) {
-                    String content = eventsNearContact.stream()
-                            .map(e -> e.getCoursename())
-                            .collect(Collectors.joining("<br/>\n"));
-                    try {
-                        Mail.createEventMail(content, person.getEmail()).sendMailWith(getMailService());
-                        MailLogService.saveLogs(person.getId(), eventsNearContact);
-                    } catch (EmailException e) {
-                        throw new IOException(e);
-                    }
-                    totalMailsSent++;
-                }
+            if ( eventsNearContact.isEmpty() || person.isMailed() )
+                continue;
+            String content = eventsNearContact.stream().map(Course::getCoursename).collect(Collectors.joining("<br/>\n"));
+            try {
+                Mail.createEventMail(content, person.getEmail()).sendMailWith(getMailService());
+                MailLogService.saveLogs(person.getId(), eventsNearContact);
+            } catch (EmailException e) {
+                throw new IOException(e);
             }
+            totalMailsSent++;
         }
 
         String redirectUrl = String.format("coursedlist.jsp?email_sent=%s&event_in_email=%s",
