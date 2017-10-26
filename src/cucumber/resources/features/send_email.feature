@@ -16,7 +16,8 @@ Feature: Send Email
       | gadget@mailinator.com                          | success : Email successfully sent |
       | inspector@mailinator.com;gadget@mailinator.com | success : Email successfully sent |
 
-  @developing # TODO: should implement "Send to the same contact again when there is a new course" tasks
+  # TODO: should implement "Send to the same contact again when there is a new course" tasks
+  @developing
   Scenario: Send to the same contact again when there is a new course
     When We have below number of contacts at each location:
       |location | number of contacts|
