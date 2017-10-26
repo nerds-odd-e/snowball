@@ -34,6 +34,7 @@ public class SendAllEventsController extends AppController {
                 }
             } catch (EmailException e) {
                 throw new IOException(e);
+                
             }
             totalMailsSent++;
         }
