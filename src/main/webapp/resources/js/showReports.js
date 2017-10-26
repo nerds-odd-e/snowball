@@ -1,11 +1,11 @@
 $(document).ready(function() {
-	var reportList = retrievereportListFromServer();
+	var reportList = retrieveReportListFromServer();
 	renderReportList(reportList, $('#reportTable'));
 });
 
-function retrievereportListFromServer()
+function retrieveReportListFromServer()
 {
-	var reportList = '';
+	var reportList = [];
 
 	$.ajax({
 	    type: 'GET',
@@ -28,6 +28,6 @@ function renderReportList(json, selector) {
     });
 }
 
-function unixTimeToDateString(unixtime) {
-    return new Date(unixtime*1000).toLocaleString();
+function unixTimeToDateString(unixTime) {
+    return new Date(unixTime*1000).toLocaleString();
 }
