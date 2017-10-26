@@ -105,9 +105,18 @@
 									</div>
 									<br> <br>
                                     <div class="row">
-                                    	<div class="col-lg-1">Location:</div>
+                                    	<div class="col-lg-1">Country:</div>
                                     	<div class="col-lg-11">
-                                    		    <select id="locationdrp" class="form-control" name="location">
+                                    	    <select id="countrydrp" class="form-control" name="country">
+                                    	        <option value="China">China</option>
+                                    	    </select>
+                                        </div>
+                                    </div>
+									<br> <br>
+                                    <div class="row">
+                                    	<div class="col-lg-1">City:</div>
+                                    	<div class="col-lg-11">
+                                    		    <input type="text" id="city" class="form-control" name="city">
                                     	    </select>
                                         </div>
                                     </div>
