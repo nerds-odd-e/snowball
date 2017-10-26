@@ -102,11 +102,12 @@ public class MyStepdefs {
         pageShouldContain(email);
     }
 
-    @When("^I change the location information of contact to be \"([^\"]*)\"$")
-    public void i_change_the_location_information_of_contact_to_be(String location) throws Throwable {
+    @When("^I change the location information of contact to be \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void i_change_the_location_information_of_contact_to_be(String country, String city) throws Throwable {
         driver.visit(BASE_URL + "contactlist.jsp");
         driver.clickButton("edit_button");
-        driver.setDropdownValue("location", location);
+        driver.setDropdownValue("country", country);
+        driver.setTextField("city", city);
         driver.clickButton("save_button");
     }
 

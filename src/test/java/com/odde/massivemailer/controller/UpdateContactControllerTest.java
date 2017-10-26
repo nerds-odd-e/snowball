@@ -31,7 +31,8 @@ public class UpdateContactControllerTest {
         new ContactPerson("John", "john@gmail.com", "Doe", "ComA", "Singapore").saveIt();
         assertEquals(1, (long) ContactPerson.count());
         request.setParameter("email", "john@gmail.com");
-        request.setParameter("location", "Malaysia");
+        request.setParameter("country", "China");
+        request.setParameter("city", "Chengdu");
         request.setParameter("name", "Jack");
         request.setParameter("company", "ComB");
         request.setParameter("lastname", "Dale");

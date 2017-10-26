@@ -107,12 +107,20 @@
 								</div>
 								<br>
 								<div class="row">
-                                    <div class="col-md-2">Location</div>
+                                    <div class="col-md-2">Country</div>
                                     <div class="col-md-10">
-                                        <select id="locationdrp" class="form-control" name="location">
+                                        <select id="countrydrp" class="form-control" name="country">
                                         </select>
                                     </div>
                                 </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-2">City</div>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control" name="city" id="city">
+                                    </div>
+                                </div>
+                                <br>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default"
@@ -140,7 +148,7 @@
 <script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
 <!-- <script type="text/javascript" src="resources/js/sendemail.js"></script> -->
 <script type="text/javascript" src="resources/js/showContact.js"></script>
-<script type="text/javascript" src="resources/js/populateLocationDropdown.js"></script>
+<script type="text/javascript" src="resources/js/populateCountriesDropdown.js"></script>
 </html>
 
 

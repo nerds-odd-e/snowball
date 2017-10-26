@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.odde.massivemailer.model.ContactPerson;
+import com.odde.massivemailer.model.Location;
+import com.odde.massivemailer.service.LocationProviderService;
 
 @WebServlet("/editContact")
 public class UpdateContactController extends HttpServlet {
@@ -16,11 +18,23 @@ public class UpdateContactController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		ContactPerson contactPerson = ContactPerson.getContactByEmail(req.getParameter("email"));
+
+		LocationProviderService locationProviderService = new LocationProviderService();
+		String city = req.getParameter("city");
+		String country = req.getParameter("country");
+		Location cityLocation = locationProviderService.getLocationForName(city);
+		String location;
+		if( cityLocation == null ){
+			location =  country + "/" + city;
+		} else {
+			location = city;
+		}
+
 		if (contactPerson != null) {
 			contactPerson.setName(req.getParameter("name"));
 			contactPerson.setLastname(req.getParameter("lastname"));
 			contactPerson.setCompany(req.getParameter("company"));
-			contactPerson.setLocation(req.getParameter("location"));
+			contactPerson.setLocation(location);
 			contactPerson.saveIt();
 			resp.sendRedirect("contactlist.jsp");
 
