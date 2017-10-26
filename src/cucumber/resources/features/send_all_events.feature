@@ -38,7 +38,7 @@ Feature: Send all events to contacts with the same location as the event - Singa
     And I click send button
     Then It should send out emails:
     |location           | number of emails  | number of events in the email  |
-    |Singapore-Singapore|                  2|                               6|
+    |Singapore/Singapore|                  2|                               6|
 
   @email
   Scenario: Contacts from multiple location not within radius, Events at single location

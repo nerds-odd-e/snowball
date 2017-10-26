@@ -44,7 +44,7 @@ public class Course extends Model {
         if (map.get("city") == null) {
             set("location", map.get("country"));
         } else {
-            set("location", map.get("country") + "-" + map.get("city"));
+            set("location", map.get("country") + "/" + map.get("city"));
         }
     }
 

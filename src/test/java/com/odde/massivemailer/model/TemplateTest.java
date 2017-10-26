@@ -32,7 +32,7 @@ public class TemplateTest {
         course.setInstructor("Roof-TheExpert");
         course.setLocation("18RobertsLane,Singapore");
         //
-        contactPerson = new ContactPerson("Madhan", "Madhan@CS.com", "Karunakaran", "CS", "Singapore-Changi");
+        contactPerson = new ContactPerson("Madhan", "Madhan@CS.com", "Karunakaran", "CS", "Singapore/Singapore");
         //
 
         template2 = new Template("DefaultTestTemplate", "Greetings {FirstName}", "Dear {FirstName} {LastName}. Please find the details of the course {CourseName} {Location} {Instructor} ");
