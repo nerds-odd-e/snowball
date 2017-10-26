@@ -28,7 +28,10 @@ public class SendAllEventsController extends AppController {
             String content = eventsNearContact.stream().map(Course::getCoursename).collect(Collectors.joining("<br/>\n"));
             try {
                 Mail.createEventMail(content, person.getEmail()).sendMailWith(getMailService());
-                MailLogService.saveLogs(person.getId(), eventsNearContact);
+                Date sent_at = new Date();
+                for(Course course : eventsNearContact){
+                    new MailLog().create(person.getId(), sent_at, course);
+                }
             } catch (EmailException e) {
                 throw new IOException(e);
             }
