@@ -17,17 +17,14 @@ function retrievereportListFromServer()
 	return reportList;
 }
 
-function renderReportList(content, selector) {
+function renderReportList(json, selector) {
     var tr = $('<tr>');
     selector.append(tr);
-    if (!content) {
-        return;
-    }
-    content.forEach(function(element) {
-        tr.append('<td class="email" style="text-align: left; line-height: 200%;">' + element.email + '</td>');
-        tr.append('<td class="location" style="text-align: left; line-height: 200%;">' + element.location + '</td>');
-        tr.append('<td class="sent-at" style="text-align: left; line-height: 200%;">' + unixTimeToDateString(element.sent_at) + '</td>');
-        tr.append('<td class="course-count" style="text-align: left; line-height: 200%;">' + element.course_count + '</td>');
+    $.each(json, function(idx, item) {
+        tr.append('<td class="email" style="text-align: left; line-height: 200%;">' + item.email + '</td>');
+        tr.append('<td class="location" style="text-align: left; line-height: 200%;">' + item.location + '</td>');
+        tr.append('<td class="sent-at" style="text-align: left; line-height: 200%;">' + unixTimeToDateString(item.sent_at) + '</td>');
+        tr.append('<td class="course-count" style="text-align: left; line-height: 200%;">' + item.course_count + '</td>');
     });
 }
 
