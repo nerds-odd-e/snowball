@@ -108,10 +108,6 @@
                                     	<div class="col-lg-1">Country:</div>
                                     	<div class="col-lg-11">
                                     	    <select id="countrydrp" class="form-control" name="country">
-                                    	        <option value="China">China</option>
-                                    	        <option value="Singapore">Singapore</option>
-                                    	        <option value="Japan">Japan</option>
-                                    	        <option value="Thailand">Thailand</option>
                                     	    </select>
                                         </div>
                                     </div>
@@ -152,5 +148,5 @@
 <!-- Bootstrap Core JavaScript -->
 <script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="resources/js/addEvent.js"></script>
-<script type="text/javascript" src="resources/js/populateLocationDropdown.js"></script>
+<script type="text/javascript" src="resources/js/populateCountriesDropdown.js"></script>
 </html>

@@ -2,6 +2,8 @@ package com.odde.massivemailer.controller;
 
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.Course;
+import com.odde.massivemailer.model.Location;
+import com.odde.massivemailer.service.LocationProviderService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +17,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -25,6 +29,11 @@ public class CoursesControllerTest {
     private CoursesController controller = new CoursesController();
     private MockHttpServletRequest request = new MockHttpServletRequest();
     private MockHttpServletResponse response = new MockHttpServletResponse();
+
+    @Before
+    public void setUp() {
+        LocationProviderService.resetLocations();
+    }
 
     @Test
     public void shouldCreateACourseWithOnlyCourseName() throws ServletException, IOException {
@@ -37,9 +46,15 @@ public class CoursesControllerTest {
     @Test
     public void shouldCreateACourseWithCourseName_Location() throws ServletException, IOException {
         request.setParameter("coursename", "test couree");
-        request.setParameter("country", "Singapore");
-        request.setParameter("city", "Singapore");
+        request.setParameter("country", "Japan");
+        request.setParameter("city", "Osaka");
         controller.doPost(request, response);
-        Assert.assertEquals("Singapore/Singapore", Course.getCourseByName("test couree").getLocation());
+
+        Assert.assertEquals("Japan/Osaka", Course.getCourseByName("test couree").getLocation());
+
+        LocationProviderService service = new LocationProviderService();
+        Location storedLocation = service.getLocationForName("Japan/Osaka");
+        assertEquals("Japan", storedLocation.getCountryName());
+        assertEquals("Osaka", storedLocation.getName());
     }
 }
