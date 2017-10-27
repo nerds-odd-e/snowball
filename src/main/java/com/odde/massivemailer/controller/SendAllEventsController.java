@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 @WebServlet("/sendAllEvents")
 public class SendAllEventsController extends AppController {
 
+    private final LocationProviderService locationProvider = new LocationProviderService();
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.sendRedirect(doSendAllMails());
@@ -24,7 +26,6 @@ public class SendAllEventsController extends AppController {
         int totalMailsSent = 0;
         int totalEvent = 0;
 
-        LocationProviderService locationProvider = new LocationProviderService();
         List<ContactPerson> contactList = ContactPerson.whereHasLocation();
         for (ContactPerson person : contactList) {
             List<Course> nearCourses = Course.whereNearTo(locationProvider, person.getLocation());
