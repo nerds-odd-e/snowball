@@ -21,19 +21,13 @@ public class ContactsController extends AppController {
         LocationProviderService locationProviderService = new LocationProviderService();
         String city = req.getParameter("city");
         String country = req.getParameter("country");
-        Location cityLocation = locationProviderService.getLocationForName(city);
-        String location;
-        if( cityLocation == null ){
-            location =  country + "/" + city;
-            Location storedLocation = locationProviderService.getLocationForName(location);
-            if (storedLocation == null) {
-                locationProviderService.addLocation(country, city);
-            }
-        } else {
-            location = city;
+        String location = country + "/" + city;
+        Location storedLocation = locationProviderService.getLocationForName(location);
+        if (storedLocation == null) {
+            locationProviderService.addLocation(country, city);
         }
 
-        ContactPerson contact = new ContactPerson("todo name", req.getParameter("email"), "todo last name", "todo company",location);
+        ContactPerson contact = new ContactPerson("todo name", req.getParameter("email"), "todo last name", "todo company", location);
 
         try {
             contact.saveIt();
