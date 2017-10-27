@@ -153,8 +153,8 @@ Feature: Send all events to contacts with the same location as the event - Singa
     And there are "1" courses at "Japan/Tokyo"
     And I trigger the sending once
     When Report page Includes
-      | email         | Location | SendDate | courseCount |
-      | abc@odd-e.com | Tokyo    | *        | 1           |
+      | email         | Location       | SendDate | courseCount |
+      | abc@odd-e.com | Japan/Tokyo    | *        | 1           |
 
   @developing
   Scenario: send email only one event

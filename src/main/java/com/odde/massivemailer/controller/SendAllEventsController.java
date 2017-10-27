@@ -29,6 +29,7 @@ public class SendAllEventsController extends AppController {
         List<ContactPerson> contactList = ContactPerson.whereHasLocation();
         for (ContactPerson person : contactList) {
             List<Course> nearCourses = Course.whereNearTo(locationProvider, person.getLocation());
+            totalEvent += nearCourses.size();
             if (nearCourses.isEmpty()) {
                 continue;
             }
@@ -38,7 +39,6 @@ public class SendAllEventsController extends AppController {
             String content = nearCourses.stream().map(Course::getCoursename).collect(Collectors.joining("<br/>\n"));
             doSendMail(person, nearCourses, content);
             totalMailsSent++;
-            totalEvent = nearCourses.size();
         }
         return String.format("coursedlist.jsp?email_sent=%s&event_in_email=%s", totalMailsSent, totalEvent);
     }
