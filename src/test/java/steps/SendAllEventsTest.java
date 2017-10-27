@@ -45,7 +45,10 @@ public class SendAllEventsTest {
         driver.visit(ADD_EVENT_URL);
         driver.setTextField("coursename", "A course");
         driver.setTextField("duration", "30");
-        driver.setDropdownValue("location", location);
+        String[] locations = location.split("/");
+        assert locations.length == 2;
+        driver.setDropdownValue("country", locations[0]);
+        driver.setTextField("city", locations[1]);
         driver.setTextField("startdate", d.format(f));
         driver.setTextField("address", "odd-e");
         driver.setTextField("coursedetails", "csd");
