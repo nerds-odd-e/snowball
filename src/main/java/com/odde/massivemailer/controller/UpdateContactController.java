@@ -28,7 +28,7 @@ public class UpdateContactController extends HttpServlet {
 			location =  country + "/" + city;
 			Location storedLocation = locationProviderService.getLocationForName(location);
 			if (storedLocation == null) {
-				locationProviderService.addLocationByName(location);
+				locationProviderService.addLocation(country, city);
 			}
 		} else {
 			location = city;

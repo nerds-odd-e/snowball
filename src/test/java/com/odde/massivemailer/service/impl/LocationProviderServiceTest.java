@@ -46,11 +46,11 @@ public class LocationProviderServiceTest {
 
     @Test
     public void addLocationByName() {
-        locationProviderService.addLocationByName("Japan/Osaka");
-        Location storedLocation = locationProviderService.getLocationForName("Japan/Osaka");
+        locationProviderService.addLocation("Japan", "Kobe");
+        Location storedLocation = locationProviderService.getLocationForName("Japan/Kobe");
         assertNotNull(storedLocation);
-        assertEquals(new Double(34.41), storedLocation.getLatitude());
-        assertEquals(new Double(135.31), storedLocation.getLongitude());
+        assertTrue(34.690083 == storedLocation.getLat());
+        assertTrue(135.1955112 == storedLocation.getLng());
     }
 
 }

@@ -43,6 +43,7 @@ public class LocationProviderService {
 
     public void addLocationByName(String name) {
         // TODO: get lat and lng dynamically
+
         Location location = new Location(name, 34.41, 135.31);
         locations.put(name, location);
     }
@@ -67,4 +68,9 @@ public class LocationProviderService {
         locations.put("Shanghai", new Location("Shanghai", 31.230416, 121.473701));
     }
 
+    public void addLocation(String country, String city) {
+        GoogleGeoAPIService geoService = new GoogleGeoAPIService();
+        Location location = geoService.getGeocode(country, city);
+        locations.put(country+"/"+city, location);
+    }
 }

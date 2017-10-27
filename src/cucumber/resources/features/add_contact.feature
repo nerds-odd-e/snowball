@@ -9,7 +9,7 @@ Feature: Add Contact
     Then Page Should Contain "terry@odd-e.com"
     And Page Should Fail
 
-  @contact
+  @contact @ka
   Scenario Outline: Verify Add New Contact To Contact List with Country And City
     When Add A Contact "<email>" at "<country>" and "<city>"
     Then Page Should Contain "<email>"

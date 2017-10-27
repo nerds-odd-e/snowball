@@ -27,7 +27,7 @@ public class ContactsController extends AppController {
             location =  country + "/" + city;
             Location storedLocation = locationProviderService.getLocationForName(location);
             if (storedLocation == null) {
-                locationProviderService.addLocationByName(location);
+                locationProviderService.addLocation(country, city);
             }
         } else {
             location = city;
