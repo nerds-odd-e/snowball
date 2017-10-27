@@ -1,18 +1,11 @@
 package com.odde.massivemailer.model;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.util.NotificationUtil;
-import org.javalite.activejdbc.Base;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import javax.mail.Message;
-import javax.mail.Session;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 import java.time.Instant;
 
 import static org.junit.Assert.assertEquals;
@@ -93,5 +86,49 @@ public class MailLogTest {
         assertEquals(2, list.get(0).get("course_count"));
         assertEquals(1, list.get(1).get("course_count"));
     }
+
+    @Test
+    public void testMailLogExist() throws Exception {
+        singaporeEvent.saveIt();
+        bangkokEvent.saveIt();
+
+        singaporeContact.saveIt();
+
+        LocalDateTime now = LocalDateTime.now();
+
+        MailLog.createIt("contact_person_id", singaporeContact.getId(), "course_id", singaporeEvent.getId(), "sent_at", now);
+        MailLog.createIt("contact_person_id", singaporeContact.getId(), "course_id", bangkokEvent.getId(), "sent_at", now);
+
+        List<Course> courses = new ArrayList<>();
+
+        courses.add(singaporeEvent);
+        courses.add(bangkokEvent);
+        assertEquals(true, MailLog.isExist(singaporeContact, courses));
+    }
+
+    @Test
+    public void testMailLogExist2() throws Exception {
+        singaporeEvent.saveIt();
+        bangkokEvent.saveIt();
+
+        singaporeContact.saveIt();
+
+        LocalDateTime now = LocalDateTime.now();
+
+        MailLog.createIt("contact_person_id", singaporeContact.getId(), "course_id", singaporeEvent.getId(), "sent_at", now);
+        MailLog.createIt("contact_person_id", singaporeContact.getId(), "course_id", bangkokEvent.getId(), "sent_at", now);
+
+        List<Course> courses = new ArrayList<>();
+
+        courses.add(singaporeEvent);
+        courses.add(bangkokEvent);
+
+        Course newBangkokEvent = new Course("New Beer event In Bangkok", "", "Bangkok");
+        newBangkokEvent.saveIt();
+
+        courses.add(newBangkokEvent);
+        assertEquals(false, MailLog.isExist(singaporeContact, courses));
+    }
+
 }
 

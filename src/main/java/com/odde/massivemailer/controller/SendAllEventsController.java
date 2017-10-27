@@ -28,11 +28,11 @@ public class SendAllEventsController extends AppController {
         int totalMailsSent = 0;
         List<ContactPerson> contactList = ContactPerson.whereHasLocation();
         for (ContactPerson person : contactList) {
-            List<Course> eventsNearContact = Course.whereNearTo(locationProvider, person.getLocation());
-            if ( eventsNearContact.isEmpty() || person.isMailed() )
+            List<Course> nearCourses = Course.whereNearTo(locationProvider, person.getLocation());
+            if ( nearCourses.isEmpty() || MailLog.isExist(person, nearCourses) )
                 continue;
-            String content = eventsNearContact.stream().map(Course::getCoursename).collect(Collectors.joining("<br/>\n"));
-            doSendMail(person, eventsNearContact, content);
+            String content = nearCourses.stream().map(Course::getCoursename).collect(Collectors.joining("<br/>\n"));
+            doSendMail(person, nearCourses, content);
             totalMailsSent++;
         }
         return totalMailsSent;

@@ -23,4 +23,17 @@ public class MailLog extends Model {
         set("course_id", course.getId());
         saveIt();
     }
+
+    public static boolean isExist(ContactPerson contactPerson, Course course) {
+        return MailLog.findFirst("contact_person_id = ? AND course_id = ?", contactPerson.getId(), course.getId()) != null;
+    }
+
+    public static boolean isExist(ContactPerson contactPerson, List<Course> courses) {
+        for (Course course: courses) {
+            if (!MailLog.isExist(contactPerson, course)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

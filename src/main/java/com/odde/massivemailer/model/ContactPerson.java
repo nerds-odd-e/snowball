@@ -139,10 +139,6 @@ public class ContactPerson extends Model {
         return contactParticipant.save();
     }
 
-    public boolean isMailed() {
-        return MailLog.findFirst("contact_person_id = ?", this.getId()) != null;
-    }
-
     public String errorMessage() {
         return "Unable to register participants";
     }

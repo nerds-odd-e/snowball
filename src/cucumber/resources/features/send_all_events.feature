@@ -167,3 +167,19 @@ Feature: Send all events to contacts with the same location as the event - Singa
     When I trigger the sending once
     Then Page Should Contain "1 emails contain 2 events sent."
 
+  @developing
+  Scenario: send mail to same contact again when there is new course
+    Given We have below number of contacts at each location:
+      | location            | number of contacts |
+      | Singapore/Singapore | 1                  |
+    And We have below number of events at each location:
+      | location  | number of events |
+      | Singapore | 1                |
+    And I click send button
+    And We have below number of events at each location:
+      | location  | number of events |
+      | Singapore | 1                |
+    And I click send button
+    Then It should send out emails:
+      | location | number of emails | number of events in the email |
+      | Combined | 1                | 2                             |
