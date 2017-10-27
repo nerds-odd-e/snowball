@@ -143,5 +143,9 @@ public class WebDriverWrapper {
     public void waitforElement(String domId) {
         getWait().until(presenceOfElementLocated(By.id(domId)));
     }
+
+    public List<WebElement> findElements(By by) {
+        return driver.findElements(by);
+    }
 }
 

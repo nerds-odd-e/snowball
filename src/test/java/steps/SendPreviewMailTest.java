@@ -9,13 +9,21 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import com.odde.massivemailer.model.ContactPerson;
 import org.junit.Assert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import steps.driver.UiElement;
 import steps.driver.WebDriverFactory;
 import steps.driver.WebDriverWrapper;
 import steps.page.CourseListPage;
 import steps.page.EnrollParticipantPage;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class SendPreviewMailTest {
     public static final String A_COURSE = "A course";
@@ -98,13 +106,20 @@ public class SendPreviewMailTest {
     }
 
     @When("^Report page Includes$")
-    public void report_page_Includes(DataTable arg1) throws Throwable {
-        // TODO: implement
-    }
+    public void report_page_Includes(DataTable reportTable) throws Throwable {
+        List<List<String>> reports = reportTable.raw();
+        reports = reports.subList(1, reports.size());
 
-    @Then("^\"([^\"]*)\" should receive email$")
-    public void should_receive_email(String arg1) throws Throwable {
-        // TODO: implement
+        driver.visit(BASE_URL + "reportlist.jsp");
+        List<WebElement> reportList = driver.findElements(By.xpath("//*[@id=\"reportTable\"]/tr/td"));
+        for (List<String> report:reports) {
+            for (int i = 0; i < reportList.size(); i++) {
+                if (report.get(i).equals("*")) {
+                    continue;
+                }
+                assertEquals(report.get(i), reportList.get(i).getText());
+            }
+        }
     }
 
     @Then("^\"([^\"]*)\" shouldn't receive email$")

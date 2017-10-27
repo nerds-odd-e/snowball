@@ -139,7 +139,6 @@ Feature: Send all events to contacts with the same location as the event - Singa
       | Japan/Tokyo             | 2      |
       | Japan/Tokyo,Japan/Osaka | 1      |
 
-  @developing
   Scenario: add new contact
     Given There is a contact "ivan@odd-e.com" at Japan/Tokyo
     And there are "2" courses at "Japan/Tokyo"
@@ -147,16 +146,15 @@ Feature: Send all events to contacts with the same location as the event - Singa
     And Page Should Contain "1 emails contain 2 events sent."
     And add contact "terry@odd-e.com" at Japan/Tokyo
     When I trigger the sending once
-    Then Page Should Contain "1 emails contain 2 events sent."
+    Then Page Should Contain "1 emails contain 4 events sent."
 
-  @developing
   Scenario: Report Page Includes
     Given There is a contact "abc@odd-e.com" at Japan/Tokyo
     And there are "1" courses at "Japan/Tokyo"
     And I trigger the sending once
     When Report page Includes
-      | email         | course | SendDate |
-      | abc@odd-e.com | 1      | *        |
+      | email         | Location | SendDate | courseCount |
+      | abc@odd-e.com | Tokyo    | *        | 1           |
 
   @developing
   Scenario: send email only one event

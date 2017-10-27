@@ -25,7 +25,6 @@ public class EmailStepdefs {
         driver.expectElementWithIdToContainText("email_result", msg);
     }
 
-
     @Given("^Default Email with Recipients \"([^\"]*)\"$")
     public void defaultEmailWithRecipients(String recipients) throws Throwable {
         addEmailRecipient(recipients);
@@ -47,7 +46,4 @@ public class EmailStepdefs {
     public void addEmailContent(String content) throws Throwable {
         driver.setTextField("content", content);
     }
-
-
-
 }
