@@ -26,12 +26,29 @@ public class LocationProviderServiceTest {
     }
 
     @Test
-    public void getLocationByName() throws Exception{
-        Location singapore = locationProviderService.getLocationForName("Singapore");
+    public void getSingaporeByName() throws Exception{
+        Location singapore = locationProviderService.getLocationForName("Singapore/Singapore");
         assertNotNull(singapore);
-        assertEquals("Singapore", singapore.getName());
+        assertEquals("Singapore/Singapore", singapore.getName());
+    }
 
-        assertNull(locationProviderService.getLocationForName("London"));
+    @Test
+    public void getKyotoByName() throws Exception{
+        Location london = locationProviderService.getLocationForName("Japan/Kyoto");
+        assertNotNull(london);
+        assertEquals("Kyoto", london.getName());
+    }
+
+    @Test
+    public void getUnknownCity() throws Exception {
+        Location location = locationProviderService.getLocationForName("foobar/hogehoge");
+        assertNull(location);
+    }
+
+    @Test
+    public void getLocationNotContainsDelimiterByName() throws Exception {
+        Location foobar = locationProviderService.getLocationForName("Kyoto");
+        assertNull(foobar);
     }
 
     @Test

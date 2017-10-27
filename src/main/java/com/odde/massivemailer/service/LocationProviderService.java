@@ -10,8 +10,9 @@ import java.util.TreeMap;
 public class LocationProviderService {
     private static Map<String, Location> locations = new TreeMap<>();
     public static final int CLOSE_BY_DISTANCE = 2000;
+    private final static String DELIMITER = "/";
 
-    static  {
+    static {
         resetLocations();
     }
 
@@ -23,14 +24,23 @@ public class LocationProviderService {
     }
 
     public Location getLocationForName(String locationString) {
-        return locations.get(locationString);
+        if (locations.containsKey(locationString)) {
+            return locations.get(locationString);
+        }
+        if (locationString.contains(DELIMITER)) {
+            String[] countryAndCity = locationString.split(DELIMITER);
+            Location location = getLocation(countryAndCity[0], countryAndCity[1]);
+            locations.put(locationString, location);
+            return location;
+        }
+        return null;
     }
 
     public String getCloseByLocationStrings(String locationName) {
         Location location = locations.get(locationName);
         String locationsString = "";
 
-        if(location != null){
+        if (location != null) {
             for (Location loc : locations.values()) {
                 if (loc.distanceFrom(location) <= CLOSE_BY_DISTANCE) {
                     locationsString += "\"" + loc.getName() + "\", ";
@@ -41,18 +51,11 @@ public class LocationProviderService {
         return locationsString;
     }
 
-    public void addLocationByName(String name) {
-        // TODO: get lat and lng dynamically
-
-        Location location = new Location(name, 34.41, 135.31);
-        locations.put(name, location);
-    }
-
     // For backward compatibility in tests
     public static void resetLocations() {
         locations = new TreeMap<>();
-        locations.put("Singapore", new Location("Singapore", 1.3521,103.8198));
-        locations.put("Singapore/Singapore", new Location("Singapore/Singapore", 1.3521,103.8198));
+        locations.put("Singapore", new Location("Singapore", 1.3521, 103.8198));
+        locations.put("Singapore/Singapore", new Location("Singapore/Singapore", 1.3521, 103.8198));
         locations.put("Bangkok", new Location("Bangkok", 13.7563, 100.5018));
         locations.put("Thailand/Bangkok", new Location("Thailand/Bangkok", 13.7563, 100.5018));
         locations.put("Tokyo", new Location("Tokyo", 35.6895, 139.6917));
@@ -69,8 +72,12 @@ public class LocationProviderService {
     }
 
     public void addLocation(String country, String city) {
+        Location location = getLocation(country, city);
+        locations.put(country + "/" + city, location);
+    }
+
+    private Location getLocation(String country, String city) {
         GoogleGeoAPIService geoService = new GoogleGeoAPIService();
-        Location location = geoService.getGeocode(country, city);
-        locations.put(country+"/"+city, location);
+        return geoService.getGeocode(country, city);
     }
 }

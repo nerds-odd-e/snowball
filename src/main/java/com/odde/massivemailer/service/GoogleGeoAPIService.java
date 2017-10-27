@@ -22,6 +22,9 @@ public class GoogleGeoAPIService {
 
     private Location getLocationFromGoogle(String country, String city) {
         GeocodingResult geocodingResult = getGeocodingResult(country, city);
+        if( geocodingResult == null ){
+            return null;
+        }
 
         AddressComponent[] addressComponents = geocodingResult.addressComponents;
         Location location = new Location();
@@ -53,6 +56,10 @@ public class GoogleGeoAPIService {
             results = request.await();
         } catch (ApiException | InterruptedException | IOException e) {
             e.printStackTrace();
+        }
+
+        if( results.length < 1){
+            return null;
         }
 
         return results[0];
