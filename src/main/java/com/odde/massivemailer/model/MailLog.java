@@ -29,11 +29,6 @@ public class MailLog extends Model {
     }
 
     public static boolean isExist(ContactPerson contactPerson, List<Course> courses) {
-        for (Course course: courses) {
-            if (!MailLog.isExist(contactPerson, course)) {
-                return false;
-            }
-        }
-        return true;
+        return courses.stream().allMatch(course -> MailLog.isExist(contactPerson, course));
     }
 }
