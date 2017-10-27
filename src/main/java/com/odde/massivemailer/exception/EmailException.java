@@ -1,6 +1,8 @@
 package com.odde.massivemailer.exception;
 
-public class EmailException extends Exception {
+import java.io.IOException;
+
+public class EmailException extends IOException {
 	
 	public EmailException(String msg) {
 		super(msg);
