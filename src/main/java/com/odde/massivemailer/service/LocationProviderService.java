@@ -2,10 +2,16 @@ package com.odde.massivemailer.service;
 
 import com.odde.massivemailer.model.Location;
 
+import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class LocationProviderService {
     private static Map<String, Location> locations = new TreeMap<>();
@@ -79,5 +85,10 @@ public class LocationProviderService {
     private Location getLocation(String country, String city) {
         GoogleGeoAPIService geoService = new GoogleGeoAPIService();
         return geoService.getGeocode(country, city);
+    }
+
+    public List<String> getAllCountryNames() throws IOException {
+        URL url = getClass().getClassLoader().getResource("csv/countries.csv");
+        return Files.readAllLines(Paths.get(url.getPath()));
     }
 }

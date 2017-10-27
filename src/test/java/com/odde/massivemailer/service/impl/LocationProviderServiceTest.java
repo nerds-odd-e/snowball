@@ -7,6 +7,11 @@ import com.odde.massivemailer.service.LocationProviderService;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.List;
+
 public class LocationProviderServiceTest {
 
     LocationProviderService locationProviderService;
@@ -68,6 +73,12 @@ public class LocationProviderServiceTest {
         assertNotNull(storedLocation);
         assertTrue(34.690083 == storedLocation.getLat());
         assertTrue(135.1955112 == storedLocation.getLng());
+    }
+
+    @Test
+    public void getAllCountryNames() throws IOException {
+        List<String> countries = locationProviderService.getAllCountryNames();
+        assertTrue(countries.contains("Netherlands Antilles"));
     }
 
 }
