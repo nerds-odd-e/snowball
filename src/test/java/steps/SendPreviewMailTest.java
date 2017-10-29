@@ -1,29 +1,21 @@
 package steps;
 
-import com.odde.massivemailer.model.Course;
-import com.odde.massivemailer.model.Participant;
 import cucumber.api.DataTable;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import com.odde.massivemailer.model.ContactPerson;
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import steps.driver.UiElement;
 import steps.driver.WebDriverFactory;
 import steps.driver.WebDriverWrapper;
 import steps.page.CourseListPage;
 import steps.page.EnrollParticipantPage;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 
 public class SendPreviewMailTest {
     public static final String A_COURSE = "A course";
