@@ -2,14 +2,12 @@ Feature: Add Contact
   As the admin I want to add contacts,
   so that I can sent newsletters to them later.
 
-  @contact
   Scenario: Verify Add Existing Contact To Contact List
     Given "terry@odd-e.com" which in "China" and "Chengdu" is a contact already
     When Add A Contact "terry@odd-e.com" at "China" and "Chengdu"
     Then Page Should Contain "terry@odd-e.com"
     And Page Should Fail
 
-  @contact @ka
   Scenario Outline: Verify Add New Contact To Contact List with Country And City
     When Add A Contact "<email>" at "<country>" and "<city>"
     Then Page Should Contain "<email>"

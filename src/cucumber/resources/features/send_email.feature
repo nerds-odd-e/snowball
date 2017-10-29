@@ -5,7 +5,6 @@ Feature: Send Email
   Background:
     Given Visit Send Mail Page
 
-  @email
   Scenario Outline: Verify sending email to people
     Given Default Email with Recipients "<email>"
     When I Click Send Email

@@ -2,7 +2,6 @@ Feature: Update Template
   User should be able to update the email template
   with contents entered by user
 
-  @updateTemplate
   Scenario: Verify updating the template
     Given Visit Edit Template Page
     When I update the contents of template
