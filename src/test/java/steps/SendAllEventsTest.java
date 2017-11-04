@@ -55,10 +55,6 @@ public class SendAllEventsTest {
         driver.setTextField("instructor", "terry");
 
         driver.clickButton("save_button");
-        driver.waitforElementByTagName("body");
-        System.out.print("creating at: ");
-        System.out.println(location);
-        System.out.flush();
     }
 
     @Given("^visit event list page$")
