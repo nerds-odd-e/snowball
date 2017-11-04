@@ -55,6 +55,10 @@ public class SendAllEventsTest {
         driver.setTextField("instructor", "terry");
 
         driver.clickButton("save_button");
+        driver.waitforElementByTagName("body");
+        System.out.print("creating at: ");
+        System.out.println(location);
+        System.out.flush();
     }
 
     @Given("^visit event list page$")
@@ -83,10 +87,10 @@ public class SendAllEventsTest {
         int totalNumberOfContacts = 0;
         for (List<String> location : contacts) {
             MyStepdefs contactTests = new MyStepdefs();
-            this.numberOfContactsInLocation = Integer.parseInt(location.get(1));
+            this.numberOfContactsInLocation = Integer.parseInt(location.get(2));
             for (int i = 0; i < this.numberOfContactsInLocation; i++) {
                 totalNumberOfContacts++;
-                contactTests.addAContact("test@test" + totalNumberOfContacts + ".com", location.get(0));
+                contactTests.addAContact("test@test" + totalNumberOfContacts + ".com", location.get(0) + "/"+location.get(1));
             }
         }
         this.numberOfContacts = totalNumberOfContacts;
@@ -156,22 +160,22 @@ public class SendAllEventsTest {
         list.map(i -> i.trim()).forEach(i -> addContact(arg1, i));
     }
 
-    @Given("^There is a contact \"([^\"]*)\" at Japan/Tokyo$")
-    public void there_is_a_contact_at_Japan_Tokyo(String arg1) throws Throwable {
+    @Given("^There is a contact \"([^\"]*)\" at Japan/(.*?)$")
+    public void there_is_a_contact_at_Japan(String email, String city_in_japan) throws Throwable {
         MyStepdefs contactTests = new MyStepdefs();
-        contactTests.addAContact(arg1, "Japan", "Tokyo");
+        contactTests.addAContact(email, "Japan", city_in_japan);
     }
 
-    @Given("^there are \"([^\"]*)\" courses at \"([^\"]*)\"$")
-    public void there_are_courses_at(String arg1, String arg2) throws Throwable {
-        int number = Integer.parseInt(arg1);
+    @Given("^there are \"([^\"]*)\" courses at each of \"([^\"]*)\"$")
+    public void there_are_courses_at(String count_string, String locations) throws Throwable {
+        int number = Integer.parseInt(count_string);
         for (int i = 0; i < number; i++) {
-            Stream.of(arg2.split(",")).forEach(s -> addCourses(30, s));
+            Stream.of(locations.split(",")).forEach(s -> addCourses(30, s));
         }
     }
 
     @Given("^add contact \"([^\"]*)\" at Japan/Tokyo$")
-    public void add_contact_at_Japan_Tokyo(String arg1) throws Throwable {
-        there_is_a_contact_at_Japan_Tokyo(arg1);
+    public void add_contact_at_Japan_Tokyo(String email) throws Throwable {
+        there_is_a_contact_at_Japan(email, "Tokyo");
     }
 }

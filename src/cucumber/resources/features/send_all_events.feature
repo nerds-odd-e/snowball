@@ -118,17 +118,17 @@ Feature: Send all events to contacts with the same location as the event - Singa
       | Combined | 2                | 6                             |
 
   Scenario Outline: send email event
-    Given There is a contact "ivan@odd-e.com" at Japan/Tokyo
-    And there are "<number>" courses at "<location>"
+    Given There is a contact "ivan@odd-e.com" at Japan/Osaka
+    And there are "<number>" courses at each of "<locations>"
     And I trigger the sending once
     And Page Should Contain "1 emails contain 2 events sent."
     When I trigger the sending once
     Then Page Should Contain "0 emails contain 2 events sent."
 
     Examples:
-      | location                | number |
-      | Japan/Tokyo             | 2      |
-      | Japan/Tokyo,Japan/Osaka | 1      |
+      | locations                | number |
+      | Japan/Tokyo              | 2      |
+      | Japan/Osaka,Japan/Tokyo  | 1      |
 
   Scenario: add new contact
     Given There is a contact "ivan@odd-e.com" at Japan/Tokyo
@@ -147,7 +147,6 @@ Feature: Send all events to contacts with the same location as the event - Singa
       | email         | Location       | SendDate | courseCount |
       | abc@odd-e.com | Japan/Tokyo    | *        | 1           |
 
-  @developing
   Scenario: send email only one event
     Given There is a contact "ivan@odd-e.com" at Japan/Tokyo
     And there are "1" courses at "Japan/Tokyo"
@@ -156,7 +155,6 @@ Feature: Send all events to contacts with the same location as the event - Singa
     When I trigger the sending once
     Then Page Should Contain "1 emails contain 2 events sent."
 
-  @developing
   Scenario: Send to the same contact again when there is a new course
     When We have below number of contacts at each location:
       |country  |city     |  number of contacts|

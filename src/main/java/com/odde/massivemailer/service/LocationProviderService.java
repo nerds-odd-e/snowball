@@ -47,9 +47,9 @@ public class LocationProviderService {
         String locationsString = "";
 
         if (location != null) {
-            for (Location loc : locations.values()) {
-                if (loc.distanceFrom(location) <= CLOSE_BY_DISTANCE) {
-                    locationsString += "\"" + loc.getName() + "\", ";
+            for (String loc : locations.keySet()) {
+                if (locations.get(loc).distanceFrom(location) <= CLOSE_BY_DISTANCE) {
+                    locationsString += "\"" + loc + "\", ";
                 }
             }
             locationsString = locationsString.substring(0, locationsString.length() - 2);
