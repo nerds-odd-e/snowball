@@ -4,13 +4,19 @@ import org.javalite.activejdbc.Base;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class DBMigrater {
     public void migrate() {
         for (String migration : migrationFiles()) {
-            Base.exec(loadMigration(migration));
+            Arrays.stream(translate(loadMigration(migration)).split(";")).forEach(
+                    sql-> Base.exec(sql + ";"));
         }
+    }
+
+    private String translate(String sql) {
+        return sql.replaceAll("AUTOINCREMENT", "AUTO_INCREMENT");
     }
 
     private List<String> migrationFiles() {

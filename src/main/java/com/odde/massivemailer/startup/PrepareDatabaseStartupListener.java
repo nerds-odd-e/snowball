@@ -11,8 +11,8 @@ public class PrepareDatabaseStartupListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        getDBReady("jdbc:sqlite:oddemail.db");
-        getDBReady("jdbc:sqlite:cucumber_test.db");
+        getMySQLDBReady("cucumber_test");
+        getMySQLDBReady("oddemail");
     }
 
     @Override
@@ -20,9 +20,9 @@ public class PrepareDatabaseStartupListener implements ServletContextListener {
 
     }
 
-    public void getDBReady(String dbLink) {
+    public void getMySQLDBReady(String dbLink) {
         System.out.println("Preparing database... " + dbLink);
-        Base.open("org.sqlite.JDBC", dbLink, "", "");
+        Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/" + dbLink, "root", "");
         new DBMigrater().migrate();
         Base.close();
     }
