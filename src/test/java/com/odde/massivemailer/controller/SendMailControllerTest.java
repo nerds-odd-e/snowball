@@ -18,8 +18,6 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -212,7 +210,7 @@ public class SendMailControllerTest {
         LazyList<Notification> all = Notification.findAll();
         Notification capturedNotification =  all.get(all.size() - 1);
 
-        assertNotNull(capturedNotification.getNotificationId());
+        assertNotNull(capturedNotification.getMessageId());
         assertThat(capturedNotification.getSubject(), is("subject for test"));
     }
 

@@ -42,7 +42,7 @@ public class OpenedEmailCounterServiceTest {
 
     private Notification createNotification() {
         Notification notification = new Notification();
-        notification.setNotificationId(email_id);
+        notification.setMessageId(email_id);
         notification.setSubject("test subject");
         String input = "Fri Nov 18 03:19:03 SGT 2016";
         SimpleDateFormat parser = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");

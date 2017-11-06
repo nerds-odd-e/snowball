@@ -3,7 +3,6 @@ package com.odde.massivemailer.service;
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.Notification;
 import com.odde.massivemailer.model.NotificationDetail;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -20,7 +19,7 @@ public class NotificationServiceTest {
     public void NotificationMustBeSaved() {
         Notification notification = new Notification();
         notification.setSubject("Subject");
-        notification.setNotificationId(123456789L);
+        notification.setMessageId(123456789L);
 
         Notification savedNotification = notification.saveAll();
 
@@ -28,14 +27,14 @@ public class NotificationServiceTest {
         assertNotNull(savedNotification.getId());
 
         assertThat(savedNotification.getSubject(), is("Subject"));
-        assertThat(savedNotification.getNotificationId(), is(123456789L));
+        assertThat(savedNotification.getMessageId(), is(123456789L));
     }
 
     @Test
     public void NotificationDetailsMustBeSaved() {
         Notification notification = new Notification();
         notification.setSubject("Subject");
-        notification.setNotificationId(123456789L);
+        notification.setMessageId(123456789L);
 
         notification.addEmailAddress("terry@odd-e.com");
 

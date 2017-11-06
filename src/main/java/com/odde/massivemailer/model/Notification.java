@@ -43,8 +43,8 @@ public class Notification extends Model {
         return (String) get("subject");
     }
 
-    public Long getNotificationId() {
-        return (Long) get("notification_id");
+    public Long getMessageId() {
+        return (Long) get("message_id");
     }
 
     public List<NotificationDetail> getNotificationDetails() {
@@ -55,14 +55,14 @@ public class Notification extends Model {
         set("subject", subject);
     }
 
-    public void setNotificationId(final Long notificationId) {
-        set("notification_id", notificationId);
+    public void setMessageId(final Long messageId) {
+        set("message_id", messageId);
     }
 
     public Notification saveAll() {
         saveIt();
         for (NotificationDetail notificationDetail : getNotificationDetails()) {
-            notificationDetail.setNotificationId(getNotificationId());
+            notificationDetail.setNotificationId(getLongId());
             notificationDetail.saveIt();
         }
         return this;

@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS notifications (
     id              INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     template_id     INTEGER,
     subject         VARCHAR(255) NOT NULL DEFAULT '',
-    notification_id INTEGER NOT NULL DEFAULT 0,
+    message_id BIGINT NOT NULL DEFAULT 0,
     sent_at         TIMESTAMP
 );
 

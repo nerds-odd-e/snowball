@@ -18,7 +18,6 @@ import java.util.List;
 @RunWith(TestWithDB.class)
 public class TestTemplateService {
 
-    TemplateService templateService;
     Template template;
 
     @BeforeClass
@@ -30,12 +29,11 @@ public class TestTemplateService {
 
     @Before
     public void setup() {
-        template = new Template();
-        templateService = new TemplateService();
+        template = new Template("DefaultTestTemplate", "Greetings {FirstName}", "Dear {FirstName} {LastName}. Please find the details of the course {CourseName} {Location} {Instructor} ");
+        template.saveIt();
 
         try {
             List<Template> tempList = Template.findByTemplateName("Default Template 1");
-            //template = templateService.getDefaultTemplate();
             template = tempList.get(0);
         } catch (Exception e) {
             e.printStackTrace();
@@ -47,7 +45,6 @@ public class TestTemplateService {
     public void templateMustNotBeNull() throws Exception {
 
         Template templateActual = null;
-        //templateActual = templateService.getDefaultTemplate();
         Assert.assertNotNull(template);
 
     }
@@ -58,14 +55,6 @@ public class TestTemplateService {
     @Test
     public void templateMustContainFirstName() throws Exception
     {
-        //Template template = new Template("DefaultTestTemplate", "Greetings {FirstName}", "Dear {FirstName} {LastName}. Please find the details of the course {CourseName} {Location} {Instructor} ");
-        //template.saveIt();
-
-        //List<Template> tempList = Template.findByTemplateName("DefaultTestTemplate");
-        //Template templateActual = templateService.getDefaultTemplate("DefaultTestTemplate");
-        //templateActual = (String) tempList.get(0).get("content");
-
-
         Assert.assertTrue(template.getString("Content").contains("{FirstName}"));
     }
 
@@ -92,12 +81,6 @@ public class TestTemplateService {
     public void templateMustContainLocation() throws Exception
     {
         Assert.assertTrue(template.getString("Content").contains("{Location}"));
-    }
-
-    @Test
-    public void populateTemplateMustReturnNull() throws Exception
-    {
-      //  templateService.populateTemplate(null, )
     }
 
 }

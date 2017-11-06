@@ -2,7 +2,6 @@ package com.odde.massivemailer.model;
 
 import com.odde.TestWithDB;
 import com.odde.massivemailer.util.NotificationUtil;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -92,7 +91,7 @@ public class MailTest {
 		Notification notification = mail.asNotification();
 
 		assertThat(notification.getSubject(), is("subject"));
-		assertThat(notification.getNotificationId(), is(123456789L));
+		assertThat(notification.getMessageId(), is(123456789L));
 	}
 
 	@Test

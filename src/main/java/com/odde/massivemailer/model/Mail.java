@@ -149,7 +149,7 @@ public class Mail {
     public Notification asNotification() {
         Notification notification = new Notification();
         notification.setSubject(getSubject());
-        notification.setNotificationId(getMessageId());
+        notification.setMessageId(getMessageId());
 
         for (String receipt : getReceipts()) {
             notification.addEmailAddress(receipt);
