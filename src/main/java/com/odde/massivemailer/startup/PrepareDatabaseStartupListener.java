@@ -23,7 +23,7 @@ public class PrepareDatabaseStartupListener implements ServletContextListener {
     public void getMySQLDBReady(String dbLink) {
         System.out.println("Preparing database... " + dbLink);
         Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/" + dbLink, "root", "");
-        new DBMigrater().migrate();
+        new DBMigrater().migrate(x -> x.replaceAll("AUTOINCREMENT", "AUTO_INCREMENT"));
         Base.close();
     }
 }

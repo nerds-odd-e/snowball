@@ -34,7 +34,7 @@ public class TestWithDB extends BlockJUnit4ClassRunner {
 
     private void dbMigrateIfNeeded() {
         if (!dbMigrated) {
-            new DBMigrater().migrate();
+            new DBMigrater().migrate(x->x);
             dbMigrated = true;
         }
     }

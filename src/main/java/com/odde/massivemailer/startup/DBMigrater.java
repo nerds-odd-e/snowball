@@ -6,17 +6,15 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.DoubleFunction;
+import java.util.function.Function;
 
 public class DBMigrater {
-    public void migrate() {
+    public void migrate(Function<String, String> stringStringFunction) {
         for (String migration : migrationFiles()) {
-            Arrays.stream(translate(loadMigration(migration)).split(";")).forEach(
+            Arrays.stream(loadMigration(migration).split(";")).map(stringStringFunction).forEach(
                     sql-> Base.exec(sql + ";"));
         }
-    }
-
-    private String translate(String sql) {
-        return sql.replaceAll("AUTOINCREMENT", "AUTO_INCREMENT");
     }
 
     private List<String> migrationFiles() {

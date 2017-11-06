@@ -9,11 +9,11 @@ public class Hooks {
     @Before
     public void beforeScenario() {
         WebDriverFactory.getDefaultDriver().visit("http://localhost:8070/massive_mailer/reset");
+        DBConnectionFactory.clean();
     }
 
     @After
     public void afterScenario() {
-        WebDriverFactory.getDefaultDriver().visit("http://localhost:8070/massive_mailer/reset");
         WebDriverFactory.resetAll();
     }
 }

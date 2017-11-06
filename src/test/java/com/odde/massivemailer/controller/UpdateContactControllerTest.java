@@ -18,6 +18,7 @@ public class UpdateContactControllerTest {
     private UpdateContactController controller;
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
+
     @Before
     public void setUpMockService() {
         controller = new UpdateContactController();
@@ -40,19 +41,10 @@ public class UpdateContactControllerTest {
         controller.doPost(request, response);
         assertEquals(1, (long) ContactPerson.count());
         ContactPerson contact = ContactPerson.getContactByEmail("john@gmail.com");
-        for (String attribute : contact.getAttributeKeys()) {
-            switch (attribute) {
-                case "FirstName":
-                    assertEquals("Jack",contact.get(attribute));
-                case "Company":
-                    assertEquals("ComB",contact.get(attribute));
-                case "Location":
-                    assertEquals("Malaysia",contact.get(attribute));
-                case "LastName":
-                    assertEquals("Dale",contact.get(attribute));
-
-            }
-        }
+        assertEquals("Jack", contact.get("FirstName"));
+        assertEquals("ComB", contact.get("Company"));
+        assertEquals("China/Chengdu", contact.get("Location"));
+        assertEquals("Dale", contact.get("LastName"));
 
         assertEquals("contactlist.jsp", response.getRedirectedUrl());
     }
