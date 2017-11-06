@@ -28,8 +28,8 @@ Feature: Send all events to contacts with the same location as the event - Singa
 
   Scenario: Have both event and contacts at single location
     When We have below number of contacts at each location:
-      | location            | number of contacts |
-      | Singapore/Singapore | 2                  |
+      | country   | city      | number of contacts |
+      | Singapore | Singapore | 2                  |
     And We have below number of events at each location:
       | country   | city      | number of contacts |
       | Singapore | Singapore | 3                  |
@@ -132,7 +132,7 @@ Feature: Send all events to contacts with the same location as the event - Singa
 
   Scenario: add new contact
     Given There is a contact "ivan@odd-e.com" at Japan/Tokyo
-    And there are "2" courses at "Japan/Tokyo"
+    And there are "2" courses at each of "Japan/Tokyo"
     And I trigger the sending once
     And Page Should Contain "1 emails contain 2 events sent."
     And add contact "terry@odd-e.com" at Japan/Tokyo
@@ -141,7 +141,7 @@ Feature: Send all events to contacts with the same location as the event - Singa
 
   Scenario: Report Page Includes
     Given There is a contact "abc@odd-e.com" at Japan/Tokyo
-    And there are "1" courses at "Japan/Tokyo"
+    And there are "1" courses at each of "Japan/Tokyo"
     And I trigger the sending once
     When Report page Includes
       | email         | Location       | SendDate | courseCount |
@@ -149,9 +149,9 @@ Feature: Send all events to contacts with the same location as the event - Singa
 
   Scenario: send email only one event
     Given There is a contact "ivan@odd-e.com" at Japan/Tokyo
-    And there are "1" courses at "Japan/Tokyo"
+    And there are "1" courses at each of "Japan/Tokyo"
     And I trigger the sending once
-    And there are "1" courses at "Japan/Osaka"
+    And there are "1" courses at each of "Japan/Osaka"
     When I trigger the sending once
     Then Page Should Contain "1 emails contain 2 events sent."
 
