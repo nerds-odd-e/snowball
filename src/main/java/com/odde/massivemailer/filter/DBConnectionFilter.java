@@ -19,7 +19,7 @@ public class DBConnectionFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
         ServletContext application = filterConfig.getServletContext();
         try{
-            Base.open("com.mysql.jdbc.Driver", getDBLink(application), "root", "");
+            Base.open();
             Base.openTransaction();
             chain.doFilter(req, resp);
             Base.commitTransaction();
@@ -35,15 +35,6 @@ public class DBConnectionFilter implements Filter {
         finally{
             Base.close();
         }
-    }
-
-    private String getDBLink(ServletContext application) {
-        String linkStr;
-        linkStr = "jdbc:mysql://localhost:3306/oddemail";
-        Object dblink = application.getAttribute("dbLink");
-        if (dblink != null)
-            linkStr = (String) dblink;
-        return linkStr;
     }
 
     @Override

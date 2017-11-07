@@ -4,7 +4,7 @@ import org.javalite.activejdbc.Base;
 
 public class DBConnectionFactory {
     public static void clean() {
-        Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/oddemail", "root", "");
+        Base.open();
         cleanDB();
         Base.close();
     }

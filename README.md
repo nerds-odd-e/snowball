@@ -9,6 +9,17 @@ launchctl setenv MM_EMAIL_PASSWORD $MM_EMAIL_PASSWORD
 ```
 * Reboot your IDE.
 
+##### Setup MySQL database
+
+This project use MySQL database. The test and development environment need a MySQL service on the localhost with root
+use with no password.
+
+Database names:
+
+* test: massive_mailer_test
+* development: massive_mailer_development
+* production: massive_mailer_production
+
 ##### Run Production
 
 `gradle appStart -DACTIVE_ENV=production`

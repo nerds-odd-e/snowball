@@ -105,11 +105,6 @@ tasks.cucumber {
     ])
 }
 
-task cucumberNow() {
-    //cucumber.tags += ['@developing']
-    finalizedBy 'cucumber'
-}
-
 if('test' in project.gradle.startParameter.taskNames) {
     project.gradle.startParameter.excludedTaskNames = ['karmaRun']
 }
