@@ -8,7 +8,6 @@ public class Hooks {
 
     @Before
     public void beforeScenario() {
-        WebDriverFactory.getDefaultDriver().visit("http://localhost:8070/massive_mailer/reset");
         DBConnectionFactory.clean();
     }
 

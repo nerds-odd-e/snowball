@@ -49,9 +49,7 @@ public class AppController extends HttpServlet {
     }
 
     private boolean isMailServiceMocked() {
-        ServletContext application = getServletConfig().getServletContext();
-        Object email_sender = application.getAttribute("email_sender");
-        return email_sender != null && ((String) email_sender).equals("mock");
+        return ! "production".equals(System.getProperty("ACTIVE_ENV"));
     }
 
     protected HashMap getParameterFromRequest(HttpServletRequest req, String[] reqFields) {
