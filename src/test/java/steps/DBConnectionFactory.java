@@ -5,8 +5,12 @@ import org.javalite.activejdbc.Base;
 public class DBConnectionFactory {
     public static void clean() {
         Base.open();
-        cleanDB();
-        Base.close();
+        try {
+            cleanDB();
+        }
+        finally {
+            Base.close();
+        }
     }
 
     private static void cleanDB() {

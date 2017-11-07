@@ -18,13 +18,18 @@ plugins {
     id "org.roboscratch.robot" version "0.1.1"
 }
 
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
+}
+
 ext {
     groovyVersion = '2.4.5'
     gebVersion = '1.1.1'
-    seleniumVersion = '2.53.1'
+    seleniumVersion = '3.7.1'
     cucumberJvmVersion = '1.2.4'
     chromeDriverVersion = '2.24'
-    phantomJsVersion = '1.9.8'
 
     ciBuild = System.getenv('SNAP_CI')
 }
@@ -35,7 +40,6 @@ apply plugin: 'war'
 apply plugin: 'org.javalite.activejdbc'
 apply from: 'gradle/gretty.gradle'
 apply from: "gradle/idea/idea.gradle"
-apply from: "gradle/osSpecificDownloads.gradle"
 
 group = 'com.odde'
 version = '0.0.1-SNAPSHOT'
@@ -60,6 +64,10 @@ repositories {
 
 gretty {
     httpPort = 8070
+    if('cucumber' in project.gradle.startParameter.taskNames) {
+        jvmArgs = ["-Dactive_env=test"]
+    }
+
 }
 
 karma {
@@ -92,16 +100,18 @@ cucumber {
 }
 
 tasks.cucumber {
-    dependsOn unzipPhantomJs, assemble, testClasses, 'appBeforeIntegrationTest'
+
+    dependsOn /*unzipPhantomJs,*/ assemble, testClasses, 'appBeforeIntegrationTest'
     finalizedBy 'appAfterIntegrationTest'
 
     def phantomJsFilename = Os.isFamily(Os.FAMILY_WINDOWS) ? "phantomjs.exe" : "bin/phantomjs"
 
     jvmOptions.systemProperties([
             "phantomjs.binary.path": Os.isFamily(Os.FAMILY_MAC) ? '/usr/local/bin/phantomjs' : new File(unzipPhantomJs.outputs.files.singleFile, phantomJsFilename).absolutePath,
-            "geb.cucumber.step.packages": "pages",
+            "geb.cucumber.step.packages": "steps",
             "geb.env": System.getProperty("geb.env"),
-            "webdriver": System.getProperty("webdriver")
+            "webdriver": System.getProperty("webdriver"),
+            "active_env": "test",
     ])
 }
 
@@ -140,11 +150,7 @@ dependencies {
     //cucumberRuntime "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"
     //cucumberRuntime "org.seleniumhq.selenium:selenium-phantomjs-driver:$seleniumVersion"
     // using a custom version of phantomjs driver for now as the original one does not support WebDriver > 2.43.1
-    cucumberRuntime("com.codeborne:phantomjsdriver:1.2.1") {
-        // phantomjs driver pulls in a different selenium version
-        transitive = false
-    }
-    testCompile "com.github.detro.ghostdriver:phantomjsdriver:1.1.0"
+    testCompile 'com.github.detro:ghostdriver:2.1.0'
 
     // https://mvnrepository.com/artifact/com.google.maps/google-maps-services
     compile group: "com.google.maps", name: "google-maps-services", version: "0.2.4"

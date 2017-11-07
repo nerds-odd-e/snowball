@@ -1,6 +1,7 @@
 package com.odde.massivemailer.filter;
 
 import org.javalite.activejdbc.Base;
+import org.javalite.activejdbc.DB;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
