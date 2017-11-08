@@ -14,7 +14,7 @@ import java.util.Map;
 
 
 @Table("courses")
-public class Course extends Model {
+public class Course extends ApplicationModel {
 
 
     public Course() {

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 @Table("course_contact_notifications")
-public class CourseContactNotification extends Model {
+public class CourseContactNotification extends ApplicationModel {
 
     public static List<Map> getReport() {
         return Base.findAll("SELECT c.email, m.sent_at, c.location, COUNT(m.course_id) AS course_count FROM course_contact_notifications m INNER JOIN contact_people c ON m.contact_person_id = c.id GROUP BY m.contact_person_id, m.sent_at");

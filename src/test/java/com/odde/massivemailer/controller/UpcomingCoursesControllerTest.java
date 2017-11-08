@@ -3,6 +3,7 @@ package com.odde.massivemailer.controller;
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.*;
 import com.odde.massivemailer.service.GMailService;
+import com.odde.massivemailer.service.UpcomingCourseMailComposer;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,9 +13,15 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
+import java.io.IOException;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 
 @RunWith(TestWithDB.class)
@@ -31,6 +38,7 @@ public class UpcomingCoursesControllerTest {
     private final ContactPerson noLocContact= new ContactPerson("testName4", "test4@gmail.com", "test4LastName", "", null);
 
     private final ArgumentCaptor<Mail> mailArgument = ArgumentCaptor.forClass(Mail.class);
+    private final ArgumentCaptor<List<Course>> coursesArgument = ArgumentCaptor.forClass(List.class);
     private final String linebreak = "<br/>\n";
 
     private UpcomingCoursesController upcomingCoursesController;
@@ -41,27 +49,35 @@ public class UpcomingCoursesControllerTest {
     @Mock
     private GMailService gmailService;
 
+    @Mock
+    private UpcomingCourseMailComposer mailComposer;
+
+    @Mock
+    private Mail mail;
+
     @Before
-    public void setUpMockService() {
+    public void setUpMockService() throws IOException {
         MockitoAnnotations.initMocks(this);
         upcomingCoursesController = new UpcomingCoursesController();
         upcomingCoursesController.setMailService(gmailService);
-
+        upcomingCoursesController.setMailComposer(mailComposer);
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
+        when(mailComposer.createUpcomingCourseMail(any(), any())).thenReturn(mail);
     }
 
     @Test
     public void sendNoEventsToNoContactsAsMail() throws Exception {
         upcomingCoursesController.doPost(request, response);
-        assertEquals("course_list.jsp?email_sent=0&event_in_email=0", response.getRedirectedUrl());
+
+        assertEquals("course_list.jsp?message=0 emails sent.", response.getRedirectedUrl());
     }
 
     @Test
     public void send1EventToNoContactsAsMail() throws Exception {
         singaporeEvent.saveIt();
         upcomingCoursesController.doPost(request, response);
-        assertEquals("course_list.jsp?email_sent=0&event_in_email=0", response.getRedirectedUrl());
+        assertEquals("course_list.jsp?message=0 emails sent.", response.getRedirectedUrl());
     }
 
     @Test
@@ -69,7 +85,7 @@ public class UpcomingCoursesControllerTest {
         singaporeEvent.saveIt();
         new ContactPerson("testName", "test1@gmail.com", "testLastName","","Singapore").saveIt();
         upcomingCoursesController.doPost(request, response);
-        assertEquals("course_list.jsp?email_sent=1&event_in_email=1", response.getRedirectedUrl());
+        assertEquals("course_list.jsp?message=1 emails sent.", response.getRedirectedUrl());
     }
 
     @Test
@@ -78,7 +94,7 @@ public class UpcomingCoursesControllerTest {
         singaporeContact.saveIt();
         singaporeContactTwo.saveIt();
         upcomingCoursesController.doPost(request, response);
-        assertEquals("course_list.jsp?email_sent=2&event_in_email=2", response.getRedirectedUrl());
+        assertEquals("course_list.jsp?message=2 emails sent.", response.getRedirectedUrl());
     }
 
 
@@ -87,7 +103,7 @@ public class UpcomingCoursesControllerTest {
         singaporeEvent.saveIt();
         singaporeContact.saveIt();
         upcomingCoursesController.doPost(request, response);
-        assertEquals("course_list.jsp?email_sent=1&event_in_email=1", response.getRedirectedUrl());
+        assertEquals("course_list.jsp?message=1 emails sent.", response.getRedirectedUrl());
     }
 
     @Test
@@ -95,7 +111,7 @@ public class UpcomingCoursesControllerTest {
         singaporeEvent.saveIt();
         new ContactPerson("testName1", "test1@gmail.com", "test1LastName").saveIt();
         upcomingCoursesController.doPost(request, response);
-        assertEquals("course_list.jsp?email_sent=0&event_in_email=0", response.getRedirectedUrl());
+        assertEquals("course_list.jsp?message=0 emails sent.", response.getRedirectedUrl());
     }
 
     @Test
@@ -104,7 +120,7 @@ public class UpcomingCoursesControllerTest {
         singaporeEventTwo.saveIt();
         singaporeContact.saveIt();
         upcomingCoursesController.doPost(request, response);
-        assertEquals("course_list.jsp?email_sent=1&event_in_email=2", response.getRedirectedUrl());
+        assertEquals("course_list.jsp?message=1 emails sent.", response.getRedirectedUrl());
     }
 
     @Test
@@ -116,27 +132,8 @@ public class UpcomingCoursesControllerTest {
 
         upcomingCoursesController.doPost(request, response);
 
-        verify(gmailService, times(2)).send(mailArgument.capture());
-        for (Mail mail: mailArgument.getAllValues()) {
-            assertEquals(singaporeEvent.getCoursename() + linebreak +
-                        singaporeEventTwo.getCoursename(), mail.getContent());
-        }
-    }
-
-    @Test
-    public void bothContactsReceive2EventsInCloseProximity() throws Exception {
-        singaporeEvent.saveIt();
-        bangkokEvent.saveIt();
-        singaporeContact.saveIt();
-        singaporeContactTwo.saveIt();
-
-        upcomingCoursesController.doPost(request, response);
-
-        verify(gmailService, times(2)).send(mailArgument.capture());
-        for (Mail mail: mailArgument.getAllValues()) {
-            assertEquals(singaporeEvent.getCoursename() + linebreak +
-                    bangkokEvent.getCoursename(), mail.getContent());
-        }
+        verify(mailComposer, times(1)).createUpcomingCourseMail(eq(singaporeContactTwo), any());
+        verify(mailComposer, times(1)).createUpcomingCourseMail(eq(singaporeContact), any());
     }
 
     @Test
@@ -148,10 +145,9 @@ public class UpcomingCoursesControllerTest {
 
         upcomingCoursesController.doPost(request, response);
 
-        verify(gmailService, times(2)).send(mailArgument.capture());
-        for (Mail mail: mailArgument.getAllValues()) {
-            assertEquals(bangkokEvent.getCoursename(), mail.getContent());
-        }
+        verify(mailComposer, times(1)).createUpcomingCourseMail(eq(singaporeContact), any());
+        verify(mailComposer, times(1)).createUpcomingCourseMail(eq(singaporeContactTwo), any());
+        verify(mail, times(2)).sendMailWith(gmailService);
     }
 
     @Test
@@ -162,14 +158,10 @@ public class UpcomingCoursesControllerTest {
         singaporeContact.saveIt();
         upcomingCoursesController.doPost(request, response);
 
-        verify(gmailService, times(1)).send(mailArgument.capture());
-
-        for (Mail mail: mailArgument.getAllValues()) {
-            assertEquals(singaporeEvent.getCoursename() + linebreak +
-                    bangkokEvent.getCoursename(), mail.getContent());
-            assertEquals(singaporeContact.getEmail(), mail.getReceipts().get(0));
-            assertEquals(1, mail.getReceipts().size());
-        }
+        verify(mailComposer, times(1)).createUpcomingCourseMail(eq(singaporeContact), coursesArgument.capture());
+        verify(mail, times(1)).sendMailWith(gmailService);
+        assertEquals(2, coursesArgument.getValue().size());
+        assertEquals(singaporeEvent, coursesArgument.getValue().get(0));
     }
 
     @Test
@@ -181,14 +173,9 @@ public class UpcomingCoursesControllerTest {
 
         upcomingCoursesController.doPost(request, response);
 
-        verify(gmailService, times(1)).send(mailArgument.capture());
-
-        for (Mail mail: mailArgument.getAllValues()) {
-            assertEquals(tokyoEvent.getCoursename(), mail.getContent());
-            assertEquals(tokyoContact.getEmail(), mail.getReceipts().get(0));
-            assertEquals(1, mail.getReceipts().size());
-        }
-
+        verify(mailComposer, times(1)).createUpcomingCourseMail(eq(tokyoContact), coursesArgument.capture());
+        verify(mail, times(1)).sendMailWith(gmailService);
+        assertEquals(1, coursesArgument.getValue().size());
     }
 
     @Test
@@ -196,38 +183,6 @@ public class UpcomingCoursesControllerTest {
         singaporeEvent.saveIt();
         noLocContact.saveIt();
         upcomingCoursesController.doPost(request, response);
-        verify(gmailService, times(0)).send(mailArgument.capture());
+        verify(mail, times(0)).sendMailWith(gmailService);
     }
-
-    @Test
-    public void bothContactsReceive2EventsWhenHaving4MailLogs() throws Exception {
-        CourseContactNotification.findAll().forEach(e -> e.delete());
-
-        singaporeEvent.saveIt();
-        singaporeEventTwo.saveIt();
-        singaporeContact.saveIt();
-        singaporeContactTwo.saveIt();
-
-        upcomingCoursesController.doPost(request, response);
-
-        verify(gmailService, times(2)).send(mailArgument.capture());
-
-        assertEquals(4, CourseContactNotification.findAll().size());
-    }
-
-    @Test
-    public void contactFromTokyoDoesNotReceiveEventInBangkokNorSingaporeThenHaving2MailLogs() throws Exception {
-        CourseContactNotification.findAll().forEach(e -> e.delete());
-
-        singaporeEvent.saveIt();
-        bangkokEvent.saveIt();
-        tokyoContact.saveIt();
-        singaporeContact.saveIt();
-        upcomingCoursesController.doPost(request, response);
-
-        verify(gmailService, times(1)).send(mailArgument.capture());
-
-        assertEquals(2, CourseContactNotification.findAll().size());
-    }
-
 }

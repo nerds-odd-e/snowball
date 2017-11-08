@@ -7,7 +7,7 @@ import org.omg.CORBA.BAD_CONTEXT;
 import java.util.List;
 
 @Table("COURSE_CONTACT_PERSON")
-public class Participant extends Model {
+public class Participant extends ApplicationModel {
 
     public Participant() {
     }

@@ -56,11 +56,6 @@ public class MyStepdefs {
         addAContact(email,country,city);
     }
 
-    @When("^Login with email \"([^\"]*)\"$")
-    public void loginWithEmail(String email) throws Throwable{
-        loginPage(BASE_URL + "game_login.jsp", email);
-    }
-
     @Then("^Page should be redirected to \"([^\"]*)\"$")
     public void pageRedirectTo(String page) throws Throwable {
         driver.expectRedirect(page);

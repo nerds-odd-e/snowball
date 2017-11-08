@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Table("template")
-public class Template extends Model {
+public class Template extends ApplicationModel {
 
    public void setTemplateName(String templateName) {
         set("templateName", templateName);

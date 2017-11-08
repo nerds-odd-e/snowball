@@ -9,7 +9,7 @@ import java.util.*;
 
 
 @Table("contact_people")
-public class ContactPerson extends Model {
+public class ContactPerson extends ApplicationModel {
     static {
         validatePresenceOf("email");
         validateWith(new UniquenessValidator("email"));

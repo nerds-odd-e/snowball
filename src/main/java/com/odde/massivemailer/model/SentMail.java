@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-public class SentMail extends Model {
+public class SentMail extends ApplicationModel {
 
     private List<SentMailVisit> sentMailVisits;
 
