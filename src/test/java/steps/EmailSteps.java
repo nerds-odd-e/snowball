@@ -1,12 +1,18 @@
 package steps;
 
+import com.odde.massivemailer.model.SentMail;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import steps.driver.WebDriverFactory;
 import steps.driver.WebDriverWrapper;
 
-public class EmailStepdefs {
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static steps.page.Notifications.getSentMailVisitCount;
+
+public class EmailSteps {
 
     private WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
     private String BASE_URL = "http://localhost:8070/massive_mailer/";
@@ -46,4 +52,10 @@ public class EmailStepdefs {
     public void addEmailContent(String content) throws Throwable {
         driver.setTextField("content", content);
     }
+
+    @Then("It should not send out emails")
+    public void shouldNotSendOutEmails() {
+        assertThat(SentMail.count(), is(0L));
+    }
+
 }

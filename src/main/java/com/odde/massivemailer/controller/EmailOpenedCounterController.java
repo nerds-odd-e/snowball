@@ -1,6 +1,6 @@
 package com.odde.massivemailer.controller;
 
-import com.odde.massivemailer.model.Notification;
+import com.odde.massivemailer.model.SentMail;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -22,7 +22,7 @@ public class EmailOpenedCounterController extends HttpServlet{
             outputStream.print("{'error': 'null id'}");
             return;
         }
-        Notification noti = Notification.findById(email_id);
+        SentMail noti = SentMail.findById(email_id);
         if(noti!=null){
             outputStream.print(noti.extract());
         }

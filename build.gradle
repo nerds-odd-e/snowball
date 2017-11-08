@@ -56,7 +56,6 @@ configurations {
     }
 }
 
-
 repositories {
     jcenter()
     maven { url 'http://repo.javalite.io' }
@@ -67,7 +66,6 @@ gretty {
     if('cucumber' in project.gradle.startParameter.taskNames) {
         jvmArgs = ["-Dactive_env=test"]
     }
-
 }
 
 karma {
@@ -100,7 +98,6 @@ cucumber {
 }
 
 tasks.cucumber {
-
     dependsOn /*unzipPhantomJs,*/ assemble, testClasses, 'appBeforeIntegrationTest'
     finalizedBy 'appAfterIntegrationTest'
 

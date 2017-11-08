@@ -2,9 +2,9 @@ describe('test show email details function', function() {
 
 	var rootId = "testContainer";
 	var markup = "<table id='summarySection'><tbody></tbody></table><table id='listTable'><tbody></tbody></table>";
-	var firstNotificationDetail = {"email": "test@t","open_count": 5};
+	var firstSentMailVisit = {"email": "test@t","open_count": 5};
 
-	var mock_json = {"subject":"Hello!", "sent_at": "2016-11-16", "total_open_count": 8, "emails": [firstNotificationDetail, {"email": "test2@t","open_count": 3}]};
+	var mock_json = {"subject":"Hello!", "sent_at": "2016-11-16", "total_open_count": 8, "emails": [firstSentMailVisit, {"email": "test2@t","open_count": 3}]};
 
 	beforeEach(function(){
 		var container = document.createElement('div');
@@ -37,11 +37,11 @@ describe('test show email details function', function() {
         })
     });
 
-    describe("NotificationDetail", function() {
+    describe("SentMailVisit", function() {
         it('should return corret table row', function() {
-            var row = new NotificationDetail(firstNotificationDetail).createRow();
+            var row = new SentMailVisit(firstSentMailVisit).createRow();
             var test=$(row).find(".open_count").text();
-            expect(test).toBe(''+firstNotificationDetail.open_count);
+            expect(test).toBe(''+firstSentMailVisit.open_count);
         });
     });
 

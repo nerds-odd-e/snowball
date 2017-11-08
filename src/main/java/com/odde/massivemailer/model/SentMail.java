@@ -8,9 +8,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-public class Notification extends Model {
+public class SentMail extends Model {
 
-    private List<NotificationDetail> notificationDetails;
+    private List<SentMailVisit> sentMailVisits;
 
     public Date getSentDate() {
         return (Date) get("sent_at");
@@ -20,23 +20,23 @@ public class Notification extends Model {
         set("sent_at", sentDate);
     }
 
-    public void setNotificationDetails(List<NotificationDetail> notificationDetails) {
-        this.notificationDetails = notificationDetails;
+    public void setSentMailVisits(List<SentMailVisit> sentMailVisits) {
+        this.sentMailVisits = sentMailVisits;
     }
 
-    public Notification() {
-        notificationDetails = new ArrayList<>();
+    public SentMail() {
+        sentMailVisits = new ArrayList<>();
     }
 
     public void addEmailAddress(final String emailAddress) {
-        NotificationDetail notificationDetail = new NotificationDetail();
-        notificationDetail.setEmailAddress(emailAddress);
+        SentMailVisit sentMailVisit = new SentMailVisit();
+        sentMailVisit.setEmailAddress(emailAddress);
 
-        addNotificationDetail(notificationDetail);
+        addVisit(sentMailVisit);
     }
 
-    public void addNotificationDetail(final NotificationDetail notificationDetail) {
-        notificationDetails.add(notificationDetail);
+    public void addVisit(final SentMailVisit sentMailVisit) {
+        sentMailVisits.add(sentMailVisit);
     }
 
     public String getSubject() {
@@ -47,8 +47,8 @@ public class Notification extends Model {
         return (Long) get("message_id");
     }
 
-    public List<NotificationDetail> getNotificationDetails() {
-        return notificationDetails;
+    public List<SentMailVisit> getSentMailVisits() {
+        return sentMailVisits;
     }
 
     public void setSubject(final String subject) {
@@ -59,11 +59,15 @@ public class Notification extends Model {
         set("message_id", messageId);
     }
 
-    public Notification saveAll() {
+    public void setContent(String content) {
+        set("content", content);
+    }
+
+    public SentMail saveAll() {
         saveIt();
-        for (NotificationDetail notificationDetail : getNotificationDetails()) {
-            notificationDetail.setNotificationId(getLongId());
-            notificationDetail.saveIt();
+        for (SentMailVisit sentMailVisit : getSentMailVisits()) {
+            sentMailVisit.setSentMailId(getLongId());
+            sentMailVisit.saveIt();
         }
         return this;
     }
@@ -72,7 +76,7 @@ public class Notification extends Model {
     public String extract() {
         ArrayList<String> sarray = new ArrayList<String>();
         int count = 0;
-        for (NotificationDetail detail : getNotificationDetails()) {
+        for (SentMailVisit detail : getSentMailVisits()) {
             count += detail.getReadCount();
             sarray.add(detail.toJSON());
         }

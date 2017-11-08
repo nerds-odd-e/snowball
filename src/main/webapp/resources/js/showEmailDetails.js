@@ -1,11 +1,11 @@
 function retrieveEmailDetailsListFromServer()
 {
 	var emailDetailsList = [];
-    notification_id = getUrlParameter('notification_id');
+    sent_mail_id = getUrlParameter('sent_mail_id');
 
 	$.ajax({
 	    type: 'GET',
-	    url: 'listEmailDetails?id='+notification_id,
+	    url: 'listEmailDetails?id='+sent_mail_id,
 	    dataType: 'json',
 	    success: function(data) {emailDetailsList = data },
 	    async: false
@@ -51,11 +51,11 @@ function NotificationSummary(item)
 function renderEmailDetailsList(json, selector)
 {
 	$.each(json.emails, function(idx, item) {
-        selector.append(new NotificationDetail(item).createRow());
+        selector.append(new SentMailVisit(item).createRow());
 	})
 }
 
-function NotificationDetail(item)
+function SentMailVisit(item)
 {
     this.getString = function(attr) {
         return attr===undefined?'':attr;

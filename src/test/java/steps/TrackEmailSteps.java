@@ -7,7 +7,7 @@ import steps.driver.WebDriverFactory;
 import steps.driver.WebDriverWrapper;
 import steps.page.ImagePage;
 
-import static steps.page.Notifications.getNotificationDetailCount;
+import static steps.page.Notifications.getSentMailVisitCount;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -36,7 +36,7 @@ public class TrackEmailSteps {
 
     @Then("^I should see that \"(.*)\" has not opened the email$")
     public void i_should_see_that_Terry_has_not_opened_the_email(String receipient) throws Throwable {
-        int count = getNotificationDetailCount(receipient);
+        int count = getSentMailVisitCount(receipient);
 
         assertThat(count, is(0));
     }
@@ -50,7 +50,7 @@ public class TrackEmailSteps {
 
     @Then("^I should see that \"(.*)\" has opened the email$")
     public void i_should_see_that_Terry_has_opened_the_email(String receipient) throws Throwable {
-        int count = getNotificationDetailCount(receipient);
+        int count = getSentMailVisitCount(receipient);
 
         assertThat(count, is(1));
     }

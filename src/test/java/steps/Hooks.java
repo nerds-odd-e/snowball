@@ -8,11 +8,12 @@ public class Hooks {
 
     @Before
     public void beforeScenario() {
-        DBConnectionFactory.clean();
+        DBConnectionFactory.prepare();
     }
 
     @After
     public void afterScenario() {
+        DBConnectionFactory.close();
         WebDriverFactory.resetAll();
     }
 }

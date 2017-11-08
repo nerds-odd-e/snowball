@@ -1,7 +1,7 @@
 package com.odde.massivemailer.controller;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.model.Notification;
+import com.odde.massivemailer.model.SentMail;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +19,7 @@ public class EmailHistoryControllerTest {
     @Before
     public void setUpMockService() {
         emailHistoryController = new EmailHistoryController();
-        Notification mail1 = new Notification();
+        SentMail mail1 = new SentMail();
         mail1.setSubject("Promotional test");
         mail1.setSentDate(null);
         mail1.saveIt();

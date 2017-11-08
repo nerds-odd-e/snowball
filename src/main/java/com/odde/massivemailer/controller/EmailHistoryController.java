@@ -1,6 +1,6 @@
 package com.odde.massivemailer.controller;
 
-import com.odde.massivemailer.model.Notification;
+import com.odde.massivemailer.model.SentMail;
 import com.odde.massivemailer.serialiser.AppGson;
 
 import javax.servlet.ServletException;
@@ -19,7 +19,7 @@ public class EmailHistoryController extends AppController {
     }
 
     private void getEmailList(HttpServletResponse resp) throws IOException {
-        String convertEmailListToJSON = AppGson.getGson().toJson(Notification.findAll());
+        String convertEmailListToJSON = AppGson.getGson().toJson(SentMail.findAll());
         ServletOutputStream outputStream = resp.getOutputStream();
         outputStream.print(convertEmailListToJSON);
     }

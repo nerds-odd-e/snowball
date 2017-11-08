@@ -27,7 +27,7 @@ public class Mail {
     private String content;
     private String key;
     private long messageId;
-    private Notification notification;
+    private SentMail sentMail;
 
 
     public Mail() {
@@ -70,11 +70,11 @@ public class Mail {
         this.content = content;
     }
 
-    private MimeMessage setMessageProperty(Session session, NotificationDetail notificationDetail)
+    private MimeMessage setMessageProperty(Session session, SentMailVisit sentMailVisit)
             throws MessagingException {
 
         try {
-            ContactPerson contact = ContactPerson.getContactByEmail(notificationDetail.getEmailAddress());
+            ContactPerson contact = ContactPerson.getContactByEmail(sentMailVisit.getEmailAddress());
             String subject, content;
             if (contact != null) {
                 subject = ReplaceAttibute(this.getSubject(), contact);
@@ -91,7 +91,7 @@ public class Mail {
 
             InetAddress ip = InetAddress.getLocalHost();
 
-            String messageContent = "<html><body>" + content + "<img height=\"42\" width=\"42\" src=\"http://" + ip.getHostAddress() + ":8070/massive_mailer/resources/images/qrcode.png?token=" + notificationDetail.getId() + "\"></img></body></html>";
+            String messageContent = "<html><body>" + content + "<img height=\"42\" width=\"42\" src=\"http://" + ip.getHostAddress() + ":8070/massive_mailer/resources/images/qrcode.png?token=" + sentMailVisit.getId() + "\"></img></body></html>";
             message.setText(messageContent);
             message.setContent(messageContent, "text/html; charset=utf-8");
 
@@ -122,11 +122,11 @@ public class Mail {
 
         List<Message> returnMsg = new ArrayList<Message>();
 
-        List<NotificationDetail> notificationDetails = notification.getNotificationDetails();
+        List<SentMailVisit> sentMailVisits = sentMail.getSentMailVisits();
 
-        for (NotificationDetail notificationDetail : notificationDetails) {
-            MimeMessage message = setMessageProperty(session, notificationDetail);
-            composeMessage(notificationDetail.getEmailAddress(), message);
+        for (SentMailVisit sentMailVisit : sentMailVisits) {
+            MimeMessage message = setMessageProperty(session, sentMailVisit);
+            composeMessage(sentMailVisit.getEmailAddress(), message);
             returnMsg.add(message);
 
         }
@@ -146,16 +146,17 @@ public class Mail {
         }
     }
 
-    public Notification asNotification() {
-        Notification notification = new Notification();
-        notification.setSubject(getSubject());
-        notification.setMessageId(getMessageId());
+    public SentMail asSentMail() {
+        SentMail sentMail = new SentMail();
+        sentMail.setSubject(getSubject());
+        sentMail.setContent(getContent());
+        sentMail.setMessageId(getMessageId());
 
         for (String receipt : getReceipts()) {
-            notification.addEmailAddress(receipt);
+            sentMail.addEmailAddress(receipt);
         }
 
-        return notification;
+        return sentMail;
     }
 
     public String getKey() {
@@ -174,17 +175,17 @@ public class Mail {
         return messageId;
     }
 
-    public void setNotification(Notification notification) {
-        this.notification = notification;
+    public void setSentMail(SentMail sentMail) {
+        this.sentMail = sentMail;
     }
 
-    public Notification getNotification() {
-        return notification;
+    public SentMail getSentMail() {
+        return sentMail;
     }
 
     public void sendMailWith(MailService mailService) throws EmailException {
-        Notification notification = asNotification().saveAll();
-        setNotification(notification);
+        SentMail sentMail = asSentMail().saveAll();
+        setSentMail(sentMail);
         mailService.send(this);
     }
 }

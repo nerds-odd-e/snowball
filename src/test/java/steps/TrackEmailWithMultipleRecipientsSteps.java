@@ -7,7 +7,7 @@ import steps.driver.WebDriverFactory;
 import steps.driver.WebDriverWrapper;
 import steps.page.ImagePage;
 
-import static steps.page.Notifications.getNotificationDetailCount;
+import static steps.page.Notifications.getSentMailVisitCount;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -58,20 +58,20 @@ public class TrackEmailWithMultipleRecipientsSteps {
 
     @Then("^I must see that no recipient has opened their email$")
     public void i_must_see_that_no_recipient_has_opened_their_email() throws Throwable {
-        assertThat(getNotificationDetailCount("recipient@odd-e.com"), is(0));
-        assertThat(getNotificationDetailCount("recipient2@odd-e.com"), is(0));
+        assertThat(getSentMailVisitCount("recipient@odd-e.com"), is(0));
+        assertThat(getSentMailVisitCount("recipient2@odd-e.com"), is(0));
     }
 
 
     @Then("^I must see that all recipients has opened their email$")
     public void i_must_see_that_all_recipients_has_opened_their_email() throws Throwable {
-        assertThat(getNotificationDetailCount("recipient@odd-e.com"), is(1));
-        assertThat(getNotificationDetailCount("recipient2@odd-e.com"), is(1));
+        assertThat(getSentMailVisitCount("recipient@odd-e.com"), is(1));
+        assertThat(getSentMailVisitCount("recipient2@odd-e.com"), is(1));
     }
 
     @Then("^I must see that one recipient has opened their email$")
     public void i_must_see_that_one_recipient_has_opened_their_email() throws Throwable {
-        assertEquals(1, getNotificationDetailCount("recipient@odd-e.com"));
-        assertEquals(0, getNotificationDetailCount("recipient2@odd-e.com"));
+        assertEquals(1, getSentMailVisitCount("recipient@odd-e.com"));
+        assertEquals(0, getSentMailVisitCount("recipient2@odd-e.com"));
     }
 }

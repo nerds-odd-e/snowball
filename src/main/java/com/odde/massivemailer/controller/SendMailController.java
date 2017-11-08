@@ -13,9 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.ContactPerson;
-import com.odde.massivemailer.model.Event;
 import com.odde.massivemailer.model.Mail;
-import com.odde.massivemailer.model.Notification;
+import com.odde.massivemailer.model.SentMail;
 import com.odde.massivemailer.service.MailService;
 
 @WebServlet("/sendMail")
@@ -27,8 +26,8 @@ public class SendMailController extends AppController {
         try {
             Mail email = processRequest(req);
 
-            Notification notification = email.asNotification().saveAll();
-            email.setNotification(notification);
+            SentMail sentMail = email.asSentMail().saveAll();
+            email.setSentMail(sentMail);
 
             MailService mailService = getMailService();
             mailService.send(email);

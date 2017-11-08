@@ -1,7 +1,7 @@
 package com.odde.massivemailer.filter;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.model.NotificationDetail;
+import com.odde.massivemailer.model.SentMailVisit;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,11 +38,11 @@ public class ImageFilterTest {
     }
 
     @Test
-    public void FilterMustUpdateNotificationDetailMatchingToken() throws IOException, ServletException {
-        NotificationDetail nd = NotificationDetail.createIt("notification_id", "1", "email_address", "my@a.b.com", "read_count", 0);
+    public void FilterMustUpdateSentMailvisitMatchingToken() throws IOException, ServletException {
+        SentMailVisit nd = SentMailVisit.createIt("sent_mail_id", "1", "email_address", "my@a.b.com", "read_count", 0);
         request.setParameter(ImageFilter.TOKEN, nd.getString("id"));
         filter.doFilter(request, response, chain);
-        NotificationDetail nd1 = NotificationDetail.findById(nd.getLongId());
+        SentMailVisit nd1 = SentMailVisit.findById(nd.getLongId());
         nd.refresh();
         assertEquals(1, nd1.getReadCount());
 

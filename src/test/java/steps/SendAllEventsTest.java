@@ -1,6 +1,6 @@
 package steps;
 
-import com.odde.massivemailer.model.MailLog;
+import com.odde.massivemailer.model.CourseContactNotification;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -30,13 +30,6 @@ public class SendAllEventsTest {
         driver.clickButton("add_button");
     }
 
-    public void cleanReportTable() {
-        Base.open("org.sqlite.JDBC", "jdbc:sqlite:cucumber_test.db", "", "");
-        Base.openTransaction();
-        MailLog.deleteAll();
-        Base.close();
-    }
-
     private void addCourses(int offsetDate, String location) {
         LocalDateTime d = LocalDateTime.now();
         DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -59,7 +52,6 @@ public class SendAllEventsTest {
 
     @Given("^visit event list page$")
     public void VisitEventListPage() throws Throwable {
-        cleanReportTable();
         this.numberOfEvents = 0;
         this.numberOfContacts = 0;
         driver.visit(BASE_URL);
@@ -142,12 +134,6 @@ public class SendAllEventsTest {
             String expectedMessage = String.format("%s emails contain %s events sent.", oneLocation.get(1), oneLocation.get(2));
             driver.expectElementWithIdToContainText("message", expectedMessage);
         }
-    }
-
-    @Then("It should not send out emails")
-    public void shouldNotSendOutEmails() {
-        String expectedMessage = String.format("0 emails contain 0 events sent.");
-        driver.expectElementWithIdToContainText("message", expectedMessage);
     }
 
     @Given("^There is a contact \"([^\"]*)\" at \"([^\"]*)\"$")

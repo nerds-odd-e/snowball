@@ -12,11 +12,7 @@ function retrieveTrackingEmailListFromServer()
 
 	return trackingList;
 }
-/**
-  private Long notificationId;
-    private Date sentDate;
 
-*/
 function renderTrackingEmailList(json, selector)
 {
 	$.each(json, function(idx, item) {
@@ -30,10 +26,10 @@ function Notification(item) {
     };
 
     this.createRow = function() {
-        return '<tr class="clickable-row" data-href="email_tracking_details.jsp?notification_id='+this.notificationId+'"><td class="subject">'+this.subject+'</td><td class="sentDate">'+this.sentDate+'</td></tr></a>';
+        return '<tr class="clickable-row" data-href="email_tracking_details.jsp?sent_mail_id='+this.sentMailId+'"><td class="subject">'+this.subject+'</td><td class="sentDate">'+this.sentDate+'</td></tr></a>';
     }
 
     this.subject = this.getString(item.attributes.subject);
     this.sentDate = this.getString(item.attributes.sent_at);
-    this.notificationId = this.getString(item.attributes.notification_id);
+    this.sentMailId = this.getString(item.attributes.sent_mail_id);
 }

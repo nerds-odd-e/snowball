@@ -3,7 +3,6 @@ package com.odde.massivemailer.controller;
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.*;
 import com.odde.massivemailer.service.GMailService;
-import org.javalite.activejdbc.Base;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -202,7 +201,7 @@ public class SendAllEventsControllerTest {
 
     @Test
     public void bothContactsReceive2EventsWhenHaving4MailLogs() throws Exception {
-        MailLog.findAll().forEach(e -> e.delete());
+        CourseContactNotification.findAll().forEach(e -> e.delete());
 
         singaporeEvent.saveIt();
         singaporeEventTwo.saveIt();
@@ -213,12 +212,12 @@ public class SendAllEventsControllerTest {
 
         verify(gmailService, times(2)).send(mailArgument.capture());
 
-        assertEquals(4, MailLog.findAll().size());
+        assertEquals(4, CourseContactNotification.findAll().size());
     }
 
     @Test
     public void contactFromTokyoDoesNotReceiveEventInBangkokNorSingaporeThenHaving2MailLogs() throws Exception {
-        MailLog.findAll().forEach(e -> e.delete());
+        CourseContactNotification.findAll().forEach(e -> e.delete());
 
         singaporeEvent.saveIt();
         bangkokEvent.saveIt();
@@ -228,7 +227,7 @@ public class SendAllEventsControllerTest {
 
         verify(gmailService, times(1)).send(mailArgument.capture());
 
-        assertEquals(2, MailLog.findAll().size());
+        assertEquals(2, CourseContactNotification.findAll().size());
     }
 
 }

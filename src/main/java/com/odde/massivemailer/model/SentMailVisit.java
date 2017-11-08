@@ -2,7 +2,7 @@ package com.odde.massivemailer.model;
 
 import org.javalite.activejdbc.Model;
 
-public class NotificationDetail extends Model {
+public class SentMailVisit extends Model {
     public String getEmailAddress() {
         return (String) get("email_address");
     }
@@ -26,8 +26,8 @@ public class NotificationDetail extends Model {
         set("read_count", read_count);
     }
 
-    public void setNotificationId(Long notificationId) {
-        set("notification_id", notificationId);
+    public void setSentMailId(Long sentMailId) {
+        set("sent_mail_id", sentMailId);
     }
 
     public void updateViewCount() {

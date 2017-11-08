@@ -3,7 +3,6 @@ package com.odde.massivemailer.controller;
 import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.*;
 import com.odde.massivemailer.service.MailService;
-import org.apache.commons.lang3.time.DateUtils;
 
 
 import javax.servlet.ServletException;
@@ -13,13 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Date;
-import java.util.StringTokenizer;
 
 @WebServlet("/previewemail")
 public class SendPreviewMail extends AppController {
@@ -48,8 +42,8 @@ public class SendPreviewMail extends AppController {
             }
 
             for (Mail email:emails ) {
-                Notification notification = email.asNotification().saveAll();
-                email.setNotification(notification);
+                SentMail sentMail = email.asSentMail().saveAll();
+                email.setSentMail(sentMail);
                 MailService mailService = getMailService();
                 mailService.send(email);
             }

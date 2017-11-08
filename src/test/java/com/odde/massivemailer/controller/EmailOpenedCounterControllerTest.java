@@ -1,7 +1,7 @@
 package com.odde.massivemailer.controller;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.model.Notification;
+import com.odde.massivemailer.model.SentMail;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -23,8 +23,8 @@ public class EmailOpenedCounterControllerTest {
 
     @Test
     public void returnEmailSubject() throws Exception {
-        Notification notification = Notification.createIt("subject", "xxx");
-        req.setParameter("id", String.valueOf(notification.getLongId()));
+        SentMail sentMail = SentMail.createIt("subject", "xxx");
+        req.setParameter("id", String.valueOf(sentMail.getLongId()));
         emailOpenedCounterController.doGet(req, res);
         assertEquals("{\"subject\":\"xxx\", \"sent_at\":\"null\", \"total_open_count\":0, \"emails\":[]}", res.getContentAsString());
     }

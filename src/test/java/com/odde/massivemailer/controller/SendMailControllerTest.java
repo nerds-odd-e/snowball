@@ -4,7 +4,7 @@ import com.odde.TestWithDB;
 import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Mail;
-import com.odde.massivemailer.model.Notification;
+import com.odde.massivemailer.model.SentMail;
 import com.odde.massivemailer.service.GMailService;
 import org.javalite.activejdbc.LazyList;
 import org.junit.Before;
@@ -40,7 +40,7 @@ public class SendMailControllerTest {
     private MockHttpServletResponse response;
 
     @Captor
-    private ArgumentCaptor<Notification> notificationCaptor;
+    private ArgumentCaptor<SentMail> notificationCaptor;
 
 
     @Before
@@ -207,11 +207,11 @@ public class SendMailControllerTest {
 
         controller.doPost(request, response);
 
-        LazyList<Notification> all = Notification.findAll();
-        Notification capturedNotification =  all.get(all.size() - 1);
+        LazyList<SentMail> all = SentMail.findAll();
+        SentMail capturedSentMail =  all.get(all.size() - 1);
 
-        assertNotNull(capturedNotification.getMessageId());
-        assertThat(capturedNotification.getSubject(), is("subject for test"));
+        assertNotNull(capturedSentMail.getMessageId());
+        assertThat(capturedSentMail.getSubject(), is("subject for test"));
     }
 
     private void mockRecipient(String recipient){

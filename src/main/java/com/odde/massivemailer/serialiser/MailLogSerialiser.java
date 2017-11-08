@@ -1,13 +1,12 @@
 package com.odde.massivemailer.serialiser;
 
-import com.odde.massivemailer.model.MailLog;
-import com.odde.massivemailer.model.Notification;
+import com.odde.massivemailer.model.CourseContactNotification;
 
 import java.util.Set;
 
 public class MailLogSerialiser extends ActiveSerialiser {
     @Override
     protected Set<String> getAttributeNames() {
-        return MailLog.attributeNames();
+        return CourseContactNotification.attributeNames();
     }
 }

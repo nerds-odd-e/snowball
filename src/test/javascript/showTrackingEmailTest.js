@@ -2,8 +2,8 @@ describe('test show tracking function', function() {
 
 	var rootId = "testContainer";
 	var markup = "<table id='trackingTable'><tbody></tbody></table>";
-	var firstNotification = {"attributes":{"notification_id":1,"subject":"test","sent_at":"2016-11-14"}};
-	var mock_json = [ firstNotification ,{"attributes":{"notification_id":2,"subject":"test2","sent_at":"2016-11-14"}}];
+	var firstNotification = {"attributes":{"sent_mail_id":1,"subject":"test","sent_at":"2016-11-14"}};
+	var mock_json = [ firstNotification ,{"attributes":{"sent_mail_id":2,"subject":"test2","sent_at":"2016-11-14"}}];
 
 	beforeEach(function(){
 		var container = document.createElement('div');
@@ -37,7 +37,7 @@ describe('test show tracking function', function() {
 	describe("Notifiction", function() {
 	    it('should return corret table row', function() {
 	        var row = new Notification(firstNotification).createRow();
-	        expect(row.indexOf("notification_id="+firstNotification.attributes.notification_id) > 0).toBe(true);
+	        expect(row.indexOf("sent_mail_id="+firstNotification.attributes.sent_mail_id) > 0).toBe(true);
 	    });
 	});
 

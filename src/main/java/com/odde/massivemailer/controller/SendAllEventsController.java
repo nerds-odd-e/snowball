@@ -1,6 +1,5 @@
 package com.odde.massivemailer.controller;
 
-import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.*;
 import com.odde.massivemailer.service.*;
 
@@ -33,7 +32,7 @@ public class SendAllEventsController extends AppController {
             if (nearCourses.isEmpty()) {
                 continue;
             }
-            if (MailLog.isExist(person, nearCourses)) {
+            if (CourseContactNotification.isExist(person, nearCourses)) {
                 continue;
             }
             String content = nearCourses.stream().map(Course::getCoursename).collect(Collectors.joining("<br/>\n"));
@@ -45,6 +44,6 @@ public class SendAllEventsController extends AppController {
 
     private void doSendMail(ContactPerson person, List<Course> eventsNearContact, String content) throws IOException {
         Mail.createEventMail(content, person.getEmail()).sendMailWith(getMailService());
-        eventsNearContact.stream().forEach(i -> new MailLog().create(person.getId(), new Date(), i));
+        eventsNearContact.stream().forEach(i -> new CourseContactNotification().create(person.getId(), new Date(), i));
     }
 }

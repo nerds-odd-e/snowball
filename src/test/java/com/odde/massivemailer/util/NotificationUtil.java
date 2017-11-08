@@ -1,37 +1,37 @@
 package com.odde.massivemailer.util;
 
 import com.odde.massivemailer.model.Mail;
-import com.odde.massivemailer.model.Notification;
-import com.odde.massivemailer.model.NotificationDetail;
+import com.odde.massivemailer.model.SentMail;
+import com.odde.massivemailer.model.SentMailVisit;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class NotificationUtil {
 
-    private static void addNotificationDetail(Mail mail) {
+    private static void addVisit(Mail mail) {
 
-        List<NotificationDetail> notificationDetails = null;
-        if (mail.getNotification().getNotificationDetails() == null) {
-            notificationDetails = new ArrayList<>();
-            mail.getNotification().setNotificationDetails(notificationDetails);
+        List<SentMailVisit> sentMailVisits = null;
+        if (mail.getSentMail().getSentMailVisits() == null) {
+            sentMailVisits = new ArrayList<>();
+            mail.getSentMail().setSentMailVisits(sentMailVisits);
         } else {
-            notificationDetails = mail.getNotification().getNotificationDetails();
+            sentMailVisits = mail.getSentMail().getSentMailVisits();
         }
 
         for (String recipient : mail.getReceipts()) {
-            NotificationDetail notificationDetail = new NotificationDetail();
-            notificationDetail.setEmailAddress(recipient);
-            notificationDetail.setId(System.currentTimeMillis());
-            notificationDetails.add(notificationDetail);
-            mail.getNotification().setNotificationDetails(notificationDetails);
+            SentMailVisit sentMailVisit = new SentMailVisit();
+            sentMailVisit.setEmailAddress(recipient);
+            sentMailVisit.setId(System.currentTimeMillis());
+            sentMailVisits.add(sentMailVisit);
+            mail.getSentMail().setSentMailVisits(sentMailVisits);
         }
     }
 
-    public static void addNotification(Mail mail) {
-        Notification notification = new Notification();
-        notification.setId(System.currentTimeMillis());
-        mail.setNotification(notification);
-        addNotificationDetail(mail);
+    public static void addSentMail(Mail mail) {
+        SentMail sentMail = new SentMail();
+        sentMail.setId(System.currentTimeMillis());
+        mail.setSentMail(sentMail);
+        addVisit(mail);
     }
 }

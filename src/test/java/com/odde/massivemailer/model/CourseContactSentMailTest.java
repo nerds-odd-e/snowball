@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(TestWithDB.class)
-public class MailLogTest {
+public class CourseContactSentMailTest {
 
     private final Course singaporeEvent = new Course("Scrum In Singapore", "", "Singapore");
     private final Course bangkokEvent = new Course("Code Smells In Bangkok", "", "Bangkok");
@@ -26,7 +26,7 @@ public class MailLogTest {
         bangkokEvent.saveIt();
         singaporeContact.saveIt();
 
-        MailLog log = new MailLog();
+        CourseContactNotification log = new CourseContactNotification();
         log.set("contact_person_id", singaporeContact.getId());
         log.set("course_id", bangkokEvent.getId());
         log.set("sent_at", Instant.parse("2015-12-15T23:30:00.000Z"));
@@ -42,10 +42,10 @@ public class MailLogTest {
         singaporeContact.saveIt();
         LocalDateTime now = LocalDateTime.now();
 
-        MailLog.createIt("contact_person_id", bangkokEvent.getId(), "course_id", singaporeEvent.getId(), "sent_at", now);
-        MailLog.createIt("contact_person_id", bangkokEvent.getId(), "course_id", bangkokEvent.getId(), "sent_at", now);
+        CourseContactNotification.createIt("contact_person_id", bangkokEvent.getId(), "course_id", singaporeEvent.getId(), "sent_at", now);
+        CourseContactNotification.createIt("contact_person_id", bangkokEvent.getId(), "course_id", bangkokEvent.getId(), "sent_at", now);
 
-        assertEquals(2, MailLog.findAll().size());
+        assertEquals(2, CourseContactNotification.findAll().size());
     }
 
     @Test
@@ -58,10 +58,10 @@ public class MailLogTest {
 
         LocalDateTime now = LocalDateTime.now();
 
-        MailLog.createIt("contact_person_id", singaporeContact.getId(), "course_id", singaporeEvent.getId(), "sent_at", now);
-        MailLog.createIt("contact_person_id", singaporeContact.getId(), "course_id", bangkokEvent.getId(), "sent_at", now);
+        CourseContactNotification.createIt("contact_person_id", singaporeContact.getId(), "course_id", singaporeEvent.getId(), "sent_at", now);
+        CourseContactNotification.createIt("contact_person_id", singaporeContact.getId(), "course_id", bangkokEvent.getId(), "sent_at", now);
 
-        List<Map> list = MailLog.getReport();
+        List<Map> list = CourseContactNotification.getReport();
         assertEquals(1, list.size());
         assertEquals(2, list.get(0).get("course_count"));
     }
@@ -77,11 +77,11 @@ public class MailLogTest {
 
         LocalDateTime now = LocalDateTime.now();
 
-        MailLog.createIt("contact_person_id", singaporeContact.getId(), "course_id", singaporeEvent.getId(), "sent_at", now);
-        MailLog.createIt("contact_person_id", singaporeContact.getId(), "course_id", bangkokEvent.getId(), "sent_at", now);
-        MailLog.createIt("contact_person_id", bangkokContact.getId(), "course_id", bangkokEvent.getId(), "sent_at", now);
+        CourseContactNotification.createIt("contact_person_id", singaporeContact.getId(), "course_id", singaporeEvent.getId(), "sent_at", now);
+        CourseContactNotification.createIt("contact_person_id", singaporeContact.getId(), "course_id", bangkokEvent.getId(), "sent_at", now);
+        CourseContactNotification.createIt("contact_person_id", bangkokContact.getId(), "course_id", bangkokEvent.getId(), "sent_at", now);
 
-        List<Map> list = MailLog.getReport();
+        List<Map> list = CourseContactNotification.getReport();
         assertEquals(2, list.size());
         assertEquals(2, list.get(0).get("course_count"));
         assertEquals(1, list.get(1).get("course_count"));
@@ -95,14 +95,14 @@ public class MailLogTest {
         bangkokEvent.saveIt();
 
         LocalDateTime now = LocalDateTime.now();
-        MailLog.createIt("contact_person_id", singaporeContact.getId(), "course_id", singaporeEvent.getId(), "sent_at", now);
-        MailLog.createIt("contact_person_id", singaporeContact.getId(), "course_id", bangkokEvent.getId(), "sent_at", now);
+        CourseContactNotification.createIt("contact_person_id", singaporeContact.getId(), "course_id", singaporeEvent.getId(), "sent_at", now);
+        CourseContactNotification.createIt("contact_person_id", singaporeContact.getId(), "course_id", bangkokEvent.getId(), "sent_at", now);
 
         List<Course> courses = new ArrayList<>();
         courses.add(singaporeEvent);
         courses.add(bangkokEvent);
 
-        assertEquals(true, MailLog.isExist(singaporeContact, courses));
+        assertEquals(true, CourseContactNotification.isExist(singaporeContact, courses));
     }
 
     @Test
@@ -115,15 +115,15 @@ public class MailLogTest {
         newBangkokEvent.saveIt();
 
         LocalDateTime now = LocalDateTime.now();
-        MailLog.createIt("contact_person_id", singaporeContact.getId(), "course_id", singaporeEvent.getId(), "sent_at", now);
-        MailLog.createIt("contact_person_id", singaporeContact.getId(), "course_id", bangkokEvent.getId(), "sent_at", now);
+        CourseContactNotification.createIt("contact_person_id", singaporeContact.getId(), "course_id", singaporeEvent.getId(), "sent_at", now);
+        CourseContactNotification.createIt("contact_person_id", singaporeContact.getId(), "course_id", bangkokEvent.getId(), "sent_at", now);
 
         List<Course> courses = new ArrayList<>();
         courses.add(singaporeEvent);
         courses.add(bangkokEvent);
         courses.add(newBangkokEvent);
 
-        assertEquals(false, MailLog.isExist(singaporeContact, courses));
+        assertEquals(false, CourseContactNotification.isExist(singaporeContact, courses));
     }
 
 }

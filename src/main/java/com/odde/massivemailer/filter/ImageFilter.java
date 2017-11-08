@@ -1,6 +1,6 @@
 package com.odde.massivemailer.filter;
 
-import com.odde.massivemailer.model.NotificationDetail;
+import com.odde.massivemailer.model.SentMailVisit;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -17,7 +17,7 @@ public class ImageFilter implements Filter {
         String token = request.getParameter(TOKEN);
 
         if (token != null) {
-            NotificationDetail nd = NotificationDetail.findById(Integer.parseInt(token));
+            SentMailVisit nd = SentMailVisit.findById(Integer.parseInt(token));
             nd.updateViewCount();
         }
 

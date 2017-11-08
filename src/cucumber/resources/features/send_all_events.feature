@@ -26,6 +26,7 @@ Feature: Send all events to contacts with the same location as the event - Singa
     And I click send button
     Then It should not send out emails
 
+  @now
   Scenario: Have both event and contacts at single location
     When We have below number of contacts at each location:
       | country   | city      | number of contacts |
@@ -38,7 +39,6 @@ Feature: Send all events to contacts with the same location as the event - Singa
       |location           | number of emails  | number of events in the email  |
       |Singapore/Singapore|                  2|                               6|
 
-    @now
   Scenario: Contacts from multiple location not within radius, Events at single location
     When We have below number of contacts at each location:
       | country   | city      | number of contacts |

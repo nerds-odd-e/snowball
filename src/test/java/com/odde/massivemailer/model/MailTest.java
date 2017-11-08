@@ -30,7 +30,7 @@ public class MailTest {
 		mail.setContent("content");
 		mail.setSubject("subject");
 		mail.setReceipts(Arrays.asList("test@gmail.com"));
-		NotificationUtil.addNotification(mail);
+		NotificationUtil.addSentMail(mail);
 
 		List<Message> messages = mail.createMessages(session);
 		
@@ -55,11 +55,11 @@ public class MailTest {
 		mail.setSubject("subject {LastName} - {Email}");
 		mail.setReceipts(Arrays.asList("test@gmail.com"));
 
-		NotificationUtil.addNotification(mail);
+		NotificationUtil.addSentMail(mail);
 
 		List<Message> messages = mail.createMessages(session);
 
-		assertEquals("<html><body>content TestName, CompanyName<img height=\"42\" width=\"42\" src=\"http://"+ InetAddress.getLocalHost().getHostAddress()+":8070/massive_mailer/resources/images/qrcode.png?token=" + mail.getNotification().getNotificationDetails().get(0).getId() + "\"></img></body></html>", messages.get(0).getContent());
+		assertEquals("<html><body>content TestName, CompanyName<img height=\"42\" width=\"42\" src=\"http://"+ InetAddress.getLocalHost().getHostAddress()+":8070/massive_mailer/resources/images/qrcode.png?token=" + mail.getSentMail().getSentMailVisits().get(0).getId() + "\"></img></body></html>", messages.get(0).getContent());
 		assertEquals("subject LastName - test@gmail.com", messages.get(0).getSubject());
 	}
 
@@ -74,7 +74,7 @@ public class MailTest {
 		mail.setContent("content");
 		mail.setSubject("subject");
 		mail.setReceipts(Arrays.asList("test@gmail.com"));
-		NotificationUtil.addNotification(mail);
+		NotificationUtil.addSentMail(mail);
 		List<Message> messages = mail.createMessages(session);
 		String[] address = messages.get(0).getFrom()[0].toString().split("<");
 		
@@ -88,10 +88,10 @@ public class MailTest {
 		mail.setSubject("subject");
 		mail.setMessageId(123456789L);
 
-		Notification notification = mail.asNotification();
+		SentMail sentMail = mail.asSentMail();
 
-		assertThat(notification.getSubject(), is("subject"));
-		assertThat(notification.getMessageId(), is(123456789L));
+		assertThat(sentMail.getSubject(), is("subject"));
+		assertThat(sentMail.getMessageId(), is(123456789L));
 	}
 
 	@Test
@@ -105,12 +105,12 @@ public class MailTest {
         receipts.add("terry@odd-e.com");
         mail.setReceipts(receipts);
 
-        Notification notification = mail.asNotification();
+        SentMail sentMail = mail.asSentMail();
 
-        List<NotificationDetail> notificationDetails = notification.getNotificationDetails();
+        List<SentMailVisit> sentMailVisits = sentMail.getSentMailVisits();
 
-        assertThat(notification.getNotificationDetails().size(), is(1));
-        assertThat(notification.getNotificationDetails().get(0).getEmailAddress(), is("terry@odd-e.com"));
+        assertThat(sentMail.getSentMailVisits().size(), is(1));
+        assertThat(sentMail.getSentMailVisits().get(0).getEmailAddress(), is("terry@odd-e.com"));
     }
 
     @Test
@@ -126,11 +126,11 @@ public class MailTest {
         receipts.add("terry3@odd-e.com");
         mail.setReceipts(receipts);
 
-        Notification notification = mail.asNotification();
+        SentMail sentMail = mail.asSentMail();
 
-        assertThat(notification.getNotificationDetails().size(), is(3));
-        assertThat(notification.getNotificationDetails().get(0).getEmailAddress(), is("terry@odd-e.com"));
-        assertThat(notification.getNotificationDetails().get(1).getEmailAddress(), is("terry2@odd-e.com"));
-        assertThat(notification.getNotificationDetails().get(2).getEmailAddress(), is("terry3@odd-e.com"));
+        assertThat(sentMail.getSentMailVisits().size(), is(3));
+        assertThat(sentMail.getSentMailVisits().get(0).getEmailAddress(), is("terry@odd-e.com"));
+        assertThat(sentMail.getSentMailVisits().get(1).getEmailAddress(), is("terry2@odd-e.com"));
+        assertThat(sentMail.getSentMailVisits().get(2).getEmailAddress(), is("terry3@odd-e.com"));
     }
 }
