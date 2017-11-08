@@ -1,11 +1,8 @@
 package steps;
 
-import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import steps.driver.WebDriverFactory;
 import steps.driver.WebDriverWrapper;
 import steps.page.CourseListPage;
@@ -13,7 +10,6 @@ import steps.page.EnrollParticipantPage;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -69,7 +65,7 @@ public class SendPreviewMailTest {
 
     @Given("^There is a contact \"([^\"]*)\" at Tokyo$")
     public void there_is_a_contact_at_Tokyo(String email) throws Throwable {
-        MyStepdefs contactTests = new MyStepdefs();
+        ContactSteps contactTests = new ContactSteps();
         contactTests.addAContact(email, "Japan", "Tokyo");
     }
 

@@ -43,6 +43,10 @@ public class SentMail extends ApplicationModel {
         return (String) get("subject");
     }
 
+    public String getContent() {
+        return (String) get("content");
+    }
+
     public Long getMessageId() {
         return (Long) get("message_id");
     }

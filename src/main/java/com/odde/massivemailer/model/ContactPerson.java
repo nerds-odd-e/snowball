@@ -1,6 +1,7 @@
 package com.odde.massivemailer.model;
 
 import com.odde.massivemailer.model.validator.UniquenessValidator;
+import com.odde.massivemailer.service.LocationProviderService;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
@@ -56,6 +57,19 @@ public class ContactPerson extends ApplicationModel {
         }
 
         return loc;
+    }
+
+    public static void createContact(String city, String country, String email) {
+        LocationProviderService locationProviderService = new LocationProviderService();
+        String location = country + "/" + city;
+        Location storedLocation = locationProviderService.getLocationForName(location);
+        if (storedLocation == null) {
+            locationProviderService.addLocation(country, city);
+        }
+
+        ContactPerson contact = new ContactPerson("todo name", email, "todo last name", "todo company", location);
+
+        contact.saveIt();
     }
 
     public String getName() {

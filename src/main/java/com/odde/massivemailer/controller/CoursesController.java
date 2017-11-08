@@ -3,7 +3,6 @@ package com.odde.massivemailer.controller;
 import com.odde.massivemailer.model.Course;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -22,8 +21,7 @@ public class CoursesController extends AppController {
 
             Map map = getParameterFromRequest(req, new String[]{"coursename", "country", "city", "address", "coursedetails", "duration", "instructor", "startdate"});
 
-            Course course = new Course(map);
-            course.saveIt();
+            Course.createCourse(map);
 
             resultMsg = "status=success&msg=Add course successfully";
         } catch (Exception e) {
@@ -32,5 +30,6 @@ public class CoursesController extends AppController {
         }
         resp.sendRedirect("add_course.jsp?" + resultMsg);
     }
+
 }
 

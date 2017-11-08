@@ -58,4 +58,9 @@ public class EmailSteps {
         assertThat(SentMail.count(), is(0L));
     }
 
+    @Then("^It should send (\\d+) emails$")
+    public void it_should_send(int expected_email_count) throws Throwable {
+        assertThat(SentMail.count(), is((long)expected_email_count));
+    }
+
 }

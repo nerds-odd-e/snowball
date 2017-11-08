@@ -11,7 +11,7 @@ import steps.driver.WebDriverWrapper;
 import static org.junit.Assert.assertTrue;
 
 
-public class MyStepdefs {
+public class ContactSteps {
 
     private WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
     public String BASE_URL = "http://localhost:8070/massive_mailer/";

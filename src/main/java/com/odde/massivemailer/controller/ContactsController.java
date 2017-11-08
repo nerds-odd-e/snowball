@@ -8,9 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.annotation.WebServlet;
 
 import com.odde.massivemailer.model.ContactPerson;
-import com.odde.massivemailer.model.Location;
 import com.odde.massivemailer.serialiser.AppGson;
-import com.odde.massivemailer.service.LocationProviderService;
 
 @WebServlet("/contacts")
 public class ContactsController extends AppController {
@@ -18,19 +16,8 @@ public class ContactsController extends AppController {
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String resultMsg;
-        LocationProviderService locationProviderService = new LocationProviderService();
-        String city = req.getParameter("city");
-        String country = req.getParameter("country");
-        String location = country + "/" + city;
-        Location storedLocation = locationProviderService.getLocationForName(location);
-        if (storedLocation == null) {
-            locationProviderService.addLocation(country, city);
-        }
-
-        ContactPerson contact = new ContactPerson("todo name", req.getParameter("email"), "todo last name", "todo company", location);
-
         try {
-            contact.saveIt();
+            ContactPerson.createContact(req.getParameter("city"), req.getParameter("country"), req.getParameter("email"));
             resultMsg = "status=success&msg=Add contact successfully";
         } catch (Exception e) {
             resultMsg = "status=failed&msg=" + e.getMessage();

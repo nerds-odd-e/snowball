@@ -60,6 +60,12 @@ public class Course extends ApplicationModel {
         return totalEventsNearContactLocation;
     }
 
+    public static Course createCourse(Map map) throws Exception {
+        Course course = new Course(map);
+        course.saveIt();
+        return course;
+    }
+
     public void setCourseName(String courseName) {
         set("coursename", courseName);
     }
