@@ -1,7 +1,6 @@
 package com.odde.massivemailer.controller;
 
 import com.odde.massivemailer.model.Course;
-import com.odde.massivemailer.model.Event;
 import com.odde.massivemailer.serialiser.AppGson;
 
 import javax.servlet.ServletException;

@@ -48,7 +48,7 @@ public class Template extends Model {
             content = getEmailContentFromTemplate(contactPerson, course);
             contactEmailId = contactPerson.getEmail();
 
-            Mail mail = Mail.createEventMail(content, contactEmailId);
+            Mail mail = Mail.createUpcomingCoursesEmail(content, contactEmailId);
             mail.setSubject(getEmailSubjectFromTemplate(contactPerson));
 
             mails.add(mail);

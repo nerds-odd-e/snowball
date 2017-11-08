@@ -30,7 +30,7 @@ public class CoursesController extends AppController {
             resultMsg = "status=failed&msg=" + e.getMessage();
 
         }
-        resp.sendRedirect("add_event.jsp?" + resultMsg);
+        resp.sendRedirect("add_course.jsp?" + resultMsg);
     }
 }
 

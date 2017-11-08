@@ -9,8 +9,8 @@ import steps.driver.WebDriverWrapper;
 public class EventTests {
 
     private WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
-    private String BASE_URL = "http://localhost:8070/massive_mailer/add_event.jsp";
-    private String EVENTLIST_BASE_URL = "http://localhost:8070/massive_mailer/eventlist.jsp";
+    private String BASE_URL = "http://localhost:8070/massive_mailer/add_course.jsp";
+    private String EVENTLIST_BASE_URL = "http://localhost:8070/massive_mailer/courselist.jsp";
 
     @Given("^I am on Add Event page$")
     public void visitAddEventPage() throws Throwable {

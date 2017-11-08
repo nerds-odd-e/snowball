@@ -1,4 +1,4 @@
-<!-- Contains the header and left pane which was common across the Send Email, Add Contact, Add Event, Contact List, and Email Tracking -->
+<!-- Contains the header and left pane which was common across the Send Email, Add Contact, Add Course, Contact List, and Email Tracking -->
 <div id="wrapper">
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -42,7 +42,7 @@
                 <li><a href="coursedlist.jsp"><span
                         class="glyphicon glyphicon-file" aria-hidden="true"></span> Course List
                         </a></li>
-                <ul><li><a href="add_event.jsp"><span
+                <ul><li><a href="add_course.jsp"><span
                                        class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Course
                                        </a></li></ul>
                 <li><a href="reportlist.jsp"><span

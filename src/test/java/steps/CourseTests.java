@@ -14,7 +14,7 @@ import static org.junit.Assert.assertTrue;
 public class CourseTests {
 
     private WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
-    private String BASE_URL = "http://localhost:8070/massive_mailer/add_event.jsp";
+    private String BASE_URL = "http://localhost:8070/massive_mailer/add_course.jsp";
 
     @Given("^I am on create new course page$")
     public void visitCreateCoursePage() throws Throwable {
@@ -40,12 +40,12 @@ public class CourseTests {
 
 
     @When("^I click the Create button$")
-    public void clickSaveEvent() throws Throwable {
+    public void clickSaveCourse() throws Throwable {
         driver.clickButton("save_button");
     }
 
     @Then("^Course should save and successfully saved message should appear$")
-    public void eventListPageShouldContain() throws Throwable {
+    public void courseListPageShouldContain() throws Throwable {
         driver.expectRedirect(BASE_URL);
         System.out.println(driver.getCurrentUrl());
         assertTrue(driver.getCurrentUrl().contains("status=success&msg=Add%20course%20successfully"));
@@ -53,7 +53,7 @@ public class CourseTests {
     }
 
     @Then("^Course should not save and show error messagea$")
-    public void eventShowErrorMassage() throws Throwable {
+    public void courseShowErrorMassage() throws Throwable {
         driver.expectRedirect(BASE_URL);
         assertTrue(driver.getCurrentUrl().contains("status=failed&msg=CityName%20is%20invalid"));
     }

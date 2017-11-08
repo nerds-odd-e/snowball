@@ -39,7 +39,7 @@ public class CoursesControllerTest {
     public void shouldCreateACourseWithOnlyCourseName() throws ServletException, IOException {
         request.setParameter("coursename", "test couree");
         controller.doPost(request, response);
-        Assert.assertEquals("add_event.jsp?status=success&msg=Add course successfully",response.getRedirectedUrl());
+        Assert.assertEquals("add_course.jsp?status=success&msg=Add course successfully",response.getRedirectedUrl());
         Assert.assertEquals("test couree", Course.getCourseByName("test couree").getCoursename());
     }
 

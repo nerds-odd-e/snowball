@@ -18,7 +18,7 @@ import static org.mockito.Mockito.verify;
 
 
 @RunWith(TestWithDB.class)
-public class SendAllEventsControllerTest {
+public class UpcomingCoursesControllerTest {
 
     private final Course singaporeEvent = new Course("Scrum In Singapore", "", "Singapore");
     private final Course singaporeEventTwo = new Course("A-TDD In Singapore", "", "Singapore");
@@ -33,7 +33,7 @@ public class SendAllEventsControllerTest {
     private final ArgumentCaptor<Mail> mailArgument = ArgumentCaptor.forClass(Mail.class);
     private final String linebreak = "<br/>\n";
 
-    private SendAllEventsController sendAllEventsController;
+    private UpcomingCoursesController upcomingCoursesController;
 
     private MockHttpServletRequest request;
 
@@ -44,8 +44,8 @@ public class SendAllEventsControllerTest {
     @Before
     public void setUpMockService() {
         MockitoAnnotations.initMocks(this);
-        sendAllEventsController = new SendAllEventsController();
-        sendAllEventsController.setMailService(gmailService);
+        upcomingCoursesController = new UpcomingCoursesController();
+        upcomingCoursesController.setMailService(gmailService);
 
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
@@ -53,23 +53,23 @@ public class SendAllEventsControllerTest {
 
     @Test
     public void sendNoEventsToNoContactsAsMail() throws Exception {
-        sendAllEventsController.doPost(request, response);
-        assertEquals("coursedlist.jsp?email_sent=0&event_in_email=0", response.getRedirectedUrl());
+        upcomingCoursesController.doPost(request, response);
+        assertEquals("course_list.jsp?email_sent=0&event_in_email=0", response.getRedirectedUrl());
     }
 
     @Test
     public void send1EventToNoContactsAsMail() throws Exception {
-        new Event("Testing-1").saveIt();
-        sendAllEventsController.doPost(request, response);
-        assertEquals("coursedlist.jsp?email_sent=0&event_in_email=0", response.getRedirectedUrl());
+        singaporeEvent.saveIt();
+        upcomingCoursesController.doPost(request, response);
+        assertEquals("course_list.jsp?email_sent=0&event_in_email=0", response.getRedirectedUrl());
     }
 
     @Test
     public void send1EventTo1ContactsAsMail() throws Exception {
         singaporeEvent.saveIt();
         new ContactPerson("testName", "test1@gmail.com", "testLastName","","Singapore").saveIt();
-        sendAllEventsController.doPost(request, response);
-        assertEquals("coursedlist.jsp?email_sent=1&event_in_email=1", response.getRedirectedUrl());
+        upcomingCoursesController.doPost(request, response);
+        assertEquals("course_list.jsp?email_sent=1&event_in_email=1", response.getRedirectedUrl());
     }
 
     @Test
@@ -77,8 +77,8 @@ public class SendAllEventsControllerTest {
         singaporeEvent.saveIt();
         singaporeContact.saveIt();
         singaporeContactTwo.saveIt();
-        sendAllEventsController.doPost(request, response);
-        assertEquals("coursedlist.jsp?email_sent=2&event_in_email=2", response.getRedirectedUrl());
+        upcomingCoursesController.doPost(request, response);
+        assertEquals("course_list.jsp?email_sent=2&event_in_email=2", response.getRedirectedUrl());
     }
 
 
@@ -86,16 +86,16 @@ public class SendAllEventsControllerTest {
     public void contactMustReceiveEventInEmailWhenHavingSameLocationAsEvent() throws Exception {
         singaporeEvent.saveIt();
         singaporeContact.saveIt();
-        sendAllEventsController.doPost(request, response);
-        assertEquals("coursedlist.jsp?email_sent=1&event_in_email=1", response.getRedirectedUrl());
+        upcomingCoursesController.doPost(request, response);
+        assertEquals("course_list.jsp?email_sent=1&event_in_email=1", response.getRedirectedUrl());
     }
 
     @Test
     public void contactMustNotReceiveEventInEmailWhenContactHasNoLocation() throws Exception {
         singaporeEvent.saveIt();
         new ContactPerson("testName1", "test1@gmail.com", "test1LastName").saveIt();
-        sendAllEventsController.doPost(request, response);
-        assertEquals("coursedlist.jsp?email_sent=0&event_in_email=0", response.getRedirectedUrl());
+        upcomingCoursesController.doPost(request, response);
+        assertEquals("course_list.jsp?email_sent=0&event_in_email=0", response.getRedirectedUrl());
     }
 
     @Test
@@ -103,8 +103,8 @@ public class SendAllEventsControllerTest {
         singaporeEvent.saveIt();
         singaporeEventTwo.saveIt();
         singaporeContact.saveIt();
-        sendAllEventsController.doPost(request, response);
-        assertEquals("coursedlist.jsp?email_sent=1&event_in_email=2", response.getRedirectedUrl());
+        upcomingCoursesController.doPost(request, response);
+        assertEquals("course_list.jsp?email_sent=1&event_in_email=2", response.getRedirectedUrl());
     }
 
     @Test
@@ -114,7 +114,7 @@ public class SendAllEventsControllerTest {
         singaporeContact.saveIt();
         singaporeContactTwo.saveIt();
 
-        sendAllEventsController.doPost(request, response);
+        upcomingCoursesController.doPost(request, response);
 
         verify(gmailService, times(2)).send(mailArgument.capture());
         for (Mail mail: mailArgument.getAllValues()) {
@@ -130,7 +130,7 @@ public class SendAllEventsControllerTest {
         singaporeContact.saveIt();
         singaporeContactTwo.saveIt();
 
-        sendAllEventsController.doPost(request, response);
+        upcomingCoursesController.doPost(request, response);
 
         verify(gmailService, times(2)).send(mailArgument.capture());
         for (Mail mail: mailArgument.getAllValues()) {
@@ -146,7 +146,7 @@ public class SendAllEventsControllerTest {
         singaporeContact.saveIt();
         singaporeContactTwo.saveIt();
 
-        sendAllEventsController.doPost(request, response);
+        upcomingCoursesController.doPost(request, response);
 
         verify(gmailService, times(2)).send(mailArgument.capture());
         for (Mail mail: mailArgument.getAllValues()) {
@@ -160,7 +160,7 @@ public class SendAllEventsControllerTest {
         bangkokEvent.saveIt();
         tokyoContact.saveIt();
         singaporeContact.saveIt();
-        sendAllEventsController.doPost(request, response);
+        upcomingCoursesController.doPost(request, response);
 
         verify(gmailService, times(1)).send(mailArgument.capture());
 
@@ -179,7 +179,7 @@ public class SendAllEventsControllerTest {
         tokyoEvent.saveIt();
         tokyoContact.save();
 
-        sendAllEventsController.doPost(request, response);
+        upcomingCoursesController.doPost(request, response);
 
         verify(gmailService, times(1)).send(mailArgument.capture());
 
@@ -195,7 +195,7 @@ public class SendAllEventsControllerTest {
     public void contactWWithNoLocationMustNotReceiveMail() throws Exception {
         singaporeEvent.saveIt();
         noLocContact.saveIt();
-        sendAllEventsController.doPost(request, response);
+        upcomingCoursesController.doPost(request, response);
         verify(gmailService, times(0)).send(mailArgument.capture());
     }
 
@@ -208,7 +208,7 @@ public class SendAllEventsControllerTest {
         singaporeContact.saveIt();
         singaporeContactTwo.saveIt();
 
-        sendAllEventsController.doPost(request, response);
+        upcomingCoursesController.doPost(request, response);
 
         verify(gmailService, times(2)).send(mailArgument.capture());
 
@@ -223,7 +223,7 @@ public class SendAllEventsControllerTest {
         bangkokEvent.saveIt();
         tokyoContact.saveIt();
         singaporeContact.saveIt();
-        sendAllEventsController.doPost(request, response);
+        upcomingCoursesController.doPost(request, response);
 
         verify(gmailService, times(1)).send(mailArgument.capture());
 

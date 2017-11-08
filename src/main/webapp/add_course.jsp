@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Add Event</title>
+<title>Add Course</title>
 <!-- Bootstrap Core CSS -->
 <link href="resources/lib/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">

@@ -14,7 +14,6 @@ public class DBConnectionFactory {
         Base.exec("INSERT INTO Template (TemplateName,Subject,Content) VALUES ('RTA Default Template', 'Greeting {FirstName}', 'Hi, {FirstName} {LastName} from {Company}');");
         Base.exec("DELETE FROM sent_mail_visits");
         Base.exec("DELETE FROM sent_mails");
-        Base.exec("DELETE FROM events");
         Base.exec("DELETE FROM contact_people");
         Base.exec("DELETE FROM courses");
         Base.exec("DELETE FROM course_contact_notifications");

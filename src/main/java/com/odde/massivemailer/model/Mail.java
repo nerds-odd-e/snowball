@@ -40,8 +40,8 @@ public class Mail {
         this.content = content;
     }
 
-    public static Mail createEventMail(String content, String email) {
-        Mail mail = new Mail(System.currentTimeMillis(), "Event Invitation", content);
+    public static Mail createUpcomingCoursesEmail(String content, String email) {
+        Mail mail = new Mail(System.currentTimeMillis(), "Course Invitation", content);
         mail.setReceipts(Collections.singletonList(email));
         return mail;
     }

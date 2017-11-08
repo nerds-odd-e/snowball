@@ -5,7 +5,7 @@ describe('isChange function',function(){
   });
 
   it('should return false when pass not blank value',function(){
-	   expect(isChange("Event Title")).toBe(true);
+	   expect(isChange("Course Title")).toBe(true);
  });
 });
 

@@ -1,11 +1,9 @@
 package steps;
 
-import com.odde.massivemailer.model.CourseContactNotification;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.javalite.activejdbc.Base;
 import steps.driver.WebDriverFactory;
 import steps.driver.WebDriverWrapper;
 
@@ -15,9 +13,9 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class SendAllEventsTest {
-    private static final String BASE_URL = "http://localhost:8070/massive_mailer/coursedlist.jsp";
+    private static final String BASE_URL = "http://localhost:8070/massive_mailer/course_list.jsp";
     private static final String ADD_CONTACT_URL = "http://localhost:8070/massive_mailer/add_contact.jsp";
-    private static final String ADD_EVENT_URL = "http://localhost:8070/massive_mailer/add_event.jsp";
+    private static final String ADD_COURSE_URL = "http://localhost:8070/massive_mailer/add_course.jsp";
 
     private WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
     private int numberOfEvents, numberOfEventsInLocation;
@@ -35,7 +33,7 @@ public class SendAllEventsTest {
         DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         d.plusMonths(offsetDate);
 
-        driver.visit(ADD_EVENT_URL);
+        driver.visit(ADD_COURSE_URL);
         driver.setTextField("coursename", "A course");
         driver.setTextField("duration", "30");
         String[] locations = location.split("/");
@@ -131,7 +129,7 @@ public class SendAllEventsTest {
         List<List<String>> emails = dtEmails.raw();
         emails = emails.subList(1, emails.size());//skip header row
         for (List<String> oneLocation : emails) {
-            String expectedMessage = String.format("%s emails contain %s events sent.", oneLocation.get(1), oneLocation.get(2));
+            String expectedMessage = String.format("%s emails contain %s courses sent.", oneLocation.get(1), oneLocation.get(2));
             driver.expectElementWithIdToContainText("message", expectedMessage);
         }
     }

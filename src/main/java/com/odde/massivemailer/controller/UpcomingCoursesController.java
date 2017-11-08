@@ -11,8 +11,8 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@WebServlet("/sendAllEvents")
-public class SendAllEventsController extends AppController {
+@WebServlet("/sendAllCourses")
+public class UpcomingCoursesController extends AppController {
 
     private final LocationProviderService locationProvider = new LocationProviderService();
 
@@ -23,12 +23,12 @@ public class SendAllEventsController extends AppController {
 
     private String doSendAllMails() throws IOException {
         int totalMailsSent = 0;
-        int totalEvent = 0;
+        int totalCourses = 0;
 
         List<ContactPerson> contactList = ContactPerson.whereHasLocation();
         for (ContactPerson person : contactList) {
             List<Course> nearCourses = Course.whereNearTo(locationProvider, person.getLocation());
-            totalEvent += nearCourses.size();
+            totalCourses += nearCourses.size();
             if (nearCourses.isEmpty()) {
                 continue;
             }
@@ -39,11 +39,11 @@ public class SendAllEventsController extends AppController {
             doSendMail(person, nearCourses, content);
             totalMailsSent++;
         }
-        return String.format("coursedlist.jsp?email_sent=%s&event_in_email=%s", totalMailsSent, totalEvent);
+        return String.format("course_list.jsp?email_sent=%s&course_in_email=%s", totalMailsSent, totalCourses);
     }
 
-    private void doSendMail(ContactPerson person, List<Course> eventsNearContact, String content) throws IOException {
-        Mail.createEventMail(content, person.getEmail()).sendMailWith(getMailService());
-        eventsNearContact.stream().forEach(i -> new CourseContactNotification().create(person.getId(), new Date(), i));
+    private void doSendMail(ContactPerson person, List<Course> coursesNearContact, String content) throws IOException {
+        Mail.createUpcomingCoursesEmail(content, person.getEmail()).sendMailWith(getMailService());
+        coursesNearContact.stream().forEach(i -> new CourseContactNotification().create(person.getId(), new Date(), i));
     }
 }

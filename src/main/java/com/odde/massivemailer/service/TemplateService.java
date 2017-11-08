@@ -72,7 +72,7 @@ public class TemplateService {
             contactEmailId = contactPerson.getEmail();
 
             //
-            Mail mail = Mail.createEventMail(content, contactEmailId);
+            Mail mail = Mail.createUpcomingCoursesEmail(content, contactEmailId);
             //
             mails.add(mail);
         }

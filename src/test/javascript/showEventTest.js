@@ -1,8 +1,8 @@
-describe('test show event function', function() {
+describe('test show course function', function() {
 
 	
 	var rootId = "testContainer";
-	var markup = "<ul id='eventTable' class='list-inline' ></ul>";
+	var markup = "<ul id='courseTable' class='list-inline' ></ul>";
 	var mock_json = [{"id":1, "attributes":{"title":"TestTitle1","description":"TestContent1", "location" : "Singapore"}},{"id":2,"attributes":{"title":"TestTitle2","description":"TestContent2", "location" : "Singapore"}}];
 	
 	beforeEach(function(){
@@ -17,24 +17,24 @@ describe('test show event function', function() {
 		container.parentNode.removeChild(container);
 	});
 	
-	it('should render empty event list when server JSON is empty',function() {
+	it('should render empty course list when server JSON is empty',function() {
 
 		var mock_json = [];
 		
-		renderEventList(mock_json, $("#eventTable"));
-		expect($("#eventTable .col-md-12").length).toBe(mock_json.length);
+		renderCourseList(mock_json, $("#courseTable"));
+		expect($("#courseTable .col-md-12").length).toBe(mock_json.length);
 	});
 	
 
-	it('should render complete event lists when server JSON contains some elements',function() {
+	it('should render complete course lists when server JSON contains some elements',function() {
 
-		renderEventList(mock_json, $('#eventTable'));
-		expect($("#eventTable .title").length).toBe(mock_json.length);
+		renderCourseList(mock_json, $('#courseTable'));
+		expect($("#courseTable .title").length).toBe(mock_json.length);
 		$.each(mock_json, function(index, obj)
 		{
-			expect($("#eventTable .title").eq(index).text()).toBe(obj.attributes.title);
-			expect($("#eventTable .content").eq(index).text()).toBe(obj.attributes.description);
-			expect($("#eventTable .location").eq(index).text()).toBe(obj.attributes.location);
+			expect($("#courseTable .title").eq(index).text()).toBe(obj.attributes.title);
+			expect($("#courseTable .content").eq(index).text()).toBe(obj.attributes.description);
+			expect($("#courseTable .location").eq(index).text()).toBe(obj.attributes.location);
 		})	
 	});
 	

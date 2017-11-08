@@ -43,9 +43,9 @@
 				<div class="row">
 					<div class="col-lg-12">
 						<h3>Send Upcoming Course Notification</h3>
-                        <form action="sendAllEvents" method="post">
+                        <form action="sendAllCourses" method="post">
                             <input type="submit" id="send_button" value="Send" />
-                            <div id="message" style=""><%= request.getParameter("email_sent") == null? "" : request.getParameter("email_sent") + " emails contain " + request.getParameter("event_in_email") + " events sent." %></div>
+                            <div id="message" style=""><%= request.getParameter("email_sent") == null? "" : request.getParameter("email_sent") + " emails contain " + request.getParameter("course_in_email") + " courses sent." %></div>
                         </form>
                     </div>
 					<div class="col-lg-12">

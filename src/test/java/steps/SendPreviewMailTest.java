@@ -30,7 +30,7 @@ public class SendPreviewMailTest {
         DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         d.plusMonths(offsetDate);
 
-        driver.visit(BASE_URL + "add_event.jsp");
+        driver.visit(BASE_URL + "add_course.jsp");
         driver.setTextField("coursename", A_COURSE);
         driver.setTextField("duration", "30");
         driver.setDropdownValue("location", "Tokyo");
@@ -87,7 +87,7 @@ public class SendPreviewMailTest {
 
     @When("^I trigger the sending once$")
     public void i_trigger_the_sending_once() throws Throwable {
-        driver.visit(BASE_URL + "coursedlist.jsp");
+        driver.visit(BASE_URL + "course_list.jsp");
         driver.clickButton("send_button");
         driver.waitforElement("message");
     }
