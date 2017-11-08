@@ -97,23 +97,6 @@ public class SendPreviewMailTest {
         addCoursesAtTokyo(1);
     }
 
-    @When("^Report page Includes$")
-    public void report_page_Includes(DataTable reportTable) throws Throwable {
-        List<List<String>> reports = reportTable.raw();
-        reports = reports.subList(1, reports.size());
-
-        driver.visit(BASE_URL + "reportlist.jsp");
-        List<WebElement> reportList = driver.findElements(By.xpath("//*[@id=\"reportTable\"]/tr/td"));
-        for (List<String> report:reports) {
-            for (int i = 0; i < reportList.size(); i++) {
-                if (report.get(i).equals("*")) {
-                    continue;
-                }
-                assertEquals(report.get(i), reportList.get(i).getText());
-            }
-        }
-    }
-
     @Then("^\"([^\"]*)\" shouldn't receive email$")
     public void shouldn_t_receive_email(String arg1) throws Throwable {
         driver.expectElementWithIdToContainText("message", "0 emails contain 0 events sent.");

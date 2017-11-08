@@ -11,7 +11,6 @@ public class AppGson {
                 .registerTypeAdapter(ContactPerson.class, new ContactPersonSerialiser())
                 .registerTypeAdapter(Template.class, new TemplateSerialiser())
                 .registerTypeAdapter(SentMail.class, new NotificationSerialiser())
-                .registerTypeAdapter(CourseContactNotification.class, new MailLogSerialiser())
                 .create();
     }
 }

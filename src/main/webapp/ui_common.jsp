@@ -45,9 +45,6 @@
                 <ul><li><a href="add_course.jsp"><span
                                        class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Course
                                        </a></li></ul>
-                <li><a href="reportlist.jsp"><span
-                        class="glyphicon glyphicon-file" aria-hidden="true"></span> Report List
-                        </a></li>
                 <li><a href="enrollParticipant.jsp"><span
                         class="glyphicon glyphicon-user" aria-hidden="true"></span>
                         Enroll Participant</a></li>

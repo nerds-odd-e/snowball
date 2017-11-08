@@ -21,9 +21,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
-/**
- * Created by csd on 30/5/17.
- */
 @RunWith(TestWithDB.class)
 public class CoursesControllerTest {
     private CoursesController controller = new CoursesController();

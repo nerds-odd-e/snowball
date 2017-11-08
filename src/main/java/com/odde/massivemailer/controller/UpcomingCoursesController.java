@@ -30,9 +30,6 @@ public class UpcomingCoursesController extends AppController {
             if (nearCourses.isEmpty()) {
                 continue;
             }
-            if (CourseContactNotification.isExist(person, nearCourses)) {
-                continue;
-            }
             mailComposer.createUpcomingCourseMail(person, nearCourses).sendMailWith(getMailService());
             totalMailsSent++;
         }
