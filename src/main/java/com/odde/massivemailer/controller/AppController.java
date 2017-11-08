@@ -4,6 +4,8 @@ import com.odde.massivemailer.service.GMailService;
 import com.odde.massivemailer.service.MailService;
 import com.odde.massivemailer.service.MockMailService;
 import com.odde.massivemailer.service.SMTPConfiguration;
+import org.javalite.activejdbc.Configuration;
+import org.javalite.activejdbc.Registry;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -49,7 +51,7 @@ public class AppController extends HttpServlet {
     }
 
     private boolean isMailServiceMocked() {
-        return ! "production".equals(System.getProperty("ACTIVE_ENV"));
+        return "test".equals(System.getProperty("active_env"));
     }
 
     protected HashMap getParameterFromRequest(HttpServletRequest req, String[] reqFields) {
