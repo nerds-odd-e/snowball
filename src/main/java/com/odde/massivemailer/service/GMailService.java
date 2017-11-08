@@ -42,10 +42,6 @@ public class GMailService implements MailService {
 		this.sendEmailViaGmail(msg);
 	}
 
-	public void setConfiguration(SMTPConfiguration config) {
-		this.configuration = config;
-	}
-
 	private void sendEmailViaGmail(List<Message> msgs) throws EmailException {
 		try {
 

@@ -12,7 +12,6 @@ public class PrepareDatabaseStartupListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         getMySQLDBReady();
-        getMySQLDBReady();
     }
 
     @Override

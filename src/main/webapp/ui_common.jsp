@@ -39,7 +39,7 @@
                                         class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add
                                         Contact</a></li></ul>
 
-                <li><a href="coursedlist.jsp"><span
+                <li><a href="course_list.jsp"><span
                         class="glyphicon glyphicon-file" aria-hidden="true"></span> Course List
                         </a></li>
                 <ul><li><a href="add_course.jsp"><span
