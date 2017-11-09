@@ -1,4 +1,4 @@
-package steps;
+package steps.driver;
 
 import org.javalite.activejdbc.Base;
 
@@ -16,7 +16,6 @@ public class DBConnectionFactory {
         Base.exec("DELETE FROM sent_mails");
         Base.exec("DELETE FROM contact_people");
         Base.exec("DELETE FROM courses");
-        Base.exec("DELETE FROM course_contact_notifications");
     }
 
     public static void close() {
