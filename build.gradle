@@ -25,7 +25,7 @@ allprojects {
 }
 
 ext {
-    phantomJsVersion = "2.1.1"
+    phantomJsVersion = "1.9.8"
     groovyVersion = '2.4.5'
     gebVersion = '1.1.1'
     seleniumVersion = '3.7.1'
@@ -100,7 +100,7 @@ cucumber {
 }
 
 tasks.cucumber {
-    if(!Os.isFamily(Os.FAMILY_MAC)) {
+    if(!Os.isFamily(Os.FAMILY_WINDOWS)) {
         dependsOn unzipPhantomJs
     }
     dependsOn assemble, testClasses, 'appBeforeIntegrationTest'
