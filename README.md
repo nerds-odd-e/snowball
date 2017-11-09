@@ -11,7 +11,7 @@ launchctl setenv MM_EMAIL_PASSWORD $MM_EMAIL_PASSWORD
 
 ##### Setup Phantomjs
 
-`brew install phantonjs`
+`brew install phantomjs`
 
 ##### Setup MySQL database
 
