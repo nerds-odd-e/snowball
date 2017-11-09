@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS Template (
+CREATE TABLE IF NOT EXISTS template (
     Id              INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     TemplateName    VARCHAR(255) NOT NULL,
     Subject         VARCHAR(255),
