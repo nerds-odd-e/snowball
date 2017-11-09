@@ -25,6 +25,7 @@ allprojects {
 }
 
 ext {
+    phantomJsVersion = '2.1.1'
     groovyVersion = '2.4.5'
     gebVersion = '1.1.1'
     seleniumVersion = '3.7.1'
@@ -98,7 +99,10 @@ cucumber {
 }
 
 tasks.cucumber {
-    dependsOn /*unzipPhantomJs,*/ assemble, testClasses, 'appBeforeIntegrationTest'
+    if (!Os.isFamily(Os.FAMILY_MAC)) {
+        dependsOn unzipPhantomJs
+    }
+    dependsOn assemble, testClasses, 'appBeforeIntegrationTest'
     finalizedBy 'appAfterIntegrationTest'
 
     def phantomJsFilename = Os.isFamily(Os.FAMILY_WINDOWS) ? "phantomjs.exe" : "bin/phantomjs"
@@ -141,12 +145,6 @@ dependencies {
     testCompile "info.cukes:cucumber-java:$cucumberJvmVersion"
     testCompile "info.cukes:cucumber-junit:$cucumberJvmVersion"
     compile 'org.flywaydb:flyway-core:3.2.1'
-    // pick whichever drivers you want. We test against most of them here.
-    // see src/test/resources/GebConfig.groovy for how to switch between them
-    //cucumberRuntime "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
-    //cucumberRuntime "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"
-    //cucumberRuntime "org.seleniumhq.selenium:selenium-phantomjs-driver:$seleniumVersion"
-    // using a custom version of phantomjs driver for now as the original one does not support WebDriver > 2.43.1
     testCompile 'com.github.detro:ghostdriver:2.1.0'
 
     // https://mvnrepository.com/artifact/com.google.maps/google-maps-services
@@ -154,3 +152,4 @@ dependencies {
 }
 
 apply from: "gradle/ci.gradle"
+apply from: "gradle/osSpecificDownloads.gradle"
