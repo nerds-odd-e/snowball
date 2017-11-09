@@ -9,6 +9,10 @@ launchctl setenv MM_EMAIL_PASSWORD $MM_EMAIL_PASSWORD
 ```
 * Reboot your IDE.
 
+##### Setup Phantomjs
+
+`brew install phantonjs`
+
 ##### Setup MySQL database
 
 This project use MySQL database. The test and development environment need a MySQL service on the localhost with root
