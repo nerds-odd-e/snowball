@@ -25,6 +25,7 @@ allprojects {
 }
 
 ext {
+    phantomJsVersion = "2.1.1"
     groovyVersion = '2.4.5'
     gebVersion = '1.1.1'
     seleniumVersion = '3.7.1'
@@ -40,6 +41,7 @@ apply plugin: 'war'
 apply plugin: 'org.javalite.activejdbc'
 apply from: 'gradle/gretty.gradle'
 apply from: "gradle/idea/idea.gradle"
+apply from: "gradle/osSpecificDownloads.gradle"
 
 group = 'com.odde'
 version = '0.0.1-SNAPSHOT'
@@ -98,12 +100,15 @@ cucumber {
 }
 
 tasks.cucumber {
+    if(!Os.isFamily(Os.FAMILY_MAC)) {
+        dependsOn unzipPhantomJs
+    }
     dependsOn assemble, testClasses, 'appBeforeIntegrationTest'
     finalizedBy 'appAfterIntegrationTest'
 
-    def phantomJsFilename = Os.isFamily(Os.FAMILY_MAC) ? "/usr/local/bin/phantomjs" : "/usr/bin/phantomjs"
+    def phantomJsFilename = Os.isFamily(Os.FAMILY_WINDOWS) ? "phantomjs.exe" : "bin/phantomjs"
     jvmOptions.systemProperties([
-            "phantomjs.binary.path": file("$projectDir/node_modules/phantomjs/bin/phantomjs"),
+            "phantomjs.binary.path": Os.isFamily(Os.FAMILY_MAC) ? file("$projectDir/node_modules/phantomjs/bin/phantomjs") : new File(unzipPhantomJs.outputs.files.singleFile, phantomJsFilename).absolutePath,
             "geb.cucumber.step.packages": "steps",
             "geb.env": System.getProperty("geb.env"),
             "webdriver": System.getProperty("webdriver"),
