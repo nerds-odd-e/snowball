@@ -42,4 +42,4 @@ npm test
 
 #### IntelliJ Integration
 
-http://javalite.io/ibntellij_idea_integratio
+http://javalite.io/intellij_idea_integration
