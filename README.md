@@ -43,3 +43,6 @@ npm test
 #### IntelliJ Integration
 
 http://javalite.io/intellij_idea_integration
+
+In IntelliJ's Project Structure, change the output path of the massive_mailer_test module to:
+<proejct_dir>/build/classes/java/main
