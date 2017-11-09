@@ -63,7 +63,7 @@ task downloadPhantomJs {
 
 task unzipPhantomJs(type: Copy) {
 	def outputDir = file("$buildDir/webdriver/phantomjs")
-	//dependsOn downloadPhantomJs
+	dependsOn downloadPhantomJs
 	outputs.dir(outputDir)
 
 	def archive = downloadPhantomJs.outputs.files.singleFile
