@@ -54,9 +54,8 @@ public class Course extends ApplicationModel {
         }
 
         LocationProviderService locationProviderService = new LocationProviderService();
-        Location location = locationProviderService.getLocationForName(locationStr);
-        System.out.println("locationName=========" + locationStr);
-        System.out.println("Location=======" + location.getLat() + " " + location.getLng());
+        locationProviderService.getLocationForName(locationStr);
+        
 
     }
 
