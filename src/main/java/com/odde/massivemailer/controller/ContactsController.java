@@ -22,6 +22,9 @@ public class ContactsController extends AppController {
         } catch (Exception e) {
             resultMsg = "status=failed&msg=" + e.getMessage();
         }
+        // add email sending code for new contact
+        // fetch the courselist
+        // send email
 
         resp.sendRedirect("contactlist.jsp?" + resultMsg);
     }
