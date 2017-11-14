@@ -25,6 +25,7 @@ public class Course extends ApplicationModel {
         setCourseName(title);
         setCourseDetails(content);
         setLocation(location);
+        // setLocationCoordidate();
     }
 
     public Course(Map<String, String> map) throws Exception {
@@ -62,6 +63,15 @@ public class Course extends ApplicationModel {
 
     public static Course createCourse(Map map) throws Exception {
         Course course = new Course(map);
+
+        /*
+         call the api to get the location co-ordinates
+         populate the model.
+         add the co-ordinate properties in model.
+         getter and setter for coordinates.
+         */
+
+
         course.saveIt();
         return course;
     }
@@ -77,6 +87,8 @@ public class Course extends ApplicationModel {
     public void setLocation(String location) {
         set("location", location);
     }
+
+
 
     public void setCourseDetails(String details) {
         set("coursedetails", details);
