@@ -30,3 +30,10 @@ Feature: Send all events to contacts with the same location as the event - Singa
     Then It should send 2 emails
     And there should be in total 6 courses in all the emails
 
+  @location
+  Scenario: Contacts with country and city will be notified about events in near location
+    When We create 2 contacts at Tokyo, Japan
+    And We create 3 courses at Osaka, Japan
+    And I send the upcoming courses emails
+    Then It should send 2 emails
+    And there should be in total 6 courses in all the emails
