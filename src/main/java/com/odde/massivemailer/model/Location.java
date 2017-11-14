@@ -42,11 +42,11 @@ public class Location {
     }
 
     public Double getLatitude() {
-        return 34.41;
+        return this.lat;
     }
 
     public Double getLongitude() {
-        return 135.31;
+        return this.lng;
     }
 
     public String getCountryCode() { return this.countryCode; }

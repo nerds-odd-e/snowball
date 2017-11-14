@@ -41,12 +41,23 @@ public class Course extends ApplicationModel {
         for (String key :keys) {
             set(key, map.get(key));
         }
-
+        String locationStr = "";
+        String country ="";
+        String city = "";
         if (map.get("city") == null) {
             set("location", map.get("country"));
         } else {
-            set("location", map.get("country") + "/" + map.get("city"));
+             country = map.get("country");
+             city = map.get("city");
+            locationStr = country + "/" + city;
+            set("location", locationStr);
         }
+
+        LocationProviderService locationProviderService = new LocationProviderService();
+        Location location = locationProviderService.getLocationForName(locationStr);
+        System.out.println("locationName=========" + locationStr);
+        System.out.println("Location=======" + location.getLat() + " " + location.getLng());
+
     }
 
     public static List<Course> whereNearTo(LocationProviderService locationProviderService, String location) {
