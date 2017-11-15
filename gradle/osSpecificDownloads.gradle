@@ -57,7 +57,8 @@ task downloadPhantomJs {
 	outputs.file(outputFile)
 
 	doLast {
-		FileUtils.copyURLToFile(new URL("https://bitbucket.org/ariya/phantomjs/downloads/$filename"), outputFile)
+		//FileUtils.copyURLToFile(new URL("https://bitbucket.org/ariya/phantomjs/downloads/$filename"), outputFile)
+		FileUtils.copyFile(new URL(file("$projectDir/gradle/$filename"), outputFile)
 	}
 }
 
