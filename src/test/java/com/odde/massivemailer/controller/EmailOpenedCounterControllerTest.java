@@ -2,6 +2,8 @@ package com.odde.massivemailer.controller;
 
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.SentMail;
+import com.odde.massivemailer.model.Template;
+import com.odde.massivemailer.serialiser.AppGson;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -23,10 +25,13 @@ public class EmailOpenedCounterControllerTest {
 
     @Test
     public void returnEmailSubject() throws Exception {
-        SentMail sentMail = SentMail.createIt("subject", "xxx");
-        req.setParameter("id", String.valueOf(sentMail.getLongId()));
+        Template template = Template.createIt("TemplateName", "Template");
+        SentMail mail = SentMail.createIt("template_id", template.getId(), "subject", "Promotional test");
+        req.setParameter("id", String.valueOf(mail.getLongId()));
         emailOpenedCounterController.doGet(req, res);
-        assertEquals("{\"subject\":\"xxx\", \"sent_at\":\"null\", \"total_open_count\":0, \"emails\":[]}", res.getContentAsString());
+        String json = res.getContentAsString();
+        SentMail result = AppGson.getGson().fromJson(json, SentMail.class);
+        assertEquals("Promotional test", result.getSubject());
     }
 
     @Test

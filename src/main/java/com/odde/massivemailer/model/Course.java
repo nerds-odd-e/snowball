@@ -1,13 +1,11 @@
 package com.odde.massivemailer.model;
 
 import com.odde.massivemailer.service.LocationProviderService;
+import org.apache.commons.lang3.StringUtils;
 import org.javalite.activejdbc.LazyList;
-import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
 
 
-import java.text.ParseException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,15 +26,13 @@ public class Course extends ApplicationModel {
         // setLocationCoordidate();
     }
 
-    public Course(Map<String, String> map) throws Exception {
-
-
+    public Course(Map<String, Object> map) throws Exception {
 
         if (map.get("city") != null && map.get("city").equals("Foobar")) {
             throw new Exception("CityName is invalid");
         }
 
-        String[] keys = {"coursename", "address", "coursedetails", "duration", "instructor", "startdate"};
+        String[] keys = {"coursename", "address", "coursedetails", "duration", "instructor", "startdate", "latitude", "longitude"};
 
         for (String key :keys) {
             set(key, map.get(key));
@@ -47,31 +43,23 @@ public class Course extends ApplicationModel {
         } else {
             set("location", map.get("country") + "/" + map.get("city"));
         }
-    }
 
-    public static List<Course> whereNearTo(LocationProviderService locationProviderService, String location) {
-        return where("location in (" + locationProviderService.getCloseByLocationStrings(location)+")");
-    }
+        if(!StringUtils.isEmpty(getLocation())){
+            LocationProviderService locationProviderService = new LocationProviderService();
+            Location location = locationProviderService.getLocationForName(getLocation());
 
-    public static int numberOfEventsNear(List<String> contactsLocation, LocationProviderService locationProviderService) {
-        int totalEventsNearContactLocation = 0;
-        for (String location : contactsLocation) {
-            totalEventsNearContactLocation += whereNearTo(locationProviderService, location).size();
+            set("latitude", location.getLat());
+            set("longitude", location.getLng());
         }
-        return totalEventsNearContactLocation;
+    }
+
+    public static List<Course> whereNearTo(String location) {
+        LocationProviderService locationProviderService = new LocationProviderService();
+        return where("location in (" + locationProviderService.getCloseByLocationStrings(location)+")");
     }
 
     public static Course createCourse(Map map) throws Exception {
         Course course = new Course(map);
-
-        /*
-         call the api to get the location co-ordinates
-         populate the model.
-         add the co-ordinate properties in model.
-         getter and setter for coordinates.
-         */
-
-
         course.saveIt();
         return course;
     }
@@ -88,10 +76,16 @@ public class Course extends ApplicationModel {
         set("location", location);
     }
 
-
-
     public void setCourseDetails(String details) {
         set("coursedetails", details);
+    }
+
+    public void setLatitude(double lat) {
+        set("latitude", lat);
+    }
+
+    public void setLongitude(double longitude) {
+        set("longitude", longitude);
     }
 
     public String getCoursename() {
@@ -104,6 +98,10 @@ public class Course extends ApplicationModel {
 
     public String getLocation() {
         return getAttribute("location");
+    }
+
+    public Location getCourseLocation() {
+        return new Location(null, getLatitude(), getLongitude());
     }
 
     public String getStartdate() {
@@ -122,8 +120,20 @@ public class Course extends ApplicationModel {
         return getAttribute("instructor");
     }
 
+    public double getLatitude() {
+        return getDoubleAttribute("latitude");
+    }
+
+    public double getLongitude() {
+        return getDoubleAttribute("longitude");
+    }
+
     public String getAttribute(String name) {
         return (String) get(name);
+    }
+
+    public double getDoubleAttribute(String name) {
+        return (double) get(name);
     }
 
      public static Course getCourseByName(String name) {

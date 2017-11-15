@@ -13,7 +13,6 @@ import java.util.*;
 @WebServlet("/sendAllCourses")
 public class UpcomingCoursesController extends AppController {
 
-    private final LocationProviderService locationProvider = new LocationProviderService();
     private UpcomingCourseMailComposer mailComposer = new UpcomingCourseMailComposer();
 
     @Override
@@ -26,7 +25,7 @@ public class UpcomingCoursesController extends AppController {
 
         List<ContactPerson> contactList = ContactPerson.whereHasLocation();
         for (ContactPerson person : contactList) {
-            List<Course> nearCourses = Course.whereNearTo(locationProvider, person.getLocation());
+            List<Course> nearCourses = Course.whereNearTo(person.getLocation());
             if (nearCourses.isEmpty()) {
                 continue;
             }

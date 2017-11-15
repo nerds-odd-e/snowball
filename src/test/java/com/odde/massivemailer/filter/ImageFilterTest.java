@@ -1,7 +1,10 @@
 package com.odde.massivemailer.filter;
 
 import com.odde.TestWithDB;
+import com.odde.massivemailer.model.Mail;
+import com.odde.massivemailer.model.SentMail;
 import com.odde.massivemailer.model.SentMailVisit;
+import com.odde.massivemailer.model.Template;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,12 +42,13 @@ public class ImageFilterTest {
 
     @Test
     public void FilterMustUpdateSentMailvisitMatchingToken() throws IOException, ServletException {
-        SentMailVisit nd = SentMailVisit.createIt("sent_mail_id", "1", "email_address", "my@a.b.com", "read_count", 0);
+        Template template = Template.createIt("TemplateName", "Template");
+        SentMail mail = SentMail.createIt("template_id", template.getId());
+        SentMailVisit nd = SentMailVisit.createIt("sent_mail_id", mail.getId(), "email_address", "my@a.b.com", "read_count", 0);
         request.setParameter(ImageFilter.TOKEN, nd.getString("id"));
         filter.doFilter(request, response, chain);
         SentMailVisit nd1 = SentMailVisit.findById(nd.getLongId());
         nd.refresh();
         assertEquals(1, nd1.getReadCount());
-
     }
 }

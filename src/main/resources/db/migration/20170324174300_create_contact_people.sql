@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS contact_people (
-    id          INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    id          INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
     name        VARCHAR(50),
     email       VARCHAR(50),
     firstname    VARCHAR(50),

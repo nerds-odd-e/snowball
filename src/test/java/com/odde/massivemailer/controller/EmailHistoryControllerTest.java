@@ -31,5 +31,4 @@ public class EmailHistoryControllerTest {
         emailHistoryController.doGet(req, res);
         assertEquals("[{\"id\":1,\"attributes\":{\"id\":\"1\",\"message_id\":\"0\",\"subject\":\"Promotional test\"}}]",res.getContentAsString());
     }
-
 }

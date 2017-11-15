@@ -15,7 +15,7 @@ public class CourseDataMother {
     private ContactPerson contact_alex;
 
     public Course build_csd_course() {
-        Map<String, String> params = new HashMap<>();
+        Map<String, Object> params = new HashMap<>();
 
         params.put("coursename", "CSD_NEW");
         params.put("country", "singapore");
@@ -25,6 +25,8 @@ public class CourseDataMother {
         params.put("duration", "5");
         params.put("instructor", "ROOF");
         params.put("startdate", "2017-05-15");
+        params.put("latitude", 100.0);
+        params.put("longitude", 100.0);
 
         try {
             return new Course(params);

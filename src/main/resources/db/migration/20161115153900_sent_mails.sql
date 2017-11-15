@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS sent_mails (
-    id              INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-    template_id     INTEGER,
+    id              INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    template_id     INTEGER NOT NULL,
     subject         VARCHAR(255) NOT NULL DEFAULT '',
     content            TEXT,
     message_id BIGINT NOT NULL DEFAULT 0,
@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS sent_mails (
 
 
 CREATE TABLE IF NOT EXISTS sent_mail_visits (
-    id              INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    id              INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
     sent_mail_id INTEGER NOT NULL,
     email_address   VARCHAR(255) NOT NULL,
     read_count      INTEGER NOT NULL DEFAULT 0,
