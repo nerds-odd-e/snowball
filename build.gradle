@@ -100,7 +100,7 @@ cucumber {
 }
 
 tasks.cucumber {
-    if(!Os.isFamily(Os.FAMILY_WINDOWS)) {
+    if(!Os.isFamily(Os.FAMILY_MAC)) {
         dependsOn unzipPhantomJs
     }
     dependsOn assemble, testClasses, 'appBeforeIntegrationTest'

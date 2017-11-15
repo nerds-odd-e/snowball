@@ -8,8 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.List;
 
 public class LocationProviderServiceTest {
@@ -68,7 +66,7 @@ public class LocationProviderServiceTest {
 
     @Test
     public void addLocationByName() {
-        locationProviderService.addLocation("Japan", "Kobe");
+        locationProviderService.addLat_LongToMemory("Japan", "Kobe");
         Location storedLocation = locationProviderService.getLocationForName("Japan/Kobe");
         assertNotNull(storedLocation);
         assertTrue(34.690083 == storedLocation.getLat());

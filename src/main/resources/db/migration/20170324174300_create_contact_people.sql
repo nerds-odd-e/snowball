@@ -5,5 +5,7 @@ CREATE TABLE IF NOT EXISTS contact_people (
     firstname    VARCHAR(50),
     lastname    VARCHAR(50),
     company     VARCHAR(50),
-    location    VARCHAR(255) NOT NULL DEFAULT ''
+    location    VARCHAR(255) NOT NULL DEFAULT '',
+    courses_sent    VARCHAR(255),
+    date_sent       DATETIME
 );

@@ -77,7 +77,7 @@ public class LocationProviderService {
         locations.put("Shanghai", new Location("Shanghai", 31.230416, 121.473701));
     }
 
-    public void addLocation(String country, String city) {
+    public void addLat_LongToMemory(String country, String city) {
         Location location = getLocation(country, city);
         locations.put(country + "/" + city, location);
     }
