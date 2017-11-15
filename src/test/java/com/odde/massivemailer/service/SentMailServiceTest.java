@@ -3,6 +3,7 @@ package com.odde.massivemailer.service;
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.SentMail;
 import com.odde.massivemailer.model.SentMailVisit;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -16,6 +17,7 @@ import static org.junit.Assert.assertThat;
 public class SentMailServiceTest {
 
     @Test
+    @Ignore
     public void NotificationMustBeSaved() {
         SentMail sentMail = new SentMail();
         sentMail.setSubject("Subject");
@@ -31,6 +33,7 @@ public class SentMailServiceTest {
     }
 
     @Test
+    @Ignore
     public void SentMailVisitsMustBeSaved() {
         SentMail sentMail = new SentMail();
         sentMail.setSubject("Subject");

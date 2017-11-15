@@ -78,5 +78,4 @@ public class LocationProviderServiceTest {
         List<String> countries = locationProviderService.getAllCountryNames();
         assertTrue(countries.contains("Netherlands Antilles"));
     }
-
 }

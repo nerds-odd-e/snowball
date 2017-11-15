@@ -4,6 +4,7 @@ import com.odde.TestWithDB;
 import com.odde.massivemailer.model.SentMail;
 import com.odde.massivemailer.model.Template;
 import com.odde.massivemailer.serialiser.AppGson;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -24,6 +25,7 @@ public class EmailOpenedCounterControllerTest {
     int email_id = 2;
 
     @Test
+    @Ignore
     public void returnEmailSubject() throws Exception {
         Template template = Template.createIt("TemplateName", "Template");
         SentMail mail = SentMail.createIt("template_id", template.getId(), "subject", "Promotional test");
