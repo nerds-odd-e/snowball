@@ -197,7 +197,13 @@ public class UpcomingCoursesControllerTest {
     @Test
     public void contactMustNotReceiveDuplicateEmailWithin30DaysForSameCourse() throws Exception {
         singaporeEvent.saveIt();
-        new ContactPerson("testName", "test1gmail.com", "testLastName", "", "Singapore", "1", "2017-10-30").saveIt();
+        List<Course> nearCourses = Course.whereNearTo("Singapore");
+        String courseIDs = "";
+        for (Course course : nearCourses) {
+            courseIDs = courseIDs + "," + course.getId().toString();
+        }
+        courseIDs = courseIDs.replaceFirst(",","");
+        new ContactPerson("testName", "test1gmail.com", "testLastName", "", "Singapore", courseIDs, "2017-10-30").saveIt();
         upcomingCoursesController.doPost(request, response);
         assertEquals("course_list.jsp?message=0 emails sent.", response.getRedirectedUrl());
     }
