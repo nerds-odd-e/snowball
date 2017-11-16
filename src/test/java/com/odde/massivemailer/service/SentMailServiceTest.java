@@ -17,7 +17,6 @@ import static org.junit.Assert.assertThat;
 public class SentMailServiceTest {
 
     @Test
-    @Ignore
     public void NotificationMustBeSaved() {
         SentMail sentMail = new SentMail();
         sentMail.setSubject("Subject");
@@ -33,7 +32,6 @@ public class SentMailServiceTest {
     }
 
     @Test
-    @Ignore
     public void SentMailVisitsMustBeSaved() {
         SentMail sentMail = new SentMail();
         sentMail.setSubject("Subject");

@@ -58,7 +58,6 @@ public class SendMailControllerTest {
     }
 
     @Test
-    @Ignore
     public void testPostSuccessful() throws Exception {
         mockRecipient("whatever");
 
@@ -67,7 +66,6 @@ public class SendMailControllerTest {
     }
 
     @Test
-    @Ignore
     public void testPostEmailException() throws Exception {
         mockRecipient("whatever");
 
