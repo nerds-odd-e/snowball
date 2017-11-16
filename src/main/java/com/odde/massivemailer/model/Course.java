@@ -7,14 +7,11 @@ import org.javalite.activejdbc.annotations.Table;
 
 import java.util.*;
 
-
-
 @Table("courses")
 public class Course extends ApplicationModel {
 
-    public static final int CLOSE_BY_DISTANCE = 2000;
-    private double lat;
-    private double longtitude;
+
+
 
 
     public Course() {
@@ -25,7 +22,6 @@ public class Course extends ApplicationModel {
         setCourseName(title);
         setCourseDetails(content);
         setLocation(location);
-        // setLocationCoordidate();
     }
 
 
@@ -72,10 +68,15 @@ public class Course extends ApplicationModel {
     public static List<Course> findAllCourseNearTo(Location geoCordinate) {
         List<Course> nearbyCources = new ArrayList<>();
         List<Course> allCourse = Course.findAll();
-        for (Course course: allCourse)
-            if(course.getGeoCoordinates().distanceFrom(geoCordinate) <= CLOSE_BY_DISTANCE)
+        for (Course course: allCourse) {
+            if(course.isNearTo(geoCordinate))
                 nearbyCources.add(course);
+        }
         return nearbyCources;
+    }
+
+    private boolean isNearTo(Location geoCordinate) {
+        return getGeoCoordinates().IsNear(geoCordinate);
     }
 
     public static List<Course> whereNearTo(LocationProviderService locationProviderService, String location) {
@@ -83,26 +84,18 @@ public class Course extends ApplicationModel {
     }
 
     //Testing Only, Ideally this vslue should come from DB
-    private Location getGeoCoordinates() {
-        if(this.getLocation().contains("Singapore")){
-            return new Location("",1.352083,103.819836);
-        }else if(this.getLocation().contains("Malaysia")){
-            return new Location("",3.139003,101.686855);
-        }else if(this.getLocation().contains("America")){
-            return new Location("",40.712775,-74.005973);
-        }
-
-        return new Location("",0,0);
-
-    }
-
-    private double getLongtitude() {
-        return this.longtitude;
-    }
-
-    private double getLat() {
-        return this.lat;
-    }
+//    private Location getGeoCoordinates() {
+//        if(this.getLocation().contains("Singapore")){
+//            return new Location("",1.352083,103.819836);
+//        }else if(this.getLocation().contains("Malaysia")){
+//            return new Location("",3.139003,101.686855);
+//        }else if(this.getLocation().contains("America")){
+//            return new Location("",40.712775,-74.005973);
+//        }
+//
+//        return new Location("",0,0);
+//
+//    }
 
     public static int numberOfEventsNear(List<String> contactsLocation, LocationProviderService locationProviderService) {
         int totalEventsNearContactLocation = 0;
@@ -111,7 +104,6 @@ public class Course extends ApplicationModel {
         }
         return totalEventsNearContactLocation;
     }
-
 
     public void setCourseName(String courseName) {
         set("coursename", courseName);
@@ -129,14 +121,6 @@ public class Course extends ApplicationModel {
         set("coursedetails", details);
     }
 
-    public void setLatitude(double lat) {
-        set("latitude", lat);
-    }
-
-    public void setLongitude(double longitude) {
-        set("longitude", longitude);
-    }
-
     public String getCoursename() {
         return getAttribute("coursename");
     }
@@ -149,8 +133,8 @@ public class Course extends ApplicationModel {
         return getAttribute("location");
     }
 
-    public Location getCourseLocation() {
-        return new Location(null, getLatitude(), getLongitude());
+    private Location getGeoCoordinates() {
+        return new Location(getLocation(), getDoubleAttribute("latitude"), getDoubleAttribute("longitude"));
     }
 
     public String getStartdate() {
@@ -167,14 +151,6 @@ public class Course extends ApplicationModel {
 
     public String getInstructor() {
         return getAttribute("instructor");
-    }
-
-    public double getLatitude() {
-        return getDoubleAttribute("latitude");
-    }
-
-    public double getLongitude() {
-        return getDoubleAttribute("longitude");
     }
 
     public String getAttribute(String name) {

@@ -18,55 +18,42 @@ public class CourseTest {
     public ExpectedException thrown = ExpectedException.none();
 
     private HashMap map;
+    private static Course aCourse;
     private static Course sgCourse;
     private static Course klCourse;
     private static Course usaCourse;
 
     @Before
-    public void Setup(){
+    public void Setup()throws Exception{
         map = new HashMap<String, Object>();
-        map.put("coursename", "coursename");
+        map.put("coursename", "Scrum");
         map.put("country", "country");
         map.put("city", "city");
         map.put("address", "address");
         map.put("coursedetails", "coursedetails");
         map.put("duration", "15");
         map.put("instructor", "instructor");
-        map.put("startdate", "startdate");
-
+        map.put("startdate", "2017-11-09");
+        aCourse = new Course(map);
         GivenIhaveThreeCourcesInSG_Kl_USA();
     }
 
     @Test
     public void testCreateCourseShouldHaveCorrectInformation() throws Exception {
 
-        Course course = new Course(map);
-
-        assertEquals("coursename", course.getCoursename());
-        assertEquals("country/city", course.getLocation());
-        assertEquals("address", course.getAddress());
-        assertEquals("coursedetails", course.getCoursedetails());
-        assertEquals("15", course.getDuration());
-        assertEquals("instructor", course.getInstructor());
-        assertEquals("startdate", course.getStartdate());
-    }
-
-    @Test
-    public void testGenerateLatLongFromSingaporeShouldReturnSuccess() throws Exception {
-
-        map.put("country", "Singapore");
-        map.put("city", "Singapore");
-
-        Course course = new Course(map);
-
-        assertEquals(1.3521, course.getLatitude(), 0.0001);
-        assertEquals(103.8198, course.getLongitude(), 0.0001);
+        assertEquals("Scrum", aCourse.getCoursename());
+        assertEquals("country/city", aCourse.getLocation());
+        assertEquals("address", aCourse.getAddress());
+        assertEquals("coursedetails", aCourse.getCoursedetails());
+        assertEquals("15", aCourse.getDuration());
+        assertEquals("instructor", aCourse.getInstructor());
+        assertEquals("2017-11-09", aCourse.getStartdate());
     }
 
     @Test
     public void whereNearTo_should_return_emptyList() {
 
-        Location unknownGeolocation = new Location("",0,0);
+        Location unknownGeolocation =  new Location("unknown/unknown",-999999999,-9999999);
 
         assertEquals(0, Course.findAllCourseNearTo(unknownGeolocation).size());
     }
@@ -92,16 +79,19 @@ public class CourseTest {
         assertEquals(klCourse, courses.get(1));
     }
 
-    private void GivenIhaveThreeCourcesInSG_Kl_USA(){
-        sgCourse = CreateCourseInDB("Singapore/Singapore", "Stanly");
-        klCourse = CreateCourseInDB("Kula Lumpur/Malaysia", "Terry");
-        usaCourse = CreateCourseInDB("New York/America", "Kim");
+    private void GivenIhaveThreeCourcesInSG_Kl_USA() throws Exception {
+        sgCourse = CreateCourseInDB("Singapore","Singapore", "Stanly");
+        klCourse = CreateCourseInDB("Kula Lumpur","Malaysia", "Terry");
+        usaCourse = CreateCourseInDB("New York","America", "Kim");
     }
 
-    private Course CreateCourseInDB(String location, String instructor) {
-        Course course = new Course("Scrum", "Scrum", location);
-        course.setCourseDetails("This is a great course");
-        course.setInstructor(instructor);
+    private Course CreateCourseInDB(String country, String city, String instructor) throws Exception {
+        map.put("coursename", "Scrum");
+        map.put("country", country);
+        map.put("city", city);
+        map.put("instructor", instructor);
+        map.put("coursedetails", "This is a great course");
+        Course course = new Course(map);
         course.saveIt();
         return course;
     }
