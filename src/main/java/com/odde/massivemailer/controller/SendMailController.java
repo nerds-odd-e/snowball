@@ -17,7 +17,7 @@ import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.model.SentMail;
 import com.odde.massivemailer.service.MailService;
 
-@WebServlet("/sendMail")
+@WebServlet("/ ")
 public class SendMailController extends AppController {
 
     @Override

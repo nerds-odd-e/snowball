@@ -10,6 +10,7 @@ Feature: Send all events to contacts with the same location as the event - Singa
     When I send the upcoming courses emails
     Then It should send <expected emails> emails
     And there should be in total <expected courses> courses in all the emails
+    Then It should send <expected emails> emails
 
     Examples:
       | sg courses/contacts | bangkok | osaka | tokyo | expected emails | expected courses |

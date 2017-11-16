@@ -5,6 +5,7 @@ import com.odde.massivemailer.service.LocationProviderService;
 import org.apache.commons.lang3.StringUtils;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.annotations.Table;
+import org.joda.time.DateTime;
 
 import java.util.*;
 
@@ -21,6 +22,8 @@ public class ContactPerson extends ApplicationModel {
     public static final String EMAIL = "Email";
     public static final String COMPANY = "Company";
     public static final String LOCATION = "Location";
+    public static final String COURSESLIST = "CoursesList";
+    public static final String EMAILSENT = new DateTime().toString();
     public static final String COURSES_SENT = "courses_sent";
     public static final String DATE_SENT = "date_sent";
     public static final String LONGITUDE = "Longitude";
@@ -64,6 +67,21 @@ public class ContactPerson extends ApplicationModel {
             set(LONGITUDE, locationDetails.getLng());
         }
     }
+
+    public ContactPerson(String name, String email, String lastname, String company,String location, String coursesList, String dateSent) {
+        setName(name);
+        setEmail(email);
+        setLastname(lastname);
+        setCompany(company);
+        setLocation(location);
+        setCourseList(coursesList);
+        setSentDate(dateSent);
+    }
+
+//    public ContactPerson(String CourseList, String DateEmailSent) {
+//        setCoursesList(CourseList);
+//        setSentDate(DateEmailSent);
+//    }
 
     public static List<ContactPerson> whereHasLocation() {
         return where(LOCATION + "<>''");
@@ -213,4 +231,28 @@ public class ContactPerson extends ApplicationModel {
     public String errorMessage() {
         return "Unable to register participants";
     }
+
+    public void setCourseList(String coursesList) {
+        set("courses_sent", coursesList);
+    }
+
+    public  void setSentDate(String sentDate) {
+        set("date_sent", sentDate);
+    }
+
+    public Object getCoursesList() {
+        return get("courses_sent");
+    }
+
+    public Object getSentDate() {
+        return get("date_sent");
+    }
+
+//    public String getCourseList() {
+//        return getAttribute(COURSESLIST);
+//    }
+//
+//    public String getSentDate() {
+//        return getAttribute(EMAILSENT);
+//    }
 }

@@ -22,4 +22,5 @@ public class UpcomingCourseMailComposerTest {
         Mail mail = composer.createUpcomingCourseMail(contact, courses);
         assertEquals(contact.getEmail(), mail.getReceipts().get(0));
     }
+
 }

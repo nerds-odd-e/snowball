@@ -8,6 +8,8 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 
+import java.sql.Timestamp;
+
 @RunWith(TestWithDB.class)
 public class ContactPersonTest {
 
@@ -111,5 +113,27 @@ public class ContactPersonTest {
 		contact.getAttribute("Invalid");
 	}
 
+
+	@Test
+	public void UpdateContactWhenEmailSent() {
+//		ContactPerson person = new ContactPerson();
+//		person.findFirst("id = ?", "77");
+//		person.set("courses_sent", "1,2,3").set("sent_date", "2017-11-30");
+//
+//		person.saveIt();
+//
+//		assertEquals("1,2,3", person.getCoursesList());
+//		assertEquals("2017-11-30", person.getSentDate());
+
+		assertEquals(0, ContactPerson.findAll().size());
+		ContactPerson p = new ContactPerson("John", "john@gmail.com", "Doe");
+		p.setCourseList("1,2,3");
+		p.setSentDate("2017-11-30 00:00:00.0");
+		p.saveIt();
+
+		ContactPerson actual = ContactPerson.findById(p.getId());
+		assertEquals("1,2,3", actual.getCoursesList());
+		assertEquals("2017-11-30 00:00:00.0", actual.getSentDate().toString());
+	}
 
 }

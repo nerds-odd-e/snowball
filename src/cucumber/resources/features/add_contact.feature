@@ -7,8 +7,7 @@ Feature: Add Contact
     When Add A Contact "terry@odd-e.com" at "China" and "Chengdu"
     Then Page Should Contain "terry@odd-e.com"
     And Page Should Fail
-
-    @sudip
+    @ab
   Scenario Outline: Verify Add New Contact To Contact List with Country And City
     When Add A Contact "<email>" at "<country>" and "<city>"
     Then Page Should Contain "<email>"

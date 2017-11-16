@@ -185,4 +185,15 @@ public class UpcomingCoursesControllerTest {
         upcomingCoursesController.doPost(request, response);
         verify(mail, times(0)).sendMailWith(gmailService);
     }
+
+    @Test
+    public void contactMustNotReceiveDuplicateEmailWithin30DaysForSameCourse() throws Exception {
+        singaporeEvent.saveIt();
+        new ContactPerson("testName", "test1gmail.com", "testLastName", "", "Singapore", "1,3,4", "2017-10-10 00:00:00.0").saveIt();
+        upcomingCoursesController.doPost(request, response);
+        assertEquals("course_list.jsp?message=1 emails sent.", response.getRedirectedUrl());
+        upcomingCoursesController.doPost(request, response);
+        assertEquals("course_list.jsp?message=0 emails sent.", response.getRedirectedUrl());
+    }
+
 }
