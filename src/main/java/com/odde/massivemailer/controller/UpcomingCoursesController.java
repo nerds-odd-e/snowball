@@ -38,11 +38,7 @@ public class UpcomingCoursesController extends AppController {
 
             System.out.println(person.getCoursesList());
             System.out.println(person.getSentDate());
-
-//            if ( person.getCoursesList().equals(courseIDs) ){//&& !new DateTime(person.getSentDate()).plusDays(30).isAfterNow()){
-//                continue;
-//            }
-
+            
             mailComposer.createUpcomingCourseMail(person, nearCourses).sendMailWith(getMailService());
             totalMailsSent++;
 
