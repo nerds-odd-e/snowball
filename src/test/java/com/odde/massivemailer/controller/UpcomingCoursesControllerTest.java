@@ -187,13 +187,38 @@ public class UpcomingCoursesControllerTest {
     }
 
     @Test
-    public void contactMustNotReceiveDuplicateEmailWithin30DaysForSameCourse() throws Exception {
+    public void contactMustReceiveDuplicateEmailAfter30DaysForSameCourse() throws Exception {
         singaporeEvent.saveIt();
-        new ContactPerson("testName", "test1gmail.com", "testLastName", "", "Singapore", "1,3,4", "2017-10-10 00:00:00.0").saveIt();
+        new ContactPerson("testName", "test1gmail.com", "testLastName", "", "Singapore", "1", "2017-10-10").saveIt();
         upcomingCoursesController.doPost(request, response);
         assertEquals("course_list.jsp?message=1 emails sent.", response.getRedirectedUrl());
+    }
+
+    @Test
+    public void contactMustNotReceiveDuplicateEmailWithin30DaysForSameCourse() throws Exception {
+        singaporeEvent.saveIt();
+        new ContactPerson("testName", "test1gmail.com", "testLastName", "", "Singapore", "1", "2017-10-30").saveIt();
         upcomingCoursesController.doPost(request, response);
         assertEquals("course_list.jsp?message=0 emails sent.", response.getRedirectedUrl());
     }
 
+    @Test
+    public void contactMustNotReceiveDuplicateEmailWithin30DaysForDifferentCourse() throws Exception {
+
+        singaporeEvent.saveIt();
+        singaporeEventTwo.saveIt();
+       new ContactPerson("testName", "test1gmail.com", "testLastName", "", "Singapore", "1,2", "2017-10-10").saveIt();
+       upcomingCoursesController.doPost(request, response);
+        assertEquals("course_list.jsp?message=1 emails sent.", response.getRedirectedUrl());
+    }
+
+    @Test
+    public void contactMustReceiveDuplicateEmailWithin30DaysForDifferentCourse() throws Exception {
+        singaporeEvent.saveIt();
+    singaporeEventTwo.saveIt();
+
+    new ContactPerson("testName", "test1gmail.com", "testLastName", "", "Singapore", "1,3", "2017-10-10").saveIt();
+        upcomingCoursesController.doPost(request, response);
+        assertEquals("course_list.jsp?message=1 emails sent.", response.getRedirectedUrl());
+    }
 }
