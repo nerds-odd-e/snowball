@@ -63,6 +63,48 @@ public class ContactPersonTest {
 	}
 
 	@Test
+	public void testCreateContactObjectValuesWithLocationAndCoOrdinates() {
+
+		String name = "name";
+		String email = "email@abc.com";
+		String lastname = "lastname";
+		String company = "myCompany";
+		String location = "Singapore";
+		ContactPerson person = new ContactPerson(name, email, lastname, company, location);
+
+		assertEquals(name, person.getName());
+		assertEquals(email, person.getEmail());
+		assertEquals(lastname, person.getLastname());
+		assertEquals(company, person.getCompany());
+		assertEquals(location, person.getLocation());
+		assertNotNull(person.getLatitude());
+		assertNotNull(person.getLongitude());
+
+	}
+
+
+	@Test
+	public void testCreateContactObjectValuesInDBWithLocationAndCoOrdinates() throws  Exception{
+		String name = "name";
+			String email = "email@abc.com";
+			String lastname = "lastname";
+			String company = "myCompany";
+			String location = "Singapore";
+			ContactPerson person = new ContactPerson(name, email, lastname, company, location);
+			ContactPerson personInDB =CreateContactInDB(person);
+			assertNotNull(personInDB.getLatitude());
+			assertNotNull(personInDB.getLongitude());
+	}
+
+	private ContactPerson CreateContactInDB(ContactPerson person) throws Exception {
+
+		person.saveIt();
+		return person;
+	}
+
+
+
+	@Test
 	public void testGetInvalidAttributeValue() throws Exception {
 		ContactPerson contact =  new ContactPerson("John", "john@gmail.com", "Doe");
 		thrown.expect(IllegalArgumentException.class);

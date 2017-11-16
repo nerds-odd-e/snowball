@@ -2,6 +2,7 @@ package com.odde.massivemailer.model;
 
 import com.odde.massivemailer.model.validator.UniquenessValidator;
 import com.odde.massivemailer.service.LocationProviderService;
+import org.apache.commons.lang3.StringUtils;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.annotations.Table;
 
@@ -20,6 +21,17 @@ public class ContactPerson extends ApplicationModel {
     public static final String EMAIL = "Email";
     public static final String COMPANY = "Company";
     public static final String LOCATION = "Location";
+    public static final String LONGITUDE = "Longitude";
+    public static final String LATITUDE = "Latitude";
+
+    public Double getLatitude() {
+        return getDoubleAttribute(LATITUDE);
+    }
+
+    public Double getLongitude() {
+        return getDoubleAttribute(LONGITUDE);
+    }
+
 
     public Map<String, String> attributes = new HashMap<>();
 
@@ -42,7 +54,13 @@ public class ContactPerson extends ApplicationModel {
         setLastname(lastname);
         setCompany(company);
         setLocation(location);
-    }
+
+            LocationProviderService locationProviderService = new LocationProviderService();
+            Location locationDetails = locationProviderService.getLocationForName(getLocation());
+
+            set(LATITUDE, locationDetails.getLat());
+            set(LONGITUDE, locationDetails.getLng());
+        }
 
     public static List<ContactPerson> whereHasLocation() {
         return where(LOCATION + "<>''");
@@ -106,6 +124,10 @@ public class ContactPerson extends ApplicationModel {
     private void setAttribute(String name, String value) {
         attributes.put(name, value);
         set(name.toLowerCase(), value);
+    }
+
+    public double getDoubleAttribute(String name) {
+        return (double) get(name);
     }
 
     public String getAttribute(String name) {
