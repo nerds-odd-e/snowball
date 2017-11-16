@@ -31,8 +31,4 @@ public class CreateCourseContactController extends AppController{
         resp.sendRedirect("registerParticpant.jsp?"+ resultMsg);
 
     }
-
-
-
-
 }

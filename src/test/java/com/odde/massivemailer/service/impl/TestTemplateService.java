@@ -33,7 +33,7 @@ public class TestTemplateService {
         template.saveIt();
 
         try {
-            List<Template> tempList = Template.findByTemplateName("Default Template 1");
+            List<Template> tempList = Template.findByTemplateName("DefaultTestTemplate");
             template = tempList.get(0);
         } catch (Exception e) {
             e.printStackTrace();
