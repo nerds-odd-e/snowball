@@ -1,6 +1,7 @@
 package com.odde.massivemailer.controller;
 
 import com.odde.massivemailer.model.SentMail;
+import com.odde.massivemailer.serialiser.AppGson;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -17,14 +18,16 @@ public class EmailOpenedCounterController extends HttpServlet{
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletOutputStream outputStream = resp.getOutputStream();
-        Object email_id = req.getParameter("id");
-        if(email_id == null) {
+        Object id = req.getParameter("id");
+        if(id == null) {
             outputStream.print("{'error': 'null id'}");
             return;
         }
-        SentMail noti = SentMail.findById(email_id);
-        if(noti!=null){
-            outputStream.print(noti.extract());
+        SentMail email = SentMail.findById(id);
+        if(email!=null){
+
+            String json = AppGson.getGson().toJson(email);
+            outputStream.print(json);
         }
     }
 
