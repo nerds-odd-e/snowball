@@ -6,14 +6,14 @@ public class Location {
     public static double INVALID_LONGTITUDE = -1;
     public static double INVALID_LATITUDE = -1;
 
-    private String name;
+    private String cityAndCountry;
     private String countryCode;
     private String countryName;
     private double lat;
     private double lng;
 
     public Location(String name, double lat, double lng) {
-        this.name = name;
+        this.cityAndCountry = name;
         this.lat = lat;
         this.lng = lng;
     }
@@ -38,7 +38,7 @@ public class Location {
     };
 
     public String getName() {
-        return this.name;
+        return this.cityAndCountry;
     }
 
     public String getCountryCode() { return this.countryCode; }
@@ -56,7 +56,7 @@ public class Location {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.cityAndCountry = name;
     }
 
     public void setCountryCode(String countryCode) {

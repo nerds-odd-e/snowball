@@ -5,14 +5,16 @@ import org.apache.commons.lang3.StringUtils;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.annotations.Table;
 
-
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 
 @Table("courses")
 public class Course extends ApplicationModel {
+
+    public static final int CLOSE_BY_DISTANCE = 2000;
+    private double lat;
+    private double longtitude;
 
 
     public Course() {
@@ -25,6 +27,14 @@ public class Course extends ApplicationModel {
         setLocation(location);
         // setLocationCoordidate();
     }
+
+
+    public static Course createCourse(Map map) throws Exception {
+        Course course = new Course(map);
+        course.saveIt();
+        return course;
+    }
+
 
     public Course(Map<String, Object> map) throws Exception {
 
@@ -53,16 +63,55 @@ public class Course extends ApplicationModel {
         }
     }
 
+
     public static List<Course> whereNearTo(String location) {
-        LocationProviderService locationProviderService = new LocationProviderService();
+        return whereNearTo(new LocationProviderService(),location);
+    }
+
+
+    public static List<Course> findAllCourseNearTo(Location geoCordinate) {
+        List<Course> nearbyCources = new ArrayList<>();
+        List<Course> allCourse = Course.findAll();
+        for (Course course: allCourse)
+            if(course.getGeoCoordinates().distanceFrom(geoCordinate) <= CLOSE_BY_DISTANCE)
+                nearbyCources.add(course);
+        return nearbyCources;
+    }
+
+    public static List<Course> whereNearTo(LocationProviderService locationProviderService, String location) {
         return where("location in (" + locationProviderService.getCloseByLocationStrings(location)+")");
     }
 
-    public static Course createCourse(Map map) throws Exception {
-        Course course = new Course(map);
-        course.saveIt();
-        return course;
+    //Testing Only, Ideally this vslue should come from DB
+    private Location getGeoCoordinates() {
+        if(this.getLocation().contains("Singapore")){
+            return new Location("",1.352083,103.819836);
+        }else if(this.getLocation().contains("Malaysia")){
+            return new Location("",3.139003,101.686855);
+        }else if(this.getLocation().contains("America")){
+            return new Location("",40.712775,-74.005973);
+        }
+
+        return new Location("",0,0);
+
     }
+
+    private double getLongtitude() {
+        return this.longtitude;
+    }
+
+    private double getLat() {
+        return this.lat;
+    }
+
+    public static int numberOfEventsNear(List<String> contactsLocation, LocationProviderService locationProviderService) {
+        int totalEventsNearContactLocation = 0;
+        for (String location : contactsLocation) {
+            totalEventsNearContactLocation += whereNearTo(locationProviderService, location).size();
+        }
+        return totalEventsNearContactLocation;
+    }
+
 
     public void setCourseName(String courseName) {
         set("coursename", courseName);
