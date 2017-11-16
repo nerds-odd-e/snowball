@@ -205,7 +205,6 @@ public class SendMailControllerTest {
     }
 
     @Test
-    @Ignore
     public void SendMailMustSaveNotification() throws ServletException, IOException {
         mockRecipient("terry@odd-e.com");
 

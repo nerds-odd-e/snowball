@@ -1,3 +1,4 @@
+
 CREATE TABLE IF NOT EXISTS sent_mails (
     id              INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
     template_id     INTEGER NOT NULL,
@@ -16,3 +17,5 @@ CREATE TABLE IF NOT EXISTS sent_mail_visits (
 
     FOREIGN KEY (sent_mail_id)   REFERENCES sent_mails(id)
 );
+
+ALTER TABLE sent_mails MODIFY template_id INTEGER null;
