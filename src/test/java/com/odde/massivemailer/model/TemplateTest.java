@@ -1,7 +1,6 @@
 package com.odde.massivemailer.model;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.controller.TemplatesControllerTest;
 import edu.emory.mathcs.backport.java.util.Collections;
 import org.junit.After;
 import org.junit.Assert;

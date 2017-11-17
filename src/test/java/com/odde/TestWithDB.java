@@ -24,7 +24,7 @@ public class TestWithDB extends BlockJUnit4ClassRunner {
 
     @Override
     public void run(RunNotifier notifier) {
-        Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/massive_mailer_test", "root", "");
+        Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/massive_mailer_unittest", "root", "");
         dbMigrateIfNeeded();
         Base.openTransaction();
         super.run(notifier);

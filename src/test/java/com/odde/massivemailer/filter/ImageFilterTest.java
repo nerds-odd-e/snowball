@@ -1,7 +1,6 @@
 package com.odde.massivemailer.filter;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.model.SentMail;
 import com.odde.massivemailer.model.SentMailVisit;
 import com.odde.massivemailer.model.Template;

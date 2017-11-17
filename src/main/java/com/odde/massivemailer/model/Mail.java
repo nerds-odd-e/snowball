@@ -40,7 +40,7 @@ public class Mail {
         this.content = content;
     }
 
-    public static Mail createUpcomingCoursesEmail(String content, String email) {
+    public static Mail  createUpcomingCoursesEmail(String content, String email) {
         Mail mail = new Mail(System.currentTimeMillis(), "Course Invitation", content);
         mail.setReceipts(Collections.singletonList(email));
         return mail;
@@ -183,9 +183,12 @@ public class Mail {
         return sentMail;
     }
 
-    public void sendMailWith(MailService mailService) throws EmailException {
-        SentMail sentMail = asSentMail().saveAll();
+    public SentMail sendMailWith(MailService mailService) throws EmailException {
+        SentMail sentMail = asSentMail();
+        sentMail.saveIt();
+
         setSentMail(sentMail);
         mailService.send(this);
+        return sentMail;
     }
 }

@@ -25,7 +25,7 @@ public class UpcomingCoursesController extends AppController {
 
         List<ContactPerson> contactList = ContactPerson.whereHasLocation();
         for (ContactPerson person : contactList) {
-            List<Course> nearCourses = Course.whereNearTo(person.getLocation());
+            List<Course> nearCourses = Course.findAllCourseNearTo(person.getGeoCordinates());
             if (nearCourses.isEmpty()) {
                 continue;
             }

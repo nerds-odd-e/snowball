@@ -22,6 +22,7 @@ public class Course extends ApplicationModel {
         setCourseName(title);
         setCourseDetails(content);
         setLocation(location);
+        setGeoCoordinates();
     }
 
 
@@ -50,6 +51,10 @@ public class Course extends ApplicationModel {
             set("location", map.get("country") + "/" + map.get("city"));
         }
 
+        setGeoCoordinates();
+    }
+
+    private void setGeoCoordinates() {
         if(!StringUtils.isEmpty(getLocation())){
             LocationProviderService locationProviderService = new LocationProviderService();
             Location location = locationProviderService.getLocationForName(getLocation());
@@ -58,12 +63,6 @@ public class Course extends ApplicationModel {
             set("longitude", location.getLng());
         }
     }
-
-
-    public static List<Course> whereNearTo(String location) {
-        return whereNearTo(new LocationProviderService(),location);
-    }
-
 
     public static List<Course> findAllCourseNearTo(Location geoCordinate) {
         List<Course> nearbyCources = new ArrayList<>();
@@ -77,32 +76,6 @@ public class Course extends ApplicationModel {
 
     private boolean isNearTo(Location geoCordinate) {
         return getGeoCoordinates().IsNear(geoCordinate);
-    }
-
-    public static List<Course> whereNearTo(LocationProviderService locationProviderService, String location) {
-        return where("location in (" + locationProviderService.getCloseByLocationStrings(location)+")");
-    }
-
-    //Testing Only, Ideally this vslue should come from DB
-//    private Location getGeoCoordinates() {
-//        if(this.getLocation().contains("Singapore")){
-//            return new Location("",1.352083,103.819836);
-//        }else if(this.getLocation().contains("Malaysia")){
-//            return new Location("",3.139003,101.686855);
-//        }else if(this.getLocation().contains("America")){
-//            return new Location("",40.712775,-74.005973);
-//        }
-//
-//        return new Location("",0,0);
-//
-//    }
-
-    public static int numberOfEventsNear(List<String> contactsLocation, LocationProviderService locationProviderService) {
-        int totalEventsNearContactLocation = 0;
-        for (String location : contactsLocation) {
-            totalEventsNearContactLocation += whereNearTo(locationProviderService, location).size();
-        }
-        return totalEventsNearContactLocation;
     }
 
     public void setCourseName(String courseName) {

@@ -8,9 +8,11 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.flywaydb.core.internal.util.StringUtils;
 
+import org.javalite.activejdbc.Model;
 import steps.driver.WebDriverFactory;
 import steps.driver.WebDriverWrapper;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 public class UpcomingCourseNotificationSteps {
@@ -33,7 +35,6 @@ public class UpcomingCourseNotificationSteps {
                 eventTests.addCourseWithCountryAndCity("Event " + i + city, country, city, "2017-05-17");
             }
     }
-
     @When("^I send the upcoming courses emails$")
     public void sendTheUpcomingCourseEmails() throws Throwable {
         driver.visit(BASE_URL);
@@ -42,14 +43,13 @@ public class UpcomingCourseNotificationSteps {
 
     @Given("^there are (\\d+)/(\\d+) courses and contacts in (.*?), (.*?)$")
     public void there_are_in_Singapore_Singapore(int courses, int contacts, String city, String country) throws Throwable {
-        ContactSteps contactTests = new ContactSteps();
         for (int i = 0; i < contacts; i++) {
-            ContactPerson.createContact(city, country, "test@test" + i + "_"+city+".com");
+            assertTrue(ContactPerson.createContact(city, country, "test@test" + i + "_"+city+".com"));
         }
 
-        EventTests eventTests = new EventTests();
         for (int i = 0; i < courses; i++) {
-            Course.createIt("coursename", "Event " + i +" in " + city, "location", country + "/" + city, "startdate", "2017-05-17");
+            Course course  = new Course("Event " + i + " in " + city,"Event " + i + " in " + city,country + "/" + city);
+            assertTrue(course.saveIt());
         }
     }
 

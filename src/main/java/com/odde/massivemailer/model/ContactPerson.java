@@ -77,7 +77,7 @@ public class ContactPerson extends ApplicationModel {
         return loc;
     }
 
-    public static void createContact(String city, String country, String email) {
+    public static boolean createContact(String city, String country, String email) {
         LocationProviderService locationProviderService = new LocationProviderService();
         String location = country + "/" + city;
         Location storedLocation = locationProviderService.getLocationForName(location);
@@ -87,7 +87,7 @@ public class ContactPerson extends ApplicationModel {
 
         ContactPerson contact = new ContactPerson("todo name", email, "todo last name", "todo company", location);
 
-        contact.saveIt();
+        return contact.saveIt();
     }
 
     public String getName() {
@@ -159,6 +159,10 @@ public class ContactPerson extends ApplicationModel {
 
     public String getLocation() {
         return getAttribute(LOCATION);
+    }
+
+    public Location getGeoCordinates() {
+        return new LocationProviderService().getLocationForName(getAttribute(LOCATION));
     }
 
     public static ContactPerson getContactById(Integer contactId) {

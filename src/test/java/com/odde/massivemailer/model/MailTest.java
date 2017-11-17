@@ -1,6 +1,9 @@
 package com.odde.massivemailer.model;
 
 import com.odde.TestWithDB;
+import com.odde.massivemailer.exception.EmailException;
+import com.odde.massivemailer.service.MailService;
+import com.odde.massivemailer.service.MockMailService;
 import com.odde.massivemailer.util.NotificationUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +18,6 @@ import java.util.Properties;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThat;
 
 @RunWith(TestWithDB.class)
@@ -133,4 +135,18 @@ public class MailTest {
         assertThat(sentMail.getSentMailVisits().get(1).getEmailAddress(), is("terry2@odd-e.com"));
         assertThat(sentMail.getSentMailVisits().get(2).getEmailAddress(), is("terry3@odd-e.com"));
     }
+
+    @Test
+    public void testSendWithFunction() throws EmailException {
+        Mail m = new Mail(1,"Subject","Content");
+        ArrayList<String> receipts = new ArrayList<>();
+        receipts.add("receipt");
+        m.setReceipts(receipts);
+        MailService service = new MockMailService();
+        SentMail sentmail= m.sendMailWith(service);
+        assertEquals(true, sentmail.getId()!=null);
+    }
 }
+
+
+

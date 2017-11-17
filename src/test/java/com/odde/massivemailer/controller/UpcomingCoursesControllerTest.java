@@ -27,14 +27,14 @@ import static org.mockito.Mockito.when;
 @RunWith(TestWithDB.class)
 public class UpcomingCoursesControllerTest {
 
-    private final Course singaporeEvent = new Course("Scrum In Singapore", "", "Singapore");
-    private final Course singaporeEventTwo = new Course("A-TDD In Singapore", "", "Singapore");
-    private final Course bangkokEvent = new Course("Code Smells In Bangkok", "", "Bangkok");
-    private final Course tokyoEvent = new Course("Code Refactoring In Tokyo", "", "Tokyo");
+    private final Course singaporeEvent = new Course("Scrum In Singapore", "", "Singapore/Singapore");
+    private final Course singaporeEventTwo = new Course("A-TDD In Singapore", "", "Singapore/Singapore");
+    private final Course bangkokEvent = new Course("Code Smells In Bangkok", "", "Bangkok/Thailand");
+    private final Course tokyoEvent = new Course("Code Refactoring In Tokyo", "", "Tokyo/Japan");
 
-    private final ContactPerson singaporeContact = new ContactPerson("testName1", "test1@gmail.com", "test1LastName", "", "Singapore");
-    private final ContactPerson singaporeContactTwo = new ContactPerson("testName2", "test2@gmail.com", "test2LastName", "", "Singapore");
-    private final ContactPerson tokyoContact = new ContactPerson("testName3", "test3@gmail.com", "test3LastName", "", "Tokyo");
+    private final ContactPerson singaporeContact = new ContactPerson("testName1", "test1@gmail.com", "test1LastName", "", "Singapore/Singapore");
+    private final ContactPerson singaporeContactTwo = new ContactPerson("testName2", "test2@gmail.com", "test2LastName", "", "Singapore/Singapore");
+    private final ContactPerson tokyoContact = new ContactPerson("testName3", "test3@gmail.com", "test3LastName", "", "Tokyo/Japan");
     private final ContactPerson noLocContact= new ContactPerson("testName4", "test4@gmail.com", "test4LastName", "", null);
 
     private final ArgumentCaptor<Mail> mailArgument = ArgumentCaptor.forClass(Mail.class);
@@ -83,7 +83,7 @@ public class UpcomingCoursesControllerTest {
     @Test
     public void send1EventTo1ContactsAsMail() throws Exception {
         singaporeEvent.saveIt();
-        new ContactPerson("testName", "test1@gmail.com", "testLastName","","Singapore").saveIt();
+        new ContactPerson("testName", "test1@gmail.com", "testLastName","","Singapore/Singapore").saveIt();
         upcomingCoursesController.doPost(request, response);
         assertEquals("course_list.jsp?message=1 emails sent.", response.getRedirectedUrl());
     }
@@ -158,7 +158,7 @@ public class UpcomingCoursesControllerTest {
         singaporeContact.saveIt();
         upcomingCoursesController.doPost(request, response);
 
-        verify(mailComposer, times(1)).createUpcomingCourseMail(eq(singaporeContact), coursesArgument.capture());
+        verify(mailComposer  , times(1)).createUpcomingCourseMail(eq(singaporeContact), coursesArgument.capture());
         verify(mail, times(1)).sendMailWith(gmailService);
         assertEquals(2, coursesArgument.getValue().size());
         assertEquals(singaporeEvent, coursesArgument.getValue().get(0));

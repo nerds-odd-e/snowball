@@ -4,12 +4,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import javax.mail.Message;
-import javax.mail.Session;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
-import java.util.Properties;
 
 import static org.junit.Assert.assertEquals;
 
