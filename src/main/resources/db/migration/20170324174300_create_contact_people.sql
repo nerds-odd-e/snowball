@@ -12,5 +12,3 @@ CREATE TABLE IF NOT EXISTS contact_people (
     longitude DOUBLE NOT NULL DEFAULT 0
 );
 
-ALTER TABLE contact_people ADD latitude DOUBLE NOT NULL DEFAULT 0;
-ALTER TABLE contact_people ADD longitude DOUBLE NOT NULL DEFAULT 0;
