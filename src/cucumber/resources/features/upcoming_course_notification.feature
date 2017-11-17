@@ -43,8 +43,7 @@ Feature: Send all events to contacts with the same location as the event - Singa
     Given there is a contact "contact@gmail.com" at Singapore, Singapore created <days from last email> before
     And there is a upcoming course at Singapore, Singapore
     And I have sent the upcoming courses emails
-#    And the email counting is reset to 0
-
+    And I have marked the current emails sent
     When a new contact "new_contact@gmail.com" is <added?> at Singapore, Singapore
     And I send the upcoming courses emails again now
 

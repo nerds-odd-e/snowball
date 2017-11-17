@@ -10,6 +10,7 @@ import cucumber.api.java.en.When;
 import org.flywaydb.core.internal.util.StringUtils;
 
 import org.javalite.activejdbc.Model;
+import org.joda.time.DateTime;
 import steps.driver.WebDriverFactory;
 import steps.driver.WebDriverWrapper;
 
@@ -19,6 +20,7 @@ import java.util.Calendar;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 public class UpcomingCourseNotificationSteps {
@@ -26,7 +28,7 @@ public class UpcomingCourseNotificationSteps {
 
     private WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
     private long currentTotalEmailCounts = 0L;
-
+    private int noOfDaysBefore = 0;
     @When("^We create (\\d+) contacts at (.*?), (.*?)$")
     public void createContactsForLocations(int numberOfContacts, String city, String country) throws Throwable {
         ContactSteps contactTests = new ContactSteps();
@@ -69,13 +71,13 @@ public class UpcomingCourseNotificationSteps {
 
     @Given("^there is a contact \"contact@gmail.com\" at Singapore, Singapore created (.*?) before")
     public void there_is_a_contact_at_Singapore_Singapore(String noOfDaysBeforeString) throws Throwable {
-        int noOfDaysBefore = Integer.valueOf(noOfDaysBeforeString.split(" ")[0]);
+        noOfDaysBefore = Integer.valueOf(noOfDaysBeforeString.split(" ")[0]);
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, -noOfDaysBefore);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
-        ContactPerson.createContactAndUpdateSentDate("Singapore", "Singapore", "contact@gmail.com", format.format(calendar.getTime()));
-    }
+        assertTrue(ContactPerson.createContactAndUpdateSentDate("Singapore", "Singapore", "contact@gmail.com", format.format(calendar.getTime())));
+}
 
     @And("^there is a upcoming course at Singapore, Singapore")
     public void there_is_upcoming_course_in_Singapore() throws Throwable {
@@ -86,6 +88,9 @@ public class UpcomingCourseNotificationSteps {
     public void i_have_sent_the_upcoming_courses_emails() throws Throwable {
         driver.visit(BASE_URL);
         driver.clickButton("send_button");
+        ContactPerson contact = ContactPerson.getContactByEmail("contact@gmail.com");
+        assertNotNull(contact);
+        assertEquals(formatDate(-noOfDaysBefore), contact.getDateSent().split(" ")[0]);
     }
 
     @When("^a new contact \"new_contact@gmail.com\" is added at Singapore, Singapore$")
@@ -100,9 +105,21 @@ public class UpcomingCourseNotificationSteps {
 
     @And("^I send the upcoming courses emails again now")
     public void send_the_upcoming_courses_emails_again() throws Throwable {
-        this.currentTotalEmailCounts = SentMail.count(); // original no of email
         driver.visit(BASE_URL);
         driver.clickButton("send_button");
+    }
+
+    @And("^I have marked the current emails sent")
+    public void ivemarkedthecurrentemailssent() {
+        this.currentTotalEmailCounts = SentMail.count(); // original no of email
+    }
+
+    private String formatDate(int amount) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, amount);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+        return format.format(calendar.getTime());
     }
 
     @Then("^in total, there should be (.*?)$")

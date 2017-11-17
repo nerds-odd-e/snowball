@@ -97,11 +97,11 @@ public class ContactPerson extends ApplicationModel {
         return loc;
     }
 
-    public static void createContactAndUpdateSentDate(String city, String country, String email, String date) {
+    public static boolean createContactAndUpdateSentDate(String city, String country, String email, String date) {
         ContactPerson contact = getContactPerson(city, country, email);
         contact.setDateSent(date);
 
-        contact.saveIt();
+        return contact.saveIt();
     }
 
     public static boolean createContact(String city, String country, String email) {
