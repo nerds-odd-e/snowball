@@ -21,6 +21,8 @@ public class ContactPerson extends ApplicationModel {
     public static final String EMAIL = "Email";
     public static final String COMPANY = "Company";
     public static final String LOCATION = "Location";
+    public static final String COURSES_SENT = "courses_sent";
+    public static final String DATE_SENT = "date_sent";
     public static final String LONGITUDE = "Longitude";
     public static final String LATITUDE = "Latitude";
 
@@ -77,7 +79,20 @@ public class ContactPerson extends ApplicationModel {
         return loc;
     }
 
+    public static void createContactAndUpdateSentDate(String city, String country, String email, String date) {
+        ContactPerson contact = getContactPerson(city, country, email);
+        contact.setDateSent(date);
+
+        contact.saveIt();
+    }
+
     public static boolean createContact(String city, String country, String email) {
+        ContactPerson contact = getContactPerson(city, country, email);
+
+        return contact.saveIt();
+    }
+
+    private static ContactPerson getContactPerson(String city, String country, String email) {
         LocationProviderService locationProviderService = new LocationProviderService();
         String location = country + "/" + city;
         Location storedLocation = locationProviderService.getLocationForName(location);
@@ -87,7 +102,9 @@ public class ContactPerson extends ApplicationModel {
 
         ContactPerson contact = new ContactPerson("todo name", email, "todo last name", "todo company", location);
 
-        return contact.saveIt();
+        contact.saveIt();
+
+        return contact;
     }
 
     public String getName() {
@@ -120,6 +137,22 @@ public class ContactPerson extends ApplicationModel {
 
     public void setCompany(String company) {
         setAttribute(COMPANY, company);
+    }
+
+    public String getCoursesSent() {
+        return getAttribute(COURSES_SENT);
+    }
+
+    public void setCoursesSent(String coursesSent) {
+        setAttribute(COURSES_SENT, coursesSent);
+    }
+
+    public String getDateSent() {
+        return getAttribute(DATE_SENT);
+    }
+
+    public void setDateSent(String dateSent) {
+        setAttribute(DATE_SENT, dateSent);
     }
 
     private void setAttribute(String name, String value) {
