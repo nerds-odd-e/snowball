@@ -102,8 +102,6 @@ public class ContactPerson extends ApplicationModel {
 
         ContactPerson contact = new ContactPerson("todo name", email, "todo last name", "todo company", location);
 
-        contact.saveIt();
-
         return contact;
     }
 
