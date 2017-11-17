@@ -161,8 +161,8 @@ public class ContactPerson extends ApplicationModel {
         return getAttribute(LOCATION);
     }
 
-    public Location getGeoCordinates() {
-        return new LocationProviderService().getLocationForName(getAttribute(LOCATION));
+    public Location getGeoCoordinates() {
+        return new Location(getLocation(), getDoubleAttribute(LATITUDE), getDoubleAttribute(LONGITUDE));
     }
 
     public static ContactPerson getContactById(Integer contactId) {
