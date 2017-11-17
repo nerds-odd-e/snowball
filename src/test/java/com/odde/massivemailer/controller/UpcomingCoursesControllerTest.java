@@ -4,6 +4,7 @@ import com.odde.TestWithDB;
 import com.odde.massivemailer.model.*;
 import com.odde.massivemailer.service.GMailService;
 import com.odde.massivemailer.service.UpcomingCourseMailComposer;
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,14 +15,15 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 @RunWith(TestWithDB.class)
@@ -44,6 +46,11 @@ public class UpcomingCoursesControllerTest {
     private UpcomingCoursesController upcomingCoursesController;
 
     private MockHttpServletRequest request;
+
+    LocalDate date = LocalDate.now();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    String text = date.format(formatter);
+    LocalDate parsedDate = LocalDate.parse(text, formatter);
 
     private MockHttpServletResponse response;
     @Mock
@@ -189,7 +196,19 @@ public class UpcomingCoursesControllerTest {
     @Test
     public void contactMustReceiveDuplicateEmailAfter30DaysForSameCourse() throws Exception {
         singaporeEvent.saveIt();
-        new ContactPerson("testName", "test1gmail.com", "testLastName", "", "Singapore", "1", "2017-10-10").saveIt();
+        ContactPerson person = new ContactPerson("testName", "test1gmail.com", "testLastName", "", "Singapore/Singapore");
+        person.saveIt();
+        List<Course> nearCourses = Course.findAllCourseNearTo(person.getGeoCoordinates());
+        String courseIDs = "";
+        for (Course course : nearCourses) {
+            courseIDs = courseIDs + "," + course.getId().toString();
+        }
+        courseIDs = courseIDs.replaceFirst(",","");
+
+        ContactPerson updatePerson = ContactPerson.findById(person.getId());
+        updatePerson.setCourseList(courseIDs);
+        updatePerson.setSentDate(parsedDate.plusDays(-35).toString());
+        updatePerson.saveIt();
         upcomingCoursesController.doPost(request, response);
         assertEquals("course_list.jsp?message=1 emails sent.", response.getRedirectedUrl());
     }
@@ -197,33 +216,29 @@ public class UpcomingCoursesControllerTest {
     @Test
     public void contactMustNotReceiveDuplicateEmailWithin30DaysForSameCourse() throws Exception {
         singaporeEvent.saveIt();
-        List<Course> nearCourses = Course.whereNearTo("Singapore");
+        ContactPerson person = new ContactPerson("testName", "test1gmail.com", "testLastName", "", "Singapore/Singapore");
+        person.saveIt();
+        List<Course> nearCourses = Course.findAllCourseNearTo(person.getGeoCoordinates());
         String courseIDs = "";
         for (Course course : nearCourses) {
             courseIDs = courseIDs + "," + course.getId().toString();
         }
         courseIDs = courseIDs.replaceFirst(",","");
-        new ContactPerson("testName", "test1gmail.com", "testLastName", "", "Singapore", courseIDs, "2017-10-30").saveIt();
+
+        ContactPerson updatePerson = ContactPerson.findById(person.getId());
+        updatePerson.setCourseList(courseIDs);
+        updatePerson.setSentDate(parsedDate.plusDays(-15).toString());
+        updatePerson.saveIt();
         upcomingCoursesController.doPost(request, response);
         assertEquals("course_list.jsp?message=0 emails sent.", response.getRedirectedUrl());
     }
 
     @Test
-    public void contactMustNotReceiveDuplicateEmailWithin30DaysForDifferentCourse() throws Exception {
-
-        singaporeEvent.saveIt();
-        singaporeEventTwo.saveIt();
-       new ContactPerson("testName", "test1gmail.com", "testLastName", "", "Singapore", "1,2", "2017-10-10").saveIt();
-       upcomingCoursesController.doPost(request, response);
-        assertEquals("course_list.jsp?message=1 emails sent.", response.getRedirectedUrl());
-    }
-
-    @Test
     public void contactMustReceiveDuplicateEmailWithin30DaysForDifferentCourse() throws Exception {
         singaporeEvent.saveIt();
-    singaporeEventTwo.saveIt();
+        singaporeEventTwo.saveIt();
 
-    new ContactPerson("testName", "test1gmail.com", "testLastName", "", "Singapore", "1,3", "2017-10-10").saveIt();
+    new ContactPerson("testName", "test1gmail.com", "testLastName", "", "Singapore/Singapore", "1,3,5", parsedDate.plusDays(-15).toString()).saveIt();
         upcomingCoursesController.doPost(request, response);
         assertEquals("course_list.jsp?message=1 emails sent.", response.getRedirectedUrl());
     }
