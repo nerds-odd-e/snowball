@@ -116,24 +116,16 @@ public class ContactPersonTest {
 
 	@Test
 	public void UpdateContactWhenEmailSent() {
-//		ContactPerson person = new ContactPerson();
-//		person.findFirst("id = ?", "77");
-//		person.set("courses_sent", "1,2,3").set("sent_date", "2017-11-30");
-//
-//		person.saveIt();
-//
-//		assertEquals("1,2,3", person.getCoursesList());
-//		assertEquals("2017-11-30", person.getSentDate());
 
 		assertEquals(0, ContactPerson.findAll().size());
 		ContactPerson p = new ContactPerson("John", "john@gmail.com", "Doe");
 		p.setCourseList("1,2,3");
-		p.setSentDate("2017-11-30 00:00:00.0");
+		p.setSentDate("2017-11-30");
 		p.saveIt();
 
 		ContactPerson actual = ContactPerson.findById(p.getId());
 		assertEquals("1,2,3", actual.getCoursesList());
-		assertEquals("2017-11-30 00:00:00.0", actual.getSentDate().toString());
+		assertEquals("2017-11-30", actual.getSentDate().toString());
 	}
 
 }

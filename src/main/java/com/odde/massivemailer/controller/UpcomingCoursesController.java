@@ -36,7 +36,6 @@ public class UpcomingCoursesController extends AppController {
             for (Course course : nearCourses) {
                 courseIDs = courseIDs + "," + course.getId().toString();
             }
-
             courseIDs = courseIDs.replaceFirst(",","");
 
             if ( !(person.getCoursesList()==null) && person.getCoursesList().equals(courseIDs) && !(person.getSentDate()==null) && new DateTime(person.getSentDate()).plusDays(30).isAfterNow()){
