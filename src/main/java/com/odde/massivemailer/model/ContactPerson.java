@@ -54,13 +54,14 @@ public class ContactPerson extends ApplicationModel {
         setLastname(lastname);
         setCompany(company);
         setLocation(location);
-
+        if (!StringUtils.isEmpty(getLocation())) {
             LocationProviderService locationProviderService = new LocationProviderService();
             Location locationDetails = locationProviderService.getLocationForName(getLocation());
 
             set(LATITUDE, locationDetails.getLat());
             set(LONGITUDE, locationDetails.getLng());
         }
+    }
 
     public static List<ContactPerson> whereHasLocation() {
         return where(LOCATION + "<>''");

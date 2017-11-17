@@ -1,3 +1,4 @@
+
 CREATE TABLE IF NOT EXISTS courses (
     id          INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
     coursename        VARCHAR(255) NOT NULL,

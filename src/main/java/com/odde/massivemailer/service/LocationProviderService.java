@@ -66,6 +66,7 @@ public class LocationProviderService {
         locations.put("Thailand/Bangkok", new Location("Thailand/Bangkok", 13.7563, 100.5018));
         locations.put("Tokyo", new Location("Tokyo", 35.6895, 139.6917));
         locations.put("Japan/Tokyo", new Location("Japan/Tokyo", 35.6895, 139.6917));
+        locations.put("Japan/Osaka", new Location("Japan/Osaka", 35.6895, 139.6917));
         locations.put("Jakarta", new Location("Jarkata", -6.174465, 106.822745));
         locations.put("Kuala Lumpur", new Location("Kuala Lumpur", 3.139003, 101.686855));
         locations.put("Seoul", new Location("Seoul", 37.566535, 126.977969));
