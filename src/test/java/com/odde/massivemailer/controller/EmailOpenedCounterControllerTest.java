@@ -1,10 +1,9 @@
 package com.odde.massivemailer.controller;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.SentMailDataMother;
+import com.odde.massivemailer.factory.SentMailFactory;
 import com.odde.massivemailer.model.SentMail;
 import com.odde.massivemailer.serialiser.AppGson;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -20,14 +19,14 @@ import static org.mockito.Mockito.mock;
 @RunWith(TestWithDB.class)
 public class EmailOpenedCounterControllerTest {
     EmailOpenedCounterController emailOpenedCounterController = new EmailOpenedCounterController();
-    SentMailDataMother sentMailDataMother = new SentMailDataMother();
+    SentMailFactory sentMailFactory = new SentMailFactory();
     MockHttpServletRequest req = new MockHttpServletRequest();
     MockHttpServletResponse res = new MockHttpServletResponse();
 
     @Test
     public void returnEmailSubject() throws Exception {
 
-        SentMail mail = sentMailDataMother.buildSentMailWithSubject("Promotional test");
+        SentMail mail = sentMailFactory.buildSentMailWithSubject("Promotional test");
         req.setParameter("id", String.valueOf(mail.getLongId()));
 
         emailOpenedCounterController.doGet(req, res);

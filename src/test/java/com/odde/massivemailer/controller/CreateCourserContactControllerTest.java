@@ -1,7 +1,7 @@
 package com.odde.massivemailer.controller;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.CourseDataMother;
+import com.odde.massivemailer.factory.CourseFactory;
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Course;
 import com.odde.massivemailer.model.Participant;
@@ -20,7 +20,7 @@ public class CreateCourserContactControllerTest  {
     private CreateCourseContactController controller;
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
-    CourseDataMother dataMother = new CourseDataMother();
+    CourseFactory dataMother = new CourseFactory();
     Course course = dataMother.csd_course();
 
     @Before

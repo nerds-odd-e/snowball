@@ -10,7 +10,6 @@ package steps;
         import java.util.List;
 
 public class UpdateTemplateTests {
-
     private WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
     private String BASE_URL = "http://localhost:8070/massive_mailer/sendemail.jsp";
 
@@ -18,7 +17,6 @@ public class UpdateTemplateTests {
     public void visitEditTemplatePage() throws Throwable {
         driver.visit(BASE_URL);
     }
-
 
     @When("^I update the contents of template$")
     public void updateTemplateWithGivenDetails(DataTable templateDetails) throws Throwable {
@@ -29,7 +27,6 @@ public class UpdateTemplateTests {
             driver.setTextField("content", val.get(1));
         }
     }
-
 
     @When("^I click on update button$")
     public void clickUpdateTemplate() throws Throwable {

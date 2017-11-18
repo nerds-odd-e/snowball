@@ -10,9 +10,9 @@ import java.util.function.DoubleFunction;
 import java.util.function.Function;
 
 public class DBMigrater {
-    public void migrate(Function<String, String> stringStringFunction) {
+    public void migrate() {
         for (String migration : migrationFiles()) {
-            Arrays.stream(loadMigration(migration).split(";")).map(stringStringFunction).forEach(
+            Arrays.stream(loadMigration(migration).split(";")).forEach(
                     sql-> Base.exec(sql + ";"));
         }
     }

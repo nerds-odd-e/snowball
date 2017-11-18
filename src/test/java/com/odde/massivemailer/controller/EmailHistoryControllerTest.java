@@ -1,7 +1,7 @@
 package com.odde.massivemailer.controller;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.SentMailDataMother;
+import com.odde.massivemailer.factory.SentMailFactory;
 import com.odde.massivemailer.model.SentMail;
 import com.odde.massivemailer.serialiser.AppGson;
 import org.junit.Before;
@@ -15,14 +15,14 @@ import static org.junit.Assert.assertEquals;
 @RunWith(TestWithDB.class)
 public class EmailHistoryControllerTest {
     EmailHistoryController emailHistoryController;
-    SentMailDataMother sentMailDataMother = new SentMailDataMother();
+    SentMailFactory sentMailFactory = new SentMailFactory();
     MockHttpServletRequest req = new MockHttpServletRequest();
     MockHttpServletResponse res = new MockHttpServletResponse();
 
     @Before
     public void setUpMockService() {
         emailHistoryController = new EmailHistoryController();
-        sentMailDataMother.buildSentMailWithSubject("Promotional test");
+        sentMailFactory.buildSentMailWithSubject("Promotional test");
     }
 
     @Test

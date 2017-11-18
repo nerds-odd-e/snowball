@@ -1,4 +1,4 @@
-package com.odde.massivemailer;
+package com.odde.massivemailer.factory;
 
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Course;
@@ -6,10 +6,7 @@ import com.odde.massivemailer.model.Course;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by csd on 1/6/17.
- */
-public class CourseDataMother {
+public class CourseFactory {
 
     private Course csd_course;
     private ContactPerson contact_alex;

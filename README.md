@@ -46,3 +46,13 @@ http://javalite.io/intellij_idea_integration
 
 In IntelliJ's Project Structure, change the output path of the massive_mailer_test module to:
 <project_dir>/build/classes/java/main
+
+#### Mac Setup
+
+On MacOS, after the Sierra update a function call to "InetAddress.getLocalHost" becomes very slow (5000ms).
+Adding the following to the /etc/hosts will solve the problem:
+
+```
+127.0.0.1   localhost mbpro.local
+::1         localhost mbpro.local
+```

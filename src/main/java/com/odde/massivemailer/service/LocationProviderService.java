@@ -57,12 +57,9 @@ public class LocationProviderService {
         return locationsString;
     }
 
-    // For backward compatibility in tests
     public static void resetLocations() {
         locations = new TreeMap<>();
-        locations.put("Singapore", new Location("Singapore", 1.3521, 103.8198));
         locations.put("Singapore/Singapore", new Location("Singapore/Singapore", 1.3521, 103.8198));
-        locations.put("Bangkok", new Location("Bangkok", 13.7563, 100.5018));
         locations.put("Thailand/Bangkok", new Location("Thailand/Bangkok", 13.7563, 100.5018));
         locations.put("Tokyo", new Location("Tokyo", 35.6895, 139.6917));
         locations.put("Japan/Tokyo", new Location("Japan/Tokyo", 35.6895, 139.6917));

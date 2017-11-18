@@ -29,7 +29,7 @@ public class UpdateContactControllerTest {
 
     @Test
     public void editExistingContact() throws Exception {
-        new ContactPerson("John", "john@gmail.com", "Doe", "ComA", "Singapore").saveIt();
+        new ContactPerson("John", "john@gmail.com", "Doe", "ComA", "Singapore/Singapore").saveIt();
         assertEquals(1, (long) ContactPerson.count());
         request.setParameter("email", "john@gmail.com");
         request.setParameter("country", "China");

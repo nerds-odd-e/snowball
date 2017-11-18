@@ -109,9 +109,7 @@ public class MailTest {
 
         SentMail sentMail = mail.asSentMail();
 
-        List<SentMailVisit> sentMailVisits = sentMail.getSentMailVisits();
-
-        assertThat(sentMail.getSentMailVisits().size(), is(1));
+		assertThat(sentMail.getSentMailVisits().size(), is(1));
         assertThat(sentMail.getSentMailVisits().get(0).getEmailAddress(), is("terry@odd-e.com"));
     }
 

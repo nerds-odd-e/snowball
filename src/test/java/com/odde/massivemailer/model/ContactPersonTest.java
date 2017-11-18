@@ -54,7 +54,7 @@ public class ContactPersonTest {
 		String email = "email@abc.com";
 		String lastname = "lastname";
 		String company = "myCompany";
-		String location = "Singapore";
+		String location = "Singapore/Singapore";
 		ContactPerson person = new ContactPerson(name, email, lastname, company, location);
 
 		assertEquals(name, person.getName());
@@ -71,7 +71,7 @@ public class ContactPersonTest {
 		String email = "email@abc.com";
 		String lastname = "lastname";
 		String company = "myCompany";
-		String location = "Singapore";
+		String location = "Singapore/Singapore";
 		ContactPerson person = new ContactPerson(name, email, lastname, company, location);
 
 		assertEquals(name, person.getName());
@@ -91,7 +91,7 @@ public class ContactPersonTest {
 			String email = "email@abc.com";
 			String lastname = "lastname";
 			String company = "myCompany";
-			String location = "Singapore";
+			String location = "Singapore/Singapore";
 			ContactPerson person = new ContactPerson(name, email, lastname, company, location);
 			ContactPerson personInDB =CreateContactInDB(person);
 			assertNotNull(personInDB.getLatitude());

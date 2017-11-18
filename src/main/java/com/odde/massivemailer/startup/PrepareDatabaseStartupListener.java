@@ -16,13 +16,11 @@ public class PrepareDatabaseStartupListener implements ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-
     }
 
     public void getMySQLDBReady() {
-        System.out.println("Preparing database... ");
         Base.open();
-        new DBMigrater().migrate(x -> x.replaceAll("AUTOINCREMENT", "AUTO_INCREMENT"));
+        new DBMigrater().migrate();
         Base.close();
     }
 }

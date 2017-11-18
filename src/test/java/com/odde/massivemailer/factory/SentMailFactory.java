@@ -1,4 +1,4 @@
-package com.odde.massivemailer;
+package com.odde.massivemailer.factory;
 
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Course;
@@ -8,7 +8,7 @@ import com.odde.massivemailer.model.Template;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SentMailDataMother {
+public class SentMailFactory {
 
     private SentMail sentMail;
     private Template template;
