@@ -2,7 +2,6 @@ Feature: List email with email subject details
   As a user I want to be able to see my email sent
   so that I can see my email in the sent emails list
 
-
   Scenario: check navigation to email list page from list email button on home page
     Given Terry sends an email
     When Terry clicks on the email track link

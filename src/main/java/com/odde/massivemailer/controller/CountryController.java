@@ -1,6 +1,5 @@
 package com.odde.massivemailer.controller;
 
-
 import com.google.gson.Gson;
 import com.odde.massivemailer.service.LocationProviderService;
 
@@ -12,10 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-
-/**
- * Created by csd on 31/3/17.
- */
 @WebServlet("/countries")
 public class CountryController extends AppController {
 

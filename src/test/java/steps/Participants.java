@@ -27,5 +27,5 @@ public class Participants {
     @Then("^course participant should contain $")
     public void course_participant_should_contain(String emailId) throws Throwable {
 
-}
+    }
 }

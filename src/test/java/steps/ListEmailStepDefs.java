@@ -6,16 +6,6 @@ import cucumber.api.java.en.When;
 import steps.driver.WebDriverFactory;
 import steps.driver.WebDriverWrapper;
 
-/**
- *
- * step definition class for the sent email page
- *  this will list all the email with subject
- *
- *  ------------------------------
- *   | Subject   | sent date           |
- *   | promotion | 12/11/2016 21:00:00 |
- */
-
 public class ListEmailStepDefs {
 
     private WebDriverWrapper emailListDriverViewer = WebDriverFactory.getDefaultDriver();

@@ -11,12 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * Created by csd on 31/3/17.
- */
-@WebServlet("/locations")
 public class LocationController extends AppController {
-
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LocationProviderService locationProviderService = new LocationProviderService();
         String locationToJSON = AppGson.getGson().toJson(locationProviderService.getSupportedLocations());

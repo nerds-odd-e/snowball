@@ -4,7 +4,6 @@ Feature: Create Course
   Background:
     Given I am on create new course page
 
-    @blah
   Scenario: Creating course with unknown location
     When Add a course with below details
       |coursename|duration|country|city   |startdate  |address|coursedetails|instructor|
@@ -12,7 +11,6 @@ Feature: Create Course
     And I click the Create button
     Then Course should not save and show error messagea
 
-    @blah
   Scenario: Creating course with known location
     When Add a course with below details
       |coursename|duration|country|city   |startdate  |address|coursedetails|instructor|
