@@ -38,10 +38,6 @@ public class UpcomingCoursesController extends AppController {
             }
             courseIDs = courseIDs.replaceFirst(",","");
 
-            if ( !(person.getCoursesList()==null) && person.getCoursesList().equals(courseIDs) && !(person.getSentDate()==null) && new DateTime(person.getSentDate()).plusDays(30).isAfterNow()){
-                continue;
-            }
-
             mailComposer.createUpcomingCourseMail(person, nearCourses).sendMailWith(getMailService());
             totalMailsSent++;
 
