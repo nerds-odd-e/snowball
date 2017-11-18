@@ -23,7 +23,6 @@ Feature: Send all events to contacts with the same location as the event - Singa
       | 3/2                 | 0/3     | 0/0   | 0/5   | 5               | 15               |
       | 0/2                 | 0/3     | 0/0   | 3/0   | 0               | 0                |
 
-  @now
   Scenario: Contacts with country and city will be notified about events in near location
     When We create 2 contacts at Osaka, Japan
     And We create 3 courses at Tokyo, Japan
@@ -37,22 +36,3 @@ Feature: Send all events to contacts with the same location as the event - Singa
     And I send the upcoming courses emails
     Then It should send 2 emails
     And there should be in total 6 courses in all the emails
-
-    @developing
-  Scenario Outline: Upcoming course email resending
-    Given there is a contact "contact@gmail.com" at Singapore, Singapore created <days from last email> before
-    And there is a upcoming course at Singapore, Singapore
-    And I have sent the upcoming courses emails
-    And I have marked the current emails sent
-    When a new contact "new_contact@gmail.com" is <added?> at Singapore, Singapore
-    And I send the upcoming courses emails again now
-
-    Then in total, there should be <new emails received by contact>
-
-    Examples:
-    | days from last email | added?    | new emails received by contact |
-    | 29 days              | not added | 0 new emails                   |
-    | 31 days              | not added | 1 new emails                   |
-    |  0 days              | not added | 0 new emails                   |
-    | 29 days              | added     | 1 new emails                   |
-
