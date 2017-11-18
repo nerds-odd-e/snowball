@@ -4,6 +4,7 @@ Feature: Create Course
   Background:
     Given I am on create new course page
 
+    @now
   Scenario: Creating course with unknown location
     When Add a course with below details
       |coursename|duration|country|city   |startdate  |address|coursedetails|instructor|

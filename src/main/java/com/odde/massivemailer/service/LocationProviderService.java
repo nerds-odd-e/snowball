@@ -1,6 +1,7 @@
 package com.odde.massivemailer.service;
 
 import com.odde.massivemailer.model.Location;
+import com.odde.massivemailer.service.exception.GeoServiceException;
 
 import java.io.IOException;
 import java.net.URL;
@@ -29,7 +30,7 @@ public class LocationProviderService {
         return new ArrayList(locations.keySet());
     }
 
-    public Location getLocationForName(String locationString) {
+    public Location getLocationForName(String locationString) throws GeoServiceException {
         if (locations.containsKey(locationString)) {
             return locations.get(locationString);
         }
@@ -75,12 +76,12 @@ public class LocationProviderService {
         locations.put("Shanghai", new Location("Shanghai", 31.230416, 121.473701));
     }
 
-    public void addLat_LongToMemory(String country, String city) {
+    public void addLat_LongToMemory(String country, String city) throws GeoServiceException {
         Location location = getLocation(country, city);
         locations.put(country + "/" + city, location);
     }
 
-    private Location getLocation(String country, String city) {
+    private Location getLocation(String country, String city) throws GeoServiceException {
         GoogleGeoAPIService geoService = new GoogleGeoAPIService();
         return geoService.getGeocode(country, city);
     }
@@ -88,5 +89,17 @@ public class LocationProviderService {
     public List<String> getAllCountryNames() throws IOException {
         URL url = getClass().getClassLoader().getResource("csv/countries.csv");
         return Files.readAllLines(Paths.get(url.getPath()));
+    }
+
+    public void cacheLocation(String city, String country, String location) {
+        Location storedLocation = null;
+        try {
+            storedLocation = getLocationForName(location);
+            if (storedLocation == null) {
+                addLat_LongToMemory(country, city);
+            }
+        } catch (GeoServiceException e) {
+            throw new RuntimeException("location service failed", e);
+        }
     }
 }

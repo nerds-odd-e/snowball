@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.odde.massivemailer.model.ContactPerson;
-import com.odde.massivemailer.model.Location;
 import com.odde.massivemailer.service.LocationProviderService;
 
 @WebServlet("/editContact")
@@ -23,10 +22,7 @@ public class UpdateContactController extends HttpServlet {
         String city = req.getParameter("city");
         String country = req.getParameter("country");
         String location = country + "/" + city;
-        Location storedLocation = locationProviderService.getLocationForName(location);
-        if (storedLocation == null) {
-            locationProviderService.addLat_LongToMemory(country, city);
-        }
+        locationProviderService.cacheLocation(city, country, location);
 
         if (contactPerson != null) {
             contactPerson.setName(req.getParameter("name"));
@@ -39,4 +35,5 @@ public class UpdateContactController extends HttpServlet {
         }
 
     }
+
 }

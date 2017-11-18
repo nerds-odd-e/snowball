@@ -2,10 +2,10 @@ package com.odde.massivemailer.model;
 
 import com.odde.massivemailer.model.validator.UniquenessValidator;
 import com.odde.massivemailer.service.LocationProviderService;
+import com.odde.massivemailer.service.exception.GeoServiceException;
 import org.apache.commons.lang3.StringUtils;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.annotations.Table;
-import org.joda.time.DateTime;
 
 import java.util.*;
 
@@ -59,10 +59,14 @@ public class ContactPerson extends ApplicationModel {
         setLocation(location);
         if (!StringUtils.isEmpty(getLocation())) {
             LocationProviderService locationProviderService = new LocationProviderService();
-            Location locationDetails = locationProviderService.getLocationForName(getLocation());
+            try {
+                Location locationDetails = locationProviderService.getLocationForName(getLocation());
 
-            set(LATITUDE, locationDetails.getLat());
-            set(LONGITUDE, locationDetails.getLng());
+                set(LATITUDE, locationDetails.getLat());
+                set(LONGITUDE, locationDetails.getLng());
+            } catch (GeoServiceException e) {
+                throw new RuntimeException("failed to get location.", e);
+            }
         }
     }
 
@@ -80,30 +84,13 @@ public class ContactPerson extends ApplicationModel {
         return where(LOCATION + "<>''");
     }
 
-    public static List<String> findValidLocations() {
-        List<String> loc = new ArrayList<>();
-
-        for(ContactPerson person : whereHasLocation()) {
-            loc.add(person.getLocation());
-        }
-
-        return loc;
-    }
-
-    public static boolean createContactAndUpdateSentDate(String city, String country, String email, String date) {
-        ContactPerson contact = getContactPerson(city, country, email);
-        contact.setDateSent(date);
-
-        return contact.saveIt();
-    }
-
-    public static boolean createContact(String city, String country, String email) {
+    public static boolean createContact(String city, String country, String email) throws GeoServiceException {
         ContactPerson contact = getContactPerson(city, country, email);
 
         return contact.saveIt();
     }
 
-    private static ContactPerson getContactPerson(String city, String country, String email) {
+    private static ContactPerson getContactPerson(String city, String country, String email) throws GeoServiceException {
         LocationProviderService locationProviderService = new LocationProviderService();
         String location = country + "/" + city;
         Location storedLocation = locationProviderService.getLocationForName(location);
@@ -158,10 +145,6 @@ public class ContactPerson extends ApplicationModel {
 
     public String getDateSent() {
         return getAttribute(DATE_SENT);
-    }
-
-    public void setDateSent(String dateSent) {
-        setAttribute(DATE_SENT, dateSent);
     }
 
     private void setAttribute(String name, String value) {

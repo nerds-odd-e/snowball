@@ -1,6 +1,7 @@
 package com.odde.massivemailer.model;
 
 import com.odde.massivemailer.service.LocationProviderService;
+import com.odde.massivemailer.service.exception.GeoServiceException;
 import org.apache.commons.lang3.StringUtils;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.annotations.Table;
@@ -9,20 +10,18 @@ import java.util.*;
 
 @Table("courses")
 public class Course extends ApplicationModel {
-
-
-
-
-
     public Course() {
-
     }
 
-    public Course(String title, String content, String location) {
+    public Course(String title, String content, String location)  {
         setCourseName(title);
         setCourseDetails(content);
         setLocation(location);
-        setGeoCoordinates();
+        try {
+            setGeoCoordinates();
+        } catch (GeoServiceException e) {
+            throw(new RuntimeException("cannot find location", e));
+        }
     }
 
 
@@ -33,28 +32,26 @@ public class Course extends ApplicationModel {
     }
 
 
-    public Course(Map<String, Object> map) throws Exception {
-
-        if (map.get("city") != null && map.get("city").equals("Foobar")) {
-            throw new Exception("CityName is invalid");
-        }
-
-        String[] keys = {"coursename", "address", "coursedetails", "duration", "instructor", "startdate", "latitude", "longitude"};
+    public Course(Map<String, Object> map) {
+        this((String)map.get("coursename"), (String)map.get("coursedetails"), locationToAddress(map.get("city"), map.get("country")));
+        String[] keys = {"address", "duration", "instructor", "startdate"};
 
         for (String key :keys) {
             set(key, map.get(key));
         }
-
-        if (map.get("city") == null) {
-            set("location", map.get("country"));
-        } else {
-            set("location", map.get("country") + "/" + map.get("city"));
-        }
-
-        setGeoCoordinates();
     }
 
-    private void setGeoCoordinates() {
+    private static String locationToAddress(Object city, Object country) {
+        String location;
+        if (city == null) {
+            location = (String) country;
+        } else {
+            location = country + "/" + city;
+        }
+        return location;
+    }
+
+    private void setGeoCoordinates() throws GeoServiceException {
         if(!StringUtils.isEmpty(getLocation())){
             LocationProviderService locationProviderService = new LocationProviderService();
             Location location = locationProviderService.getLocationForName(getLocation());

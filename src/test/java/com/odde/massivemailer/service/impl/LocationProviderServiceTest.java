@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import com.odde.massivemailer.model.Location;
 import com.odde.massivemailer.service.LocationProviderService;
+import com.odde.massivemailer.service.exception.GeoServiceException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -64,7 +65,7 @@ public class LocationProviderServiceTest {
     }
 
     @Test
-    public void addLocationByName() {
+    public void addLocationByName() throws GeoServiceException {
         locationProviderService.addLat_LongToMemory("Japan", "Kobe");
         Location storedLocation = locationProviderService.getLocationForName("Japan/Kobe");
         assertNotNull(storedLocation);

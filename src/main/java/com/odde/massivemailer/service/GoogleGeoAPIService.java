@@ -7,20 +7,29 @@ import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
 import com.odde.massivemailer.model.Location;
 import com.google.maps.*;
+import com.odde.massivemailer.service.exception.GeoServiceException;
 
 import java.io.IOException;
 
 public class GoogleGeoAPIService {
 
-    public Location getGeocode(String country, String city) {
+    public Location getGeocode(String country, String city) throws GeoServiceException {
         if (country != null) {
-            return getLocationFromGoogle(country, city);
+            try {
+                return getLocationFromGoogle(country, city);
+            } catch (InterruptedException e) {
+                throw(new GeoServiceException(e));
+            } catch (ApiException e) {
+                throw(new GeoServiceException(e));
+            } catch (IOException e) {
+                throw(new GeoServiceException(e));
+            }
         }
 
         return new Location(null, Location.INVALID_LATITUDE, Location.INVALID_LONGTITUDE);
     }
 
-    private Location getLocationFromGoogle(String country, String city) {
+    private Location getLocationFromGoogle(String country, String city) throws InterruptedException, ApiException, IOException {
         GeocodingResult geocodingResult = getGeocodingResult(country, city);
         if( geocodingResult == null ){
             return null;
@@ -48,26 +57,16 @@ public class GoogleGeoAPIService {
         }
     }
 
-    private GeocodingResult getGeocodingResult(String country, String city) {
+    private GeocodingResult getGeocodingResult(String country, String city) throws InterruptedException, ApiException, IOException {
         GeocodingApiRequest request = GeocodingApi.newRequest(getGeoApiContext()).address(country + " " + city).language("en");
-
-        GeocodingResult[] results = new GeocodingResult[0];
-        try {
-            results = request.await();
-        } catch (ApiException | InterruptedException | IOException e) {
-            e.printStackTrace();
-        }
-
+        GeocodingResult[] results = request.await();
         if( results.length < 1){
             return null;
         }
-
         return results[0];
     }
 
     private GeoApiContext getGeoApiContext() {
         return new GeoApiContext.Builder().apiKey("AIzaSyCS2QW4mfmL_OWAvngQc-hw6xPzHurjTC8").build();
     }
-
-
 }
