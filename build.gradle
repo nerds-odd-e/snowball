@@ -67,6 +67,7 @@ gretty {
     httpPort = 8070
     if(project.gradle.startParameter.taskNames.any{e -> e.startsWith('cucumber')}) {
         jvmArgs = ["-Dactive_env=test"]
+        httpPort = 8060
     }
 }
 
@@ -114,6 +115,12 @@ tasks.cucumber {
             "webdriver": System.getProperty("webdriver"),
             "active_env": "test",
     ])
+    doFirst {
+        gretty {
+            jvmArgs = ["-Dactive_env=test"]
+            httpPort = 8060
+        }
+    }
 }
 
 tasks.create("cucumber_now") {

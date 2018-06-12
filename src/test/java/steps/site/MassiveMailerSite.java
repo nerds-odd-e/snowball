@@ -11,7 +11,7 @@ public class MassiveMailerSite {
     public WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
 
     public String baseUrl() {
-        return "http://localhost:8070/massive_mailer/";
+        return "http://localhost:8060/massive_mailer/";
     }
 
     public WebDriverWrapper getDriver() {
