@@ -65,7 +65,7 @@ repositories {
 
 gretty {
     httpPort = 8070
-    if('cucumber' in project.gradle.startParameter.taskNames) {
+    if(project.gradle.startParameter.taskNames.any{e -> e.startsWith('cucumber')}) {
         jvmArgs = ["-Dactive_env=test"]
     }
 }
@@ -96,7 +96,7 @@ cucumber {
             "classpath:io.jdev.geb.cucumber.steps.groovy.en", 'classpath:steps'
     ]
 
-    tags = ['~@system'] + (System.getProperty("extra_tag") != null ? [System.getProperty("extra_tag")] : [])
+    tags = ['~@system']
 }
 
 tasks.cucumber {
@@ -114,6 +114,15 @@ tasks.cucumber {
             "webdriver": System.getProperty("webdriver"),
             "active_env": "test",
     ])
+}
+
+tasks.create("cucumber_now") {
+    finalizedBy "cucumber"
+    doFirst {
+        cucumber {
+            tags = ['~@system', '@now']
+        }
+    }
 }
 
 if('test' in project.gradle.startParameter.taskNames) {

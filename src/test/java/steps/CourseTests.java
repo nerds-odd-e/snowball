@@ -47,7 +47,6 @@ public class CourseTests {
     @Then("^Course should save and successfully saved message should appear$")
     public void courseListPageShouldContain() throws Throwable {
         driver.expectRedirect(BASE_URL);
-        System.out.println(driver.getCurrentUrl());
         assertTrue(driver.getCurrentUrl().contains("status=success&msg=Add%20course%20successfully"));
 
     }
@@ -55,6 +54,7 @@ public class CourseTests {
     @Then("^Course should not save and show error messagea$")
     public void courseShowErrorMassage() throws Throwable {
         driver.expectRedirect(BASE_URL);
+        System.out.println(driver.getCurrentUrl());
         assertTrue(driver.getCurrentUrl().contains("status=failed&msg=CityName%20is%20invalid"));
     }
 }

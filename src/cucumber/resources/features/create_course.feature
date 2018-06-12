@@ -12,6 +12,7 @@ Feature: Create Course
     And I click the Create button
     Then Course should not save and show error messagea
 
+  @now
   Scenario: Creating course with known location
     When Add a course with below details
       |coursename|duration|country|city   |startdate  |address|coursedetails|instructor|
