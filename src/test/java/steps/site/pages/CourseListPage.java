@@ -1,10 +1,9 @@
-package steps.page;
+package steps.site.pages;
 
-import steps.driver.WebDriverFactory;
 import steps.driver.WebDriverWrapper;
+import steps.site.MassiveMailerSite;
 
 public class CourseListPage {
-    private static final String BASE_URL = "http://localhost:8070/massive_mailer/course_list.jsp";
     private WebDriverWrapper driver;
     private MassiveMailerSite site;
 
@@ -20,7 +19,7 @@ public class CourseListPage {
     }
 
     public void sendPrecourseEmailFor(String aCourse) {
-        driver.visit(BASE_URL);
+        site.visit("course_list.jsp");
         driver.clickButtonByName("precourse " + aCourse);
     }
 }

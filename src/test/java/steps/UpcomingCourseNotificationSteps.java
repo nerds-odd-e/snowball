@@ -3,21 +3,15 @@ package steps;
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Course;
 import com.odde.massivemailer.model.SentMail;
-import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.flywaydb.core.internal.util.StringUtils;
 
-import org.javalite.activejdbc.Model;
-import org.joda.time.DateTime;
-import steps.driver.WebDriverFactory;
 import steps.driver.WebDriverWrapper;
-import steps.page.MassiveMailerSite;
+import steps.site.MassiveMailerSite;
 
 import static junit.framework.TestCase.assertTrue;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;

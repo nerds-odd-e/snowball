@@ -3,12 +3,11 @@ package steps;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import steps.driver.WebDriverFactory;
 import steps.driver.WebDriverWrapper;
-import steps.page.ImagePage;
-import steps.page.MassiveMailerSite;
+import steps.site.pages.ImagePage;
+import steps.site.MassiveMailerSite;
 
-import static steps.page.Notifications.getSentMailVisitCount;
+import static steps.site.pages.Notifications.getSentMailVisitCount;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;

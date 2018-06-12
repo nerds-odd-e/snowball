@@ -1,8 +1,7 @@
-package steps.page;
+package steps.site.pages;
 
 import com.odde.massivemailer.model.SentMailVisit;
-import steps.driver.WebDriverFactory;
-import steps.driver.WebDriverWrapper;
+import steps.site.MassiveMailerSite;
 
 import java.sql.SQLException;
 

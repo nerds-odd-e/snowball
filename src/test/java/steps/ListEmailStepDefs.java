@@ -3,12 +3,13 @@ package steps;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import steps.driver.WebDriverFactory;
 import steps.driver.WebDriverWrapper;
+import steps.site.MassiveMailerSite;
 
 public class ListEmailStepDefs {
 
-    private WebDriverWrapper emailListDriverViewer = WebDriverFactory.getDefaultDriver();
+    private MassiveMailerSite site = new MassiveMailerSite();
+    private WebDriverWrapper driver = site.getDriver();
     TrackEmailSteps emailSteps = new TrackEmailSteps();
 
     @Given("^Terry sends an email$")
@@ -18,12 +19,12 @@ public class ListEmailStepDefs {
 
     @When("^Terry clicks on the email track link$")
     public void terry_clicks_on_the_email_track_link() throws Throwable {
-        emailListDriverViewer.findElementById("emailtracking").click();
+        driver.findElementById("emailtracking").click();
     }
 
     @Then("^Terry can see the email list page$")
     public void terry_can_see_the_email_list_page() throws Throwable {
-        emailListDriverViewer.isAtURL("http://localhost:8070/massive_mailer/" +"email_tracking.jsp");
+        driver.isAtURL(site.baseUrl() +"email_tracking.jsp");
     }
 
     @Given("^Terry send an email with subject \"([^\"]*)\"$")
@@ -33,6 +34,6 @@ public class ListEmailStepDefs {
 
     @Then("^Terry should see the email with subject \"([^\"]*)\" in the list with date$")
     public void terry_should_see_the_email_with_subject_in_the_list_with_date(String subject) throws Throwable {
-        emailListDriverViewer.pageShouldContain(subject);
+        driver.pageShouldContain(subject);
     }
 }

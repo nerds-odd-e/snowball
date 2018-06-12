@@ -1,6 +1,7 @@
-package steps.page;
+package steps.site.pages;
 
 import steps.driver.WebDriverWrapper;
+import steps.site.MassiveMailerSite;
 
 public class AddContactPage {
     private MassiveMailerSite site;

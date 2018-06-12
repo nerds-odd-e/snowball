@@ -4,11 +4,11 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import steps.driver.WebDriverWrapper;
-import steps.page.MassiveMailerSite;
+import steps.site.MassiveMailerSite;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static steps.page.Notifications.getSentMailVisitCount;
+import static steps.site.pages.Notifications.getSentMailVisitCount;
 
 public class TrackEmailSteps {
     private MassiveMailerSite site = new MassiveMailerSite();

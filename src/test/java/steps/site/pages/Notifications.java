@@ -1,4 +1,4 @@
-package steps.page;
+package steps.site.pages;
 
 import com.odde.massivemailer.model.SentMailVisit;
 

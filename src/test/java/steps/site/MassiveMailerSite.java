@@ -1,8 +1,11 @@
-package steps.page;
+package steps.site;
 
-import com.google.common.collect.Multiset;
 import steps.driver.WebDriverFactory;
 import steps.driver.WebDriverWrapper;
+import steps.site.pages.AddContactPage;
+import steps.site.pages.CourseListPage;
+import steps.site.pages.EnrollParticipantPage;
+import steps.site.pages.ImagePage;
 
 public class MassiveMailerSite {
     public WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();

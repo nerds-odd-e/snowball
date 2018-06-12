@@ -4,9 +4,8 @@ package steps;
         import cucumber.api.java.en.Given;
         import cucumber.api.java.en.Then;
         import cucumber.api.java.en.When;
-        import steps.driver.WebDriverFactory;
         import steps.driver.WebDriverWrapper;
-        import steps.page.MassiveMailerSite;
+        import steps.site.MassiveMailerSite;
 
         import java.util.List;
 

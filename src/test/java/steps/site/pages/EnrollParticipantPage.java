@@ -1,9 +1,7 @@
-package steps.page;
+package steps.site.pages;
 
-import steps.driver.WebDriverFactory;
 import steps.driver.WebDriverWrapper;
-
-import java.sql.SQLException;
+import steps.site.MassiveMailerSite;
 
 public class EnrollParticipantPage {
     private final MassiveMailerSite site;
