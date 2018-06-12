@@ -6,20 +6,19 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import steps.driver.WebDriverFactory;
 import steps.driver.WebDriverWrapper;
+import steps.page.MassiveMailerSite;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
-import static steps.page.Notifications.getSentMailVisitCount;
 
 public class EmailSteps {
 
-    private WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
-    private String BASE_URL = "http://localhost:8070/massive_mailer/";
+    private MassiveMailerSite site = new MassiveMailerSite();
+    private WebDriverWrapper driver = site.getDriver();
 
     @Given("^Visit Send Mail Page$")
     public void visitSendMailPage() throws Throwable {
-        driver.visit(BASE_URL);
+        site.visit("");
     }
 
     @When("^I Click Send Email$")

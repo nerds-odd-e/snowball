@@ -6,6 +6,7 @@ import cucumber.api.java.en.When;
 import steps.driver.WebDriverFactory;
 import steps.driver.WebDriverWrapper;
 import steps.page.ImagePage;
+import steps.page.MassiveMailerSite;
 
 import static steps.page.Notifications.getSentMailVisitCount;
 import static org.hamcrest.CoreMatchers.is;
@@ -13,13 +14,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 public class TrackEmailWithMultipleRecipientsSteps {
-    private static final String BASE_URL = "http://localhost:8070/massive_mailer/";
-
-    private WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
+    private MassiveMailerSite site = new MassiveMailerSite();
+    private WebDriverWrapper driver = site.getDriver();
 
     @Given("^I send an email to multiple recipients$")
     public void i_send_an_email_to_multiple_recipients() throws Throwable {
-        driver.visit(BASE_URL);
+        site.visit("");
         driver.setTextField("recipient", "recipient@odd-e.com;recipient2@odd-e.com");
         driver.setTextField("subject", "Subject");
         driver.setTextField("content", "Hello!");
@@ -33,15 +33,14 @@ public class TrackEmailWithMultipleRecipientsSteps {
 
     @When("^all recipients opens their email$")
     public void all_recipients_opens_their_email() throws Throwable {
-        ImagePage page = new ImagePage();
+        ImagePage page = site.imagePage();
         page.load("recipient@odd-e.com");
         page.load("recipient2@odd-e.com");
     }
 
     @When("^one recipient opens their email$")
     public void one_recipient_opens_their_email() throws Throwable {
-        ImagePage page = new ImagePage();
-        page.load("recipient@odd-e.com");
+        site.imagePage().load("recipient@odd-e.com");
     }
 
     @When("^no recipients did not open their email$")

@@ -4,21 +4,22 @@ import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import steps.driver.WebDriverFactory;
 import steps.driver.WebDriverWrapper;
+import steps.page.MassiveMailerSite;
+
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class CourseTests {
 
-    private WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
-    private String BASE_URL = "http://localhost:8070/massive_mailer/add_course.jsp";
+    private MassiveMailerSite site = new MassiveMailerSite();
+    private WebDriverWrapper driver = site.getDriver();
+    private String add_course_url = site.baseUrl() + "add_course.jsp";
 
     @Given("^I am on create new course page$")
     public void visitCreateCoursePage() throws Throwable {
-        driver.visit(BASE_URL);
+        driver.visit(add_course_url);
     }
 
 
@@ -46,14 +47,14 @@ public class CourseTests {
 
     @Then("^Course should save and successfully saved message should appear$")
     public void courseListPageShouldContain() throws Throwable {
-        driver.expectRedirect(BASE_URL);
+        driver.expectRedirect(add_course_url);
         assertTrue(driver.getCurrentUrl().contains("status=success&msg=Add%20course%20successfully"));
 
     }
 
     @Then("^Course should not save and show error messagea$")
     public void courseShowErrorMassage() throws Throwable {
-        driver.expectRedirect(BASE_URL);
+        driver.expectRedirect(add_course_url);
         System.out.println(driver.getCurrentUrl());
         assertTrue(driver.getCurrentUrl().contains("status=failed&msg=CityName%20is%20invalid"));
     }

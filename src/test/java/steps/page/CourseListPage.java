@@ -5,10 +5,17 @@ import steps.driver.WebDriverWrapper;
 
 public class CourseListPage {
     private static final String BASE_URL = "http://localhost:8070/massive_mailer/course_list.jsp";
-    private WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
+    private WebDriverWrapper driver;
+    private MassiveMailerSite site;
+
+    public CourseListPage(MassiveMailerSite site) {
+
+        this.site = site;
+        this.driver = site.driver;
+    }
 
     public void sendPreviewEmailFor(String a_course) {
-        driver.visit(BASE_URL);
+        site.visit("course_list.jsp");
         driver.clickButtonByName("preview " + a_course);
     }
 

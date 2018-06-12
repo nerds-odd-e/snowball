@@ -3,18 +3,16 @@ package steps;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import steps.driver.WebDriverFactory;
 import steps.driver.WebDriverWrapper;
-import steps.page.ImagePage;
+import steps.page.MassiveMailerSite;
 
-import static steps.page.Notifications.getSentMailVisitCount;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static steps.page.Notifications.getSentMailVisitCount;
 
 public class TrackEmailSteps {
-    private static final String BASE_URL = "http://localhost:8070/massive_mailer/";
-
-    private WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
+    private MassiveMailerSite site = new MassiveMailerSite();
+    private WebDriverWrapper driver = site.getDriver();
 
     @Given("^I send an email to \"(.*)\"$")
     public void i_send_an_email_to_Terry(String recipient) throws Throwable {
@@ -22,7 +20,7 @@ public class TrackEmailSteps {
     }
 
     public void sendEmail(String recipient, String subject) {
-        driver.visit(BASE_URL);
+        site.visit("");
         driver.setTextField("recipient", recipient);
         driver.setTextField("subject", subject);
         driver.setTextField("content", "Hello!");
@@ -43,9 +41,7 @@ public class TrackEmailSteps {
 
     @When("^\"(.*)\" open the email$")
     public void terry_open_the_email(String recipient) throws Throwable {
-        ImagePage page = new ImagePage();
-
-        page.load(recipient);
+        site.imagePage().load(recipient);
     }
 
     @Then("^I should see that \"(.*)\" has opened the email$")

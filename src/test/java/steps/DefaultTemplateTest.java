@@ -31,7 +31,6 @@ public class DefaultTemplateTest {
 
     @Then("^template should cotain last name$")
     public void template_should_cotain_last_name() throws Throwable {
-        System.out.println(template);
         if (!template.getString("Content").contains("{LastName}")) {
             throw new Exception("Default Template should contaain last name");
         }

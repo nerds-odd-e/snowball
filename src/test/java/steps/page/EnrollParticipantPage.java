@@ -6,12 +6,16 @@ import steps.driver.WebDriverWrapper;
 import java.sql.SQLException;
 
 public class EnrollParticipantPage {
-    private static final String BASE_URL = "http://localhost:8070/massive_mailer/enrollParticipant.jsp";
+    private final MassiveMailerSite site;
+    private WebDriverWrapper driver;
 
-    private WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
+    public EnrollParticipantPage(MassiveMailerSite site) {
+        this.site = site;
+        this.driver = site.driver;
+    }
 
     public void addStudentTo(String a_course, String email) {
-        driver.visit(BASE_URL);
+        site.visit("enrollParticipant.jsp");
         driver.setDropdownByText("courseId", a_course);
         driver.setTextField("email", email);
         driver.clickButton("add_button");

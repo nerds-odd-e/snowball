@@ -6,16 +6,18 @@ package steps;
         import cucumber.api.java.en.When;
         import steps.driver.WebDriverFactory;
         import steps.driver.WebDriverWrapper;
+        import steps.page.MassiveMailerSite;
 
         import java.util.List;
 
 public class UpdateTemplateTests {
-    private WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
-    private String BASE_URL = "http://localhost:8070/massive_mailer/sendemail.jsp";
+    private MassiveMailerSite site = new MassiveMailerSite();
+    private WebDriverWrapper driver = site.getDriver();
+    private String sendemail_url = site.baseUrl()+ "sendemail.jsp";
 
     @Given("^Visit Edit Template Page$")
     public void visitEditTemplatePage() throws Throwable {
-        driver.visit(BASE_URL);
+        driver.visit(sendemail_url);
     }
 
     @When("^I update the contents of template$")
@@ -35,6 +37,6 @@ public class UpdateTemplateTests {
 
     @Then("^Template contents should be update and I should get an element with message \"<success>\"$")
     public void shouldGetSuccessMessage() throws Throwable {
-        driver.expectRedirect(BASE_URL);
+        driver.expectRedirect(sendemail_url);
     }
 }

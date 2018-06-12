@@ -23,7 +23,7 @@ public class ListEmailStepDefs {
 
     @Then("^Terry can see the email list page$")
     public void terry_can_see_the_email_list_page() throws Throwable {
-        emailListDriverViewer.isAtURL(CucumberConstant.EMAIL_TRACKING_URL);
+        emailListDriverViewer.isAtURL("http://localhost:8070/massive_mailer/" +"email_tracking.jsp");
     }
 
     @Given("^Terry send an email with subject \"([^\"]*)\"$")

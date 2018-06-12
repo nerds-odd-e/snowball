@@ -5,16 +5,16 @@ import cucumber.api.java.en.When;
 import cucumber.api.java.en.Then;
 import steps.driver.WebDriverFactory;
 import steps.driver.WebDriverWrapper;
+import steps.page.MassiveMailerSite;
 
 public class EventTests {
 
-    private WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
-    private String BASE_URL = "http://localhost:8070/massive_mailer/add_course.jsp";
-    private String EVENTLIST_BASE_URL = "http://localhost:8070/massive_mailer/courselist.jsp";
+    private MassiveMailerSite site = new MassiveMailerSite();
+    private WebDriverWrapper driver = site.getDriver();
 
     @Given("^I am on Add Event page$")
     public void visitAddEventPage() throws Throwable {
-        driver.visit(BASE_URL);
+        site.visit("add_course.jsp");
     }
 
     @When("^Create course \"([^\"]*)\" in \"([^\"]*)\"$")

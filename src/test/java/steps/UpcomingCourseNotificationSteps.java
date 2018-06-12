@@ -13,6 +13,7 @@ import org.javalite.activejdbc.Model;
 import org.joda.time.DateTime;
 import steps.driver.WebDriverFactory;
 import steps.driver.WebDriverWrapper;
+import steps.page.MassiveMailerSite;
 
 import static junit.framework.TestCase.assertTrue;
 import java.text.SimpleDateFormat;
@@ -24,10 +25,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 public class UpcomingCourseNotificationSteps {
-    private static final String BASE_URL = "http://localhost:8070/massive_mailer/course_list.jsp";
+    private MassiveMailerSite site = new MassiveMailerSite();
+    private WebDriverWrapper driver = site.getDriver();
 
-    private WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
-    private int noOfDaysBefore = 0;
     @When("^We create (\\d+) contacts at (.*?), (.*?)$")
     public void createContactsForLocations(int numberOfContacts, String city, String country) throws Throwable {
         ContactSteps contactTests = new ContactSteps();
@@ -46,7 +46,7 @@ public class UpcomingCourseNotificationSteps {
 
     @When("^I send the upcoming courses emails$")
     public void sendTheUpcomingCourseEmails() throws Throwable {
-        driver.visit(BASE_URL);
+        site.visit("course_list.jsp");
         driver.clickButton("send_button");
     }
 

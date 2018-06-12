@@ -11,15 +11,27 @@ public class MassiveMailerSite {
         return "http://localhost:8070/massive_mailer/";
     }
 
-    public AddContactPage addContactPage() {
-        return new AddContactPage(this);
-    }
-
     public WebDriverWrapper getDriver() {
         return driver;
     }
 
     public void visit(String path) {
         driver.visit(baseUrl() + path);
+    }
+
+    public AddContactPage addContactPage() {
+        return new AddContactPage(this);
+    }
+
+    public EnrollParticipantPage enrollParticipantPage() {
+        return new EnrollParticipantPage(this);
+    }
+
+    public CourseListPage courseListPage() {
+        return new CourseListPage(this);
+    }
+
+    public ImagePage imagePage() {
+        return new ImagePage(this);
     }
 }

@@ -7,13 +7,15 @@ import steps.driver.WebDriverWrapper;
 import java.sql.SQLException;
 
 public class ImagePage {
-    private static final String BASE_URL = "http://localhost:8070/massive_mailer/";
+    private MassiveMailerSite site;
 
-    private WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
+    public ImagePage(MassiveMailerSite site) {
+        this.site = site;
+    }
 
     public void load(final String recipient) throws SQLException, ClassNotFoundException {
         String token = SentMailVisit.first("email_address = ?", recipient).getString("id");
-        String url = BASE_URL+"resources/images/qrcode.png?token=" + token;
-        driver.visit(url);
+        String path = "resources/images/qrcode.png?token=" + token;
+        site.visit(path);
     }
 }

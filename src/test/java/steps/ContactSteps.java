@@ -16,7 +16,6 @@ public class ContactSteps {
 
     private MassiveMailerSite site = new MassiveMailerSite();
     private WebDriverWrapper driver = site.getDriver();
-    private String BASE_URL = site.baseUrl();
 
     @When("^Add A Contact \"([^\"]*)\" at \"([^\"]*)\"$")
     public void addAContact(String email,String location) throws Throwable {

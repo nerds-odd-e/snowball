@@ -7,6 +7,7 @@ import steps.driver.WebDriverFactory;
 import steps.driver.WebDriverWrapper;
 import steps.page.CourseListPage;
 import steps.page.EnrollParticipantPage;
+import steps.page.MassiveMailerSite;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -14,19 +15,16 @@ import java.time.format.DateTimeFormatter;
 import static org.junit.Assert.assertEquals;
 
 public class SendPreviewMailTest {
+    private MassiveMailerSite site = new MassiveMailerSite();
+    private WebDriverWrapper driver = site.getDriver();
     public static final String A_COURSE = "A course";
-    private static final String BASE_URL = "http://localhost:8070/massive_mailer/";
-    private WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
-    TrackEmailSteps emailSteps = new TrackEmailSteps();
 
-   /* private WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
-    private String adminEmail, studentEmail;*/
     private void addCoursesAtTokyo(int offsetDate) throws Throwable {
         LocalDateTime d = LocalDateTime.now();
         DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         d.plusMonths(offsetDate);
 
-        driver.visit(BASE_URL + "add_course.jsp");
+        site.visit("add_course.jsp");
         driver.setTextField("coursename", A_COURSE);
         driver.setTextField("duration", "30");
         driver.setDropdownValue("location", "Tokyo");
@@ -46,12 +44,12 @@ public class SendPreviewMailTest {
 
     @Given("^there are students with email \"([^\"]*)\" loaded for this course$")
     public void there_are_students_with_email_loaded_for_this_course(String email) throws Throwable {
-        new EnrollParticipantPage().addStudentTo(A_COURSE, email);
+        site.enrollParticipantPage().addStudentTo(A_COURSE, email);
     }
 
     @When("^i send preview email for this course$")
     public void i_send_preview_email_for_this_course() throws Throwable {
-        new CourseListPage().sendPreviewEmailFor(A_COURSE);
+        site.courseListPage().sendPreviewEmailFor(A_COURSE);
     }
 
     @Then("^\"([^\"]*)\" should receive the pre-course email$")
@@ -60,7 +58,7 @@ public class SendPreviewMailTest {
 
     @When("^i send precourse email for this course$")
     public void i_send_precourse_email_for_this_course() throws Throwable {
-        new CourseListPage().sendPrecourseEmailFor(A_COURSE);
+        site.courseListPage().sendPrecourseEmailFor(A_COURSE);
     }
 
     @Given("^There is a contact \"([^\"]*)\" at Tokyo$")
@@ -83,7 +81,7 @@ public class SendPreviewMailTest {
 
     @When("^I trigger the sending once$")
     public void i_trigger_the_sending_once() throws Throwable {
-        driver.visit(BASE_URL + "course_list.jsp");
+        site.visit( "course_list.jsp");
         driver.clickButton("send_button");
         driver.waitforElement("message");
     }
