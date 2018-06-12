@@ -123,7 +123,8 @@ tasks.cucumber {
     }
 }
 
-tasks.create("cucumber_now") {
+task cucumber_now {
+    group "verification"
     finalizedBy "cucumber"
     doFirst {
         cucumber {

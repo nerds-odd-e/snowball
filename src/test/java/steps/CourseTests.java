@@ -7,7 +7,9 @@ import cucumber.api.java.en.When;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertTrue;
 
@@ -25,20 +27,37 @@ public class CourseTests {
 
     @When("^Add a course with below details$")
     public void addCourseWithGivenDetails(DataTable dtCourseDetails) throws Throwable {
-        List<List<String>> courses = dtCourseDetails.raw();
-        courses = courses.subList(1, courses.size());
-        for(List<String> val:courses){
-            driver.setTextField("coursename", val.get(0));
-            driver.setTextField("duration", val.get(1));
-            driver.setDropdownValue("country", val.get(2));
-            driver.setTextField("city", val.get(3));
-            driver.setTextField("startdate", val.get(4));
-            driver.setTextField("address", val.get(5));
-            driver.setTextField("coursedetails", val.get(6));
-            driver.setTextField("instructor", val.get(7));
-        }
+        Map<String, String> vals = dtCourseDetails.asMap(String.class, String.class);
+            fill_in_course_data(vals);
+
     }
 
+    private void fill_in_course_data(Map<String, String> course_data) {
+        driver.setTextField("coursename", course_data.get("coursename"));
+        driver.setTextField("duration", course_data.get("duration"));
+        driver.setDropdownValue("country", course_data.get("country"));
+        driver.setTextField("city", course_data.get("city"));
+        driver.setTextField("startdate", course_data.get("startdate"));
+        driver.setTextField("address", course_data.get("address"));
+        driver.setTextField("coursedetails", course_data.get("coursedetails"));
+        driver.setTextField("instructor", course_data.get("instructor"));
+    }
+
+    @When("^Add a course with location \"([^\"]*)\", \"([^\"]*)\"$")
+    public void add_a_course_with_location(String city, String country) throws Throwable {
+        HashMap<String, String> vals = new HashMap<>();
+        vals.put("country", country);
+        vals.put("city", city);
+        vals.put("coursename", "CSD");
+        vals.put("duration", "3");
+        vals.put("startdate", "2017-11-23");
+        vals.put("address", "odd-e");
+        vals.put("coursedetails", "odd-addresse");
+        vals.put("instructor", "someone");
+        fill_in_course_data(vals);
+        clickSaveCourse();
+
+    }
 
     @When("^I click the Create button$")
     public void clickSaveCourse() throws Throwable {

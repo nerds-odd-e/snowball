@@ -4,20 +4,28 @@ Feature: Create Course
   Background:
     Given I am on create new course page
 
-    @now
-  Scenario: Creating course with unknown location
+  Scenario: Creating course successfully
     When Add a course with below details
-      |coursename|duration|country|city   |startdate  |address|coursedetails|instructor|
-      |    CSD-1 | 30     |China  |Foobar |2017-10-23 |odd-e  |CSD Training | Terry    |
-    And I click the Create button
-    Then Course should not save and show error messagea
-
-  @now
-  Scenario: Creating course with known location
-    When Add a course with below details
-      |coursename|duration|country|city   |startdate  |address|coursedetails|instructor|
-      |    CSD-1 | 30     |China  |Chengdu|2017-10-23 |odd-e  |CSD Training | Terry    |
+      |coursename    | CSD-1         |
+      |duration      | 30            |
+      |country       | China         |
+      |city          | Chengdu       |
+      |startdate     | 2017-10-23    |
+      |address       | odd-e         |
+      |coursedetails | CSD training  |
+      |instructor    | Terry         |
     And I click the Create button
     Then Course should save and successfully saved message should appear
+
+  Scenario Outline: Creating course with unknown location
+    When Add a course with location "<city>", "<country>"
+    Then Course should <expected result>
+
+    Examples:
+      | city     | country   | expected result                                   |
+      #---------------------------------------------------------------------------
+      | Foobar   | China     | not save and show error messagea                  |
+      | Chengdu  | China     | save and successfully saved message should appear |
+
 
 
