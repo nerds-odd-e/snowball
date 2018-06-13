@@ -1,5 +1,15 @@
 Feature: Track Email
 
+  Scenario: check navigation to email list page from list email button on home page
+    Given Terry sends an email
+    When Terry clicks on the email track link
+    Then Terry can see the email list page
+
+  Scenario: check sent email in the list
+    Given Terry send an email with subject "hello"
+    When  Terry clicks on the email track link
+    Then  Terry should see the email with subject "hello" in the list with date
+
   @system
   Scenario: Email is never opened
     Given I send an email to "terry1@odd-e.com"

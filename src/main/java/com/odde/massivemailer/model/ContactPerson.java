@@ -62,8 +62,10 @@ public class ContactPerson extends ApplicationModel {
             try {
                 Location locationDetails = locationProviderService.getLocationForName(getLocation());
 
-                set(LATITUDE, locationDetails.getLat());
-                set(LONGITUDE, locationDetails.getLng());
+                if (locationDetails != null) {
+                    set(LATITUDE, locationDetails.getLat());
+                    set(LONGITUDE, locationDetails.getLng());
+                }
             } catch (GeoServiceException e) {
                 throw new RuntimeException("failed to get location.", e);
             }

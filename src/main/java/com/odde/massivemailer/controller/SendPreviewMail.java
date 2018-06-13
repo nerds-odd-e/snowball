@@ -69,7 +69,6 @@ public class SendPreviewMail extends AppController {
         Course course = Course.getCourseById(new Integer(courseId));
 
         String action = req.getParameter("action");
-        List<Template> precourseTemplates =Template.findByTemplateName("Pre Template");
 
         if("preview".equalsIgnoreCase(action)) {
             ContactPerson admin = new ContactPerson("Admin","myodde@gmail.com","admin","odd-e","Singapore");
@@ -83,13 +82,12 @@ public class SendPreviewMail extends AppController {
             }
 
         }
+
+        List<Template> precourseTemplates =Template.findByTemplateName("Pre-course Template");
         Template precourseTemplate = precourseTemplates.get(0);
         emails=precourseTemplate.getPopulatedEmailTemplate(course,contactPerson);
 
 
         return emails;
     }
-
-
-
 }

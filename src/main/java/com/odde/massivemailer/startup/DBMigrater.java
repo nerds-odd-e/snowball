@@ -12,7 +12,7 @@ import java.util.function.Function;
 public class DBMigrater {
     public void migrate() {
         for (String migration : migrationFiles()) {
-            Arrays.stream(loadMigration(migration).split(";")).forEach(
+            Arrays.stream(loadMigration(migration).split(";")).filter(s->!s.trim().isEmpty()).forEach(
                     sql-> Base.exec(sql + ";"));
         }
     }
@@ -42,15 +42,14 @@ public class DBMigrater {
         String path = "/db/migration/" + name;
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(path)))) {
-            StringBuilder builder = new StringBuilder();
             String line = reader.readLine();
+            List<String> lines = new ArrayList<String>();
 
             while (line != null) {
-                builder.append(line);
+                lines.add(line);
                 line = reader.readLine();
             }
-
-            return builder.toString();
+            return String.join("\n", lines);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
