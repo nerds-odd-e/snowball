@@ -50,7 +50,7 @@ function populateCourses(courseId)
 {
 	$.ajax({
 	    type: 'GET',
-	    url: 'courselist',
+	    url: 'courses',
 	    dataType: 'json',
 	    success: function(data) {
 	        $("#courses").children().remove();

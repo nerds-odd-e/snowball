@@ -2,8 +2,6 @@ package com.odde.massivemailer.service.impl;
 
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.Template;
-import com.odde.massivemailer.service.TemplateService;
-import com.odde.massivemailer.startup.DBMigrater;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;

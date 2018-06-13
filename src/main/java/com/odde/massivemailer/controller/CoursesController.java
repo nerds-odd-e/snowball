@@ -1,10 +1,12 @@
 package com.odde.massivemailer.controller;
 
 import com.odde.massivemailer.model.Course;
+import com.odde.massivemailer.serialiser.AppGson;
 
 import java.io.IOException;
 import java.util.Map;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.annotation.WebServlet;
@@ -29,6 +31,12 @@ public class CoursesController extends AppController {
 
         }
         resp.sendRedirect("add_course.jsp?" + resultMsg);
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String convertedCourseToJSON = AppGson.getGson().toJson(Course.findAll());
+        ServletOutputStream outputStream = response.getOutputStream();
+        outputStream.print(convertedCourseToJSON);
     }
 
 }
