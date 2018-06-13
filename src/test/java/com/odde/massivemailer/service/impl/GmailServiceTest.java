@@ -57,7 +57,6 @@ public class GmailServiceTest {
    
 	
 	@Test
-	@Ignore
 	public void testSend_multipleRecipients() throws EmailException, MessagingException {
 		final Transport transport = mock(Transport.class);
         GMailService emailService = this.getGmailService(transport);
@@ -70,7 +69,6 @@ public class GmailServiceTest {
 
 	}
 	@Test(expected = EmailException.class)
-	@Ignore
 	public void testSend_failed() throws Exception {
 		Transport transport = null;
         GMailService emailService = this.getGmailService(transport);
@@ -78,7 +76,7 @@ public class GmailServiceTest {
 		emailService.send(email);
 	}
 
-	@Test @Ignore
+	@Test
 	public void sendEmailViaGreenMailSMTP() throws EmailException, UnknownHostException {
 		//Arrange
 		GreenMail greenMail = new GreenMail(new ServerSetup(3025, null, "smtp"));

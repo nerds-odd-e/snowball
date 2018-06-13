@@ -97,7 +97,7 @@ cucumber {
             "classpath:io.jdev.geb.cucumber.steps.groovy.en", 'classpath:steps'
     ]
 
-    tags = ['~@system']
+    tags = ['~@system', '~@slow']
 }
 
 tasks.cucumber {
