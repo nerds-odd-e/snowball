@@ -82,7 +82,7 @@
                                             <div class="row">
                                                 <div class="col-lg-2">Start Date:</div>
                                                 <div class="col-lg-10">
-                                                    <input type="date" class="form-control" name="startdate" id="courseStartDate">
+                                                    <input type="text" class="form-control" name="startdate" id="courseStartDate">
                                                  </div>
                                             </div>
                                         </div>

@@ -135,11 +135,10 @@ public class WebDriverWrapper {
 
     public void setDropdownByText(String dropdownName, String text) {
         Select dropdown = new Select(getWait().until(ExpectedConditions.visibilityOfElementLocated(By.name(dropdownName))));
-        takeScreenShot();
         dropdown.selectByVisibleText(text);
     }
 
-    private void takeScreenShot() {
+    public void takeScreenShot() {
 
         File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
         try {
