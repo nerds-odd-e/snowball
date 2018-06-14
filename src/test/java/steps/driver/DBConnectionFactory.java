@@ -15,7 +15,7 @@ public class DBConnectionFactory {
         Base.exec("INSERT INTO template (TemplateName,Subject,Content) VALUES ('Pre-course Template', 'Greeting {FirstName}', 'Hi, {FirstName} {LastName} from {Company}');");
         Base.exec("DELETE FROM sent_mail_visits");
         Base.exec("DELETE FROM sent_mails");
-        Base.exec("DELETE FROM course_contact_person");
+        Base.exec("DELETE FROM COURSE_CONTACT_PERSON");
         Base.exec("DELETE FROM contact_people");
         Base.exec("DELETE FROM courses");
     }

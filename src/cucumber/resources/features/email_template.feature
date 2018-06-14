@@ -1,4 +1,4 @@
-Feature: Update Template
+Feature: Email Template
   User should be able to update the email template
   with contents entered by user
 
