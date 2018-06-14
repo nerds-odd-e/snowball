@@ -13,6 +13,11 @@ public class EnrollParticipantPage {
     }
 
     public void addStudentTo(String a_course, String email) {
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         site.visit("enrollParticipant.jsp");
         driver.setDropdownByText("courseId", a_course);
         driver.setTextField("email", email);
