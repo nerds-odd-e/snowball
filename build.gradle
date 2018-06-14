@@ -107,12 +107,13 @@ tasks.cucumber {
     dependsOn assemble, testClasses, 'appBeforeIntegrationTest'
     finalizedBy 'appAfterIntegrationTest'
 
-    def phantomJsFilename = Os.isFamily(Os.FAMILY_WINDOWS) ? "phantomjs.exe" : "bin/phantomjs"
+    //def phantomJsFilename = Os.isFamily(Os.FAMILY_WINDOWS) ? "phantomjs.exe" : "bin/phantomjs"
+    jvmOptions.systemProperties("webdriver.chrome.driver": "/usr/local/bin/chromedriver")
     jvmOptions.systemProperties([
-            "phantomjs.binary.path": Os.isFamily(Os.FAMILY_MAC) ? file("$projectDir/node_modules/phantomjs/bin/phantomjs") : new File(unzipPhantomJs.outputs.files.singleFile, phantomJsFilename).absolutePath,
+            //"phantomjs.binary.path": Os.isFamily(Os.FAMILY_MAC) ? file("$projectDir/node_modules/phantomjs/bin/phantomjs") : new File(unzipPhantomJs.outputs.files.singleFile, phantomJsFilename).absolutePath,
             "geb.cucumber.step.packages": "steps",
             "geb.env": System.getProperty("geb.env"),
-            "webdriver": System.getProperty("webdriver"),
+            "webdriver": "chrome", //System.getProperty("webdriver")
             "active_env": "test",
     ])
     doFirst {

@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -28,8 +29,11 @@ public class WebDriverWrapper {
     private WebDriver driver;
 
     public WebDriverWrapper() {
-        if (System.getProperty("webdriver").equals("chrome"))
-            driver = new ChromeDriver();
+        if (System.getProperty("webdriver").equals("chrome")) {
+            ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.addArguments("--headless");
+            driver = new ChromeDriver(chromeOptions);
+        }
         else {
             DesiredCapabilities dcap = new DesiredCapabilities();
             String[] phantomArgs = new  String[] {
