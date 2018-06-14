@@ -17,15 +17,6 @@ describe('test show tracking function', function() {
 		container.parentNode.removeChild(container);
 	});
 
-	it('should render email contains tracking list',function() {
-		renderTrackingEmailList(mock_json, $("#trackingTable tbody"));
-
-	    $.each(mock_json, function(idx, item) {
-		    expect($("#trackingTable .subject").eq(idx).text()).toBe(item.attributes.subject);
-            expect($("#trackingTable .sentDate").eq(idx).text()).toBe(item.attributes.sent_at);
-		});
-	});
-
 	it('should render empty string for missing attributes',function() {
 	    delete firstNotification.attributes.subject;
 		renderTrackingEmailList(mock_json, $("#trackingTable tbody"));

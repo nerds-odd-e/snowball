@@ -14,7 +14,7 @@ buildscript {
 }
 
 plugins {
-    id 'com.craigburke.karma' version '1.4.3'
+    id 'com.craigburke.karma' version '1.4.4'
     id "org.roboscratch.robot" version "0.1.1"
 }
 
@@ -73,14 +73,14 @@ gretty {
 
 karma {
     basePath = '../src/main/'
-    colors = true
+    colors = false
     profile('default'){
         libraryBases = ['webapp/resources/lib/**/']
         libraryFiles = ['jquery.js', 'bootstrap.js'] // <1>
-        sourceBases = ['webapp/resources/js/']        
-        sourceFiles = ['**/*.js'] // <2>        
-        testBases = ['../test/javascript/']        
-        testFiles = ['**/*Test.js'] // <3>        
+        sourceBases = ['webapp/resources/js/']
+        sourceFiles = ['**/*.js'] // <2>
+        testBases = ['../test/javascript/']
+        testFiles = ['**/*Test.js'] // <3>
     }
     browsers = ['PhantomJS']
     frameworks = ['jasmine']
