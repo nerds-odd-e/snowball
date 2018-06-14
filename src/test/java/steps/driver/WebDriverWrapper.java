@@ -1,9 +1,7 @@
 package steps.driver;
 
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
@@ -17,6 +15,8 @@ import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertThat;
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -135,7 +135,18 @@ public class WebDriverWrapper {
 
     public void setDropdownByText(String dropdownName, String text) {
         Select dropdown = new Select(getWait().until(ExpectedConditions.visibilityOfElementLocated(By.name(dropdownName))));
+        takeScreenShot();
         dropdown.selectByVisibleText(text);
+    }
+
+    private void takeScreenShot() {
+
+        File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+        try {
+            FileUtils.copyFile(scrFile, new File("screenshot.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setDropdownValue(String dropdownName, String text) {
