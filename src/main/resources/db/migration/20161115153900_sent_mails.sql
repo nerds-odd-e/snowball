@@ -20,4 +20,5 @@ CREATE TABLE IF NOT EXISTS sent_mail_visits (
 );
 
 ALTER TABLE sent_mails MODIFY template_id INTEGER null;
-ALTER TABLE sent_mails ADD COLUMN receivers VARCHAR(255) NOT NULL DEFAULT '';
+
+#ALTER TABLE IGNORE sent_mails ADD COLUMN receivers VARCHAR(255) NOT NULL DEFAULT '';

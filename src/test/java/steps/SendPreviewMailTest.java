@@ -1,17 +1,10 @@
 package steps;
 
-import com.odde.massivemailer.model.SentMail;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.javalite.activejdbc.Model;
-import org.junit.Assert;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
-
-import java.util.function.BiConsumer;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 
@@ -38,17 +31,7 @@ public class SendPreviewMailTest {
 
     @Then("^\"([^\"]*)\" should receive the pre-course email$")
     public void should_receive_the_pre_course_email(String email) throws Throwable {
-        String all = allEmailsThatGotMessages();
-        if (!all.contains(email)) {
-            BiConsumer<StringBuilder, Model> a = (result, m)-> result.append(m.get("receivers").toString());
-            Assert.fail(String.format("This email should have received message: %s\n\tFound message to:\n%s", email, all));
-        }
-    }
-
-    private String allEmailsThatGotMessages() {
-        return SentMail.findAll().stream().map(m ->
-                String.format("\t\t%s: %s", m.get("receivers").toString(), m.get("subject").toString())
-        ).collect(Collectors.joining("\n"));
+        site.ExpectNoEmailTo(email);
     }
 
     @When("^i send precourse email for this course$")
@@ -65,10 +48,7 @@ public class SendPreviewMailTest {
 
     @Then("^\"([^\"]*)\" shouldn't receive any email$")
     public void shouldn_t_receive_email(String email) throws Throwable {
-        String all = allEmailsThatGotMessages();
-        if (all.contains(email)) {
-            Assert.fail(String.format("This email should not receive any message: %s\n\tFound message to:\n%s", email, all));
-        }
+        site.ExpectEmailTo(email);
     }
 
 }

@@ -1,11 +1,17 @@
 package steps.site;
 
+import com.odde.massivemailer.model.SentMail;
+import org.javalite.activejdbc.Model;
+import org.junit.Assert;
 import steps.driver.WebDriverFactory;
 import steps.driver.WebDriverWrapper;
 import steps.site.pages.AddContactPage;
 import steps.site.pages.CourseListPage;
 import steps.site.pages.EnrollParticipantPage;
 import steps.site.pages.ImagePage;
+
+import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
 
 public class MassiveMailerSite {
     public WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
@@ -36,5 +42,26 @@ public class MassiveMailerSite {
 
     public ImagePage imagePage() {
         return new ImagePage(this);
+    }
+
+    private String allEmailsThatGotMessages() {
+        return SentMail.findAll().stream().map(m ->
+                String.format("\t\t%s: %s", m.get("receivers").toString(), m.get("subject").toString())
+        ).collect(Collectors.joining("\n"));
+    }
+
+    public void ExpectNoEmailTo(String email) {
+        String all = allEmailsThatGotMessages();
+        if (!all.contains(email)) {
+            BiConsumer<StringBuilder, Model> a = (result, m)-> result.append(m.get("receivers").toString());
+            Assert.fail(String.format("This email should have received message: %s\n\tFound message to:\n%s", email, all));
+        }
+    }
+
+    public void ExpectEmailTo(String email) {
+        String all = allEmailsThatGotMessages();
+        if (all.contains(email)) {
+            Assert.fail(String.format("This email should not receive any message: %s\n\tFound message to:\n%s", email, all));
+        }
     }
 }

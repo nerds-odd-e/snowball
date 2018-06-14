@@ -1,7 +1,9 @@
 Feature: send pre-course mail
   As a user I want to send preview mail to admin
 
-  @now
+  Background:
+    Given "student@odd-e.com" which in "China" and "Chengdu" is a contact already
+
   Scenario Outline: previewing and sending precourse email
     Given there is a course starting from "2017-05-17"
     And there is a student with email "<student emails>" loaded for this course
@@ -13,4 +15,4 @@ Feature: send pre-course mail
     |student emails       |action    |who should receive the email  | who should not receive any email |
     |                     |preview   |admin@odd-e.com               | student@odd-e.com                |
     |student@odd-e.com    |preview   |admin@odd-e.com               | student@odd-e.com                |
-    #|student@odd-e.com    |precourse |student@odd-e.com             | admin@odd-e.com                  |
+    |student@odd-e.com    |precourse |student@odd-e.com             | admin@odd-e.com                  |

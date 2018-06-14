@@ -11,6 +11,9 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import static org.hamcrest.Matchers.containsString;
+import static org.junit.Assert.assertThat;
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 import java.util.List;
@@ -95,7 +98,7 @@ public class WebDriverWrapper {
 
     public void pageShouldContain(String text) {
         String bodyText = getBodyText();
-        assertTrue("Text not found!", bodyText.contains(text));
+        assertThat(bodyText, containsString(text));
     }
 
     public String getBodyText() {
