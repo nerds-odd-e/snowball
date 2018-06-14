@@ -35,7 +35,6 @@ public class SendMailController extends AppController {
 
         } catch (EmailException e) {
             resp.sendRedirect("sendemail.jsp?status=failed&msg=Unable to send");
-            e.printStackTrace();
 
         } catch (SQLException e) {
             resp.sendRedirect("sendemail.jsp?status=failed&msg=Fail");
