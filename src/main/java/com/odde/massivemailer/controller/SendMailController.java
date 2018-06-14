@@ -29,8 +29,7 @@ public class SendMailController extends AppController {
             SentMail sentMail = email.asSentMail().saveAll();
             email.setSentMail(sentMail);
 
-            MailService mailService = getMailService();
-            mailService.send(email);
+            email.sendMailWith(getMailService());
 
             resp.sendRedirect("sendemail.jsp?status=success&msg=Email successfully sent&repcnt=" + email.getReceipts().size());
 

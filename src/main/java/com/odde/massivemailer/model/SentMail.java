@@ -63,6 +63,10 @@ public class SentMail extends ApplicationModel {
         set("message_id", messageId);
     }
 
+    public void setReceivers(String receivers) {
+        set("receivers", receivers);
+    }
+
     public void setContent(String content) {
         set("content", content);
     }
@@ -93,4 +97,5 @@ public class SentMail extends ApplicationModel {
         }
         return "{\"subject\":\""+ getSubject()+"\", \"sent_at\":\""+date+"\", \"total_open_count\":"+count+", \"emails\":["+String.join(", ", sarray)+"]}";
     }
+
 }

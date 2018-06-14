@@ -44,8 +44,7 @@ public class SendPreviewMail extends AppController {
             for (Mail email:emails ) {
                 SentMail sentMail = email.asSentMail().saveAll();
                 email.setSentMail(sentMail);
-                MailService mailService = getMailService();
-                mailService.send(email);
+                email.sendMailWith(getMailService());
             }
 
 
@@ -71,7 +70,7 @@ public class SendPreviewMail extends AppController {
         String action = req.getParameter("action");
 
         if("preview".equalsIgnoreCase(action)) {
-            ContactPerson admin = new ContactPerson("Admin","myodde@gmail.com","admin","odd-e","Singapore");
+            ContactPerson admin = new ContactPerson("Admin","admin@odd-e.com","admin","odd-e","Singapore");
             contactPerson.add(admin);
 
 

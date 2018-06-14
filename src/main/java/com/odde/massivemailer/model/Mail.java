@@ -148,6 +148,7 @@ public class Mail {
 
     public SentMail asSentMail() {
         SentMail sentMail = new SentMail();
+        sentMail.setReceivers(String.join(";", getReceipts()));
         sentMail.setSubject(getSubject());
         sentMail.setContent(getContent());
         sentMail.setMessageId(getMessageId());
