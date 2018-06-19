@@ -278,6 +278,6 @@ public class ContactPerson extends ApplicationModel {
     }
 
     public static LazyList<ContactPerson> getContactsWithoutConsentRequest() {
-        return where("consent_request_date is null");
+        return where(CONSENT_SENT + " is null");
     }
 }

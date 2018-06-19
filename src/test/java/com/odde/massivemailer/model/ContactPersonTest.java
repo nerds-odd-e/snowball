@@ -145,7 +145,7 @@ public class ContactPersonTest {
 	public void testGetContactsWithoutConsentRequest() {
 
 		ContactPerson.getContactsWithoutConsentRequest().forEach((item) -> {
-			assertNull(item.getConsentRequestDate());
+			assertNull(item.getConsentSend());
 		});
 
 	}
