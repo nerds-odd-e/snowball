@@ -37,7 +37,11 @@
                         Contact List</a></li>
                 <ul><li><a href="add_contact.jsp"><span
                                         class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add
-                                        Contact</a></li></ul>
+                                        Contact</a></li>
+                      <li><a href="add_contact_batch.jsp"><span
+                                                              class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add
+                                                              Contact Batch</a></li>
+                                        </ul>
 
                 <li><a href="course_list.jsp"><span
                         class="glyphicon glyphicon-file" aria-hidden="true"></span> Course List
