@@ -6,11 +6,16 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 
+
 import java.time.LocalDate;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RunWith(TestWithDB.class)
 public class ContactPersonTest {
@@ -20,28 +25,28 @@ public class ContactPersonTest {
 
 	@Test
 	public void testCreateContactObjectWithoutCompany() {
-		
+
 		String name = "name";
 		String email = "email@abc.com";
 		String lastname = "lastname";
 		ContactPerson person = new ContactPerson(name, email, lastname);
-		
+
 		assertEquals(name, person.getName());
 		assertEquals(email, person.getEmail());
 		assertEquals(lastname, person.getLastname());
 		assertEquals("", person.getCompany());
 	}
-	
-	
+
+
 	@Test
 	public void testCreateContactObjectWithCompany() {
-		
+
 		String name = "name";
 		String email = "email@abc.com";
 		String lastname = "lastname";
 		String company = "myCompany";
 		ContactPerson person = new ContactPerson(name, email, lastname, company);
-		
+
 		assertEquals(name, person.getName());
 		assertEquals(email, person.getEmail());
 		assertEquals(lastname, person.getLastname());
@@ -138,6 +143,7 @@ public class ContactPersonTest {
 
 	@Test
 	public void testGetContactsWithoutConsentRequest() {
+
 		ContactPerson.getContactsWithoutConsentRequest().forEach((item) -> {
 			assertNull(item.getConsentRequestDate());
 		});
@@ -158,4 +164,24 @@ public class ContactPersonTest {
 		assertEquals("2017-11-30", actual.getSentDate().toString());
 	}
 
+	@Test
+	public void createContactsShouldReturnFalseIfItsEmptyList() {
+		List<ContactPerson> newContacts = new ArrayList<ContactPerson>();
+		assertEquals(false, ContactPerson.createContacts(newContacts));
+	}
+
+	@Test
+	public void createContactsShouldReturnTrueIfNotEmptyList() {
+		List<ContactPerson> newContacts = new ArrayList();
+		ContactPerson contacts = new ContactPerson("Shailesh", "forshailesh@gmail.com", "Thakur", "CS", "Singapore/Singapore");
+		newContacts.add(contacts);
+		assertEquals(true, ContactPerson.createContacts(newContacts));
+		assertNotNull(ContactPerson.getContactByEmail("forshailesh@gmail.com").getId());
+
+
+		contacts = new ContactPerson("Bala", "balakg@gmail.com", "GovindRaj", "CS", "Singapore/Singapore");
+		newContacts.add(contacts);
+		assertEquals(true, ContactPerson.createContacts(newContacts));
+		assertEquals("GovindRaj", ContactPerson.getContactByEmail("balakg@gmail.com").getLastname());
+	}
 }

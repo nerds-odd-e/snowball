@@ -28,6 +28,8 @@ public class ContactPerson extends ApplicationModel {
     public static final String DATE_SENT = "date_sent";
     public static final String LONGITUDE = "Longitude";
     public static final String LATITUDE = "Latitude";
+    public static final String CONSENT_REQUEST_DATE = "consent_request_date";
+    public static final String CONSENT_RECEIVED_DATE = "consent_received_date";
     public static final String CONSENT_SENT = "consent_sent";
     public static final String CONSENT_RECEIVED = "consent_received";
 
@@ -35,11 +37,9 @@ public class ContactPerson extends ApplicationModel {
     public Double getLatitude() {
         return getDoubleAttribute(LATITUDE);
     }
-
     public Double getLongitude() {
         return getDoubleAttribute(LONGITUDE);
     }
-
 
     public Map<String, String> attributes = new HashMap<>();
 
@@ -55,6 +55,7 @@ public class ContactPerson extends ApplicationModel {
         setLastname(lastname);
         setCompany(company);
     }
+
 
     public ContactPerson(String name, String email, String lastname, String company,String location) {
         setName(name);
@@ -108,6 +109,21 @@ public class ContactPerson extends ApplicationModel {
         ContactPerson contact = new ContactPerson("todo name", email, "todo last name", "todo company", location);
 
         return contact;
+    }
+
+    public static boolean createContacts(List<ContactPerson> newContacts) {
+        boolean returnValue;
+
+        if(newContacts.isEmpty()) {
+            returnValue = false;
+        } else {
+            for(int i = 0; i < newContacts.size(); i++) {
+                ContactPerson contact = newContacts.get(i);
+                contact.saveIt();
+            }
+            returnValue = true;
+        }
+        return returnValue;
     }
 
     public String getName() {
@@ -231,6 +247,10 @@ public class ContactPerson extends ApplicationModel {
         return get("date_sent");
     }
 
+    public void setConsentRequestDate(LocalDate requestDate) {
+        set(CONSENT_REQUEST_DATE, DateUtil.asDate(requestDate));
+    }
+
     public void setConsentSend(LocalDate requestDate) {
         set(CONSENT_SENT, DateUtil.asDate(requestDate));
     }
@@ -239,9 +259,17 @@ public class ContactPerson extends ApplicationModel {
         set(CONSENT_RECEIVED, DateUtil.asDate(receivedDate));
     }
 
+    public LocalDate getConsentRequestDate() {
+        return DateUtil.asLocalDate((Date) get(CONSENT_REQUEST_DATE));
+    }
+
     public LocalDate getConsentSend() {
         final Date date = (Date) get(CONSENT_SENT);
         return date != null ? DateUtil.asLocalDate(date) : null;
+    }
+
+    public LocalDate getConsentReceivedDate() {
+        return DateUtil.asLocalDate((Date) get(CONSENT_RECEIVED_DATE));
     }
 
     public LocalDate getConsentReceived() {
