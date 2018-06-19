@@ -6,18 +6,18 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class TemplateProvider {
-    public static final String GDPR_TEMPLATE = "GDPR Consent";
+public enum TemplateProvider {
 
-    public static String getTemplate(String templateName) throws IOException, URISyntaxException {
+    GDPR_TEMPLATE("template/GDPRConsent.ftl");
 
-        switch (templateName) {
-            case GDPR_TEMPLATE:
-               Path path = Paths.get(TemplateProvider.class.getClassLoader().getResource("template/GDPRConsent.ftl").toURI());
-                byte[] fileBytes = Files.readAllBytes(path);
-                    return new String(fileBytes);
-                default:
-                    throw new IllegalArgumentException(String.format("Template %s is not defined",templateName));
-        }
+    private String path;
+    TemplateProvider(String path) {
+        this.path = path;
+    }
+
+    public String getTemplate() throws IOException, URISyntaxException {
+        Path path = Paths.get(TemplateProvider.class.getClassLoader().getResource(this.path).toURI());
+        byte[] fileBytes = Files.readAllBytes(path);
+        return new String(fileBytes);
     }
 }

@@ -3,6 +3,12 @@ package com.odde.massivemailer.service;
 import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Mail;
+import edu.emory.mathcs.backport.java.util.Collections;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+
+import static com.odde.massivemailer.template.TemplateProvider.GDPR_TEMPLATE;
 
 public class GDPRService {
 
@@ -29,8 +35,13 @@ public class GDPRService {
     }
 
     private Mail makeConsentRequestMail(ContactPerson contactPerson) {
-        // TODO:
-        String content = templateService.applyTemplate("", null);
+        String content = null;
+        try {
+            content = templateService.applyTemplate(GDPR_TEMPLATE, Collections.emptyMap());
+        } catch (IOException | URISyntaxException e) {
+            throw new RuntimeException("Template processing failed.", e);
+        }
+
         return Mail.createConsentRequestEmail(content, contactPerson.getEmail());
     }
 }
