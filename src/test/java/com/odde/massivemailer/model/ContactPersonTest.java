@@ -111,13 +111,13 @@ public class ContactPersonTest {
 		LocalDate requestDate = LocalDate.of(2018, 6, 18);
 		LocalDate receivedDate = LocalDate.of(2018, 6, 20);
 
-		person.setConsentRequestDate(requestDate);
-		person.setConsentReceivedDate(receivedDate);
+		person.setConsentSend(requestDate);
+		person.setConsentReceived(receivedDate);
 
 		ContactPerson personInDB = CreateContactInDB(person);
 
-		assertEquals(requestDate, personInDB.getConsentRequestDate());
-		assertEquals(receivedDate, personInDB.getConsentReceivedDate());
+		assertEquals(requestDate, personInDB.getConsentSend());
+		assertEquals(receivedDate, personInDB.getConsentReceived());
 	}
 
 	private ContactPerson CreateContactInDB(ContactPerson person) throws Exception {

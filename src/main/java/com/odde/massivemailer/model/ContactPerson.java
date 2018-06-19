@@ -28,8 +28,8 @@ public class ContactPerson extends ApplicationModel {
     public static final String DATE_SENT = "date_sent";
     public static final String LONGITUDE = "Longitude";
     public static final String LATITUDE = "Latitude";
-    public static final String CONSENT_REQUEST_DATE = "consent_request_date";
-    public static final String CONSENT_RECEIVED_DATE = "consent_received_date";
+    public static final String CONSENT_SENT = "consent_sent";
+    public static final String CONSENT_RECEIVED = "consent_received";
 
 
     public Double getLatitude() {
@@ -231,20 +231,22 @@ public class ContactPerson extends ApplicationModel {
         return get("date_sent");
     }
 
-    public void setConsentRequestDate(LocalDate requestDate) {
-        set(CONSENT_REQUEST_DATE, DateUtil.asDate(requestDate));
+    public void setConsentSend(LocalDate requestDate) {
+        set(CONSENT_SENT, DateUtil.asDate(requestDate));
     }
 
-    public void setConsentReceivedDate(LocalDate receivedDate) {
-        set(CONSENT_RECEIVED_DATE, DateUtil.asDate(receivedDate));
+    public void setConsentReceived(LocalDate receivedDate) {
+        set(CONSENT_RECEIVED, DateUtil.asDate(receivedDate));
     }
 
-    public LocalDate getConsentRequestDate() {
-        return DateUtil.asLocalDate((Date)get(CONSENT_REQUEST_DATE));
+    public LocalDate getConsentSend() {
+        final Date date = (Date) get(CONSENT_SENT);
+        return date != null ? DateUtil.asLocalDate(date) : null;
     }
 
-    public LocalDate getConsentReceivedDate() {
-        return DateUtil.asLocalDate((Date)get(CONSENT_RECEIVED_DATE));
+    public LocalDate getConsentReceived() {
+        final Date date = (Date) get(CONSENT_RECEIVED);
+        return date != null ? DateUtil.asLocalDate(date) : null;
     }
 
     public static LazyList<ContactPerson> getContactsWithoutConsentRequest() {
