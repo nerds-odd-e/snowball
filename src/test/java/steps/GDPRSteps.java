@@ -16,13 +16,12 @@ public class GDPRSteps {
 
     @Given("^Visit Front page$")
     @When("^I open the main page$")
-    public void iOpenTheMainPage() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
+    public void iOpenTheMainPage() {
        driver.visit(site.baseUrl());
     }
 
     @Then("^System shows GDPR menu on left panel$")
-    public void systemShowsGDPRMenuOnLeftPanel() throws Throwable {
+    public void systemShowsGDPRMenuOnLeftPanel() {
         driver.pageShouldContain("GDPR");
     }
 
