@@ -246,4 +246,8 @@ public class ContactPerson extends ApplicationModel {
     public LocalDate getConsentReceivedDate() {
         return DateUtil.asLocalDate((Date)get(CONSENT_RECEIVED_DATE));
     }
+
+    public static LazyList<ContactPerson> getContactsWithoutConsentRequest() {
+        return where("consent_request_date is null");
+    }
 }

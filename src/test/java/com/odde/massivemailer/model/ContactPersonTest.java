@@ -10,6 +10,7 @@ import java.time.LocalDate;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 @RunWith(TestWithDB.class)
 public class ContactPersonTest {
@@ -134,6 +135,14 @@ public class ContactPersonTest {
 		contact.getAttribute("Invalid");
 	}
 
+
+	@Test
+	public void testGetContactsWithoutConsentRequest() {
+		ContactPerson.getContactsWithoutConsentRequest().forEach((item) -> {
+			assertNull(item.getConsentRequestDate());
+		});
+
+	}
 
 	@Test
 	public void UpdateContactWhenEmailSent() {

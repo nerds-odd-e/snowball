@@ -1,6 +1,8 @@
 package com.odde.massivemailer.controller;
 
+import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.ContactPerson;
+import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.serialiser.AppGson;
 
 import javax.servlet.ServletException;
@@ -15,6 +17,13 @@ public class GDPRController extends AppController {
     private static final long serialVersionUID = 1L;
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ContactPerson.getContactsWithoutConsentRequest().forEach((item) -> {
+            try {
+                mailService.send(null);
+            } catch (EmailException e) {
+                throw new RuntimeException(e);
+            }
+        });
         showSuccess(resp);
     }
 
@@ -22,7 +31,7 @@ public class GDPRController extends AppController {
         resp.sendError(503, "Fail to send email");
     }*/
 
-    public void showSuccess(HttpServletResponse resp) throws ServletException, IOException  {
+    public void showSuccess(HttpServletResponse resp) throws ServletException, IOException {
         resp.setStatus(200);
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");

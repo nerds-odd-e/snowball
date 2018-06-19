@@ -1,6 +1,8 @@
 package com.odde.massivemailer.controller;
 
+import com.odde.TestWithDB;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
@@ -9,6 +11,7 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
+@RunWith(TestWithDB.class)
 public class GDPRControllerTest {
 
     private GDPRController gdprController = new GDPRController();
