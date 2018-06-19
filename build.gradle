@@ -97,7 +97,7 @@ cucumber {
             "classpath:io.jdev.geb.cucumber.steps.groovy.en", 'classpath:steps'
     ]
 
-    tags = ['~@system', '~@slow', '~@developing']
+    tags = ['~@system', '~@slow', '~@developing', '@trigger']
 }
 
 tasks.cucumber {
@@ -123,6 +123,17 @@ tasks.cucumber {
         }
     }
 }
+
+task cucumber_trigger {
+    group "verification"
+    finalizedBy "cucumber"
+    doFirst {
+        cucumber {
+            tags = ['@trigger']
+        }
+    }
+}
+
 
 task cucumber_now {
     group "verification"

@@ -4,7 +4,8 @@
   "description": "Pre-prerequisite * The environment variables `MM_EMAIL_USERID` and `MM_EMAIL_PASSWORD` are required to send emails out. * On Mac OS X, add the following to your environment variables (~/.bash_profile). ``` export MM_EMAIL_USERID=<your gmail address> export MM_EMAIL_PASSWORD=<your gmail password> launchctl setenv MM_EMAIL_USERID $MM_EMAIL_USERID launchctl setenv MM_EMAIL_PASSWORD $MM_EMAIL_PASSWORD ``` * Reboot your IDE.",
   "main": "karma.conf.js",
   "dependencies": {
-    "karma-chrome-launcher": "^2.0.0"
+    "karma-chrome-launcher": "^2.0.0",
+    "npm": "^6.1.0"
   },
   "devDependencies": {
     "jasmine-core": "^2.5.2",
