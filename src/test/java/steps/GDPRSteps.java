@@ -8,15 +8,14 @@ import steps.site.MassiveMailerSite;
 public class GDPRSteps {
     private MassiveMailerSite site = new MassiveMailerSite();
     private WebDriverWrapper driver = site.getDriver();
-
     @When("^I open the main page$")
     public void iOpenTheMainPage() throws Throwable {
-        driver.visit(site.baseUrl());
+        // Write code here that turns the phrase above into concrete actions
+       driver.visit(site.baseUrl());
     }
-
 
     @Then("^System shows GDPR menu on left panel$")
     public void systemShowsGDPRMenuOnLeftPanel() throws Throwable {
-
+        driver.pageShouldContain("GDPR");
     }
 }
