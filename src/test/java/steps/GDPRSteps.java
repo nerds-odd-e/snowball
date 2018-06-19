@@ -32,7 +32,7 @@ public class GDPRSteps {
 
     @Then("^GDPR page shows in right side of page$")
     public void pageShouldShowGDPRpage() {
-        assertTrue(driver.getCurrentUrl().contains("gdpr.jsp"));
+        assertTrue(driver.getCurrentUrl().contains("/gdpr"));
     }
 
     @And("^Trigger button should exist in page$")
