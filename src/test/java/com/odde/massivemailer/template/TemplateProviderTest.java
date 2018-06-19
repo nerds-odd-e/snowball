@@ -6,7 +6,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-public class ConsentTemplateTest {
+public class TemplateProviderTest {
     @Test
     public  void getsHtmlTemplateWhenProvidedTheTemplateName() throws IOException, URISyntaxException {
         String templateBody  = TemplateProvider.getTemplate(TemplateProvider.GDPR_TEMPLATE);
