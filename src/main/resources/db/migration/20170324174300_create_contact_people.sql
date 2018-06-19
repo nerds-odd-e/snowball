@@ -14,5 +14,5 @@ CREATE TABLE IF NOT EXISTS contact_people (
     consent_received_date DATE
 );
 
-alter table contact_people add column consent_request_date DATE DEFAULT NULL;
-alter table contact_people add column consent_received_date DATE DEFAULT NULL;
+#alter table contact_people add column consent_request_date DATE DEFAULT NULL;
+#alter table contact_people add column consent_received_date DATE DEFAULT NULL;
