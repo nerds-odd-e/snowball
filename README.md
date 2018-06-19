@@ -15,7 +15,7 @@ This project use MySQL database. The test and development environment need a MyS
 use with no password.
 
 Database names:
-
+    
 * test: massive_mailer_test (for cucumber tests) massive_mailer_unittest (for junit tests)
 * development: massive_mailer_development
 * production: massive_mailer_production
