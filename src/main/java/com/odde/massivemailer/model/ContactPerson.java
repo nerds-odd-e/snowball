@@ -3,10 +3,12 @@ package com.odde.massivemailer.model;
 import com.odde.massivemailer.model.validator.UniquenessValidator;
 import com.odde.massivemailer.service.LocationProviderService;
 import com.odde.massivemailer.service.exception.GeoServiceException;
+import com.odde.massivemailer.util.DateUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.annotations.Table;
 
+import java.time.LocalDate;
 import java.util.*;
 
 
@@ -26,6 +28,9 @@ public class ContactPerson extends ApplicationModel {
     public static final String DATE_SENT = "date_sent";
     public static final String LONGITUDE = "Longitude";
     public static final String LATITUDE = "Latitude";
+    public static final String CONSENT_REQUEST_DATE = "consent_request_date";
+    public static final String CONSENT_RECEIVED_DATE = "consent_received_date";
+
 
     public Double getLatitude() {
         return getDoubleAttribute(LATITUDE);
@@ -224,5 +229,21 @@ public class ContactPerson extends ApplicationModel {
 
     public Object getSentDate() {
         return get("date_sent");
+    }
+
+    public void setConsentRequestDate(LocalDate requestDate) {
+        set(CONSENT_REQUEST_DATE, DateUtil.asDate(requestDate));
+    }
+
+    public void setConsentReceivedDate(LocalDate receivedDate) {
+        set(CONSENT_RECEIVED_DATE, DateUtil.asDate(receivedDate));
+    }
+
+    public LocalDate getConsentRequestDate() {
+        return DateUtil.asLocalDate((Date)get(CONSENT_REQUEST_DATE));
+    }
+
+    public LocalDate getConsentReceivedDate() {
+        return DateUtil.asLocalDate((Date)get(CONSENT_RECEIVED_DATE));
     }
 }
