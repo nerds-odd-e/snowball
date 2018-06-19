@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS sent_mail_visits;
+DROP TABLE IF EXISTS sent_mails;
 
 CREATE TABLE IF NOT EXISTS sent_mails (
     id              INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
