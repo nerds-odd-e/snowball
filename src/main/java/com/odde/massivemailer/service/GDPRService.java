@@ -7,27 +7,30 @@ import com.odde.massivemailer.model.Mail;
 public class GDPRService {
 
     private MailService mailService;
+    private TemplateService templateService;
 
-    public GDPRService(MailService mailService) {
+    public GDPRService(MailService mailService, TemplateService templateService) {
         this.mailService = mailService;
+        this.templateService = templateService;
     }
 
     public void sendConsentRequestEmail() {
-        ContactPerson.getContactsWithoutConsentRequest()
+        ContactPerson.getContactsWithoutConsentRequest().stream()
+                .map(this::makeConsentRequestMail)
                 .forEach(this::sendConsentRequestEmail);
     }
 
-    private void sendConsentRequestEmail(ContactPerson contactPerson) {
-        Mail mail = makeConsentRequestMail(contactPerson);
-
+    private void sendConsentRequestEmail(Mail mail) {
         try {
             mailService.send(mail);
         } catch (EmailException e) {
-            throw new RuntimeException("Cannot send email to " + contactPerson.getEmail(), e);
+            throw new RuntimeException("Cannot send email to " + mail.getReceipts(), e);
         }
     }
 
     private Mail makeConsentRequestMail(ContactPerson contactPerson) {
-        return new Mail();
+        // TODO:
+        String content = templateService.applyTemplate("", null);
+        return Mail.createConsentRequestEmail(content, contactPerson.getEmail());
     }
 }

@@ -24,7 +24,8 @@ import static org.mockito.Mockito.times;
 public class GDPRServiceTest {
 
     MailService mockMailService = Mockito.mock(MailService.class);
-    GDPRService gdprService = new GDPRService(mockMailService);
+    TemplateService templateService = Mockito.mock(TemplateService.class);
+    GDPRService gdprService = new GDPRService(mockMailService, templateService);
 
     ArgumentCaptor<Mail> mailArgumentCaptor;
 

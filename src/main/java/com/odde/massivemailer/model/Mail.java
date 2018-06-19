@@ -46,6 +46,12 @@ public class Mail {
         return mail;
     }
 
+    public static Mail createConsentRequestEmail(String content, String email) {
+        Mail mail = new Mail(System.currentTimeMillis(), "Consent Request", content);
+        mail.setReceipts(Collections.singletonList(email));
+        return mail;
+    }
+
     public List<String> getReceipts() {
         return receipts;
     }
