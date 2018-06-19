@@ -1,14 +1,15 @@
 package com.odde.massivemailer.model;
 
-import static org.junit.Assert.*;
-
 import com.odde.TestWithDB;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 
-import java.sql.Timestamp;
+import java.time.LocalDate;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(TestWithDB.class)
 public class ContactPersonTest {
@@ -96,6 +97,26 @@ public class ContactPersonTest {
 			ContactPerson personInDB =CreateContactInDB(person);
 			assertNotNull(personInDB.getLatitude());
 			assertNotNull(personInDB.getLongitude());
+	}
+
+	@Test
+	public void testConsentReqAndReceivedIsSaved() throws Exception {
+		String name = "name";
+		String email = "email@abc.com";
+		String lastname = "lastname";
+		String company = "myCompany";
+		String location = "Singapore/Singapore";
+		ContactPerson person = new ContactPerson(name, email, lastname, company, location);
+		LocalDate requestDate = LocalDate.of(2018, 6, 18);
+		LocalDate receivedDate = LocalDate.of(2018, 6, 20);
+
+		person.setConsentRequestDate(requestDate);
+		person.setConsentReceivedDate(receivedDate);
+
+		ContactPerson personInDB = CreateContactInDB(person);
+
+		assertEquals(requestDate, personInDB.getConsentRequestDate());
+		assertEquals(receivedDate, personInDB.getConsentReceivedDate());
 	}
 
 	private ContactPerson CreateContactInDB(ContactPerson person) throws Exception {

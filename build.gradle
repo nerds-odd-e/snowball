@@ -31,6 +31,7 @@ ext {
     seleniumVersion = '3.7.1'
     cucumberJvmVersion = '1.2.4'
     chromeDriverVersion = '2.24'
+    assertJVersion = "3.10.0"
 
     ciBuild = System.getenv('SNAP_CI')
 }
@@ -173,6 +174,7 @@ dependencies {
     testCompile "info.cukes:cucumber-core:$cucumberJvmVersion"
     testCompile "info.cukes:cucumber-java:$cucumberJvmVersion"
     testCompile "info.cukes:cucumber-junit:$cucumberJvmVersion"
+    testCompile "org.assertj:assertj-core:$assertJVersion"
     compile 'org.flywaydb:flyway-core:3.2.1'
     testCompile 'com.github.detro:ghostdriver:2.1.0'
 
