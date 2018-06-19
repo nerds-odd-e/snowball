@@ -51,6 +51,9 @@
                 <li><a id="emailtracking" href="email_tracking.jsp"><span
                         class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                         Email Tracking</a></li>
+                <li><a id="GDPR" href="gdpr.jsp"><span
+                        class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        GDPR</a></li>
             </ul>
         </div>
     <!-- /.navbar-collapse -->

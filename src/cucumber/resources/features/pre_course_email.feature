@@ -4,7 +4,6 @@ Feature: send pre-course mail
   Background:
     Given "student@odd-e.com" which in "China" and "Chengdu" is a contact already
 
-    @now
   Scenario Outline: previewing and sending precourse email
     Given there is a course starting from "2017-05-17"
     And there is a student with email "<student emails>" loaded for this course
