@@ -11,7 +11,6 @@ import steps.site.MassiveMailerSite;
 
 import static junit.framework.TestCase.assertTrue;
 
-@RunWith(Cucumber.class)
 public class GDPRSteps {
     private MassiveMailerSite site = new MassiveMailerSite();
     private WebDriverWrapper driver = site.getDriver();
