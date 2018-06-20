@@ -17,7 +17,6 @@ Feature: Add Contact by Batch
     And the contact should be updated with "<country>"
     And the contact should be updated with "<city>"
 
-
     Examples:
       | email           | name | last name | company |   city   | country     |
       | user1@odd-e.com | john |    smith  | odd-e   |  Chengdu | China       |

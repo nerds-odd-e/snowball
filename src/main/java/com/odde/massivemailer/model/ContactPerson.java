@@ -90,43 +90,26 @@ public class ContactPerson extends ApplicationModel {
         return where(LOCATION + "<>''");
     }
 
-    public static boolean createContact(String city, String country, String email) throws GeoServiceException {
-        ContactPerson contact = getContactPerson(city, country, email);
+
+    public static boolean createContact(String city, String country, String email, String name, String lastname, String company) throws GeoServiceException {
+        ContactPerson contact = getContactPerson(city, country, email, name, lastname, company);
 
         return contact.saveIt();
     }
 
-    public static boolean createContact(String city, String country, String email, String name, String lastName, String company) throws GeoServiceException {
-        ContactPerson contact = getContactPerson(city, country, email);
-
-        return contact.saveIt();
-    }
-
-    private static ContactPerson getContactPerson(String city, String country, String email, String name, String lastName, String company) throws GeoServiceException {
-        LocationProviderService locationProviderService = new LocationProviderService();
+    private static ContactPerson getContactPerson(String city, String country, String email, String name, String lastname, String company) throws GeoServiceException {
+            LocationProviderService locationProviderService = new LocationProviderService();
         String location = country + "/" + city;
         Location storedLocation = locationProviderService.getLocationForName(location);
         if (storedLocation == null) {
             locationProviderService.addLat_LongToMemory(country, city);
         }
 
-        ContactPerson contact = new ContactPerson(name, email, lastName, company, location);
+        ContactPerson contact = new ContactPerson(name, email, lastname, company, location);
 
         return contact;
     }
 
-    private static ContactPerson getContactPerson(String city, String country, String email) throws GeoServiceException {
-        LocationProviderService locationProviderService = new LocationProviderService();
-        String location = country + "/" + city;
-        Location storedLocation = locationProviderService.getLocationForName(location);
-        if (storedLocation == null) {
-            locationProviderService.addLat_LongToMemory(country, city);
-        }
-
-        ContactPerson contact = new ContactPerson("todo name", email, "todo last name", "todo company", location);
-
-        return contact;
-    }
 
     public static boolean createContacts(List<ContactPerson> newContacts) {
         boolean returnValue;

@@ -47,7 +47,7 @@ public class UpcomingCourseNotificationSteps {
     @Given("^there are (\\d+)/(\\d+) courses and contacts in (.*?), (.*?)$")
     public void there_are_in_Singapore_Singapore(int courses, int contacts, String city, String country) throws Throwable {
         for (int i = 0; i < contacts; i++) {
-            assertTrue(ContactPerson.createContact(city, country, "test@test" + i + "_"+city+".com"));
+//            assertTrue(ContactPerson.createContact(city, country, "test@test" + i + "_"+city+".com"));
         }
 
         for (int i = 0; i < courses; i++) {

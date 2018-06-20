@@ -63,6 +63,9 @@ public class ContactsControllerTest {
 
     @Test
     public void addNewContact() throws Exception {
+        request.setParameter("company", "odd-e");
+        request.setParameter("lastname", "Smith");
+        request.setParameter("name", "Mark");
         request.setParameter("email", "newbie@gmail.com");
         request.setParameter("country", "Singapore");
         request.setParameter("city", "Singapore");
@@ -70,4 +73,5 @@ public class ContactsControllerTest {
 
         assertEquals("contactlist.jsp?status=success&msg=Add contact successfully", response.getRedirectedUrl());
     }
+
 }

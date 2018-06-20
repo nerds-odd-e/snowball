@@ -32,7 +32,7 @@ public class GDPRServiceTest {
     @Test
     public void should_invoke_send_for_contact_without_consent_requested_date() throws EmailException, GeoServiceException {
         ContactPerson.deleteAll();
-        ContactPerson.createContact("SG", "SG", "abc1@email.com");
+        ContactPerson.createContact("SG", "SG", "abc1@email.com", "john","doe","odde");
 
         ContactPerson contactPerson1 = new ContactPerson("SG", "SG", "abc4@email.com");
         contactPerson1.setConsentSend(LocalDate.now());
