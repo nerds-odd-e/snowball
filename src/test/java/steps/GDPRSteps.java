@@ -4,12 +4,14 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import cucumber.api.junit.Cucumber;
+import org.junit.runner.RunWith;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
 import static junit.framework.TestCase.assertTrue;
 
-
+@RunWith(Cucumber.class)
 public class GDPRSteps {
     private MassiveMailerSite site = new MassiveMailerSite();
     private WebDriverWrapper driver = site.getDriver();
