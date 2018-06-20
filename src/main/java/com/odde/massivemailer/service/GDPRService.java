@@ -3,7 +3,6 @@ package com.odde.massivemailer.service;
 import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Mail;
-import edu.emory.mathcs.backport.java.util.Collections;
 
 public class GDPRService {
 
@@ -30,7 +29,7 @@ public class GDPRService {
     }
 
     private Mail makeConsentRequestMail(ContactPerson contactPerson) {
-        String content = templateService.createConsentEmailContent(Collections.emptyMap());
+        String content = templateService.createConsentEmailContent(contactPerson);
         return Mail.createConsentRequestEmail(content, contactPerson.getEmail());
     }
 }
