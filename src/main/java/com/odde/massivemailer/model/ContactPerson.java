@@ -267,4 +267,19 @@ public class ContactPerson extends ApplicationModel {
     public static LazyList<ContactPerson> getContactsWithoutConsentRequest() {
         return where(CONSENT_SENT + " is null");
     }
+
+    @Override
+    public boolean equals(Object o) {
+        ContactPerson cp = (ContactPerson)o;
+        return Objects.equals(getName(),cp.getName())
+                && Objects.equals(getEmail(),cp.getEmail())
+                && Objects.equals(getLastname(),cp.getLastname())
+                && Objects.equals(getCompany(),cp.getCompany())
+                && Objects.equals(getLocation(),cp.getLocation());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getAttributes());
+    }
 }
