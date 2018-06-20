@@ -14,7 +14,7 @@ public class GDPRController extends AppController {
     private static final long serialVersionUID = 1L;
 
     private TemplateService templateService = new TemplateService();
-    private GDPRService gdprService = new GDPRService(mailService, templateService);
+    private GDPRService gdprService = new GDPRService(getMailService(), templateService);
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         gdprService.sendConsentRequestEmail();

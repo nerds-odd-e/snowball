@@ -3,6 +3,7 @@ package com.odde.massivemailer.service;
 import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Mail;
+import com.odde.massivemailer.model.SentMail;
 
 public class GDPRService {
 
@@ -22,6 +23,8 @@ public class GDPRService {
 
     private void sendConsentRequestEmail(Mail mail) {
         try {
+            SentMail sentMail = mail.asSentMail().saveAll();
+            mail.setSentMail(sentMail);
             mailService.send(mail);
         } catch (EmailException e) {
             throw new RuntimeException("Cannot send email to " + mail.getReceipts(), e);
