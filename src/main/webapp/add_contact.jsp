@@ -52,6 +52,34 @@
 										</div>
 									</div>
 									<br> <br>
+
+									<div class="row">
+										<div class="col-lg-1">Name:</div>
+										<div class="col-lg-11">
+											<input type="text" class="form-control" name="name"
+												id="name">
+										</div>
+									</div>
+									<br> <br>
+
+									<div class="row">
+										<div class="col-lg-1">Last Name:</div>
+										<div class="col-lg-11">
+											<input type="text" class="form-control" name="lastName"
+												id="lastName">
+										</div>
+									</div>
+									<br> <br>
+
+									<div class="row">
+										<div class="col-lg-1">Company:</div>
+										<div class="col-lg-11">
+											<input type="text" class="form-control" name="company"
+												id="company">
+										</div>
+									</div>
+									<br> <br>
+
 									<div class="row">
 										<div class="col-lg-1">Country:</div>
 										<div class="col-lg-11">

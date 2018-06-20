@@ -5,10 +5,7 @@ import org.javalite.activejdbc.Model;
 import org.junit.Assert;
 import steps.driver.WebDriverFactory;
 import steps.driver.WebDriverWrapper;
-import steps.site.pages.AddContactPage;
-import steps.site.pages.CourseListPage;
-import steps.site.pages.EnrollParticipantPage;
-import steps.site.pages.ImagePage;
+import steps.site.pages.*;
 
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
@@ -30,6 +27,10 @@ public class MassiveMailerSite {
 
     public AddContactPage addContactPage() {
         return new AddContactPage(this);
+    }
+
+    public AddContactBatchPage addContactBatchPage(){
+        return new AddContactBatchPage(this);
     }
 
     public EnrollParticipantPage enrollParticipantPage() {

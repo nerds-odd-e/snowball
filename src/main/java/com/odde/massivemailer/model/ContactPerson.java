@@ -96,6 +96,25 @@ public class ContactPerson extends ApplicationModel {
         return contact.saveIt();
     }
 
+    public static boolean createContact(String city, String country, String email, String name, String lastName, String company) throws GeoServiceException {
+        ContactPerson contact = getContactPerson(city, country, email);
+
+        return contact.saveIt();
+    }
+
+    private static ContactPerson getContactPerson(String city, String country, String email, String name, String lastName, String company) throws GeoServiceException {
+        LocationProviderService locationProviderService = new LocationProviderService();
+        String location = country + "/" + city;
+        Location storedLocation = locationProviderService.getLocationForName(location);
+        if (storedLocation == null) {
+            locationProviderService.addLat_LongToMemory(country, city);
+        }
+
+        ContactPerson contact = new ContactPerson(name, email, lastName, company, location);
+
+        return contact;
+    }
+
     private static ContactPerson getContactPerson(String city, String country, String email) throws GeoServiceException {
         LocationProviderService locationProviderService = new LocationProviderService();
         String location = country + "/" + city;

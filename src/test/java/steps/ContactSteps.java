@@ -92,4 +92,23 @@ public class ContactSteps {
         pageShouldContain(email);
         pageShouldContain(location);
     }
+
+
+    @Given("^I am on the Add a contact page by batch and click on Upload Button$")
+    public void i_am_on_contact_page_batch_upload() throws Throwable {
+        site.visit( "add_contact_batch.jsp");
+        driver.clickButton("batchFile");
+    }
+
+    @When("^I upload a CSV file containing the contacts list$")
+    public void i_upload_a_csv_file() throws Throwable {
+        assertTrue(true);
+    }
+
+    @When("^System shows Add Contact Batch option$")
+    public void show_add_contact_batch() throws Throwable {
+        assertTrue(true);
+    }
+
+
 }
