@@ -271,7 +271,7 @@ public class ContactPerson extends ApplicationModel {
     @Override
     public boolean equals(Object o) {
         ContactPerson cp = (ContactPerson)o;
-        return Objects.equals(getName(),cp.getName())
+        return o != null && Objects.equals(getName(),cp.getName())
                 && Objects.equals(getEmail(),cp.getEmail())
                 && Objects.equals(getLastname(),cp.getLastname())
                 && Objects.equals(getCompany(),cp.getCompany())

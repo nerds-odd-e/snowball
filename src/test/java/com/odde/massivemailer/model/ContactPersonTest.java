@@ -174,14 +174,16 @@ public class ContactPersonTest {
 		ContactPerson contacts = new ContactPerson("Shailesh", "forshailesh@gmail.com", "Thakur", "CS", "Singapore/Singapore");
 		newContacts.add(contacts);
 		assertEquals(true, ContactPerson.createContacts(newContacts));
-		assertNotNull(ContactPerson.getContactByEmail("forshailesh@gmail.com").getId());
 
+	}
 
-		contacts = new ContactPerson("Bala", "balakg@gmail.com", "GovindRaj", "CS", "Singapore/Singapore");
+	@Test
+	public void test_create_contacts_should_create_same_details_that_was_requested() {
+		List<ContactPerson> newContacts = new ArrayList();
+		ContactPerson contacts = new ContactPerson("Bala", "balakg@gmail.com", "GovindRaj", "CS", "Singapore/Singapore");
 		newContacts.add(contacts);
-		assertEquals(true, ContactPerson.createContacts(newContacts));
+		ContactPerson.createContacts(newContacts);
 		assertTrue(contacts.equals(ContactPerson.getContactByEmail("balakg@gmail.com")));
 		assertFalse(contacts.equals(ContactPerson.getContactByEmail("forshailesh@gmail.com")));
-
 	}
 }
