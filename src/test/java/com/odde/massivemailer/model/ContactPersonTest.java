@@ -9,13 +9,11 @@ import org.junit.runner.RunWith;
 
 import java.time.LocalDate;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.Assert.*;
 
 @RunWith(TestWithDB.class)
 public class ContactPersonTest {
@@ -165,13 +163,13 @@ public class ContactPersonTest {
 	}
 
 	@Test
-	public void createContactsShouldReturnFalseIfItsEmptyList() {
+	public void test_create_contacts_should_return_false_If_EmptyList() {
 		List<ContactPerson> newContacts = new ArrayList<ContactPerson>();
 		assertEquals(false, ContactPerson.createContacts(newContacts));
 	}
 
 	@Test
-	public void createContactsShouldReturnTrueIfNotEmptyList() {
+	public void test_create_contacts_should_return_true_If_NotEmptyList() {
 		List<ContactPerson> newContacts = new ArrayList();
 		ContactPerson contacts = new ContactPerson("Shailesh", "forshailesh@gmail.com", "Thakur", "CS", "Singapore/Singapore");
 		newContacts.add(contacts);
@@ -182,6 +180,8 @@ public class ContactPersonTest {
 		contacts = new ContactPerson("Bala", "balakg@gmail.com", "GovindRaj", "CS", "Singapore/Singapore");
 		newContacts.add(contacts);
 		assertEquals(true, ContactPerson.createContacts(newContacts));
-		assertEquals("GovindRaj", ContactPerson.getContactByEmail("balakg@gmail.com").getLastname());
+		assertTrue(contacts.equals(ContactPerson.getContactByEmail("balakg@gmail.com")));
+		assertFalse(contacts.equals(ContactPerson.getContactByEmail("forshailesh@gmail.com")));
+
 	}
 }
