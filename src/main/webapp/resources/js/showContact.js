@@ -96,12 +96,13 @@ function showEditContactDetail(item)
 }
 
 function insertDataIntoContactModal(item){
+
     var location = item.attributes.location;
 
-    var positionOfslash = location.indexOf("/");
-    var country = location.substring(0, positionOfslash);
-    var city = location.substring(positionOfslash + 1);
-    
+    var positionOfslash = location.split("/");
+    var country = positionOfslash[0];
+    var city = positionOfslash[1];
+
 	$('#name').val(item.attributes.firstname);
 	$('#lastname').val(item.attributes.lastname);
 	$('#company').val(item.attributes.company);
