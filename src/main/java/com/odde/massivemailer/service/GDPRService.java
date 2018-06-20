@@ -5,11 +5,6 @@ import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Mail;
 import edu.emory.mathcs.backport.java.util.Collections;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-
-import static com.odde.massivemailer.template.TemplateProvider.GDPR_TEMPLATE;
-
 public class GDPRService {
 
     private MailService mailService;
@@ -35,13 +30,7 @@ public class GDPRService {
     }
 
     private Mail makeConsentRequestMail(ContactPerson contactPerson) {
-        String content = null;
-        try {
-            content = templateService.applyTemplate(GDPR_TEMPLATE, Collections.emptyMap());
-        } catch (IOException | URISyntaxException e) {
-            throw new RuntimeException("Template processing failed.", e);
-        }
-
+        String content = templateService.createConsentEmailContent(Collections.emptyMap());
         return Mail.createConsentRequestEmail(content, contactPerson.getEmail());
     }
 }

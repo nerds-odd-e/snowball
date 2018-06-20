@@ -1,15 +1,15 @@
 package com.odde.massivemailer.template;
 
-import org.junit.Assert;
+import freemarker.template.Template;
 import org.junit.Test;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class TemplateProviderTest {
+
     @Test
-    public  void getsHtmlTemplateWhenProvidedTheTemplateName() throws IOException, URISyntaxException {
-        String templateBody  = TemplateProvider.GDPR_TEMPLATE.getTemplate();
-        Assert.assertTrue(templateBody.length() > 1);
+    public void createFreemarkTemplateForGDPRConsent() {
+        Template template = TemplateProvider.getConsentTemplate();
+        assertThat(template.getName()).isEqualTo("template/GDPRConsent.ftl");
     }
 }
