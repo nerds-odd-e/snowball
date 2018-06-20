@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.util.Collections;
 import java.util.Map;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class TemplateServiceTest {
@@ -24,7 +25,6 @@ public class TemplateServiceTest {
         Map<String, Object> parameter = Collections.singletonMap("firstName", name);
 
         String resolvedTemplate  = templateService.applyTemplate(TemplateProvider.GDPR_TEMPLATE, parameter);
-
         assertTrue("GDPR_TEMPLATE should contain the first name of receipt.", resolvedTemplate.contains(name));
     }
 }

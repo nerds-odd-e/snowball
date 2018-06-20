@@ -1,7 +1,7 @@
 <html>
 	<body>
 		<p>
-			Dear ${firstName}
+			Dear ${firstName!""}
 			
 			As you may have heard, the new EU data privacy protection law has been introduced. To keep pace with this law we need to obtain your consent to  remain in contact with you. Please click on the link below to confirm your consent.
 

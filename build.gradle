@@ -151,7 +151,7 @@ if('test' in project.gradle.startParameter.taskNames) {
 }
 
 dependencies {
-
+    compile group: 'org.freemarker', name: 'freemarker', version: '2.3.28'
     compile group: 'com.sun.mail', name: 'javax.mail', version: '1.5.4'
     compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.8.11.2'
     compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.6'
