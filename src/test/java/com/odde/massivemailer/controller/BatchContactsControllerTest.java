@@ -30,7 +30,7 @@ public class BatchContactsControllerTest {
         request.setContent(contactPayload.getBytes());
         controller.doPost(request, response);
 
-        assertThat(response.getRedirectedUrl(), is("batchContacts.jsp?status=success&msg=Batch add contacts successfully"));
+        assertThat(response.getRedirectedUrl(), is("add_contact_batch.jsp"));
     }
 
 }

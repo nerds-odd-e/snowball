@@ -16,8 +16,8 @@ public class BatchContactsController extends AppController {
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String resultMsg = "";
-        if (req.getContentLength()>0) {
-            resultMsg = "batchContacts.jsp?status=success&msg=Batch add contacts successfully";
+        if (req.getContentLength() > 0) {
+            resultMsg = "add_contact_batch.jsp";
         }
         resp.sendRedirect(resultMsg);
     }

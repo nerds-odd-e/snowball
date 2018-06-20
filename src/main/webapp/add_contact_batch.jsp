@@ -23,9 +23,7 @@
 <body>
         <jsp:include page="ui_common.jsp" />
 		<div id="page-wrapper">
-			<form name="addContact" id="addContact" method="post"
-				action="contacts">
-
+			<form name="batchContacts" id="batchContacts" method="post" action="batchContacts">
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
@@ -44,14 +42,21 @@
 								</div>
 								<div class="panel-body">
                                 <div class="row">
-                                    <input type="file" name="myfile" id="batchFile" onChange="fileInputHandler()" accept=".csv"/>
+                                    <input type="file" name="myfile" id="batchFile" accept=".csv"/>
+                                    <input type="text" name="data" id="data" style="display:none"/>
+								</div>
 								</div>
 
+							<div id="conflictedContacts">
 
-								</div>
+							</div>
+
+							<div id="contacts">
+
 							</div>
 						</div>
 					</div>
+					</form>
 				</div>
 
 			</form>
@@ -62,15 +67,6 @@
 	src="resources/lib/bootstrap/js/jquery.js"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="resources/js/addContact.js"></script>
-<script type="text/javascript" src="resources/js/populateCountriesDropdown.js"></script>
-<script type="text/javascript">
-    function fileInputHandler(){
-    var batchContent = document.getElementById("batchFile").files[0];
-
-       var reader = new FileReader();
-      reader.readAsText(batchContent,'ISO-8559-1');
-
-    }
+<script type="text/javascript" src="resources/js/addContactBatch.js"></script>
 </script>
 </html>
