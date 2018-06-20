@@ -65,8 +65,8 @@
 									<div class="row">
 										<div class="col-lg-1">Last Name:</div>
 										<div class="col-lg-11">
-											<input type="text" class="form-control" name="lastName"
-												id="lastName">
+											<input type="text" class="form-control" name="lastname"
+												id="lastname">
 										</div>
 									</div>
 									<br> <br>
