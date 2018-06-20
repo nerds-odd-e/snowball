@@ -13,6 +13,6 @@ Feature: Obtain consent by email
     When Administrator wants to send consent email
     And Constant email is created and sent
 
-    Then
-    And User is marked consent recived
+
+    Then User is marked consent recived
 
