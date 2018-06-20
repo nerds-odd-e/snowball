@@ -181,6 +181,7 @@ public class ContactPersonTest {
 		newContacts.add(contacts);
 		assertEquals(true, ContactPerson.createContacts(newContacts));
 		assertTrue(contacts.equals(ContactPerson.getContactByEmail("balakg@gmail.com")));
+		assertFalse(contacts.equals(ContactPerson.getContactByEmail("forshailesh@gmail.com")));
 
 	}
 }
