@@ -4,14 +4,13 @@ import com.odde.massivemailer.service.GMailService;
 import com.odde.massivemailer.service.MailService;
 import com.odde.massivemailer.service.MockMailService;
 import com.odde.massivemailer.service.SMTPConfiguration;
-import org.javalite.activejdbc.Configuration;
-import org.javalite.activejdbc.Registry;
 
-import javax.servlet.ServletContext;
+import javax.mail.Session;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.Properties;
 
 public class AppController extends HttpServlet {
     public static final String EMAIL_PASSWORD = "MM_EMAIL_PASSWORD";
@@ -45,9 +44,17 @@ public class AppController extends HttpServlet {
         MailService ms = new MockMailService();
         if (! isMailServiceMocked()) {
             SMTPConfiguration config = new SMTPConfiguration(System.getenv("MM_EMAIL_USERID"), System.getenv(EMAIL_PASSWORD), SMTP_ADDR, PORT);
-            ms = new GMailService(config);
+            final Session mailSession = createMailSession();
+            ms = new GMailService(config, mailSession);
         }
         return ms;
+    }
+
+    public Session createMailSession() {
+        Properties props = System.getProperties();
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.auth", "true");
+        return Session.getDefaultInstance(props);
     }
 
     private boolean isMailServiceMocked() {

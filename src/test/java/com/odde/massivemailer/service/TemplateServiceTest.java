@@ -1,11 +1,14 @@
 package com.odde.massivemailer.service;
 
+import com.odde.TestWithDB;
 import com.odde.massivemailer.model.ContactPerson;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertTrue;
 
+@RunWith(TestWithDB.class)
 public class TemplateServiceTest {
 
     @Test

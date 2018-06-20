@@ -5,6 +5,9 @@ import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.model.SentMail;
 
+import java.util.Collection;
+import java.util.Collections;
+
 public class GDPRService {
 
     private MailService mailService;
@@ -38,5 +41,9 @@ public class GDPRService {
 
     public void processGDPRConsentEmails() {
 
+    }
+
+    public Collection<Mail> getEmails() {
+        return Collections.emptyList();
     }
 }

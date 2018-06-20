@@ -12,7 +12,11 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
+import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.Mockito.times;
 
 @RunWith(TestWithDB.class)
@@ -40,7 +44,7 @@ public class GDPRServiceTest {
 
         gdprService.sendConsentRequestEmail();
         Mockito.verify(mockMailService, times(1)).send(Mockito.any(Mail.class));
-   }
+    }
 
     @Test
     public void should_NOT_invoke_send_contact_with_consent_requested_date() throws EmailException, GeoServiceException {
@@ -52,4 +56,16 @@ public class GDPRServiceTest {
         gdprService.sendConsentRequestEmail();
         Mockito.verify(mockMailService, times(0)).send(Mockito.any(Mail.class));
     }
+
+    @Test
+    public void getEmailTest() {
+        final List<Mail> mockEmails = new ArrayList<>();
+        mockEmails.add(new Mail());
+
+        final Collection<Mail> emails = gdprService.getEmails();
+        assertThat(emails).isEqualTo(mockEmails);
+    }
+
+}
+
 }
