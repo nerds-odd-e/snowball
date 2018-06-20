@@ -32,4 +32,8 @@ public class GDPRService {
         String content = templateService.createConsentEmailContent(contactPerson);
         return Mail.createConsentRequestEmail(content, contactPerson.getEmail());
     }
+
+    public void processGDPRConsentEmails() {
+
+    }
 }
