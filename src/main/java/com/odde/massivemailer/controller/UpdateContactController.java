@@ -22,6 +22,7 @@ public class UpdateContactController extends HttpServlet {
         String city = req.getParameter("city");
         String country = req.getParameter("country");
         String location = country + "/" + city;
+
         locationProviderService.cacheLocation(city, country, location);
 
         if (contactPerson != null) {

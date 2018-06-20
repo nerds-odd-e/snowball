@@ -96,11 +96,17 @@ function showEditContactDetail(item)
 }
 
 function insertDataIntoContactModal(item){
+    var location = item.attributes.location;
 
+    var positionOfslash = location.indexOf("/");
+    var country = location.substring(0, positionOfslash);
+    var city = location.substring(positionOfslash + 1);
+    
 	$('#name').val(item.attributes.firstname);
 	$('#lastname').val(item.attributes.lastname);
 	$('#company').val(item.attributes.company);
-	$('#locationdrp').val(item.attributes.location);
+	$('#countrydrp').val(country);
+	$('#city').val(city);
 	$('#email').val(item.attributes.email);
 	$('#email_label').text(item.attributes.email);
 }
