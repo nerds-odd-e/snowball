@@ -170,20 +170,29 @@ public class ContactPersonTest {
 
 	@Test
 	public void test_create_contacts_should_return_true_If_NotEmptyList() {
-		List<ContactPerson> newContacts = new ArrayList();
-		ContactPerson contacts = new ContactPerson("Shailesh", "forshailesh@gmail.com", "Thakur", "CS", "Singapore/Singapore");
-		newContacts.add(contacts);
+		List<ContactPerson> newContacts = getContactPeopleList("Shailesh", "forshailesh@gmail.com", "Thakur", "CS", "Singapore/Singapore");
 		assertEquals(true, ContactPerson.createContacts(newContacts));
 
 	}
 
 	@Test
 	public void test_create_contacts_should_create_same_details_that_was_requested() {
-		List<ContactPerson> newContacts = new ArrayList();
-		ContactPerson contacts = new ContactPerson("Bala", "balakg@gmail.com", "GovindRaj", "CS", "Singapore/Singapore");
-		newContacts.add(contacts);
+		List<ContactPerson> newContacts = getContactPeopleList("Bala", "balakg@gmail.com", "GovindRaj", "CS", "Singapore/Singapore");
 		ContactPerson.createContacts(newContacts);
-		assertTrue(contacts.equals(ContactPerson.getContactByEmail("balakg@gmail.com")));
-		assertFalse(contacts.equals(ContactPerson.getContactByEmail("forshailesh@gmail.com")));
+
+		assertTrue(isEquals(newContacts, "balakg@gmail.com"));
+		assertFalse(isEquals(newContacts, "forshailesh@gmail.com"));
 	}
+
+	private boolean isEquals(List<ContactPerson> newContacts, String email) {
+		return newContacts.get(0).equals(ContactPerson.getContactByEmail(email));
+	}
+
+	private List<ContactPerson> getContactPeopleList(String name, String email, String lastname, String company,String location) {
+		List<ContactPerson> newContacts = new ArrayList();
+		ContactPerson contacts = new ContactPerson(name, email, lastname, company, location);
+		newContacts.add(contacts);
+		return newContacts;
+	}
+
 }
