@@ -1,15 +1,9 @@
 package com.odde.massivemailer.controller;
 
-import com.odde.massivemailer.exception.EmailException;
-import com.odde.massivemailer.model.ContactPerson;
-import com.odde.massivemailer.model.Mail;
-import com.odde.massivemailer.serialiser.AppGson;
 import com.odde.massivemailer.service.GDPRService;
 import com.odde.massivemailer.service.TemplateService;
-import com.odde.massivemailer.template.TemplateProvider;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
