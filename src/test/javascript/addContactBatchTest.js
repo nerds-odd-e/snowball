@@ -15,7 +15,7 @@ describe('fileInputHandler function', function(){
 //                  size: 44320,
 //                  type: "image/png",
 //                });
-          	    document.getElementById("batchFile").files[0] = file;
+//          	    document.getElementById("batchFile").files[0] = file;
           //fileInputHandler()
      	  //expect(document.getElementById("batchFile").value).toBe("");
         });
