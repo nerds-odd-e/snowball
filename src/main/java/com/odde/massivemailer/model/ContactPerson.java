@@ -111,16 +111,11 @@ public class ContactPerson extends ApplicationModel {
     }
 
 
-    public static boolean createContacts(List<ContactPerson> newContacts) {
-
-        if(!newContacts.isEmpty()) {
-            for(int i = 0; i < newContacts.size(); i++) {
-                ContactPerson contact = newContacts.get(i);
-                contact.saveIt();
-            }
-            return true;
+    public static void createContacts(List<ContactPerson> newContacts) {
+        for(int i = 0; i < newContacts.size(); i++) {
+            ContactPerson contact = newContacts.get(i);
+            contact.saveIt();
         }
-        return false;
     }
 
     public String getName() {

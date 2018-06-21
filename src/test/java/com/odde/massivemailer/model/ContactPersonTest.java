@@ -163,19 +163,6 @@ public class ContactPersonTest {
 	}
 
 	@Test
-	public void test_create_contacts_should_return_false_If_EmptyList() {
-		List<ContactPerson> newContacts = new ArrayList<ContactPerson>();
-		assertEquals(false, ContactPerson.createContacts(newContacts));
-	}
-
-	@Test
-	public void test_create_contacts_should_return_true_If_NotEmptyList() {
-		List<ContactPerson> newContacts = getContactPeopleList("Shailesh", "forshailesh@gmail.com", "Thakur", "CS", "Singapore/Singapore");
-		assertEquals(true, ContactPerson.createContacts(newContacts));
-
-	}
-
-	@Test
 	public void test_create_contacts_should_create_same_details_that_was_requested() {
 		List<ContactPerson> newContacts = getContactPeopleList("Bala", "balakg@gmail.com", "GovindRaj", "CS", "Singapore/Singapore");
 		ContactPerson.createContacts(newContacts);
