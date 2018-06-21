@@ -91,4 +91,5 @@ public class Location {
     public boolean IsNear(Location geoCoordinate) {
         return this.distanceFrom(geoCoordinate) <= CLOSE_BY_DISTANCE;
     }
+
 }

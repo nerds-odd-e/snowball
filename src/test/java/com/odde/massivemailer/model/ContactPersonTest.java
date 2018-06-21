@@ -206,4 +206,14 @@ public class ContactPersonTest {
 		assertFalse(ContactPerson.isValidEmail("abc"));
 	}
 
+	@Test
+	public void	willReturnTrueIfCountryIsValid(){
+		assertTrue(ContactPerson.isValidCountry("singapore"));
+	}
+
+	@Test
+	public void	willReturnFalseIfCountryIsInvalid(){
+		assertFalse(ContactPerson.isValidCountry("Mingjia"));
+	}
+
 }
