@@ -112,18 +112,15 @@ public class ContactPerson extends ApplicationModel {
 
 
     public static boolean createContacts(List<ContactPerson> newContacts) {
-        boolean returnValue;
 
-        if(newContacts.isEmpty()) {
-            returnValue = false;
-        } else {
+        if(!newContacts.isEmpty()) {
             for(int i = 0; i < newContacts.size(); i++) {
                 ContactPerson contact = newContacts.get(i);
                 contact.saveIt();
             }
-            returnValue = true;
+            return true;
         }
-        return returnValue;
+        return false;
     }
 
     public String getName() {
