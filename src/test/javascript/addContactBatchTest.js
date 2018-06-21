@@ -1,4 +1,4 @@
-describe('fileInputHandler function', function(){
+describe('file upload function', function(){
      var markup = "<input type='file' id='batchFile' onChange='fileInputHandler()' accept='.csv'/>";
 
      beforeEach(function(){

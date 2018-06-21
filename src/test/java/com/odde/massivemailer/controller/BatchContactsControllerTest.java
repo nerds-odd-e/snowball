@@ -38,10 +38,29 @@ public class BatchContactsControllerTest {
     }
 
     @Test
-    public void willSaveContactPersonList() throws Exception {
+    public void willNotSaveContactPersonIfListIsEmpty() throws Exception {
+        request.setParameter("data",
+                "email,firstname,lastname,company,country,city");
+        controller.doPost(request, response);
+        assertThat(ContactPerson.count(), is(0L));
+    }
+
+    @Test
+    public void willSaveSingletonContactPersonList() throws Exception {
         request.setParameter("data",
                 "email,firstname,lastname,company,country,city;aaa@aaa.com,myname,mylastname,mycompany,singapore,mycity");
         controller.doPost(request, response);
         assertThat(ContactPerson.count(), is(1L));
     }
+
+    @Test
+    public void willSaveMultipleContactPersonList() throws Exception {
+        request.setParameter("data",
+                "email,firstname,lastname,company,country,city;" +
+                        "aaa@aaa.com,myname,mylastname,mycompany,singapore,mycity;" +
+                        "bbb@bbb.com,yourname,yourlastname,yourcompany,singapore,yourcity");
+        controller.doPost(request, response);
+        assertThat(ContactPerson.count(), is(2L));
+    }
+
 }
