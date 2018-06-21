@@ -25,6 +25,11 @@ public class ContactSteps {
         site.addContactPage().addContact(email, country, city);
     }
 
+    @When("^Add A Contact \"([^\"]*)\" at \"([^\"]*)\" and \"([^\"]*)\" for \"([^\"]*)\", \"([^\"]*)\" from \"([^\"]*)\"$")
+    public void addAContactWithAllInputs(String email, String country, String city, String name, String lastName, String company) throws Throwable {
+        site.addContactPage().addContactWithAllInput(email, country, city, name, lastName, company);
+    }
+
     @And("^Page Should Contain \"([^\"]*)\"$")
     public void pageShouldContain(String text) throws Throwable {
         driver.pageShouldContain(text);
@@ -94,21 +99,6 @@ public class ContactSteps {
     }
 
 
-    @Given("^I am on the Add a contact page by batch and click on Upload Button$")
-    public void i_am_on_contact_page_batch_upload() throws Throwable {
-        site.visit( "add_contact_batch.jsp");
-        driver.clickButton("batchFile");
-    }
-
-    @When("^I upload a CSV file containing the contacts list$")
-    public void i_upload_a_csv_file() throws Throwable {
-        assertTrue(true);
-    }
-
-    @When("^System shows Add Contact Batch option$")
-    public void show_add_contact_batch() throws Throwable {
-        assertTrue(true);
-    }
 
 
 }

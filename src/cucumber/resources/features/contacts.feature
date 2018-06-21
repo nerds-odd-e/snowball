@@ -9,17 +9,20 @@ Feature: Contacts
     And Page Should Fail
 
   Scenario Outline: Verify Add New Contact To Contact List with Country And City
-    When Add A Contact "<email>" at "<country>" and "<city>"
+    When Add A Contact "<email>" at "<country>" and "<city>" for "<name>", "<lastName>" from "<company>"
     Then Page Should Contain "<email>"
     And  Page Should Contain "<country>"
     And  Page Should Contain "<city>"
+    And  Page Should Contain "<name>"
+    And  Page Should Contain "<lastName>"
+    And  Page Should Contain "<company>"
     And Page Should Success
 
     Examples:
-      | email           | city    | country     |
-      | user1@odd-e.com | Chengdu | China       |
-      | user2@odd-e.com | Aigle   | Switzerland |
-      | user4@odd-e.com | Dubna   | Russia      |
+      | email           | city    | country     |  name |  lastName  | company |
+      | user1@odd-e.com | Chengdu | China       |  john |  smith     | odd-e   |
+      | user2@odd-e.com | Aigle   | Switzerland |  jane |  doe       | odd-e   |
+      | user4@odd-e.com | Dubna   | Russia      |  mark |  smith     | odd-e   |
 
   Scenario: Edit Location Information of Contact
     Given "terry@odd-e.com" which in "China" and "Chengdu" is a contact already
@@ -27,10 +30,18 @@ Feature: Contacts
     Then contact "terry@odd-e.com"'s locations should be "China/Chengdu"
 
   @developing
-  Scenario: Verify Add Contact Batch menu
-    Given I am on the Add a contact page by batch and click on Upload Button
-    When I upload a CSV file containing the contacts list
-    Then System shows Add Contact Batch option
+  Scenario: Verify Add Contact Batch
+    When I upload a valid CSV file containing
+      |coursename    | CSD-1         |
+      |duration      | 30            |
+      |country       | China         |
+      |city          | Chengdu       |
+      |startdate     | 2017-10-23    |
+      |address       | odd-e         |
+      |coursedetails | CSD training  |
+      |instructor    | Terry         |
+    Then I should see the
+
 
   @developing
   Scenario Outline: Update contact information if already exists in the system and all columns in DB is empty except email

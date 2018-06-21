@@ -10,6 +10,7 @@ public class AddContactPage {
     public AddContactPage(MassiveMailerSite massiveMailerSite) {
         site = massiveMailerSite;
         this.driver = site.getDriver();
+        site.visit("add_contact.jsp");
     }
 
     public void addContactWithLocationString(String email, String location) throws Throwable{
@@ -20,10 +21,16 @@ public class AddContactPage {
     }
 
     public void addContact(String email, String country, String city) throws Throwable{
-        site.visit("add_contact.jsp");
         driver.setTextField("email", email);
         driver.setDropdownValue("country", country);
         driver.setTextField("city", city);
         driver.clickButton("add_button");
+    }
+
+    public void addContactWithAllInput(String email, String country, String city, String name, String lastName, String company) throws Throwable{
+        driver.setTextField("name", name);
+        driver.setTextField("lastname", lastName);
+        driver.setTextField("company", company);
+        this.addContact(email,country,city);
     }
 }
