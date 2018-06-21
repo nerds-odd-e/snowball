@@ -1,6 +1,7 @@
 package com.odde.massivemailer.model;
 
 import com.odde.TestWithDB;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -163,14 +164,29 @@ public class ContactPersonTest {
 	}
 
 	@Test
-	public void test_create_contacts_should_create_same_details_that_was_requested() {
-		List<ContactPerson> newContacts = getContactPeopleList("Bala", "balakg@gmail.com", "GovindRaj", "CS", "Singapore/Singapore");
-		ContactPerson.createContacts(newContacts);
+	public void test_prepare_list_of_contacts_should_create_listof_contacts() {
 
-		assertTrue(isEquals(newContacts, "balakg@gmail.com"));
-		assertFalse(isEquals(newContacts, "forshailesh@gmail.com"));
+		String csvData = preparecsvDataForTest();
+
+		List<ContactPerson> contacts = ContactPerson.prepareContactsList(csvData);
+		assertEquals(1, contacts.size());
+
 	}
 
+	@Test
+	public void test_create_contacts_should_create_same_details_that_was_requested() {
+
+		String csvData = preparecsvDataForTest();
+		ContactPerson.createContacts(csvData);
+
+		List<ContactPerson> contacts = ContactPerson.prepareContactsList(csvData);
+
+		assertTrue(isEquals(contacts, "balakg@gmail.com"));
+		assertFalse(isEquals(contacts, "forshailesh@gmail.com"));
+
+	}
+
+<<<<<<< HEAD
     @Test
     public void testDeleteUser() {
         ContactPerson person = new ContactPerson("testPerson", "bla@bla.com", "TestPersonLastName La");
@@ -187,13 +203,15 @@ public class ContactPersonTest {
 
 	private boolean isEquals(List<ContactPerson> newContacts, String email) {
 		return newContacts.get(0).equals(ContactPerson.getContactByEmail(email));
+=======
+	private String preparecsvDataForTest() {
+		return "email,firstname,lastname,company,country,city;Bala,balakg@gmail.com,GovindRaj,CS,Singapore,Singapore";
+
+>>>>>>> refactored batch contact controller
 	}
 
-	private List<ContactPerson> getContactPeopleList(String name, String email, String lastname, String company,String location) {
-		List<ContactPerson> newContacts = new ArrayList();
-		ContactPerson contacts = new ContactPerson(name, email, lastname, company, location);
-		newContacts.add(contacts);
-		return newContacts;
+	private boolean isEquals(List<ContactPerson> newContacts, String email) {
+		return newContacts.get(0).equals(ContactPerson.getContactByEmail(email));
 	}
 
 }
