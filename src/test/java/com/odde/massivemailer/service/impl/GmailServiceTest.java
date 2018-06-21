@@ -11,6 +11,7 @@ import com.odde.massivemailer.service.MailService;
 import com.odde.massivemailer.service.SMTPConfiguration;
 import com.odde.massivemailer.util.NotificationUtil;
 import org.assertj.core.api.Assertions;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,11 +33,23 @@ public class GmailServiceTest {
 			"kit.sumate@gmail.com" };
 
 	private Session session;
+	private GreenMail greenMail;
+	private MailService gmailWithGreenMail;
 
 	@Before
 	public void setup() {
 		this.session = MailService.createMailSession();
+		greenMail= new GreenMail(new ServerSetup(3025, null, "smtp"));
+		greenMail.start();
+		SMTPConfiguration config = new SMTPConfiguration("fake@greenmail.com", "*******", "localhost", 3025);
+		gmailWithGreenMail = new GMailService(config, this.session);
 	}
+
+	@After
+	public void tearDown(){
+		greenMail.stop();
+	}
+
 	private Mail createEmail() {
 		Mail email = new Mail();
 		email.setContent("Hi Dude");
@@ -82,21 +95,15 @@ public class GmailServiceTest {
 	@Test
 	public void sendEmailViaGreenMailSMTP() throws EmailException, UnknownHostException {
 		//Arrange
-		GreenMail greenMail = new GreenMail(new ServerSetup(3025, null, "smtp"));
-		greenMail.start();
-		SMTPConfiguration config = new SMTPConfiguration("fake@greenmail.com", "*******", "localhost", 3025);
-
-        GMailService mailService = new GMailService(config, this.session);
-
 
         //Act
 		Mail mail = createEmail();
-		mailService.send(mail);
+		gmailWithGreenMail.send(mail);
 
 		//Assert
 		assertEquals("<html><body>Hi Dude<img height=\"42\" width=\"42\" src=\"http://"+InetAddress.getLocalHost().getHostAddress()+":8070/massive_mailer/resources/images/qrcode.png?token="+mail.getSentMail().getSentMailVisits().get(0).getId()+"\"></img></body></html>", GreenMailUtil.getBody(greenMail.getReceivedMessages()[0]));
 		assertEquals("<html><body>Hi Dude<img height=\"42\" width=\"42\" src=\"http://"+InetAddress.getLocalHost().getHostAddress()+":8070/massive_mailer/resources/images/qrcode.png?token="+mail.getSentMail().getSentMailVisits().get(1).getId()+"\"></img></body></html>", GreenMailUtil.getBody(greenMail.getReceivedMessages()[1]));
-		greenMail.stop();
+
 	}
 
 	@Test
@@ -106,5 +113,8 @@ public class GmailServiceTest {
 		List<Mail> unreadMails = mailService.readEmail(false);
 		Assertions.assertThat(unreadMails).isNotNull();
 	}
+
+
+
 
 }
