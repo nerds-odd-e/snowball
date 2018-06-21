@@ -17,6 +17,7 @@ public class BatchContactsController extends AppController {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String resultMsg = "add_contact_batch.jsp";
         String data = req.getParameter("data");
+        System.out.println("data :" + data);
 
         ContactPerson.createContacts(data);
 

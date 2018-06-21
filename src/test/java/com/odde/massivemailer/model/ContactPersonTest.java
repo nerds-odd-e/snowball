@@ -183,7 +183,7 @@ public class ContactPersonTest {
 		String csvData = preparecsvDataForTest();
 
 		List<ContactPerson> contacts = ContactPerson.prepareContactsList(csvData);
-		assertEquals(1, contacts.size());
+		assertEquals(2, contacts.size());
 
 	}
 
@@ -205,7 +205,7 @@ public class ContactPersonTest {
 	}
 
 	private String preparecsvDataForTest() {
-		return "email,firstname,lastname,company,country,city;Bala,balakg@gmail.com,GovindRaj,CS,Singapore,Singapore";
+		return "email,firstname,lastname,company,country,city;balakg@gmail.com,Bala,GovindRaj,CS,Singapore,Singapore;forshailesg@gmail.com,Shailesh,Thakur,CS,Singapore,Singapore";
 	}
 
 }

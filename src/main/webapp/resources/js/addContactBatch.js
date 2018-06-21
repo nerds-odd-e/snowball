@@ -17,6 +17,7 @@ function submitUploadData(){
 }
 
 function formatCsvData(value) {
-    var rows = value.replace('\n',';');
+    console.log(value);
+    var rows = value.replace(/\n/g,';');
     document.getElementById("data").value = rows;
 }
