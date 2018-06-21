@@ -39,6 +39,13 @@ public class ContactPerson extends ApplicationModel {
         return getDoubleAttribute(LONGITUDE);
     }
 
+    private static final int EMAIL_INDEX = 0;
+    private static final int FIRSTNAME_INDEX = 1;
+    private static final int LASTNAME_INDEX = 2;
+    private static final int COMPANY_INDEX = 3;
+    private static final int COUNTRY_INDEX = 4;
+    private static final int CITY_INDEX = 5;
+
     public Map<String, String> attributes = new HashMap<>();
 
     public ContactPerson() { }
@@ -111,11 +118,33 @@ public class ContactPerson extends ApplicationModel {
     }
 
 
-    public static void createContacts(List<ContactPerson> newContacts) {
-        for(int i = 0; i < newContacts.size(); i++) {
-            ContactPerson contact = newContacts.get(i);
+    public static void createContacts(String csvData) {
+
+        List<ContactPerson> contacts = prepareContactsList(csvData);
+
+        for(int i = 0; i < contacts.size(); i++) {
+            ContactPerson contact;
+            contact = contacts.get(i);
             contact.saveIt();
         }
+    }
+
+    public static List<ContactPerson> prepareContactsList(String csvData) {
+
+        String[] contactPersonList = csvData.split(";");
+        List<ContactPerson> contacts = new ArrayList<>();
+
+        for (int i = 1; i < contactPersonList.length; i++) {
+            String currentContact = contactPersonList[i];
+            String[] contactInformation = currentContact.split(",");
+            ContactPerson contactPerson = new ContactPerson(contactInformation[EMAIL_INDEX],
+                    contactInformation[FIRSTNAME_INDEX], contactInformation[LASTNAME_INDEX],
+                    contactInformation[COMPANY_INDEX],
+                    contactInformation[CITY_INDEX] + "/" + contactInformation[COUNTRY_INDEX]);
+            contacts.add(contactPerson);
+        }
+
+        return contacts;
     }
 
     public String getName() {
