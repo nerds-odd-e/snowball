@@ -68,4 +68,18 @@ public class GDPRServiceTest {
         assertThat(emails).isEqualTo(mockEmails);
     }
 
+    @Test
+    public void mailCanBeSentToContact() {
+        ContactPerson contactPerson = new ContactPerson("Terry", "terry@odde.com", "Tan");
+        contactPerson.setForgotten(false);
+        assertThat(gdprService.canContactReceiveEmail(contactPerson)).isTrue();
+    }
+
+    @Test
+    public void mailCanNotBeSentToContact() {
+        ContactPerson contactPerson = new ContactPerson("Terry", "terry@odde.com", "Tan");
+        contactPerson.setForgotten(true);
+        assertThat(gdprService.canContactReceiveEmail(contactPerson)).isFalse();
+    }
+
 }
