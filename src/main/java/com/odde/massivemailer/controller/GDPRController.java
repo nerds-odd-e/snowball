@@ -1,5 +1,6 @@
 package com.odde.massivemailer.controller;
 
+import com.odde.massivemailer.service.ConsentService;
 import com.odde.massivemailer.service.GDPRService;
 import com.odde.massivemailer.service.TemplateService;
 
@@ -14,7 +15,8 @@ public class GDPRController extends AppController {
     private static final long serialVersionUID = 1L;
 
     private TemplateService templateService = new TemplateService();
-    private GDPRService gdprService = new GDPRService(getMailService(), templateService);
+    private ConsentService consentService = new ConsentService();
+    private GDPRService gdprService = new GDPRService(getMailService(), templateService, consentService);
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         gdprService.sendConsentRequestEmail();

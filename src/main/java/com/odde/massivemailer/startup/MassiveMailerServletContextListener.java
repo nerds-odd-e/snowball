@@ -1,6 +1,7 @@
 package com.odde.massivemailer.startup;
 
 import com.odde.massivemailer.controller.SendMailController;
+import com.odde.massivemailer.service.MailService;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -15,7 +16,7 @@ public class MassiveMailerServletContextListener implements ServletContextListen
     public void contextInitialized(ServletContextEvent arg0) {
         System.out.println("ServletContextListener started");
         String emailUserID = System.getenv("MM_EMAIL_USERID");
-        String emailPassword = System.getenv(SendMailController.EMAIL_PASSWORD);
+        String emailPassword = System.getenv(MailService.EMAIL_PASSWORD);
 
         if(null == emailUserID || null == emailPassword){
             System.err.println("Necessary environment variable does not exist yet!");

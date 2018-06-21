@@ -7,21 +7,30 @@ import com.odde.massivemailer.model.SentMail;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.logging.Logger;
 
 public class GDPRService {
+    private final Logger logger = Logger.getLogger(GDPRService.class.getName());
 
     private MailService mailService;
     private TemplateService templateService;
-
-    public GDPRService(MailService mailService, TemplateService templateService) {
+    private ConsentService consentService;
+    public GDPRService(MailService mailService, TemplateService templateService, ConsentService consentService) {
         this.mailService = mailService;
         this.templateService = templateService;
+        this.consentService = consentService;
     }
 
     public void sendConsentRequestEmail() {
         ContactPerson.getContactsWithoutConsentRequest().stream()
+                .map(this::updateConsentRequestDate)
                 .map(this::makeConsentRequestMail)
                 .forEach(this::sendConsentRequestEmail);
+    }
+
+    private ContactPerson updateConsentRequestDate(ContactPerson contactPerson) {
+        this.consentService.updateConsentRequestDate(contactPerson);
+        return contactPerson;
     }
 
     private void sendConsentRequestEmail(Mail mail) {
@@ -40,7 +49,7 @@ public class GDPRService {
     }
 
     public void processGDPRConsentEmails() {
-
+        logger.info("Processing GDPR consent response emails.");
     }
 
     public Collection<Mail> getEmails() {

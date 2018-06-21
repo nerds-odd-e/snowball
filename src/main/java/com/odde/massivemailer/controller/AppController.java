@@ -13,9 +13,6 @@ import java.util.HashMap;
 import java.util.Properties;
 
 public class AppController extends HttpServlet {
-    public static final String EMAIL_PASSWORD = "MM_EMAIL_PASSWORD";
-    private static final String SMTP_ADDR = "smtp.gmail.com";
-    private static final int PORT = 587;
 
     protected MailService mailService;
 
@@ -34,31 +31,7 @@ public class AppController extends HttpServlet {
     }
 
     protected MailService getMailService() {
-        if (null == mailService) {
-            mailService = createMailService();
-        }
-        return mailService;
-    }
-
-    private MailService createMailService() {
-        MailService ms = new MockMailService();
-        if (! isMailServiceMocked()) {
-            SMTPConfiguration config = new SMTPConfiguration(System.getenv("MM_EMAIL_USERID"), System.getenv(EMAIL_PASSWORD), SMTP_ADDR, PORT);
-            final Session mailSession = createMailSession();
-            ms = new GMailService(config, mailSession);
-        }
-        return ms;
-    }
-
-    public Session createMailSession() {
-        Properties props = System.getProperties();
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.auth", "true");
-        return Session.getDefaultInstance(props);
-    }
-
-    private boolean isMailServiceMocked() {
-        return "test".equals(System.getProperty("active_env"));
+        return MailService.createMailService();
     }
 
     protected HashMap getParameterFromRequest(HttpServletRequest req, String[] reqFields) {
