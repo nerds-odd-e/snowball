@@ -1,5 +1,4 @@
 @developing
-@now
 Feature: The right to be forgoten
     Scenario: Delete contact upon a receiving request to be deleted
     Given Contact ivan@odde.com exists

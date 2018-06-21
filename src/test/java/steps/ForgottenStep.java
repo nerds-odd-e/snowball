@@ -1,16 +1,18 @@
 package steps;
 
+import com.odde.TestWithDB;
 import com.odde.massivemailer.model.ContactPerson;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
 import static org.junit.Assert.*;
-
+@RunWith(TestWithDB.class)
 public class ForgottenStep {
 
     private MassiveMailerSite site = new MassiveMailerSite();
@@ -32,10 +34,9 @@ public class ForgottenStep {
     public void ivan_odde_com_is_displayed_as_red_at_the_list_below() throws Throwable {
         driver.pageShouldContain("ivan@odde.com");
 
-        boolean existIvan = driver.findElements(By.className("forgotten_table"))
+        boolean existIvan = driver.findElements(By.id("forgotten_table"))
                 .stream()
-                .flatMap(it -> it.findElements(By.className("contact_email")).stream())
-                .filter(it -> it.getAttribute("class").contains("forgotten_item"))
+                .flatMap(it -> it.findElements(By.className("email-address")).stream())
                 .filter(it -> it.getText().contains("ivan@odde.com"))
                 .count() == 1;
         assertTrue("ivan@odde.com in the element with class 'contact_email', 'forgotten'", existIvan);
