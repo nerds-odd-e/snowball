@@ -26,7 +26,7 @@ public class BatchContactsValidatorController extends AppController {
     private static final long serialVersionUID = 1L;
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String resultMsg = "add_contact_batch_validation.jsp";
+        String resultMsg = "add_contact_batch.jsp";
         String data = req.getParameter("data");
         String[] rows = data.split(";");
         List<ContactPerson> contactPersonList = new ArrayList<>();

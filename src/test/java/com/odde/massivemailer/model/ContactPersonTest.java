@@ -196,4 +196,14 @@ public class ContactPersonTest {
 		return newContacts;
 	}
 
+	@Test
+	public void willReturnTrueIfEmailIsValid(){
+		assertTrue(ContactPerson.isValidEmail("abc@email.com"));
+	}
+
+	@Test
+	public void willReturnFalseIfEmailIsInvalid(){
+		assertFalse(ContactPerson.isValidEmail("abc"));
+	}
+
 }
