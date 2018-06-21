@@ -31,7 +31,10 @@ public class AppController extends HttpServlet {
     }
 
     protected MailService getMailService() {
-        return MailService.createMailService();
+        if (mailService == null) {
+            mailService = MailService.createMailService();
+        }
+        return mailService;
     }
 
     protected HashMap getParameterFromRequest(HttpServletRequest req, String[] reqFields) {
