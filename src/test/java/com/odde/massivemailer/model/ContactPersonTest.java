@@ -184,7 +184,6 @@ public class ContactPersonTest {
 
 		List<ContactPerson> contacts = ContactPerson.prepareContactsList(csvData);
 		assertEquals(2, contacts.size());
-
 	}
 
 	@Test
@@ -195,17 +194,18 @@ public class ContactPersonTest {
 
 		List<ContactPerson> contacts = ContactPerson.prepareContactsList(csvData);
 
+		//assertEquals(contacts.get(0).getEmail(), "balakg@gmail.com");
 		assertTrue(isEquals(contacts, "balakg@gmail.com"));
 		assertFalse(isEquals(contacts, "forshailesh@gmail.com"));
 
 	}
 
-	private boolean isEquals(List<ContactPerson> newContacts, String email) {
-		return newContacts.get(0).equals(ContactPerson.getContactByEmail(email));
-	}
-
 	private String preparecsvDataForTest() {
 		return "email,firstname,lastname,company,country,city;balakg@gmail.com,Bala,GovindRaj,CS,Singapore,Singapore;forshailesg@gmail.com,Shailesh,Thakur,CS,Singapore,Singapore";
+	}
+
+	private boolean isEquals(List<ContactPerson> newContacts, String email) {
+		return newContacts.get(0).equals(ContactPerson.getContactByEmail(email));
 	}
 
 }

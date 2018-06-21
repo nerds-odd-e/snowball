@@ -138,6 +138,7 @@ public class ContactPerson extends ApplicationModel {
         for (int i = 1; i < contactPersonList.length; i++) {
             String currentContact = contactPersonList[i];
             String[] contactInformation = currentContact.split(",");
+
             ContactPerson contactPerson = new ContactPerson(
                     contactInformation[FIRSTNAME_INDEX], contactInformation[EMAIL_INDEX],contactInformation[LASTNAME_INDEX],
                     contactInformation[COMPANY_INDEX],
