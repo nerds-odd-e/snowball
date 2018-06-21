@@ -208,4 +208,24 @@ public class ContactPersonTest {
 		return newContacts.get(0).equals(ContactPerson.getContactByEmail(email));
 	}
 
+	@Test
+	public void willReturnTrueIfEmailIsValid(){
+		assertTrue(ContactPerson.isValidEmail("abc@email.com"));
+	}
+
+	@Test
+	public void willReturnFalseIfEmailIsInvalid(){
+		assertFalse(ContactPerson.isValidEmail("abc"));
+	}
+
+	@Test
+	public void	willReturnTrueIfCountryIsValid(){
+		assertTrue(ContactPerson.isValidCountry("singapore"));
+	}
+
+	@Test
+	public void	willReturnFalseIfCountryIsInvalid(){
+		assertFalse(ContactPerson.isValidCountry("Mingjia"));
+	}
+
 }

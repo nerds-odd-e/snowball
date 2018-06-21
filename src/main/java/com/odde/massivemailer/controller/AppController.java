@@ -1,16 +1,11 @@
 package com.odde.massivemailer.controller;
 
-import com.odde.massivemailer.service.GMailService;
 import com.odde.massivemailer.service.MailService;
-import com.odde.massivemailer.service.MockMailService;
-import com.odde.massivemailer.service.SMTPConfiguration;
 
-import javax.mail.Session;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
-import java.util.Properties;
 
 public class AppController extends HttpServlet {
 

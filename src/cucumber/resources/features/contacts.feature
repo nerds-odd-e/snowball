@@ -31,13 +31,13 @@ Feature: Contacts
 
   @developing
   Scenario: Verify Add Contact Batch
-    Given the contact to be added does not exist in the DB
+    Given The contact to be added does not exist in the DB
     When I upload a valid CSV file
     Then I should see the message showing contacts are added successfully
 
   @developing
   Scenario Outline: Update contact information if already exists in the system
-    Given Contact for "<email>" exists in the system (Email only)
+    Given Contact for "<email>" exists in the system
     When I upload a valid CSV file with "<email>"
     Then the contact should be updated with "<name>"
     And the contact should be updated with "<lastname>"

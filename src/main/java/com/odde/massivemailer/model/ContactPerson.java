@@ -4,12 +4,18 @@ import com.odde.massivemailer.model.validator.UniquenessValidator;
 import com.odde.massivemailer.service.LocationProviderService;
 import com.odde.massivemailer.service.exception.GeoServiceException;
 import com.odde.massivemailer.util.DateUtil;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.annotations.Table;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 @Table("contact_people")
@@ -300,6 +306,32 @@ public class ContactPerson extends ApplicationModel {
 
     public static LazyList<ContactPerson> getContactsWithoutConsentRequest() {
         return where(CONSENT_SENT + " is null");
+    }
+
+    public static boolean isValidEmail(String email){
+        String emailPattern = "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+        Pattern p = Pattern.compile(emailPattern);
+        Matcher m = p.matcher(email);
+        return m.matches();
+    }
+
+    public static boolean isValidCountry(String country){
+        return validCountryList().contains(country.toLowerCase());
+    }
+
+    private static List<String> validCountryList(){
+        String csvFile = "src/main/resources/csv/countries.csv";
+        String line = "";
+        List<String> validCountries = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+            while ((line = br.readLine()) != null) {
+                validCountries.add(line.toLowerCase());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return validCountries;
     }
 
     @Override

@@ -1,30 +1,43 @@
 package com.odde.massivemailer.controller;
 
+import com.odde.massivemailer.exception.EmailException;
+import com.odde.massivemailer.model.ContactPerson;
+import com.odde.massivemailer.model.Mail;
+import com.odde.massivemailer.model.SentMail;
+import com.odde.massivemailer.service.GDPRService;
+import com.odde.massivemailer.startup.Universe;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.odde.massivemailer.exception.EmailException;
-import com.odde.massivemailer.model.ContactPerson;
-import com.odde.massivemailer.model.Mail;
-import com.odde.massivemailer.model.SentMail;
-import com.odde.massivemailer.service.MailService;
-
 @WebServlet("/sendMail")
 public class SendMailController extends AppController {
 
+    private volatile GDPRService gdprService;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        gdprService = Universe.gdprService();
+    }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+            throws IOException {
         try {
             Mail email = processRequest(req);
+
+            if (email.getReceipts().isEmpty()) {
+                return;
+            }
 
             SentMail sentMail = email.asSentMail().saveAll();
             email.setSentMail(sentMail);
@@ -53,7 +66,7 @@ public class SendMailController extends AppController {
             if (recipient.startsWith("company:")) {
 
                 String[] aaa = recipient.split(":");
-                String company = aaa[1].toString();
+                String company = aaa[1];
                 List<ContactPerson> contactList = getContactPersons(company);
                 if (contactList.isEmpty()) {
                     throw new SQLException();
@@ -62,9 +75,13 @@ public class SendMailController extends AppController {
                     recipientList.add(contactPerson.getEmail());
                 }
             } else {
-                recipientList.add(recipient);
+                ContactPerson contact = ContactPerson.getContactByEmail(recipient);
+                if (contact == null || gdprService.canContactReceiveEmail(contact)) {
+                    recipientList.add(recipient);
+                }
             }
         }
+
         email.setMessageId(System.currentTimeMillis());
         email.setContent(req.getParameter("content"));
         email.setSubject(req.getParameter("subject"));
@@ -74,7 +91,7 @@ public class SendMailController extends AppController {
         return email;
     }
 
-    private List<ContactPerson> getContactPersons(String company) throws SQLException {
+    private List<ContactPerson> getContactPersons(String company) {
         List<ContactPerson> contactList;
 
         company = company.replaceAll("\"", "");

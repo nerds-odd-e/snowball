@@ -7,6 +7,8 @@ import cucumber.api.java.en.When;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 
@@ -28,6 +30,36 @@ public class ContactSteps {
     @When("^Add A Contact \"([^\"]*)\" at \"([^\"]*)\" and \"([^\"]*)\" for \"([^\"]*)\", \"([^\"]*)\" from \"([^\"]*)\"$")
     public void addAContactWithAllInputs(String email, String country, String city, String name, String lastName, String company) throws Throwable {
         site.addContactPage().addContactWithAllInput(email, country, city, name, lastName, company);
+    }
+
+    @Given("^The contact to be added does not exist in the DB$")
+    public void aContactDoesNotExistInDB() {
+        assertTrue(true);
+    }
+
+    @Given("^Contact for \"([^\"]*)\" exists in the system$")
+    public void aContactAlreadyExistInDB(String email) {
+        assertFalse(email.isEmpty());
+    }
+
+    @When("^I upload a valid CSV file$")
+    public void uploadCSVFile() {
+        assertTrue(true);
+    }
+
+    @When("^I upload a valid CSV file with \"([^\"]*)\"$")
+    public void uploadCSVFileWithSpecificEmail(String email) {
+        assertFalse(email.isEmpty());
+    }
+
+    @Then("^the contact should be updated with \"([^\"]*)\"$")
+    public void contactAttributeIsUpdated(String field) {
+        assertFalse(field.isEmpty());
+    }
+
+    @Then("^I should see the message showing contacts are added successfully$")
+    public void contactListAddedSuccessfully() {
+        assertTrue(true);
     }
 
     @And("^Page Should Contain \"([^\"]*)\"$")
@@ -97,8 +129,4 @@ public class ContactSteps {
         pageShouldContain(email);
         pageShouldContain(location);
     }
-
-
-
-
 }
