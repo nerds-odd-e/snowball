@@ -7,40 +7,34 @@ import com.odde.TestWithDB;
 import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.service.GMailService;
+import com.odde.massivemailer.service.MailService;
 import com.odde.massivemailer.service.SMTPConfiguration;
 import com.odde.massivemailer.util.NotificationUtil;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.mail.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
 
 import static junit.framework.TestCase.assertEquals;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 @RunWith(TestWithDB.class)
-@Ignore
-//TODO remove ignore
 public class GmailServiceTest {
 
 	private static String[] RECIPIENTS = new String[] { "myodde@gmail.com",
 			"kit.sumate@gmail.com" };
 
-    private Session session;
+	private Session session;
 
-    @Before
-    public void setup() {
-//        session = mock(Session.class);
-    }
-
+	@Before
+	public void setup() {
+		this.session = MailService.createMailSession();
+	}
 	private Mail createEmail() {
 		Mail email = new Mail();
 		email.setContent("Hi Dude");
@@ -52,9 +46,9 @@ public class GmailServiceTest {
 	
 	private GMailService getGmailService(final Transport transport) {
 		SMTPConfiguration config = new SMTPConfiguration("fakeUser@gmail.com", "fakeUserPassword", "smtp.gmail.com", 587);
-        GMailService gmailService = new GMailService(config, session) {
+		GMailService gmailService = new GMailService(config, this.session) {
 			@Override
-			protected Transport getTransport() {
+			protected Transport getTransport() throws NoSuchProviderException {
 				return transport;
 			} 
 		};
@@ -90,44 +84,16 @@ public class GmailServiceTest {
 		greenMail.start();
 		SMTPConfiguration config = new SMTPConfiguration("fake@greenmail.com", "*******", "localhost", 3025);
 
-        GMailService mailService = new GMailService(config, session);
+        GMailService mailService = new GMailService(config, this.session);
 
 
         //Act
 		Mail mail = createEmail();
-		mail.sendMailWith(mailService);
-//		mailService.send(mail);
+		mailService.send(mail);
 
 		//Assert
 		assertEquals("<html><body>Hi Dude<img height=\"42\" width=\"42\" src=\"http://"+InetAddress.getLocalHost().getHostAddress()+":8070/massive_mailer/resources/images/qrcode.png?token="+mail.getSentMail().getSentMailVisits().get(0).getId()+"\"></img></body></html>", GreenMailUtil.getBody(greenMail.getReceivedMessages()[0]));
 		assertEquals("<html><body>Hi Dude<img height=\"42\" width=\"42\" src=\"http://"+InetAddress.getLocalHost().getHostAddress()+":8070/massive_mailer/resources/images/qrcode.png?token="+mail.getSentMail().getSentMailVisits().get(1).getId()+"\"></img></body></html>", GreenMailUtil.getBody(greenMail.getReceivedMessages()[1]));
 		greenMail.stop();
 	}
-
-    @Test
-	@Ignore
-    public void getEmailTest() throws MessagingException {
-        final List<Mail> mockUnreadEmails = new ArrayList<>();
-        final List<Mail> mockReadEmails = new ArrayList<>();
-        final List<Mail> mockEmails = new ArrayList<>();
-        mockEmails.addAll(mockReadEmails);
-        mockEmails.addAll(mockUnreadEmails);
-
-        final Transport transport = mock(Transport.class);
-
-		Store mockStore = mock(Store.class);
-		when(session.getStore("imaps")).thenReturn(mockStore);
-
-		Folder mockFolder = mock(Folder.class);
-		when(mockStore.getFolder(anyString())).thenReturn(mockFolder);
-
-//		when(mockFolder.search(any())).thenReturn(mockEmails);
-
-        GMailService emailService = this.getGmailService(transport);
-
-        final Set<Mail> emails = emailService.getUnreadEmails();
-        assertThat(emails).containsAll(mockUnreadEmails);
-        assertThat(emails).doesNotContainAnyElementsOf(mockReadEmails);
-    }
-
 }

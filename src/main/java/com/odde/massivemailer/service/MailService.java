@@ -4,9 +4,7 @@ import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.Mail;
 
 import javax.mail.Session;
-import java.util.Collection;
 import java.util.Properties;
-import java.util.Set;
 
 public interface MailService {
     String EMAIL_PASSWORD = "MM_EMAIL_PASSWORD";
@@ -14,8 +12,6 @@ public interface MailService {
     int PORT = 587;
 
     void send(Mail email) throws EmailException;
-
-    Set<Mail> getUnreadEmails();
 
     MailService mailService = createMailService();
 

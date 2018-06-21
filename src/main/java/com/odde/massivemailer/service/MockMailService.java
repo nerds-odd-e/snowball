@@ -2,8 +2,6 @@ package com.odde.massivemailer.service;
 
 import com.odde.massivemailer.model.Mail;
 
-import java.util.Set;
-
 public class MockMailService implements MailService {
 
     @Override
@@ -11,8 +9,4 @@ public class MockMailService implements MailService {
         // do nothing
     }
 
-    @Override
-    public Set<Mail> getUnreadEmails() {
-        return null;
-    }
 }
