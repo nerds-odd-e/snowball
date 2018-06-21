@@ -4,6 +4,7 @@ import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.Mail;
 
 import javax.mail.Session;
+import java.util.List;
 import java.util.Properties;
 
 public interface MailService {
@@ -38,4 +39,6 @@ public interface MailService {
         props.put("mail.smtp.auth", "true");
         return Session.getDefaultInstance(props);
     }
+
+    List<Mail> readEmail(boolean readFlag);
 }

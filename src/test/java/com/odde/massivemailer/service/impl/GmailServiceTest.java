@@ -10,6 +10,7 @@ import com.odde.massivemailer.service.GMailService;
 import com.odde.massivemailer.service.MailService;
 import com.odde.massivemailer.service.SMTPConfiguration;
 import com.odde.massivemailer.util.NotificationUtil;
+import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,6 +19,7 @@ import javax.mail.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
+import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.mockito.Matchers.any;
@@ -96,4 +98,13 @@ public class GmailServiceTest {
 		assertEquals("<html><body>Hi Dude<img height=\"42\" width=\"42\" src=\"http://"+InetAddress.getLocalHost().getHostAddress()+":8070/massive_mailer/resources/images/qrcode.png?token="+mail.getSentMail().getSentMailVisits().get(1).getId()+"\"></img></body></html>", GreenMailUtil.getBody(greenMail.getReceivedMessages()[1]));
 		greenMail.stop();
 	}
+
+	@Test
+	public void readEmail_when_requested_unreadEmails_shouldReturnUnreadEmails() {
+		final Transport transport = mock(Transport.class);
+		MailService mailService = getGmailService(transport);
+		List<Mail> unreadMails = mailService.readEmail(false);
+		Assertions.assertThat(unreadMails).isNotNull();
+	}
+
 }

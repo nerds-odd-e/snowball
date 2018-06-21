@@ -4,6 +4,7 @@ import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.Mail;
 
 import javax.mail.*;
+import java.util.ArrayList;
 import java.util.List;
 
 //TODO remove comments
@@ -28,6 +29,12 @@ public class GMailService implements MailService {
 			throw new EmailException("Unable to send an email: " + ex);
 		}
 		this.sendEmailViaGmail(msg);
+	}
+
+	@Override
+	public List<Mail> readEmail(boolean readFlag) {
+
+		return new ArrayList<>();
 	}
 
 	private void sendEmailViaGmail(List<Message> msgs) throws EmailException {
