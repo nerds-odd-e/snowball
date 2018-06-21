@@ -57,6 +57,6 @@ public class GDPRService {
     }
 
     public boolean canContactReceiveEmail(ContactPerson contactPerson) {
-        return !contactPerson.isForgotten();
+        return  !contactPerson.isForgotten();
     }
 }

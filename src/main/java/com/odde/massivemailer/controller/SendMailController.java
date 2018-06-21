@@ -76,7 +76,7 @@ public class SendMailController extends AppController {
                 }
             } else {
                 ContactPerson contact = ContactPerson.getContactByEmail(recipient);
-                if (gdprService.canContactReceiveEmail(contact)) {
+                if (contact == null || gdprService.canContactReceiveEmail(contact)) {
                     recipientList.add(recipient);
                 }
             }
