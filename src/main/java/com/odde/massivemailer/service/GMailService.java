@@ -3,7 +3,6 @@ package com.odde.massivemailer.service;
 import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.exception.MailBoxReadException;
 import com.odde.massivemailer.model.Mail;
-import org.jsoup.Jsoup;
 
 import javax.mail.*;
 import javax.mail.internet.MimeMultipart;
@@ -11,10 +10,10 @@ import javax.mail.search.FlagTerm;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Properties;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+//TODO remove comments
 public class GMailService implements MailService {
 
 	private SMTPConfiguration configuration;
@@ -86,7 +85,7 @@ public class GMailService implements MailService {
 				break; // without break same text appears twice in my tests
 			} else if (bodyPart.isMimeType("text/html")) {
 				String html = (String) bodyPart.getContent();
-				result = result + "\n" + Jsoup.parse(html).text();
+//				result = result + "\n" + Jsoup.parse(html).text();
 			} else if (bodyPart.getContent() instanceof MimeMultipart) {
 				result = result + getTextFromMimeMultipart((MimeMultipart) bodyPart.getContent());
 			}

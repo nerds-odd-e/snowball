@@ -95,7 +95,8 @@ public class GmailServiceTest {
 
         //Act
 		Mail mail = createEmail();
-		mailService.send(mail);
+		mail.sendMailWith(mailService);
+//		mailService.send(mail);
 
 		//Assert
 		assertEquals("<html><body>Hi Dude<img height=\"42\" width=\"42\" src=\"http://"+InetAddress.getLocalHost().getHostAddress()+":8070/massive_mailer/resources/images/qrcode.png?token="+mail.getSentMail().getSentMailVisits().get(0).getId()+"\"></img></body></html>", GreenMailUtil.getBody(greenMail.getReceivedMessages()[0]));
@@ -105,7 +106,7 @@ public class GmailServiceTest {
 
     @Test
 	@Ignore
-    public void getEmailTest() {
+    public void getEmailTest() throws MessagingException {
         final List<Mail> mockUnreadEmails = new ArrayList<>();
         final List<Mail> mockReadEmails = new ArrayList<>();
         final List<Mail> mockEmails = new ArrayList<>();
@@ -114,7 +115,13 @@ public class GmailServiceTest {
 
         final Transport transport = mock(Transport.class);
 
-//        when(session.get)
+		Store mockStore = mock(Store.class);
+		when(session.getStore("imaps")).thenReturn(mockStore);
+
+		Folder mockFolder = mock(Folder.class);
+		when(mockStore.getFolder(anyString())).thenReturn(mockFolder);
+
+//		when(mockFolder.search(any())).thenReturn(mockEmails);
 
         GMailService emailService = this.getGmailService(transport);
 
