@@ -164,6 +164,20 @@ public class ContactPersonTest {
 	}
 
 	@Test
+	public void testDeleteUser() {
+		ContactPerson person = new ContactPerson("testPerson", "bla@bla.com", "TestPersonLastName La");
+		assertFalse(person.isForgotten());
+
+		person.setForgotten(true);
+		assertTrue(person.isForgotten());
+
+		person.saveIt();
+
+		ContactPerson fromDb = ContactPerson.findById(person.getId());
+		assertTrue(fromDb.isForgotten());
+	}
+
+	@Test
 	public void test_prepare_list_of_contacts_should_create_listof_contacts() {
 
 		String csvData = preparecsvDataForTest();
@@ -186,32 +200,12 @@ public class ContactPersonTest {
 
 	}
 
-<<<<<<< HEAD
-    @Test
-    public void testDeleteUser() {
-        ContactPerson person = new ContactPerson("testPerson", "bla@bla.com", "TestPersonLastName La");
-        assertFalse(person.isForgotten());
-
-        person.setForgotten(true);
-		assertTrue(person.isForgotten());
-
-		person.saveIt();
-
-		ContactPerson fromDb = ContactPerson.findById(person.getId());
-		assertTrue(fromDb.isForgotten());
-    }
-
 	private boolean isEquals(List<ContactPerson> newContacts, String email) {
 		return newContacts.get(0).equals(ContactPerson.getContactByEmail(email));
-=======
-	private String preparecsvDataForTest() {
-		return "email,firstname,lastname,company,country,city;Bala,balakg@gmail.com,GovindRaj,CS,Singapore,Singapore";
-
->>>>>>> refactored batch contact controller
 	}
 
-	private boolean isEquals(List<ContactPerson> newContacts, String email) {
-		return newContacts.get(0).equals(ContactPerson.getContactByEmail(email));
+	private String preparecsvDataForTest() {
+		return "email,firstname,lastname,company,country,city;Bala,balakg@gmail.com,GovindRaj,CS,Singapore,Singapore";
 	}
 
 }
