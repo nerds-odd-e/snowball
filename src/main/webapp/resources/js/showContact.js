@@ -28,6 +28,7 @@ function Contact(attributes) {
     this.company = attributes.company===undefined?'':attributes.company;
     this.location = attributes.location===undefined?'':attributes.location;
     this.email = attributes.email===undefined?'':attributes.email;
+    this.forgotten = attributes.forgotten===undefined?0:attributes.forgotten;
 }
 
 function createTableData(cssClasses, value) {
@@ -41,6 +42,7 @@ function createButtonElement(buttonId, buttonName, clickEvent) {
 
 function renderContactList(json, selector)
 {
+
     selector.html('');
 	$.each(json, function(idx, item) {
         var contact = new Contact(item.attributes);
@@ -52,7 +54,7 @@ function renderContactList(json, selector)
           ['location', contact.location],
           ['', createButtonElement('edit_button', 'edit', 'showEditContactDetail(' + JSON.stringify(item) + ')')],
         ];
-        generateTableRow(selector, tableContent);
+        generateContactTableRow(selector, tableContent, contact.forgotten);
     })
 }
 
@@ -69,12 +71,13 @@ function renderContactSelectionList(json, selector)
             ['contact-cname', contact.company],
             ['contact-location', contact.location]
         ];
-        generateTableRow(selector, tableContent);
+        generateContactTableRow(selector, tableContent, contact.forgotten);
 	})
 }
 
-function generateTableRow(selector, content) {
-    var tr = $('<tr>');
+function generateContactTableRow(selector, content, isForgotten) {
+    var style = isForgotten === 1 ? '  style="color: red" ' : '';
+    var tr = $('<tr' + style + '>' );
     selector.append(tr);
     content.forEach(function(element) {
         tr.append(createTableData(element[0], element[1]));

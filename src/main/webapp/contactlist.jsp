@@ -58,6 +58,34 @@
 						</div>
 					</div>
 				</div>
+				<!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Forgotten Contact List</h1>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <table class="table table-responsive table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Email</th>
+                                        <th>Name</th>
+                                        <th>Last Name</th>
+                                        <th>Company</th>
+                                        <th>Location</th>
+                                        <th>Edit</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="forgotten_table">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
 			</div>
 
 
