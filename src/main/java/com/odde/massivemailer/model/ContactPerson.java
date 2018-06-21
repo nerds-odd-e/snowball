@@ -30,6 +30,7 @@ public class ContactPerson extends ApplicationModel {
     public static final String LATITUDE = "Latitude";
     public static final String CONSENT_SENT = "consent_sent";
     public static final String CONSENT_RECEIVED = "consent_received";
+    public static final String FORGOTTEN = "forgotten";
 
 
     public Double getLatitude() {
@@ -247,6 +248,15 @@ public class ContactPerson extends ApplicationModel {
         set(CONSENT_RECEIVED, DateUtil.asDate(receivedDate));
     }
 
+
+    public void setForgotten(boolean forgotten) {
+        set(FORGOTTEN, forgotten );
+    }
+
+    public boolean isForgotten() {
+        Boolean forgotten = (Boolean) get(FORGOTTEN);
+        return forgotten != null ? forgotten : false;
+    }
 
     public LocalDate getConsentSend() {
         final Date date = (Date) get(CONSENT_SENT);

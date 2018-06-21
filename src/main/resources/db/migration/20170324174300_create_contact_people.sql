@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS contact_people (
     latitude DOUBLE NOT NULL DEFAULT 0,
     longitude DOUBLE NOT NULL DEFAULT 0,
     consent_sent DATE,
-    consent_received DATE
+    consent_received DATE,
+    forgotten BIT
 );
 

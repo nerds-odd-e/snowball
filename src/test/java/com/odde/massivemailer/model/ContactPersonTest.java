@@ -171,6 +171,20 @@ public class ContactPersonTest {
 		assertFalse(isEquals(newContacts, "forshailesh@gmail.com"));
 	}
 
+    @Test
+    public void testDeleteUser() {
+        ContactPerson person = new ContactPerson("testPerson", "bla@bla.com", "TestPersonLastName La");
+        assertFalse(person.isForgotten());
+
+        person.setForgotten(true);
+		assertTrue(person.isForgotten());
+
+		person.saveIt();
+
+		ContactPerson fromDb = ContactPerson.findById(person.getId());
+		assertTrue(fromDb.isForgotten());
+    }
+
 	private boolean isEquals(List<ContactPerson> newContacts, String email) {
 		return newContacts.get(0).equals(ContactPerson.getContactByEmail(email));
 	}
