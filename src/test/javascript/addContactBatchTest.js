@@ -1,13 +1,13 @@
 describe('file upload function', function(){
-     var markup = "<input type='file' id='batchFile' onChange='fileInputHandler()' accept='.csv'/>";
+     it('should format csv data',function(){
+        var markup = "<form><input id='data'/></form>";
 
-     beforeEach(function(){
-     	var container = document.createElement('div');
+        var container = document.createElement('div');
      	document.body.appendChild(container);
      	container.innerHTML = markup;
-     });
 
-     it('should submit uploaded data',function(){
-
+        var value = "firstName,lastName\n"+"test,test";
+        formatCsvData(value);
+        expect(document.getElementById("data").value).toBe("firstName,lastName;test,test");
      });
 });
