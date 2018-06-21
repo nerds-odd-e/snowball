@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@WebServlet("/batchContacts")
+@WebServlet("/validateBatchContacts")
 public class BatchContactsValidatorController extends AppController {
 
     private static final int EMAIL_INDEX = 0;
