@@ -19,10 +19,10 @@ Feature: Contacts
     And Page Should Success
 
     Examples:
-      | email           | city    | country     |  name |  lastName  | company |
-      | user1@odd-e.com | Chengdu | China       |  john |  smith     | odd-e   |
-      | user2@odd-e.com | Aigle   | Switzerland |  jane |  doe       | odd-e   |
-      | user4@odd-e.com | Dubna   | Russia      |  mark |  smith     | odd-e   |
+      | email           | city    | country     | name | lastName | company |
+      | user1@odd-e.com | Chengdu | China       | john | smith    | odd-e   |
+      | user2@odd-e.com | Aigle   | Switzerland | jane | doe      | odd-e   |
+      | user4@odd-e.com | Dubna   | Russia      | mark | smith    | odd-e   |
 
   Scenario: Edit Location Information of Contact
     Given "terry@odd-e.com" which in "China" and "Chengdu" is a contact already
@@ -31,40 +31,21 @@ Feature: Contacts
 
   @developing
   Scenario: Verify Add Contact Batch
-    When I upload a valid CSV file containing
-      |coursename    | CSD-1         |
-      |duration      | 30            |
-      |country       | China         |
-      |city          | Chengdu       |
-      |startdate     | 2017-10-23    |
-      |address       | odd-e         |
-      |coursedetails | CSD training  |
-      |instructor    | Terry         |
-    Then I should see the
-
+    Given the contact to be added does not exist in the DB
+    When I upload a valid CSV file
+    Then I should see the message showing contacts are added successfully
 
   @developing
-  Scenario Outline: Update contact information if already exists in the system and all columns in DB is empty except email
+  Scenario Outline: Update contact information if already exists in the system
     Given Contact for "<email>" exists in the system (Email only)
     When I upload a valid CSV file with "<email>"
     Then the contact should be updated with "<name>"
     And the contact should be updated with "<lastname>"
     And the contact should be updated with "<company>"
-    And the contact should be updated with "<city>"
-    And the contact should be updated with "<country>"
+    And the contact should be updated with "<location>"
 
     Examples:
-      | email           | name |  lastname | company |   city   | country     |
-      | user1@odd-e.com | john |    smith  | odd-e   |  Chengdu | China       |
-      | user2@odd-e.com | jane |    doe    | odd-e   |  Aigle   | Switzerland |
-      | user3@odd-e.com | mark |    smith  | odd-e   |  Dubna   | Russia      |
-
-  @developing
-  Scenario Outline: Update contact information if already exists in the system and all columns in DB is not empty and have different first name
-    Given Contact for "<email>" exists in the system (Email only)
-    When I upload a valid CSV file with "<email>"
-    Then the system should display "<email>" is having conflicts with the first name "<john>"
-
-    Examples:
-      | email           | name |
-      | user1@odd-e.com | john |
+      | email           | name | lastname | company | location          |
+      | user1@odd-e.com | john | smith    | odd-e   | Chengdu/China     |
+      | user2@odd-e.com | jane | doe      | odd-e   | Aigle/Switzerland |
+      | user3@odd-e.com | mark | smith    | odd-e   | Dubna/Russia      |
