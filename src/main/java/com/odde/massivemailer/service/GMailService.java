@@ -1,21 +1,22 @@
 package com.odde.massivemailer.service;
 
 import com.odde.massivemailer.exception.EmailException;
+import com.odde.massivemailer.exception.MailBoxReadException;
 import com.odde.massivemailer.model.Mail;
 
 import javax.mail.*;
-import java.util.ArrayList;
+import javax.mail.search.FlagTerm;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
-//TODO remove comments
 public class GMailService implements MailService {
 
-	private SMTPConfiguration configuration;
-
+	private MailConfiguration mailConfiguration;
 	public final Session session;
 
-	public GMailService(SMTPConfiguration config, Session session) {
-        configuration = config;
+	public GMailService(MailConfiguration config, Session session) {
+        mailConfiguration = config;
 		this.session = session;
 	}
 
@@ -32,20 +33,37 @@ public class GMailService implements MailService {
 	}
 
 	@Override
-	public List<Mail> readEmail(boolean readFlag) {
+	public List<Mail> readEmail(boolean readFlag) throws MessagingException {
+		Store store = session.getStore("imap");
+		store.connect(
+				mailConfiguration.HOST,
+				mailConfiguration.IMAP_PORT,
+				mailConfiguration.FROM,
+				mailConfiguration.PASSWD);
+		Folder inbox = store.getFolder("inbox");
+		inbox.open(Folder.READ_ONLY);
+		final Message[] messages = inbox.search(new FlagTerm(new Flags(Flags.Flag.SEEN), false));
+		return Arrays.stream(messages)
+					.map(this::toMail)
+					.collect(Collectors.toList());
+	}
 
-		return new ArrayList<>();
+	private Mail toMail(Message message) {
+		try {
+			return new Mail(message.getMessageNumber(), message.getSubject(), message.toString());
+		} catch (MessagingException ex) {
+			throw new MailBoxReadException("Unable to map email to message", ex);
+		}
 	}
 
 	private void sendEmailViaGmail(List<Message> msgs) throws EmailException {
 		try {
 
 			Transport transport = getTransport();
-			transport.connect(configuration.HOST, configuration.PORT, configuration.FROM, configuration.PASSWD);
+			transport.connect(mailConfiguration.HOST, mailConfiguration.SMTP_PORT, mailConfiguration.FROM, mailConfiguration.PASSWD);
 			for (Message msg : msgs) {
 				transport.sendMessage(msg, msg.getAllRecipients());
 			}
-
 			transport.close();
 
 		} catch (Exception ex) {

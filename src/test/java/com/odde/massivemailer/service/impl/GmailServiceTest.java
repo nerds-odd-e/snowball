@@ -8,7 +8,7 @@ import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.service.GMailService;
 import com.odde.massivemailer.service.MailService;
-import com.odde.massivemailer.service.SMTPConfiguration;
+import com.odde.massivemailer.service.MailConfiguration;
 import com.odde.massivemailer.util.NotificationUtil;
 import org.assertj.core.api.Assertions;
 import org.junit.After;
@@ -39,9 +39,9 @@ public class GmailServiceTest {
 	@Before
 	public void setup() {
 		this.session = MailService.createMailSession();
-		greenMail= new GreenMail(new ServerSetup(3025, null, "smtp"));
+		greenMail= new GreenMail(new ServerSetup[]{new ServerSetup(3025, null, "smtp"), new ServerSetup(3026, null, "imap")});
 		greenMail.start();
-		SMTPConfiguration config = new SMTPConfiguration("fake@greenmail.com", "*******", "localhost", 3025);
+		MailConfiguration config = new MailConfiguration("myodde@gmail.com", "myodde@gmail.com", "localhost", 3025,3026);
 		gmailWithGreenMail = new GMailService(config, this.session);
 	}
 
@@ -60,7 +60,11 @@ public class GmailServiceTest {
 	}
 	
 	private GMailService getGmailService(final Transport transport) {
-		SMTPConfiguration config = new SMTPConfiguration("fakeUser@gmail.com", "fakeUserPassword", "smtp.gmail.com", 587);
+		MailConfiguration config = new MailConfiguration(
+				"fakeUser@gmail.com",
+				"fakeUserPassword",
+				"smtp.gmail.com",
+				587,143	);
 		GMailService gmailService = new GMailService(config, this.session) {
 			@Override
 			protected Transport getTransport() throws NoSuchProviderException {
@@ -92,7 +96,7 @@ public class GmailServiceTest {
 		emailService.send(email);
 	}
 
-	@Test
+    @Test
 	public void sendEmailViaGreenMailSMTP() throws EmailException, UnknownHostException {
 		//Arrange
 
@@ -106,15 +110,24 @@ public class GmailServiceTest {
 
 	}
 
+
 	@Test
-	public void readEmail_when_requested_unreadEmails_shouldReturnUnreadEmails() {
-		final Transport transport = mock(Transport.class);
-		MailService mailService = getGmailService(transport);
-		List<Mail> unreadMails = mailService.readEmail(false);
+	public void readEmail_when_requested_unreadEmails_shouldReturnUnreadEmails() throws MessagingException, EmailException {
+		Mail mail = createEmail();
+		gmailWithGreenMail.send(mail);
+		List<Mail> unreadMails = gmailWithGreenMail.readEmail(false);
 		Assertions.assertThat(unreadMails).isNotNull();
 	}
 
+	@Test
+	public void readEmail_ReadsTheUnredEmailFromInbox() throws EmailException, MessagingException {
+		Mail mail = createEmail();
+		gmailWithGreenMail.send(mail);
+		List<Mail> unreadEmails  = gmailWithGreenMail.readEmail(false);
 
+		Assertions.assertThat(unreadEmails).hasAtLeastOneElementOfType(Mail.class);
+
+	}
 
 
 }
