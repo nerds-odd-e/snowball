@@ -167,7 +167,7 @@ public class ContactSteps {
     }
 
     private void deleteCSVFile() {
-        File csvFile = new File("contactsUploadTest.csv");
+        File csvFile = new File(System.getProperty("java.io.tmpdir")+"/contactsUploadTest.csv");
         boolean deleteSuccess = false;
         if (csvFile.exists()) {
             deleteSuccess = csvFile.delete();
