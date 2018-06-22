@@ -22,6 +22,34 @@ public class ContactPersonTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
+    private List<ContactPerson> createContactsForTest() {
+        String csvData = preparecsvDataForTest();
+        ContactPerson.createContacts(csvData);
+
+        return ContactPerson.prepareContactsList(csvData);
+    }
+
+
+    private String preparecsvDataForTest() {
+        return "email,firstname,lastname,company,country,city;balakg@gmail.com,Bala,GovindRaj,CS,Singapore,Singapore;forshailesh@gmail.com,Shailesh,Thakur,CS,Singapore,Singapore";
+    }
+
+    private boolean isEquals(List<ContactPerson> newContacts, String email) {
+        return newContacts.get(0).equals(ContactPerson.getContactByEmail(email));
+    }
+
+    private List<ContactPerson> getContactPeopleList(String name, String email, String lastname, String company, String location) {
+        List<ContactPerson> newContacts = new ArrayList();
+        ContactPerson contacts = new ContactPerson(name, email, lastname, company, location);
+        newContacts.add(contacts);
+        return newContacts;
+    }
+
+    private ContactPerson CreateContactInDB(ContactPerson person) throws Exception {
+        person.saveIt();
+        return person;
+    }
+
     @Test
     public void testCreateContactObjectWithoutCompany() {
         String name = "name";
@@ -116,11 +144,6 @@ public class ContactPersonTest {
         assertEquals(receivedDate, personInDB.getConsentReceived());
     }
 
-    private ContactPerson CreateContactInDB(ContactPerson person) throws Exception {
-        person.saveIt();
-        return person;
-    }
-
     @Test
     public void testGetInvalidAttributeValue() throws Exception {
         ContactPerson contact = new ContactPerson("John", "john@gmail.com", "Doe");
@@ -174,30 +197,9 @@ public class ContactPersonTest {
 
     @Test
     public void test_create_contacts_should_create_same_details_that_was_requested() {
-
-        String csvData = preparecsvDataForTest();
-        ContactPerson.createContacts(csvData);
-
-        List<ContactPerson> contacts = ContactPerson.prepareContactsList(csvData);
-
+        List<ContactPerson> contacts = createContactsForTest();
         assertTrue(isEquals(contacts, "balakg@gmail.com"));
         assertFalse(isEquals(contacts, "forshailesh@gmail.com"));
-
-    }
-
-    private String preparecsvDataForTest() {
-        return "email,firstname,lastname,company,country,city;balakg@gmail.com,Bala,GovindRaj,CS,Singapore,Singapore;forshailesg@gmail.com,Shailesh,Thakur,CS,Singapore,Singapore";
-    }
-
-	private boolean isEquals(List<ContactPerson> newContacts, String email) {
-		return newContacts.get(0).equals(ContactPerson.getContactByEmail(email));
-	}
-
-    private List<ContactPerson> getContactPeopleList(String name, String email, String lastname, String company, String location) {
-        List<ContactPerson> newContacts = new ArrayList();
-        ContactPerson contacts = new ContactPerson(name, email, lastname, company, location);
-        newContacts.add(contacts);
-        return newContacts;
     }
 
     @Test
@@ -220,5 +222,19 @@ public class ContactPersonTest {
         assertFalse(ContactPerson.isValidCountry("Mingjia"));
     }
 
+    @Test
+    public void noAdditionalContactAddedWhenContactAlreadyExist(){
+        List<ContactPerson> contacts = createContactsForTest();
+        assertEquals(2, contacts.size());
+
+        int shaileshCount = 0;
+        for(ContactPerson cp : contacts){
+            if(cp.getEmail().equals("forshailesh@gmail.com")){
+                shaileshCount++;
+            }
+        }
+        assertEquals(1, shaileshCount);
+
+    }
 
 }
