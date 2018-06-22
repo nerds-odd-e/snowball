@@ -34,7 +34,8 @@ public class SendMailController extends AppController {
             throws IOException {
         try {
 
-            final List<String> recipientList = getRecipientList(req);
+            String requestRecipients = req.getParameter("recipient");
+            final List<String> recipientList = getRecipientList(requestRecipients);
             if (recipientList.isEmpty()) {
                 return;
             }
@@ -59,10 +60,9 @@ public class SendMailController extends AppController {
         }
     }
 
-    public List<String> getRecipientList(HttpServletRequest req) throws SQLException {
+    public List<String> getRecipientList(String recipients) throws SQLException {
 
-        String tempRecipient = req.getParameter("recipient");
-        StringTokenizer st = new StringTokenizer(tempRecipient, ";");
+        StringTokenizer st = new StringTokenizer(recipients, ";");
         ArrayList<String> recipientList = new ArrayList<String>();
         while (st.hasMoreTokens()) {
             String recipient = st.nextToken();

@@ -84,7 +84,7 @@ public class SendMailControllerTest {
         String subject = "subject for test";
         String content = "content-na-ka";
 
-        List<String> recipientList = controller.getRecipientList(request);
+        List<String> recipientList = controller.getRecipientList(request.getParameter("recipient"));
         Mail mail = controller.createEmail(System.currentTimeMillis(),content,subject,recipientList);
 
         assertEquals(subject, mail.getSubject());
@@ -105,7 +105,7 @@ public class SendMailControllerTest {
             new ContactPerson("", companyRecipients[i], "", "abc").saveIt();
         }
 
-        List<String> recipientList = controller.getRecipientList(request);
+        List<String> recipientList = controller.getRecipientList(request.getParameter("recipient"));
         Mail mail = controller.createEmail(System.currentTimeMillis(),"bla","bbla",recipientList);
 
 
@@ -127,7 +127,7 @@ public class SendMailControllerTest {
 
         mockRecipient("company:" + company);
 
-        List<String> recipientList = controller.getRecipientList(request);
+        List<String> recipientList = controller.getRecipientList(request.getParameter("recipient"));
         Mail mail = controller.createEmail(System.currentTimeMillis(),"bla","bbla",recipientList);
 
         List<String> recipients = mail.getReceipts();
@@ -148,7 +148,7 @@ public class SendMailControllerTest {
 
         mockRecipient("company:\"" + company + "\"");
 
-        List<String> recipientList = controller.getRecipientList(request);
+        List<String> recipientList = controller.getRecipientList(request.getParameter("recipient"));
         Mail mail = controller.createEmail(System.currentTimeMillis(),"bla","bbla",recipientList);
 
         List<String> recipients = mail.getReceipts();
@@ -182,7 +182,7 @@ public class SendMailControllerTest {
 
         mockRecipient("company:\"" + company);
 
-        List<String> recipientList = controller.getRecipientList(request);
+        List<String> recipientList = controller.getRecipientList(request.getParameter("recipient"));
         Mail mail = controller.createEmail(System.currentTimeMillis(),"bla","bbla",recipientList);
 
 
@@ -204,7 +204,7 @@ public class SendMailControllerTest {
 
         mockRecipient("company:" + company);
 
-        List<String> recipientList = controller.getRecipientList(request);
+        List<String> recipientList = controller.getRecipientList(request.getParameter("recipient"));
         Mail mail = controller.createEmail(System.currentTimeMillis(),"bla","bbla",recipientList);
 
         List<String> recipients = mail.getReceipts();
