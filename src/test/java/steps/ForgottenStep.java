@@ -16,13 +16,6 @@ public class ForgottenStep {
     private MassiveMailerSite site = new MassiveMailerSite();
     private WebDriverWrapper driver = site.getDriver();
 
-    @Given("^Contact ivan@odde\\.com is forgotten$")
-    public void contact_ivan_odde_com_is_forgotten() {
-        ContactPerson contact = new ContactPerson("ivan", "ivan@odde.com", "ivan");
-        contact.setForgotten(true);
-        contact.saveIt();
-    }
-
     @When("^Enter contact list page$")
     public void enter_contact_list_page() {
         site.visit("contactlist.jsp");

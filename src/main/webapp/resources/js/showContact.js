@@ -1,9 +1,9 @@
 function render() {
     var contactList = retrieveContactListFromServer();
-	var normal = contactList.filter(function (item) { return item.attributes.forgotten !== 1});
-    var forgotten = contactList.filter(function (item) { return item.attributes.forgotten === 1 });
-	renderContactList(normal, $('#contactTable'));
-	renderContactList(forgotten, $('#forgotten_table'));
+	var normal = contactList.filter(function (item) { return item.attributes.forgotten !== "true"});
+    var forgotten = contactList.filter(function (item) { return item.attributes.forgotten === "true"});
+	renderContactList(normal, $('#contactTable'), false);
+	renderContactList(forgotten, $('#forgotten_table'), true);
 
 }
 
@@ -49,7 +49,7 @@ function createButtonElement(buttonId, buttonName, clickEvent) {
     return '<button class="btn btn-default" id="' + buttonId + '" name="' + buttonName + '" onclick=\'' + clickEvent + '\'>' + buttonName +'</button>';
 }
 
-function renderContactList(json, selector)
+function renderContactList(json, selector, isForgotten)
 {
 
     selector.html('');
@@ -61,9 +61,11 @@ function renderContactList(json, selector)
           ['', contact.lastName],
           ['company', contact.company],
           ['location', contact.location],
-          ['', createButtonElement('edit_button', 'edit', 'showEditContactDetail(' + JSON.stringify(item) + ')')],
-          ['', createButtonElement('forget_button', 'forget', 'forgetContact(' + JSON.stringify(contact) + ')')],
+          ['', createButtonElement('edit_button', 'edit', 'showEditContactDetail(' + JSON.stringify(item) + ')')]
         ];
+        if (!isForgotten) {
+          tableContent.push(['', createButtonElement('forget_button', 'forget', 'forgetContact(' + JSON.stringify(contact) + ')')])
+        }
         generateContactTableRow(selector, tableContent, contact.forgotten);
     })
 }
@@ -96,7 +98,7 @@ function renderContactSelectionList(json, selector)
 }
 
 function generateContactTableRow(selector, content, isForgotten) {
-    var style = isForgotten === 1 ? '  style="color: red" ' : '';
+    var style = isForgotten ? '  style="color: red" ' : '';
     var tr = $('<tr' + style + '>' );
     selector.append(tr);
     content.forEach(function(element) {
