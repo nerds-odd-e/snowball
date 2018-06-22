@@ -12,7 +12,6 @@ import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
 import static org.junit.Assert.*;
-@RunWith(TestWithDB.class)
 public class ForgottenStep {
 
     private MassiveMailerSite site = new MassiveMailerSite();
