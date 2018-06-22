@@ -3,6 +3,7 @@ package com.odde.massivemailer.service;
 import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.Mail;
 
+import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import java.util.List;
@@ -46,5 +47,5 @@ public interface MailService {
         return Session.getDefaultInstance(props);
     }
 
-    List<Mail> readEmail(boolean readFlag) throws MessagingException;
+    List<Message> readEmail(boolean readFlag) throws MessagingException;
 }

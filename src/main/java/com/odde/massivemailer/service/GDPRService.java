@@ -5,6 +5,10 @@ import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.model.SentMail;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.logging.Logger;
@@ -49,7 +53,32 @@ public class GDPRService {
     }
 
     public void processGDPRConsentEmails() {
-        logger.info("Processing GDPR consent response emails.");
+        try {
+            mailService.readEmail(false).stream()
+                    .filter(mail -> {
+                        try {
+                            return mail.getSubject().contains("GDPR Consent");
+                        } catch (MessagingException e) {
+                            throw new RuntimeException(e);
+                        }
+                    })
+                    .forEach(mail -> processResponse(mail));
+
+        } catch (MessagingException e) {
+            throw new RuntimeException("Can't read emails");
+        }
+    }
+
+    private void processResponse(Message mail) {
+        try {
+            ContactPerson contactByEmail = ContactPerson.getContactByEmail(mail.getFrom()[0].toString());
+            if (mail.getContent().toString().contains("I Agree")) {
+                contactByEmail.setConsentReceived(LocalDate.now());
+                contactByEmail.save();
+            }
+        } catch (MessagingException | IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public Collection<Mail> getEmails() {

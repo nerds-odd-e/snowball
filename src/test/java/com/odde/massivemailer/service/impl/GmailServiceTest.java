@@ -123,7 +123,7 @@ public class GmailServiceTest {
     public void readEmail_when_requested_unreadEmails_shouldReturnUnreadEmails() throws MessagingException, EmailException {
         Mail mail = createEmail();
         gmailWithGreenMail.send(mail);
-        List<Mail> unreadMails = gmailWithGreenMail.readEmail(false);
+        List<Message> unreadMails = gmailWithGreenMail.readEmail(false);
         Assertions.assertThat(unreadMails).isNotNull();
     }
 
@@ -131,9 +131,9 @@ public class GmailServiceTest {
     public void readEmail_ReadsTheUnredEmailFromInbox() throws EmailException, MessagingException {
         Mail mail = createEmail();
         gmailWithGreenMail.send(mail);
-        List<Mail> unreadEmails = gmailWithGreenMail.readEmail(false);
+        List<Message> unreadEmails = gmailWithGreenMail.readEmail(false);
 
-        Assertions.assertThat(unreadEmails).hasAtLeastOneElementOfType(Mail.class);
+        Assertions.assertThat(unreadEmails).hasAtLeastOneElementOfType(Message.class);
 
     }
 

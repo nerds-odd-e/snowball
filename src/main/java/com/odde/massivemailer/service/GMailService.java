@@ -1,14 +1,12 @@
 package com.odde.massivemailer.service;
 
 import com.odde.massivemailer.exception.EmailException;
-import com.odde.massivemailer.exception.MailBoxReadException;
 import com.odde.massivemailer.model.Mail;
 
 import javax.mail.*;
 import javax.mail.search.FlagTerm;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class GMailService implements MailService {
 
@@ -33,25 +31,16 @@ public class GMailService implements MailService {
     }
 
     @Override
-    public List<Mail> readEmail(boolean readFlag) throws MessagingException {
+    public List<Message> readEmail(boolean readFlag) throws MessagingException {
 
         Store store = mailConfig.getImapStore(session);
 
         Folder inbox = store.getFolder("inbox");
         inbox.open(Folder.READ_ONLY);
-        final Message[] messages = inbox.search(new FlagTerm(new Flags(Flags.Flag.SEEN), false));
-        return Arrays.stream(messages)
-                .map(this::toMail)
-                .collect(Collectors.toList());
+        final Message[] messages = inbox.search(new FlagTerm(new Flags(Flags.Flag.SEEN), readFlag));
+        return Arrays.asList(messages);
     }
 
-    private Mail toMail(Message message) {
-        try {
-            return new Mail(message.getMessageNumber(), message.getSubject(), message.toString());
-        } catch (MessagingException ex) {
-            throw new MailBoxReadException("Unable to map email to message", ex);
-        }
-    }
 
     private void sendEmailViaGmail(List<Message> msgs) throws EmailException {
         try {
