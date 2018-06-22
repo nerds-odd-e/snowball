@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	var contactList = retrieveContactListFromServer();
-	var normal = contactList.filter(function (item) { return item.attributes.forgotten == 0 });
-    var forgotten = contactList.filter(function (item) { return item.attributes.forgotten == 1 });
+	var normal = contactList.filter(function (item) { return item.attributes.forgotten !== 1});
+    var forgotten = contactList.filter(function (item) { return item.attributes.forgotten === 1 });
 	renderContactList(normal, $('#contactTable'));
 	renderContactList(forgotten, $('#forgotten_table'));
 
