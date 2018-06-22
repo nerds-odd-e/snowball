@@ -11,8 +11,7 @@ public class MassiveMailerGDPRContextListener  implements ServletContextListener
     public void contextInitialized(ServletContextEvent sce) {
         System.out.println("GDPR service started.");
         Universe.createUniverse();
-        System.out.println("Universe.mailService() = " + Universe.mailService());
-//        Universe.gdprService().processGDPRConsentEmails();
+        Universe.gdprService().processGDPRConsentEmails();
     }
 
     @Override

@@ -64,8 +64,8 @@ public class GDPRService {
                     })
                     .forEach(mail -> processResponse(mail));
 
-        } catch (MessagingException e) {
-            throw new RuntimeException("Can't read emails");
+        } catch (MessagingException ex) {
+            System.out.println("Could not read the emails");
         }
     }
 
