@@ -1,19 +1,33 @@
 package com.odde.massivemailer.service;
 
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Store;
+import javax.mail.Transport;
+
 public class MailConfiguration {
 
-    public String FROM;
-    public String PASSWD;
-    public String HOST;
-    public int SMTP_PORT;
-    public int IMAP_PORT;
+    private final String username;
+    private final String password;
+    private final ServerConfig smtp;
+    private final ServerConfig imap;
+
+    public MailConfiguration(String username, String password, ServerConfig smtp, ServerConfig imap) {
+        this.username = username;
+        this.password = password;
+        this.smtp = smtp;
+        this.imap = imap;
+    }
 
 
-    public MailConfiguration(String username, String password, String host, int smtpPort, int imapPort) {
-        this.FROM = username;
-        this.PASSWD = password;
-        this.HOST = host;
-        this.SMTP_PORT = smtpPort;
-        this.IMAP_PORT = imapPort;
+    public Store getImapStore(Session session) throws MessagingException {
+        Store store = session.getStore("imap");
+        store.connect(this.imap.host(),this.imap.port(),this.username,this.password);
+        return  store;
+    }
+    public Transport getSmtpTransport(Session session) throws MessagingException {
+        Transport transport = session.getTransport("smtp");
+        transport.connect(this.smtp.host(), this.smtp.port(),this.username, this.password);
+        return transport;
     }
 }
