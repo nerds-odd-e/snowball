@@ -28,7 +28,6 @@ public class ContactsController extends AppController {
 
     public void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException {
         String email = req.getParameter("email");
-        System.out.println("email = " + email);
         ContactPerson person = ContactPerson.getContactByEmail(email);
         person.setForgotten(true);
         person.saveIt();

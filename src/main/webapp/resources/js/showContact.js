@@ -62,13 +62,13 @@ function renderContactList(json, selector)
           ['company', contact.company],
           ['location', contact.location],
           ['', createButtonElement('edit_button', 'edit', 'showEditContactDetail(' + JSON.stringify(item) + ')')],
-          ['', createButtonElement('forgotten_button', 'forgotten', 'forgotten(' + JSON.stringify(contact) + ')')],
+          ['', createButtonElement('forget_button', 'forget', 'forgetContact(' + JSON.stringify(contact) + ')')],
         ];
         generateContactTableRow(selector, tableContent, contact.forgotten);
     })
 }
 
-function forgotten (contact) {
+function forgetContact(contact) {
     var contactEmail = "email=" + contact.email;
     $.ajax({
 	    type: 'DELETE',

@@ -1,8 +1,8 @@
 Feature: The right to be forgoten
 Scenario: Delete contact upon a receiving request to be deleted
     Given Contact ivan@odde.com exists
-    When Contact ivan@odde.com requests to be forgoten by email
-    Then Contact ivan@odde.com is marked as forgoten
+    When Contact ivan@odde.com requests to be forgotten by email
+    Then Contact ivan@odde.com is marked as forgotten
 
 @developing
 Scenario: Admin can not send email to forgotten contact

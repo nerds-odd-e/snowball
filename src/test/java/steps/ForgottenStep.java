@@ -50,15 +50,15 @@ public class ForgottenStep {
         }
     }
 
-    @When("^Contact ivan@odde\\.com requests to be forgoten by email$")
+    @When("^Contact ivan@odde\\.com requests to be forgotten by email$")
     public void contactRequestToBeForgottenByEmai() {
         String email = "ivan@odde.com";
         site.visit("contactlist.jsp");
 
-        driver.clickXPath("//td[text()='" + email + "']/following-sibling::td//button[text()='forgotten']");
+        driver.clickXPath("//td[text()='" + email + "']/following-sibling::td//button[text()='forget']");
     }
 
-    @Then("^Contact ivan@odde\\.com is marked as forgoten$")
+    @Then("^Contact ivan@odde\\.com is marked as forgotten$")
     public void contactIvanOddeComIsMarkedAsForgoten() throws Throwable {
         String email = "ivan@odde.com";
 
