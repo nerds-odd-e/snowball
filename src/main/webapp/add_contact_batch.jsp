@@ -46,14 +46,6 @@
                                     <input type="text" name="data" id="data" style="display:none"/>
 								</div>
 								</div>
-
-							<div id="conflictedContacts">
-
-							</div>
-
-							<div id="contacts">
-
-							</div>
 						</div>
 					</div>
 					</form>

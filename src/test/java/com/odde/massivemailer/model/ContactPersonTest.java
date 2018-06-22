@@ -201,7 +201,7 @@ public class ContactPersonTest {
 	}
 
 	private String preparecsvDataForTest() {
-		return "email,firstname,lastname,company,country,city;balakg@gmail.com,Bala,GovindRaj,CS,Singapore,Singapore;forshailesg@gmail.com,Shailesh,Thakur,CS,Singapore,Singapore";
+		return "email,firstname,lastname,company,country,city;balakg@gmail.com,Bala,GovindRaj,CS,Singapore,Singapore;forshailesh@gmail.com,Shailesh,Thakur,CS,Singapore,Singapore";
 	}
 
 	private boolean isEquals(List<ContactPerson> newContacts, String email) {

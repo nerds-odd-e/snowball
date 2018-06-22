@@ -127,6 +127,11 @@ public class WebDriverWrapper {
         assertEquals(elements.size(), count);
     }
 
+    public void clickUpload() {
+        UiElement uploadBtn = findElementById("batchFile");
+        uploadBtn.sendKeys(System.getProperty("java.io.tmpdir") + "/contactsUploadTest.csv");
+    }
+
     public int countElementWithClass(String cssClass) {
         return driver.findElements(By.className(cssClass)).size();
     }

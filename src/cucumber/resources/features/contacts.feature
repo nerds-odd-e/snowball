@@ -19,21 +19,26 @@ Feature: Contacts
     And Page Should Success
 
     Examples:
-      | email           | city    | country     | name | lastName | company |
-      | user1@odd-e.com | Chengdu | China       | john | smith    | odd-e   |
-      | user2@odd-e.com | Aigle   | Switzerland | jane | doe      | odd-e   |
-      | user4@odd-e.com | Dubna   | Russia      | mark | smith    | odd-e   |
+      | email           | city    | country     | name  | lastName | company |
+      | user1@odd-e.com | Chengdu | China       | jaohn | smith    | odd-e   |
+      | user2@odd-e.com | Aigle   | Switzerland | jane  | doe      | odd-e   |
+      | user4@odd-e.com | Dubna   | Russia      | mark  | smith    | odd-e   |
 
   Scenario: Edit Location Information of Contact
     Given "terry@odd-e.com" which in "China" and "Chengdu" is a contact already
     When I change the location information of contact to be "China" and "Chengdu"
     Then contact "terry@odd-e.com"'s locations should be "China/Chengdu"
 
-  @developing
-  Scenario: Verify Add Contact Batch
-    Given The contact to be added does not exist in the DB
-    When I upload a valid CSV file
-    Then I should see the message showing contacts are added successfully
+  @now
+  Scenario: Upload CSV with Multiple Contacts
+    Given There are the following contacts in the CSV file that do not exist in the system
+      | email,firstname,lastname,company,country,city                |
+      | balakg@gmail.com,Bala,GovindRaj,CS,Singapore,Singapore       |
+      | forshailesh@gmail.com,Shailesh,Thakur,CS,Singapore,Singapore |
+    When I upload the CSV file
+    Then There must be two more contacts added
+      | balakg@gmail.com      |
+      | forshailesh@gmail.com |
 
   @developing
   Scenario Outline: Update contact information if already exists in the system

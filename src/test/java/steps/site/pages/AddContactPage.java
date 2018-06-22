@@ -18,7 +18,7 @@ public class AddContactPage {
         String country = location_parts[0];
         String city = location_parts[1];
         addContact(email, country, city);
-    }
+     }
 
     public void addContact(String email, String country, String city) throws Throwable{
         driver.setTextField("email", email);
