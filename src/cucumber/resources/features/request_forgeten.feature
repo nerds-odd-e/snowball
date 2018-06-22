@@ -11,9 +11,9 @@ Scenario: Admin can not send email to forgotten contact
     Then An error is displayed
     And The email is not sent
 
-@developing
 Scenario: Forgotten contact is displayed as red at the list below
-    Given Contact ivan@odde.com is forgotten
-    When Enter contact list page
+    Given Contact ivan@odde.com exists
+    When Contact ivan@odde.com requests to be forgotten by email
+    And Enter contact list page
     Then ivan@odde.com is displayed as red at the list below
 
