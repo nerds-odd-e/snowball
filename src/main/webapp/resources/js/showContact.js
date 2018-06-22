@@ -1,14 +1,20 @@
-$(document).ready(function() {
-	var contactList = retrieveContactListFromServer();
+function render() {
+    var contactList = retrieveContactListFromServer();
 	var normal = contactList.filter(function (item) { return item.attributes.forgotten !== 1});
     var forgotten = contactList.filter(function (item) { return item.attributes.forgotten === 1 });
 	renderContactList(normal, $('#contactTable'));
 	renderContactList(forgotten, $('#forgotten_table'));
 
+}
+
+$(document).ready(function() {
+	render();
 	$("#save_button").click(function() {
 		submitEditContact();
 	});
 });
+
+
 
 function retrieveContactListFromServer()
 {
@@ -56,9 +62,20 @@ function renderContactList(json, selector)
           ['company', contact.company],
           ['location', contact.location],
           ['', createButtonElement('edit_button', 'edit', 'showEditContactDetail(' + JSON.stringify(item) + ')')],
+          ['', createButtonElement('forgotten_button', 'forgotten', 'forgotten(' + JSON.stringify(contact) + ')')],
         ];
         generateContactTableRow(selector, tableContent, contact.forgotten);
     })
+}
+
+function forgotten (contact) {
+    var contactEmail = "email=" + contact.email;
+    $.ajax({
+	    type: 'DELETE',
+	    url: 'contacts?' + contactEmail,
+	    success: function(data) {render();},
+	    async: false
+	});
 }
 
 function renderContactSelectionList(json, selector)
