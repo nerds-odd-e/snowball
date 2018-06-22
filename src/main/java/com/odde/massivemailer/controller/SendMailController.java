@@ -33,12 +33,17 @@ public class SendMailController extends AppController {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
         try {
-            Mail email = processRequest(req);
 
-            if (email.getReceipts().isEmpty()) {
+            String requestRecipients = req.getParameter("recipient");
+            final List<String> recipientList = getRecipientList(requestRecipients);
+            if (recipientList.isEmpty()) {
                 return;
             }
 
+            String content = req.getParameter("content");
+            String subject = req.getParameter("subject");
+
+            final Mail email = createEmail(System.currentTimeMillis(), content, subject, recipientList);
             SentMail sentMail = email.asSentMail().saveAll();
             email.setSentMail(sentMail);
 
@@ -55,11 +60,9 @@ public class SendMailController extends AppController {
         }
     }
 
-    public Mail processRequest(HttpServletRequest req) throws SQLException {
+    public List<String> getRecipientList(String recipients) throws SQLException {
 
-        Mail email = new Mail();
-        String tempRecipient = req.getParameter("recipient");
-        StringTokenizer st = new StringTokenizer(tempRecipient, ";");
+        StringTokenizer st = new StringTokenizer(recipients, ";");
         ArrayList<String> recipientList = new ArrayList<String>();
         while (st.hasMoreTokens()) {
             String recipient = st.nextToken();
@@ -72,7 +75,9 @@ public class SendMailController extends AppController {
                     throw new SQLException();
                 }
                 for (ContactPerson contactPerson : contactList) {
-                    recipientList.add(contactPerson.getEmail());
+                    if (gdprService.canContactReceiveEmail(contactPerson)) {
+                        recipientList.add(contactPerson.getEmail());
+                    }
                 }
             } else {
                 ContactPerson contact = ContactPerson.getContactByEmail(recipient);
@@ -82,9 +87,14 @@ public class SendMailController extends AppController {
             }
         }
 
-        email.setMessageId(System.currentTimeMillis());
-        email.setContent(req.getParameter("content"));
-        email.setSubject(req.getParameter("subject"));
+        return recipientList;
+    }
+
+    public Mail createEmail(long messageId, String content, String subject, List<String> recipientList) {
+        Mail email = new Mail();
+        email.setMessageId(messageId);
+        email.setContent(content);
+        email.setSubject(subject);
 
         email.setReceipts(recipientList);
 

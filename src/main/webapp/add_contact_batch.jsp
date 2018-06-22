@@ -41,7 +41,7 @@
 									<h3 class="panel-title">File Information</h3>
 								</div>
 								<div class="panel-body">
-                                <div class="row">
+                                <div class="row" style="padding:0 20px">
                                     <input type="file" name="myfile" id="batchFile" accept=".csv"/>
                                     <input type="text" name="data" id="data" style="display:none"/>
 								</div>

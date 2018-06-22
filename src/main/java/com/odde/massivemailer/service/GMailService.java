@@ -4,56 +4,57 @@ import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.Mail;
 
 import javax.mail.*;
-import java.util.ArrayList;
+import javax.mail.search.FlagTerm;
+import java.util.Arrays;
 import java.util.List;
 
-//TODO remove comments
 public class GMailService implements MailService {
 
-	private SMTPConfiguration configuration;
+    private MailConfiguration mailConfig;
+    public final Session session;
 
-	public final Session session;
+    public GMailService(MailConfiguration config, Session session) {
+        mailConfig = config;
+        this.session = session;
+    }
 
-	public GMailService(SMTPConfiguration config, Session session) {
-        configuration = config;
-		this.session = session;
-	}
+    @Override
+    public void send(Mail email) throws EmailException {
+        List<Message> msg;
+        try {
+            msg = email.createMessages(session);
 
-	@Override
-	public void send(Mail email) throws EmailException {
-		List<Message> msg;
-		try {
-			msg = email.createMessages(session);
+        } catch (MessagingException ex) {
+            throw new EmailException("Unable to send an email: " + ex);
+        }
+        this.sendEmailViaGmail(msg);
+    }
 
-		} catch (MessagingException ex) {
-			throw new EmailException("Unable to send an email: " + ex);
-		}
-		this.sendEmailViaGmail(msg);
-	}
+    @Override
+    public List<Message> readEmail(boolean readFlag) throws MessagingException {
 
-	@Override
-	public List<Mail> readEmail(boolean readFlag) {
+        Store store = mailConfig.getImapStore(session);
 
-		return new ArrayList<>();
-	}
+        Folder inbox = store.getFolder("inbox");
+        inbox.open(Folder.READ_ONLY);
+        final Message[] messages = inbox.search(new FlagTerm(new Flags(Flags.Flag.SEEN), readFlag));
+        return Arrays.asList(messages);
+    }
 
-	private void sendEmailViaGmail(List<Message> msgs) throws EmailException {
-		try {
 
-			Transport transport = getTransport();
-			transport.connect(configuration.HOST, configuration.PORT, configuration.FROM, configuration.PASSWD);
-			for (Message msg : msgs) {
-				transport.sendMessage(msg, msg.getAllRecipients());
-			}
+    private void sendEmailViaGmail(List<Message> msgs) throws EmailException {
+        try {
 
-			transport.close();
+            Transport transport = mailConfig.getSmtpTransport(session);
 
-		} catch (Exception ex) {
-			throw new EmailException("Unable to send an email: " + ex);
-		}
-	}
+            for (Message msg : msgs) {
+                transport.sendMessage(msg, msg.getAllRecipients());
+            }
+            transport.close();
 
-	protected Transport getTransport() throws NoSuchProviderException {
-		return session.getTransport("smtp");
-	}
+        } catch (Exception ex) {
+            throw new EmailException("Unable to send an email: " + ex);
+        }
+    }
+
 }

@@ -81,13 +81,17 @@ public class SendMailControllerTest {
     public void testProcessRequest() throws SQLException {
 
         mockRecipient("name1@gmail.com", "name2@gmail.com");
-        Mail mail = controller.processRequest(request);
+        String subject = "subject for test";
+        String content = "content-na-ka";
 
-        assertEquals("subject for test", mail.getSubject());
+        List<String> recipientList = controller.getRecipientList(request.getParameter("recipient"));
+        Mail mail = controller.createEmail(System.currentTimeMillis(),content,subject,recipientList);
+
+        assertEquals(subject, mail.getSubject());
         List<String> repList = mail.getReceipts();
         assertEquals("name1@gmail.com", repList.get(0));
         assertEquals("name2@gmail.com", repList.get(1));
-        assertEquals("content-na-ka", mail.getContent());
+        assertEquals(content, mail.getContent());
     }
 
 
@@ -101,7 +105,9 @@ public class SendMailControllerTest {
             new ContactPerson("", companyRecipients[i], "", "abc").saveIt();
         }
 
-        Mail mail = controller.processRequest(request);
+        List<String> recipientList = controller.getRecipientList(request.getParameter("recipient"));
+        Mail mail = controller.createEmail(System.currentTimeMillis(),"bla","bbla",recipientList);
+
 
         List<String> repList = mail.getReceipts();
         for (int i = 0; i < repList.size(); ++i) {
@@ -121,7 +127,8 @@ public class SendMailControllerTest {
 
         mockRecipient("company:" + company);
 
-        Mail mail = controller.processRequest(request);
+        List<String> recipientList = controller.getRecipientList(request.getParameter("recipient"));
+        Mail mail = controller.createEmail(System.currentTimeMillis(),"bla","bbla",recipientList);
 
         List<String> recipients = mail.getReceipts();
 
@@ -141,7 +148,8 @@ public class SendMailControllerTest {
 
         mockRecipient("company:\"" + company + "\"");
 
-        Mail mail = controller.processRequest(request);
+        List<String> recipientList = controller.getRecipientList(request.getParameter("recipient"));
+        Mail mail = controller.createEmail(System.currentTimeMillis(),"bla","bbla",recipientList);
 
         List<String> recipients = mail.getReceipts();
 
@@ -174,7 +182,9 @@ public class SendMailControllerTest {
 
         mockRecipient("company:\"" + company);
 
-        Mail mail = controller.processRequest(request);
+        List<String> recipientList = controller.getRecipientList(request.getParameter("recipient"));
+        Mail mail = controller.createEmail(System.currentTimeMillis(),"bla","bbla",recipientList);
+
 
         List<String> recipients = mail.getReceipts();
 
@@ -194,7 +204,8 @@ public class SendMailControllerTest {
 
         mockRecipient("company:" + company);
 
-        Mail mail = controller.processRequest(request);
+        List<String> recipientList = controller.getRecipientList(request.getParameter("recipient"));
+        Mail mail = controller.createEmail(System.currentTimeMillis(),"bla","bbla",recipientList);
 
         List<String> recipients = mail.getReceipts();
 
@@ -237,10 +248,10 @@ public class SendMailControllerTest {
     @Test
     public void sendEmailToDeletedContactPerson() throws IOException {
         String email = "terry@odde.com";
-        List<ContactPerson> persons = mockRecipient(email);
-        persons.stream().forEach(person -> {
-            person.setForgotten(true);
-            person.saveIt();
+        List<ContactPerson> contacts = mockRecipient(email);
+        contacts.stream().forEach(contact -> {
+            contact.setForgotten(true);
+            contact.saveIt();
         });
 
         controller.doPost(request, response);

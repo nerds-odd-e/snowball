@@ -308,14 +308,14 @@ public class ContactPerson extends ApplicationModel {
         return where(CONSENT_SENT + " is null");
     }
 
-    public static boolean isValidEmail(String email){
+    static boolean isValidEmail(String email){
         String emailPattern = "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
         Pattern p = Pattern.compile(emailPattern);
         Matcher m = p.matcher(email);
         return m.matches();
     }
 
-    public static boolean isValidCountry(String country){
+    static boolean isValidCountry(String country){
         return validCountryList().contains(country.toLowerCase());
     }
 

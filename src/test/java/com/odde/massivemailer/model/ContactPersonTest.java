@@ -228,4 +228,33 @@ public class ContactPersonTest {
 		assertFalse(ContactPerson.isValidCountry("Mingjia"));
 	}
 
+    private List<ContactPerson> createContactsForTest() {
+        String csvData = preparecsvDataForTest();
+        ContactPerson.createContacts(csvData);
+
+        return ContactPerson.prepareContactsList(csvData);
+    }
+
+    private List<ContactPerson> getContactPeopleList(String name, String email, String lastname, String company, String location) {
+        List<ContactPerson> newContacts = new ArrayList();
+        ContactPerson contacts = new ContactPerson(name, email, lastname, company, location);
+        newContacts.add(contacts);
+        return newContacts;
+    }
+
+    @Test
+    public void noAdditionalContactAddedWhenContactAlreadyExist(){
+        List<ContactPerson> contacts = createContactsForTest();
+        assertEquals(2, contacts.size());
+
+        int shaileshCount = 0;
+        for(ContactPerson cp : contacts){
+            if(cp.getEmail().equals("forshailesh@gmail.com")){
+                shaileshCount++;
+            }
+        }
+        assertEquals(1, shaileshCount);
+
+    }
+
 }

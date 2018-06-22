@@ -2,6 +2,7 @@ package com.odde.massivemailer.service;
 
 import com.odde.massivemailer.model.Mail;
 
+import javax.mail.Message;
 import java.util.List;
 
 public class MockMailService implements MailService {
@@ -12,7 +13,7 @@ public class MockMailService implements MailService {
     }
 
     @Override
-    public List<Mail> readEmail(boolean readFlag) {
+    public List<Message> readEmail(boolean readFlag) {
         //do nothing
         return null;
     }
