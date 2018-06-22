@@ -13,6 +13,7 @@ public interface MailService {
     String SMTP_ADDR = "smtp.gmail.com";
     int SMTP_PORT = 587;
     int IMAP_PORT = 143;
+    String IMAP_HOST ="imap.gmail.com" ;
 
     void send(Mail email) throws EmailException;
 
@@ -22,7 +23,10 @@ public interface MailService {
         if (mailService == null) {
             MailService ms = new MockMailService();
             if (!isMailServiceMocked()) {
-                MailConfiguration config = new MailConfiguration(System.getenv("MM_EMAIL_USERID"), System.getenv(EMAIL_PASSWORD), SMTP_ADDR, SMTP_PORT, IMAP_PORT);
+                MailConfiguration config = new MailConfiguration(System.getenv("MM_EMAIL_USERID"),
+                        System.getenv(EMAIL_PASSWORD),
+                        ServerConfig.get(SMTP_ADDR,SMTP_PORT),
+                        ServerConfig.get(IMAP_HOST,IMAP_PORT));
                 final Session mailSession = createMailSession();
                 ms = new GMailService(config, mailSession);
             }
