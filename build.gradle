@@ -125,23 +125,12 @@ tasks.cucumber {
     }
 }
 
-task cucumber_trigger {
-    group "verification"
-    finalizedBy "cucumber"
-    doFirst {
-        cucumber {
-            tags = ['@trigger']
-        }
-    }
-}
-
-
 task cucumber_now {
     group "verification"
     finalizedBy "cucumber"
     doFirst {
         cucumber {
-            tags = ['~@system', '@now']
+            tags = ['@now']
         }
     }
 }

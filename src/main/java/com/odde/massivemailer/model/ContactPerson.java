@@ -4,7 +4,6 @@ import com.odde.massivemailer.model.validator.UniquenessValidator;
 import com.odde.massivemailer.service.LocationProviderService;
 import com.odde.massivemailer.service.exception.GeoServiceException;
 import com.odde.massivemailer.util.DateUtil;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.annotations.Table;
@@ -30,8 +29,6 @@ public class ContactPerson extends ApplicationModel {
     public static final String EMAIL = "Email";
     public static final String COMPANY = "Company";
     public static final String LOCATION = "Location";
-    public static final String COURSES_SENT = "courses_sent";
-    public static final String DATE_SENT = "date_sent";
     public static final String LONGITUDE = "Longitude";
     public static final String LATITUDE = "Latitude";
     public static final String CONSENT_SENT = "consent_sent";
@@ -185,18 +182,6 @@ public class ContactPerson extends ApplicationModel {
 
     public void setCompany(String company) {
         setAttribute(COMPANY, company);
-    }
-
-    public String getCoursesSent() {
-        return getAttribute(COURSES_SENT);
-    }
-
-    public void setCoursesSent(String coursesSent) {
-        setAttribute(COURSES_SENT, coursesSent);
-    }
-
-    public String getDateSent() {
-        return getAttribute(DATE_SENT);
     }
 
     private void setAttribute(String name, String value) {

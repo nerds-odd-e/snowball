@@ -20,11 +20,6 @@ public class MailConfiguration {
     }
 
 
-    public Store getImapStore(Session session) throws MessagingException {
-        Store store = session.getStore("imap");
-        store.connect(this.imap.host(),this.imap.port(),this.username,this.password);
-        return  store;
-    }
     public Transport getSmtpTransport(Session session) throws MessagingException {
         Transport transport = session.getTransport("smtp");
         transport.connect(this.smtp.host(), this.smtp.port(),this.username, this.password);

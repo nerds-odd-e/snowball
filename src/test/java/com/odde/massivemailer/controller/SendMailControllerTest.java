@@ -6,21 +6,22 @@ import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.model.SentMail;
 import com.odde.massivemailer.service.GMailService;
-import com.odde.massivemailer.startup.Universe;
 import org.javalite.activejdbc.LazyList;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
@@ -32,24 +33,22 @@ import static org.mockito.Mockito.*;
 public class SendMailControllerTest {
     private SendMailController controller;
 
+    @Mock
     private GMailService gmailService;
 
     private MockHttpServletRequest request;
 
     private MockHttpServletResponse response;
 
+    @Captor
+    private ArgumentCaptor<SentMail> notificationCaptor;
+
 
     @Before
-    public void setUp() throws ServletException {
-        gmailService = mock(GMailService.class);
-
-        Universe.createUniverse(
-                new Universe.MockConfiguration()
-                        .with(gmailService)
-        );
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
 
         controller = new SendMailController();
-        controller.init(mock(ServletConfig.class));
         controller.setMailService(gmailService);
 
         request = new MockHttpServletRequest();
@@ -80,18 +79,14 @@ public class SendMailControllerTest {
     @Test
     public void testProcessRequest() throws SQLException {
 
-        mockRecipient("name1@gmail.com", "name2@gmail.com");
-        String subject = "subject for test";
-        String content = "content-na-ka";
+        mockRecipient("name1@gmail.com;name2@gmail.com");
+        Mail mail = controller.processRequest(request);
 
-        List<String> recipientList = controller.getRecipientList(request.getParameter("recipient"));
-        Mail mail = controller.createEmail(System.currentTimeMillis(),content,subject,recipientList);
-
-        assertEquals(subject, mail.getSubject());
+        assertEquals("subject for test", mail.getSubject());
         List<String> repList = mail.getReceipts();
         assertEquals("name1@gmail.com", repList.get(0));
         assertEquals("name2@gmail.com", repList.get(1));
-        assertEquals(content, mail.getContent());
+        assertEquals("content-na-ka", mail.getContent());
     }
 
 
@@ -105,9 +100,7 @@ public class SendMailControllerTest {
             new ContactPerson("", companyRecipients[i], "", "abc").saveIt();
         }
 
-        List<String> recipientList = controller.getRecipientList(request.getParameter("recipient"));
-        Mail mail = controller.createEmail(System.currentTimeMillis(),"bla","bbla",recipientList);
-
+        Mail mail = controller.processRequest(request);
 
         List<String> repList = mail.getReceipts();
         for (int i = 0; i < repList.size(); ++i) {
@@ -127,8 +120,7 @@ public class SendMailControllerTest {
 
         mockRecipient("company:" + company);
 
-        List<String> recipientList = controller.getRecipientList(request.getParameter("recipient"));
-        Mail mail = controller.createEmail(System.currentTimeMillis(),"bla","bbla",recipientList);
+        Mail mail = controller.processRequest(request);
 
         List<String> recipients = mail.getReceipts();
 
@@ -148,8 +140,7 @@ public class SendMailControllerTest {
 
         mockRecipient("company:\"" + company + "\"");
 
-        List<String> recipientList = controller.getRecipientList(request.getParameter("recipient"));
-        Mail mail = controller.createEmail(System.currentTimeMillis(),"bla","bbla",recipientList);
+        Mail mail = controller.processRequest(request);
 
         List<String> recipients = mail.getReceipts();
 
@@ -182,9 +173,7 @@ public class SendMailControllerTest {
 
         mockRecipient("company:\"" + company);
 
-        List<String> recipientList = controller.getRecipientList(request.getParameter("recipient"));
-        Mail mail = controller.createEmail(System.currentTimeMillis(),"bla","bbla",recipientList);
-
+        Mail mail = controller.processRequest(request);
 
         List<String> recipients = mail.getReceipts();
 
@@ -204,8 +193,7 @@ public class SendMailControllerTest {
 
         mockRecipient("company:" + company);
 
-        List<String> recipientList = controller.getRecipientList(request.getParameter("recipient"));
-        Mail mail = controller.createEmail(System.currentTimeMillis(),"bla","bbla",recipientList);
+        Mail mail = controller.processRequest(request);
 
         List<String> recipients = mail.getReceipts();
 
@@ -215,7 +203,7 @@ public class SendMailControllerTest {
     }
 
     @Test
-    public void SendMailMustSaveNotification() throws IOException {
+    public void SendMailMustSaveNotification() throws ServletException, IOException {
         mockRecipient("terry@odd-e.com");
 
         controller.doPost(request, response);
@@ -227,34 +215,7 @@ public class SendMailControllerTest {
         assertThat(capturedSentMail.getSubject(), is("subject for test"));
     }
 
-    private List<ContactPerson> mockRecipient(String... emails) {
-        List<ContactPerson> contacts =
-                Arrays.asList(emails).stream()
-                        .map(email -> {
-                            ContactPerson person = new ContactPerson(email, email, email);
-                            person.saveIt();
-                            return person;
-                        })
-                        .collect(Collectors.toList());
-
-        String recipients = contacts.stream()
-                .map(ContactPerson::getEmail)
-                .collect(Collectors.joining(";"));
-        request.setParameter("recipient", recipients);
-
-        return contacts;
-    }
-
-    @Test
-    public void sendEmailToDeletedContactPerson() throws IOException {
-        String email = "terry@odde.com";
-        List<ContactPerson> contacts = mockRecipient(email);
-        contacts.stream().forEach(contact -> {
-            contact.setForgotten(true);
-            contact.saveIt();
-        });
-
-        controller.doPost(request, response);
-        verify(gmailService, times(0)).send(any(Mail.class));
+    private void mockRecipient(String recipient){
+        request.setParameter("recipient", recipient);
     }
 }

@@ -46,6 +46,4 @@ public interface MailService {
         props.put("mail.smtp.auth", "true");
         return Session.getDefaultInstance(props);
     }
-
-    List<Message> readEmail(boolean readFlag) throws MessagingException;
 }

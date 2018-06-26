@@ -1,7 +1,5 @@
 package com.odde.massivemailer.model;
 
-import org.javalite.activejdbc.Model;
-
 public class SentMailVisit extends ApplicationModel {
     public String getEmailAddress() {
         return (String) get("email_address");

@@ -30,18 +30,6 @@ public class GMailService implements MailService {
         this.sendEmailViaGmail(msg);
     }
 
-    @Override
-    public List<Message> readEmail(boolean readFlag) throws MessagingException {
-
-        Store store = mailConfig.getImapStore(session);
-
-        Folder inbox = store.getFolder("inbox");
-        inbox.open(Folder.READ_ONLY);
-        final Message[] messages = inbox.search(new FlagTerm(new Flags(Flags.Flag.SEEN), readFlag));
-        return Arrays.asList(messages);
-    }
-
-
     private void sendEmailViaGmail(List<Message> msgs) throws EmailException {
         try {
 

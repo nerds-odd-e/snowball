@@ -12,10 +12,4 @@ public class MockMailService implements MailService {
         // do nothing
     }
 
-    @Override
-    public List<Message> readEmail(boolean readFlag) {
-        //do nothing
-        return null;
-    }
-
 }

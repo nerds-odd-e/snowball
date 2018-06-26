@@ -1,4 +1,3 @@
-DROP TABLE IF EXISTS contact_people;
 CREATE TABLE IF NOT EXISTS contact_people (
     id          INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
     name        VARCHAR(50),
@@ -10,9 +9,6 @@ CREATE TABLE IF NOT EXISTS contact_people (
     courses_sent    VARCHAR(255),
     date_sent       DATE,
     latitude DOUBLE NOT NULL DEFAULT 0,
-    longitude DOUBLE NOT NULL DEFAULT 0,
-    consent_sent DATE,
-    consent_received DATE,
-    forgotten BIT
+    longitude DOUBLE NOT NULL DEFAULT 0
 );
 

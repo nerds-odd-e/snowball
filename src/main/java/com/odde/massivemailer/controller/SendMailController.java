@@ -4,10 +4,7 @@ import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.model.SentMail;
-import com.odde.massivemailer.service.GDPRService;
-import com.odde.massivemailer.startup.Universe;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,29 +18,12 @@ import java.util.StringTokenizer;
 @WebServlet("/sendMail")
 public class SendMailController extends AppController {
 
-    private volatile GDPRService gdprService;
-
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        gdprService = Universe.gdprService();
-    }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
         try {
+            Mail email = processRequest(req);
 
-            String requestRecipients = req.getParameter("recipient");
-            final List<String> recipientList = getRecipientList(requestRecipients);
-            if (recipientList.isEmpty()) {
-                return;
-            }
-
-            String content = req.getParameter("content");
-            String subject = req.getParameter("subject");
-
-            final Mail email = createEmail(System.currentTimeMillis(), content, subject, recipientList);
             SentMail sentMail = email.asSentMail().saveAll();
             email.setSentMail(sentMail);
 
@@ -60,48 +40,39 @@ public class SendMailController extends AppController {
         }
     }
 
-    public List<String> getRecipientList(String recipients) throws SQLException {
+    public Mail processRequest(HttpServletRequest req) throws SQLException {
 
-        StringTokenizer st = new StringTokenizer(recipients, ";");
+        Mail email = new Mail();
+        String tempRecipient = req.getParameter("recipient");
+        StringTokenizer st = new StringTokenizer(tempRecipient, ";");
         ArrayList<String> recipientList = new ArrayList<String>();
         while (st.hasMoreTokens()) {
             String recipient = st.nextToken();
             if (recipient.startsWith("company:")) {
 
                 String[] aaa = recipient.split(":");
-                String company = aaa[1];
+                String company = aaa[1].toString();
                 List<ContactPerson> contactList = getContactPersons(company);
                 if (contactList.isEmpty()) {
                     throw new SQLException();
                 }
                 for (ContactPerson contactPerson : contactList) {
-                    if (gdprService.canContactReceiveEmail(contactPerson)) {
-                        recipientList.add(contactPerson.getEmail());
-                    }
+                    recipientList.add(contactPerson.getEmail());
                 }
             } else {
-                ContactPerson contact = ContactPerson.getContactByEmail(recipient);
-                if (contact == null || gdprService.canContactReceiveEmail(contact)) {
-                    recipientList.add(recipient);
-                }
+                recipientList.add(recipient);
             }
         }
-
-        return recipientList;
-    }
-
-    public Mail createEmail(long messageId, String content, String subject, List<String> recipientList) {
-        Mail email = new Mail();
-        email.setMessageId(messageId);
-        email.setContent(content);
-        email.setSubject(subject);
+        email.setMessageId(System.currentTimeMillis());
+        email.setContent(req.getParameter("content"));
+        email.setSubject(req.getParameter("subject"));
 
         email.setReceipts(recipientList);
 
         return email;
     }
 
-    private List<ContactPerson> getContactPersons(String company) {
+    private List<ContactPerson> getContactPersons(String company) throws SQLException {
         List<ContactPerson> contactList;
 
         company = company.replaceAll("\"", "");

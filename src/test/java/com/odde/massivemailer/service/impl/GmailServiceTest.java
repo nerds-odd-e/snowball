@@ -117,25 +117,4 @@ public class GmailServiceTest {
         assertEquals("<html><body>Hi Dude<img height=\"42\" width=\"42\" src=\"http://" + InetAddress.getLocalHost().getHostAddress() + ":8070/massive_mailer/resources/images/qrcode.png?token=" + mail.getSentMail().getSentMailVisits().get(1).getId() + "\"></img></body></html>", GreenMailUtil.getBody(greenMail.getReceivedMessages()[1]));
 
     }
-
-
-    @Test
-    public void readEmail_when_requested_unreadEmails_shouldReturnUnreadEmails() throws MessagingException, EmailException {
-        Mail mail = createEmail();
-        gmailWithGreenMail.send(mail);
-        List<Message> unreadMails = gmailWithGreenMail.readEmail(false);
-        Assertions.assertThat(unreadMails).isNotNull();
-    }
-
-    @Test
-    public void readEmail_ReadsTheUnredEmailFromInbox() throws EmailException, MessagingException {
-        Mail mail = createEmail();
-        gmailWithGreenMail.send(mail);
-        List<Message> unreadEmails = gmailWithGreenMail.readEmail(false);
-
-        Assertions.assertThat(unreadEmails).hasAtLeastOneElementOfType(Message.class);
-
-    }
-
-
 }
