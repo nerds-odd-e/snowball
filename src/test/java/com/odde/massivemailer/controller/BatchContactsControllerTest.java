@@ -22,6 +22,7 @@ public class BatchContactsControllerTest {
         controller = new BatchContactsController();
 
         request = new MockHttpServletRequest();
+
         response = new MockHttpServletResponse();
 
         request.setParameter("data",

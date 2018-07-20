@@ -12,20 +12,6 @@
             </button>
             <a class="navbar-brand" href="index.html">Massive Mailer</a>
         </div>
-        <!-- Top Menu Items -->
-        <ul class="nav navbar-right top-nav">
-            <li class="dropdown"><a href="#" class="dropdown-toggle"
-                data-toggle="dropdown"><i class="fa fa-envelope"></i> Terry <b
-                    class="caret"></b></a>
-                <ul class="dropdown-menu">
-                    <li><a href="#"><i class="fa fa-fw fa-user"></i> Profile</a></li>
-                    <li><a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a></li>
-                    <li><a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#"><i class="fa fa-fw fa-power-off"></i> Log
-                            Out</a></li>
-                </ul></li>
-        </ul>
         <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav side-nav">
@@ -55,9 +41,6 @@
                 <li><a id="emailtracking" href="email_tracking.jsp"><span
                         class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                         Email Tracking</a></li>
-                <li><a id="GDPR" href="gdpr"><span
-                        class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                        GDPR</a></li>
             </ul>
         </div>
     <!-- /.navbar-collapse -->

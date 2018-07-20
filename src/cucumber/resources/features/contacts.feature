@@ -40,7 +40,6 @@ Feature: Contacts
       | balakg@gmail.com      |
       | forshailesh@gmail.com |
 
-  @developing
   Scenario Outline: Update contact information if already exists in the system
     Given Contact for "<email>" exists in the system
     When I upload a valid CSV file with "<email>"
