@@ -261,38 +261,6 @@ public class ContactPerson extends ApplicationModel {
         return get("date_sent");
     }
 
-    public void setConsentSend(LocalDate requestDate) {
-        set(CONSENT_SENT, DateUtil.asDate(requestDate));
-    }
-
-    public void setConsentReceived(LocalDate receivedDate) {
-        set(CONSENT_RECEIVED, DateUtil.asDate(receivedDate));
-    }
-
-
-    public void setForgotten(boolean forgotten) {
-        set(FORGOTTEN, forgotten );
-    }
-
-    public boolean isForgotten() {
-        Boolean forgotten = (Boolean) get(FORGOTTEN);
-        return forgotten != null ? forgotten : false;
-    }
-
-    public LocalDate getConsentSend() {
-        final Date date = (Date) get(CONSENT_SENT);
-        return date != null ? DateUtil.asLocalDate(date) : null;
-    }
-    
-    public LocalDate getConsentReceived() {
-        final Date date = (Date) get(CONSENT_RECEIVED);
-        return date != null ? DateUtil.asLocalDate(date) : null;
-    }
-
-    public static LazyList<ContactPerson> getContactsWithoutConsentRequest() {
-        return where(CONSENT_SENT + " is null");
-    }
-
     static boolean isValidEmail(String email){
         String emailPattern = "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
         Pattern p = Pattern.compile(emailPattern);

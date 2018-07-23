@@ -135,9 +135,6 @@ public class ContactSteps {
             String contactDetail = contactString.get(i);
             String email = contactDetail.substring(0, contactDetail.indexOf(","));
             ContactPerson contactPerson = ContactPerson.getContactByEmail(email);
-            if (contactPerson != null) {
-                contactPerson.setForgotten(true);
-            }
             contactToWrite.append(contactDetail);
             contactToWrite.append('\n');
         }

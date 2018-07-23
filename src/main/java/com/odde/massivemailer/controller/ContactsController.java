@@ -26,13 +26,6 @@ public class ContactsController extends AppController {
         resp.sendRedirect("contactlist.jsp?" + resultMsg);
     }
 
-    public void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException {
-        String email = req.getParameter("email");
-        ContactPerson person = ContactPerson.getContactByEmail(email);
-        person.setForgotten(true);
-        person.saveIt();
-    }
-
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String convertedContactToJSON = null;
         if (req.getParameter("email") == null) {
