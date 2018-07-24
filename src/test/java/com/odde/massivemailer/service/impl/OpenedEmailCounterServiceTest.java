@@ -44,8 +44,8 @@ public class OpenedEmailCounterServiceTest {
         SentMail sentMail = new SentMail();
         sentMail.setMessageId(email_id);
         sentMail.setSubject("test subject");
-        String input = "2016-11-18 01:02:03";
-        SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String input = "Fri Nov 18 03:19:03 SGT 2016";
+        SimpleDateFormat parser = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
         TimeZone tz = TimeZone.getTimeZone("Asia/Singapore");
         parser.setTimeZone(tz);
         try {

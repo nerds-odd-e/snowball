@@ -28,7 +28,6 @@ public class ContactPerson extends ApplicationModel {
     public static final String LASTNAME = "LastName";
     public static final String EMAIL = "Email";
     public static final String COMPANY = "Company";
-    public static final String CONSENT_ID = "consent_id";
     public static final String LOCATION = "Location";
     public static final String LONGITUDE = "Longitude";
     public static final String LATITUDE = "Latitude";
@@ -73,28 +72,6 @@ public class ContactPerson extends ApplicationModel {
         setLastname(lastname);
         setCompany(company);
         setLocation(location);
-        if (!StringUtils.isEmpty(getLocation())) {
-            LocationProviderService locationProviderService = new LocationProviderService();
-            try {
-                Location locationDetails = locationProviderService.getLocationForName(getLocation());
-
-                if (locationDetails != null) {
-                    set(LATITUDE, locationDetails.getLat());
-                    set(LONGITUDE, locationDetails.getLng());
-                }
-            } catch (GeoServiceException e) {
-                throw new RuntimeException("failed to get location.", e);
-            }
-        }
-    }
-
-    public ContactPerson(String name, String email, String lastname, String company,String location, String consentId) {
-        setName(name);
-        setEmail(email);
-        setLastname(lastname);
-        setCompany(company);
-        setLocation(location);
-        setConsentId(consentId);
         if (!StringUtils.isEmpty(getLocation())) {
             LocationProviderService locationProviderService = new LocationProviderService();
             try {
@@ -205,14 +182,6 @@ public class ContactPerson extends ApplicationModel {
 
     public void setCompany(String company) {
         setAttribute(COMPANY, company);
-    }
-
-    public void setConsentId(String consentId) {
-        setAttribute(CONSENT_ID, consentId);
-    }
-
-    public String getConsentId() {
-        return getAttribute(CONSENT_ID);
     }
 
     private void setAttribute(String name, String value) {
