@@ -24,6 +24,19 @@ Feature: Contacts
       | user2@odd-e.com | Aigle   | Switzerland | jane  | doe      | odd-e   |
       | user4@odd-e.com | Dubna   | Russia      | mark  | smith    | odd-e   |
 
+  @developing
+  Scenario Outline: Verify Add New Contact To Contact List with ConsentId
+    When Add A Contact "<email>" and "<consentId>"
+    Then Page Should Contain "<email>"
+    And  Page Should Contain "<consentId>"
+    And Page Should Success
+
+    Examples:
+      | email           | consentId |
+      | user1@odd-e.com | abc       |
+      | user2@odd-e.com | def       |
+      | user4@odd-e.com | ghi       |
+
   Scenario: Edit Location Information of Contact
     Given "terry@odd-e.com" which in "China" and "Chengdu" is a contact already
     When I change the location information of contact to be "China" and "Chengdu"
@@ -61,7 +74,7 @@ Feature: Contacts
     And no consentId included
     When I add the contact in the system
     Then Contact record is created
-      | email,firstname,lastname,company,country,city                |
-      | terry20180724@odd-e.com,Terry,Tang,odd-e,China,Xian       |
+      | email,firstname,lastname,company,country,city       |
+      | terry20180724@odd-e.com,Terry,Tang,odd-e,China,Xian |
     And a unique consentId is generated
     And consent email is sent with the consentId in the mail text
