@@ -2,7 +2,34 @@ Feature: batch enroll students
   As a user I want to enroll multiple students to course
 
   Background:
-    Given There is a course "CSD Tokyo" already
+    Given There is a course "CSD Tokyo" already registered
+
+  @developing
+  Scenario: Enroll students
+    Given Tom exists in the system
+    And Carry doesn't exist in the system
+    When I enroll Tom and Carry
+    Then Enrollment Result page is displayed
+    And "Tom" and "Carry" are displayed as "OK"
+    When I visit the course "CSD Tokyo" page
+    Then "Tom" and "Carry" are displayed
+    When I visit the contact page
+    Then "Tom" is displayed as updated student
+    And "Carry" is displayed as new student
+
+  @developing
+  Scenario: Enroll students throws errors
+    Given Tom exists in the system
+    And Carry doesn't exist in the system
+    When I enroll Tom with invalid email
+    And I enroll Carry with invalid email
+    Then Enrollment Result page is displayed
+    And "Tom" and "Carry" are displayed as "Failed"
+    When I visit the course "CSD Tokyo" page
+    Then "Tom" and "Carry" are not displayed
+    When I visit the contact page
+    Then "Tom" is displayed but not updated
+    And "Carry" is not displayed
 
   @developing
   Scenario: Add 1 new student
@@ -17,35 +44,7 @@ Feature: batch enroll students
     Then "Tom" is displayed in Contact List
     When I visit "CSD Tokyo" summary
     Then "Tom" is enrolled
-
-  @developing
-  Scenario: Add 1 exists student
-    Given Carry does exists in system
-      | email,firstname,lastname,company,country,city         |
-      | carry@example.com,Carry,Fisher,CS,Singapore,Singapore |
-    When I enroll a student
-    Then Enrollment Result page is displayed
-    And "Carry" is displayed as "OK"
-      | carry@example.com |
-    When I visit Contact List page
-    Then "Carry" is displayed in Contact List
-    When I visit "CSD Tokyo" summary
-    Then "Carry" is enrolled
-
-  @developing
-  Scenario: Error on enroll a students
-    Given Tom does exists in system
-      | email,firstname,lastname,company,country,city |
-      | tom@.com,Tom,Smith,CS,Singapore,Singapore     |
-    When I enroll students
-    Then Enrollment Result page is displayed
-    And "Tom" is displayed as "NG"
-      | tom@example.com |
-    When I visit Contact List page
-    Then "Tom" is not displayed in Contact List
-    When I visit "CSD Tokyo" summary
-    Then "Tom" is not enrolled
-
+    
   @developing
   Scenario: Mixed (success/error) on enroll multiple students
     Given Tom does exists in system
