@@ -42,7 +42,6 @@ Feature: Contacts
     When I change the location information of contact to be "China" and "Chengdu"
     Then contact "terry@odd-e.com"'s locations should be "China/Chengdu"
 
-  @now
   Scenario: Upload CSV with Multiple Contacts
     Given There are the following contacts in the CSV file that do not exist in the system
       | email,firstname,lastname,company,country,city                |
