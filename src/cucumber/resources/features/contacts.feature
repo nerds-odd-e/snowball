@@ -53,3 +53,15 @@ Feature: Contacts
       | user1@odd-e.com | john | smith    | odd-e   | Chengdu/China     |
       | user2@odd-e.com | jane | doe      | odd-e   | Aigle/Switzerland |
       | user3@odd-e.com | mark | smith    | odd-e   | Dubna/Russia      |
+
+  @wip
+  Scenario: Add new contact without consentId
+    Given Contact for "terry20180724@odd-e.com" which is not existing in the system
+    And name is "Terry" and lastname is "Tang" and company is "odd-e" and location is "China" and "Xian"
+    And no consentId included
+    When I add the contact in the system
+    Then Contact record is created
+      | email,firstname,lastname,company,country,city                |
+      | terry20180724@odd-e.com,Terry,Tang,odd-e,China,Xian       |
+    And a unique consentId is generated
+    And consent email is sent with the consentId in the mail text
