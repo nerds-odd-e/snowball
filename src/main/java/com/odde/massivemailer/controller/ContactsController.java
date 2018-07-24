@@ -16,10 +16,15 @@ public class ContactsController extends AppController {
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String resultMsg;
-
         try {
             ContactPerson.createContact(req.getParameter("city"), req.getParameter("country"), req.getParameter("email"), req.getParameter("name"),req.getParameter("lastname"),req.getParameter("company"));
             resultMsg = "status=success&msg=Add contact successfully";
+            if(req.getParameter("consent_id") != null) {
+                // TODO generate consent_id
+                // TODO send email with the consent_id
+                resultMsg += " with existing consent_id";
+            } else {
+            }
         } catch (Exception e) {
             resultMsg = "status=failed&msg=" + e.getMessage();
         }
