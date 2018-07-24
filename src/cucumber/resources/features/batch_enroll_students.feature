@@ -44,7 +44,7 @@ Feature: batch enroll students
     Then "Tom" is displayed in Contact List
     When I visit "CSD Tokyo" summary
     Then "Tom" is enrolled
-    
+
   @developing
   Scenario: Mixed (success/error) on enroll multiple students
     Given Tom does exists in system
