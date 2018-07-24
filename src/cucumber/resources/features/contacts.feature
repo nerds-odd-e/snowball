@@ -24,6 +24,19 @@ Feature: Contacts
       | user2@odd-e.com | Aigle   | Switzerland | jane  | doe      | odd-e   |
       | user4@odd-e.com | Dubna   | Russia      | mark  | smith    | odd-e   |
 
+  @developing
+  Scenario Outline: Verify Add New Contact To Contact List with ConsentId
+    When Add A Contact "<email>" and "<consentId>"
+    Then Page Should Contain "<email>"
+    And  Page Should Contain "<consentId>"
+    And Page Should Success
+
+    Examples:
+      | email           | consentId |
+      | user1@odd-e.com | abc       |
+      | user2@odd-e.com | def       |
+      | user4@odd-e.com | ghi       |
+
   Scenario: Edit Location Information of Contact
     Given "terry@odd-e.com" which in "China" and "Chengdu" is a contact already
     When I change the location information of contact to be "China" and "Chengdu"
@@ -39,6 +52,7 @@ Feature: Contacts
       | balakg@gmail.com      |
       | forshailesh@gmail.com |
 
+  @developing
   Scenario Outline: Update contact information if already exists in the system
     Given Contact for "<email>" exists in the system
     When I upload a valid CSV file with "<email>"
@@ -46,9 +60,22 @@ Feature: Contacts
     And the contact should be updated with "<lastname>"
     And the contact should be updated with "<company>"
     And the contact should be updated with "<location>"
+    And the contact should be updated with "<consentId>"
 
     Examples:
-      | email           | name | lastname | company | location          |
-      | user1@odd-e.com | john | smith    | odd-e   | Chengdu/China     |
-      | user2@odd-e.com | jane | doe      | odd-e   | Aigle/Switzerland |
-      | user3@odd-e.com | mark | smith    | odd-e   | Dubna/Russia      |
+      | email           | name | lastname | company | location          | consentId                        |
+      | user1@odd-e.com | john | smith    | odd-e   | Chengdu/China     | ef98e3b803ab2326dbadf8fa8ed1d1ca |
+      | user2@odd-e.com | jane | doe      | odd-e   | Aigle/Switzerland | 19a70418bdb440c2c0f97ddab8fa486d |
+      | user3@odd-e.com | mark | smith    | odd-e   | Dubna/Russia      | 7b2ea5378b29a1f607198980f55b0615 |
+
+  @developing
+  Scenario: Add new contact without consentId
+    Given Contact for "terry20180724@odd-e.com" which is not existing in the system
+    And name is "Terry" and lastname is "Tang" and company is "odd-e" and location is "China" and "Xian"
+    And no consentId included
+    When I add the contact in the system
+    Then Contact record is created
+      | email,firstname,lastname,company,country,city       |
+      | terry20180724@odd-e.com,Terry,Tang,odd-e,China,Xian |
+    And a unique consentId is generated
+    And consent email is sent with the consentId in the mail text
