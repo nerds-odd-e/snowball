@@ -33,4 +33,12 @@ public class AddContactPage {
         driver.setTextField("company", company);
         this.addContact(email,country,city);
     }
+
+    public void addContactWithConsentId(String email, String country, String city, String consentId) {
+        driver.setTextField("email", email);
+        driver.setDropdownValue("country", country);
+        driver.setTextField("city", city);
+        driver.setTextField("consent_id", consentId);
+        driver.clickButton("add_button");
+    }
 }

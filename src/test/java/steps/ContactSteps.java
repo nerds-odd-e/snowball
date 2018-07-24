@@ -38,6 +38,23 @@ public class ContactSteps {
         site.addContactPage().addContactWithAllInput(email, country, city, name, lastName, company);
     }
 
+    @Given("^I am on the new contact page$")
+    public void i_am_on_the_new_contact_page() throws Throwable {
+        site.visit("add_contact.jsp");
+        pageShouldContain("Add Contact");
+    }
+
+    @Then("^I can see the element for \"([^\"]*)\"$")
+    public void i_can_see_the_element(String arg1) throws Throwable {
+        driver.findElementById(arg1);
+    }
+
+
+    @When("Add A Contact \"([^\"]*)\" at \"([^\"]*)\" and \"([^\"]*)\" with \"([^\"]*)\"")
+    public void addConsentId (String email, String country, String city, String consentId) {
+        site.addContactPage().addContactWithConsentId(email, country, city, consentId);
+    }
+
     @Given("^Contact for \"([^\"]*)\" exists in the system$")
     public void aContactAlreadyExistInDB(String email) {
         assertFalse(email.isEmpty());

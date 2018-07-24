@@ -94,6 +94,12 @@
 											<input id="city" class="form-control" name="city" />
 										</div>
 									</div>
+									<div class="row">
+                                        <div class="col-lg-1">ConsentId:</div>
+                                        <div class="col-lg-11">
+                                            <input id="consent_id" class="form-control" name="consent_id" />
+                                        </div>
+                                    </div>
 									<br> <br>
 									<div class="row">
 										<div class="col-lg-12">

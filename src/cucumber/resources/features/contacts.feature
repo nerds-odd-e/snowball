@@ -24,18 +24,24 @@ Feature: Contacts
       | user2@odd-e.com | Aigle   | Switzerland | jane  | doe      | odd-e   |
       | user4@odd-e.com | Dubna   | Russia      | mark  | smith    | odd-e   |
 
+  Scenario: Contact page item verification
+    Given I am on the new contact page
+    Then I can see the element for "consent_id"
+
   @developing
   Scenario Outline: Verify Add New Contact To Contact List with ConsentId
-    When Add A Contact "<email>" and "<consentId>"
+    When Add A Contact "<email>" at "<country>" and "<city>" with "<consentId>"
     Then Page Should Contain "<email>"
+    And  Page Should Contain "<country>"
+    And  Page Should Contain "<city>"
     And  Page Should Contain "<consentId>"
     And Page Should Success
 
     Examples:
-      | email           | consentId |
-      | user1@odd-e.com | abc       |
-      | user2@odd-e.com | def       |
-      | user4@odd-e.com | ghi       |
+      | email           | city    | country     | consentId                        |
+      | user1@odd-e.com | Chengdu | China       | ef98e3b803ab2326dbadf8fa8ed1d1ca |
+      | user2@odd-e.com | Aigle   | Switzerland | 19a70418bdb440c2c0f97ddab8fa486d |
+      | user4@odd-e.com | Dubna   | Russia      | 4bad761ad2d83a0302d29dfd1601279c |
 
   Scenario: Edit Location Information of Contact
     Given "terry@odd-e.com" which in "China" and "Chengdu" is a contact already
