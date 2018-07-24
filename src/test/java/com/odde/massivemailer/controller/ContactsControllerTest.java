@@ -2,6 +2,7 @@ package com.odde.massivemailer.controller;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThat;
 
 import com.odde.TestWithDB;
@@ -62,7 +63,7 @@ public class ContactsControllerTest {
     }
 
     @Test
-    public void addNewContact() throws Exception {
+    public void addNewContactWithoutConsentId() throws Exception {
         request.setParameter("company", "odd-e");
         request.setParameter("lastname", "Smith");
         request.setParameter("name", "Mark");
@@ -72,6 +73,20 @@ public class ContactsControllerTest {
         controller.doPost(request, response);
 
         assertEquals("contactlist.jsp?status=success&msg=Add contact successfully", response.getRedirectedUrl());
+    }
+
+    @Test
+    public void addNewContact() throws Exception {
+        request.setParameter("company", "odd-e");
+        request.setParameter("lastname", "Smith");
+        request.setParameter("name", "Mark");
+        request.setParameter("email", "newbie@gmail.com");
+        request.setParameter("country", "Singapore");
+        request.setParameter("city", "Singapore");
+        request.setParameter("consent_id", "0f60ada7d76eaa22651648cb39c349d5");
+        controller.doPost(request, response);
+
+        assertEquals("contactlist.jsp?status=success&msg=Add contact successfully with existing consent_id", response.getRedirectedUrl());
     }
 
 }
