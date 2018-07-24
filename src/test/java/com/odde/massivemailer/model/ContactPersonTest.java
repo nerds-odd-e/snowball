@@ -28,6 +28,7 @@ public class ContactPersonTest {
 		String name = "name";
 		String email = "email@abc.com";
 		String lastname = "lastname";
+		String consentId = "CD00002";
 		ContactPerson person = new ContactPerson(name, email, lastname);
 
 		assertEquals(name, person.getName());
@@ -61,13 +62,15 @@ public class ContactPersonTest {
 		String lastname = "lastname";
 		String company = "myCompany";
 		String location = "Singapore/Singapore";
-		ContactPerson person = new ContactPerson(name, email, lastname, company, location);
+		String consentId = "CD00002";
+		ContactPerson person = new ContactPerson(name, email, lastname, company, location, consentId);
 
 		assertEquals(name, person.getName());
 		assertEquals(email, person.getEmail());
 		assertEquals(lastname, person.getLastname());
 		assertEquals(company, person.getCompany());
 		assertEquals(location, person.getLocation());
+		assertEquals(consentId, person.getConsentId());
 	}
 
 	@Test
@@ -78,7 +81,8 @@ public class ContactPersonTest {
 		String lastname = "lastname";
 		String company = "myCompany";
 		String location = "Singapore/Singapore";
-		ContactPerson person = new ContactPerson(name, email, lastname, company, location);
+		String consentId = "CD00002";
+		ContactPerson person = new ContactPerson(name, email, lastname, company, location, consentId);
 
 		assertEquals(name, person.getName());
 		assertEquals(email, person.getEmail());
@@ -98,7 +102,8 @@ public class ContactPersonTest {
 			String lastname = "lastname";
 			String company = "myCompany";
 			String location = "Singapore/Singapore";
-			ContactPerson person = new ContactPerson(name, email, lastname, company, location);
+			String consentId = "CD00002";
+			ContactPerson person = new ContactPerson(name, email, lastname, company, location, consentId);
 			ContactPerson personInDB =CreateContactInDB(person);
 			assertNotNull(personInDB.getLatitude());
 			assertNotNull(personInDB.getLongitude());
@@ -190,13 +195,6 @@ public class ContactPersonTest {
         ContactPerson.createContacts(csvData);
 
         return ContactPerson.prepareContactsList(csvData);
-    }
-
-    private List<ContactPerson> getContactPeopleList(String name, String email, String lastname, String company, String location) {
-        List<ContactPerson> newContacts = new ArrayList();
-        ContactPerson contacts = new ContactPerson(name, email, lastname, company, location);
-        newContacts.add(contacts);
-        return newContacts;
     }
 
     @Test
