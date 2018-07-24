@@ -53,7 +53,7 @@ Feature: Contacts
       | balakg@gmail.com      |
       | forshailesh@gmail.com |
 
-  @wip
+  @developing
   Scenario Outline: Update contact information if already exists in the system
     Given Contact for "<email>" exists in the system
     When I upload a valid CSV file with "<email>"
@@ -69,7 +69,7 @@ Feature: Contacts
       | user2@odd-e.com | jane | doe      | odd-e   | Aigle/Switzerland | 19a70418bdb440c2c0f97ddab8fa486d |
       | user3@odd-e.com | mark | smith    | odd-e   | Dubna/Russia      | 7b2ea5378b29a1f607198980f55b0615 |
 
-  @wip
+  @developing
   Scenario: Add new contact without consentId
     Given Contact for "terry20180724@odd-e.com" which is not existing in the system
     And name is "Terry" and lastname is "Tang" and company is "odd-e" and location is "China" and "Xian"
