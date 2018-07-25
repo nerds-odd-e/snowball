@@ -47,6 +47,12 @@ Feature: Contacts
     When I change the location information of contact to be "China" and "Chengdu"
     Then contact "terry@odd-e.com"'s locations should be "China/Chengdu"
 
+  @developing
+  Scenario: Add consentid of exists Contact
+    Given "terry@odd-e.com" which with no consent id contact already
+    When I add consent id "abcd"
+    Then contact "terry@odd-e.com"'s consent id should be "abcd"
+
   Scenario: Upload CSV with Multiple Contacts
     Given There are the following contacts in the CSV file that do not exist in the system
       | email,firstname,lastname,company,country,city                |
@@ -57,7 +63,7 @@ Feature: Contacts
       | balakg@gmail.com      |
       | forshailesh@gmail.com |
 
-  @developing
+  @developing @now
   Scenario Outline: Update contact information if already exists in the system
     Given Contact for "<email>" exists in the system
     When I upload a valid CSV file with "<email>"
