@@ -3,7 +3,6 @@ package com.odde.massivemailer.model;
 import com.odde.massivemailer.model.validator.UniquenessValidator;
 import com.odde.massivemailer.service.LocationProviderService;
 import com.odde.massivemailer.service.exception.GeoServiceException;
-import com.odde.massivemailer.util.DateUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.annotations.Table;
@@ -11,7 +10,6 @@ import org.javalite.activejdbc.annotations.Table;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,11 +17,6 @@ import java.util.regex.Pattern;
 
 @Table("contact_people")
 public class ContactPerson extends ApplicationModel {
-    static {
-        validatePresenceOf("email");
-        validateWith(new UniquenessValidator("email"));
-    }
-
     public static final String FIRSTNAME = "FirstName";
     public static final String LASTNAME = "LastName";
     public static final String EMAIL = "Email";
@@ -34,15 +27,7 @@ public class ContactPerson extends ApplicationModel {
     public static final String CONSENT_SENT = "consent_sent";
     public static final String CONSENT_RECEIVED = "consent_received";
     public static final String FORGOTTEN = "forgotten";
-
-
-    public Double getLatitude() {
-        return getDoubleAttribute(LATITUDE);
-    }
-    public Double getLongitude() {
-        return getDoubleAttribute(LONGITUDE);
-    }
-
+    public static final String CONSENT_ID = "consent_id";
     private static final int EMAIL_INDEX = 0;
     private static final int FIRSTNAME_INDEX = 1;
     private static final int LASTNAME_INDEX = 2;
@@ -50,9 +35,20 @@ public class ContactPerson extends ApplicationModel {
     private static final int COUNTRY_INDEX = 4;
     private static final int CITY_INDEX = 5;
 
+    static {
+        validatePresenceOf("email");
+        validateWith(new UniquenessValidator("email"));
+    }
+
     public Map<String, String> attributes = new HashMap<>();
 
-    public ContactPerson() { }
+    public ContactPerson() {
+    }
+
+    public ContactPerson(String email, String consentId) {
+        setEmail(email);
+        setConsentId(consentId);
+    }
 
     public ContactPerson(String name, String email, String lastname) {
         this(name, email, lastname, "");
@@ -65,8 +61,7 @@ public class ContactPerson extends ApplicationModel {
         setCompany(company);
     }
 
-
-    public ContactPerson(String name, String email, String lastname, String company,String location) {
+    public ContactPerson(String name, String email, String lastname, String company, String location) {
         setName(name);
         setEmail(email);
         setLastname(lastname);
@@ -87,7 +82,7 @@ public class ContactPerson extends ApplicationModel {
         }
     }
 
-    public ContactPerson(String name, String email, String lastname, String company,String location, String coursesList, String dateSent) {
+    public ContactPerson(String name, String email, String lastname, String company, String location, String coursesList, String dateSent) {
         setName(name);
         setEmail(email);
         setLastname(lastname);
@@ -101,7 +96,6 @@ public class ContactPerson extends ApplicationModel {
         return where(LOCATION + "<>''");
     }
 
-
     public static boolean createContact(String city, String country, String email, String name, String lastname, String company) throws GeoServiceException {
         ContactPerson contact = getContactPerson(city, country, email, name, lastname, company);
 
@@ -109,7 +103,7 @@ public class ContactPerson extends ApplicationModel {
     }
 
     private static ContactPerson getContactPerson(String city, String country, String email, String name, String lastname, String company) throws GeoServiceException {
-            LocationProviderService locationProviderService = new LocationProviderService();
+        LocationProviderService locationProviderService = new LocationProviderService();
         String location = country + "/" + city;
         Location storedLocation = locationProviderService.getLocationForName(location);
         if (storedLocation == null) {
@@ -121,12 +115,11 @@ public class ContactPerson extends ApplicationModel {
         return contact;
     }
 
-
     public static void createContacts(String csvData) {
 
         List<ContactPerson> contacts = prepareContactsList(csvData);
 
-        for(int i = 0; i < contacts.size(); i++) {
+        for (int i = 0; i < contacts.size(); i++) {
             ContactPerson contact;
             contact = contacts.get(i);
             contact.saveIt();
@@ -143,13 +136,65 @@ public class ContactPerson extends ApplicationModel {
             String[] contactInformation = currentContact.split(",");
 
             ContactPerson contactPerson = new ContactPerson(
-                    contactInformation[FIRSTNAME_INDEX], contactInformation[EMAIL_INDEX],contactInformation[LASTNAME_INDEX],
+                    contactInformation[FIRSTNAME_INDEX], contactInformation[EMAIL_INDEX], contactInformation[LASTNAME_INDEX],
                     contactInformation[COMPANY_INDEX],
                     contactInformation[CITY_INDEX] + "/" + contactInformation[COUNTRY_INDEX]);
             contacts.add(contactPerson);
         }
 
         return contacts;
+    }
+
+    public static List<ContactPerson> getContactListFromCompany(String company) {
+        return where("company = ?", company);
+    }
+
+    public static ContactPerson getContactByEmail(String emailAddress) {
+        LazyList<ContactPerson> list = where("email = ?", emailAddress);
+        if (list.size() > 0)
+            return list.get(0);
+        return null;
+    }
+
+    public static ContactPerson getContactById(Integer contactId) {
+        LazyList<ContactPerson> list = where("id = ?", contactId.intValue());
+        if (list.size() > 0)
+            return list.get(0);
+        return null;
+    }
+
+    static boolean isValidEmail(String email) {
+        String emailPattern = "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+        Pattern p = Pattern.compile(emailPattern);
+        Matcher m = p.matcher(email);
+        return m.matches();
+    }
+
+    static boolean isValidCountry(String country) {
+        return validCountryList().contains(country.toLowerCase());
+    }
+
+    private static List<String> validCountryList() {
+        String csvFile = "src/main/resources/csv/countries.csv";
+        String line = "";
+        List<String> validCountries = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+            while ((line = br.readLine()) != null) {
+                validCountries.add(line.toLowerCase());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return validCountries;
+    }
+
+    public Double getLatitude() {
+        return getDoubleAttribute(LATITUDE);
+    }
+
+    public Double getLongitude() {
+        return getDoubleAttribute(LONGITUDE);
     }
 
     public String getName() {
@@ -193,9 +238,17 @@ public class ContactPerson extends ApplicationModel {
         return (double) get(name);
     }
 
+    public String getConsentId() {
+        return getAttribute(CONSENT_ID);
+    }
+
+    private void setConsentId(String consentId) {
+        setAttribute(CONSENT_ID, consentId);
+    }
+
     public String getAttribute(String name) {
         Object o = get(name);
-        if(o != null)
+        if (o != null)
             return o.toString();
         return "";
     }
@@ -204,35 +257,18 @@ public class ContactPerson extends ApplicationModel {
         return getMetaModel().getAttributeNamesSkipId();
     }
 
-    public static List<ContactPerson> getContactListFromCompany(String company) {
-        return where("company = ?", company);
-    }
-
-    public static ContactPerson getContactByEmail(String emailAddress) {
-        LazyList<ContactPerson> list = where("email = ?", emailAddress);
-        if (list.size()> 0)
-            return list.get(0);
-        return null;
+    public String getLocation() {
+        return getAttribute(LOCATION);
     }
 
     public void setLocation(String location) {
         setAttribute(LOCATION, location);
     }
 
-    public String getLocation() {
-        return getAttribute(LOCATION);
-    }
-
     public Location getGeoCoordinates() {
         return new Location(getLocation(), getDoubleAttribute(LATITUDE), getDoubleAttribute(LONGITUDE));
     }
 
-    public static ContactPerson getContactById(Integer contactId) {
-        LazyList<ContactPerson> list = where("id = ?", contactId.intValue());
-        if (list.size()> 0)
-            return list.get(0);
-        return null;
-	}
     public boolean AddToCourse(String courseId) {
         int participantId = (int) getId();
 
@@ -249,10 +285,6 @@ public class ContactPerson extends ApplicationModel {
         set("courses_sent", coursesList);
     }
 
-    public  void setSentDate(String sentDate) {
-        set("date_sent", sentDate);
-    }
-
     public Object getCoursesList() {
         return get("courses_sent");
     }
@@ -261,40 +293,18 @@ public class ContactPerson extends ApplicationModel {
         return get("date_sent");
     }
 
-    static boolean isValidEmail(String email){
-        String emailPattern = "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
-        Pattern p = Pattern.compile(emailPattern);
-        Matcher m = p.matcher(email);
-        return m.matches();
-    }
-
-    static boolean isValidCountry(String country){
-        return validCountryList().contains(country.toLowerCase());
-    }
-
-    private static List<String> validCountryList(){
-        String csvFile = "src/main/resources/csv/countries.csv";
-        String line = "";
-        List<String> validCountries = new ArrayList<>();
-
-        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
-            while ((line = br.readLine()) != null) {
-                validCountries.add(line.toLowerCase());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return validCountries;
+    public void setSentDate(String sentDate) {
+        set("date_sent", sentDate);
     }
 
     @Override
     public boolean equals(Object o) {
-        ContactPerson cp = (ContactPerson)o;
-        return o != null && Objects.equals(getName(),cp.getName())
-                && Objects.equals(getEmail(),cp.getEmail())
-                && Objects.equals(getLastname(),cp.getLastname())
-                && Objects.equals(getCompany(),cp.getCompany())
-                && Objects.equals(getLocation(),cp.getLocation());
+        ContactPerson cp = (ContactPerson) o;
+        return o != null && Objects.equals(getName(), cp.getName())
+                && Objects.equals(getEmail(), cp.getEmail())
+                && Objects.equals(getLastname(), cp.getLastname())
+                && Objects.equals(getCompany(), cp.getCompany())
+                && Objects.equals(getLocation(), cp.getLocation());
     }
 
     @Override

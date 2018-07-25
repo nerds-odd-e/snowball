@@ -23,6 +23,16 @@ public class ContactPersonTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
+    public void test_createContactWithConsentId() {
+        String email = "email@abc.com";
+        String consentId = "1234";
+        ContactPerson contactPerson = new ContactPerson(email, consentId);
+
+        assertEquals(email, contactPerson.getEmail());
+        assertEquals(consentId, contactPerson.getConsentId());
+    }
+
+    @Test
     public void testCreateContactObjectWithoutCompany() {
 
         String name = "name";
