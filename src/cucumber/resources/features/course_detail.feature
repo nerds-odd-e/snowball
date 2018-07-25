@@ -2,7 +2,17 @@ Feature: Course Detail
   Display enrolled participants
 
   Background:
-    Given there is a course named "CSD Tokyo"
+    Given I am on create new course page
+    And Add a course with below details
+      | coursename    | CSD Tokyo    |
+      | duration      | 30           |
+      | country       | Japan        |
+      | city          | Tokyo        |
+      | startdate     | 2017-10-23   |
+      | address       | odd-e        |
+      | coursedetails | CSD training |
+      | instructor    | Terry        |
+    And I click the Create button
 
   @developing
   Scenario: Display course that has no participant
