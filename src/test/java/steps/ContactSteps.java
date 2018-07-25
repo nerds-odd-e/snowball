@@ -2,6 +2,7 @@ package steps;
 
 import com.odde.massivemailer.model.ContactPerson;
 import cucumber.api.DataTable;
+import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -49,10 +50,16 @@ public class ContactSteps {
         driver.findElementById(arg1);
     }
 
-
     @When("Add A Contact \"([^\"]*)\" at \"([^\"]*)\" and \"([^\"]*)\" with \"([^\"]*)\"")
     public void addConsentId (String email, String country, String city, String consentId) {
         site.addContactPage().addContactWithConsentId(email, country, city, consentId);
+    }
+
+
+    @Then("^I should get an element with message email sent: \"([^\"]*)\"$")
+    public void i_should_get_an_element_with_message_email_sent(String arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        pageShouldContain("email sent: " + arg1);
     }
 
     @Given("^Contact for \"([^\"]*)\" exists in the system$")

@@ -24,19 +24,14 @@ Feature: Contacts
       | user2@odd-e.com | Aigle   | Switzerland | jane  | doe      | odd-e   |
       | user4@odd-e.com | Dubna   | Russia      | mark  | smith    | odd-e   |
 
-  Scenario: Contact page item verification
-    Given I am on the new contact page
-    Then I can see the element for "consent_id"
-
   @developing
   Scenario Outline: Verify Add New Contact To Contact List with ConsentId
-    Given Add A Contact "<email>" at "<country>" and "<city>" with "<consentId>"
-    When I send email to <email>
-    Then the contact should receive email: <email received?>
+    When Add A Contact "<email>" at "<country>" and "<city>" with "<consentId>"
+    Then I should get an element with message email sent: "<email sent?>"
     Examples:
-      | email           | city    | country     | consentId  |  email received? |
-      | user5@odd-e.com | Dubna   | Russia      | 1234       |   Yes            |
-      | user5@odd-e.com | Dubna   | Russia      |            |   No             |
+      | email           | city    | country     | consentId  |  email sent? |
+      | user5@odd-e.com | Dubna   | Russia      | 1234       |   yes        |
+      | user6@odd-e.com | Dubna   | Russia      |            |   no         |
 
 
   @developing
