@@ -23,7 +23,6 @@ public class ContactsController extends AppController {
                 // TODO generate consent_id
                 // TODO send email with the consent_id
                 resultMsg += " with existing consent_id";
-            } else {
             }
         } catch (Exception e) {
             resultMsg = "status=failed&msg=" + e.getMessage();
