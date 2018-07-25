@@ -1,21 +1,22 @@
 package steps;
 
+import cucumber.api.DataTable;
 import cucumber.api.PendingException;
-import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import steps.driver.WebDriverWrapper;
+import steps.site.MassiveMailerSite;
+
+import java.util.stream.Collectors;
 
 public class MultipleEnrollmentSteps {
-    @Given("^There is a course \"([^\"]*)\" already registered$")
-    public void thereIsACourseAlreadyRegistered(String arg0) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
+
+    private MassiveMailerSite site = new MassiveMailerSite();
 
     @When("^I enroll participants to \"([^\"]*)\"$")
-    public void iEnrollParticipantsTo(String arg0) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void iEnrollParticipantsTo(String courseName, DataTable participantsData) throws Throwable {
+        String participants = participantsData.asList(String.class).stream().collect(Collectors.joining());
+        site.enrollParticipantPage().addStudentsTo(courseName, participants);
     }
 
     @When("^I enroll \"([^\"]*)\" to \"([^\"]*)\"$")
@@ -25,7 +26,7 @@ public class MultipleEnrollmentSteps {
     }
 
     @Then("^participant with correct information is enrolled to \"([^\"]*)\"$")
-    public void participantWithCorrectInformationIsEnrolledTo(String arg0) throws Throwable {
+    public void participantWithCorrectInformationIsEnrolledTo(String courseName, DataTable participantsData) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }

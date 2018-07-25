@@ -1,5 +1,7 @@
 package steps;
 
+import cucumber.api.DataTable;
+import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -52,4 +54,8 @@ public class SendPreviewMailTest {
         site.ExpectEmailTo(email);
     }
 
+    @Then("^all participants below should receive the pre-course email$")
+    public void allParticipantsBelowShouldReceiveThePreCourseEmail(DataTable emails) throws Throwable {
+        emails.asList(String.class).stream().forEach((email) -> site.ExpectEmailTo(email));
+    }
 }
