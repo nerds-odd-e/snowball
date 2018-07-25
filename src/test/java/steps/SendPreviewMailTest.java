@@ -19,10 +19,10 @@ public class SendPreviewMailTest {
         eventTests.addCourseWithCountryAndCity(A_COURSE, "Singapore","Singapore", date);
     }
 
-    @Given("^there is a student in system \"([^\"]*)\" loaded for this course$")
-    public void there_are_students_with_email_loaded_for_this_course(String tsv) throws Throwable {
-        if (tsv.isEmpty()) return;
-        site.enrollParticipantPage().addStudentsTo(A_COURSE, tsv);
+    @Given("^there is a student with information \"([^\"]*)\" loaded for this course$")
+    public void there_are_students_with_email_loaded_for_this_course(String information) throws Throwable {
+        if (information.isEmpty()) return;
+        site.enrollParticipantPage().addStudentsTo(A_COURSE, information);
     }
 
     @When("^i send preview email for this course$")

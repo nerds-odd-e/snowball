@@ -12,7 +12,7 @@ public class EnrollParticipantPage {
         this.driver = site.driver;
     }
 
-    public void addStudentsTo(String a_course, String tsv) {
+    public void addStudentsTo(String a_course, String information) {
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
@@ -20,7 +20,7 @@ public class EnrollParticipantPage {
         }
         site.visit("enrollParticipant.jsp");
         driver.setDropdownByText("courseId", a_course);
-        driver.setTextField("participants", tsv);
+        driver.setTextField("participants", information);
         driver.clickButton("add_button");
     }
 }
