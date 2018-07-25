@@ -22,7 +22,6 @@ public class UpdateContactController extends HttpServlet {
         String city = req.getParameter("city");
         String country = req.getParameter("country");
         String location = country + "/" + city;
-
         locationProviderService.cacheLocation(city, country, location);
 
         if (contactPerson != null) {
@@ -30,6 +29,7 @@ public class UpdateContactController extends HttpServlet {
             contactPerson.setLastname(req.getParameter("lastname"));
             contactPerson.setCompany(req.getParameter("company"));
             contactPerson.setLocation(location);
+            contactPerson.setConsentId("abcd");
             contactPerson.saveIt();
             resp.sendRedirect("contactlist.jsp");
 

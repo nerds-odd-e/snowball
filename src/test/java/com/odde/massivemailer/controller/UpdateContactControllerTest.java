@@ -37,6 +37,7 @@ public class UpdateContactControllerTest {
         request.setParameter("name", "Jack");
         request.setParameter("company", "ComB");
         request.setParameter("lastname", "Dale");
+        request.setParameter("consent_id", "abcd");
 
         controller.doPost(request, response);
         assertEquals(1, (long) ContactPerson.count());
@@ -45,6 +46,7 @@ public class UpdateContactControllerTest {
         assertEquals("ComB", contact.get("Company"));
         assertEquals("China/Chengdu", contact.get("Location"));
         assertEquals("Dale", contact.get("LastName"));
+        assertEquals("abcd", contact.get("consent_id"));
 
         assertEquals("contactlist.jsp", response.getRedirectedUrl());
     }

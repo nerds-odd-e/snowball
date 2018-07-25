@@ -234,7 +234,7 @@ public class ContactPerson extends ApplicationModel {
         return getAttribute(CONSENT_ID);
     }
 
-    private void setConsentId(String consentId) {
+    public void setConsentId(String consentId) {
         setAttribute(CONSENT_ID, consentId);
     }
 
