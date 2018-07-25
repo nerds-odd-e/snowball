@@ -156,6 +156,27 @@ public class ContactSteps {
         pageShouldContain(location);
     }
 
+    // WIP
+    @Given("^\"([^\"]*)\" which with no consent id contact already$")
+    public void whichWithNoConsentIdContactAlready(String email) throws Throwable {
+        addAContact(email, "China", "Chengdu");
+    }
+
+    @When("^I add consent id \"([^\"]*)\"$")
+    public void iAddConsentId(String consentId) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        site.visit("contactlist.jsp");
+        driver.clickButton("edit_button");
+        driver.setTextField("consent_id", consentId);
+        driver.clickButton("save_button");
+    }
+
+    @Then("^contact \"([^\"]*)\"'s consent id should be \"([^\"]*)\"$")
+    public void contactSConsentIdShouldBe(String email, String consentId) throws Throwable {
+        pageShouldContain(email);
+        pageShouldContain(consentId);
+    }
+
     @Given("^There are the following contacts in the CSV file that do not exist in the system$")
     public void there_are_the_following_info_in_the_CSV_file(DataTable contacts) throws Throwable {
         List<String> contactString = contacts.asList(String.class);
@@ -206,5 +227,6 @@ public class ContactSteps {
         }
         assertTrue(deleteSuccess);
     }
+
 
 }
