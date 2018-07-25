@@ -29,9 +29,9 @@ Feature: Contacts
     When Add A Contact "<email>" at "<country>" and "<city>" with "<consentId>"
     Then I should get an element with message email sent: "<email sent?>"
     Examples:
-      | email           | city    | country     | consentId  |  email sent? |
-      | user5@odd-e.com | Dubna   | Russia      | 1234       |   yes        |
-      | user6@odd-e.com | Dubna   | Russia      |            |   no         |
+      | email           | city  | country | consentId | email sent? |
+      | user5@odd-e.com | Dubna | Russia  | 1234      | yes         |
+      | user6@odd-e.com | Dubna | Russia  |           | no          |
 
 
   @developing
@@ -78,6 +78,25 @@ Feature: Contacts
       | user1@odd-e.com | john | smith    | odd-e   | Chengdu/China     | ef98e3b803ab2326dbadf8fa8ed1d1ca |
       | user2@odd-e.com | jane | doe      | odd-e   | Aigle/Switzerland | 19a70418bdb440c2c0f97ddab8fa486d |
       | user3@odd-e.com | mark | smith    | odd-e   | Dubna/Russia      | 7b2ea5378b29a1f607198980f55b0615 |
+
+
+  @developing
+  Scenario Outline: Verify Edit Existing Contact
+    Given Contact for "<email>" exists in the system
+    When Edit A Contact "<country>" and "<city>" for "<name>", "<lastName>" from "<company>" and "<consentId>"
+    Then Page Should Contain "<consentId>"
+    And  Page Should Contain "<country>"
+    And  Page Should Contain "<city>"
+    And  Page Should Contain "<name>"
+    And  Page Should Contain "<lastName>"
+    And  Page Should Contain "<company>"
+    And Page Should Success
+
+    Examples:
+      | email           | city    | country     | name  | lastName | company | consentId |
+      | user1@odd-e.com | Chengdu | China       | jaohn | smith    | odd-e   | 1234      |
+      | user2@odd-e.com | Aigle   | Switzerland | jane  | doe      | odd-e   | 1235      |
+      | user4@odd-e.com | Dubna   | Russia      | mark  | smith    | odd-e   |           |
 
   @developing
   Scenario: Add new contact without consentId
