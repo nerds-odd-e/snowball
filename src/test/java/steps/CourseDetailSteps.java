@@ -24,25 +24,7 @@ public class CourseDetailSteps {
         driver.visit(courseDetailUrl + "?id=" + course.getId().toString());
         driver.pageShouldContain(courseName);
     }
-
-    @Then("^No participant is displayed in enrolled participant list$")
-    public void noParticipantIsDisplayedInEnrolledParticipantList() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
-
-    @Given("^Two paricipants are enrolled to \"([^\"]*)\"$")
-    public void twoParicipantsAreEnrolledTo(String arg0) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
-
-    @Then("^Two participants are displayed in enrolled participant list$")
-    public void twoParticipantsAreDisplayedInEnrolledParticipantList() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
-
+    
     @When("^I enroll participants to \"([^\"]*)\" from course detail page$")
     public void iEnrollParticipantsToFromCourseDetailPage(String courseName, DataTable participantsData) throws Throwable {
         String participants = participantsData.asList(String.class).stream().collect(Collectors.joining("\n"));
