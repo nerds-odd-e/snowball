@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThat;
 
 import com.odde.TestWithDB;
+import org.javalite.activejdbc.Model;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -76,7 +77,7 @@ public class ContactsControllerTest {
     }
 
     @Test
-    public void addNewContact() throws Exception {
+    public void addNewContactWithConsentId() throws Exception {
         request.setParameter("company", "odd-e");
         request.setParameter("lastname", "Smith");
         request.setParameter("name", "Mark");
@@ -87,6 +88,10 @@ public class ContactsControllerTest {
         controller.doPost(request, response);
 
         assertEquals("contactlist.jsp?status=success&msg=Add contact successfully with existing consent_id", response.getRedirectedUrl());
+        assertEquals(1, (long) ContactPerson.count());
+        Model lastContact = ContactPerson.findFirst("1 = 1");
+        assertEquals("Singapore/Singapore",lastContact.getString("location"));
+        assertEquals("0f60ada7d76eaa22651648cb39c349d5",lastContact.getString("consent_id"));
     }
 
 }

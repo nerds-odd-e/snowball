@@ -96,24 +96,16 @@ public class ContactPerson extends ApplicationModel {
         return where(LOCATION + "<>''");
     }
 
-    public static boolean createContact(String city, String country, String email, String name, String lastname, String company) throws GeoServiceException {
-        ContactPerson contact = getContactPerson(city, country, email, name, lastname, company);
+    public static boolean createContact(String city, String country, String email, String name, String lastname, String company, String consent_id) {
+        String location = country + "/" + city;
+        new LocationProviderService().cacheLocation(city, country, location);
 
+        ContactPerson contact = new ContactPerson(name, email, lastname, company, location);
+        contact.setConsentId(consent_id);
         return contact.saveIt();
     }
 
-    private static ContactPerson getContactPerson(String city, String country, String email, String name, String lastname, String company) throws GeoServiceException {
-        LocationProviderService locationProviderService = new LocationProviderService();
-        String location = country + "/" + city;
-        Location storedLocation = locationProviderService.getLocationForName(location);
-        if (storedLocation == null) {
-            locationProviderService.addLat_LongToMemory(country, city);
-        }
 
-        ContactPerson contact = new ContactPerson(name, email, lastname, company, location);
-
-        return contact;
-    }
 
     public static void createContacts(String csvData) {
 
