@@ -14,9 +14,7 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.util.List;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 public class ContactSteps {
@@ -55,11 +53,24 @@ public class ContactSteps {
         site.addContactPage().addContactWithConsentId(email, country, city, consentId);
     }
 
-
     @Then("^I should get an element with message email sent: \"([^\"]*)\"$")
-    public void i_should_get_an_element_with_message_email_sent(String arg1) throws Throwable {
+    public void i_should_get_an_element_with_message_email_sent(String emailSent) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-        pageShouldContain("email sent: " + arg1);
+        pageShouldContain("email sent: " + emailSent);
+    }
+
+    @Then("^it should not create a new contact \"([^\"]*)\"$")
+    public void itShouldNotCreateANewContact(String anotherEmail) throws Throwable {
+        site.visit("contactlist.jsp");
+        driver.pageShouldContain("user5@odd-e.com");
+        String bodyText = driver.getBodyText();
+        assertFalse(bodyText.contains(anotherEmail));
+    }
+
+    @And("^I should get error message \"([^\"]*)\"$")
+    public void iShouldGetErrorMessage(String errorMessage) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+//        throw new PendingException();
     }
 
     @Given("^Contact for \"([^\"]*)\" exists in the system$")
@@ -195,4 +206,5 @@ public class ContactSteps {
         }
         assertTrue(deleteSuccess);
     }
+
 }

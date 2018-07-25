@@ -35,15 +35,12 @@ Feature: Contacts
 
 
   @developing
-  Scenario Outline:
-    Given Add A Contact "<email>" at "<country>" and "<city>" with "<consentId>"
-    When Add A Contact "ANOTHER@EMAil.com" at "Singapore" and "Singapore" with "<consentId>"
-    Then it should not create a new contact
-    And I should get error message "the consent ID is used by <email> already"
+  Scenario:
+    Given Add A Contact "user5@odd-e.com" at "Russia" and "Dubna" with "1234"
+    When Add A Contact "ANOTHER@EMAil.com" at "Singapore" and "Singapore" with "1234"
+    Then it should not create a new contact "ANOTHER@EMAil.com"
+    And I should get error message "the consent ID is used by user5@odd-e.com already"
 
-    Examples:
-      | email           | city    | country     | consentId  |  email received? |
-      | user5@odd-e.com | Dubna   | Russia      | 1234       |   Yes            |
 
   Scenario: Edit Location Information of Contact
     Given "terry@odd-e.com" which in "China" and "Chengdu" is a contact already
