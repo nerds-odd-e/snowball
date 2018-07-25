@@ -22,168 +22,168 @@ public class ContactPersonTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-	@Test
-	public void testCreateContactObjectWithoutCompany() {
+    @Test
+    public void testCreateContactObjectWithoutCompany() {
 
-		String name = "name";
-		String email = "email@abc.com";
-		String lastname = "lastname";
-		ContactPerson person = new ContactPerson(name, email, lastname);
+        String name = "name";
+        String email = "email@abc.com";
+        String lastname = "lastname";
+        ContactPerson person = new ContactPerson(name, email, lastname);
 
-		assertEquals(name, person.getName());
-		assertEquals(email, person.getEmail());
-		assertEquals(lastname, person.getLastname());
-		assertEquals("", person.getCompany());
-	}
-
-
-	@Test
-	public void testCreateContactObjectWithCompany() {
-
-		String name = "name";
-		String email = "email@abc.com";
-		String lastname = "lastname";
-		String company = "myCompany";
-		ContactPerson person = new ContactPerson(name, email, lastname, company);
-
-		assertEquals(name, person.getName());
-		assertEquals(email, person.getEmail());
-		assertEquals(lastname, person.getLastname());
-		assertEquals(company, person.getCompany());
-	}
+        assertEquals(name, person.getName());
+        assertEquals(email, person.getEmail());
+        assertEquals(lastname, person.getLastname());
+        assertEquals("", person.getCompany());
+    }
 
 
-	@Test
-	public void testCreateContactObjectWithLocation() {
+    @Test
+    public void testCreateContactObjectWithCompany() {
 
-		String name = "name";
-		String email = "email@abc.com";
-		String lastname = "lastname";
-		String company = "myCompany";
-		String location = "Singapore/Singapore";
-		ContactPerson person = new ContactPerson(name, email, lastname, company, location);
+        String name = "name";
+        String email = "email@abc.com";
+        String lastname = "lastname";
+        String company = "myCompany";
+        ContactPerson person = new ContactPerson(name, email, lastname, company);
 
-		assertEquals(name, person.getName());
-		assertEquals(email, person.getEmail());
-		assertEquals(lastname, person.getLastname());
-		assertEquals(company, person.getCompany());
-		assertEquals(location, person.getLocation());
-	}
-
-	@Test
-	public void testCreateContactObjectValuesWithLocationAndCoOrdinates() {
-
-		String name = "name";
-		String email = "email@abc.com";
-		String lastname = "lastname";
-		String company = "myCompany";
-		String location = "Singapore/Singapore";
-		ContactPerson person = new ContactPerson(name, email, lastname, company, location);
-
-		assertEquals(name, person.getName());
-		assertEquals(email, person.getEmail());
-		assertEquals(lastname, person.getLastname());
-		assertEquals(company, person.getCompany());
-		assertEquals(location, person.getLocation());
-		assertNotNull(person.getLatitude());
-		assertNotNull(person.getLongitude());
-
-	}
+        assertEquals(name, person.getName());
+        assertEquals(email, person.getEmail());
+        assertEquals(lastname, person.getLastname());
+        assertEquals(company, person.getCompany());
+    }
 
 
-	@Test
-	public void testCreateContactObjectValuesInDBWithLocationAndCoOrdinates() throws  Exception{
-		String name = "name";
-			String email = "email@abc.com";
-			String lastname = "lastname";
-			String company = "myCompany";
-			String location = "Singapore/Singapore";
-			ContactPerson person = new ContactPerson(name, email, lastname, company, location);
-			ContactPerson personInDB =CreateContactInDB(person);
-			assertNotNull(personInDB.getLatitude());
-			assertNotNull(personInDB.getLongitude());
-	}
+    @Test
+    public void testCreateContactObjectWithLocation() {
 
-	private ContactPerson CreateContactInDB(ContactPerson person) throws Exception {
+        String name = "name";
+        String email = "email@abc.com";
+        String lastname = "lastname";
+        String company = "myCompany";
+        String location = "Singapore/Singapore";
+        ContactPerson person = new ContactPerson(name, email, lastname, company, location);
 
-		person.saveIt();
-		return person;
-	}
+        assertEquals(name, person.getName());
+        assertEquals(email, person.getEmail());
+        assertEquals(lastname, person.getLastname());
+        assertEquals(company, person.getCompany());
+        assertEquals(location, person.getLocation());
+    }
+
+    @Test
+    public void testCreateContactObjectValuesWithLocationAndCoOrdinates() {
+
+        String name = "name";
+        String email = "email@abc.com";
+        String lastname = "lastname";
+        String company = "myCompany";
+        String location = "Singapore/Singapore";
+        ContactPerson person = new ContactPerson(name, email, lastname, company, location);
+
+        assertEquals(name, person.getName());
+        assertEquals(email, person.getEmail());
+        assertEquals(lastname, person.getLastname());
+        assertEquals(company, person.getCompany());
+        assertEquals(location, person.getLocation());
+        assertNotNull(person.getLatitude());
+        assertNotNull(person.getLongitude());
+
+    }
 
 
+    @Test
+    public void testCreateContactObjectValuesInDBWithLocationAndCoOrdinates() throws Exception {
+        String name = "name";
+        String email = "email@abc.com";
+        String lastname = "lastname";
+        String company = "myCompany";
+        String location = "Singapore/Singapore";
+        ContactPerson person = new ContactPerson(name, email, lastname, company, location);
+        ContactPerson personInDB = CreateContactInDB(person);
+        assertNotNull(personInDB.getLatitude());
+        assertNotNull(personInDB.getLongitude());
+    }
 
-	@Test
-	public void testGetInvalidAttributeValue() throws Exception {
-		ContactPerson contact =  new ContactPerson("John", "john@gmail.com", "Doe");
-		thrown.expect(IllegalArgumentException.class);
-		contact.getAttribute("Invalid");
-	}
+
+    private ContactPerson CreateContactInDB(ContactPerson person) throws Exception {
+
+        person.saveIt();
+        return person;
+    }
 
 
-	@Test
-	public void UpdateContactWhenEmailSent() {
+    @Test
+    public void testGetInvalidAttributeValue() throws Exception {
+        ContactPerson contact = new ContactPerson("John", "john@gmail.com", "Doe");
+        thrown.expect(IllegalArgumentException.class);
+        contact.getAttribute("Invalid");
+    }
 
-		assertEquals(0, ContactPerson.findAll().size());
-		ContactPerson p = new ContactPerson("John", "john@gmail.com", "Doe");
-		p.setCourseList("1,2,3");
-		p.setSentDate("2017-11-30");
-		p.saveIt();
 
-		ContactPerson actual = ContactPerson.findById(p.getId());
-		assertEquals("1,2,3", actual.getCoursesList());
-		assertEquals("2017-11-30", actual.getSentDate().toString());
-	}
+    @Test
+    public void UpdateContactWhenEmailSent() {
 
-	@Test
-	public void test_prepare_list_of_contacts_should_create_listof_contacts() {
+        assertEquals(0, ContactPerson.findAll().size());
+        ContactPerson p = new ContactPerson("John", "john@gmail.com", "Doe");
+        p.setCourseList("1,2,3");
+        p.setSentDate("2017-11-30");
+        p.saveIt();
 
-		String csvData = preparecsvDataForTest();
+        ContactPerson actual = ContactPerson.findById(p.getId());
+        assertEquals("1,2,3", actual.getCoursesList());
+        assertEquals("2017-11-30", actual.getSentDate().toString());
+    }
 
-		List<ContactPerson> contacts = ContactPerson.prepareContactsList(csvData);
-		assertEquals(2, contacts.size());
-	}
+    @Test
+    public void test_prepare_list_of_contacts_should_create_listof_contacts() {
 
-	@Test
-	public void test_create_contacts_should_create_same_details_that_was_requested() {
+        String csvData = preparecsvDataForTest();
 
-		String csvData = preparecsvDataForTest();
-		ContactPerson.createContacts(csvData);
+        List<ContactPerson> contacts = ContactPerson.prepareContactsList(csvData);
+        assertEquals(2, contacts.size());
+    }
 
-		List<ContactPerson> contacts = ContactPerson.prepareContactsList(csvData);
+    @Test
+    public void test_create_contacts_should_create_same_details_that_was_requested() {
 
-		//assertEquals(contacts.get(0).getEmail(), "balakg@gmail.com");
-		assertTrue(isEquals(contacts, "balakg@gmail.com"));
-		assertFalse(isEquals(contacts, "forshailesh@gmail.com"));
+        String csvData = preparecsvDataForTest();
+        ContactPerson.createContacts(csvData);
 
-	}
+        List<ContactPerson> contacts = ContactPerson.prepareContactsList(csvData);
 
-	private String preparecsvDataForTest() {
-		return "email,firstname,lastname,company,country,city;balakg@gmail.com,Bala,GovindRaj,CS,Singapore,Singapore;forshailesh@gmail.com,Shailesh,Thakur,CS,Singapore,Singapore";
-	}
+        //assertEquals(contacts.get(0).getEmail(), "balakg@gmail.com");
+        assertTrue(isEquals(contacts, "balakg@gmail.com"));
+        assertFalse(isEquals(contacts, "forshailesh@gmail.com"));
 
-	private boolean isEquals(List<ContactPerson> newContacts, String email) {
-		return newContacts.get(0).equals(ContactPerson.getContactByEmail(email));
-	}
+    }
 
-	@Test
-	public void willReturnTrueIfEmailIsValid(){
-		assertTrue(ContactPerson.isValidEmail("abc@email.com"));
-	}
+    private String preparecsvDataForTest() {
+        return "email,firstname,lastname,company,country,city;balakg@gmail.com,Bala,GovindRaj,CS,Singapore,Singapore;forshailesh@gmail.com,Shailesh,Thakur,CS,Singapore,Singapore";
+    }
 
-	@Test
-	public void willReturnFalseIfEmailIsInvalid(){
-		assertFalse(ContactPerson.isValidEmail("abc"));
-	}
+    private boolean isEquals(List<ContactPerson> newContacts, String email) {
+        return newContacts.get(0).equals(ContactPerson.getContactByEmail(email));
+    }
 
-	@Test
-	public void	willReturnTrueIfCountryIsValid(){
-		assertTrue(ContactPerson.isValidCountry("singapore"));
-	}
+    @Test
+    public void willReturnTrueIfEmailIsValid() {
+        assertTrue(ContactPerson.isValidEmail("abc@email.com"));
+    }
 
-	@Test
-	public void	willReturnFalseIfCountryIsInvalid(){
-		assertFalse(ContactPerson.isValidCountry("Mingjia"));
-	}
+    @Test
+    public void willReturnFalseIfEmailIsInvalid() {
+        assertFalse(ContactPerson.isValidEmail("abc"));
+    }
+
+    @Test
+    public void willReturnTrueIfCountryIsValid() {
+        assertTrue(ContactPerson.isValidCountry("singapore"));
+    }
+
+    @Test
+    public void willReturnFalseIfCountryIsInvalid() {
+        assertFalse(ContactPerson.isValidCountry("Mingjia"));
+    }
 
     private List<ContactPerson> createContactsForTest() {
         String csvData = preparecsvDataForTest();
@@ -200,13 +200,13 @@ public class ContactPersonTest {
     }
 
     @Test
-    public void noAdditionalContactAddedWhenContactAlreadyExist(){
+    public void noAdditionalContactAddedWhenContactAlreadyExist() {
         List<ContactPerson> contacts = createContactsForTest();
         assertEquals(2, contacts.size());
 
         int shaileshCount = 0;
-        for(ContactPerson cp : contacts){
-            if(cp.getEmail().equals("forshailesh@gmail.com")){
+        for (ContactPerson cp : contacts) {
+            if (cp.getEmail().equals("forshailesh@gmail.com")) {
                 shaileshCount++;
             }
         }
