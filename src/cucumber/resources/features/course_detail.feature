@@ -31,12 +31,3 @@ Feature: Course Detail
     And Carry appears in the enroll form
       | carry@ |
 
-  @developing
-  Scenario Outline: Enroll a participant to course
-    When I enroll "<participant information>" to "CSD Tokyo"
-    Then "<participant email>" is <enrollment result> to "CSD Tokyo"
-
-    Examples:
-      | participant email | participant information                               | enrollment result |
-      | tom@example.com   | tom@example.com\tTom\tSmith\tCS\tSingapore\tSingapore | enrolled          |
-      | carry@            | carry@\tCarry\tFisher\tCS\tSingapore\tSingapore       | not enrolled      |
