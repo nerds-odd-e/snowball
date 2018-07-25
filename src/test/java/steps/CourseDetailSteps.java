@@ -24,7 +24,7 @@ public class CourseDetailSteps {
         driver.visit(courseDetailUrl + "?id=" + course.getId().toString());
         driver.pageShouldContain(courseName);
     }
-    
+
     @When("^I enroll participants to \"([^\"]*)\" from course detail page$")
     public void iEnrollParticipantsToFromCourseDetailPage(String courseName, DataTable participantsData) throws Throwable {
         String participants = participantsData.asList(String.class).stream().collect(Collectors.joining("\n"));
