@@ -30,18 +30,25 @@ Feature: Contacts
 
   @developing
   Scenario Outline: Verify Add New Contact To Contact List with ConsentId
-    When Add A Contact "<email>" at "<country>" and "<city>" with "<consentId>"
-    Then Page Should Contain "<email>"
-    And  Page Should Contain "<country>"
-    And  Page Should Contain "<city>"
-    And  Page Should Contain "<consentId>"
-    And Page Should Success
+    Given Add A Contact "<email>" at "<country>" and "<city>" with "<consentId>"
+    When I send email to <email>
+    Then the contact should receive email: <email received?>
+    Examples:
+      | email           | city    | country     | consentId  |  email received? |
+      | user5@odd-e.com | Dubna   | Russia      | 1234       |   Yes            |
+      | user5@odd-e.com | Dubna   | Russia      |            |   No             |
+
+
+  @developing
+  Scenario Outline:
+    Given Add A Contact "<email>" at "<country>" and "<city>" with "<consentId>"
+    When Add A Contact "ANOTHER@EMAil.com" at "Singapore" and "Singapore" with "<consentId>"
+    Then it should not create a new contact
+    And I should get error message "the consent ID is used by <email> already"
 
     Examples:
-      | email           | city    | country     | consentId                        |
-      | user1@odd-e.com | Chengdu | China       | ef98e3b803ab2326dbadf8fa8ed1d1ca |
-      | user2@odd-e.com | Aigle   | Switzerland | 19a70418bdb440c2c0f97ddab8fa486d |
-      | user4@odd-e.com | Dubna   | Russia      | 4bad761ad2d83a0302d29dfd1601279c |
+      | email           | city    | country     | consentId  |  email received? |
+      | user5@odd-e.com | Dubna   | Russia      | 1234       |   Yes            |
 
   Scenario: Edit Location Information of Contact
     Given "terry@odd-e.com" which in "China" and "Chengdu" is a contact already
