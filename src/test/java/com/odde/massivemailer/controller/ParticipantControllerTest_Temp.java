@@ -2,6 +2,7 @@ package com.odde.massivemailer.controller;
 
 import com.odde.TestWithDB;
 import com.odde.massivemailer.factory.CourseFactory;
+import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Participant;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,10 +34,13 @@ public class ParticipantControllerTest_Temp {
     public void saveParticipantsInCourse() throws Throwable {
         request.setParameter("courseId", "123");
         request.setParameter("participants", "tom@example.com\tTom\tSmith\tCS\tSingapore\tSingapore");
-        List<Participant> participants = Participant.whereHasCourseId("123");
         controller.doPost(request, response);
+
+        List<Participant> participants = Participant.whereHasCourseId("123");
+        ContactPerson contactByEmail = ContactPerson.getContactByEmail("tom@example.com");
 
         assertEquals("enrollParticipant.jsp?courseId=123", response.getRedirectedUrl());
         assertEquals(1, participants.size());
+        assertEquals("tom@example.com", contactByEmail.getEmail());
     }
 }
