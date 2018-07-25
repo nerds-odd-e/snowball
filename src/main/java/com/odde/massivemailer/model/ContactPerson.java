@@ -19,6 +19,7 @@ import java.util.regex.Pattern;
 
 @Table("contact_people")
 public class ContactPerson extends ApplicationModel {
+
     static {
         validatePresenceOf("email");
         validateWith(new UniquenessValidator("email"));
@@ -34,6 +35,7 @@ public class ContactPerson extends ApplicationModel {
     public static final String CONSENT_SENT = "consent_sent";
     public static final String CONSENT_RECEIVED = "consent_received";
     public static final String FORGOTTEN = "forgotten";
+    public static final String CONSENT_ID = "consent_id";
 
 
     public Double getLatitude() {
@@ -53,6 +55,11 @@ public class ContactPerson extends ApplicationModel {
     public Map<String, String> attributes = new HashMap<>();
 
     public ContactPerson() { }
+
+    public ContactPerson(String email, String consentId) {
+        setEmail(email);
+        setConsentId(consentId);
+    }
 
     public ContactPerson(String name, String email, String lastname) {
         this(name, email, lastname, "");
@@ -239,6 +246,14 @@ public class ContactPerson extends ApplicationModel {
         Participant contactParticipant = new Participant(new Integer(participantId), new Integer(courseId));
 
         return contactParticipant.save();
+    }
+
+    public void setConsentId(String consentId) {
+        setAttribute(CONSENT_ID, consentId);
+    }
+
+    public String getConsentId() {
+        return getAttribute(CONSENT_ID);
     }
 
     public String errorMessage() {

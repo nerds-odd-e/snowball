@@ -52,6 +52,15 @@ public class ContactPersonTest {
         assertEquals(company, person.getCompany());
     }
 
+    @Test
+    public void testCreateContactObjectWithConsentId() {
+        String email = "nishiyama@example.com";
+        String consentId = "GEBARA-20180725";
+        ContactPerson person = new ContactPerson(email, consentId);
+        assertEquals(email, person.getEmail());
+        assertEquals(consentId, person.getConsentId());
+    }
+
 
     @Test
     public void testCreateContactObjectWithLocation() {
