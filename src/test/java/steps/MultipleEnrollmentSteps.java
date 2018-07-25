@@ -25,12 +25,6 @@ public class MultipleEnrollmentSteps {
         throw new PendingException();
     }
 
-    @Then("^participant with correct information is enrolled to \"([^\"]*)\"$")
-    public void participantWithCorrectInformationIsEnrolledTo(String courseName, DataTable participantsData) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
-
     @Then("^\"([^\"]*)\" is enrolled to \"([^\"]*)\"$")
     public void isEnrolled(String arg0, String arg1) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
@@ -42,4 +36,5 @@ public class MultipleEnrollmentSteps {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }
+
 }
