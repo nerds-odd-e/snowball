@@ -29,7 +29,7 @@ public class UpdateContactController extends HttpServlet {
             contactPerson.setLastname(req.getParameter("lastname"));
             contactPerson.setCompany(req.getParameter("company"));
             contactPerson.setLocation(location);
-            contactPerson.setConsentId("abcd");
+            contactPerson.setConsentId(req.getParameter("consent_id"));
             contactPerson.saveIt();
             resp.sendRedirect("contactlist.jsp");
 
