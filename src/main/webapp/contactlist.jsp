@@ -77,6 +77,7 @@
                                         <th>Last Name</th>
                                         <th>Company</th>
                                         <th>Location</th>
+                                        <th>ConsentId</th>
                                         <th>Edit</th>
                                     </tr>
                                 </thead>
@@ -148,7 +149,13 @@
                                         <input type="text" class="form-control" name="city" id="city">
                                     </div>
                                 </div>
-                                <br>
+								<br>
+								<div class="row">
+									<div class="col-md-2">ConsentId</div>
+									<div class="col-md-10">
+										<input type="text" class="form-control" name="consent_id" id="consent_id">
+									</div>
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default"
