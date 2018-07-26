@@ -46,5 +46,6 @@ public class CourseDetailControllerTest {
 
         assertThat(response.getContentAsString(), containsString("\"participants\":["));
         assertThat(response.getContentAsString(), containsString("\"email\":\"tommy@example.com\""));
+        assertThat(response.getContentAsString(), containsString("\"name\":\"Tommy\""));
     }
 }

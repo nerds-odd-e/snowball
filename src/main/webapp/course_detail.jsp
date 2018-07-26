@@ -123,4 +123,12 @@
 <!-- Bootstrap Core JavaScript -->
 <script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="resources/js/showCourseDetail.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+	var courseDetailData = retrieveCourseDetailFromServer();
+
+	renderParticipantRows(courseDetailData, $('#courseTable tbody'));
+});
+</script>
 </html>
