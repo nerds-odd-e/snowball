@@ -1,24 +1,44 @@
 package com.odde.massivemailer.controller;
 
+import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Course;
+import com.odde.massivemailer.model.Participant;
 import com.odde.massivemailer.serialiser.AppGson;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @WebServlet("/course/detail")
 public class CourseDetailController extends AppController{
     public static class CourseDetailDTO {
-        String courseName;
+        public static class ParticipantDTO {
+            String email;
 
-        CourseDetailDTO(String courseName) {
+            public ParticipantDTO(String email) {
+                this.email = email;
+            }
+        }
+        String courseName;
+        List<ParticipantDTO> participants;
+
+        public CourseDetailDTO(String courseName, List<ParticipantDTO> participants) {
             this.courseName = courseName;
+            this.participants = participants;
         }
     }
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Course course = Course.getCourseById(Integer.parseInt(request.getParameter("id")));
-        response.getOutputStream().print(AppGson.getGson().toJson(new CourseDetailDTO(course.getCoursename())));
+        String courseId = request.getParameter("id");
+        Course course = Course.getCourseById(Integer.parseInt(courseId));
+
+        List<CourseDetailDTO.ParticipantDTO> participants = Participant.whereHasCourseId(courseId).stream()
+                .map(participant -> ContactPerson.getContactById(Integer.parseInt(participant.getContactPersonId().toString())))
+                .map(contactPerson -> new CourseDetailDTO.ParticipantDTO(contactPerson.getEmail()))
+                .collect(Collectors.toList());
+        CourseDetailDTO result = new CourseDetailDTO(course.getCoursename(), participants);
+        response.getOutputStream().print(AppGson.getGson().toJson(result));
     }
 }
