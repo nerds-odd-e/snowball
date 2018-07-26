@@ -47,9 +47,8 @@ public class CourseDetailSteps {
         throw new PendingException();
     }
 
-    @Then("^No participant is displayed in enrolled participant list$")
-    public void noParticipantIsDisplayedInEnrolledParticipantList() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    @Then("^\"([^\"]*)\" course detail page is shown$")
+    public void courseDetailPageIsShown(String courseName) {
+        driver.pageShouldContain(courseName);
     }
 }

@@ -14,10 +14,9 @@ Feature: Course Detail
       | instructor    | Terry        |
     And I click the Create button
 
-  @developing
   Scenario: Display course that has no participant
     When I visit "CSD Tokyo" detail page from course list page
-    Then No participant is displayed in enrolled participant list
+    Then "CSD Tokyo" course detail page is shown
 
   @developing
   Scenario: Enroll multiple participants to course from course detail page
