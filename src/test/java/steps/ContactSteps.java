@@ -171,6 +171,7 @@ public class ContactSteps {
         // Write code here that turns the phrase above into concrete actions
         site.visit("contactlist.jsp");
         driver.clickButton("edit_button");
+        Thread.sleep(2000);
         driver.setTextField("consent_id", consentId);
         driver.clickButton("save_button");
     }
@@ -178,6 +179,7 @@ public class ContactSteps {
     @Then("^contact \"([^\"]*)\"'s consent id should be \"([^\"]*)\"$")
     public void contactSConsentIdShouldBe(String email, String consentId) throws Throwable {
         site.visit("contactlist.jsp");
+        Thread.sleep(2000);
         pageShouldContain(email);
         pageShouldContain(consentId);
     }

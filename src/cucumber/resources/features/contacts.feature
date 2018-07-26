@@ -1,7 +1,7 @@
 Feature: Contacts
   As the admin I want to maintain contacts,
   so that I can sent newsletters to them later.
-  @developing
+
   Scenario: Add consentid of exists Contact
     Given "terry@odd-e.com" which with no consent id contact already
     When I add consent id "43"
