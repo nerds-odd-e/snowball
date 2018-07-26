@@ -19,7 +19,7 @@ Feature: Course Detail
     When I visit "CSD Tokyo" detail page
     Then No participant is displayed in enrolled participant list
 
-  @developing
+  @developing @now
   Scenario: Enroll multiple participants to course from course detail page
     When I enroll participants to "CSD Tokyo" from course detail page
       | tom@example.com\tTom\tSmith\tCS\tSingapore\tSingapore    |

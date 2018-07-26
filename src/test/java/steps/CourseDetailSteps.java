@@ -34,7 +34,7 @@ public class CourseDetailSteps {
     }
 
     @Then("^participant with correct information appears on \"([^\"]*)\" course detail page$")
-    public void participantWithCorrectInformationApearsOnCourseDetailPage(String courseName, DataTable participantsData) throws Throwable {
+    public void participantWithCorrectInformationAppearsOnCourseDetailPage(String courseName, DataTable participantsData) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }
