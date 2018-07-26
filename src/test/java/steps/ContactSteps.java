@@ -2,7 +2,6 @@ package steps;
 
 import com.odde.massivemailer.model.ContactPerson;
 import cucumber.api.DataTable;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -55,7 +54,7 @@ public class ContactSteps {
     }
 
     @When("Add A Contact \"([^\"]*)\" at \"([^\"]*)\" and \"([^\"]*)\" with \"([^\"]*)\"")
-    public void addConsentId (String email, String country, String city, String consentId) {
+    public void addConsentId(String email, String country, String city, String consentId) {
         site.addContactPage().addContactWithConsentId(email, country, city, consentId);
     }
 
@@ -189,7 +188,7 @@ public class ContactSteps {
     public void there_are_the_following_info_in_the_CSV_file(DataTable contacts) throws Throwable {
         List<String> contactString = contacts.asList(String.class);
 
-        PrintWriter pw = new PrintWriter(new File(System.getProperty("java.io.tmpdir")+"/contactsUploadTest.csv"));
+        PrintWriter pw = new PrintWriter(new File(System.getProperty("java.io.tmpdir") + "/contactsUploadTest.csv"));
         StringBuilder contactToWrite = new StringBuilder();
 
         contactToWrite.append(contactString.get(0));
@@ -228,7 +227,7 @@ public class ContactSteps {
     }
 
     private void deleteCSVFile() {
-        File csvFile = new File(System.getProperty("java.io.tmpdir")+"/contactsUploadTest.csv");
+        File csvFile = new File(System.getProperty("java.io.tmpdir") + "/contactsUploadTest.csv");
         boolean deleteSuccess = false;
         if (csvFile.exists()) {
             deleteSuccess = csvFile.delete();
