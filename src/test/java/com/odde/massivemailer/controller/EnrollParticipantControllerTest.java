@@ -69,11 +69,13 @@ public class EnrollParticipantControllerTest {
 
     @Test
     public void saveParticipantInCourseWithError() throws Throwable {
-        String participantsString = "takemiya@\tKeisuke\tSmith\tCS\tSingapore\tSingapore";
+        String takamiyaEmail = "takemiya@\tKeisuke\tSmith\tCS\tSingapore\tSingapore";
+        String odaEmail = "odashota.com\tKeisuke\tSmith\tCS\tSingapore\tSingapore";
         request.setParameter("courseId", "123");
-        request.setParameter("participants", participantsString);
+        String testLine = takamiyaEmail + "\n" + odaEmail;
+        request.setParameter("participants", testLine);
         controller.doPost(request, response);
 
-        assertEquals("course_detail.jsp?id=123&errors=" + URLEncoder.encode(participantsString, "UTF-8"), response.getRedirectedUrl());
+        assertEquals("course_detail.jsp?id=123&errors=" + URLEncoder.encode(testLine, "UTF-8"), response.getRedirectedUrl());
     }
 }
