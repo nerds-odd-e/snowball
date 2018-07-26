@@ -37,6 +37,11 @@ public class ContactSteps {
         site.addContactPage().addContactWithAllInput(email, country, city, name, lastName, company);
     }
 
+    @When("^Add A Contact \"([^\"]*)\" at \"([^\"]*)\" and \"([^\"]*)\" for \"([^\"]*)\", \"([^\"]*)\" from \"([^\"]*)\" with \"([^\"]*)\"$")
+    public void addAContactWithConsentId(String email, String country, String city, String name, String lastName, String company, String consentId) throws Throwable {
+        site.addContactPage().addContactWithAllInput(email, country, city, name, lastName, company, consentId);
+    }
+
     @Given("^I am on the new contact page$")
     public void i_am_on_the_new_contact_page() throws Throwable {
         site.visit("add_contact.jsp");
@@ -227,6 +232,4 @@ public class ContactSteps {
         }
         assertTrue(deleteSuccess);
     }
-
-
 }

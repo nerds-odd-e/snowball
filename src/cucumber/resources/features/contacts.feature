@@ -8,23 +8,6 @@ Feature: Contacts
     Then Page Should Contain "terry@odd-e.com"
     And Page Should Fail
 
-  Scenario Outline: Verify Add New Contact To Contact List with Country And City
-    When Add A Contact "<email>" at "<country>" and "<city>" for "<name>", "<lastName>" from "<company>"
-    Then Page Should Contain "<email>"
-    And  Page Should Contain "<country>"
-    And  Page Should Contain "<city>"
-    And  Page Should Contain "<name>"
-    And  Page Should Contain "<lastName>"
-    And  Page Should Contain "<company>"
-    And Page Should Success
-
-    Examples:
-      | email           | city    | country     | name  | lastName | company |
-      | user1@odd-e.com | Chengdu | China       | jaohn | smith    | odd-e   |
-      | user2@odd-e.com | Aigle   | Switzerland | jane  | doe      | odd-e   |
-      | user4@odd-e.com | Dubna   | Russia      | mark  | smith    | odd-e   |
-
-  @developing
   Scenario Outline: Verify Add New Contact To Contact List with Country And City and consent id
     When Add A Contact "<email>" at "<country>" and "<city>" for "<name>", "<lastName>" from "<company>" with "<consentId>"
     Then Page Should Contain "<email>"
