@@ -25,6 +25,24 @@ Feature: Contacts
       | user4@odd-e.com | Dubna   | Russia      | mark  | smith    | odd-e   |
 
   @developing
+  Scenario Outline: Verify Add New Contact To Contact List with Country And City and consent id
+    When Add A Contact "<email>" at "<country>" and "<city>" for "<name>", "<lastName>" from "<company>" with "<consentId>"
+    Then Page Should Contain "<email>"
+    And  Page Should Contain "<country>"
+    And  Page Should Contain "<city>"
+    And  Page Should Contain "<name>"
+    And  Page Should Contain "<lastName>"
+    And  Page Should Contain "<company>"
+    And  Page Should Contain "<consentId>"
+    And Page Should Success
+
+    Examples:
+      | email           | city    | country     | name  | lastName | company | consentId |
+      | user1@odd-e.com | Chengdu | China       | jaohn | smith    | odd-e   | 123       |
+      | user2@odd-e.com | Aigle   | Switzerland | jane  | doe      | odd-e   | abc       |
+      | user4@odd-e.com | Dubna   | Russia      | mark  | smith    | odd-e   | def       |
+
+  @developing
   Scenario Outline: Verify Add New Contact To Contact List with ConsentId
     When Add A Contact "<email>" at "<country>" and "<city>" with "<consentId>"
     Then I should get an element with message email sent: "<email sent?>"
@@ -47,7 +65,7 @@ Feature: Contacts
     When I change the location information of contact to be "China" and "Chengdu"
     Then contact "terry@odd-e.com"'s locations should be "China/Chengdu"
 
-  @developing @now
+  @developing
   Scenario: Add consentid of exists Contact
     Given "terry@odd-e.com" which with no consent id contact already
     When I add consent id "abcd"
