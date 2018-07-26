@@ -4,12 +4,17 @@ $(document).ready(function() {
 });
 
 function renderCourseName(data, $el) {
+    if (!data) return;
     $el.text(data.courseName);
 }
 
 function retrieveCourseDetailFromServer() {
     var courseDetail = {};
 
+    var params = new URL(window.location.href).searchParams;
+    if (!params || !params.length) {
+        return;
+    }
   	$.ajax({
   	    type: 'GET',
   	    url: 'course/detail?id=' + new URL(window.location.href).searchParams.get('id'),
