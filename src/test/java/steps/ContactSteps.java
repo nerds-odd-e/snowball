@@ -7,6 +7,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import steps.driver.UiElement;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
@@ -233,5 +234,17 @@ public class ContactSteps {
             deleteSuccess = csvFile.delete();
         }
         assertTrue(deleteSuccess);
+    }
+
+    @When("^I open edit contact page for contact \"([^\"]*)\"$")
+    public void iOpenEditContactPageForContact(String email) throws Throwable {
+        site.visit("contactlist.jsp");
+        driver.clickButton("edit_button");
+    }
+
+    @Then("^I should see \"([^\"]*)\" in consent id textbox$")
+    public void iShouldSeeInConsentIdTextbox(String consentId) throws Throwable {
+        UiElement consentIdTextbox = driver.findElementByName("consent_id");
+        assertEquals(consentId, consentIdTextbox.getAttribute("value"));
     }
 }

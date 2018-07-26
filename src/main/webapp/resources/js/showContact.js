@@ -137,6 +137,7 @@ function insertDataIntoContactModal(item){
 	$('#city').val(city);
 	$('#email').val(item.attributes.email);
 	$('#email_label').text(item.attributes.email);
+	$('#consent_id').val(item.attributes.consent_id);
 }
 
 function openEditContactModal()

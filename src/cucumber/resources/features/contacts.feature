@@ -6,6 +6,8 @@ Feature: Contacts
     Given "terry@odd-e.com" which with no consent id contact already
     When I add consent id "43"
     Then contact "terry@odd-e.com"'s consent id should be "43"
+    When I open edit contact page for contact "terry@odd-e.com"
+    Then I should see "43" in consent id textbox
 
   Scenario: Contacts with duplicate email is not allowed
     Given "terry@odd-e.com" which in "China" and "Chengdu" is a contact already
