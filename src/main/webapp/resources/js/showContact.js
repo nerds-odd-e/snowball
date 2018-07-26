@@ -38,6 +38,7 @@ function Contact(attributes) {
     this.location = attributes.location===undefined?'':attributes.location;
     this.email = attributes.email===undefined?'':attributes.email;
     this.forgotten = attributes.forgotten===undefined?0:attributes.forgotten;
+    this.consentId = attributes.consent_id===undefined?'':attributes.consent_id;
 }
 
 function createTableData(cssClasses, value) {
@@ -61,6 +62,7 @@ function renderContactList(json, selector, isForgotten)
           ['', contact.lastName],
           ['company', contact.company],
           ['location', contact.location],
+          ['consentid', contact.consentId],
           ['', createButtonElement('edit_button', 'edit', 'showEditContactDetail(' + JSON.stringify(item) + ')')]
         ];
         if (!isForgotten) {

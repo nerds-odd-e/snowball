@@ -49,6 +49,7 @@
                                         <th>Last Name</th>
                                         <th>Company</th>
                                         <th>Location</th>
+                                        <th>Consent ID</th>
                                         <th>Edit</th>
                                     </tr>
                                 </thead>
@@ -77,7 +78,7 @@
                                         <th>Last Name</th>
                                         <th>Company</th>
                                         <th>Location</th>
-                                        <th>ConsentId</th>
+                                        <th>Consent Id</th>
                                         <th>Edit</th>
                                     </tr>
                                 </thead>

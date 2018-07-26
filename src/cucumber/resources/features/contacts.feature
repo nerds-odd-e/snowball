@@ -47,7 +47,7 @@ Feature: Contacts
     When I change the location information of contact to be "China" and "Chengdu"
     Then contact "terry@odd-e.com"'s locations should be "China/Chengdu"
 
-  @developing
+  @developing @now
   Scenario: Add consentid of exists Contact
     Given "terry@odd-e.com" which with no consent id contact already
     When I add consent id "abcd"
