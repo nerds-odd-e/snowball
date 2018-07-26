@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	var courseDetail = retrieveCourseDetailFromServer();
-	renderCourseName(courseDetail, $('#courseTable'));
+	renderCourseName(courseDetail, $('#courseName'));
 });
 
 function renderCourseName(data, $el) {
@@ -10,14 +10,14 @@ function renderCourseName(data, $el) {
 
 function retrieveCourseDetailFromServer() {
     var courseDetail = {};
-
-    var params = new URL(window.location.href).searchParams;
-    if (!params || !params.length) {
+    var url = new URL(window.location.href)
+    if (!url.searchParams) {
         return;
     }
+
   	$.ajax({
   	    type: 'GET',
-  	    url: 'course/detail?id=' + new URL(window.location.href).searchParams.get('id'),
+  	    url: 'course/detail?id=' + url.searchParams.get('id'),
   	    dataType: 'json',
   	    success: function(data) { courseDetail = data },
   	    async: false

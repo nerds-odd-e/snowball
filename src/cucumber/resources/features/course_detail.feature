@@ -16,10 +16,10 @@ Feature: Course Detail
 
   @developing
   Scenario: Display course that has no participant
-    When I visit "CSD Tokyo" detail page
+    When I visit "CSD Tokyo" detail page from course list page
     Then No participant is displayed in enrolled participant list
 
-  @developing @now
+  @developing
   Scenario: Enroll multiple participants to course from course detail page
     When I enroll participants to "CSD Tokyo" from course detail page
       | tom@example.com\tTom\tSmith\tCS\tSingapore\tSingapore    |

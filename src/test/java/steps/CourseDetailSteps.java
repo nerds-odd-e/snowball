@@ -17,10 +17,12 @@ public class CourseDetailSteps {
     private WebDriverWrapper driver = site.getDriver();
     private String courseDetailUrl = site.baseUrl() + "course_detail.jsp";
 
-    @When("^I visit \"([^\"]*)\" detail page$")
+    @When("^I visit \"([^\"]*)\" detail page from course list page$")
     public void iVisitDetailPage(String courseName) {
+        site.visit("course_list.jsp");
         Course course = Course.getCourseByName(courseName);
-        driver.visit(courseDetailUrl + "?id=" + course.getId().toString());
+        driver.clickById("course_detail_link_"+course.getId().toString());
+        driver.pageShouldContain("Course Detail");
         driver.pageShouldContain(courseName);
     }
 
