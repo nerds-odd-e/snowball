@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -64,5 +65,15 @@ public class EnrollParticipantControllerTest {
         assertEquals(2, participants.size());
         assertEquals("tom@example.com", tom.getEmail());
         assertEquals("carry@example.com", carry.getEmail());
+    }
+
+    @Test
+    public void saveParticipantInCourseWithError() throws Throwable {
+        String participantsString = "takemiya@\tKeisuke\tSmith\tCS\tSingapore\tSingapore";
+        request.setParameter("courseId", "123");
+        request.setParameter("participants", participantsString);
+        controller.doPost(request, response);
+
+        assertEquals("course_detail.jsp?id=123&errors=" + URLEncoder.encode(participantsString, "UTF-8"), response.getRedirectedUrl());
     }
 }
