@@ -85,5 +85,5 @@
 	src="resources/lib/bootstrap/js/jquery.js"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="resources/js/showCourses.js"></script>
+<script type="text/javascript" src="resources/js/showCourseDetail.js"></script>
 </html>

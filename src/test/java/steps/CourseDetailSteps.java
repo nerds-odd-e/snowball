@@ -4,7 +4,6 @@ import com.odde.massivemailer.model.Course;
 import cucumber.api.DataTable;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import steps.driver.WebDriverWrapper;
@@ -42,6 +41,12 @@ public class CourseDetailSteps {
 
     @And("^Carry appears in the enroll form$")
     public void carryAppearsInTheEnrollForm() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Then("^No participant is displayed in enrolled participant list$")
+    public void noParticipantIsDisplayedInEnrolledParticipantList() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }
