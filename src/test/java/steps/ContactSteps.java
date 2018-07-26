@@ -168,8 +168,6 @@ public class ContactSteps {
 
     @When("^I add consent id \"([^\"]*)\"$")
     public void iAddConsentId(String consentId) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        site.visit("contactlist.jsp");
         driver.clickButton("edit_button");
         Thread.sleep(2000);
         driver.setTextField("consent_id", consentId);
