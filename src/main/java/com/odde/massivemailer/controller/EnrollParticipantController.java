@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 
-@WebServlet("/courseparticipants_temp")
-public class ParticipantController_Temp {
+@WebServlet("/enroll_participants")
+public class EnrollParticipantController {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws Throwable {
         String courseId = request.getParameter("courseId");
@@ -21,6 +21,6 @@ public class ParticipantController_Temp {
                     ContactPerson contactPerson = ContactPerson.getContactByEmail(email);
                     new Participant(Integer.parseInt(contactPerson.getId().toString()), new Integer(courseId)).save();
                 });
-        response.sendRedirect("enrollParticipant.jsp?courseId=" + courseId);
+        response.sendRedirect("course_detail.jsp?id=" + courseId);
     }
 }
