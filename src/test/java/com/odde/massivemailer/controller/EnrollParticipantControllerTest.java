@@ -42,7 +42,7 @@ public class EnrollParticipantControllerTest {
         List<Participant> participants = Participant.whereHasCourseId("123");
         ContactPerson contactByEmail = ContactPerson.getContactByEmail("tom@example.com");
 
-        assertEquals("course_detail.jsp?id=123", response.getRedirectedUrl());
+        assertEquals("course_detail.jsp?id=123&errors=", response.getRedirectedUrl());
         assertEquals(1, participants.size());
         assertEquals("tom@example.com", contactByEmail.getEmail());
     }
@@ -61,7 +61,7 @@ public class EnrollParticipantControllerTest {
         ContactPerson tom = ContactPerson.getContactByEmail("tom@example.com");
         ContactPerson carry = ContactPerson.getContactByEmail("carry@example.com");
 
-        assertEquals("course_detail.jsp?id=123", response.getRedirectedUrl());
+        assertEquals("course_detail.jsp?id=123&errors=", response.getRedirectedUrl());
         assertEquals(2, participants.size());
         assertEquals("tom@example.com", tom.getEmail());
         assertEquals("carry@example.com", carry.getEmail());
