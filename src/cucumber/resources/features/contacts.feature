@@ -2,6 +2,11 @@ Feature: Contacts
   As the admin I want to maintain contacts,
   so that I can sent newsletters to them later.
 
+  Scenario: Add consentid of exists Contact
+    Given "terry@odd-e.com" which with no consent id contact already
+    When I add consent id "43"
+    Then contact "terry@odd-e.com"'s consent id should be "43"
+
   Scenario: Contacts with duplicate email is not allowed
     Given "terry@odd-e.com" which in "China" and "Chengdu" is a contact already
     When Add A Contact "terry@odd-e.com" at "China" and "Chengdu"
@@ -47,12 +52,6 @@ Feature: Contacts
     Given "terry@odd-e.com" which in "China" and "Chengdu" is a contact already
     When I change the location information of contact to be "China" and "Chengdu"
     Then contact "terry@odd-e.com"'s locations should be "China/Chengdu"
-
-  @developing
-  Scenario: Add consentid of exists Contact
-    Given "terry@odd-e.com" which with no consent id contact already
-    When I add consent id "abcd"
-    Then contact "terry@odd-e.com"'s consent id should be "abcd"
 
   Scenario: Upload CSV with Multiple Contacts
     Given There are the following contacts in the CSV file that do not exist in the system

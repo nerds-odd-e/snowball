@@ -161,7 +161,6 @@ public class ContactSteps {
         pageShouldContain(location);
     }
 
-    // WIP
     @Given("^\"([^\"]*)\" which with no consent id contact already$")
     public void whichWithNoConsentIdContactAlready(String email) throws Throwable {
         addAContact(email, "China", "Chengdu");
@@ -178,6 +177,7 @@ public class ContactSteps {
 
     @Then("^contact \"([^\"]*)\"'s consent id should be \"([^\"]*)\"$")
     public void contactSConsentIdShouldBe(String email, String consentId) throws Throwable {
+        site.visit("contactlist.jsp");
         pageShouldContain(email);
         pageShouldContain(consentId);
     }

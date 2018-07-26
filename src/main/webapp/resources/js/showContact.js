@@ -62,7 +62,7 @@ function renderContactList(json, selector, isForgotten)
           ['', contact.lastName],
           ['company', contact.company],
           ['location', contact.location],
-          ['consentid', contact.consentId],
+          ['consent_id', contact.consentId],
           ['', createButtonElement('edit_button', 'edit', 'showEditContactDetail(' + JSON.stringify(item) + ')')]
         ];
         if (!isForgotten) {
