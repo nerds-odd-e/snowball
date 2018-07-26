@@ -15,10 +15,10 @@ public class CourseDetailSteps {
 
     private MassiveMailerSite site = new MassiveMailerSite();
     private WebDriverWrapper driver = site.getDriver();
-    private String courseDetailUrl = site.baseUrl()+ "course_detail.jsp";
+    private String courseDetailUrl = site.baseUrl() + "course_detail.jsp";
 
     @When("^I visit \"([^\"]*)\" detail page$")
-    public void iVisitDetailPage(String courseName) throws Throwable {
+    public void iVisitDetailPage(String courseName) {
         Course course = Course.getCourseByName(courseName);
         driver.visit(courseDetailUrl + "?id=" + course.getId().toString());
         driver.pageShouldContain(courseName);
