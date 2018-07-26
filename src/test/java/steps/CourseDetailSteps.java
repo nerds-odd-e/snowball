@@ -33,14 +33,14 @@ public class CourseDetailSteps {
         driver.clickButton("add_button");
     }
 
-    @Then("^participant with correct information apears on \"([^\"]*)\" course detail page$")
-    public void participantWithCorrectInformationApearsOnCourseDetailPage(String arg0) throws Throwable {
+    @Then("^participant with correct information appears on \"([^\"]*)\" course detail page$")
+    public void participantWithCorrectInformationApearsOnCourseDetailPage(String courseName, DataTable participantsData) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }
 
     @And("^Carry appears in the enroll form$")
-    public void carryAppearsInTheEnrollForm() throws Throwable {
+    public void carryAppearsInTheEnrollForm(DataTable participantsData) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }

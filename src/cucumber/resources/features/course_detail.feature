@@ -25,7 +25,7 @@ Feature: Course Detail
       | tom@example.com\tTom\tSmith\tCS\tSingapore\tSingapore    |
       | john@example.com\tJohn\tFisher\tCS\tSingapore\tSingapore |
       | carry@\tCarry\tFisher\tCS\tSingapore\tSingapore          |
-    Then participant with correct information apears on "CSD Tokyo" course detail page
+    Then participant with correct information appears on "CSD Tokyo" course detail page
       | tom@example.com  | Tom  | Smith |
       | john@example.com | john | smith |
     And Carry appears in the enroll form

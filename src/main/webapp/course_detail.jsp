@@ -36,6 +36,43 @@
 				</div>
 				<!-- /.row -->
 
+			<form name="addParticipant" id="addParticipant" method="post">
+
+				<div class="container-fluid">
+
+					<!-- Page Heading -->
+					<div class="row">
+						<div class="col-lg-12">
+							<h1 class="page-header">Enroll Participant</h1>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-lg-12">
+
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h3 class="panel-title">Course Enrollment Details</h3>
+								</div>
+								<div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-1">Participants:</div>
+                                        <div class="col-lg-11">
+                                              <input type="text" name="participants" id="participants">
+                                              <input type="hidden" name="participantIdHidden" value=""/>
+                                              <button type="button" name="add_button" class="btn btn-default" id="add_button" value="Add">Add</button>
+                                        </div>
+                                    </div>
+
+									<br> <br>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+
 				<input type="hidden" id="courseId" value="${param.repcnt}" />
 				<div id="div12">
 
