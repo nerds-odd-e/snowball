@@ -81,10 +81,6 @@ public class WebDriverWrapper {
         getWait().until(ExpectedConditions.presenceOfElementLocated(By.name(button_name))).click();
     }
 
-    public void clickXPath(String xpath) {
-        driver.findElement(By.xpath(xpath)).click();
-    }
-
     public void clickById(String id) {
         driver.findElement(By.id(id)).click();
     }
@@ -118,12 +114,8 @@ public class WebDriverWrapper {
         assertTrue("Text not found! actual: "+ actualText+ ", expected:`" + text + "` But got: `" + getBodyText() + "`", actualText.contains(text));
     }
 
-    public void expectElementWithIdToContainValue(String id, int value) {
-        assertEquals(Integer.toString(value), findElementById(id).getText());
-    }
-
-    public void expectElementWithIdGreaterThanOrEqualsValue(String id, int value) {
-        assertTrue(Integer.parseInt(findElementById(id).getText()) >= value);
+    public void expectElementWithIdToContainValue(String id, String value) {
+        assertEquals(value, findElementById(id).getText());
     }
 
     public void expectPageToContainExactlyNElements(String text, int count) {
@@ -136,26 +128,11 @@ public class WebDriverWrapper {
         uploadBtn.sendKeys(System.getProperty("java.io.tmpdir") + "/contactsUploadTest.csv");
     }
 
-    public int countElementWithClass(String cssClass) {
-        return driver.findElements(By.className(cssClass)).size();
-    }
-
-    public String getElementMarginWithClass(String cssClass) { return driver.findElement(By.className(cssClass)).getCssValue("margin-left"); }
-
     public void setDropdownByText(String dropdownName, String text) {
         Select dropdown = new Select(getWait().until(ExpectedConditions.visibilityOfElementLocated(By.name(dropdownName))));
         dropdown.selectByVisibleText(text);
     }
 
-    public void takeScreenShot() {
-
-        File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-        try {
-            FileUtils.copyFile(scrFile, new File("screenshot.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public void setDropdownValue(String dropdownName, String text) {
         Select dropdown = new Select(getWait().until(ExpectedConditions.visibilityOfElementLocated(By.name(dropdownName))));
@@ -166,9 +143,6 @@ public class WebDriverWrapper {
         return new WebDriverWait(driver, 10);
     }
 
-    public void waitforElement(String domId) {
-        getWait().until(presenceOfElementLocated(By.id(domId)));
-    }
 
     public List<WebElement> findElements(By by) {
         return driver.findElements(by);

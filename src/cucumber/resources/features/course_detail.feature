@@ -25,6 +25,6 @@ Feature: Course Detail
     Then participant with correct information appears on "CSD Tokyo" course detail page
       | tom@example.com  | Tom  | Smith |
       | john@example.com | john | smith |
-    And Carry appears in the enroll form
-      | carry@ |
+    And participant with invalid information appears in the enroll form
+      | carry@\tCarry\tFisher\tCS\tSingapore\tSingapore          |
 

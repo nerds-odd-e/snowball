@@ -66,10 +66,10 @@ public class CourseDetailSteps {
         assertTrue(tableContent.contains(johnData.get(2)));
     }
 
-    @And("^Carry appears in the enroll form$")
+    @And("^participant with invalid information appears in the enroll form$")
     public void carryAppearsInTheEnrollForm(DataTable participantsData) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        String errorParticipantData = participantsData.asList(String.class).get(0);
+        driver.expectElementWithIdToContainValue("participants", errorParticipantData);
     }
 
     @Then("^\"([^\"]*)\" course detail page is shown$")
