@@ -42,13 +42,10 @@ Feature: Contacts
       | user6@odd-e.com | Dubna | Russia  |           | no          |
 
 
-  @developing
   Scenario:
     Given Add A Contact "user5@odd-e.com" at "Russia" and "Dubna" with "1234"
     When Add A Contact "ANOTHER@EMAil.com" at "Singapore" and "Singapore" with "1234"
-    Then it should not create a new contact "ANOTHER@EMAil.com"
-    And I should get error message "the consent ID is used by user5@odd-e.com already"
-
+    Then Page Should Fail
 
   Scenario: Edit Location Information of Contact
     Given "terry@odd-e.com" which in "China" and "Chengdu" is a contact already

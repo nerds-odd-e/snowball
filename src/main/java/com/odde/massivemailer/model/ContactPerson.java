@@ -38,6 +38,7 @@ public class ContactPerson extends ApplicationModel {
     static {
         validatePresenceOf("email");
         validateWith(new UniquenessValidator("email"));
+        validateWith(new UniquenessValidator("consent_id"));
     }
 
     public Map<String, String> attributes = new HashMap<>();
@@ -230,10 +231,17 @@ public class ContactPerson extends ApplicationModel {
     }
 
     public String getConsentId() {
-        return getAttribute(CONSENT_ID);
+        String attribute = getAttribute(CONSENT_ID);
+        if (attribute == null || attribute.isEmpty()) {
+            return null;
+        }
+        return attribute;
     }
 
     public void setConsentId(String consentId) {
+        if (consentId == null || consentId.isEmpty()) {
+            return;
+        }
         setAttribute(CONSENT_ID, consentId);
     }
 
