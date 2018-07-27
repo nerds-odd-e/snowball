@@ -36,10 +36,8 @@
 				</div>
 				<!-- /.row -->
 
-			<form name="addParticipant" id="addParticipant" method="post">
-
+			<form action="enroll_participants" name="addParticipant" id="addParticipant" method="post">
 				<div class="container-fluid">
-
 					<!-- Page Heading -->
 					<div class="row">
 						<div class="col-lg-12">
@@ -60,6 +58,7 @@
                                         <div class="col-lg-11">
                                               <input type="text" name="participants" id="participants">
                                               <input type="hidden" name="participantIdHidden" value=""/>
+                                              <input type="hidden" id="courseId" name="courseId" value='<%=request.getParameter("id")%>'/>
                                               <button type="button" name="add_button" class="btn btn-default" id="add_button" value="Add">Add</button>
                                         </div>
                                     </div>
@@ -90,13 +89,8 @@
                             <table class="table table-responsive table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Course Name</th>
-                                        <th>Duration</th>
-                                        <th>Location</th>
-                                        <th>Start Date</th>
-                                        <th>Instructor</th>
-                                        <th>Email to Participants</th>
-                                        <th>Email to Admin</th>
+                                        <th>Email</th>
+                                        <th>Participant Name</th>
                                     </tr>
                                 </thead>
                                 <tbody id="courseTable">
@@ -123,12 +117,13 @@
 <!-- Bootstrap Core JavaScript -->
 <script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="resources/js/showCourseDetail.js"></script>
+<script type="text/javascript" src="resources/js/showParticipants.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 
 	var courseDetailData = retrieveCourseDetailFromServer();
 
-	renderParticipantRows(courseDetailData, $('#courseTable tbody'));
+	renderParticipantRows(courseDetailData, $('#courseTable'));
 });
 </script>
 </html>

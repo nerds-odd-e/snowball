@@ -5,7 +5,7 @@ function retrieveCourseDetailFromServer()
 
 	$.ajax({
 	    type: 'GET',
-	    url: 'course/detail/?id='+ course_id,
+	    url: 'course/detail?id='+ course_id,
 	    dataType: 'json',
 	    success: function(data) {courseDetailData = data },
 	    async: false

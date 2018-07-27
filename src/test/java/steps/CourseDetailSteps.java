@@ -1,6 +1,7 @@
 package steps;
 
 import com.odde.massivemailer.model.Course;
+import com.odde.massivemailer.model.Participant;
 import cucumber.api.DataTable;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
@@ -9,7 +10,10 @@ import cucumber.api.java.en.When;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
+import java.util.List;
 import java.util.stream.Collectors;
+
+import static org.junit.Assert.assertTrue;
 
 public class CourseDetailSteps {
 
@@ -21,7 +25,7 @@ public class CourseDetailSteps {
     public void iVisitDetailPage(String courseName) {
         site.visit("course_list.jsp");
         Course course = Course.getCourseByName(courseName);
-        driver.clickById("course_detail_link_"+course.getId().toString());
+        driver.clickById("course_detail_link_" + course.getId().toString());
         driver.pageShouldContain("Course Detail");
         driver.pageShouldContain(courseName);
     }
@@ -33,12 +37,33 @@ public class CourseDetailSteps {
         driver.visit(courseDetailUrl + "?id=" + course.getId().toString());
         driver.setTextField("participants", participants);
         driver.clickButton("add_button");
+        Thread.sleep(2000);
     }
 
     @Then("^participant with correct information appears on \"([^\"]*)\" course detail page$")
     public void participantWithCorrectInformationAppearsOnCourseDetailPage(String courseName, DataTable participantsData) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        List<List<String>> data = participantsData.asLists(String.class);
+        List<String> tomData = data.get(0);
+        List<String> johnData = data.get(1);
+
+        String participants = participantsData.asList(String.class).stream().collect(Collectors.joining("\n"));
+        Course course = Course.getCourseByName(courseName);
+        List<Participant> participants1 = Participant.whereHasCourseId(course.getId().toString());
+        System.out.println("======================================");
+        System.out.println(participants1.size());
+        System.out.println(driver.getCurrentUrl());
+        System.out.println();
+
+        System.out.println("======================================");
+        System.out.println(driver.findElementById("page-wrapper").getText());
+        String tableContent = driver.findElementById("courseTable").getText();
+
+        assertTrue(tableContent.contains(tomData.get(0)));
+        assertTrue(tableContent.contains(tomData.get(1)));
+        assertTrue(tableContent.contains(tomData.get(2)));
+        assertTrue(tableContent.contains(johnData.get(0)));
+        assertTrue(tableContent.contains(johnData.get(1)));
+        assertTrue(tableContent.contains(johnData.get(2)));
     }
 
     @And("^Carry appears in the enroll form$")

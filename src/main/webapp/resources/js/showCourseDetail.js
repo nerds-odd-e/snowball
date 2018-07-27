@@ -1,6 +1,10 @@
 $(document).ready(function() {
 	var courseDetail = retrieveCourseDetailFromServer();
 	renderCourseName(courseDetail, $('#courseName'));
+
+	$("#add_button").click(function() {
+    		submitForm();
+    	});
 });
 
 function renderCourseName(data, $el) {
@@ -24,3 +28,10 @@ function retrieveCourseDetailFromServer() {
   	});
   	return courseDetail;
 }
+
+function submitForm() {
+	document.forms[0].submit();
+	$("#participants").val("");
+}
+
+

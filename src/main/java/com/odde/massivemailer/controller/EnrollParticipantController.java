@@ -6,6 +6,7 @@ import com.odde.massivemailer.model.Participant;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @WebServlet("/enroll_participants")
-public class EnrollParticipantController {
+public class EnrollParticipantController extends AppController {
 
     private static class DBRecord {
         private final String[] line;
@@ -39,6 +40,7 @@ public class EnrollParticipantController {
         }
 
         public void save() {
+            System.out.printf("L43:%d\n", line.length);
             new ContactPerson(line[1], line[0], line[2], line[3], line[4]).save();
             ContactPerson contactPerson = ContactPerson.getContactByEmail(line[0]);
             new Participant(Integer.parseInt(contactPerson.getId().toString()), Integer.parseInt(this.courseId)).save();
@@ -53,11 +55,12 @@ public class EnrollParticipantController {
         Valid, Invalid
     }
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws Throwable {
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         String courseId = request.getParameter("courseId");
 
         String[] participantsLines = request.getParameter("participants").split("\n");
-
+        System.out.printf("L63:%s\n", participantsLines);
         Map<ValidationResult, List<DBRecord>> validatedRecords = Arrays.stream(participantsLines).map(line -> line.split("\t"))
                 .map(DBRecord.mapper(courseId))
                 .collect(Collectors.groupingBy(record -> {
@@ -70,6 +73,10 @@ public class EnrollParticipantController {
                 .stream()
                 .map(DBRecord::getSingleLine)
                 .collect(Collectors.joining("\n"));
-        response.sendRedirect("course_detail.jsp?id=" + courseId + "&errors=" + URLEncoder.encode(errors, "UTF-8"));
+        try {
+            response.sendRedirect("course_detail.jsp?id=" + courseId + "&errors=" + URLEncoder.encode(errors, "UTF-8"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
