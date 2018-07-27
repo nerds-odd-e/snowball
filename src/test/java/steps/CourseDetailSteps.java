@@ -8,6 +8,7 @@ import cucumber.api.java.en.When;;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
@@ -49,9 +50,9 @@ public class CourseDetailSteps {
     @And("^participant with invalid information appears in the enroll form$")
     public void carryAppearsInTheEnrollForm(DataTable participantsData) throws Throwable {
         String errorParticipantData = participantsData.asList(String.class).get(0);
-        driver.executeJavaScript("document.getElementById('testTsvInput').value = document.getElementById('participants').value");
-        String errorInput = driver.findElementById("testTsvInput").getAttribute("value");
-        assertEquals(errorParticipantData, errorInput);
+        Optional<String> error = driver.executeJavaScript("return document.getElementById('participants').value");
+        assertTrue(error.isPresent());
+        assertEquals(errorParticipantData, error.get());
         driver.pageShouldContain("Check the following participants.");
     }
 
