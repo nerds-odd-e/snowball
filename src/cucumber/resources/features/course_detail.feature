@@ -22,9 +22,10 @@ Feature: Course Detail
   Scenario: Enroll multiple participants to course from course detail page
     When I enroll participants to "CSD Tokyo" from course detail page
       | tom@example.com	Tom	Smith	CS	Singapore	Singapore    |
+      | john@example.com	John	Fisher	CS	Singapore	Singapore |
+      | carry@	Carry	Fisher	CS	Singapore	Singapore          |
     Then participant with correct information appears on "CSD Tokyo" course detail page
-      | tom@example.com  | Tom  | Smith |
-      | john@example.com | john | smith |
+      | tom@example.com  | Tom  |
+      | john@example.com | John |
     And participant with invalid information appears in the enroll form
-      | carry@\tCarry\tFisher\tCS\tSingapore\tSingapore          |
-
+      | carry@	Carry	Fisher	CS	Singapore	Singapore |
