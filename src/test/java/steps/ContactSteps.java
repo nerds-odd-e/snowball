@@ -2,6 +2,7 @@ package steps;
 
 import com.odde.massivemailer.model.ContactPerson;
 import cucumber.api.DataTable;
+import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -60,7 +61,6 @@ public class ContactSteps {
 
     @Then("^I should get an element with message email sent: \"([^\"]*)\"$")
     public void i_should_get_an_element_with_message_email_sent(String emailSent) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
         pageShouldContain("email sent: " + emailSent);
     }
 
@@ -242,5 +242,40 @@ public class ContactSteps {
     public void iShouldSeeInConsentIdTextbox(String consentId) throws Throwable {
         UiElement consentIdTextbox = driver.findElementByName("consent_id");
         assertEquals(consentId, consentIdTextbox.getAttribute("value"));
+    }
+
+    @When("^Edit A Contact \"([^\"]*)\" and \"([^\"]*)\" for \"([^\"]*)\", \"([^\"]*)\" from \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void editAContactAndForFromAnd(String arg0, String arg1, String arg2, String arg3, String arg4, String arg5) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Given("^Contact for \"([^\"]*)\" which is not existing in the system$")
+    public void contactForWhichIsNotExistingInTheSystem(String email) throws Throwable {
+        assertNotNull(email);
+        assertFalse(email.isEmpty());
+    }
+
+    @When("^I add the contact whose name is \"([^\"]*)\" and lastname is \"([^\"]*)\" and company is \"([^\"]*)\" and email is \"([^\"]*)\" and location is \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void iAddTheContactWhoseNameIsAndLastnameIsAndCompanyIsAndEmailIsAndLocationIsAnd(String name, String lastname, String company, String email, String country, String city) throws Throwable {
+        assertNotNull(name);
+        assertNotNull(lastname);
+        assertNotNull(company);
+        assertNotNull(country);
+        assertNotNull(email);
+        assertNotNull(city);
+
+        site.addContactPage().addContactWithAllInput(email, country, city, name, lastname, company);
+    }
+
+    @Then("^Contact \"([^\"]*)\" record is created$")
+    public void contactRecordIsCreated(String email) throws Throwable {
+        site.visit("contactlist.jsp");
+        pageShouldContain(email);
+    }
+
+    @And("^consent email is sent with a automatically generated unique consent ID in the mail text$")
+    public void consentEmailIsSentWithAAutomaticallyGeneratedUniqueConsentIDInTheMailText() throws Throwable {
+        pageShouldContain("sent with consentId");
     }
 }

@@ -101,13 +101,12 @@ Feature: Contacts
       | user4@odd-e.com | Dubna   | Russia      | mark  | smith    | odd-e   |           |
 
   @developing
-  Scenario: Add new contact without consentId
-    Given Contact for "terry20180724@odd-e.com" which is not existing in the system
-    And name is "Terry" and lastname is "Tang" and company is "odd-e" and location is "China" and "Xian"
-    And no consentId included
-    When I add the contact in the system
-    Then Contact record is created
-      | email,firstname,lastname,company,country,city       |
-      | terry20180724@odd-e.com,Terry,Tang,odd-e,China,Xian |
-    And a unique consentId is generated
-    And consent email is sent with the consentId in the mail text
+  Scenario Outline: Add new contact without consentId
+    Given Contact for "<email>" which is not existing in the system
+    When I add the contact whose name is "<firstname>" and lastname is "<lastname>" and company is "<company>" and email is "<email>" and location is "<country>" and "<city>"
+    Then Contact "<email>" record is created
+    And consent email is sent with a automatically generated unique consent ID in the mail text
+
+  Examples:
+  | email                   | city    | country     | firstname   | lastname | company |
+  | terry20180724@odd-e.com | Chengdu | China       | jaaahn      | smith    | odd-e   |
