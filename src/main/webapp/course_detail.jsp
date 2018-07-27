@@ -58,6 +58,7 @@
                                         <div class="col-lg-1">Participants:</div>
                                         <div class="col-lg-11">
                                             <textarea name="participants" id="participants" rows="5" cols="80">${param.errors}</textarea>
+                                            <input type="hidden" id="testTsvInput" value=""/>
                                             <input type="hidden" name="participantIdHidden" value=""/>
                                             <input type="hidden" id="courseId" name="courseId" value='<%=request.getParameter("id")%>'/>
                                             <button type="button" name="add_button" class="btn btn-default" id="add_button" value="Add">Add</button>

@@ -1,19 +1,16 @@
 package steps;
 
 import com.odde.massivemailer.model.Course;
-import com.odde.massivemailer.model.Participant;
 import cucumber.api.DataTable;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import org.openqa.selenium.JavascriptExecutor;
+import cucumber.api.java.en.When;;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class CourseDetailSteps {
@@ -52,7 +49,9 @@ public class CourseDetailSteps {
     @And("^participant with invalid information appears in the enroll form$")
     public void carryAppearsInTheEnrollForm(DataTable participantsData) throws Throwable {
         String errorParticipantData = participantsData.asList(String.class).get(0);
-        driver.expectElementWithIdToContainValue("participants", errorParticipantData);
+        driver.executeJavaScript("document.getElementById('testTsvInput').value = document.getElementById('participants').value");
+        String errorInput = driver.findElementById("testTsvInput").getAttribute("value");
+        assertEquals(errorParticipantData, errorInput);
         driver.pageShouldContain("Fail");
     }
 
