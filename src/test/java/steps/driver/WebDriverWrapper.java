@@ -24,6 +24,10 @@ import static org.junit.Assert.*;
 public class WebDriverWrapper {
     private WebDriver driver;
 
+    public void executeJavaScript(String script) {
+        ((JavascriptExecutor)driver).executeScript(script);
+    }
+
     public WebDriverWrapper() {
         if (System.getProperty("webdriver").equals("chrome")) {
             ChromeOptions chromeOptions = new ChromeOptions();

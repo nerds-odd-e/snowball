@@ -7,6 +7,7 @@ import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.openqa.selenium.JavascriptExecutor;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
@@ -36,6 +37,8 @@ public class CourseDetailSteps {
         Course course = Course.getCourseByName(courseName);
         driver.visit(courseDetailUrl + "?id=" + course.getId().toString());
         driver.setTextField("participants", participants);
+
+        driver.executeJavaScript("document.getElementById('participants').value = 'tom@example.com	Tom	Smith	CS	Singapore	Singapore';");
         driver.clickButton("add_button");
         Thread.sleep(2000);
     }
