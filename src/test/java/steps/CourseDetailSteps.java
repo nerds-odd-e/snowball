@@ -41,33 +41,19 @@ public class CourseDetailSteps {
     }
 
     @Then("^participant with correct information appears on \"([^\"]*)\" course detail page$")
-    public void participantWithCorrectInformationAppearsOnCourseDetailPage(String courseName, DataTable participantsData) throws Throwable {
-        List<List<String>> data = participantsData.asLists(String.class);
-        List<String> tomData = data.get(0);
-        List<String> johnData = data.get(1);
-
-        String participants = participantsData.asList(String.class).stream().collect(Collectors.joining("\n"));
-        Course course = Course.getCourseByName(courseName);
-        List<Participant> participants1 = Participant.whereHasCourseId(course.getId().toString());
-        System.out.println("======================================");
-        System.out.println(participants1.size());
-        System.out.println(driver.getCurrentUrl());
-        System.out.println();
-
-        System.out.println("======================================");
-        System.out.println(driver.findElementById("page-wrapper").getText());
+    public void participantWithCorrectInformationAppearsOnCourseDetailPage(String courseName, DataTable participants) throws Throwable {
         String tableContent = driver.findElementById("courseTable").getText();
-
-        assertTrue(tableContent.contains(tomData.get(0)));
-        assertTrue(tableContent.contains(tomData.get(1)));
-        assertTrue(tableContent.contains(johnData.get(0)));
-        assertTrue(tableContent.contains(johnData.get(1)));
+        participants.asLists(String.class).forEach(participant -> {
+            assertTrue(tableContent.contains(participant.get(0)));
+            assertTrue(tableContent.contains(participant.get(1)));
+        });
     }
 
     @And("^participant with invalid information appears in the enroll form$")
     public void carryAppearsInTheEnrollForm(DataTable participantsData) throws Throwable {
         String errorParticipantData = participantsData.asList(String.class).get(0);
         driver.expectElementWithIdToContainValue("participants", errorParticipantData);
+        driver.pageShouldContain("Fail");
     }
 
     @Then("^\"([^\"]*)\" course detail page is shown$")

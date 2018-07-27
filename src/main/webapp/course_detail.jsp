@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -56,10 +57,13 @@
                                     <div class="row">
                                         <div class="col-lg-1">Participants:</div>
                                         <div class="col-lg-11">
-                                              <textarea name="participants" id="participants" rows="5" cols="80">${param.errors}</textarea>
-                                              <input type="hidden" name="participantIdHidden" value=""/>
-                                              <input type="hidden" id="courseId" name="courseId" value='<%=request.getParameter("id")%>'/>
-                                              <button type="button" name="add_button" class="btn btn-default" id="add_button" value="Add">Add</button>
+                                            <textarea name="participants" id="participants" rows="5" cols="80">${param.errors}</textarea>
+                                            <input type="hidden" name="participantIdHidden" value=""/>
+                                            <input type="hidden" id="courseId" name="courseId" value='<%=request.getParameter("id")%>'/>
+                                            <button type="button" name="add_button" class="btn btn-default" id="add_button" value="Add">Add</button>
+                                            <c:if test="${not empty param.errors}" >
+                                                <span class="failed" style="color:red;">Failed</span>
+                                            </c:if>
                                         </div>
                                     </div>
 
