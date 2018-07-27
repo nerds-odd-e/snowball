@@ -1,7 +1,9 @@
 package steps.driver;
 
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.*;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
@@ -11,19 +13,13 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.junit.Assert.assertThat;
-import static org.openqa.selenium.support.ui.ExpectedConditions.*;
-
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.Matchers.containsString;
+import static org.junit.Assert.*;
 
 public class WebDriverWrapper {
     private WebDriver driver;
@@ -33,10 +29,9 @@ public class WebDriverWrapper {
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions.addArguments("--headless");
             driver = new ChromeDriver(chromeOptions);
-        }
-        else {
+        } else {
             DesiredCapabilities dcap = new DesiredCapabilities();
-            String[] phantomArgs = new  String[] {
+            String[] phantomArgs = new String[]{
                     "--webdriver-loglevel=NONE"
             };
             dcap.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);
@@ -47,6 +42,7 @@ public class WebDriverWrapper {
         driver.manage().window().maximize();
 
     }
+
     public void visit(String url) {
         driver.get(url);
     }
@@ -60,7 +56,7 @@ public class WebDriverWrapper {
         assertTrue(driver.getCurrentUrl().equals(url));
     }
 
-    public String getCurrentUrl(){
+    public String getCurrentUrl() {
         return driver.getCurrentUrl();
     }
 
@@ -111,7 +107,7 @@ public class WebDriverWrapper {
 
     public void expectElementWithIdToContainText(String id, String text) {
         String actualText = findElementById(id).getText();
-        assertTrue("Text not found! actual: "+ actualText+ ", expected:`" + text + "` But got: `" + getBodyText() + "`", actualText.contains(text));
+        assertTrue("Text not found! actual: " + actualText + ", expected:`" + text + "` But got: `" + getBodyText() + "`", actualText.contains(text));
     }
 
     public void expectElementWithIdToContainValue(String id, String value) {
@@ -119,7 +115,7 @@ public class WebDriverWrapper {
     }
 
     public void expectPageToContainExactlyNElements(String text, int count) {
-        List<WebElement> elements = driver.findElements(By.xpath("//*[contains(text(),'"+text+"')]"));
+        List<WebElement> elements = driver.findElements(By.xpath("//*[contains(text(),'" + text + "')]"));
         assertEquals(elements.size(), count);
     }
 
@@ -143,6 +139,9 @@ public class WebDriverWrapper {
         return new WebDriverWait(driver, 10);
     }
 
+    public void waitForDisplayed(String domId) {
+        getWait().until(webDriver -> webDriver.findElement(By.id(domId)).isDisplayed());
+    }
 
     public List<WebElement> findElements(By by) {
         return driver.findElements(by);
