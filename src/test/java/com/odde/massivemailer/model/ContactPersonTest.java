@@ -28,8 +28,12 @@ public class ContactPersonTest {
         String consentId = "1234";
         ContactPerson contactPerson = new ContactPerson(email, consentId);
 
-        assertEquals(email, contactPerson.getEmail());
-        assertEquals(consentId, contactPerson.getConsentId());
+        contactPerson.saveIt();
+
+        ContactPerson actual = ContactPerson.getContactByEmail(email);
+
+        assertEquals("email@abc.com", actual.getEmail());
+        assertEquals("1234", actual.getConsentId());
     }
 
     @Test
@@ -40,10 +44,14 @@ public class ContactPersonTest {
         String lastname = "lastname";
         ContactPerson person = new ContactPerson(name, email, lastname);
 
-        assertEquals(name, person.getName());
-        assertEquals(email, person.getEmail());
-        assertEquals(lastname, person.getLastname());
-        assertEquals("", person.getCompany());
+        person.saveIt();
+
+        ContactPerson actual = ContactPerson.getContactByEmail(email);
+
+        assertEquals(name, actual.getName());
+        assertEquals(email, actual.getEmail());
+        assertEquals(lastname, actual.getLastname());
+        assertEquals("", actual.getCompany());
     }
 
 
@@ -56,10 +64,14 @@ public class ContactPersonTest {
         String company = "myCompany";
         ContactPerson person = new ContactPerson(name, email, lastname, company);
 
-        assertEquals(name, person.getName());
-        assertEquals(email, person.getEmail());
-        assertEquals(lastname, person.getLastname());
-        assertEquals(company, person.getCompany());
+        person.saveIt();
+
+        ContactPerson actual = ContactPerson.getContactByEmail(email);
+
+        assertEquals(name, actual.getName());
+        assertEquals(email, actual.getEmail());
+        assertEquals(lastname, actual.getLastname());
+        assertEquals(company, actual.getCompany());
     }
 
 
@@ -73,11 +85,15 @@ public class ContactPersonTest {
         String location = "Singapore/Singapore";
         ContactPerson person = new ContactPerson(name, email, lastname, company, location);
 
-        assertEquals(name, person.getName());
-        assertEquals(email, person.getEmail());
-        assertEquals(lastname, person.getLastname());
-        assertEquals(company, person.getCompany());
-        assertEquals(location, person.getLocation());
+        person.saveIt();
+
+        ContactPerson actual = ContactPerson.getContactByEmail(email);
+
+        assertEquals(name, actual.getName());
+        assertEquals(email, actual.getEmail());
+        assertEquals(lastname, actual.getLastname());
+        assertEquals(company, actual.getCompany());
+        assertEquals(location, actual.getLocation());
     }
 
     @Test
@@ -90,13 +106,16 @@ public class ContactPersonTest {
         String location = "Singapore/Singapore";
         ContactPerson person = new ContactPerson(name, email, lastname, company, location);
 
-        assertEquals(name, person.getName());
-        assertEquals(email, person.getEmail());
-        assertEquals(lastname, person.getLastname());
-        assertEquals(company, person.getCompany());
-        assertEquals(location, person.getLocation());
-        assertNotNull(person.getLatitude());
-        assertNotNull(person.getLongitude());
+        person.saveIt();
+        ContactPerson actual = ContactPerson.getContactByEmail(email);
+
+        assertEquals(name, actual.getName());
+        assertEquals(email, actual.getEmail());
+        assertEquals(lastname, actual.getLastname());
+        assertEquals(company, actual.getCompany());
+        assertEquals(location, actual.getLocation());
+        assertNotNull(actual.getLatitude());
+        assertNotNull(actual.getLongitude());
 
     }
 
@@ -113,7 +132,6 @@ public class ContactPersonTest {
         assertNotNull(personInDB.getLatitude());
         assertNotNull(personInDB.getLongitude());
     }
-
 
     private ContactPerson CreateContactInDB(ContactPerson person) throws Exception {
 
@@ -223,5 +241,6 @@ public class ContactPersonTest {
         assertEquals(1, shaileshCount);
 
     }
+
 
 }
