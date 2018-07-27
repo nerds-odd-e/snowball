@@ -28,6 +28,7 @@ public class EnrollParticipantController extends AppController {
         public static Function<String[], DBRecord> mapper(String courseId) {
             return l -> new DBRecord(l, courseId);
         }
+
         public DBRecord(String[] line, String courseId) {
             this.line = line;
             this.courseId = courseId;
@@ -40,9 +41,11 @@ public class EnrollParticipantController extends AppController {
         }
 
         public void save() {
-            new ContactPerson(line[1], line[0], line[2], line[3], line[4]).save();
-            ContactPerson contactPerson = ContactPerson.getContactByEmail(line[0]);
-            new Participant(Integer.parseInt(contactPerson.getId().toString()), Integer.parseInt(this.courseId)).save();
+            ContactPerson contactPerson = new ContactPerson(line[1], line[0], line[2], line[3], line[4]);
+            if (line.length == 7) contactPerson.setConsentId(line[6]);
+            contactPerson.save();
+            Integer contactPersonId = Integer.parseInt(ContactPerson.getContactByEmail(line[0]).getId().toString());
+            new Participant(contactPersonId, Integer.parseInt(this.courseId)).save();
         }
 
         public String getSingleLine() {

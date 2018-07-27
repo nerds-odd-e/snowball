@@ -20,9 +20,9 @@ Feature: Course Detail
 
   Scenario: Enroll multiple participants to course from course detail page
     When I enroll participants to "CSD Tokyo" from course detail page
-      | tom@example.com	Tom	Smith	CS	Singapore	Singapore    |
-      | john@example.com	John	Fisher	CS	Singapore	Singapore |
-      | carry@	Carry	Fisher	CS	Singapore	Singapore          |
+      | tom@example.com	Tom	Smith	CS	Singapore	Singapore	CNT-0001    |
+      | john@example.com	John	Fisher	CS	Singapore	Singapore	CNT-0002 |
+      | carry@	Carry	Fisher	CS	Singapore	Singapore	CNT-0003          |
     Then participant with correct information appears on "CSD Tokyo" course detail page
       | tom@example.com  | Tom  |
       | john@example.com | John |

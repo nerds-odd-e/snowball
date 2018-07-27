@@ -48,6 +48,21 @@ public class EnrollParticipantControllerTest {
     }
 
     @Test
+    public void saveParticipantInCourseWithConsentId() throws Throwable {
+        request.setParameter("courseId", "123");
+        request.setParameter("participants", "tom@example.com\tTom\tSmith\tCS\tSingapore\tSingapore\tCNT-0001");
+        controller.doPost(request, response);
+
+        List<Participant> participants = Participant.whereHasCourseId("123");
+        ContactPerson contactByEmail = ContactPerson.getContactByEmail("tom@example.com");
+
+        assertEquals("CNT-0001", contactByEmail.getConsentId());
+        assertEquals("course_detail.jsp?id=123&errors=", response.getRedirectedUrl());
+        assertEquals(1, participants.size());
+        assertEquals("tom@example.com", contactByEmail.getEmail());
+    }
+
+    @Test
     public void saveParticipantsInCourse() throws Throwable {
         request.setParameter("courseId", "123");
         String inputTsvLines = Stream.of(
