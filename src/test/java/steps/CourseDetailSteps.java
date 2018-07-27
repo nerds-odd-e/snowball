@@ -52,7 +52,7 @@ public class CourseDetailSteps {
         driver.executeJavaScript("document.getElementById('testTsvInput').value = document.getElementById('participants').value");
         String errorInput = driver.findElementById("testTsvInput").getAttribute("value");
         assertEquals(errorParticipantData, errorInput);
-        driver.pageShouldContain("Fail");
+        driver.pageShouldContain("Check the following participants.");
     }
 
     @Then("^\"([^\"]*)\" course detail page is shown$")
