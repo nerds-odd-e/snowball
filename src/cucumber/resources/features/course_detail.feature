@@ -27,4 +27,4 @@ Feature: Course Detail
       | tom@example.com  | Tom  |
       | john@example.com | John |
     And participant with invalid information appears in the enroll form
-      | carry@	Carry	Fisher	CS	Singapore	Singapore |
+      | carry@	Carry	Fisher	CS	Singapore	Singapore	CNT-0003 |
