@@ -17,7 +17,7 @@ Feature: Create Course
     And I click the Create button
     Then Course should save and successfully saved message should appear
 
-  @developing
+    @system
   Scenario Outline: Creating course with unknown location
     When Add a course with location "<city>", "<country>"
     Then Course should <expected result>

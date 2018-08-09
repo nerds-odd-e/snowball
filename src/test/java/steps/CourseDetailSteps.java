@@ -24,7 +24,7 @@ public class CourseDetailSteps {
     public void iVisitDetailPage(String courseName) {
         site.visit("course_list.jsp");
         Course course = Course.getCourseByName(courseName);
-        driver.clickById("course_detail_link_" + course.getId().toString());
+        driver.visit(courseDetailUrl + "?id=" + course.getId().toString());
         driver.pageShouldContain("Course Detail");
         driver.pageShouldContain(courseName);
     }
@@ -32,10 +32,7 @@ public class CourseDetailSteps {
     @When("^I enroll participants to \"([^\"]*)\" from course detail page$")
     public void iEnrollParticipantsToFromCourseDetailPage(String courseName, DataTable participantsData) throws Throwable {
         String participants = participantsData.asList(String.class).stream().collect(Collectors.joining("\\n"));
-        Course course = Course.getCourseByName(courseName);
-        driver.visit(courseDetailUrl + "?id=" + course.getId().toString());
-        driver.executeJavaScript("document.getElementById('participants').value = '" + participants + "';");
-        driver.clickButton("add_button");
+        site.enrollParticipantPage().enrollParticipants(courseName, participants);
     }
 
     @Then("^participant with correct information appears on \"([^\"]*)\" course detail page$")

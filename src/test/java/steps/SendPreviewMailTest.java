@@ -24,7 +24,7 @@ public class SendPreviewMailTest {
     @Given("^there is a student with information \"([^\"]*)\" loaded for this course$")
     public void there_are_students_with_email_loaded_for_this_course(String information) throws Throwable {
         if (information.isEmpty()) return;
-        site.enrollParticipantPage().addStudentsTo(A_COURSE, information);
+        site.enrollParticipantPage().enrollParticipants(A_COURSE, information);
     }
 
     @When("^i send preview email for this course$")

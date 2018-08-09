@@ -4,7 +4,6 @@ Feature: send pre-course mail
   Background:
     Given "student@odd-e.com" which in "China" and "Chengdu" is a contact already
 
-  @developing
   Scenario Outline: previewing and sending precourse email
     Given there is a course starting from "2017-05-17"
     And there is a student with information "<student information>" loaded for this course
@@ -14,6 +13,6 @@ Feature: send pre-course mail
 
     Examples:
       | student information                                   | action    | who should receive the email | who should not receive any email |
-      |                                                       | preview   | admin@odd-e.com              | student@odd-e.com                |
-      | tom@example.com\tTom\tSmith\tCS\tSingapore\tSingapore | preview   | admin@odd-e.com              | student@odd-e.com                |
-      | tom@example.com\tTom\tSmith\tCS\tSingapore\tSingapore | precourse | student@odd-e.com            | admin@odd-e.com                  |
+      |                                                       | preview   | admin@odd-e.com              | tom@example.com                  |
+      | tom@example.com\tTom\tSmith\tCS\tSingapore\tSingapore | preview   | admin@odd-e.com              | tom@example.com                  |
+      | tom@example.com\tTom\tSmith\tCS\tSingapore\tSingapore | precourse | tom@example.com              | admin@odd-e.com                  |
