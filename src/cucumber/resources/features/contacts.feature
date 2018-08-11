@@ -30,10 +30,9 @@ Feature: Contacts
     And the contact should be updated with "<lastname>"
     And the contact should be updated with "<company>"
     And the contact should be updated with "<location>"
-    And the contact should be updated with "<consentId>"
 
     Examples:
-      | email           | name | lastname | company | location          | consentId                        |
-      | user1@odd-e.com | john | smith    | odd-e   | Chengdu/China     | ef98e3b803ab2326dbadf8fa8ed1d1ca |
-      | user2@odd-e.com | jane | doe      | odd-e   | Aigle/Switzerland | 19a70418bdb440c2c0f97ddab8fa486d |
-      | user3@odd-e.com | mark | smith    | odd-e   | Dubna/Russia      | 7b2ea5378b29a1f607198980f55b0615 |
+      | email           | name | lastname | company | location          |
+      | user1@odd-e.com | john | smith    | odd-e   | Chengdu/China     |
+      | user2@odd-e.com | jane | doe      | odd-e   | Aigle/Switzerland |
+      | user3@odd-e.com | mark | smith    | odd-e   | Dubna/Russia      |

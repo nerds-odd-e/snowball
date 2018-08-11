@@ -38,7 +38,6 @@ function Contact(attributes) {
     this.location = attributes.location===undefined?'':attributes.location;
     this.email = attributes.email===undefined?'':attributes.email;
     this.forgotten = attributes.forgotten===undefined?0:attributes.forgotten;
-    this.consentId = attributes.consent_id===undefined?'':attributes.consent_id;
 }
 
 function createTableData(cssClasses, value) {
@@ -62,7 +61,6 @@ function renderContactList(json, selector, isForgotten)
           ['', contact.lastName],
           ['company', contact.company],
           ['location', contact.location],
-          ['consent_id', contact.consentId],
           ['', createButtonElement('edit_button', 'edit', 'showEditContactDetail(' + JSON.stringify(item) + ')')]
         ];
         if (!isForgotten) {
@@ -137,7 +135,6 @@ function insertDataIntoContactModal(item){
 	$('#city').val(city);
 	$('#email').val(item.attributes.email);
 	$('#email_label').text(item.attributes.email);
-	$('#consent_id').val(item.attributes.consent_id);
 }
 
 function openEditContactModal()

@@ -42,7 +42,6 @@ public class EnrollParticipantController extends AppController {
 
         public void save() {
             ContactPerson contactPerson = new ContactPerson(line[1], line[0], line[2], line[3], line[4]);
-            if (line.length == 7) contactPerson.setConsentId(line[6]);
             contactPerson.save();
             Integer contactPersonId = Integer.parseInt(ContactPerson.getContactByEmail(line[0]).getId().toString());
             new Participant(contactPersonId, Integer.parseInt(this.courseId)).save();

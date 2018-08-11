@@ -38,11 +38,6 @@ public class ContactSteps {
         site.addContactPage().addContactWithAllInput(email, country, city, name, lastName, company);
     }
 
-    @When("^Add A Contact \"([^\"]*)\" at \"([^\"]*)\" and \"([^\"]*)\" for \"([^\"]*)\", \"([^\"]*)\" from \"([^\"]*)\" with \"([^\"]*)\"$")
-    public void addAContactWithConsentId(String email, String country, String city, String name, String lastName, String company, String consentId) throws Throwable {
-        site.addContactPage().addContactWithAllInput(email, country, city, name, lastName, company, consentId);
-    }
-
     @Given("^I am on the new contact page$")
     public void i_am_on_the_new_contact_page() throws Throwable {
         site.visit("add_contact.jsp");
@@ -52,11 +47,6 @@ public class ContactSteps {
     @Then("^I can see the element for \"([^\"]*)\"$")
     public void i_can_see_the_element(String arg1) throws Throwable {
         driver.findElementById(arg1);
-    }
-
-    @When("Add A Contact \"([^\"]*)\" at \"([^\"]*)\" and \"([^\"]*)\" with \"([^\"]*)\"")
-    public void addConsentId(String email, String country, String city, String consentId) {
-        site.addContactPage().addContactWithConsentId(email, country, city, consentId);
     }
 
     @Then("^I should get an element with message email sent: \"([^\"]*)\"$")
@@ -161,26 +151,6 @@ public class ContactSteps {
         pageShouldContain(location);
     }
 
-    @Given("^\"([^\"]*)\" which with no consent id contact already$")
-    public void whichWithNoConsentIdContactAlready(String email) throws Throwable {
-        addAContact(email, "China", "Chengdu");
-    }
-
-    @When("^I add consent id \"([^\"]*)\"$")
-    public void iAddConsentId(String consentId) throws Throwable {
-        driver.clickButton("edit_button");
-        driver.waitForDisplayed("consent_id");
-        driver.setTextField("consent_id", consentId);
-        driver.clickButton("save_button");
-    }
-
-    @Then("^contact \"([^\"]*)\"'s consent id should be \"([^\"]*)\"$")
-    public void contactSConsentIdShouldBe(String email, String consentId) throws Throwable {
-        site.visit("contactlist.jsp");
-        pageShouldContain(email);
-        pageShouldContain(consentId);
-    }
-
     @Given("^There are the following contacts in the CSV file that do not exist in the system$")
     public void there_are_the_following_info_in_the_CSV_file(DataTable contacts) throws Throwable {
         List<String> contactString = contacts.asList(String.class);
@@ -238,12 +208,6 @@ public class ContactSteps {
         driver.clickButton("edit_button");
     }
 
-    @Then("^I should see \"([^\"]*)\" in consent id textbox$")
-    public void iShouldSeeInConsentIdTextbox(String consentId) throws Throwable {
-        UiElement consentIdTextbox = driver.findElementByName("consent_id");
-        assertEquals(consentId, consentIdTextbox.getAttribute("value"));
-    }
-
     @When("^Edit A Contact \"([^\"]*)\" and \"([^\"]*)\" for \"([^\"]*)\", \"([^\"]*)\" from \"([^\"]*)\" and \"([^\"]*)\"$")
     public void editAContactAndForFromAnd(String arg0, String arg1, String arg2, String arg3, String arg4, String arg5) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
@@ -272,10 +236,5 @@ public class ContactSteps {
     public void contactRecordIsCreated(String email) throws Throwable {
         site.visit("contactlist.jsp");
         pageShouldContain(email);
-    }
-
-    @And("^consent email is sent with a automatically generated unique consent ID in the mail text$")
-    public void consentEmailIsSentWithAAutomaticallyGeneratedUniqueConsentIDInTheMailText() throws Throwable {
-        pageShouldContain("sent with consentId");
     }
 }

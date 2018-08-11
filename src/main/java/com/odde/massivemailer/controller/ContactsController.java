@@ -28,11 +28,8 @@ public class ContactsController extends AppController {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String resultMsg;
         try {
-            ContactPerson.createContact(req.getParameter("city"), req.getParameter("country"), req.getParameter("email"), req.getParameter("name"), req.getParameter("lastname"), req.getParameter("company"), req.getParameter("consent_id"));
+            ContactPerson.createContact(req.getParameter("city"), req.getParameter("country"), req.getParameter("email"), req.getParameter("name"), req.getParameter("lastname"), req.getParameter("company"));
             resultMsg = "status=success&msg=Add contact successfully";
-            if (req.getParameter("consent_id") != null) {
-                resultMsg += " with existing consent_id";
-            }
         } catch (Exception e) {
             resultMsg = "status=failed&msg=" + e.getMessage();
         }

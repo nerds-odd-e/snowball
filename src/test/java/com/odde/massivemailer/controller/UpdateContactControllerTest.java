@@ -37,7 +37,6 @@ public class UpdateContactControllerTest {
         request.setParameter("name", "Jack");
         request.setParameter("company", "ComB");
         request.setParameter("lastname", "Dale");
-        request.setParameter("consent_id", "abcd");
 
         controller.doPost(request, response);
         assertEquals(1, (long) ContactPerson.count());
@@ -46,31 +45,6 @@ public class UpdateContactControllerTest {
         assertEquals("ComB", contact.get("Company"));
         assertEquals("China/Chengdu", contact.get("Location"));
         assertEquals("Dale", contact.get("LastName"));
-        assertEquals("abcd", contact.get("consent_id"));
-
-        assertEquals("contactlist.jsp", response.getRedirectedUrl());
-    }
-
-    @Test
-    public void editExistingContact2() throws Exception {
-        new ContactPerson("John", "john@gmail.com", "Doe", "ComA", "Singapore/Singapore").saveIt();
-        assertEquals(1, (long) ContactPerson.count());
-        request.setParameter("email", "john@gmail.com");
-        request.setParameter("country", "China");
-        request.setParameter("city", "Chengdu");
-        request.setParameter("name", "Jack");
-        request.setParameter("company", "ComB");
-        request.setParameter("lastname", "Dale");
-        request.setParameter("consent_id", "1234");
-
-        controller.doPost(request, response);
-        assertEquals(1, (long) ContactPerson.count());
-        ContactPerson contact = ContactPerson.getContactByEmail("john@gmail.com");
-        assertEquals("Jack", contact.get("FirstName"));
-        assertEquals("ComB", contact.get("Company"));
-        assertEquals("China/Chengdu", contact.get("Location"));
-        assertEquals("Dale", contact.get("LastName"));
-        assertEquals("1234", contact.get("consent_id"));
 
         assertEquals("contactlist.jsp", response.getRedirectedUrl());
     }

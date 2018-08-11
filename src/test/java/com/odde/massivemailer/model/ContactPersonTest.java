@@ -23,56 +23,6 @@ public class ContactPersonTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void test_validDuplicatedConsentId() {
-        ContactPerson person = new ContactPerson();
-        person.setEmail("email@abc.com");
-        person.setLocation("Tokyo/Japan");
-        person.setConsentId("abc");
-
-        person.saveIt();
-
-        ContactPerson another = new ContactPerson();
-        another.setEmail("another@abc.com");
-        another.setLocation("Tokyo/Japan");
-        another.setConsentId("abc");
-
-        try {
-            another.saveIt();
-            fail();
-        } catch (Exception e) {
-            //pass
-        }
-    }
-
-    @Test
-    public void test_setNullwithConsentID() {
-        ContactPerson contactPerson = new ContactPerson();
-        contactPerson.setEmail("email@abc.com");
-        contactPerson.setLocation("Tokyo/Japan");
-        contactPerson.setConsentId("");
-        contactPerson.saveIt();
-
-        ContactPerson actual = ContactPerson.getContactByEmail("email@abc.com");
-
-
-        assertEquals(null, actual.getConsentId());
-    }
-
-    @Test
-    public void test_createContactWithConsentId() {
-        String email = "email@abc.com";
-        String consentId = "1234";
-        ContactPerson contactPerson = new ContactPerson(email, consentId);
-
-        contactPerson.saveIt();
-
-        ContactPerson actual = ContactPerson.getContactByEmail(email);
-
-        assertEquals("email@abc.com", actual.getEmail());
-        assertEquals("1234", actual.getConsentId());
-    }
-
-    @Test
     public void testCreateContactObjectWithoutCompany() {
 
         String name = "name";

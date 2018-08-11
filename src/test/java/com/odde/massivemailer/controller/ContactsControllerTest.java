@@ -64,7 +64,7 @@ public class ContactsControllerTest {
     }
 
     @Test
-    public void addNewContactWithoutConsentId() throws Exception {
+    public void addNewContact() throws Exception {
         request.setParameter("company", "odd-e");
         request.setParameter("lastname", "Smith");
         request.setParameter("name", "Mark");
@@ -74,24 +74,6 @@ public class ContactsControllerTest {
         controller.doPost(request, response);
 
         assertEquals("contactlist.jsp?status=success&msg=Add contact successfully", response.getRedirectedUrl());
-    }
-
-    @Test
-    public void addNewContactWithConsentId() throws Exception {
-        request.setParameter("company", "odd-e");
-        request.setParameter("lastname", "Smith");
-        request.setParameter("name", "Mark");
-        request.setParameter("email", "newbie@gmail.com");
-        request.setParameter("country", "Singapore");
-        request.setParameter("city", "Singapore");
-        request.setParameter("consent_id", "0f60ada7d76eaa22651648cb39c349d5");
-        controller.doPost(request, response);
-
-        assertEquals("contactlist.jsp?status=success&msg=Add contact successfully with existing consent_id", response.getRedirectedUrl());
-        assertEquals(1, (long) ContactPerson.count());
-        Model lastContact = ContactPerson.findFirst("1 = 1");
-        assertEquals("Singapore/Singapore",lastContact.getString("location"));
-        assertEquals("0f60ada7d76eaa22651648cb39c349d5",lastContact.getString("consent_id"));
     }
 
 }

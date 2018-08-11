@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS contact_people (
     lastname    VARCHAR(50),
     company     VARCHAR(50),
     location    VARCHAR(255) NOT NULL DEFAULT '',
+    consent_id  varchar(64) default null,
     courses_sent    VARCHAR(255),
     date_sent       DATE,
     latitude DOUBLE NOT NULL DEFAULT 0,

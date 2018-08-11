@@ -145,14 +145,6 @@ public class MailTest {
         assertEquals(true, sentmail.getId()!=null);
     }
 
-    @Test
-	public void testCreateConsentRequestEmail() {
-		Mail consentRequestMail = Mail.createConsentRequestEmail("CONTENT", "abc@test.com");
-		assertEquals("Consent Request", consentRequestMail.getSubject());
-		assertEquals("abc@test.com", consentRequestMail.getReceipts().get(0));
-		assertEquals(1, consentRequestMail.getReceipts().size());
-	}
-
 }
 
 

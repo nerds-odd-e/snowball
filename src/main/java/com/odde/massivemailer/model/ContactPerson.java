@@ -24,10 +24,6 @@ public class ContactPerson extends ApplicationModel {
     public static final String LOCATION = "Location";
     public static final String LONGITUDE = "Longitude";
     public static final String LATITUDE = "Latitude";
-    public static final String CONSENT_SENT = "consent_sent";
-    public static final String CONSENT_RECEIVED = "consent_received";
-    public static final String FORGOTTEN = "forgotten";
-    public static final String CONSENT_ID = "consent_id";
     private static final int EMAIL_INDEX = 0;
     private static final int FIRSTNAME_INDEX = 1;
     private static final int LASTNAME_INDEX = 2;
@@ -38,17 +34,11 @@ public class ContactPerson extends ApplicationModel {
     static {
         validatePresenceOf("email");
         validateWith(new UniquenessValidator("email"));
-        validateWith(new UniquenessValidator("consent_id"));
     }
 
     public Map<String, String> attributes = new HashMap<>();
 
     public ContactPerson() {
-    }
-
-    public ContactPerson(String email, String consentId) {
-        setEmail(email);
-        setConsentId(consentId);
     }
 
     public ContactPerson(String name, String email, String lastname) {
@@ -97,12 +87,11 @@ public class ContactPerson extends ApplicationModel {
         return where(LOCATION + "<>''");
     }
 
-    public static boolean createContact(String city, String country, String email, String name, String lastname, String company, String consent_id) {
+    public static boolean createContact(String city, String country, String email, String name, String lastname, String company) {
         String location = country + "/" + city;
         new LocationProviderService().cacheLocation(city, country, location);
 
         ContactPerson contact = new ContactPerson(name, email, lastname, company, location);
-        contact.setConsentId(consent_id);
         return contact.saveIt();
     }
 
@@ -228,21 +217,6 @@ public class ContactPerson extends ApplicationModel {
 
     public double getDoubleAttribute(String name) {
         return (double) get(name);
-    }
-
-    public String getConsentId() {
-        String attribute = getAttribute(CONSENT_ID);
-        if (attribute == null || attribute.isEmpty()) {
-            return null;
-        }
-        return attribute;
-    }
-
-    public void setConsentId(String consentId) {
-        if (consentId == null || consentId.isEmpty()) {
-            return;
-        }
-        setAttribute(CONSENT_ID, consentId);
     }
 
     public String getAttribute(String name) {
