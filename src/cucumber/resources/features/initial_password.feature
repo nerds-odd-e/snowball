@@ -11,3 +11,10 @@ Feature: Initial Password
     Examples:
       | email           | name | password |
       | user1@odd-e.com | john | 1234abcd |
+
+  @developing
+  Scenario: invalid email address
+    When Admin add a new contact "John" with invalid email: "invalid@####"
+    Then Contact page show "error message"
+    And  Contact was not created
+    And  Mail was not sent
