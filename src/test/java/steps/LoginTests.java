@@ -4,10 +4,15 @@ import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
-import static org.junit.Assert.assertTrue;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.assertArrayEquals;
 
 public class LoginTests {
     private MassiveMailerSite site = new MassiveMailerSite();
@@ -43,4 +48,39 @@ public class LoginTests {
         throw new PendingException();
     }
 
+    @Then("^Show cources list \"([^\"]*)\"$")
+    public void show_cources_list(String cources) throws Throwable {
+        String[] expected = cources.split(",");
+        List<String> courseListOnPage = new ArrayList<String>();
+        for (WebElement e : driver.findElements(By.className("course name"))) {
+            courseListOnPage.add(e.getText());
+        }
+
+        String[] actual = {};
+        courseListOnPage.toArray(actual);
+        assertArrayEquals(actual, expected);
+
+        driver.pageShouldContain("Course List");
+    }
+
+    @Then("^Matsuo Show cources list test \"([^\"]*)\"$")
+    public void show_cources_list_test(String cources) throws Throwable {
+        driver.visit(site.baseUrl() + "course_list.jsp");
+        String[] expected = cources.split(",");
+
+        System.out.println(driver.findElementById("page-wrapper").getText());
+
+        List<String> courseListOnPage = new ArrayList<String>();
+        for (WebElement e : driver.findElements(By.className("course"))) {
+            System.out.println(e.getText());
+            courseListOnPage.add(e.getText());
+        }
+//
+//        String[] actual = {};
+//        actual = courseListOnPage.toArray(actual);
+//        assertArrayEquals(expected, actual);
+//
+//        driver.pageShouldContain("Course List");
+
+    }
 }
