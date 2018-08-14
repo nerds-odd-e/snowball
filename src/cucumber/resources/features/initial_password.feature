@@ -23,3 +23,10 @@ Feature: Initial Password
       | email           | name |
       | invalid@####    | John |
       | test@           | Mary |
+
+   @developing
+   Scenario: invalid token
+     Given Admin add a new contact Yang with email: yang@odd-e.com
+     When Yang access invalid url
+     Then show not found page
+     And Yang cannot set password
