@@ -6,7 +6,7 @@ Feature: Initial Password
   @developing
   Scenario Outline: Initial password follow confirmation mail
     When Admin add a new contact "<name>" with email: "<email>"
-    Then An confirmation email is sent to "<email>" from: "admin@odd-e.com"
+    Then An confirmation email is sent to "<email>" from: "myodde@gmail.com"
     When "<name>" click the link in the email
     And "<name>" set password to "<password>"
     Then "<name>" can login with "<email>" and "<password>"

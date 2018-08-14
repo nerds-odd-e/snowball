@@ -1,5 +1,6 @@
 package steps;
 
+import com.odde.massivemailer.model.Mail;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -11,6 +12,7 @@ public class InitialPasswordSteps {
 
     private MassiveMailerSite site = new MassiveMailerSite();
     private WebDriverWrapper driver = site.getDriver();
+    private Mail mail = new Mail();
 
     @When("^Admin add a new contact \"([^\"]*)\" with email: \"([^\"]*)\"$")
     public void admin_add_a_new_contact_with_email(String name, String email) throws Throwable {
@@ -18,16 +20,14 @@ public class InitialPasswordSteps {
     }
 
     @Then("^An confirmation email is sent to \"([^\"]*)\" from: \"([^\"]*)\"$")
-    public void an_confirmation_email_is_sent_to_from(String arg1, String arg2) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void an_confirmation_email_is_sent_to_from(String email, String fromAddres) throws Throwable {
+        String token = "123123123asbs";
+        mail.setContent("http://localhost:8060/massive_mailer/initial_password?token=" + token);
     }
 
     @When("^\"([^\"]*)\" click the link in the email$")
     public void click_the_link_in_the_email(String arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        String token = "123123123asbs";
-        driver.visit("http://localhost:8060/massive_mailer/initial_password?token=" + token);
+        driver.visit(mail.getContent());
     }
 
     @When("^\"([^\"]*)\" set password to \"([^\"]*)\"$")
