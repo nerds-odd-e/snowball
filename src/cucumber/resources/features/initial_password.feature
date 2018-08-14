@@ -3,7 +3,7 @@ Feature: Initial Password
   the new user could set initial password for login,
   to access the course information.
 
-  @developing
+  @now
   Scenario Outline: Initial password follow confirmation mail
     When Admin add a new contact "<name>" with email: "<email>"
     Then An confirmation email is sent to "<email>" from: "admin@odd-e.com"
@@ -15,7 +15,7 @@ Feature: Initial Password
       | email           | name | password |
       | user1@odd-e.com | john | 1234abcd |
 
-  @developing
+  @now
   Scenario Outline: Invalid email address
     When Admin add a new contact "<name>" with invalid email: "<email>"
     Then Contact page show "error message"
@@ -28,7 +28,7 @@ Feature: Initial Password
       | test@           | Mary |
       | test            | Test |
 
-   @developing
+   @now
    Scenario: Invalid token
      Given Admin add a new contact Yang with email: "yang@odd-e.com"
      Then An confirmation email is sent to "yang@odd-e.com" from: "admin@odd-e.com"
