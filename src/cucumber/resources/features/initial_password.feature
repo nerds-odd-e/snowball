@@ -13,8 +13,13 @@ Feature: Initial Password
       | user1@odd-e.com | john | 1234abcd |
 
   @developing
-  Scenario: invalid email address
-    When Admin add a new contact "John" with invalid email: "invalid@####"
+  Scenario Outline: invalid email address
+    When Admin add a new contact "<name>" with invalid email: "<email>"
     Then Contact page show "error message"
     And  Contact was not created
     And  Mail was not sent
+
+    Examples:
+      | email           | name |
+      | invalid@####    | John |
+      | test@           | Mary |
