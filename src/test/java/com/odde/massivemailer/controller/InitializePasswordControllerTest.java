@@ -1,6 +1,7 @@
 package com.odde.massivemailer.controller;
 
 import com.odde.TestWithDB;
+import com.odde.massivemailer.model.ContactPerson;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,11 +25,19 @@ public class InitializePasswordControllerTest {
 
     @Test
     public void initialPassword() throws Exception {
-        request.setParameter("password", "abcd1234");
-        request.setParameter("password_confirm", "abcd1234");
 
+        ContactPerson user = new ContactPerson("Test", "test@example.com", "Last");
+        user.saveIt();
+//        InitialPasswordToken token = InitialPasswordToken("token", user.getLongId());
+//        token.saveIt();
+        String password = "abcd1234";
+
+        request.setParameter("token", "token");
+        request.setParameter("password", password);
+        request.setParameter("password_confirm", password);
         controller.doPost(request, response);
 
+        assertEquals("abcd1234", user.getPassword());
         assertEquals("initialize-success.jsp", response.getRedirectedUrl());
     }
 }

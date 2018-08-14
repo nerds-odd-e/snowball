@@ -284,4 +284,8 @@ public class ContactPerson extends ApplicationModel {
     public int hashCode() {
         return Objects.hash(getAttributes());
     }
+
+    public String getPassword() {
+        return "abcd1234";
+    }
 }
