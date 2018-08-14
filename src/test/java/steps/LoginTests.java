@@ -17,6 +17,7 @@ public class LoginTests {
     @Given("^Visit Login Page$")
     public void visitLoginPage() throws Throwable {
         driver.visit(login_url);
+        driver.pageShouldContain("Login Massive Mailer");
     }
 
     @Given("^Fill form with \"([^\"]*)\" and \"([^\"]*)\"$")
