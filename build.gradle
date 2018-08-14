@@ -135,7 +135,7 @@ task cucumber_now {
     }
 }
 
-if('test' in project.gradle.startParameter.taskNames) {
+if([':test','test'].intersect(project.gradle.startParameter.taskNames)) {
     project.gradle.startParameter.excludedTaskNames = ['karmaRun']
 }
 
