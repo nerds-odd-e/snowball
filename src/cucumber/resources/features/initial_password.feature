@@ -9,7 +9,7 @@ Feature: Initial Password
     Then An confirmation email is sent to "<email>" from: "myodde@gmail.com"
     When "<name>" click the link in the email
     And "<name>" set password to "<password>"
-    Then "<name>" can login with "<email>" and "<password>"
+    Then Show success page
 
     Examples:
       | email           | name | password |

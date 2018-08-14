@@ -35,10 +35,10 @@ public class InitialPasswordSteps {
         site.initializePasswordPage().setPassword(password);
     }
 
-    @Then("^\"([^\"]*)\" can login with \"([^\"]*)\" and \"([^\"]*)\"$")
-    public void can_login_with_and(String arg1, String arg2, String arg3) throws Throwable {
+    @Then("^Show success page$")
+    public void show_success_page() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        driver.pageShouldContain("成功しました");
     }
 
     @When("^Admin add a new contact \"([^\"]*)\" with invalid email: \"([^\"]*)\"$")
