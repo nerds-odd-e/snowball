@@ -26,7 +26,8 @@ public class InitialPasswordSteps {
     @When("^\"([^\"]*)\" click the link in the email$")
     public void click_the_link_in_the_email(String arg1) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        String token = "123123123asbs";
+        driver.visit("http://localhost:8060/massive_mailer/initial_password?token=" + token);
     }
 
     @When("^\"([^\"]*)\" set password to \"([^\"]*)\"$")
