@@ -6,7 +6,6 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
-import steps.site.pages.AddContactPage;
 
 public class InitialPasswordSteps {
 
@@ -14,9 +13,8 @@ public class InitialPasswordSteps {
     private WebDriverWrapper driver = site.getDriver();
 
     @When("^Admin add a new contact \"([^\"]*)\" with email: \"([^\"]*)\"$")
-    public void admin_add_a_new_contact_with_email(String arg1, String arg2) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void admin_add_a_new_contact_with_email(String name, String email) throws Throwable {
+        site.addContactPage().addContact(email, "Japan", "Tokyo");
     }
 
     @Then("^An confirmation email is sent to \"([^\"]*)\" from: \"([^\"]*)\"$")
