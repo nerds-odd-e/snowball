@@ -1,7 +1,7 @@
 Feature: Initial Password
 
   @developing
-  Scenario Outline: AAA
+  Scenario Outline: Send mail for initial password
     When Admin add a new contact <name> with email: "<email>"
     Then An confirmation email is sent to "<email>"
     When "<name>" click the link in the email
