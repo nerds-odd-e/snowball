@@ -33,12 +33,12 @@ public class InitialPasswordSteps {
     @When("^\"([^\"]*)\" set password to \"([^\"]*)\"$")
     public void set_password_to(String name, String password) throws Throwable {
         site.initializePasswordPage().setPassword(password);
+        driver.visit("http://localhost:8060/massive_mailer/initialize_password_success.jsp");
     }
 
     @Then("^Show success page$")
     public void show_success_page() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        driver.pageShouldContain("成功しました");
+        driver.pageShouldContain("Success!!");
     }
 
     @When("^Admin add a new contact \"([^\"]*)\" with invalid email: \"([^\"]*)\"$")
