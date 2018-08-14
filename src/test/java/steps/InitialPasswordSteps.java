@@ -31,9 +31,8 @@ public class InitialPasswordSteps {
     }
 
     @When("^\"([^\"]*)\" set password to \"([^\"]*)\"$")
-    public void set_password_to(String arg1, String arg2) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void set_password_to(String name, String password) throws Throwable {
+        site.initializePasswordPage().setPassword(password);
     }
 
     @Then("^\"([^\"]*)\" can login with \"([^\"]*)\" and \"([^\"]*)\"$")

@@ -45,6 +45,10 @@ public class MassiveMailerSite {
         return new ImagePage(this);
     }
 
+    public InitializePasswordPage initializePasswordPage() {
+        return new InitializePasswordPage(this);
+    }
+
     private String allEmailsThatGotMessages() {
         return SentMail.findAll().stream().map(m ->
                 String.format("\t\t%s: %s", m.get("receivers").toString(), m.get("subject").toString())
@@ -65,4 +69,5 @@ public class MassiveMailerSite {
             Assert.fail(String.format("This email should not receive any message: %s\n\tFound message to:\n%s", email, all));
         }
     }
+
 }
