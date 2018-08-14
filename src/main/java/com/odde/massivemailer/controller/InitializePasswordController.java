@@ -6,8 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/password")
-public class PasswordController  extends AppController {
+@WebServlet("/initializePassword")
+public class InitializePasswordController extends AppController {
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 

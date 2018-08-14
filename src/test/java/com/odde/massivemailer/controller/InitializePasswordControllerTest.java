@@ -10,13 +10,13 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(TestWithDB.class)
-public class PasswordControllerTest {
-    private PasswordController controller;
+public class InitializePasswordControllerTest {
+    private InitializePasswordController controller;
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
     @Before
     public void setUpMockService() {
-        controller = new PasswordController();
+        controller = new InitializePasswordController();
 
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
