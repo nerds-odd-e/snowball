@@ -10,23 +10,17 @@ import com.google.maps.*;
 import com.odde.massivemailer.service.exception.GeoServiceException;
 
 import java.io.IOException;
-
 public class GoogleGeoAPIService {
 
     public Location getGeocode(String country, String city) throws GeoServiceException {
-        if (country != null) {
-            try {
-                return getLocationFromGoogle(country, city);
-            } catch (InterruptedException e) {
-                throw(new GeoServiceException(e));
-            } catch (ApiException e) {
-                throw(new GeoServiceException(e));
-            } catch (IOException e) {
-                throw(new GeoServiceException(e));
-            }
+        if (country == null) {
+            return new Location(null, Location.INVALID_LATITUDE, Location.INVALID_LONGTITUDE);
         }
-
-        return new Location(null, Location.INVALID_LATITUDE, Location.INVALID_LONGTITUDE);
+        try {
+            return getLocationFromGoogle(country, city);
+        } catch (InterruptedException | ApiException | IOException e) {
+            throw(new GeoServiceException(e));
+        }
     }
 
     private Location getLocationFromGoogle(String country, String city) throws InterruptedException, ApiException, IOException {

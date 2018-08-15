@@ -11,12 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class LocationProviderService {
     private static Map<String, Location> locations = new TreeMap<>();
-    public static final int CLOSE_BY_DISTANCE = 2000;
     private final static String DELIMITER = "/";
 
     static {
@@ -41,21 +38,6 @@ public class LocationProviderService {
             return location;
         }
         return null;
-    }
-
-    public String getCloseByLocationStrings(String locationName) {
-        Location location = locations.get(locationName);
-        String locationsString = "";
-
-        if (location != null) {
-            for (String loc : locations.keySet()) {
-                if (locations.get(loc).distanceFrom(location) <= CLOSE_BY_DISTANCE) {
-                    locationsString += "\"" + loc + "\", ";
-                }
-            }
-            locationsString = locationsString.substring(0, locationsString.length() - 2);
-        }
-        return locationsString;
     }
 
     public static void resetLocations() {

@@ -56,15 +56,6 @@ public class LocationProviderServiceTest {
     }
 
     @Test
-    public void getClosebyLocations() {
-        assertEquals("\"Jakarta\", \"Kuala Lumpur\", \"Singapore/Singapore\", \"Thailand/Bangkok\"", locationProviderService.getCloseByLocationStrings("Singapore/Singapore"));
-        assertEquals("\"Hanoi\", \"Kuala Lumpur\", \"Singapore/Singapore\", \"Thailand/Bangkok\"", locationProviderService.getCloseByLocationStrings("Thailand/Bangkok"));
-        assertEquals("\"Bangalore\", \"New Delhi\"", locationProviderService.getCloseByLocationStrings("Bangalore"));
-        assertEquals("\"Beijing\", \"Seoul\", \"Shanghai\"", locationProviderService.getCloseByLocationStrings("Beijing"));
-        assertEquals("", locationProviderService.getCloseByLocationStrings("Bukit Batok West Ave 6"));
-    }
-
-    @Test
     public void addLocationByName() throws GeoServiceException {
         locationProviderService.addLat_LongToMemory("Japan", "Kobe");
         Location storedLocation = locationProviderService.getLocationForName("Japan/Kobe");
