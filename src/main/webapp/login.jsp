@@ -22,8 +22,8 @@
 </head>
 <body>
 		<div id="page-wrapper">
-			<form name="Login" id="login" method="post"
-				action="contacts">
+			<form name="login" id="loginForm" method="get"
+				action="courses">
 
 				<div class="container-fluid">
 
@@ -66,8 +66,7 @@
 
 									<div class="row">
 										<div class="col-lg-12">
-											<button type="button" class="btn btn-default"
-												id="login">Login</button>
+											<input type="submit" id="login" value="Login">
 										</div>
 									</div>
 								</div>
