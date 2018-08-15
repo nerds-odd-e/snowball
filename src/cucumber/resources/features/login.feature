@@ -3,28 +3,6 @@ Feature: Login
 
   Background:
     Given There are 3 courses
-    Given I am on create new course page
-    And Add a course with below details
-      | coursename    | 1 - Tokyo CSD |
-      | duration      | 30            |
-      | country       | China         |
-      | city          | Chengdu       |
-      | startdate     | 2017-10-23    |
-      | address       | odd-e         |
-      | coursedetails | CSD training  |
-      | instructor    | Terry         |
-    And I click the Create button
-    And I am on create new course page
-    And Add a course with below details
-      | coursename    | 1 - Osaka CSD |
-      | duration      | 30            |
-      | country       | China         |
-      | city          | Chengdu       |
-      | startdate     | 2017-10-23    |
-      | address       | odd-e         |
-      | coursedetails | CSD training  |
-      | instructor    | Terry         |
-    And I click the Create button
     And "terry@odd-e.com" which in "China" and "Chengdu" is a contact already
 
 

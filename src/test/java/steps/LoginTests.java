@@ -1,5 +1,6 @@
 package steps;
 
+import cucumber.api.PendingException;
 import com.odde.massivemailer.model.User;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -12,7 +13,6 @@ import steps.site.MassiveMailerSite;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -20,10 +20,6 @@ public class LoginTests{
     private MassiveMailerSite site = new MassiveMailerSite();
     private WebDriverWrapper driver = site.getDriver();
     private String login_url = site.baseUrl() + "login.jsp";
-
-    @Given("^There are (\\d+) courses$")
-    public void there_are_courses(int arg1) throws Throwable {
-    }
 
     @Given("^Visit Login Page$")
     public void visitLoginPage() throws Throwable {

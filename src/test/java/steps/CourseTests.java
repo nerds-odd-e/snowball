@@ -8,7 +8,6 @@ import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertTrue;
@@ -45,18 +44,37 @@ public class CourseTests {
 
     @When("^Add a course with location \"([^\"]*)\", \"([^\"]*)\"$")
     public void add_a_course_with_location(String city, String country) throws Throwable {
+        addCourseWithLocationAndCourseName(city, country, "CSD");
+
+    }
+
+    public void addCourseWithLocationAndCourseName(String city, String country, String courseName) throws Throwable {
+        HashMap<String, String> vals = createCourseData(city, country, courseName);
+        fill_in_course_data(vals);
+        clickSaveCourse();
+    }
+
+    @Given("^There are (\\d+) courses$")
+    public void there_are_courses(int num) throws Throwable {
+        String country = "Japan";
+        String city = "Tokyo";
+        for (int i = 1; i <= num; i++){
+            visitCreateCoursePage();
+            addCourseWithLocationAndCourseName(city, country,"CSD-" + i);
+        }
+    }
+
+    private HashMap<String, String> createCourseData(String city, String country, String coursename) {
         HashMap<String, String> vals = new HashMap<>();
         vals.put("country", country);
         vals.put("city", city);
-        vals.put("coursename", "CSD");
+        vals.put("coursename", coursename);
         vals.put("duration", "3");
         vals.put("startdate", "2017-11-23");
         vals.put("address", "odd-e");
         vals.put("coursedetails", "odd-addresse");
         vals.put("instructor", "someone");
-        fill_in_course_data(vals);
-        clickSaveCourse();
-
+        return vals;
     }
 
     @When("^I click the Create button$")
