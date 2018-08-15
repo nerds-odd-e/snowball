@@ -1,7 +1,6 @@
 package com.odde.massivemailer.controller;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.model.ContactPerson;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,21 +23,28 @@ public class InitializePasswordControllerTest {
     }
 
     @Test
+    public void showInitialPasswordViewSuccessfully() throws Exception {
+        controller.doGet(request,response);
+        assertEquals("initialize_password.jsp", response.getRedirectedUrl());
+    }
+
+    @Test
+    public void showInitialPasswordViewWrongIfTokenNone() throws Exception {
+        controller.doGet(request,response);
+        assertEquals("initialize_password.jsp", response.getRedirectedUrl());
+    }
+
+    @Test
     public void initialPasswordSuccessfully() throws Exception {
-
-//        ContactPerson user = new ContactPerson("Test", "test@example.com", "Last");
-//        user.saveIt();
-//        InitialPasswordToken token = InitialPasswordToken("token", user.getLongId());
-//        token.saveIt();
-//        String password = "abcd1234";
-//
-//        request.setParameter("token", "token");
-//        request.setParameter("password", password);
-//        request.setParameter("password_confirm", password);
-
+        request.setParameter("password","sdfgsdfgsdg");
         controller.doPost(request, response);
-//
         assertEquals("initialize_password_success.jsp", response.getRedirectedUrl());
+    }
+
+    @Test
+    public void initialPasswordWrong() throws Exception {
+        controller.doPost(request, response);
+        assertEquals("initialize_password.jsp", response.getRedirectedUrl());
     }
 
     @Test
@@ -46,19 +52,5 @@ public class InitializePasswordControllerTest {
         boolean isValidate = controller.validate("abcd1234");
         assertEquals(true, isValidate);
     }
-//
-//    @Test
-//    public void initialPasswordSuccessfullyWithOtherPassword() throws Exception {
-//
-//        ContactPerson user = new ContactPerson("Test", "test@example.com", "Last");
-//        user.saveIt();
-//        String password = "ffff1234";
-//
-//        request.setParameter("token", "token");
-//        request.setParameter("password", password);
-//        request.setParameter("password_confirm", password);
-//        controller.doPost(request, response);
-//
-//        assertEquals("ffff1234", user.getPassword());
-//    }
+
 }
