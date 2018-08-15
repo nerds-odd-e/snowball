@@ -34,7 +34,7 @@ public class LoginControllerTest {
         request.setParameter("password", "incorrectpass");
 
         controller.doPost(request, response);
-        assertThat(response.getRedirectedUrl(), containsString("login.jsp"));
+        assertThat(response.getRedirectedUrl(), containsString("login.jsp?status=fail"));
     }
 
     @Test

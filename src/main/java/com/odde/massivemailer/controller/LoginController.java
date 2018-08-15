@@ -13,11 +13,12 @@ public class LoginController {
         String password = req.getParameter("password");
         String url;
 
-        if (user != null && user.getPassword() != null && user.getPassword().equals(password)){
+        if (user != null && user.isPasswordCorrect(password)){
             url = "course_list.jsp";
         } else {
-            url = "login.jsp";
+            url = "login.jsp?status=fail";
         }
         resp.sendRedirect(url);
     }
+
 }

@@ -22,7 +22,8 @@ public class User extends ApplicationModel {
         return null;
     }
 
-    public String getPassword() {
-        return getString("password");
+    public boolean isPasswordCorrect(String password) {
+        String userPassword = getString("password");
+        return userPassword != null && userPassword.equals(password);
     }
 }
