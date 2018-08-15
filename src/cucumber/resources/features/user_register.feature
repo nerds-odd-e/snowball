@@ -47,3 +47,13 @@ Feature: User Register
     When Yang change the token in the url to "I_made_it_up" and access the new url
     Then "Invalid token" message is shown
     And Yang cannot set password
+
+  Scenario: Upload CSV with Multiple Contacts
+    Given There are the following contacts in the CSV file that do not exist in the system
+      | email,firstname,lastname,company,country,city                |
+      | balakg@gmail.com,Bala,GovindRaj,CS,Singapore,Singapore       |
+      | forshailesh@gmail.com,Shailesh,Thakur,CS,Singapore,Singapore |
+    When I upload the CSV file
+    Then There must be two more contacts added
+      | balakg@gmail.com      |
+      | forshailesh@gmail.com |

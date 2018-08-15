@@ -131,57 +131,6 @@ public class ContactSteps {
         driver.pageShouldContain(location);
     }
 
-    @Given("^There are the following contacts in the CSV file that do not exist in the system$")
-    public void there_are_the_following_info_in_the_CSV_file(DataTable contacts) throws Throwable {
-        List<String> contactString = contacts.asList(String.class);
-
-        PrintWriter pw = new PrintWriter(new File(System.getProperty("java.io.tmpdir") + "/contactsUploadTest.csv"));
-        StringBuilder contactToWrite = new StringBuilder();
-
-        contactToWrite.append(contactString.get(0));
-        contactToWrite.append('\n');
-
-        for (int i = 1; i < contactString.size(); i++) {
-            String contactDetail = contactString.get(i);
-            String email = contactDetail.substring(0, contactDetail.indexOf(","));
-            ContactPerson contactPerson = ContactPerson.getContactByEmail(email);
-            contactToWrite.append(contactDetail);
-            contactToWrite.append('\n');
-        }
-
-        pw.write(contactToWrite.toString());
-        pw.close();
-    }
-
-    @When("^I upload the CSV file$")
-    public void i_upload_the_CSV_file() throws Throwable {
-        site.visit("add_contact_batch.jsp");
-        driver.clickUpload();
-    }
-
-    @Then("^There must be two more contacts added$")
-    public void there_must_be_two_more_contacts_added(DataTable emailList) throws Throwable {
-        driver.expectAlert("Batch Contacts Uploaded");
-        checkContactsAreCreated(emailList.asList(String.class));
-        deleteCSVFile();
-    }
-
-    private void checkContactsAreCreated(List<String> emails) {
-        site.visit("contactlist.jsp");
-        for (String email : emails) {
-            driver.pageShouldContain(email);
-        }
-    }
-
-    private void deleteCSVFile() {
-        File csvFile = new File(System.getProperty("java.io.tmpdir") + "/contactsUploadTest.csv");
-        boolean deleteSuccess = false;
-        if (csvFile.exists()) {
-            deleteSuccess = csvFile.delete();
-        }
-        assertTrue(deleteSuccess);
-    }
-
     @When("^I open edit contact page for contact \"([^\"]*)\"$")
     public void iOpenEditContactPageForContact(String email) throws Throwable {
         site.visit("contactlist.jsp");
