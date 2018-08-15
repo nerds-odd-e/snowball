@@ -39,13 +39,13 @@ Feature: Login
   Scenario: Show Cources List Test
     Given I am on create new course page
     When Add a course with below details
-      |coursename    | CSD-1         |
-      |duration      | 30            |
-      |country       | China         |
-      |city          | Chengdu       |
-      |startdate     | 2017-10-23    |
-      |address       | odd-e         |
-      |coursedetails | CSD training  |
-      |instructor    | Terry         |
+      | coursename    | CSD-1        |
+      | duration      | 30           |
+      | country       | China        |
+      | city          | Chengdu      |
+      | startdate     | 2017-10-23   |
+      | address       | odd-e        |
+      | coursedetails | CSD training |
+      | instructor    | Terry        |
     And I click the Create button
     Then Matsuo Show cources list test "1 - Tokyo CSD,2 - CSD cource,3 - Osaka CSD"

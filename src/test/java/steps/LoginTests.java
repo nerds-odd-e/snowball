@@ -46,7 +46,8 @@ public class LoginTests {
 
     @Then("^I should move to page with url \"([^\"]*)\"$")
     public void i_should_move_to_page_with_url(String arg1) throws Throwable {
-        assertEquals(login_url, driver.getCurrentUrl());
+        String expected = site.baseUrl() + arg1;
+        assertEquals(expected, driver.getCurrentUrl());
     }
 
     @Then("^Login failed message is shown$")
