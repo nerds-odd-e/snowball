@@ -26,9 +26,7 @@ public class LoginControllerTest {
 
     @Test
     public void redirectLoginPageWhenIncorrectMailAndPassword() throws Exception {
-        User user = new User("mary@example.com");
-        user.setPassword("abcd1234");
-        user.saveIt();
+        createUser();
 
         request.setParameter("email", "mary@example.com");
         request.setParameter("password", "incorrectpass");
@@ -39,14 +37,18 @@ public class LoginControllerTest {
 
     @Test
     public void redirectCourseListPageWhenCorrectMailAndPassword() throws Exception {
-        User user = new User("mary@example.com");
-        user.setPassword("abcd1234");
-        user.saveIt();
+        createUser();
 
         request.setParameter("email", "mary@example.com");
         request.setParameter("password", "abcd1234");
         controller.doPost(request, response);
 
         assertThat(response.getRedirectedUrl(), containsString("course_list.jsp"));
+    }
+
+    private void createUser() {
+        User user = new User("mary@example.com");
+        user.setPassword("abcd1234");
+        user.saveIt();
     }
 }
