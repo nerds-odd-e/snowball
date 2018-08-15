@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class LoginTests {
     private MassiveMailerSite site = new MassiveMailerSite();
@@ -42,10 +44,14 @@ public class LoginTests {
         throw new PendingException();
     }
 
-    @Then("^I should move to page with url \"([^\"]*)\" and message \"([^\"]*)\"$")
-    public void i_should_move_to_page_with_url_and(String arg1, String arg2) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    @Then("^I should move to page with url \"([^\"]*)\"$")
+    public void i_should_move_to_page_with_url(String arg1) throws Throwable {
+        assertEquals(login_url, driver.getCurrentUrl());
+    }
+
+    @Then("^Login failed message is shown$")
+    public void login_failed_message_is_shown() throws Throwable {
+        driver.pageShouldContain("login failed");
     }
 
     @Then("^Show cources list \"([^\"]*)\"$")

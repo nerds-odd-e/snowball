@@ -41,6 +41,9 @@
 								<div class="panel-heading">
 									<h3 class="panel-title">Login</h3>
 								</div>
+								<div class="alert alert-danger">
+									login failed
+								</div>
 								<div class="panel-body">
 
 									<div class="row">
