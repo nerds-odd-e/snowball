@@ -15,6 +15,7 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 public class UserRegisterSteps {
 
@@ -81,9 +82,15 @@ public class UserRegisterSteps {
     }
 
     @Then("^Contact was not created$")
-    public void contact_was_not_created() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void contact_was_not_created(String email) throws Throwable {
+
+    }
+
+    @Then("^\"([^\"]*)\" was not contained at Contact List Page$")
+    public void was_not_contained_at_Contact_List_Page(String email) throws Throwable {
+        driver.visit("http://localhost:8060/massive_mailer/contactlist.jsp");
+    	String contactTable = driver.findElementById("contactTable").getText();
+        assertFalse(contactTable.contains(email));
     }
 
     @Then("^Mail was not sent$")
