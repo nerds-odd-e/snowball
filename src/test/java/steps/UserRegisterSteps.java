@@ -14,6 +14,8 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.util.List;
 
+import static org.hamcrest.Matchers.containsString;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 
@@ -109,27 +111,23 @@ public class UserRegisterSteps {
     }
 
     @Given("^Admin add a new contact Yang with email: \"([^\"]*)\"$")
-    public void admin_add_a_new_contact_Yang_with_email(String arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void admin_add_a_new_contact_Yang_with_email(String email) throws Throwable {
+        site.addContactPage().addContact(email, "Japan", "Tokyo");
     }
 
     @When("^Yang change the token in the url to \"([^\"]*)\" and access the new url$")
-    public void yang_change_the_token_in_the_url_to_and_access_the_new_url(String arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void yang_change_the_token_in_the_url_to_and_access_the_new_url(String token) throws Throwable {
+        driver.visit("http://localhost:8060/massive_mailer/initialize_password.jsp?token=" + token);
     }
 
     @Then("^\"([^\"]*)\" message is shown$")
-    public void message_is_shown(String arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void message_is_shown(String msg) throws Throwable {
+        String bodyText = driver.getBodyText();
+        assertThat(bodyText, containsString(msg));
     }
 
     @Then("^Yang cannot set password$")
     public void yang_cannot_set_password() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
     }
 
     @Given("^There are the following contacts in the CSV file that do not exist in the system$")
