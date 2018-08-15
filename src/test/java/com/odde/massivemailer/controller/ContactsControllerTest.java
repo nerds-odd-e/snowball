@@ -4,8 +4,12 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 
 import com.odde.TestWithDB;
+import com.odde.massivemailer.model.Mail;
+import com.odde.massivemailer.service.GMailService;
 import org.javalite.activejdbc.Model;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,6 +17,8 @@ import org.junit.Test;
 
 import com.odde.massivemailer.model.ContactPerson;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
@@ -21,9 +27,16 @@ public class ContactsControllerTest {
     private ContactsController controller;
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
+
+    @Mock
+    private GMailService gmailService;
+
     @Before
     public void setUpMockService() {
+        MockitoAnnotations.initMocks(this);
+
         controller = new ContactsController();
+        controller.setMailService(gmailService);
 
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
@@ -73,7 +86,9 @@ public class ContactsControllerTest {
         request.setParameter("city", "Singapore");
         controller.doPost(request, response);
 
+        verify(gmailService).send(any(Mail.class));
         assertEquals("contactlist.jsp?status=success&msg=Add contact successfully", response.getRedirectedUrl());
+
     }
 
 }
