@@ -23,7 +23,7 @@
 <body>
 		<div id="page-wrapper">
 			<form name="Initialize-Password" id="initialize-password" method="post"
-				action="initializePassword">
+				action="initialPassword">
 
 				<div class="container-fluid">
 
@@ -63,7 +63,7 @@
 
 									<div class="row">
 										<div class="col-lg-12">
-											<button type="button" class="btn btn-default"
+											<button type="submit" class="btn btn-default"
 												id="submit">Login</button>
 										</div>
 									</div>

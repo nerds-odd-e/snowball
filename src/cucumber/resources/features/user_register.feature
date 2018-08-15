@@ -9,7 +9,6 @@ Feature: User Register
     Then Page Should Contain "terry@odd-e.com"
     And Page Should Fail
 
-  @developing
   Scenario: Initial password follow confirmation mail
     When Admin add a new contact "john" with email: "user1@odd-e.com"
     Then An confirmation email is sent to "user1@odd-e.com" from: "myodde@gmail.com"

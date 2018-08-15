@@ -52,7 +52,7 @@ public class UserRegisterSteps {
 
     @Then("^An confirmation email is sent to \"([^\"]*)\" from: \"([^\"]*)\"$")
     public void an_confirmation_email_is_sent_to_from(String email, String fromAddres) throws Throwable {
-        String expectUrl = "http://localhost:8060/massive_mailer/initial_password?token=";
+        String expectUrl = "http://localhost:8060/massive_mailer/initialPassword?token=";
         sentMail = SentMail.getSentMailBy(email);
         assertTrue(sentMail.getContent().contains(expectUrl));
     }
@@ -65,7 +65,6 @@ public class UserRegisterSteps {
     @When("^\"([^\"]*)\" set password to \"([^\"]*)\"$")
     public void set_password_to(String name, String password) throws Throwable {
         site.initializePasswordPage().setPassword(password);
-        driver.visit("http://localhost:8060/massive_mailer/initialize_password_success.jsp");
     }
 
     @Then("^Show success page$")

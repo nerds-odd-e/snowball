@@ -11,7 +11,6 @@ public class InitializePasswordPage {
 
     public InitializePasswordPage(MassiveMailerSite site) {
         this.driver = site.getDriver();
-        site.visit("initialize_password.jsp");
     }
 
     public void setPassword(final String password) throws SQLException, ClassNotFoundException {

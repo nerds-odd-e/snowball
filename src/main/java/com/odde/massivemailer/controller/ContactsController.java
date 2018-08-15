@@ -45,7 +45,7 @@ public class ContactsController extends AppController {
 				List<String> receipts = new ArrayList<>();
 				receipts.add(emailAddress);
 				email.setReceipts(receipts);
-				email.setContent("http://localhost:8060/massive_mailer/initial_password?token=" + token);
+				email.setContent("http://localhost:8060/massive_mailer/initialPassword?token=" + token);
 				email.sendMailWith(getMailService());
 			} catch (Exception e) {
 				resultMsg = "status=failed&msg=" + e.getMessage();
