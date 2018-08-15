@@ -52,13 +52,14 @@ public class Course extends ApplicationModel {
     }
 
     private void setGeoCoordinates() throws GeoServiceException {
-        if(!StringUtils.isEmpty(getLocation())){
-            LocationProviderService locationProviderService = new LocationProviderService();
-            Location location = locationProviderService.getLocationForName(getLocation());
-
-            set("latitude", location.getLat());
-            set("longitude", location.getLng());
+        String locationName = getLocation();
+        if (StringUtils.isEmpty(locationName)) {
+            return;
         }
+        LocationProviderService locationProviderService = new LocationProviderService();
+        Location location = locationProviderService.getLocationForName(locationName);
+        set("latitude", location.getLat());
+        set("longitude", location.getLng());
     }
 
     public static List<Course> findAllCourseNearTo(Location geoCordinate) {
