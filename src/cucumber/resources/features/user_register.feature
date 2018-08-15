@@ -17,7 +17,7 @@ Feature: User Register
     And "john" set password to "1234abcd"
     Then Show success page
 
-  @now
+  @developing
   Scenario Outline: Invalid email address
     When Admin add a new contact "<name>" with invalid email: "<email>"
     Then Contact page show "error message"
