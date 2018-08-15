@@ -28,11 +28,6 @@ public class ContactSteps {
         site.addContactPage().addContactWithLocationString(email, location);
     }
 
-    @When("^Add A Contact \"([^\"]*)\" at \"([^\"]*)\" and \"([^\"]*)\"$")
-    public void addAContact(String email, String country, String city) throws Throwable {
-        site.addContactPage().addContact(email, country, city);
-    }
-
     @When("^Add A Contact \"([^\"]*)\" at \"([^\"]*)\" and \"([^\"]*)\" for \"([^\"]*)\", \"([^\"]*)\" from \"([^\"]*)\"$")
     public void addAContactWithAllInputs(String email, String country, String city, String name, String lastName, String company) throws Throwable {
         site.addContactPage().addContactWithAllInput(email, country, city, name, lastName, company);
@@ -41,7 +36,7 @@ public class ContactSteps {
     @Given("^I am on the new contact page$")
     public void i_am_on_the_new_contact_page() throws Throwable {
         site.visit("add_contact.jsp");
-        pageShouldContain("Add Contact");
+        driver.pageShouldContain("Add Contact");
     }
 
     @Then("^I can see the element for \"([^\"]*)\"$")
@@ -51,7 +46,7 @@ public class ContactSteps {
 
     @Then("^I should get an element with message email sent: \"([^\"]*)\"$")
     public void i_should_get_an_element_with_message_email_sent(String emailSent) throws Throwable {
-        pageShouldContain("email sent: " + emailSent);
+        driver.pageShouldContain("email sent: " + emailSent);
     }
 
     @Then("^it should not create a new contact \"([^\"]*)\"$")
@@ -83,19 +78,9 @@ public class ContactSteps {
         assertFalse(field.isEmpty());
     }
 
-    @And("^Page Should Contain \"([^\"]*)\"$")
-    public void pageShouldContain(String text) throws Throwable {
-        driver.pageShouldContain(text);
-    }
-
     @And("^Page Should Success")
     public void pageShouldSuccess() throws Throwable {
         assertTrue(driver.getCurrentUrl().contains("status=success"));
-    }
-
-    @And("^Page Should Fail$")
-    public void pageShouldFail() throws Throwable {
-        assertTrue(driver.getCurrentUrl().contains("status=failed"));
     }
 
     @Then("^Element \"([^\"]*)\" Should Contain \"([^\"]*)\"$")
@@ -108,11 +93,6 @@ public class ContactSteps {
         driver.expectPageToContainExactlyNElements(text, count);
     }
 
-    @Given("^\"([^\"]*)\" which in \"([^\"]*)\" and \"([^\"]*)\" is a contact already$")
-    public void is_a_contact_already(String email, String country, String city) throws Throwable {
-        addAContact(email, country, city);
-    }
-
     @Then("^Page should be redirected to \"([^\"]*)\"$")
     public void pageRedirectTo(String page) throws Throwable {
         driver.expectRedirect(page);
@@ -121,7 +101,7 @@ public class ContactSteps {
     @And("^Contacts page should contain \"([^\"]*)\"$")
     public void contactsListPageShouldContain(String email) throws Throwable {
         site.visit("contactlist.jsp");
-        pageShouldContain(email);
+        driver.pageShouldContain(email);
     }
 
     @And("^Contacts page should contain exactly (\\d+) \"([^\"]*)\"$")
@@ -133,7 +113,7 @@ public class ContactSteps {
     @Given("^There is a contact \"([^\"]*)\"$")
     public void there_is_a_contact(String email) throws Throwable {
         site.visit("contactlist.jsp");
-        pageShouldContain(email);
+        driver.pageShouldContain(email);
     }
 
     @When("^I change the location information of contact to be \"([^\"]*)\" and \"([^\"]*)\"$")
@@ -147,8 +127,8 @@ public class ContactSteps {
 
     @Then("^contact \"([^\"]*)\"'s locations should be \"([^\"]*)\"$")
     public void contact_s_locations_should_be(String email, String location) throws Throwable {
-        pageShouldContain(email);
-        pageShouldContain(location);
+        driver.pageShouldContain(email);
+        driver.pageShouldContain(location);
     }
 
     @Given("^There are the following contacts in the CSV file that do not exist in the system$")
@@ -235,6 +215,6 @@ public class ContactSteps {
     @Then("^Contact \"([^\"]*)\" record is created$")
     public void contactRecordIsCreated(String email) throws Throwable {
         site.visit("contactlist.jsp");
-        pageShouldContain(email);
+        driver.pageShouldContain(email);
     }
 }

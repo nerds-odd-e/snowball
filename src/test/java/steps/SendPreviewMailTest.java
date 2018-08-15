@@ -1,14 +1,12 @@
 package steps;
 
 import cucumber.api.DataTable;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
-import static org.junit.Assert.assertEquals;
 
 public class SendPreviewMailTest {
     private MassiveMailerSite site = new MassiveMailerSite();
@@ -45,8 +43,7 @@ public class SendPreviewMailTest {
 
     @Given("^There is a contact \"([^\"]*)\" at Tokyo$")
     public void there_is_a_contact_at_Tokyo(String email) throws Throwable {
-        ContactSteps contactTests = new ContactSteps();
-        contactTests.addAContact(email, "Japan", "Tokyo");
+        site.addContactPage().addContact(email, "Japan", "Tokyo");
     }
 
     @Then("^\"([^\"]*)\" shouldn't receive any email$")

@@ -3,6 +3,12 @@ Feature: User Register
   the new user could set initial password for login,
   to access the course information.
 
+  Scenario: Contacts with duplicate email is not allowed
+    Given "terry@odd-e.com" which in "China" and "Chengdu" is a contact already
+    When Add A Contact "terry@odd-e.com" at "China" and "Chengdu"
+    Then Page Should Contain "terry@odd-e.com"
+    And Page Should Fail
+
   @developing
   Scenario: Initial password follow confirmation mail
     When Admin add a new contact "john" with email: "user1@odd-e.com"
