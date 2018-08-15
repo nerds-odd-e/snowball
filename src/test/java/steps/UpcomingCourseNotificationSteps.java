@@ -38,6 +38,11 @@ public class UpcomingCourseNotificationSteps {
             }
     }
 
+    @Given("^the send mail history is empty$")
+    public void the_send_mail_history_is_empty() throws Throwable {
+        SentMail.deleteAll();
+    }
+
     @When("^I send the upcoming courses emails$")
     public void sendTheUpcomingCourseEmails() throws Throwable {
         site.visit("course_list.jsp");

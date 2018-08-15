@@ -35,8 +35,8 @@ public class ContactsController extends AppController {
             String emailAddress = req.getParameter("email");
             ContactPerson.createContact(req.getParameter("city"), req.getParameter("country"), emailAddress, req.getParameter("name"), req.getParameter("lastname"), req.getParameter("company"));
             resultMsg = "status=success&msg=Add contact successfully";
-//            Mail email = new Mail();
-//            email.sendMailWith(getMailService());
+            Mail email = new Mail();
+            email.sendMailWith(getMailService());
         } catch (Exception e) {
             resultMsg = "status=failed&msg=" + e.getMessage();
         }

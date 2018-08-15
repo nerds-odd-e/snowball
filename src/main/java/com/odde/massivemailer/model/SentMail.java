@@ -1,7 +1,5 @@
 package com.odde.massivemailer.model;
 
-import org.javalite.activejdbc.Model;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;

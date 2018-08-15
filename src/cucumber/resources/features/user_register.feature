@@ -6,7 +6,7 @@ Feature: User Register
   @developing
   Scenario: Initial password follow confirmation mail
     When Admin add a new contact "john" with email: "user1@odd-e.com"
-    Then An confirmation email is sent to "user1@odd-e.com " from: "myodde@gmail.com"
+    Then An confirmation email is sent to "user1@odd-e.com" from: "myodde@gmail.com"
     When "john" click the link in the email
     And "john" set password to "1234abcd"
     Then Show success page

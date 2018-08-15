@@ -86,7 +86,7 @@ public class ContactsControllerTest {
         request.setParameter("city", "Singapore");
         controller.doPost(request, response);
 
-//        verify(gmailService).send(any(Mail.class));
+        verify(gmailService).send(any(Mail.class));
         assertEquals("contactlist.jsp?status=success&msg=Add contact successfully", response.getRedirectedUrl());
 
     }
