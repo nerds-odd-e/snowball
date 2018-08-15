@@ -10,7 +10,16 @@ import java.io.IOException;
 public class InitializePasswordController extends AppController {
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if (req.getParameter("password") != null) {
 
-        resp.sendRedirect("initialize-success.jsp");
+        }
+        resp.sendRedirect("initialize_password_success.jsp");
+    }
+
+    public boolean validate(String password) {
+        if (password != null) {
+            return true;
+        }
+        return false;
     }
 }

@@ -23,7 +23,7 @@
 <body>
 		<div id="page-wrapper">
 			<form name="Initialize-Password" id="initialize-password" method="post"
-				action="contacts">
+				action="initializePassword">
 
 				<div class="container-fluid">
 
