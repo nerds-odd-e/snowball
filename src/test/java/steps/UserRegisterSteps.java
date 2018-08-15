@@ -8,6 +8,8 @@ import cucumber.api.java.en.When;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
+import static org.junit.Assert.assertTrue;
+
 public class UserRegisterSteps {
 
     private MassiveMailerSite site = new MassiveMailerSite();
@@ -66,6 +68,12 @@ public class UserRegisterSteps {
     @When("^Admin add a new contact \"([^\"]*)\" with valid email: \"([^\"]*)\"$")
     public void admin_add_a_new_contact_with_valid_email(String name, String email) throws Throwable {
         site.addContactPage().addContact(email, "Japan", "Tokyo");
+    }
+
+    @Then("^Contact list page show \"([^\"]*)\"$")
+    public void contact_list_page_show(String email) throws Throwable {
+        String contactTable = driver.findElementById("contactTable").getText();
+        assertTrue(contactTable.contains(email));
     }
 
     @Given("^Admin add a new contact Yang with email: \"([^\"]*)\"$")

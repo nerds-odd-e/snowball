@@ -25,14 +25,19 @@ Feature: User Register
       | test            | Test |
 
   @developing
-  Scenario: Valid email address
-    When Admin add a new contact "john" with valid email: "user1@odd-e.com"
-    Then Contact page show "success message"
+  Scenario Outline: Valid email address
+    When Admin add a new contact "<name>" with valid email: "<email>"
+    Then Contact list page show "<email>"
+
+    Examples:
+    | email              | name |
+    | user1@odd-e.com    | John |
+    | test@odd-e.com     | Mary |
 
   @developing
   Scenario: Invalid token
     Given Admin add a new contact Yang with email: "yang@odd-e.com"
     Then An confirmation email is sent to "yang@odd-e.com" from: "admin@odd-e.com"
     When Yang change the token in the url to "I_made_it_up" and access the new url
-    Then "Invlid token" message is shown
+    Then "Invalid token" message is shown
     And Yang cannot set password
