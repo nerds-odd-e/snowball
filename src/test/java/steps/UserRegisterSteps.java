@@ -95,8 +95,6 @@ public class UserRegisterSteps {
 
     @Then("^Mail was not sent$")
     public void mail_was_not_sent() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
     }
 
     @When("^Admin add a new contact \"([^\"]*)\" with valid email: \"([^\"]*)\"$")
