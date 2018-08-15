@@ -1,7 +1,6 @@
 package steps;
 
-import com.odde.massivemailer.model.ContactPerson;
-import com.odde.massivemailer.model.Mail;
+import com.odde.massivemailer.model.SentMail;
 import cucumber.api.DataTable;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
@@ -21,7 +20,7 @@ public class UserRegisterSteps {
 
     private MassiveMailerSite site = new MassiveMailerSite();
     private WebDriverWrapper driver = site.getDriver();
-    private Mail mail = new Mail();
+    private SentMail sentMail = null;
 
     @Given("^\"([^\"]*)\" which in \"([^\"]*)\" and \"([^\"]*)\" is a contact already$")
     public void is_a_contact_already(String email, String country, String city) throws Throwable {
@@ -50,13 +49,14 @@ public class UserRegisterSteps {
 
     @Then("^An confirmation email is sent to \"([^\"]*)\" from: \"([^\"]*)\"$")
     public void an_confirmation_email_is_sent_to_from(String email, String fromAddres) throws Throwable {
-        String token = "123123123asbs";
-        mail.setContent("http://localhost:8060/massive_mailer/initial_password?token=" + token);
+        String expectUrl = "http://localhost:8060/massive_mailer/initial_password?token=";
+        sentMail = SentMail.getSentMailBy(email);
+        assertTrue(sentMail.getContent().contains(expectUrl));
     }
 
     @When("^\"([^\"]*)\" click the link in the email$")
     public void click_the_link_in_the_email(String arg1) throws Throwable {
-        driver.visit(mail.getContent());
+        driver.visit(sentMail.getContent());
     }
 
     @When("^\"([^\"]*)\" set password to \"([^\"]*)\"$")

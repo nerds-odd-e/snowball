@@ -36,6 +36,11 @@ public class ContactsController extends AppController {
             ContactPerson.createContact(req.getParameter("city"), req.getParameter("country"), emailAddress, req.getParameter("name"), req.getParameter("lastname"), req.getParameter("company"));
             resultMsg = "status=success&msg=Add contact successfully";
             Mail email = new Mail();
+            String token = "123123123asbs";
+            List<String> receipts = new ArrayList<>();
+            receipts.add(emailAddress);
+            email.setReceipts(receipts);
+            email.setContent("http://localhost:8060/massive_mailer/initial_password?token=" + token);
             email.sendMailWith(getMailService());
         } catch (Exception e) {
             resultMsg = "status=failed&msg=" + e.getMessage();

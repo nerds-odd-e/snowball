@@ -96,4 +96,7 @@ public class SentMail extends ApplicationModel {
         return "{\"subject\":\""+ getSubject()+"\", \"sent_at\":\""+date+"\", \"total_open_count\":"+count+", \"emails\":["+String.join(", ", sarray)+"]}";
     }
 
+    public static SentMail getSentMailBy(String email) {
+        return findFirst("receivers = ?", email);
+    }
 }
