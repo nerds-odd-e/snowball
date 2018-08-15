@@ -13,16 +13,7 @@ public class User extends ApplicationModel {
     }
 
     public void setPassword(String password) {
-        set("password", toHashString(password));
-    }
-
-    private String toHashString(String password) {
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-1");
-            return new String(digest.digest(password.getBytes()));
-        } catch (Exception e) {
-            return null;
-        }
+        set("password", password);
     }
 
     public static User getUserByEmail(String email) {
@@ -38,6 +29,6 @@ public class User extends ApplicationModel {
             return false;
         }
 
-        return userPassword.equals(toHashString(password));
+        return userPassword.equals(password);
     }
 }
