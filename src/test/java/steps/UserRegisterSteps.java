@@ -8,7 +8,7 @@ import cucumber.api.java.en.When;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
-public class InitialPasswordSteps {
+public class UserRegisterSteps {
 
     private MassiveMailerSite site = new MassiveMailerSite();
     private WebDriverWrapper driver = site.getDriver();
@@ -61,6 +61,11 @@ public class InitialPasswordSteps {
     public void mail_was_not_sent() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
+    }
+
+    @When("^Admin add a new contact \"([^\"]*)\" with valid email: \"([^\"]*)\"$")
+    public void admin_add_a_new_contact_with_valid_email(String name, String email) throws Throwable {
+        site.addContactPage().addContact(email, "Japan", "Tokyo");
     }
 
     @Given("^Admin add a new contact Yang with email: \"([^\"]*)\"$")
