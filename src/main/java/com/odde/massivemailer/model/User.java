@@ -12,7 +12,7 @@ public class User extends ApplicationModel {
     }
 
     public void setPassword(String password) {
-
+        set("password", password);
     }
 
     public static User getUserByEmail(String email) {
@@ -22,5 +22,7 @@ public class User extends ApplicationModel {
         return null;
     }
 
-
+    public String getPassword() {
+        return getString("password");
+    }
 }

@@ -26,6 +26,9 @@ public class LoginControllerTest {
 
     @Test
     public void redirectLoginPageWhenIncorrectMailAndPassword() throws Exception {
+        User user = new User("mary@example.com");
+        user.setPassword("abcd1234");
+        user.saveIt();
 
         request.setParameter("email", "mary@example.com");
         request.setParameter("password", "incorrectpass");

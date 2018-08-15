@@ -10,11 +10,13 @@ public class LoginController {
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         User user = User.getUserByEmail(req.getParameter("email"));
+        String password = req.getParameter("password");
         String url;
-        if (user == null) {
-            url = "login.jsp";
-        } else {
+
+        if (user != null && user.getPassword() != null && user.getPassword().equals(password)){
             url = "course_list.jsp";
+        } else {
+            url = "login.jsp";
         }
         resp.sendRedirect(url);
     }
