@@ -22,8 +22,8 @@
 </head>
 <body>
 		<div id="page-wrapper">
-			<form name="login" id="loginForm" method="get"
-				action="courses">
+			<form name="login" id="loginForm" method="post"
+				action="login">
 
 				<div class="container-fluid">
 

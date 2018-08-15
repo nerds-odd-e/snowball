@@ -31,10 +31,12 @@ Feature: Login
   @developing
   Scenario: Login success
     Given Visit Login Page
+    Given There is a user with "mary@example.com" and "abcd1234"
     Given Fill form with "mary@example.com" and "abcd1234"
     When I click login button
     Then Show course list of current user
 
+  @developing
   Scenario Outline: Login fail
     Given Visit Login Page
     Given Fill form with "<email>" and "<password>"
@@ -43,12 +45,12 @@ Feature: Login
     And Login failed message is shown
 
     Examples:
-      | email               | password       | url       |
-      | mary@example.com    | hogehoge       | login.jsp |
-      | unknown@example.com | hogehoge       | login.jsp |
-      | uninit@example.com  | uninitpassword | login.jsp |
+      | email               | password       | url                   |
+      | mary@example.com    | hogehoge       | login.jsp?status=fail |
+      | unknown@example.com | hogehoge       | login.jsp?status=fail |
+      | uninit@example.com  | uninitpassword | login.jsp?status=fail |
 
-  @now
+  @developing
   Scenario Outline: Cources List after Login
     Given Visit Login Page
     Given Fill form with "<email>" and "<password>"

@@ -1,11 +1,9 @@
 package steps;
 
-import cucumber.api.DataTable;
-import cucumber.api.PendingException;
+import com.odde.massivemailer.model.User;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import gherkin.formatter.model.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import steps.driver.WebDriverWrapper;
@@ -33,6 +31,14 @@ public class LoginTests{
         driver.pageShouldContain("Login Massive Mailer");
     }
 
+    @Given("^There is a user with \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void there_is_a_user_with_and(String email, String password) throws Throwable {
+        User.deleteAll();
+        User user = new User(email);
+        user.setPassword(password);
+        user.saveIt();
+    }
+
     @Given("^Fill form with \"([^\"]*)\" and \"([^\"]*)\"$")
     public void fill_form_with_and(String arg1, String arg2) throws Throwable {
         driver.setTextField("email", arg1);
@@ -46,7 +52,7 @@ public class LoginTests{
 
     @Then("^Show course list of current user$")
     public void show_course_list_of_current_user() throws Throwable {
-        assertTrue(driver.getCurrentUrl().contains("courses"));
+        assertTrue(driver.getCurrentUrl().contains("course_list"));
     }
 
     @Then("^I should move to page with url \"([^\"]*)\"$")
