@@ -68,7 +68,7 @@ public class InitializePasswordControllerTest {
         request.setParameter("password", "abcd123");
         request.setParameter("password_confirm", "123123");
         request.setParameter("email", "user1@odd-e.com");
-        User newUser = new User("user1@odd-e.com");
+        User newUser = new User("user1@odd-e.com", "123");
         newUser.saveIt();
         controller.doPost(request, response);
         assertEquals("initialize_password.jsp?error=unmatch", response.getRedirectedUrl());
