@@ -10,8 +10,9 @@ import java.security.MessageDigest;
 public class User extends ApplicationModel {
     public User(){}
 
-    public User(String email) {
+    public User(String email, String token) {
         set("email", email);
+        set("token", token);
     }
 
     public void setPassword(String password) {
@@ -44,5 +45,10 @@ public class User extends ApplicationModel {
             e.printStackTrace();
             return null;
         }
+    }
+
+
+    public String getToken() {
+        return "";
     }
 }

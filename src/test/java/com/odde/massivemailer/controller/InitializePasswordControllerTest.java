@@ -45,7 +45,7 @@ public class InitializePasswordControllerTest {
         request.setParameter("password","sdfgsdfgsdg");
         request.setParameter("password_confirm", "sdfgsdfgsdg");
         request.setParameter("email", "user1@odd-e.com");
-        User newUser = new User("user1@odd-e.com");
+        User newUser = new User("user1@odd-e.com", "123");
         newUser.saveIt();
         controller.doPost(request, response);
         User user = User.findFirst("email = ? AND password IS NOT NULL", request.getParameter("email"));
@@ -76,7 +76,7 @@ public class InitializePasswordControllerTest {
 
     @Ignore
     public void invalidTokenError() throws Exception {
-        User user = new User("megumi@gmail.com");
+        User user = new User("megumi@gmail.com", "123");
         user.saveIt();
         request.setParameter("token", "123123");
         request.setParameter("password","sdfgsdfgsdg");

@@ -51,7 +51,7 @@ public class LoginControllerTest {
     }
 
     private void createUser() {
-        User user = new User("mary@example.com");
+        User user = new User("mary@example.com", "123");
         user.setPassword("abcd1234");
         user.saveIt();
     }

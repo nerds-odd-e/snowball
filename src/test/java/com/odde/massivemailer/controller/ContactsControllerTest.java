@@ -1,22 +1,17 @@
 package com.odde.massivemailer.controller;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import com.odde.TestWithDB;
+import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.model.User;
 import com.odde.massivemailer.service.GMailService;
 import com.odde.massivemailer.service.MailService;
 import com.odde.massivemailer.service.PasswordTokenService;
+import org.javalite.activejdbc.LazyList;
+import org.javalite.activejdbc.Model;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import com.odde.massivemailer.model.ContactPerson;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -27,8 +22,12 @@ import org.springframework.mock.web.MockHttpServletResponse;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 
 @RunWith(TestWithDB.class)
 public class ContactsControllerTest {
@@ -45,20 +44,16 @@ public class ContactsControllerTest {
 	@Captor
     private ArgumentCaptor<Mail> mailCaptor;
 
-    private String passwordToken = "qwertyuiop[";
-
     @Before
     public void setUpMockService() {
         MockitoAnnotations.initMocks(this);
 
         controller = new ContactsController();
         controller.setMailService(gmailService);
-        controller.setPasswordTokenService(passwordTokenService);
 
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
 
-        when((passwordTokenService.createToken())).thenReturn(passwordToken);
     }
 
     @Test
@@ -80,7 +75,7 @@ public class ContactsControllerTest {
         controller.doGet(request, response);
 
         assertThat(response.getContentAsString(), containsString("\"email\":\"john@gmail.com\""));
-        Assert.assertTrue(response.getContentAsString().indexOf("\"email\":\"peter@gmail.com\"") < 0);
+        Assert.assertTrue(!response.getContentAsString().contains("\"email\":\"peter@gmail.com\""));
     }
 
     @Test
@@ -123,16 +118,13 @@ public class ContactsControllerTest {
 		verify(gmailService).send(mailCaptor.capture());
 		Mail mail = mailCaptor.getValue();
 
-        String token = getTokenFromEmail(mail);
-        User userFound = User.findByToken(token);
-        assertEquals("newbie@gmail.com", userFound.getEmail());
-
+        User userFound = getLastUser();
+        assertThat(mail.getContent(), containsString("token="+userFound.getToken()));
     }
 
-    private String getTokenFromEmail(Mail mail) {
-        Pattern pattern = Pattern.compile("token\\=(\\w+)");
-        Matcher matcher = pattern.matcher(mail.getContent());
-        return matcher.group(1);
+    private User getLastUser() {
+        LazyList<Model> all = User.findAll();
+        return (User) all.get(all.size() - 1);
     }
 
 }

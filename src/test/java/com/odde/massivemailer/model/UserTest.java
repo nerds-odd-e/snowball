@@ -13,7 +13,7 @@ public class UserTest {
     public void testValidPassword() {
         String email = "hoge@example.com";
         String password = "hogehoge";
-        User user = new User(email);
+        User user = new User(email, "123");
         user.setPassword(password);
         user.saveIt();
 
@@ -26,7 +26,7 @@ public class UserTest {
     public void testInvalidPassword() {
         String email = "hoge@example.com";
         String password = "hogehoge";
-        User user = new User(email);
+        User user = new User(email, "123");
         user.setPassword(password);
         user.saveIt();
 

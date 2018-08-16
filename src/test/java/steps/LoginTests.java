@@ -27,11 +27,24 @@ public class LoginTests{
         driver.pageShouldContain("Login Massive Mailer");
     }
 
+    @Given("^Login failed message is not shown$")
+    public void login_failed_message_is_not_shown() throws Throwable {
+        assertFalse(driver.getBodyText().contains("login failed"));
+    }
+
+    @Given("^There is a user with \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void there_is_a_user_with_and(String email, String password) throws Throwable {
+        User.deleteAll();
+        User user = new User(email, "123");
+        user.setPassword(password);
+        user.saveIt();
+    }
+
     @Given("^There are users as bellow$")
     public void there_are_users_as_bellow(DataTable userTable) throws Throwable {
         Map<String, String> vals = userTable.asMap(String.class, String.class);
         vals.entrySet().forEach(entry -> {
-            User user = new User(entry.getKey());
+            User user = new User(entry.getKey(), "123");
             user.setPassword(entry.getValue());
             user.saveIt();
         });
@@ -62,7 +75,7 @@ public class LoginTests{
     @Given("^There is a user with \"([^\"]*)\" and \"([^\"]*)\" and password initialize is done$")
     public void there_is_a_user_with_and_and_password_initialize_is_done(String email, String password) throws Throwable {
         User.deleteAll();
-        User user = new User(email);
+        User user = new User(email, "");
         user.setPassword(password);
         user.saveIt();
     }
@@ -70,7 +83,7 @@ public class LoginTests{
     @Given("^There is a user with \"([^\"]*)\" and \"([^\"]*)\" and password initialize is undone$")
     public void there_is_a_user_with_and_and_password_initialize_is_undone(String email, String password) throws Throwable {
         User.deleteAll();
-        User user = new User(email);
+        User user = new User(email, "123");
         user.saveIt();
     }
 
