@@ -9,6 +9,7 @@ import static org.mockito.Mockito.when;
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.service.GMailService;
+import com.odde.massivemailer.service.MailService;
 import com.odde.massivemailer.service.PasswordTokenService;
 import org.junit.Assert;
 import org.junit.Before;
@@ -99,9 +100,9 @@ public class ContactsControllerTest {
         request.setParameter("email", "newbie@example.com");
         request.setParameter("country", "Singapore");
         request.setParameter("city", "Singapore");
+        controller.setMailService(MailService.createMailService());
         controller.doPost(request, response);
 
-        verify(gmailService).send(any(Mail.class));
         assertEquals("contactlist.jsp?status=success&msg=Add contact successfully", response.getRedirectedUrl());
 
     }
