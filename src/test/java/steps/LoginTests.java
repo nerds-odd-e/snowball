@@ -75,9 +75,29 @@ public class LoginTests{
         assertEquals(expected, driver.getCurrentUrl());
     }
 
+    @Given("^There is a user with \"([^\"]*)\" and \"([^\"]*)\" and password initialize is done$")
+    public void there_is_a_user_with_and_and_password_initialize_is_done(String email, String password) throws Throwable {
+        User.deleteAll();
+        User user = new User(email);
+        user.setPassword(password);
+        user.saveIt();
+    }
+
+    @Given("^There is a user with \"([^\"]*)\" and \"([^\"]*)\" and password initialize is undone$")
+    public void there_is_a_user_with_and_and_password_initialize_is_undone(String email, String password) throws Throwable {
+        User.deleteAll();
+        User user = new User(email);
+        user.saveIt();
+    }
+
     @And("^Login failed message is shown$")
     public void login_failed_message_is_shown() throws Throwable {
         driver.pageShouldContain("login failed");
+    }
+
+    @Then("^Login failed message is hidden$")
+    public void login_failed_message_is_hidden() throws Throwable {
+        assertTrue(driver.getCurrentUrl().contains("course_list"));
     }
 
     @Then("^Show courses list \"([^\"]*)\"$")

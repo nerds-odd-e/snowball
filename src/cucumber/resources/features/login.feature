@@ -26,7 +26,7 @@ Feature: Login
     When I click login button
     Then Show course list of current user
 
-  @now
+  @developing
   Scenario Outline: Login fail
     Given Visit Login Page
     Given Login failed message is not shown
@@ -40,6 +40,22 @@ Feature: Login
       | mary@example.com    | hogehoge       | login.jsp?status=fail |
       | unknown@example.com | hogehoge       | login.jsp?status=fail |
       | uninit@example.com  | uninitpassword | login.jsp?status=fail |
+
+  @now
+  Scenario Outline: login
+    Given Visit Login Page
+    Given There is a user with "<userEmail>" and "<userPassword>" and password initialize is <initPassword>
+    Given Fill form with "<inputEmail>" and "<inputPassword>"
+    When I click login button
+    Then I should move to page with url "<url>"
+    And Login failed message is <message>
+
+    Examples:
+      | userEmail        | initPassword | userPassword | inputEmail          | inputPassword | url                   | message |
+      | mary@example.com | done         | abcd1234     | mary@example.com    | abcd1234      | course_list.jsp       | hidden  |
+      | mary@example.com | done         | abcd1234     | mary@example.com    | hogehoge      | login.jsp?status=fail | shown   |
+      | mary@example.com | done         | abcd1234     | unknown@example.com | abcd1234      | login.jsp?status=fail | shown   |
+      | mary@example.com | undone       | abcd1234     | undone@example.com  | abcd1234      | login.jsp?status=fail | shown   |
 
   @developing
   Scenario Outline: Courses List after Login
