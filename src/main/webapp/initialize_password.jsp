@@ -52,7 +52,7 @@
 									<div class="row">
 										<div class="col-lg-1">Password:</div>
 										<div class="col-lg-11">
-											<input type="text" class="form-control" name="password"
+											<input type="password" class="form-control" name="password"
 												id="password">
 										</div>
 									</div>
