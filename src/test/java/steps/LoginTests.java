@@ -120,22 +120,14 @@ public class LoginTests{
 
     }
 
-    @When("^I click course detail link$")
-    public void i_click_course_detail_link() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    @When("^I go to contact list link$")
+    public void i_go_to_contact_list_link() throws Throwable {
+        site.visit("contactlist.jsp");
     }
 
-    @Then("^Show course detail$")
-    public void show_course_detail() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
-
-    @When("^I go to course detail url$")
-    public void i_go_to_course_detail_url() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    @Then("^Show contact list$")
+    public void show_contact_list() throws Throwable {
+        driver.pageShouldContain("Contact List");
     }
 
     @Then("^Show login page$")
@@ -143,6 +135,5 @@ public class LoginTests{
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }
-
 
 }
