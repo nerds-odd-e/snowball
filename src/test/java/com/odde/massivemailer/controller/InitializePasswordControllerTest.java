@@ -31,14 +31,15 @@ public class InitializePasswordControllerTest {
         assertEquals("initialize_password.jsp?token=123123", response.getRedirectedUrl());
     }
 
-    @Ignore
+    @Test
     public void showInitialPasswordViewWrongIfTokenNone() throws Exception {
         controller.doGet(request,response);
-        assertTrue(response.getRedirectedUrl().contains("initialize_password_wrong_token.jsp"));
+        assertTrue(response.getRedirectedUrl().contains("initialize_password_token_error.jsp"));
     }
 
     @Test
     public void initialPasswordSuccessfully() throws Exception {
+        request.setParameter("token", "123123");
         request.setParameter("password","sdfgsdfgsdg");
         controller.doPost(request, response);
         assertEquals("initialize_password_success.jsp", response.getRedirectedUrl());
@@ -46,6 +47,8 @@ public class InitializePasswordControllerTest {
 
     @Test
     public void initialPasswordWrong() throws Exception {
+        request.setParameter("token", "123123");
+        request.setParameter("password", "");
         controller.doPost(request, response);
         assertEquals("initialize_password.jsp", response.getRedirectedUrl());
     }
