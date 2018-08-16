@@ -43,6 +43,7 @@ public class InitializePasswordControllerTest {
     public void initialPasswordSuccessfully() throws Exception {
         request.setParameter("token", "123123");
         request.setParameter("password","sdfgsdfgsdg");
+        request.setParameter("password_confirm", "sdfgsdfgsdg");
         request.setParameter("email", "user1@odd-e.com");
         User newUser = new User("user1@odd-e.com");
         newUser.saveIt();
@@ -56,8 +57,21 @@ public class InitializePasswordControllerTest {
     public void initialPasswordWrong() throws Exception {
         request.setParameter("token", "123123");
         request.setParameter("password", "");
+        request.setParameter("password_confirm", "");
         controller.doPost(request, response);
         assertEquals("initialize_password.jsp", response.getRedirectedUrl());
+    }
+
+    @Test
+    public void unmatchPasswordAndPasswordConfirm() throws Exception {
+        request.setParameter("token", "123123");
+        request.setParameter("password", "abcd123");
+        request.setParameter("password_confirm", "123123");
+        request.setParameter("email", "user1@odd-e.com");
+        User newUser = new User("user1@odd-e.com");
+        newUser.saveIt();
+        controller.doPost(request, response);
+        assertEquals("initialize_password.jsp?error=unmatch", response.getRedirectedUrl());
     }
 
     @Ignore
@@ -66,6 +80,7 @@ public class InitializePasswordControllerTest {
         user.saveIt();
         request.setParameter("token", "123123");
         request.setParameter("password","sdfgsdfgsdg");
+        request.setParameter("password_confirm", "sdfgsdfgsdg");
         controller.doPost(request, response);
 
         assertTrue(response.getRedirectedUrl().contains("initialize_password_token_error.jsp"));

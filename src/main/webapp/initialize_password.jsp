@@ -22,6 +22,12 @@
 </head>
 <body>
 		<div id="page-wrapper">
+		    <%if("unmatch".equals(request.getParameter("error"))){%>
+            <div>
+                <p>Password unmatched!</p>
+            </div>
+            <%}%>
+
 			<form name="Initialize-Password" id="initialize-password" method="post"
 				action="initialPassword">
 

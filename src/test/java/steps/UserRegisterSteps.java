@@ -67,7 +67,7 @@ public class UserRegisterSteps {
         site.initializePasswordPage().setPassword(password);
     }
 
-    @When("^\"([^\"]*)\" set password-confirm to \"([^\"]*)\"$")
+    @When("^\"([^\"]*)\" set password_confirm to \"([^\"]*)\"$")
     public void set_password_confirm_to(String name, String password) throws Throwable {
         site.initializePasswordPage().setPasswordConfirm(password);
     }

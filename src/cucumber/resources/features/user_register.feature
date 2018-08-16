@@ -15,7 +15,7 @@ Feature: User Register
     Then An confirmation email is sent to "user1@odd-e.com" from: "myodde@gmail.com"
     When "john" click the link in the email
     And "john" set password to "1234abcd"
-    And "john" set password-confirm to "1234abcd"
+    And "john" set password_confirm to "1234abcd"
     And "john" clicks submit button
     Then Show valid information
     And Visit Login Page
@@ -53,17 +53,17 @@ Feature: User Register
     Then "Invalid token" message is shown
 
   @developing
-  Scenario Outline: Check password and password-confirm
+  Scenario Outline: Check password and password_confirm
     Given Admin add a new contact "john" with email: "john@odd-e.com"
     Then An confirmation email is sent to "john@odd-e.com" from: "myodde@gmail.com"
     When "john" click the link in the email
     And "john" set password to "<password>"
-    And "john" set password-confirm to "<password-confirm>"
+    And "john" set password_confirm to "<password_confirm>"
     And "john" clicks submit button
     Then Show <result> information
 
     Examples:
-    | password    | password-confirm | result  |
+    | password    | password_confirm | result  |
     | 123123ab    | 123123ab         | valid   |
     | 1asaasdf123 | aljsdflkjasf     | invalid |
 
