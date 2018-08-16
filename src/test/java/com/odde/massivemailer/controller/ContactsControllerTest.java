@@ -98,7 +98,6 @@ public class ContactsControllerTest {
         request.setParameter("email", "newbie@example.com");
         request.setParameter("country", "Singapore");
         request.setParameter("city", "Singapore");
-        controller.setMailService(MailService.createMailService());
         controller.doPost(request, response);
 
         assertEquals("contactlist.jsp?status=success&msg=Add contact successfully", response.getRedirectedUrl());
