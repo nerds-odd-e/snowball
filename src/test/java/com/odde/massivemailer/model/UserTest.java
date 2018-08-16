@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 public class UserTest {
 
     @Test
-    public void testIsPasswordCorrect() {
+    public void testValidPassword() {
         String email = "hoge@example.com";
         String password = "hogehoge";
         User user = new User(email);
@@ -20,5 +20,19 @@ public class UserTest {
         User dbUser = User.getUserByEmail(email);
         assertNotNull(dbUser);
         assertTrue(dbUser.isPasswordCorrect(password));
+    }
+
+    @Test
+    public void testInvalidPassword() {
+        String email = "hoge@example.com";
+        String password = "hogehoge";
+        User user = new User(email);
+        user.setPassword(password);
+        user.saveIt();
+
+        String invalidPassword = "invalidhoge";
+        User dbUser = User.getUserByEmail(email);
+        assertNotNull(dbUser);
+        assertFalse(dbUser.isPasswordCorrect(invalidPassword));
     }
 }
