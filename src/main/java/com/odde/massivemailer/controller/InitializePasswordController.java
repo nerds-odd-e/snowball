@@ -1,5 +1,7 @@
 package com.odde.massivemailer.controller;
 
+import com.odde.massivemailer.model.ContactPerson;
+import com.odde.massivemailer.model.User;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.ServletException;
@@ -22,10 +24,13 @@ public class InitializePasswordController extends AppController {
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (this.validate(req.getParameter("password"))) {
+            User user = User.findFirst("email = ?", req.getParameter("email"));
+            user.setPassword(req.getParameter("password"));
+            user.saveIt();
             resp.sendRedirect("initialize_password_success.jsp");
             return;
         }
-        resp.sendRedirect("initialize_password.jsp");
+       resp.sendRedirect("initialize_password.jsp");
     }
 
     boolean validate(String password) {

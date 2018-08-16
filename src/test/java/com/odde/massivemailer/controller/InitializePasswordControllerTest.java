@@ -10,6 +10,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(TestWithDB.class)
@@ -42,7 +43,12 @@ public class InitializePasswordControllerTest {
     public void initialPasswordSuccessfully() throws Exception {
         request.setParameter("token", "123123");
         request.setParameter("password","sdfgsdfgsdg");
+        request.setParameter("email", "user1@odd-e.com");
+        User newUser = new User("user1@odd-e.com");
+        newUser.saveIt();
         controller.doPost(request, response);
+        User user = User.findFirst("email = ? AND password IS NOT NULL", request.getParameter("email"));
+        assertNotNull(user);
         assertEquals("initialize_password_success.jsp", response.getRedirectedUrl());
     }
 
