@@ -97,7 +97,7 @@ public class LoginTests{
 
     @Then("^Login failed message is hidden$")
     public void login_failed_message_is_hidden() throws Throwable {
-        assertTrue(driver.getCurrentUrl().contains("course_list"));
+        assertFalse(driver.getBodyText().contains("login failed"));
     }
 
     @Then("^Show courses list \"([^\"]*)\"$")
