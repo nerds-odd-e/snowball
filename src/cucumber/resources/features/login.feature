@@ -13,15 +13,19 @@ Feature: Login
       | JohnSmith@mail.com	Tom	Smith	CS	Singapore    |
       | JaneDoe@mail.com	John	Fisher	CS	Singapore |
 
+  @now
   Scenario: Login success
     Given Visit Login Page
+    Given Login failed message is not shown
     Given There is a user with "mary@example.com" and "abcd1234"
     Given Fill form with "mary@example.com" and "abcd1234"
     When I click login button
     Then Show course list of current user
 
+  @now
   Scenario Outline: Login fail
     Given Visit Login Page
+    Given Login failed message is not shown
     Given Fill form with "<email>" and "<password>"
     When I click login button
     Then I should move to page with url "<url>"

@@ -2,6 +2,7 @@ package steps;
 
 import cucumber.api.PendingException;
 import com.odde.massivemailer.model.User;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -15,6 +16,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class LoginTests{
@@ -26,6 +28,11 @@ public class LoginTests{
     public void visitLoginPage() throws Throwable {
         driver.visit(login_url);
         driver.pageShouldContain("Login Massive Mailer");
+    }
+
+    @Given("^Login failed message is not shown$")
+    public void login_failed_message_is_not_shown() throws Throwable {
+        assertFalse(driver.getBodyText().contains("login failed"));
     }
 
     @Given("^There is a user with \"([^\"]*)\" and \"([^\"]*)\"$")
@@ -58,7 +65,7 @@ public class LoginTests{
         assertEquals(expected, driver.getCurrentUrl());
     }
 
-    @Then("^Login failed message is shown$")
+    @And("^Login failed message is shown$")
     public void login_failed_message_is_shown() throws Throwable {
         driver.pageShouldContain("login failed");
     }
