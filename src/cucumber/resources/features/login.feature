@@ -10,7 +10,11 @@ Feature: Login
     And "Bobb@example.com" which in "China" and "Chengdu" is a contact already
     When I visit "CSD-1" detail page from course list page
     When I enroll participants to "CSD-1" from course detail page
-      | JohnSmith@mail.com	Tom	Smith	CS	Singapore    |
+      | JohnSmith@mail.com	Tom	Smith	CS	Singapore |
+      | JaneDoe@mail.com	John	Fisher	CS	Singapore |
+    When I visit "CSD-2" detail page from course list page
+    When I enroll participants to "CSD-2" from course detail page
+      | john@example.com	john	jon	CS	Singapore    |
       | JaneDoe@mail.com	John	Fisher	CS	Singapore |
 
   @now
@@ -37,20 +41,24 @@ Feature: Login
       | unknown@example.com | hogehoge       | login.jsp?status=fail |
       | uninit@example.com  | uninitpassword | login.jsp?status=fail |
 
-  @now
+  @developing
   Scenario Outline: Courses List after Login
     Given Visit Login Page
-    Given There is a user with "<email>" and "<password>"
+    Given There are users as bellow
+      | JohnSmith@mail.com | abcd1234 |
+      | JaneDoe@mail.com   | abcd1001 |
+      | john@example.com   | abcd1002 |
+      | Bobb@example.com   | abcd1003 |
     Given Fill form with "<email>" and "<password>"
     When I click login button
     Then Show courses list "<courses>"
 
     Examples:
-      | email              | password | courses |
-      | JohnSmith@mail.com | abcd1234 | CSD-1   |
-#      | JaneDoe@mail.com   | abcd1001 | CSD-1   |
-#      | john@example.com   | abcd1002 | CSD-2               |
-#      | Bobb@example.com   | abcd1003 |                             |
+      | email              | password | courses     |
+      | JohnSmith@mail.com | abcd1234 | CSD-1       |
+      | JaneDoe@mail.com   | abcd1001 | CSD-1,CSD-2 |
+      | john@example.com   | abcd1002 | CSD-2       |
+      | Bobb@example.com   | abcd1003 |             |
 
   @developing
   Scenario: Show Cources List Test

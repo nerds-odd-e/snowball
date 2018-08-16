@@ -1,5 +1,6 @@
 package steps;
 
+import cucumber.api.DataTable;
 import cucumber.api.PendingException;
 import com.odde.massivemailer.model.User;
 import cucumber.api.java.en.And;
@@ -11,8 +12,7 @@ import org.openqa.selenium.WebElement;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -41,6 +41,16 @@ public class LoginTests{
         User user = new User(email);
         user.setPassword(password);
         user.saveIt();
+    }
+
+    @Given("^There are users as bellow$")
+    public void there_are_users_as_bellow(DataTable userTable) throws Throwable {
+        Map<String, String> vals = userTable.asMap(String.class, String.class);
+        vals.entrySet().forEach(entry -> {
+            User user = new User(entry.getKey());
+            user.setPassword(entry.getValue());
+            user.saveIt();
+        });
     }
 
     @Given("^Fill form with \"([^\"]*)\" and \"([^\"]*)\"$")
@@ -73,16 +83,16 @@ public class LoginTests{
     @Then("^Show courses list \"([^\"]*)\"$")
     public void show_courses_list(String courses) throws Throwable {
         driver.pageShouldContain("Course List");
-        driver.pageShouldContain("CSD-1");
-//        String[] expected = courses.split(",");
-//        List<String> courseListOnPage = new ArrayList<String>();
-//        for (WebElement e : driver.findElements(By.className("course name"))) {
-//            courseListOnPage.add(e.getText());
-//        }
-//
-//        String[] actual = {};
-//        courseListOnPage.toArray(actual);
-//        assertArrayEquals(actual, expected);
+        List<String> expected = Arrays.asList(courses.split(","));
+
+        List<String> courseListOnPage = new ArrayList<String>();
+        for (WebElement e : driver.findElements(By.className("course-name"))) {
+            courseListOnPage.add(e.getText().split(" - ")[1]);
+        }
+        Collections.sort(expected);
+        Collections.sort(courseListOnPage);
+
+        assertEquals(expected, courseListOnPage);
     }
 
     @Then("^Matsuo Show cources list test \"([^\"]*)\"$")

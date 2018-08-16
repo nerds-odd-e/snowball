@@ -62,7 +62,7 @@ function renderCourseList(json, selector)
 	    var sendEvent = 'sendEmail(' + course.id + ', 1 )';
 	    var previewEvent = 'sendEmail(' + course.id + ', 2 )';
         var tableContent = [
-          ['course name', course.id + ' - ' + course.coursename, course.id],
+          ['course-name', course.id + ' - ' + course.coursename, course.id],
           ['duration', course.duration, null],
           ['location', course.location, null],
           ['startdate', course.startdate, null],
