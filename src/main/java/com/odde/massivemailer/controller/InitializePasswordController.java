@@ -21,12 +21,11 @@ public class InitializePasswordController extends AppController {
     }
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String token = req.getParameter("token");
         if (this.validate(req.getParameter("password"))) {
             resp.sendRedirect("initialize_password_success.jsp");
-        } else {
-            resp.sendRedirect("initialize_password.jsp");
+            return;
         }
+        resp.sendRedirect("initialize_password.jsp");
     }
 
     boolean validate(String password) {

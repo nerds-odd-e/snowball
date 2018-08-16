@@ -1,6 +1,7 @@
 package com.odde.massivemailer.controller;
 
 import com.odde.TestWithDB;
+import com.odde.massivemailer.model.User;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -53,10 +54,20 @@ public class InitializePasswordControllerTest {
         assertEquals("initialize_password.jsp", response.getRedirectedUrl());
     }
 
+    @Ignore
+    public void invalidTokenError() throws Exception {
+        User user = new User("megumi@gmail.com");
+        user.saveIt();
+        request.setParameter("token", "123123");
+        request.setParameter("password","sdfgsdfgsdg");
+        controller.doPost(request, response);
+
+        assertTrue(response.getRedirectedUrl().contains("initialize_password_token_error.jsp"));
+    }
+
     @Test
     public void initialPasswordValidate() throws Exception {
         boolean isValidate = controller.validate("abcd1234");
         assertTrue(isValidate);
     }
-
 }
