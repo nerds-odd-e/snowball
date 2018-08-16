@@ -14,18 +14,18 @@ public class LoginController extends AppController {
         String email = req.getParameter("email");
         User user = User.getUserByEmail(email);
         String password = req.getParameter("password");
-        String url;
+        String redirectUrl;
 
         if (user != null && user.isPasswordCorrect(password)) {
             Cookie sessionCookie = new Cookie("session_id", email);
             sessionCookie.setSecure(true);
             sessionCookie.setHttpOnly(true);
             resp.addCookie(sessionCookie);
-            url = "course_list.jsp";
+            redirectUrl = "course_list.jsp";
         } else {
-            url = "login.jsp?status=fail";
+            redirectUrl = "login.jsp?status=fail";
         }
-        resp.sendRedirect(url);
+        resp.sendRedirect(redirectUrl);
     }
 
 }

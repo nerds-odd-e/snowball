@@ -69,4 +69,15 @@ public class LoginControllerTest {
         assertNotNull(cookie);
         assertEquals("mary@example.com", cookie.getValue());
     }
+
+    @Test
+    public void notSetCookieWhenLoginSuccess() throws Exception {
+        createUser();
+        request.setParameter("email", "mary@example.com");
+        request.setParameter("password", "incorrect");
+        controller.doPost(request, response);
+
+        Cookie cookie = response.getCookie("session_id");
+        assertNull(cookie);
+    }
 }
