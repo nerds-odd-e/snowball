@@ -67,9 +67,24 @@ public class UserRegisterSteps {
         site.initializePasswordPage().setPassword(password);
     }
 
-    @Then("^Show success page$")
-    public void show_success_page() throws Throwable {
+    @When("^\"([^\"]*)\" set password-confirm to \"([^\"]*)\"$")
+    public void set_password_confirm_to(String name, String password) throws Throwable {
+        site.initializePasswordPage().setPasswordConfirm(password);
+    }
+
+    @When("^\"([^\"]*)\" clicks submit button$")
+    public void clicks_submit_button(String name) throws Throwable {
+        site.initializePasswordPage().submit();
+    }
+
+    @Then("^Show valid information$")
+    public void show_valid_information() throws Throwable {
         driver.pageShouldContain("Success!!");
+    }
+
+    @Then("^Show invalid information$")
+    public void show_invalid_information() throws Throwable {
+        driver.pageShouldContain("Password unmatched!");
     }
 
     @When("^Admin add a new contact \"([^\"]*)\" with invalid email: \"([^\"]*)\"$")

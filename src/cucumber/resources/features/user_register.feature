@@ -15,7 +15,9 @@ Feature: User Register
     Then An confirmation email is sent to "user1@odd-e.com" from: "myodde@gmail.com"
     When "john" click the link in the email
     And "john" set password to "1234abcd"
-    Then Show success page
+    And "john" set password-confirm to "1234abcd"
+    And "john" clicks submit button
+    Then Show valid information
     And Visit Login Page
     And Fill form with "user1@odd-e.com" and "1234abcd"
     And I click login button
@@ -49,6 +51,21 @@ Feature: User Register
     Then An confirmation email is sent to "yang@odd-e.com" from: "myodde@gmail.com"
     When "Yang" change the token in the url to "I_made_it_up" and access the new url
     Then "Invalid token" message is shown
+
+  @developing
+  Scenario Outline: Check password and password-confirm
+    Given Admin add a new contact "john" with email: "john@odd-e.com"
+    Then An confirmation email is sent to "john@odd-e.com" from: "myodde@gmail.com"
+    When "john" click the link in the email
+    And "john" set password to "<password>"
+    And "john" set password-confirm to "<password-confirm>"
+    And "john" clicks submit button
+    Then Show <result> information
+
+    Examples:
+    | password    | password-confirm | result  |
+    | 123123ab    | 123123ab         | valid   |
+    | 1asaasdf123 | aljsdflkjasf     | invalid |
 
   Scenario: Upload CSV with Multiple Contacts
     Given There are the following contacts in the CSV file that do not exist in the system
