@@ -26,6 +26,7 @@ import java.io.IOException;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 
@@ -75,7 +76,7 @@ public class ContactsControllerTest {
         controller.doGet(request, response);
 
         assertThat(response.getContentAsString(), containsString("\"email\":\"john@gmail.com\""));
-        Assert.assertTrue(!response.getContentAsString().contains("\"email\":\"peter@gmail.com\""));
+        assertTrue(!response.getContentAsString().contains("\"email\":\"peter@gmail.com\""));
     }
 
     @Test
