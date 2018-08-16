@@ -9,6 +9,9 @@ import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
+import javax.servlet.ServletException;
+import java.io.IOException;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -28,9 +31,18 @@ public class InitializePasswordControllerTest {
 
     @Test
     public void showInitialPasswordViewSuccessfully() throws Exception {
+        User newUser = new User("user1@odd-e.com", "123123");
+        newUser.saveIt();
         request.setParameter("token", "123123");
         controller.doGet(request,response);
         assertEquals("initialize_password.jsp?token=123123", response.getRedirectedUrl());
+    }
+
+    @Test
+    public void showInitialPasswordViewFailWithDBNoExistsToken() throws ServletException, IOException {
+        request.setParameter("token", "123123");
+        controller.doGet(request,response);
+        assertTrue(response.getRedirectedUrl().contains("initialize_password_token_error.jsp"));
     }
 
     @Test
@@ -44,11 +56,10 @@ public class InitializePasswordControllerTest {
         request.setParameter("token", "123123");
         request.setParameter("password","sdfgsdfgsdg");
         request.setParameter("password_confirm", "sdfgsdfgsdg");
-        request.setParameter("email", "user1@odd-e.com");
-        User newUser = new User("user1@odd-e.com", "123");
+        User newUser = new User("user1@odd-e.com", "123123");
         newUser.saveIt();
         controller.doPost(request, response);
-        User user = User.findFirst("email = ? AND password IS NOT NULL", request.getParameter("email"));
+        User user = User.findFirst("token = ? AND password IS NOT NULL", request.getParameter("token"));
         assertNotNull(user);
         assertEquals("initialize_password_success.jsp", response.getRedirectedUrl());
     }
