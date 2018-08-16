@@ -109,13 +109,8 @@ public class UserRegisterSteps {
         assertTrue(contactTable.contains(email));
     }
 
-    @Given("^Admin add a new contact Yang with email: \"([^\"]*)\"$")
-    public void admin_add_a_new_contact_Yang_with_email(String email) throws Throwable {
-        site.addContactPage().addContact(email, "Japan", "Tokyo");
-    }
-
-    @When("^Yang change the token in the url to \"([^\"]*)\" and access the new url$")
-    public void yang_change_the_token_in_the_url_to_and_access_the_new_url(String token) throws Throwable {
+    @When("^\"([^\"]*)\" change the token in the url to \"([^\"]*)\" and access the new url$")
+    public void change_the_token_in_the_url_to_and_access_the_new_url(String name, String token) throws Throwable {
         driver.visit("http://localhost:8060/massive_mailer/initialize_password.jsp?token=" + token);
     }
 
@@ -123,10 +118,6 @@ public class UserRegisterSteps {
     public void message_is_shown(String msg) throws Throwable {
         String bodyText = driver.getBodyText();
         assertThat(bodyText, containsString(msg));
-    }
-
-    @Then("^Yang cannot set password$")
-    public void yang_cannot_set_password() throws Throwable {
     }
 
     @Given("^There are the following contacts in the CSV file that do not exist in the system$")

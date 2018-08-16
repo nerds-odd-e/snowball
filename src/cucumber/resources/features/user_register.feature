@@ -44,11 +44,10 @@ Feature: User Register
 
   @developing
   Scenario: Invalid token
-    Given Admin add a new contact Yang with email: "yang@odd-e.com"
+    Given Admin add a new contact "Yang" with email: "yang@odd-e.com"
     Then An confirmation email is sent to "yang@odd-e.com" from: "myodde@gmail.com"
-    When Yang change the token in the url to "I_made_it_up" and access the new url
+    When "Yang" change the token in the url to "I_made_it_up" and access the new url
     Then "Invalid token" message is shown
-    And Yang cannot set password
 
   Scenario: Upload CSV with Multiple Contacts
     Given There are the following contacts in the CSV file that do not exist in the system
