@@ -13,8 +13,6 @@ Feature: Login
       | JohnSmith@mail.com	Tom	Smith	CS	Singapore    |
       | JaneDoe@mail.com	John	Fisher	CS	Singapore |
 
-
-  @developing
   Scenario: Login success
     Given Visit Login Page
     Given There is a user with "mary@example.com" and "abcd1234"
@@ -22,7 +20,6 @@ Feature: Login
     When I click login button
     Then Show course list of current user
 
-  @developing
   Scenario Outline: Login fail
     Given Visit Login Page
     Given Fill form with "<email>" and "<password>"
