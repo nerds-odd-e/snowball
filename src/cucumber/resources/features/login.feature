@@ -90,3 +90,20 @@ Feature: Login
       | instructor    | Terry        |
     And I click the Create button
     Then Matsuo Show cources list test "1 - Tokyo CSD,2 - CSD cource,3 - Osaka CSD"
+
+#    TODO: ScenarioからScenarioを呼ぶ方法を聞く
+  @developing
+  Scenario: click course detail after login
+    Given Visit Login Page
+    Given Login failed message is not shown
+    Given There is a user with "mary@example.com" and "abcd1234"
+    Given Fill form with "mary@example.com" and "abcd1234"
+    When I click login button
+    Then Show course list of current user
+    When I click course detail link
+    Then Show course detail
+
+  @developing
+  Scenario: click course detail after not login
+    When I go to course detail url
+    Then Show login page

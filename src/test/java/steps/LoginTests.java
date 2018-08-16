@@ -135,4 +135,30 @@ public class LoginTests{
 //        driver.pageShouldContain("Course List");
 
     }
+
+    @When("^I click course detail link$")
+    public void i_click_course_detail_link() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Then("^Show course detail$")
+    public void show_course_detail() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @When("^I go to course detail url$")
+    public void i_go_to_course_detail_url() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Then("^Show login page$")
+    public void show_login_page() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+
 }
