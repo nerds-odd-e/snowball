@@ -1,8 +1,8 @@
 package steps;
 
+import com.odde.massivemailer.model.User;
 import cucumber.api.DataTable;
 import cucumber.api.PendingException;
-import com.odde.massivemailer.model.User;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -14,10 +14,7 @@ import steps.site.MassiveMailerSite;
 
 import java.util.*;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class LoginTests{
     private MassiveMailerSite site = new MassiveMailerSite();
@@ -28,19 +25,6 @@ public class LoginTests{
     public void visitLoginPage() throws Throwable {
         driver.visit(login_url);
         driver.pageShouldContain("Login Massive Mailer");
-    }
-
-    @Given("^Login failed message is not shown$")
-    public void login_failed_message_is_not_shown() throws Throwable {
-        assertFalse(driver.getBodyText().contains("login failed"));
-    }
-
-    @Given("^There is a user with \"([^\"]*)\" and \"([^\"]*)\"$")
-    public void there_is_a_user_with_and(String email, String password) throws Throwable {
-        User.deleteAll();
-        User user = new User(email);
-        user.setPassword(password);
-        user.saveIt();
     }
 
     @Given("^There are users as bellow$")

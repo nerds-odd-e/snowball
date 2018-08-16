@@ -18,30 +18,6 @@ Feature: Login
       | JaneDoe@mail.com	John	Fisher	CS	Singapore |
 
   @now
-  Scenario: Login success
-    Given Visit Login Page
-    Given Login failed message is not shown
-    Given There is a user with "mary@example.com" and "abcd1234"
-    Given Fill form with "mary@example.com" and "abcd1234"
-    When I click login button
-    Then Show course list of current user
-
-  @developing
-  Scenario Outline: Login fail
-    Given Visit Login Page
-    Given Login failed message is not shown
-    Given Fill form with "<email>" and "<password>"
-    When I click login button
-    Then I should move to page with url "<url>"
-    And Login failed message is shown
-
-    Examples:
-      | email               | password       | url                   |
-      | mary@example.com    | hogehoge       | login.jsp?status=fail |
-      | unknown@example.com | hogehoge       | login.jsp?status=fail |
-      | uninit@example.com  | uninitpassword | login.jsp?status=fail |
-
-  @now
   Scenario Outline: login
     Given Visit Login Page
     Given There is a user with "<userEmail>" and "<userPassword>" and password initialize is <initPassword>
@@ -55,7 +31,7 @@ Feature: Login
       | mary@example.com | done         | abcd1234     | mary@example.com    | abcd1234      | course_list.jsp       | hidden  |
       | mary@example.com | done         | abcd1234     | mary@example.com    | hogehoge      | login.jsp?status=fail | shown   |
       | mary@example.com | done         | abcd1234     | unknown@example.com | abcd1234      | login.jsp?status=fail | shown   |
-      | mary@example.com | undone       | abcd1234     | undone@example.com  | abcd1234      | login.jsp?status=fail | shown   |
+      | mary@example.com | undone       | abcd1234     | mary@example.com    | abcd1234      | login.jsp?status=fail | shown   |
 
   @developing
   Scenario Outline: Courses List after Login
