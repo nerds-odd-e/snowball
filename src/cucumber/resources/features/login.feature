@@ -68,18 +68,17 @@ Feature: Login
     Then Matsuo Show cources list test "1 - Tokyo CSD,2 - CSD cource,3 - Osaka CSD"
 
 #    TODO: ScenarioからScenarioを呼ぶ方法を聞く
-  @now
-  Scenario: click course detail after login
+  @developing
+  Scenario: go to contact list link after login
     Given Visit Login Page
-    Given Login failed message is not shown
-    Given There is a user with "mary@example.com" and "abcd1234"
+    Given There is a user with "mary@example.com" and "abcd1234" and password initialize is done
     Given Fill form with "mary@example.com" and "abcd1234"
     When I click login button
     Then Show course list of current user
     When I go to contact list link
     Then Show contact list
 
-  @now
-  Scenario: click course detail after not login
+  @developing
+  Scenario: go to contact list link after not login
     When I go to contact list link
     Then Show login page
