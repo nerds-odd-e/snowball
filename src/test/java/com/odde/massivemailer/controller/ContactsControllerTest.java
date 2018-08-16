@@ -1,26 +1,30 @@
 package com.odde.massivemailer.controller;
 
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.service.GMailService;
-import org.javalite.activejdbc.Model;
+import com.odde.massivemailer.service.PasswordTokenService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.odde.massivemailer.model.ContactPerson;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+
+import javax.servlet.ServletException;
+import java.io.IOException;
 
 @RunWith(TestWithDB.class)
 public class ContactsControllerTest {
@@ -31,15 +35,26 @@ public class ContactsControllerTest {
     @Mock
     private GMailService gmailService;
 
+    @Mock
+    private PasswordTokenService passwordTokenService;
+
+	@Captor
+    private ArgumentCaptor<Mail> mailCaptor;
+
+    private String passwordToken = "qwertyuiop[";
+
     @Before
     public void setUpMockService() {
         MockitoAnnotations.initMocks(this);
 
         controller = new ContactsController();
         controller.setMailService(gmailService);
+        controller.setPasswordTokenService(passwordTokenService);
 
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
+
+        when((passwordTokenService.createToken())).thenReturn(passwordToken);
     }
 
     @Test
@@ -89,6 +104,22 @@ public class ContactsControllerTest {
         verify(gmailService).send(any(Mail.class));
         assertEquals("contactlist.jsp?status=success&msg=Add contact successfully", response.getRedirectedUrl());
 
+    }
+
+    @Test
+    public void mailContent() throws ServletException, IOException {
+        request.setParameter("company", "odd-e");
+        request.setParameter("lastname", "Smith");
+        request.setParameter("name", "Mark");
+        request.setParameter("email", "newbie@gmail.com");
+        request.setParameter("country", "Singapore");
+        request.setParameter("city", "Singapore");
+        controller.doPost(request, response);
+
+		verify(gmailService).send(mailCaptor.capture());
+		Mail mail = mailCaptor.getValue();
+
+		assertTrue(mail.getContent().contains("http://localhost:8060/massive_mailer/initialPassword?token=" + passwordToken));
     }
 
 }

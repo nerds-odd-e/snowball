@@ -1,12 +1,8 @@
 package com.odde.massivemailer.service;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.lang3.StringUtils;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
-public class PasswordTokenService {
+public class PasswordTokenService implements TokenService {
 
 	public String createToken() {
 		String ranStr = RandomStringUtils.random(1);
