@@ -5,6 +5,6 @@ import org.apache.commons.lang3.RandomStringUtils;
 public class PasswordTokenService implements TokenService {
 
 	public String createToken() {
-		return RandomStringUtils.random(10);
+		return RandomStringUtils.randomAlphanumeric(100);
 	}
 }

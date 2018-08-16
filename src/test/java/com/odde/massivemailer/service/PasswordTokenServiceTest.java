@@ -9,11 +9,11 @@ import static org.junit.Assert.assertTrue;
 public class PasswordTokenServiceTest {
 
 	@Test
-	public void test_create_token_longer_than_10() {
+	public void test_create_token_longer_than_100() {
 		PasswordTokenService service = new PasswordTokenService();
 		String token = service.createToken();
 
-		assertTrue(token.length() >= 10);
+		assertTrue(token.length() >= 100);
 	}
 	@Test
 	public void test_randam_token() {
