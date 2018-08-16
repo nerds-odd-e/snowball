@@ -13,6 +13,7 @@ import steps.site.MassiveMailerSite;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -62,14 +63,12 @@ public class LoginTests{
         driver.pageShouldContain("login failed");
     }
 
-    @Then("^Show cources list \"([^\"]*)\"$")
-    public void show_cources_list(String cources) throws Throwable {
-        String[] expected = cources.split(",");
-        List<String> courseListOnPage = new ArrayList<String>();
-
-
-
-
+    @Then("^Show courses list \"([^\"]*)\"$")
+    public void show_courses_list(String courses) throws Throwable {
+        driver.pageShouldContain("Course List");
+        driver.pageShouldContain("CSD-1");
+//        String[] expected = courses.split(",");
+//        List<String> courseListOnPage = new ArrayList<String>();
 //        for (WebElement e : driver.findElements(By.className("course name"))) {
 //            courseListOnPage.add(e.getText());
 //        }
@@ -77,8 +76,6 @@ public class LoginTests{
 //        String[] actual = {};
 //        courseListOnPage.toArray(actual);
 //        assertArrayEquals(actual, expected);
-//
-//        driver.pageShouldContain("Course List");
     }
 
     @Then("^Matsuo Show cources list test \"([^\"]*)\"$")

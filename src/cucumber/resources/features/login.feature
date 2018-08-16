@@ -3,7 +3,15 @@ Feature: Login
 
   Background:
     Given There are 3 courses
-    And "terry@odd-e.com" which in "China" and "Chengdu" is a contact already
+    And "mary@example.com" which in "China" and "Chengdu" is a contact already
+    And "JohnSmith@mail.com" which in "China" and "Chengdu" is a contact already
+    And "JaneDoe@mail.com" which in "China" and "Chengdu" is a contact already
+    And "john@example.com" which in "China" and "Chengdu" is a contact already
+    And "Bobb@example.com" which in "China" and "Chengdu" is a contact already
+    When I visit "CSD-1" detail page from course list page
+    When I enroll participants to "CSD-1" from course detail page
+      | JohnSmith@mail.com	Tom	Smith	CS	Singapore    |
+      | JaneDoe@mail.com	John	Fisher	CS	Singapore |
 
 
   @developing
@@ -28,18 +36,19 @@ Feature: Login
       | unknown@example.com | hogehoge       | login.jsp?status=fail |
       | uninit@example.com  | uninitpassword | login.jsp?status=fail |
 
-  @developing
-  Scenario Outline: Cources List after Login
+  @now
+  Scenario Outline: Courses List after Login
     Given Visit Login Page
+    Given There is a user with "<email>" and "<password>"
     Given Fill form with "<email>" and "<password>"
     When I click login button
-    Then Show cources list "<cources>"
+    Then Show courses list "<courses>"
 
     Examples:
-      | email              | password | cources                     |
-      | JohnSmith@mail.com | abcd1234 | 1 - Tokyo CSD               |
-      | JaneDoe@mail.com   | abcd1001 | 1 - Tokyo CSD,3 - Osaka CSD |
-#      | john@example.com   | abcd1002 | 3 - Osaka CSD               |
+      | email              | password | courses |
+      | JohnSmith@mail.com | abcd1234 | CSD-1   |
+#      | JaneDoe@mail.com   | abcd1001 | CSD-1   |
+#      | john@example.com   | abcd1002 | CSD-2               |
 #      | Bobb@example.com   | abcd1003 |                             |
 
   @developing
