@@ -12,9 +12,9 @@ public class Participant extends ApplicationModel {
     public Participant() {
     }
 
-    public Participant(Integer _participantId, Integer _courseId) {
+    public Participant(Integer _contactPersonId, Integer _courseId) {
         setCourseId(_courseId);
-        setContactPersonId(_participantId);
+        setContactPersonId(_contactPersonId);
     }
 
     public void setCourseId(Integer _courseId) {
@@ -37,5 +37,7 @@ public class Participant extends ApplicationModel {
         return where("course_id = " + courseId );
     }
 
-
+    public static List<Participant> whereHasContactPersonId(String contactPersonId) {
+        return where("contact_person_id = " + contactPersonId );
+    }
 }
