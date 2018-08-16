@@ -9,12 +9,17 @@ Feature: User Register
     Then Page Should Contain "terry@odd-e.com"
     And Page Should Fail
 
+  @developing
   Scenario: Initial password follow confirmation mail
     When Admin add a new contact "john" with email: "user1@odd-e.com"
     Then An confirmation email is sent to "user1@odd-e.com" from: "myodde@gmail.com"
     When "john" click the link in the email
     And "john" set password to "1234abcd"
     Then Show success page
+    And Visit Login Page
+    And Fill form with "user1@odd-e.com" and "1234abcd"
+    And I click login button
+    And Show course list of current user
 
   Scenario Outline: Invalid email address
     When Admin add a new contact "<name>" with invalid email: "<email>"
