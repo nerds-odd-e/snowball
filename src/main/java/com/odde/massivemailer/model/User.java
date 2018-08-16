@@ -8,6 +8,7 @@ import java.security.MessageDigest;
 
 @Table("users")
 public class User extends ApplicationModel {
+    public static final String PASSWORD = "Password";
     public User(){}
 
     public User(String email, String token) {
