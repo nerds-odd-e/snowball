@@ -9,8 +9,12 @@ import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
+import javax.servlet.http.Cookie;
+
+import java.util.Arrays;
+
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 @RunWith(TestWithDB.class)
 public class LoginControllerTest {
@@ -50,5 +54,19 @@ public class LoginControllerTest {
         User user = new User("mary@example.com");
         user.setPassword("abcd1234");
         user.saveIt();
+    }
+
+    @Test
+    public void setCookieWhenLoginSuccess() throws Exception {
+        createUser();
+        request.setParameter("email", "mary@example.com");
+        request.setParameter("password", "abcd1234");
+        controller.doPost(request, response);
+
+        Cookie cookie = response.getCookie("session_id");
+        assertTrue(cookie.getSecure());
+        assertTrue(cookie.isHttpOnly());
+        assertNotNull(cookie);
+        assertEquals("mary@example.com", cookie.getValue());
     }
 }
