@@ -49,6 +49,7 @@
 								</div>
 								<div class="panel-body">
 
+                                    <input type="hidden" class="form-control" name="token" id="token" value=<%=request.getParameter("token")%> >
 									<div class="row">
 										<div class="col-lg-1">Password:</div>
 										<div class="col-lg-11">

@@ -34,7 +34,9 @@ public class InitializePasswordController extends AppController {
             return;
         }
 
-        User user = this.fetchTokenUser(req.getParameter("token"));
+        String token = req.getParameter("token");
+        System.out.println("token: " + token);
+        User user = this.fetchTokenUser(token);
         if (user == null) {
             resp.sendRedirect("initialize_password_token_error.jsp");
             return;

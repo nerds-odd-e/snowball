@@ -127,6 +127,9 @@ public class UserRegisterSteps {
     @When("^\"([^\"]*)\" change the token in the url to \"([^\"]*)\" and access the new url$")
     public void change_the_token_in_the_url_to_and_access_the_new_url(String name, String token) throws Throwable {
         driver.visit("http://localhost:8060/massive_mailer/initialize_password.jsp?token=" + token);
+        site.initializePasswordPage().setPassword("123");
+        site.initializePasswordPage().setPasswordConfirm("123");
+        site.initializePasswordPage().submit();
     }
 
     @Then("^\"([^\"]*)\" message is shown$")

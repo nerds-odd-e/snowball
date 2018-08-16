@@ -9,7 +9,6 @@ Feature: User Register
     Then Page Should Contain "terry@odd-e.com"
     And Page Should Fail
 
-  @developing
   Scenario: Initial password follow confirmation mail
     When Admin add a new contact "john" with email: "user1@odd-e.com"
     Then An confirmation email is sent to "user1@odd-e.com" from: "myodde@gmail.com"
@@ -23,7 +22,6 @@ Feature: User Register
     And I click login button
     And Show course list of current user
 
-  @now
   Scenario Outline: Invalid email address
     When Admin add a new contact "<name>" with invalid email: "<email>"
     Then Contact page show "error message"
@@ -45,14 +43,12 @@ Feature: User Register
     | user1@odd-e.com    | John |
     | test@odd-e.com     | Mary |
 
-  @developing
   Scenario: Invalid token
     Given Admin add a new contact "Yang" with email: "yang@odd-e.com"
     Then An confirmation email is sent to "yang@odd-e.com" from: "myodde@gmail.com"
     When "Yang" change the token in the url to "I_made_it_up" and access the new url
     Then "Invalid token" message is shown
 
-  @developing
   Scenario Outline: Check password and password_confirm
     Given Admin add a new contact "john" with email: "john@odd-e.com"
     Then An confirmation email is sent to "john@odd-e.com" from: "myodde@gmail.com"

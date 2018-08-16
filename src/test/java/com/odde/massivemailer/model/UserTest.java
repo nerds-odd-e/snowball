@@ -35,4 +35,16 @@ public class UserTest {
         assertNotNull(dbUser);
         assertFalse(dbUser.isPasswordCorrect(invalidPassword));
     }
+
+    @Test
+    public void testFetchUserByToken() {
+        String email = "hoge@example.com";
+        String password = "hogehoge";
+        User user = new User(email, "123");
+        user.setPassword(password);
+        user.saveIt();
+
+        User dbUser = User.findFirst("token = ?", "123");
+        assertNotNull(dbUser);
+    }
 }
