@@ -8,6 +8,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(TestWithDB.class)
 public class InitializePasswordControllerTest {
@@ -50,7 +51,14 @@ public class InitializePasswordControllerTest {
     @Test
     public void initialPasswordValidate() throws Exception {
         boolean isValidate = controller.validate("abcd1234");
-        assertEquals(true, isValidate);
+        assertTrue(isValidate);
+    }
+
+    @Test
+    public void getTokenFromUrl() throws Exception {
+        request.setParameter("token", "123123");
+        controller.doGet(request, response);
+        assertTrue(response.getRedirectedUrl().contains("token=123123"));
     }
 
 }

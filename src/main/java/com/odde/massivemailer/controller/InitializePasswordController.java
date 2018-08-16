@@ -12,7 +12,8 @@ import java.io.IOException;
 public class InitializePasswordController extends AppController {
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect("initialize_password.jsp");
+        String token = req.getParameter("token");
+        resp.sendRedirect("initialize_password.jsp?token=" + token);
     }
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -23,10 +24,7 @@ public class InitializePasswordController extends AppController {
         }
     }
 
-    public boolean validate(String password) {
-        if (StringUtils.isEmpty(password)) {
-            return false;
-        }
-        return true;
+    boolean validate(String password) {
+        return !StringUtils.isEmpty(password);
     }
 }
