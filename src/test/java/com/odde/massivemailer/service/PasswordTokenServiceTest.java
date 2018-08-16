@@ -12,4 +12,10 @@ public class PasswordTokenServiceTest {
 
 		Assert.assertNotNull(token);
 	}
+	@Test
+	public void test_randam_token() {
+		PasswordTokenService passwordTokenService = new PasswordTokenService();
+		String tokenOne = passwordTokenService.createToken();
+		String tokenTwo = passwordTokenService.createToken();
+	}
 }

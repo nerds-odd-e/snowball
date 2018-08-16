@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.Mail;
+import com.odde.massivemailer.model.User;
 import com.odde.massivemailer.service.GMailService;
 import com.odde.massivemailer.service.MailService;
 import com.odde.massivemailer.service.PasswordTokenService;
@@ -26,6 +27,8 @@ import org.springframework.mock.web.MockHttpServletResponse;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @RunWith(TestWithDB.class)
 public class ContactsControllerTest {
@@ -108,7 +111,7 @@ public class ContactsControllerTest {
     }
 
     @Test
-    public void mailContent() throws ServletException, IOException {
+    public void mustSendAnEmailContainingPasswordSettingURLWithTokenWhenAddContact() throws ServletException, IOException {
         request.setParameter("company", "odd-e");
         request.setParameter("lastname", "Smith");
         request.setParameter("name", "Mark");
@@ -120,7 +123,16 @@ public class ContactsControllerTest {
 		verify(gmailService).send(mailCaptor.capture());
 		Mail mail = mailCaptor.getValue();
 
-		assertTrue(mail.getContent().contains("http://localhost:8060/massive_mailer/initialPassword?token=" + passwordToken));
+        String token = getTokenFromEmail(mail);
+        User userFound = User.findByToken(token);
+        assertEquals("newbie@gmail.com", userFound.getEmail());
+
+    }
+
+    private String getTokenFromEmail(Mail mail) {
+        Pattern pattern = Pattern.compile("token\\=(\\w+)");
+        Matcher matcher = pattern.matcher(mail.getContent());
+        return matcher.group(1);
     }
 
 }
