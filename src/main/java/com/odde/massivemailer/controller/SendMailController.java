@@ -5,7 +5,6 @@ import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.model.SentMail;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,12 +21,16 @@ public class SendMailController extends AppController {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
         try {
-            Mail email = processRequest(req);
 
-            SentMail sentMail = email.asSentMail().saveAll();
-            email.setSentMail(sentMail);
+            Mail email = new Mail();
+            String tempRecipient = req.getParameter("recipient");
+            StringTokenizer st = new StringTokenizer(tempRecipient, ";");
+            ArrayList<String> recipientList = getRecipients(st);
+            email.setMessageId(System.currentTimeMillis());
+            email.setContent(req.getParameter("content"));
+            email.setSubject(req.getParameter("subject"));
 
-            email.sendMailWith(getMailService());
+            email.sendMailToRecipients(recipientList, getMailService());
 
             resp.sendRedirect("sendemail.jsp?status=success&msg=Email successfully sent&repcnt=" + email.getReceipts().size());
 
@@ -40,11 +43,7 @@ public class SendMailController extends AppController {
         }
     }
 
-    public Mail processRequest(HttpServletRequest req) throws SQLException {
-
-        Mail email = new Mail();
-        String tempRecipient = req.getParameter("recipient");
-        StringTokenizer st = new StringTokenizer(tempRecipient, ";");
+    private ArrayList<String> getRecipients(StringTokenizer st) throws SQLException {
         ArrayList<String> recipientList = new ArrayList<String>();
         while (st.hasMoreTokens()) {
             String recipient = st.nextToken();
@@ -63,13 +62,7 @@ public class SendMailController extends AppController {
                 recipientList.add(recipient);
             }
         }
-        email.setMessageId(System.currentTimeMillis());
-        email.setContent(req.getParameter("content"));
-        email.setSubject(req.getParameter("subject"));
-
-        email.setReceipts(recipientList);
-
-        return email;
+        return recipientList;
     }
 
     private List<ContactPerson> getContactPersons(String company) throws SQLException {

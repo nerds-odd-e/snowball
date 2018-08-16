@@ -42,8 +42,6 @@ public class SendPreviewMail extends AppController {
             }
 
             for (Mail email:emails ) {
-                SentMail sentMail = email.asSentMail().saveAll();
-                email.setSentMail(sentMail);
                 email.sendMailWith(getMailService());
             }
 

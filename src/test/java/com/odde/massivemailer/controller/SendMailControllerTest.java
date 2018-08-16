@@ -41,7 +41,7 @@ public class SendMailControllerTest {
     private MockHttpServletResponse response;
 
     @Captor
-    private ArgumentCaptor<SentMail> notificationCaptor;
+    private ArgumentCaptor<Mail> mailCaptor;
 
 
     @Before
@@ -77,10 +77,10 @@ public class SendMailControllerTest {
 
 
     @Test
-    public void testProcessRequest() throws SQLException {
+    public void testProcessRequest() throws SQLException, IOException {
 
         mockRecipient("name1@gmail.com;name2@gmail.com");
-        Mail mail = controller.processRequest(request);
+        Mail mail = postAndGetMailBeingSent();
 
         assertEquals("subject for test", mail.getSubject());
         List<String> repList = mail.getReceipts();
@@ -89,9 +89,19 @@ public class SendMailControllerTest {
         assertEquals("content-na-ka", mail.getContent());
     }
 
+    private Mail postAndGetMailBeingSent() {
+        try {
+            controller.doPost(request, response);
+            verify(gmailService).send(mailCaptor.capture());
+        } catch (IOException e) {
+           fail();
+        }
+        return mailCaptor.getValue();
+    }
+
 
     @Test
-    public void testProcessRequestByCompany() throws SQLException {
+    public void testProcessRequestByCompany() throws SQLException, IOException {
 
         mockRecipient("company:abc");
         String[] companyRecipients = {"ab1@abc.com", "ab2@abc.com", "ab3@abc.com"};
@@ -100,7 +110,8 @@ public class SendMailControllerTest {
             new ContactPerson("", companyRecipients[i], "", "abc").saveIt();
         }
 
-        Mail mail = controller.processRequest(request);
+        Mail mail = postAndGetMailBeingSent();
+
 
         List<String> repList = mail.getReceipts();
         for (int i = 0; i < repList.size(); ++i) {
@@ -110,7 +121,7 @@ public class SendMailControllerTest {
     }
 
     @Test
-    public void ProcessRequestMustHandleCompany() throws SQLException {
+    public void ProcessRequestMustHandleCompany() throws SQLException, IOException {
         String company = "abc";
 
         new ContactPeopleBuilder(company)
@@ -120,7 +131,7 @@ public class SendMailControllerTest {
 
         mockRecipient("company:" + company);
 
-        Mail mail = controller.processRequest(request);
+        Mail mail = postAndGetMailBeingSent();
 
         List<String> recipients = mail.getReceipts();
 
@@ -140,7 +151,7 @@ public class SendMailControllerTest {
 
         mockRecipient("company:\"" + company + "\"");
 
-        Mail mail = controller.processRequest(request);
+        Mail mail = postAndGetMailBeingSent();
 
         List<String> recipients = mail.getReceipts();
 
@@ -173,7 +184,7 @@ public class SendMailControllerTest {
 
         mockRecipient("company:\"" + company);
 
-        Mail mail = controller.processRequest(request);
+        Mail mail = postAndGetMailBeingSent();
 
         List<String> recipients = mail.getReceipts();
 
@@ -193,7 +204,7 @@ public class SendMailControllerTest {
 
         mockRecipient("company:" + company);
 
-        Mail mail = controller.processRequest(request);
+        Mail mail = postAndGetMailBeingSent();
 
         List<String> recipients = mail.getReceipts();
 

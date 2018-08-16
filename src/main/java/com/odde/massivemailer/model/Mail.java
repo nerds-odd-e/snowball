@@ -192,4 +192,15 @@ public class Mail {
         mailService.send(this);
         return sentMail;
     }
+
+    public void sendMailToRecipients(List<String> receipts, MailService mailService) throws EmailException {
+		setReceipts(receipts);
+		sendMailWith(mailService);
+	}
+
+    public void sendMailToRecipient(String emailAddress, MailService mailService) throws EmailException {
+		List<String> receipts = new ArrayList<>();
+		receipts.add(emailAddress);
+		sendMailToRecipients(receipts, mailService);
+	}
 }
