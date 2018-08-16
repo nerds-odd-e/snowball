@@ -96,7 +96,7 @@ public class ContactsControllerTest {
         request.setParameter("company", "odd-e");
         request.setParameter("lastname", "Smith");
         request.setParameter("name", "Mark");
-        request.setParameter("email", "newbie@gmail.com");
+        request.setParameter("email", "newbie@example.com");
         request.setParameter("country", "Singapore");
         request.setParameter("city", "Singapore");
         controller.doPost(request, response);
