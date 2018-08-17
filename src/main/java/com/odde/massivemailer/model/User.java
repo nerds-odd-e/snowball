@@ -10,7 +10,7 @@ import java.security.MessageDigest;
 
 @Table("users")
 public class User extends ApplicationModel {
-    public static final String HASHED_PASSWORD = "hashed_password";
+    private static final String HASHED_PASSWORD = "hashed_password";
     public User(){}
 
     public User(String email) {
@@ -34,7 +34,7 @@ public class User extends ApplicationModel {
     }
 
     public boolean isPasswordCorrect(String password) {
-        String userPassword = getString(HASHED_PASSWORD);
+        String userPassword = getHashedPassword();
         if (userPassword == null) {
             return false;
         }
@@ -57,6 +57,10 @@ public class User extends ApplicationModel {
 
     public String getToken() {
         return getString("token");
+    }
+
+    public String getHashedPassword() {
+        return getString(HASHED_PASSWORD);
     }
 
     public static User fetchUserByToken(String token) {
