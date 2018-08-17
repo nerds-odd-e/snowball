@@ -8,7 +8,7 @@ import java.security.MessageDigest;
 
 @Table("users")
 public class User extends ApplicationModel {
-    public static final String PASSWORD = "Password";
+    public static final String HASHED_PASSWORD = "hashed_password";
     public User(){}
 
     public User(String email, String token) {
@@ -17,7 +17,7 @@ public class User extends ApplicationModel {
     }
 
     public void setPassword(String password) {
-        set("password", toHashString(password));
+        set(HASHED_PASSWORD, toHashString(password));
     }
 
     public static User getUserByEmail(String email) {
@@ -28,7 +28,7 @@ public class User extends ApplicationModel {
     }
 
     public boolean isPasswordCorrect(String password) {
-        String userPassword = getString("password");
+        String userPassword = getString(HASHED_PASSWORD);
         if (userPassword == null) {
             return false;
         }

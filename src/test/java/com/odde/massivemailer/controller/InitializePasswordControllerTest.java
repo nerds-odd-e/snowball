@@ -59,8 +59,8 @@ public class InitializePasswordControllerTest {
         User newUser = new User("user1@odd-e.com", "123123");
         newUser.saveIt();
         controller.doPost(request, response);
-        User user = User.findFirst("token = ? AND password IS NOT NULL", request.getParameter("token"));
-        assertNotNull(user.get(User.PASSWORD));
+        User user = User.findFirst("token = ? AND hashed_password IS NOT NULL", request.getParameter("token"));
+        assertNotNull(user.get(User.HASHED_PASSWORD));
         assertEquals("initialize_password_success.jsp", response.getRedirectedUrl());
     }
 
