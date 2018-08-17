@@ -17,20 +17,20 @@ Feature: Login
       | john@example.com	john	jon	CS	Singapore    |
       | JaneDoe@mail.com	John	Fisher	CS	Singapore |
 
+    @now
   Scenario Outline: login
     Given Visit Login Page
-    Given There is a user with "<userEmail>" and "<userPassword>" and password initialize is <initPassword>
-    Given Fill form with "<inputEmail>" and "<inputPassword>"
+    Given There are users as bellow
+      | mary@example.com | abcd1234 |
+    Given Fill form with "<email>" and "<password>"
     When I click login button
     Then I should move to page with url "<url>"
     And Login failed message is <message>
-
     Examples:
-      | userEmail        | initPassword | userPassword | inputEmail          | inputPassword | url                   | message |
-      | mary@example.com | done         | abcd1234     | mary@example.com    | abcd1234      | course_list.jsp       | hidden  |
-      | mary@example.com | done         | abcd1234     | mary@example.com    | hogehoge      | login.jsp?status=fail | shown   |
-      | mary@example.com | done         | abcd1234     | unknown@example.com | abcd1234      | login.jsp?status=fail | shown   |
-      | mary@example.com | undone       | abcd1234     | mary@example.com    | abcd1234      | login.jsp?status=fail | shown   |
+      | email               | password | url                   | message |
+      | mary@example.com    | abcd1234 | course_list.jsp       | hidden  |
+      | mary@example.com    | hogehoge | login.jsp?status=fail | shown   |
+      | unknown@example.com | abcd1234 | login.jsp?status=fail | shown   |
 
   Scenario Outline: Courses List after Login
     Given Visit Login Page
@@ -54,9 +54,9 @@ Feature: Login
   Scenario Outline: Preserve login info after navigation
     Given Visit Login Page
     Given There are users as bellow
-      | JaneDoe@mail.com   | abcd1001 |
-      | john@example.com   | abcd1002 |
-      | Bobb@example.com   | abcd1003 |
+      | JaneDoe@mail.com | abcd1001 |
+      | john@example.com | abcd1002 |
+      | Bobb@example.com | abcd1003 |
     Given Fill form with "<email>" and "<password>"
     And I click login button
     And I move to top page
@@ -64,10 +64,10 @@ Feature: Login
     Then Show courses list "<courses>"
 
     Examples:
-      | email              | password | courses     |
-      | JaneDoe@mail.com   | abcd1001 | CSD-1,CSD-2 |
-      | john@example.com   | abcd1002 | CSD-2       |
-      | Bobb@example.com   | abcd1003 |             |
+      | email            | password | courses     |
+      | JaneDoe@mail.com | abcd1001 | CSD-1,CSD-2 |
+      | john@example.com | abcd1002 | CSD-2       |
+      | Bobb@example.com | abcd1003 |             |
 
   @developing
   Scenario: Show Cources List Test
