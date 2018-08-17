@@ -52,9 +52,9 @@ public class LoginTests{
     }
 
     @Given("^Fill form with \"([^\"]*)\" and \"([^\"]*)\"$")
-    public void fill_form_with_and(String arg1, String arg2) throws Throwable {
-        driver.setTextField("email", arg1);
-        driver.setTextField("password", arg2);
+    public void fill_form_with_and(String email, String password) throws Throwable {
+        driver.setTextField("email", email);
+        driver.setTextField("password", password);
     }
 
     @When("^I click login button$")
@@ -68,8 +68,8 @@ public class LoginTests{
     }
 
     @Then("^I should move to page with url \"([^\"]*)\"$")
-    public void i_should_move_to_page_with_url(String arg1) throws Throwable {
-        String expected = site.baseUrl() + arg1;
+    public void i_should_move_to_page_with_url(String url) throws Throwable {
+        String expected = site.baseUrl() + url;
         assertEquals(expected, driver.getCurrentUrl());
     }
 
