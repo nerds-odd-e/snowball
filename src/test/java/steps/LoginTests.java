@@ -134,22 +134,6 @@ public class LoginTests{
 
     }
 
-    @When("^I go to contact list link$")
-    public void i_go_to_contact_list_link() throws Throwable {
-        site.visit("contactlist.jsp");
-    }
-
-    @Then("^Show contact list$")
-    public void show_contact_list() throws Throwable {
-        driver.pageShouldContain("Contact List");
-    }
-
-    @Then("^Show login page$")
-    public void show_login_page() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
-
     @Given("^I move to top page$")
     public void i_move_to_top_page() throws Throwable {
         site.visit("index.html");
