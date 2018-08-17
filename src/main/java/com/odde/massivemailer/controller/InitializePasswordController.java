@@ -1,7 +1,6 @@
 package com.odde.massivemailer.controller;
 
 import com.odde.massivemailer.model.User;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +13,7 @@ public class InitializePasswordController extends AppController {
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String token = req.getParameter("token");
-        if (this.fetchTokenUser(token) == null) {
+        if (User.fetchUserByToken(token) == null) {
             resp.sendRedirect("initialize_password_token_error.jsp");
             return;
         }
@@ -30,12 +29,12 @@ public class InitializePasswordController extends AppController {
             return;
         }
 
-        if (!this.validate(password)) {
+        if (!User.validatePassword(password)) {
             resp.sendRedirect("initialize_password.jsp?error=error&token=" + token);
             return;
         }
 
-        User user = this.fetchTokenUser(token);
+        User user = User.fetchUserByToken(token);
         if (user == null) {
             resp.sendRedirect("initialize_password_token_error.jsp");
             return;
@@ -47,17 +46,5 @@ public class InitializePasswordController extends AppController {
         user.setPassword(req.getParameter("password"));
         user.saveIt();
         resp.sendRedirect("initialize_password_success.jsp");
-    }
-
-    User fetchTokenUser(String token) {
-        if (null == token) {
-            return null;
-        }
-        User user = User.findFirst("token = ?", token);
-        return user;
-    }
-
-    boolean validate(String password) {
-        return !StringUtils.isEmpty(password);
     }
 }

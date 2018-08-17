@@ -1,6 +1,7 @@
 package com.odde.massivemailer.model;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.annotations.Table;
 
@@ -56,5 +57,16 @@ public class User extends ApplicationModel {
 
     public String getToken() {
         return getString("token");
+    }
+
+    public static User fetchUserByToken(String token) {
+        if (null == token) {
+            return null;
+        }
+        return User.findFirst("token = ?", token);
+    }
+
+    public static boolean validatePassword(String password) {
+        return !StringUtils.isEmpty(password);
     }
 }
