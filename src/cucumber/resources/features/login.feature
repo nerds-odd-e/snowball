@@ -17,7 +17,6 @@ Feature: Login
       | john@example.com	john	jon	CS	Singapore    |
       | JaneDoe@mail.com	John	Fisher	CS	Singapore |
 
-  @now
   Scenario Outline: login
     Given Visit Login Page
     Given There is a user with "<userEmail>" and "<userPassword>" and password initialize is <initPassword>

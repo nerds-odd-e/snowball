@@ -47,7 +47,7 @@ public class LoginControllerTest {
         request.setParameter("password", "abcd1234");
         controller.doPost(request, response);
 
-        assertThat(response.getRedirectedUrl(), containsString("course_list.jsp"));
+        assertEquals("course_list.jsp", response.getRedirectedUrl());
     }
 
     private void createUser() {

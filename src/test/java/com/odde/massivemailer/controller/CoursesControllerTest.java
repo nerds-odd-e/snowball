@@ -14,6 +14,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -60,7 +61,8 @@ public class CoursesControllerTest {
         ContactPerson mary = createContactPerson("mary@example.com");
         createCourse("Bob's course");
 
-        request.setParameter("email", mary.getEmail());
+        Cookie sessionCookie = new Cookie("session_id", mary.getEmail());
+        request.setCookies(new Cookie[]{sessionCookie});
         controller.doGet(request, response);
         assertEquals("[]", response.getContentAsString());
     }
@@ -88,7 +90,9 @@ public class CoursesControllerTest {
         Participant participant = new Participant(Integer.parseInt(bob.getId().toString()), Integer.parseInt(bobsCourse.getId().toString()));
         participant.saveIt();
 
-        request.setParameter("email", bob.getEmail());
+        Cookie otherCookie = new Cookie("any", "any");
+        Cookie sessionCookie = new Cookie("session_id", bob.getEmail());
+        request.setCookies(new Cookie[]{otherCookie, sessionCookie});
         controller.doGet(request, response);
         List<LinkedTreeMap<String, Object>> courses = AppGson.getGson().fromJson(response.getContentAsString(), List.class);
         assertEquals(1, courses.size());

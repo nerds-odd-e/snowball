@@ -42,9 +42,10 @@ public class LoginTests{
 
     @Given("^There are users as bellow$")
     public void there_are_users_as_bellow(DataTable userTable) throws Throwable {
+        User.deleteAll();
         Map<String, String> vals = userTable.asMap(String.class, String.class);
         vals.entrySet().forEach(entry -> {
-            User user = new User(entry.getKey(), "123");
+            User user = new User(entry.getKey(), "");
             user.setPassword(entry.getValue());
             user.saveIt();
         });
