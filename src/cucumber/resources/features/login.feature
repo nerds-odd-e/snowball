@@ -17,7 +17,6 @@ Feature: Login
       | john@example.com	john	jon	CS	Singapore    |
       | JaneDoe@mail.com	John	Fisher	CS	Singapore |
 
-    @now
   Scenario Outline: login
     Given Visit Login Page
     Given There are users as bellow
@@ -31,6 +30,17 @@ Feature: Login
       | mary@example.com    | abcd1234 | course_list.jsp       | hidden  |
       | mary@example.com    | hogehoge | login.jsp?status=fail | shown   |
       | unknown@example.com | abcd1234 | login.jsp?status=fail | shown   |
+
+  Scenario Outline: login fail when user's password is not initialized
+    Given Visit Login Page
+    Given There is a user with "mary@example.com" but password initialize is undone
+    Given Fill form with "<email>" and "<password>"
+    When I click login button
+    Then I should move to page with url "<url>"
+    And Login failed message is <message>
+    Examples:
+      | email               | password | url                   | message |
+      | mary@example.com    | abcd1234 | login.jsp?status=fail | shown   |
 
   Scenario Outline: Courses List after Login
     Given Visit Login Page
