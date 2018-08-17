@@ -1,7 +1,6 @@
 package com.odde.massivemailer.controller;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.User;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,8 +9,6 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 import javax.servlet.http.Cookie;
-
-import java.util.Arrays;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.*;
@@ -51,7 +48,7 @@ public class LoginControllerTest {
     }
 
     private void createUser() {
-        User user = new User("mary@example.com", "123");
+        User user = new User("mary@example.com");
         user.setPassword("abcd1234");
         user.saveIt();
     }

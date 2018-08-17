@@ -1,5 +1,6 @@
 package com.odde.massivemailer.model;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.annotations.Table;
 
@@ -11,9 +12,13 @@ public class User extends ApplicationModel {
     public static final String HASHED_PASSWORD = "hashed_password";
     public User(){}
 
-    public User(String email, String token) {
+    public User(String email) {
         set("email", email);
-        set("token", token);
+        set("token", createToken());
+    }
+
+    private static String createToken() {
+        return RandomStringUtils.randomAlphanumeric(100);
     }
 
     public void setPassword(String password) {
@@ -50,6 +55,6 @@ public class User extends ApplicationModel {
 
 
     public String getToken() {
-        return "";
+        return getString("token");
     }
 }

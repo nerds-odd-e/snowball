@@ -13,7 +13,7 @@ public class UserTest {
     public void testValidPassword() {
         String email = "hoge@example.com";
         String password = "hogehoge";
-        User user = new User(email, "123");
+        User user = new User(email);
         user.setPassword(password);
         user.saveIt();
 
@@ -26,7 +26,7 @@ public class UserTest {
     public void testInvalidPassword() {
         String email = "hoge@example.com";
         String password = "hogehoge";
-        User user = new User(email, "123");
+        User user = new User(email);
         user.setPassword(password);
         user.saveIt();
 
@@ -40,11 +40,26 @@ public class UserTest {
     public void testFetchUserByToken() {
         String email = "hoge@example.com";
         String password = "hogehoge";
-        User user = new User(email, "123");
+        User user = new User(email);
         user.setPassword(password);
         user.saveIt();
 
-        User dbUser = User.findFirst("token = ?", "123");
+        User dbUser = User.findFirst("token = ?", user.getToken());
         assertNotNull(dbUser);
+    }
+
+
+    @Test
+    public void test_create_token_longer_than_100() {
+        User user = new User("aaaaa@gmail.com");
+
+        assertTrue(user.getToken().length() >= 100);
+    }
+    @Test
+    public void test_randam_token() {
+        User userOne = new User("aaaaa@gmail.com");
+        User userTwo = new User("bbbb@gmail.com");
+
+        assertNotEquals(userOne.getToken(), userTwo.getToken());
     }
 }

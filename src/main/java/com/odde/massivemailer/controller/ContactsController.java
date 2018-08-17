@@ -5,7 +5,6 @@ import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.model.User;
 import com.odde.massivemailer.serialiser.AppGson;
 import com.odde.massivemailer.service.MailService;
-import com.odde.massivemailer.service.PasswordTokenService;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -17,7 +16,6 @@ import java.io.IOException;
 @WebServlet("/contacts")
 public class ContactsController extends AppController {
     private static final long serialVersionUID = 1L;
-    private PasswordTokenService passwordTokenService = new PasswordTokenService();
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String convertedContactToJSON = null;
@@ -43,12 +41,11 @@ public class ContactsController extends AppController {
 			MailService mailService = getMailService();
 			ContactPerson.createContact(req.getParameter("city"), req.getParameter("country"), emailAddress, req.getParameter("name"), req.getParameter("lastname"), req.getParameter("company"));
 			resultMsg = "status=success&msg=Add contact successfully";
-			String token = passwordTokenService.createToken();
-			User user = new User(emailAddress, token);
+			User user = new User(emailAddress);
 			if (user.saveIt()) {
 				Mail email = new Mail();
 				email.setSubject("");
-				email.setContent("http://localhost:8060/massive_mailer/initialPassword?token=" + token);
+				email.setContent("http://localhost:8060/massive_mailer/initialPassword?token=" + user.getToken());
 				email.sendMailToRecipient(emailAddress, mailService);
 			}
 		} catch (Exception e) {

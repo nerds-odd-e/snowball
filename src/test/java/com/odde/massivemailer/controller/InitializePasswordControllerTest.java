@@ -31,11 +31,11 @@ public class InitializePasswordControllerTest {
 
     @Test
     public void showInitialPasswordViewSuccessfully() throws Exception {
-        User newUser = new User("user1@odd-e.com", "123123");
+        User newUser = new User("user1@odd-e.com");
         newUser.saveIt();
-        request.setParameter("token", "123123");
+        request.setParameter("token", newUser.getToken());
         controller.doGet(request,response);
-        assertEquals("initialize_password.jsp?token=123123", response.getRedirectedUrl());
+        assertEquals("initialize_password.jsp?token=" + newUser.getToken(), response.getRedirectedUrl());
     }
 
     @Test
@@ -53,13 +53,13 @@ public class InitializePasswordControllerTest {
 
     @Test
     public void initialPasswordSuccessfully() throws Exception {
-        request.setParameter("token", "123123");
+        User newUser = new User("user1@odd-e.com");
+        request.setParameter("token", newUser.getToken());
         request.setParameter("password","sdfgsdfgsdg");
         request.setParameter("password_confirm", "sdfgsdfgsdg");
-        User newUser = new User("user1@odd-e.com", "123123");
         newUser.saveIt();
         controller.doPost(request, response);
-        User user = User.findFirst("token = ? AND hashed_password IS NOT NULL", request.getParameter("token"));
+        User user = User.findFirst("token = ? AND hashed_password IS NOT NULL", newUser.getToken());
         assertNotNull(user.get(User.HASHED_PASSWORD));
         assertEquals("initialize_password_success.jsp", response.getRedirectedUrl());
     }
@@ -79,7 +79,7 @@ public class InitializePasswordControllerTest {
         request.setParameter("password", "abcd123");
         request.setParameter("password_confirm", "123123");
         request.setParameter("email", "user1@odd-e.com");
-        User newUser = new User("user1@odd-e.com", "123");
+        User newUser = new User("user1@odd-e.com");
         newUser.saveIt();
         controller.doPost(request, response);
         assertEquals("initialize_password.jsp?error=unmatch&token=123123", response.getRedirectedUrl());
@@ -91,7 +91,7 @@ public class InitializePasswordControllerTest {
         request.setParameter("password", "123123");
         request.setParameter("password_confirm", "123123");
         request.setParameter("email", "user1@odd-e.com");
-        User newUser = new User(request.getParameter("email"), request.getParameter("token"));
+        User newUser = new User(request.getParameter("email"));
         newUser.setPassword(request.getParameter("password"));
         newUser.saveIt();
 
@@ -102,7 +102,7 @@ public class InitializePasswordControllerTest {
 
     @Ignore
     public void invalidTokenError() throws Exception {
-        User user = new User("megumi@gmail.com", "123");
+        User user = new User("megumi@gmail.com");
         user.saveIt();
         request.setParameter("token", "123123");
         request.setParameter("password","sdfgsdfgsdg");

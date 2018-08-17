@@ -6,10 +6,8 @@ import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.model.User;
 import com.odde.massivemailer.service.GMailService;
 import com.odde.massivemailer.service.MailService;
-import com.odde.massivemailer.service.PasswordTokenService;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,9 +36,6 @@ public class ContactsControllerTest {
 
     @Mock
     private GMailService gmailService;
-
-    @Mock
-    private PasswordTokenService passwordTokenService;
 
 	@Captor
     private ArgumentCaptor<Mail> mailCaptor;
