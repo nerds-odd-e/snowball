@@ -22,18 +22,18 @@ public class LoginTests{
     private String login_url = site.baseUrl() + "login.jsp";
 
     @Given("^Visit Login Page$")
-    public void visitLoginPage() throws Throwable {
+    public void visitLoginPage() {
         driver.visit(login_url);
         driver.pageShouldContain("Login Massive Mailer");
     }
 
     @Given("^Login failed message is not shown$")
-    public void login_failed_message_is_not_shown() throws Throwable {
+    public void login_failed_message_is_not_shown() {
         assertFalse(driver.getBodyText().contains("login failed"));
     }
 
     @Given("^There is a user with \"([^\"]*)\" and \"([^\"]*)\"$")
-    public void there_is_a_user_with_and(String email, String password) throws Throwable {
+    public void there_is_a_user_with_and(String email, String password) {
         User.deleteAll();
         User user = new User(email);
         user.setPassword(password);
@@ -41,7 +41,7 @@ public class LoginTests{
     }
 
     @Given("^There are users as bellow$")
-    public void there_are_users_as_bellow(DataTable userTable) throws Throwable {
+    public void there_are_users_as_bellow(DataTable userTable) {
         User.deleteAll();
         Map<String, String> vals = userTable.asMap(String.class, String.class);
         vals.entrySet().forEach(entry -> {
@@ -52,46 +52,46 @@ public class LoginTests{
     }
 
     @Given("^Fill form with \"([^\"]*)\" and \"([^\"]*)\"$")
-    public void fill_form_with_and(String email, String password) throws Throwable {
+    public void fill_form_with_and(String email, String password) {
         driver.setTextField("email", email);
         driver.setTextField("password", password);
     }
 
     @When("^I click login button$")
-    public void i_click_login_button() throws Throwable {
+    public void i_click_login_button() {
         driver.clickButton("login");
     }
 
     @Then("^Show course list of current user$")
-    public void show_course_list_of_current_user() throws Throwable {
+    public void show_course_list_of_current_user() {
         assertTrue(driver.getCurrentUrl().contains("course_list"));
     }
 
     @Then("^I should move to page with url \"([^\"]*)\"$")
-    public void i_should_move_to_page_with_url(String url) throws Throwable {
+    public void i_should_move_to_page_with_url(String url) {
         String expected = site.baseUrl() + url;
         assertEquals(expected, driver.getCurrentUrl());
     }
 
     @Given("^There is a user with \"([^\"]*)\" but password initialize is undone$")
-    public void there_is_a_user_with_but_password_initialize_is_undone(String email) throws Throwable {
+    public void there_is_a_user_with_but_password_initialize_is_undone(String email) {
         User.deleteAll();
         User user = new User(email);
         user.saveIt();
     }
 
     @And("^Login failed message is shown$")
-    public void login_failed_message_is_shown() throws Throwable {
+    public void login_failed_message_is_shown() {
         driver.pageShouldContain("login failed");
     }
 
     @Then("^Login failed message is hidden$")
-    public void login_failed_message_is_hidden() throws Throwable {
+    public void login_failed_message_is_hidden() {
         assertFalse(driver.getBodyText().contains("login failed"));
     }
 
     @Then("^Show courses list \"([^\"]*)\"$")
-    public void show_courses_list(String courses) throws Throwable {
+    public void show_courses_list(String courses) {
         driver.pageShouldContain("Course List");
 
         List<String> expected  = new ArrayList<>();
@@ -111,19 +111,17 @@ public class LoginTests{
     }
 
     @Given("^I move to top page$")
-    public void i_move_to_top_page() throws Throwable {
+    public void i_move_to_top_page() {
         site.visit("index.html");
     }
 
     @When("^I move to course list page$")
-    public void i_move_to_course_list_page() throws Throwable {
+    public void i_move_to_course_list_page() {
         site.visit("course_list.jsp");
     }
 
     @Then("^Show all courses list \"([^\"]*)\"$")
-    public void show_all_courses_list(String courses) throws Throwable {
+    public void show_all_courses_list(String courses) {
         show_courses_list(courses);
     }
-
-
 }
