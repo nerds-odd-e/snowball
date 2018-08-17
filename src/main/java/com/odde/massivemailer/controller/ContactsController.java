@@ -42,7 +42,12 @@ public class ContactsController extends AppController {
 			if (user.saveIt()) {
 				Mail email = new Mail();
 				email.setSubject("");
-				email.setContent("http://localhost:8060/massive_mailer/initialPassword?token=" + user.getToken());
+				String env = System.getProperty("active_env");
+				if ("test".equals(env)) {
+					email.setContent("http://localhost:8060/massive_mailer/initialPassword?token=" + user.getToken());
+				} else {
+					email.setContent("http://localhost:8070/massive_mailer/initialPassword?token=" + user.getToken());
+				}
 				email.sendMailToRecipient(emailAddress, mailService);
 			}
 			resp.sendRedirect("contactlist.jsp?" + "status=success&msg=Add contact successfully");

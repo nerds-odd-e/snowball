@@ -116,13 +116,7 @@ public class ContactsControllerTest {
 		verify(gmailService).send(mailCaptor.capture());
 		Mail mail = mailCaptor.getValue();
 
-        User userFound = getLastUser();
-        assertThat(mail.getContent(), containsString("token="+userFound.getToken()));
-    }
-
-    private User getLastUser() {
-        LazyList<Model> all = User.findAll();
-        return (User) all.get(all.size() - 1);
+        assertThat(mail.getContent(), containsString("http://localhost:8070/massive_mailer/initialPassword?token="));
     }
 
 }

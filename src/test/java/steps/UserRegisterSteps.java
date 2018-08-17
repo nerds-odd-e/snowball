@@ -52,7 +52,7 @@ public class UserRegisterSteps {
 
     @Then("^An confirmation email is sent to \"([^\"]*)\" from: \"([^\"]*)\"$")
     public void an_confirmation_email_is_sent_to_from(String email, String fromAddres) throws Throwable {
-        String expectUrl = "http://localhost:8060/massive_mailer/initialPassword?token=";
+        String expectUrl = site.baseUrl() + "initialPassword?token=";
         sentMail = SentMail.getSentMailBy(email);
         assertTrue(sentMail.getContent().contains(expectUrl));
     }
@@ -104,7 +104,7 @@ public class UserRegisterSteps {
 
     @Then("^\"([^\"]*)\" was not contained at Contact List Page$")
     public void was_not_contained_at_Contact_List_Page(String email) throws Throwable {
-        driver.visit("http://localhost:8060/massive_mailer/contactlist.jsp");
+        driver.visit(site.baseUrl() + "contactlist.jsp");
     	String contactTable = driver.findElementById("contactTable").getText();
         assertFalse(contactTable.contains(email));
     }
@@ -126,7 +126,7 @@ public class UserRegisterSteps {
 
     @When("^\"([^\"]*)\" change the token in the url to \"([^\"]*)\" and access the new url$")
     public void change_the_token_in_the_url_to_and_access_the_new_url(String name, String token) throws Throwable {
-        driver.visit("http://localhost:8060/massive_mailer/initialize_password.jsp?token=" + token);
+        driver.visit(site.baseUrl() + "initialize_password.jsp?token=" + token);
         site.initializePasswordPage().setPassword("123");
         site.initializePasswordPage().setPasswordConfirm("123");
         site.initializePasswordPage().submit();
