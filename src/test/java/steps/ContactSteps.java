@@ -33,6 +33,15 @@ public class ContactSteps {
         site.addContactPage().addContactWithAllInput(email, country, city, name, lastName, company);
     }
 
+    @Given("^There are (\\d+) contact people$")
+    public void there_are_contact_people(int arg1) throws Throwable {
+        site.addContactPage().addContact("mary@example.com", "China", "Chengdu");
+        site.addContactPage().addContact("JohnSmith@mail.com", "China", "Chengdu");
+        site.addContactPage().addContact("JaneDoe@mail.com", "China", "Chengdu");
+        site.addContactPage().addContact("john@example.com", "China", "Chengdu");
+        site.addContactPage().addContact("Bobb@example.com", "China", "Chengdu");
+    }
+
     @Given("^I am on the new contact page$")
     public void i_am_on_the_new_contact_page() throws Throwable {
         site.visit("add_contact.jsp");

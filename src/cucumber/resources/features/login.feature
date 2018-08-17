@@ -4,17 +4,13 @@ Feature: Login
 
   Background:
     Given There are 3 courses
-    And "mary@example.com" which in "China" and "Chengdu" is a contact already
-    And "JohnSmith@mail.com" which in "China" and "Chengdu" is a contact already
-    And "JaneDoe@mail.com" which in "China" and "Chengdu" is a contact already
-    And "john@example.com" which in "China" and "Chengdu" is a contact already
-    And "Bobb@example.com" which in "China" and "Chengdu" is a contact already
-    When I visit "CSD-1" detail page from course list page
-    When I enroll participants to "CSD-1" from course detail page
+    Given There are 5 contact people
+    And I visit "CSD-1" detail page from course list page
+    And I enroll participants to "CSD-1" from course detail page
       | JohnSmith@mail.com	Tom	Smith	CS	Singapore |
       | JaneDoe@mail.com	John	Fisher	CS	Singapore |
-    When I visit "CSD-2" detail page from course list page
-    When I enroll participants to "CSD-2" from course detail page
+    And I visit "CSD-2" detail page from course list page
+    And I enroll participants to "CSD-2" from course detail page
       | john@example.com	john	jon	CS	Singapore    |
       | JaneDoe@mail.com	John	Fisher	CS	Singapore |
 
