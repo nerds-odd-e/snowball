@@ -18,7 +18,6 @@ public class LoginController extends AppController {
 
         if (user != null && user.isPasswordCorrect(password)) {
             Cookie sessionCookie = new Cookie("session_id", email);
-            sessionCookie.setSecure(true);
             sessionCookie.setHttpOnly(true);
             resp.addCookie(sessionCookie);
             redirectUrl = "course_list.jsp";

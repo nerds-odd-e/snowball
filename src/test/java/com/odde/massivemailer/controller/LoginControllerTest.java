@@ -64,7 +64,7 @@ public class LoginControllerTest {
         controller.doPost(request, response);
 
         Cookie cookie = response.getCookie("session_id");
-        assertTrue(cookie.getSecure());
+        assertFalse(cookie.getSecure());
         assertTrue(cookie.isHttpOnly());
         assertNotNull(cookie);
         assertEquals("mary@example.com", cookie.getValue());
