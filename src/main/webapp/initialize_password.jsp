@@ -22,9 +22,9 @@
 </head>
 <body>
 		<div id="page-wrapper">
-		    <%if("unmatch".equals(request.getParameter("error"))){%>
+		    <%if("error".equals(request.getParameter("error"))){%>
             <div>
-                <p>Password unmatched!</p>
+                <p>Error!</p>
             </div>
             <%}%>
 

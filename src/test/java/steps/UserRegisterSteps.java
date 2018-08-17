@@ -84,7 +84,7 @@ public class UserRegisterSteps {
 
     @Then("^Show invalid information$")
     public void show_invalid_information() throws Throwable {
-        driver.pageShouldContain("Password unmatched!");
+        driver.pageShouldContain("Error!");
     }
 
     @When("^Admin add a new contact \"([^\"]*)\" with invalid email: \"([^\"]*)\"$")

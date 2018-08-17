@@ -26,12 +26,12 @@ public class InitializePasswordController extends AppController {
         String passwordConfirm = req.getParameter("password_confirm");
         String token = req.getParameter("token");
         if (!password.equals(passwordConfirm)) {
-            resp.sendRedirect("initialize_password.jsp?error=unmatch&token=" + token);
+            resp.sendRedirect("initialize_password.jsp?error=error&token=" + token);
             return;
         }
 
         if (!this.validate(password)) {
-            resp.sendRedirect("initialize_password.jsp?error=unmatch&token=" + token);
+            resp.sendRedirect("initialize_password.jsp?error=error&token=" + token);
             return;
         }
 
@@ -41,7 +41,7 @@ public class InitializePasswordController extends AppController {
             return;
         }
         if (user.get(User.HASHED_PASSWORD) != null) {
-            resp.sendRedirect("initialize_password.jsp?error=passwordAlreadyExists");
+            resp.sendRedirect("initialize_password.jsp?error=error");
             return;
         }
         user.setPassword(req.getParameter("password"));
