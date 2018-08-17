@@ -22,11 +22,6 @@
 </head>
 <body>
 		<div id="page-wrapper">
-		    <%if("error".equals(request.getParameter("error"))){%>
-            <div>
-                <p>Error!</p>
-            </div>
-            <%}%>
 
 			<form name="Initialize-Password" id="initialize-password" method="post"
 				action="initialPassword">
@@ -42,6 +37,11 @@
 
 					<div class="row">
 						<div class="col-lg-12">
+						    <%if("error".equals(request.getParameter("error"))){%>
+                                <div class="alert alert-danger">
+                                    <p>Error!</p>
+                                </div>
+                            <%}%>
 
 							<div class="panel panel-default">
 								<div class="panel-heading">

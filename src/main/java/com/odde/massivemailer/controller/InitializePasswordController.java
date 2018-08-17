@@ -24,12 +24,7 @@ public class InitializePasswordController extends AppController {
         String password = req.getParameter("password");
         String passwordConfirm = req.getParameter("password_confirm");
         String token = req.getParameter("token");
-        if (!password.equals(passwordConfirm)) {
-            resp.sendRedirect("initialize_password.jsp?error=error&token=" + token);
-            return;
-        }
-
-        if (!User.validatePassword(password)) {
+        if (!password.equals(passwordConfirm) || !User.validatePassword(password)) {
             resp.sendRedirect("initialize_password.jsp?error=error&token=" + token);
             return;
         }
