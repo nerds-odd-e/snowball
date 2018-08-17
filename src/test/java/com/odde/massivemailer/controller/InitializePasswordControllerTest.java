@@ -87,11 +87,11 @@ public class InitializePasswordControllerTest {
 
     @Test
     public void cannotSetPasswordWhenPasswordIsAlreadySet() throws Exception {
-        request.setParameter("token", "123123");
+        User newUser = new User(request.getParameter("email"));
+        request.setParameter("token", newUser.getToken());
         request.setParameter("password", "123123");
         request.setParameter("password_confirm", "123123");
         request.setParameter("email", "user1@odd-e.com");
-        User newUser = new User(request.getParameter("email"));
         newUser.setPassword(request.getParameter("password"));
         newUser.saveIt();
 
