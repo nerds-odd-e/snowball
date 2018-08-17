@@ -32,7 +32,6 @@ Feature: Login
       | mary@example.com | done         | abcd1234     | unknown@example.com | abcd1234      | login.jsp?status=fail | shown   |
       | mary@example.com | undone       | abcd1234     | mary@example.com    | abcd1234      | login.jsp?status=fail | shown   |
 
-  @developing
   Scenario Outline: Courses List after Login
     Given Visit Login Page
     Given There are users as bellow

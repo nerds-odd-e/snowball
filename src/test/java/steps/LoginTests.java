@@ -7,6 +7,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import steps.driver.WebDriverWrapper;
@@ -101,16 +102,21 @@ public class LoginTests{
     @Then("^Show courses list \"([^\"]*)\"$")
     public void show_courses_list(String courses) throws Throwable {
         driver.pageShouldContain("Course List");
-        List<String> expected = Arrays.asList(courses.split(","));
 
-        List<String> courseListOnPage = new ArrayList<String>();
+        List<String> expected  = new ArrayList<>();
+        if (StringUtils.isNotEmpty(courses)) {
+            expected = new ArrayList<>(Arrays.asList(courses.split(",")));
+        }
+
+        List<String> actual = new ArrayList<>();
         for (WebElement e : driver.findElements(By.className("course-name"))) {
-            courseListOnPage.add(e.getText().split(" - ")[1]);
+            actual.add(e.getText().split(" - ")[1]);
         }
         Collections.sort(expected);
-        Collections.sort(courseListOnPage);
+        Collections.sort(actual);
 
-        assertEquals(expected, courseListOnPage);
+        assertEquals(expected.size(), actual.size());
+        assertEquals(expected, actual);
     }
 
     @Then("^Matsuo Show cources list test \"([^\"]*)\"$")
