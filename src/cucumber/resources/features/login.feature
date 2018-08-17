@@ -78,3 +78,7 @@ Feature: Login
       | JaneDoe@mail.com | abcd1001 | CSD-1,CSD-2 |
       | john@example.com | abcd1002 | CSD-2       |
       | Bobb@example.com | abcd1003 |             |
+
+    Scenario: Courses List no login
+      When I move to course list page
+      Then Show all courses list "CSD-1,CSD-2,CSD-3"

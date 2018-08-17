@@ -120,5 +120,10 @@ public class LoginTests{
         site.visit("course_list.jsp");
     }
 
+    @Then("^Show all courses list \"([^\"]*)\"$")
+    public void show_all_courses_list(String courses) throws Throwable {
+        show_courses_list(courses);
+    }
+
 
 }
