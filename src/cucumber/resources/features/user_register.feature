@@ -63,6 +63,24 @@ Feature: User Register
     | 123123ab    | 123123ab         | valid   |
     | 1asaasdf123 | aljsdflkjasf     | invalid |
 
+  Scenario Outline: If initial password setting failed then retry
+    Given Admin add a new contact "john" with email: "john@odd-e.com"
+    Then An confirmation email is sent to "john@odd-e.com" from: "myodde@gmail.com"
+    When "john" click the link in the email
+    And "john" set password to "<password>"
+    And "john" set password_confirm to "<fail_password>"
+    And "john" clicks submit button
+    Then Show invalid information
+    And "john" set password to "<success_password>"
+    And "john" set password_confirm to "<success_password>"
+    And "john" clicks submit button
+    Then Show valid information
+
+    Examples:
+    | password    | fail_password  | success_password |
+    | 123123ab    | 1234dflkjasf   | 1234qwer         |
+    |             |                | 1234qwer         |
+
   Scenario: Upload CSV with Multiple Contacts
     Given There are the following contacts in the CSV file that do not exist in the system
       | email,firstname,lastname,company,country,city                |

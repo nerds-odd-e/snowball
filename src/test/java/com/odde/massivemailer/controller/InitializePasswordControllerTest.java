@@ -70,7 +70,7 @@ public class InitializePasswordControllerTest {
         request.setParameter("password", "");
         request.setParameter("password_confirm", "");
         controller.doPost(request, response);
-        assertEquals("initialize_password.jsp", response.getRedirectedUrl());
+        assertEquals("initialize_password.jsp?error=unmatch&token=123123", response.getRedirectedUrl());
     }
 
     @Test
@@ -82,7 +82,7 @@ public class InitializePasswordControllerTest {
         User newUser = new User("user1@odd-e.com", "123");
         newUser.saveIt();
         controller.doPost(request, response);
-        assertEquals("initialize_password.jsp?error=unmatch", response.getRedirectedUrl());
+        assertEquals("initialize_password.jsp?error=unmatch&token=123123", response.getRedirectedUrl());
     }
 
     @Ignore

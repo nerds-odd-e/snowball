@@ -24,17 +24,17 @@ public class InitializePasswordController extends AppController {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String password = req.getParameter("password");
         String passwordConfirm = req.getParameter("password_confirm");
+        String token = req.getParameter("token");
         if (!password.equals(passwordConfirm)) {
-            resp.sendRedirect("initialize_password.jsp?error=unmatch");
+            resp.sendRedirect("initialize_password.jsp?error=unmatch&token=" + token);
             return;
         }
 
         if (!this.validate(password)) {
-            resp.sendRedirect("initialize_password.jsp");
+            resp.sendRedirect("initialize_password.jsp?error=unmatch&token=" + token);
             return;
         }
 
-        String token = req.getParameter("token");
         User user = this.fetchTokenUser(token);
         if (user == null) {
             resp.sendRedirect("initialize_password_token_error.jsp");
