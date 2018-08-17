@@ -111,27 +111,6 @@ public class LoginTests{
         assertEquals(expected, actual);
     }
 
-    @Then("^Matsuo Show cources list test \"([^\"]*)\"$")
-    public void show_cources_list_test(String cources) throws Throwable {
-        driver.visit(site.baseUrl() + "course_list.jsp");
-        String[] expected = cources.split(",");
-
-        System.out.println(driver.findElementById("page-wrapper").getText());
-
-        List<String> courseListOnPage = new ArrayList<String>();
-        for (WebElement e : driver.findElements(By.className("course"))) {
-            System.out.println(e.getText());
-            courseListOnPage.add(e.getText());
-        }
-//
-//        String[] actual = {};
-//        actual = courseListOnPage.toArray(actual);
-//        assertArrayEquals(expected, actual);
-//
-//        driver.pageShouldContain("Course List");
-
-    }
-
     @Given("^I move to top page$")
     public void i_move_to_top_page() throws Throwable {
         site.visit("index.html");
