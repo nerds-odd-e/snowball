@@ -11,10 +11,12 @@ import java.security.MessageDigest;
 @Table("users")
 public class User extends ApplicationModel {
     private static final String HASHED_PASSWORD = "hashed_password";
+    private static final String EMAIL = "email";
+
     public User(){}
 
     public User(String email) {
-        set("email", email);
+        set(this.EMAIL, email);
         set("token", createToken());
     }
 
@@ -72,5 +74,9 @@ public class User extends ApplicationModel {
 
     public static boolean validatePassword(String password) {
         return !StringUtils.isEmpty(password);
+    }
+
+    public String getEmail() {
+        return getString(this.EMAIL);
     }
 }

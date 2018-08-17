@@ -9,15 +9,20 @@ import static org.junit.Assert.*;
 @RunWith(TestWithDB.class)
 public class UserTest {
 
+    private User createUser(String email, String password) {
+        User user = new User(email);
+        user.setPassword(password);
+        user.saveIt();
+        return user;
+    }
+
     @Test
     public void testValidPassword() {
         String email = "hoge@example.com";
         String password = "hogehoge";
-        User user = new User(email);
-        user.setPassword(password);
-        user.saveIt();
+        User user = createUser(email, password);
 
-        User dbUser = User.getUserByEmail(email);
+        User dbUser = User.getUserByEmail(user.getEmail());
         assertNotNull(dbUser);
         assertTrue(dbUser.isPasswordCorrect(password));
     }
@@ -26,12 +31,10 @@ public class UserTest {
     public void testInvalidPassword() {
         String email = "hoge@example.com";
         String password = "hogehoge";
-        User user = new User(email);
-        user.setPassword(password);
-        user.saveIt();
+        User user = createUser(email, password);
 
         String invalidPassword = "invalidhoge";
-        User dbUser = User.getUserByEmail(email);
+        User dbUser = User.getUserByEmail(user.getEmail());
         assertNotNull(dbUser);
         assertFalse(dbUser.isPasswordCorrect(invalidPassword));
     }
@@ -40,9 +43,7 @@ public class UserTest {
     public void testFetchUserByToken() {
         String email = "hoge@example.com";
         String password = "hogehoge";
-        User user = new User(email);
-        user.setPassword(password);
-        user.saveIt();
+        User user = createUser(email, password);
 
         User dbUser = User.findFirst("token = ?", user.getToken());
         assertNotNull(dbUser);
