@@ -85,6 +85,21 @@ public class InitializePasswordControllerTest {
         assertEquals("initialize_password.jsp?error=unmatch&token=123123", response.getRedirectedUrl());
     }
 
+    @Test
+    public void cannotSetPasswordWhenPasswordIsAlreadySet() throws Exception {
+        request.setParameter("token", "123123");
+        request.setParameter("password", "123123");
+        request.setParameter("password_confirm", "123123");
+        request.setParameter("email", "user1@odd-e.com");
+        User newUser = new User(request.getParameter("email"), request.getParameter("token"));
+        newUser.setPassword(request.getParameter("password"));
+        newUser.saveIt();
+
+        controller.doPost(request, response);
+        assertEquals("initialize_password.jsp?error=passwordAlreadyExists", response.getRedirectedUrl());
+
+    }
+
     @Ignore
     public void invalidTokenError() throws Exception {
         User user = new User("megumi@gmail.com", "123");

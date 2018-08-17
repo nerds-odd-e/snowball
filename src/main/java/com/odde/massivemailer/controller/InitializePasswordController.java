@@ -40,6 +40,10 @@ public class InitializePasswordController extends AppController {
             resp.sendRedirect("initialize_password_token_error.jsp");
             return;
         }
+        if (user.get(User.PASSWORD) != null) {
+            resp.sendRedirect("initialize_password.jsp?error=passwordAlreadyExists");
+            return;
+        }
         user.setPassword(req.getParameter("password"));
         user.saveIt();
         resp.sendRedirect("initialize_password_success.jsp");
