@@ -53,6 +53,25 @@ Feature: Login
       | Bobb@example.com   | abcd1003 |             |
 
   @developing
+  Scenario Outline: Preserve login info after navigation
+    Given Visit Login Page
+    Given There are users as bellow
+      | JaneDoe@mail.com   | abcd1001 |
+      | john@example.com   | abcd1002 |
+      | Bobb@example.com   | abcd1003 |
+    Given Fill form with "<email>" and "<password>"
+    And I click login button
+    And I move to top page
+    When I move to course list page
+    Then Show courses list "<courses>"
+
+    Examples:
+      | email              | password | courses     |
+      | JaneDoe@mail.com   | abcd1001 | CSD-1,CSD-2 |
+      | john@example.com   | abcd1002 | CSD-2       |
+      | Bobb@example.com   | abcd1003 |             |
+
+  @developing
   Scenario: Show Cources List Test
     Given I am on create new course page
     When Add a course with below details

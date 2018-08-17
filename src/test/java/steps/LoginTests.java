@@ -149,4 +149,15 @@ public class LoginTests{
         throw new PendingException();
     }
 
+    @Given("^I move to top page$")
+    public void i_move_to_top_page() throws Throwable {
+        site.visit("index.html");
+    }
+
+    @When("^I move to course list page$")
+    public void i_move_to_course_list_page() throws Throwable {
+        site.visit("course_list.jsp");
+    }
+
+
 }
