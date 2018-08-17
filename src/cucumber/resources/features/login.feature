@@ -84,4 +84,3 @@ Feature: Login
       | instructor    | Terry        |
     And I click the Create button
     Then Matsuo Show cources list test "1 - Tokyo CSD,2 - CSD cource,3 - Osaka CSD"
-git
