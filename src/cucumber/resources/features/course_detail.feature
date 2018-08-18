@@ -2,8 +2,7 @@ Feature: Course Detail
   Display enrolled participants
 
   Background:
-    Given I am on create new course page
-    And Add a course with below details
+    Given There is a course with below details
       | coursename    | CSD Tokyo    |
       | duration      | 30           |
       | country       | Japan        |
@@ -12,7 +11,6 @@ Feature: Course Detail
       | address       | odd-e        |
       | coursedetails | CSD training |
       | instructor    | Terry        |
-    And I click the Create button
 
   Scenario: Display course that has no participant
     When I visit "CSD Tokyo" detail page from course list page
@@ -20,9 +18,9 @@ Feature: Course Detail
 
   Scenario: Enroll multiple participants to course from course detail page
     When I enroll participants to "CSD Tokyo" from course detail page
-      | tom@example.com	Tom	Smith	CS	Singapore	Singapore	CNT-0001    |
+      | tom@example.com	Tom	Smith	CS	Singapore	Singapore	CNT-0001         |
       | john@example.com	John	Fisher	CS	Singapore	Singapore	CNT-0002 |
-      | carry@	Carry	Fisher	CS	Singapore	Singapore	CNT-0003          |
+      | carry@	Carry	Fisher	CS	Singapore	Singapore	CNT-0003             |
     Then participant with correct information appears on "CSD Tokyo" course detail page
       | tom@example.com  | Tom  |
       | john@example.com | John |

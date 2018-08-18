@@ -10,7 +10,10 @@ import steps.site.MassiveMailerSite;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertTrue;
+import static junit.framework.TestCase.assertTrue;
+import static org.hamcrest.Matchers.containsString;
+import static org.junit.Assert.assertThat;
+import static org.mockito.ArgumentMatchers.contains;
 
 public class CourseTests {
 
@@ -18,14 +21,19 @@ public class CourseTests {
     private WebDriverWrapper driver = site.getDriver();
     private String add_course_url = site.baseUrl() + "add_course.jsp";
 
-    @Given("^I am on create new course page$")
-    public void visitCreateCoursePage() throws Throwable {
+    @Given("^There is a course with below details$")
+    public void thereIsACourseWithBelowDetails(DataTable dtCourseDetails) throws Throwable {
+        visitCreateCoursePage();
+        addCourseWithGivenDetails(dtCourseDetails);
+        clickSaveCourse();
+    }
+
+    private void visitCreateCoursePage() {
         driver.visit(add_course_url);
     }
 
 
-    @When("^Add a course with below details$")
-    public void addCourseWithGivenDetails(DataTable dtCourseDetails) throws Throwable {
+    private void addCourseWithGivenDetails(DataTable dtCourseDetails) {
         Map<String, String> vals = dtCourseDetails.asMap(String.class, String.class);
             fill_in_course_data(vals);
 
@@ -44,6 +52,7 @@ public class CourseTests {
 
     @When("^Add a course with location \"([^\"]*)\", \"([^\"]*)\"$")
     public void add_a_course_with_location(String city, String country) throws Throwable {
+        visitCreateCoursePage();
         addCourseWithLocationAndCourseName(city, country, "CSD");
 
     }
@@ -77,22 +86,22 @@ public class CourseTests {
         return vals;
     }
 
-    @When("^I click the Create button$")
-    public void clickSaveCourse() throws Throwable {
+    private void clickSaveCourse() {
         driver.clickButton("save_button");
     }
 
     @Then("^Course should save and successfully saved message should appear$")
-    public void courseListPageShouldContain() throws Throwable {
+    public void courseListPageShouldContain() {
         driver.expectRedirect(add_course_url);
         assertTrue(driver.getCurrentUrl().contains("status=success&msg=Add%20course%20successfully"));
 
     }
 
     @Then("^Course should not save and show error messagea$")
-    public void courseShowErrorMassage() throws Throwable {
+    public void courseShowErrorMassage() {
         driver.expectRedirect(add_course_url);
         System.out.println(driver.getCurrentUrl());
-        assertTrue(driver.getCurrentUrl().contains("status=failed&msg=CityName%20is%20invalid"));
+        assertThat(driver.getCurrentUrl(), containsString("status=failed&msg=CityName%20is%20invalid"));
     }
+
 }

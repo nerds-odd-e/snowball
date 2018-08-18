@@ -43,72 +43,51 @@ public class ContactSteps {
     }
 
     @Given("^I am on the new contact page$")
-    public void i_am_on_the_new_contact_page() throws Throwable {
+    public void i_am_on_the_new_contact_page() {
         site.visit("add_contact.jsp");
         driver.pageShouldContain("Add Contact");
     }
 
     @Then("^I can see the element for \"([^\"]*)\"$")
-    public void i_can_see_the_element(String arg1) throws Throwable {
+    public void i_can_see_the_element(String arg1) {
         driver.findElementById(arg1);
     }
 
     @Then("^I should get an element with message email sent: \"([^\"]*)\"$")
-    public void i_should_get_an_element_with_message_email_sent(String emailSent) throws Throwable {
+    public void i_should_get_an_element_with_message_email_sent(String emailSent) {
         driver.pageShouldContain("email sent: " + emailSent);
     }
 
     @Then("^it should not create a new contact \"([^\"]*)\"$")
-    public void itShouldNotCreateANewContact(String anotherEmail) throws Throwable {
+    public void itShouldNotCreateANewContact(String anotherEmail) {
         site.visit("contactlist.jsp");
         driver.pageShouldContain("user5@odd-e.com");
         String bodyText = driver.getBodyText();
         assertFalse(bodyText.contains(anotherEmail));
     }
 
-    @And("^I should get error message \"([^\"]*)\"$")
-    public void iShouldGetErrorMessage(String errorMessage) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-//        throw new PendingException();
-    }
-
-    @Given("^Contact for \"([^\"]*)\" exists in the system$")
-    public void aContactAlreadyExistInDB(String email) {
-        assertFalse(email.isEmpty());
-    }
-
-    @When("^I upload a valid CSV file with \"([^\"]*)\"$")
-    public void uploadCSVFileWithSpecificEmail(String email) {
-        assertFalse(email.isEmpty());
-    }
-
-    @Then("^the contact should be updated with \"([^\"]*)\"$")
-    public void contactAttributeIsUpdated(String field) {
-        assertFalse(field.isEmpty());
-    }
-
     @And("^Page Should Success")
-    public void pageShouldSuccess() throws Throwable {
+    public void pageShouldSuccess() {
         assertTrue(driver.getCurrentUrl().contains("status=success"));
     }
 
     @Then("^Element \"([^\"]*)\" Should Contain \"([^\"]*)\"$")
-    public void expectElementWithIdToContainText(String element, String text) throws Throwable {
+    public void expectElementWithIdToContainText(String element, String text) {
         driver.expectElementWithIdToContainText(element, text);
     }
 
     @And("^Page Should Contain Exactly (\\d+) \"([^\"]*)\"$")
-    public void pageShouldContainExactlyNElements(int count, String text) throws Throwable {
+    public void pageShouldContainExactlyNElements(int count, String text) {
         driver.expectPageToContainExactlyNElements(text, count);
     }
 
     @Then("^Page should be redirected to \"([^\"]*)\"$")
-    public void pageRedirectTo(String page) throws Throwable {
+    public void pageRedirectTo(String page) {
         driver.expectRedirect(page);
     }
 
     @And("^Contacts page should contain \"([^\"]*)\"$")
-    public void contactsListPageShouldContain(String email) throws Throwable {
+    public void contactsListPageShouldContain(String email) {
         site.visit("contactlist.jsp");
         driver.pageShouldContain(email);
     }
@@ -120,13 +99,13 @@ public class ContactSteps {
     }
 
     @Given("^There is a contact \"([^\"]*)\"$")
-    public void there_is_a_contact(String email) throws Throwable {
+    public void there_is_a_contact(String email) {
         site.visit("contactlist.jsp");
         driver.pageShouldContain(email);
     }
 
     @When("^I change the location information of contact to be \"([^\"]*)\" and \"([^\"]*)\"$")
-    public void i_change_the_location_information_of_contact_to_be(String country, String city) throws Throwable {
+    public void i_change_the_location_information_of_contact_to_be(String country, String city) {
         site.visit("contactlist.jsp");
         driver.clickButton("edit_button");
         driver.setDropdownValue("country", country);
@@ -135,25 +114,25 @@ public class ContactSteps {
     }
 
     @Then("^contact \"([^\"]*)\"'s locations should be \"([^\"]*)\"$")
-    public void contact_s_locations_should_be(String email, String location) throws Throwable {
+    public void contact_s_locations_should_be(String email, String location) {
         driver.pageShouldContain(email);
         driver.pageShouldContain(location);
     }
 
     @When("^I open edit contact page for contact \"([^\"]*)\"$")
-    public void iOpenEditContactPageForContact(String email) throws Throwable {
+    public void iOpenEditContactPageForContact(String email) {
         site.visit("contactlist.jsp");
         driver.clickButton("edit_button");
     }
 
     @When("^Edit A Contact \"([^\"]*)\" and \"([^\"]*)\" for \"([^\"]*)\", \"([^\"]*)\" from \"([^\"]*)\" and \"([^\"]*)\"$")
-    public void editAContactAndForFromAnd(String arg0, String arg1, String arg2, String arg3, String arg4, String arg5) throws Throwable {
+    public void editAContactAndForFromAnd(String arg0, String arg1, String arg2, String arg3, String arg4, String arg5) {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }
 
     @Given("^Contact for \"([^\"]*)\" which is not existing in the system$")
-    public void contactForWhichIsNotExistingInTheSystem(String email) throws Throwable {
+    public void contactForWhichIsNotExistingInTheSystem(String email) {
         assertNotNull(email);
         assertFalse(email.isEmpty());
     }
@@ -171,7 +150,7 @@ public class ContactSteps {
     }
 
     @Then("^Contact \"([^\"]*)\" record is created$")
-    public void contactRecordIsCreated(String email) throws Throwable {
+    public void contactRecordIsCreated(String email) {
         site.visit("contactlist.jsp");
         driver.pageShouldContain(email);
     }
