@@ -3,7 +3,6 @@ package steps.driver;
 import java.util.ArrayList;
 
 public class WebDriverFactory {
-//    private static WebDriverWrapper driver;
     private static ArrayList<WebDriverWrapper> drivers = new ArrayList();
 
     public static WebDriverWrapper getDefaultDriver() {

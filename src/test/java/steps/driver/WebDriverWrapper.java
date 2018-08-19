@@ -32,6 +32,10 @@ public class WebDriverWrapper {
         if (System.getProperty("webdriver").equals("chrome")) {
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions.addArguments("--headless");
+            chromeOptions.addArguments("--disable-gpu");
+            chromeOptions.addArguments("--no-sandbox");
+            chromeOptions.addArguments("--silent");
+            chromeOptions.addArguments("--start-maximized");
             driver = new ChromeDriver(chromeOptions);
         } else {
             DesiredCapabilities dcap = new DesiredCapabilities();
@@ -41,9 +45,9 @@ public class WebDriverWrapper {
             dcap.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);
             driver = new PhantomJSDriver(dcap);
             Logger.getLogger(PhantomJSDriverService.class.getName()).setLevel(Level.OFF);
+            driver.manage().window().maximize();
         }
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
 
     }
 

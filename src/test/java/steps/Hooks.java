@@ -15,6 +15,11 @@ public class Hooks {
     @After
     public void afterScenario() {
         DBConnectionFactory.close();
+    }
+
+    @Before("@start_new_browser")
+    public void beforeStartNewBrowser() {
         WebDriverFactory.resetAll();
     }
+
 }
