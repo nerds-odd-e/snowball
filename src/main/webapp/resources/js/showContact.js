@@ -1,9 +1,6 @@
 function render() {
-    var contactList = retrieveContactListFromServer();
-	var normal = contactList.filter(function (item) { return item.attributes.forgotten !== "true"});
-    var forgotten = contactList.filter(function (item) { return item.attributes.forgotten === "true"});
-	renderContactList(normal, $('#contactTable'), false);
-	renderContactList(forgotten, $('#forgotten_table'), true);
+  var contactList = retrieveContactListFromServer();
+	renderContactList(contactList, $('#contactTable'), false);
 
 }
 
@@ -37,7 +34,6 @@ function Contact(attributes) {
     this.company = attributes.company===undefined?'':attributes.company;
     this.location = attributes.location===undefined?'':attributes.location;
     this.email = attributes.email===undefined?'':attributes.email;
-    this.forgotten = attributes.forgotten===undefined?0:attributes.forgotten;
 }
 
 function createTableData(cssClasses, value) {
@@ -49,7 +45,7 @@ function createButtonElement(buttonId, buttonName, clickEvent) {
     return '<button class="btn btn-default" id="' + buttonId + '" name="' + buttonName + '" onclick=\'' + clickEvent + '\'>' + buttonName +'</button>';
 }
 
-function renderContactList(json, selector, isForgotten)
+function renderContactList(json, selector)
 {
 
     selector.html('');
@@ -63,21 +59,8 @@ function renderContactList(json, selector, isForgotten)
           ['location', contact.location],
           ['', createButtonElement('edit_button', 'edit', 'showEditContactDetail(' + JSON.stringify(item) + ')')]
         ];
-        if (!isForgotten) {
-          tableContent.push(['', createButtonElement('forget_button', 'forget', 'forgetContact(' + JSON.stringify(contact) + ')')])
-        }
-        generateContactTableRow(selector, tableContent, contact.forgotten);
+        generateContactTableRow(selector, tableContent);
     })
-}
-
-function forgetContact(contact) {
-    var contactEmail = "email=" + contact.email;
-    $.ajax({
-	    type: 'DELETE',
-	    url: 'contacts?' + contactEmail,
-	    success: function(data) {render();},
-	    async: false
-	});
 }
 
 function renderContactSelectionList(json, selector)
@@ -93,13 +76,12 @@ function renderContactSelectionList(json, selector)
             ['contact-cname', contact.company],
             ['contact-location', contact.location]
         ];
-        generateContactTableRow(selector, tableContent, contact.forgotten);
+        generateContactTableRow(selector, tableContent);
 	})
 }
 
-function generateContactTableRow(selector, content, isForgotten) {
-    var style = isForgotten ? '  style="color: red" ' : '';
-    var tr = $('<tr' + style + '>' );
+function generateContactTableRow(selector, content) {
+    var tr = $('<tr>' );
     selector.append(tr);
     content.forEach(function(element) {
         tr.append(createTableData(element[0], element[1]));

@@ -20,12 +20,6 @@ public class WebDriverFactory {
         return driver;
     }
 
-    public static WebDriverWrapper getAdditionalDriver() {
-        WebDriverWrapper driver = new WebDriverWrapper();
-        drivers.add(driver);
-        return driver;
-    }
-
     public static void resetAll() {
         for (WebDriverWrapper driver : drivers) {
             driver.closeAll();
