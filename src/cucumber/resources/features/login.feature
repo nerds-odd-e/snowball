@@ -1,4 +1,3 @@
-@now
 Feature: Login
   User should be able to login
   if email address and password are valid
@@ -13,39 +12,31 @@ Feature: Login
       | JaneDoe@mail.com	John	Fisher	CS	Singapore |
 
   Scenario Outline: login
-    Given Visit Login Page
     Given There are users as bellow
       | mary@example.com | abcd1234 |
-    Given Fill form with "<email>" and "<password>"
-    When I click login button
+    When I login with "<email>" and "<password>"
     Then I should move to page with url "<url>"
     And Login failed message is <message>
+
     Examples:
       | email               | password | url                   | message |
       | mary@example.com    | abcd1234 | course_list.jsp       | hidden  |
       | mary@example.com    | hogehoge | login.jsp?status=fail | shown   |
       | unknown@example.com | abcd1234 | login.jsp?status=fail | shown   |
 
-  Scenario Outline: login fail when user's password is not initialized
-    Given Visit Login Page
+  Scenario: login fail when user's password is not initialized
     Given There is a user with "mary@example.com" but password initialize is undone
-    Given Fill form with "<email>" and "<password>"
-    When I click login button
-    Then I should move to page with url "<url>"
-    And Login failed message is <message>
-    Examples:
-      | email               | password | url                   | message |
-      | mary@example.com    | abcd1234 | login.jsp?status=fail | shown   |
+    When I login with "mary@example.com" and "abcd1234"
+    Then I should move to page with url "login.jsp?status=fail"
+    And Login failed message is shown
 
   Scenario Outline: Courses List after Login
-    Given Visit Login Page
     Given There are users as bellow
       | JohnSmith@mail.com | abcd1234 |
       | JaneDoe@mail.com   | abcd1001 |
       | john@example.com   | abcd1002 |
       | Bobb@example.com   | abcd1003 |
-    Given Fill form with "<email>" and "<password>"
-    When I click login button
+    When I login with "<email>" and "<password>"
     Then Show courses list "<courses>"
 
     Examples:
@@ -55,25 +46,14 @@ Feature: Login
       | john@example.com   | abcd1002 | CSD-2       |
       | Bobb@example.com   | abcd1003 |             |
 
-  Scenario Outline: Preserve login info after navigation
-    Given Visit Login Page
+  Scenario: Preserve login info after navigation
     Given There are users as bellow
-      | JaneDoe@mail.com | abcd1001 |
       | john@example.com | abcd1002 |
-      | Bobb@example.com | abcd1003 |
-    Given Fill form with "<email>" and "<password>"
-    And I click login button
+    And I login with "john@example.com" and "abcd1002"
     And I move to top page
     When I move to course list page
-    Then Show courses list "<courses>"
+    Then Show courses list "CSD-2"
 
-    Examples:
-      | email            | password | courses     |
-      | JaneDoe@mail.com | abcd1001 | CSD-1,CSD-2 |
-      | john@example.com | abcd1002 | CSD-2       |
-      | Bobb@example.com | abcd1003 |             |
-
-    @start_new_browser
     Scenario: Courses List no login
       When I move to course list page
       Then Show all courses list "CSD-1,CSD-2,CSD-3"

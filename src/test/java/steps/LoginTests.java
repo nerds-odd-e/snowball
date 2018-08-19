@@ -21,8 +21,7 @@ public class LoginTests{
     private WebDriverWrapper driver = site.getDriver();
     private String login_url = site.baseUrl() + "login.jsp";
 
-    @Given("^Visit Login Page$")
-    public void visitLoginPage() {
+    private void visitLoginPage() {
         driver.visit(login_url);
         driver.pageShouldContain("Login Massive Mailer");
     }
@@ -51,14 +50,11 @@ public class LoginTests{
         });
     }
 
-    @Given("^Fill form with \"([^\"]*)\" and \"([^\"]*)\"$")
-    public void fill_form_with_and(String email, String password) {
+    @Given("^I login with \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void login_in_with_email_and_pwd(String email, String password) {
+        visitLoginPage();
         driver.setTextField("email", email);
         driver.setTextField("password", password);
-    }
-
-    @When("^I click login button$")
-    public void i_click_login_button() {
         driver.clickButton("login");
     }
 
