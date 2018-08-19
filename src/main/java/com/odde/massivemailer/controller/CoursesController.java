@@ -13,6 +13,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -48,6 +49,10 @@ public class CoursesController extends AppController {
             return;
         }
         ContactPerson contactPerson = ContactPerson.getContactByEmail(loginedUserEmail.getEmail());
+        if (contactPerson == null) {
+            response.getOutputStream().print("[]");
+            return;
+        }
         List<Participant> participants = Participant.whereHasContactPersonId(contactPerson.getId().toString());
         List<Object> courseList = participants.stream().map(participant -> Course.findById(participant.getCourseId())).collect(Collectors.toList());
         String convertedCourseToJSON = AppGson.getGson().toJson(courseList);

@@ -15,11 +15,6 @@ public class SeleniumWebElement implements UiElement {
     }
 
     @Override
-    public void submit() {
-        element.submit();
-    }
-
-    @Override
     public String getText() {
         return element.getText();
     }
@@ -29,8 +24,4 @@ public class SeleniumWebElement implements UiElement {
         element.click();
     }
 
-    @Override
-    public String getAttribute(String attrName) {
-        return element.getAttribute(attrName);
-    }
 }

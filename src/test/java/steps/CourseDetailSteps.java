@@ -30,7 +30,8 @@ public class CourseDetailSteps {
     }
 
     @When("^I enroll participants to \"([^\"]*)\" from course detail page$")
-    public void iEnrollParticipantsToFromCourseDetailPage(String courseName, DataTable participantsData) throws Throwable {
+    public void iEnrollParticipantsToFromCourseDetailPage(String courseName, DataTable participantsData) {
+        iVisitDetailPage(courseName);
         String participants = participantsData.asList(String.class).stream().collect(Collectors.joining("\\n"));
         site.enrollParticipantPage().enrollParticipants(courseName, participants);
     }

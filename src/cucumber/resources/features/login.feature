@@ -1,15 +1,13 @@
+@now
 Feature: Login
   User should be able to login
   if email address and password are valid
 
   Background:
     Given There are 3 courses
-    Given There are 5 contact people
-    And I visit "CSD-1" detail page from course list page
     And I enroll participants to "CSD-1" from course detail page
       | JohnSmith@mail.com	Tom	Smith	CS	Singapore |
       | JaneDoe@mail.com	John	Fisher	CS	Singapore |
-    And I visit "CSD-2" detail page from course list page
     And I enroll participants to "CSD-2" from course detail page
       | john@example.com	john	jon	CS	Singapore    |
       | JaneDoe@mail.com	John	Fisher	CS	Singapore |

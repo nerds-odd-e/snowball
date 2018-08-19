@@ -57,6 +57,15 @@ public class CoursesControllerTest {
     }
 
     @Test
+    public void mustNotContainAnyCourseWhenCurrentUserIsNotAContact() throws IOException, ServletException {
+        createCourse("Bob's course");
+        Cookie sessionCookie = new Cookie("session_id", "non_contact@gmail.com");
+        request.setCookies(new Cookie[]{sessionCookie});
+        controller.doGet(request, response);
+        assertEquals("[]", response.getContentAsString());
+    }
+
+    @Test
     public void mustNotContainCourseDoseNotBelongToCurrentUser() throws IOException, ServletException {
         ContactPerson mary = createContactPerson("mary@example.com");
         createCourse("Bob's course");

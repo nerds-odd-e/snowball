@@ -1,5 +1,6 @@
 package steps;
 
+import com.odde.massivemailer.model.Course;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -13,7 +14,6 @@ import java.util.Map;
 import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertThat;
-import static org.mockito.ArgumentMatchers.contains;
 
 public class CourseTests {
 
@@ -22,7 +22,7 @@ public class CourseTests {
     private String add_course_url = site.baseUrl() + "add_course.jsp";
 
     @Given("^There is a course with below details$")
-    public void thereIsACourseWithBelowDetails(DataTable dtCourseDetails) throws Throwable {
+    public void thereIsACourseWithBelowDetails(DataTable dtCourseDetails) {
         visitCreateCoursePage();
         addCourseWithGivenDetails(dtCourseDetails);
         clickSaveCourse();
@@ -34,20 +34,20 @@ public class CourseTests {
 
 
     private void addCourseWithGivenDetails(DataTable dtCourseDetails) {
-        Map<String, String> vals = dtCourseDetails.asMap(String.class, String.class);
+        Map<String, Object> vals = dtCourseDetails.asMap(String.class, Object.class);
             fill_in_course_data(vals);
 
     }
 
-    private void fill_in_course_data(Map<String, String> course_data) {
-        driver.setTextField("coursename", course_data.get("coursename"));
-        driver.setTextField("duration", course_data.get("duration"));
-        driver.setDropdownValue("country", course_data.get("country"));
-        driver.setTextField("city", course_data.get("city"));
-        driver.setTextField("startdate", course_data.get("startdate"));
-        driver.setTextField("address", course_data.get("address"));
-        driver.setTextField("coursedetails", course_data.get("coursedetails"));
-        driver.setTextField("instructor", course_data.get("instructor"));
+    private void fill_in_course_data(Map<String, Object> course_data) {
+        driver.setTextField("coursename", (String)course_data.get("coursename"));
+        driver.setTextField("duration", (String)course_data.get("duration"));
+        driver.setDropdownValue("country", (String)course_data.get("country"));
+        driver.setTextField("city", (String)course_data.get("city"));
+        driver.setTextField("startdate", (String)course_data.get("startdate"));
+        driver.setTextField("address", (String)course_data.get("address"));
+        driver.setTextField("coursedetails", (String)course_data.get("coursedetails"));
+        driver.setTextField("instructor", (String)course_data.get("instructor"));
     }
 
     @When("^Add a course with location \"([^\"]*)\", \"([^\"]*)\"$")
@@ -57,24 +57,21 @@ public class CourseTests {
 
     }
 
-    public void addCourseWithLocationAndCourseName(String city, String country, String courseName) throws Throwable {
-        HashMap<String, String> vals = createCourseData(city, country, courseName);
+    public void addCourseWithLocationAndCourseName(String city, String country, String courseName) {
+        HashMap<String, Object> vals = createCourseData(city, country, courseName);
         fill_in_course_data(vals);
         clickSaveCourse();
     }
 
     @Given("^There are (\\d+) courses$")
     public void there_are_courses(int num) throws Throwable {
-        String country = "Japan";
-        String city = "Tokyo";
         for (int i = 1; i <= num; i++){
-            visitCreateCoursePage();
-            addCourseWithLocationAndCourseName(city, country,"CSD-" + i);
+            Course.createCourse(createCourseData("Tokyo", "Japan", "CSD-" + i));
         }
     }
 
-    private HashMap<String, String> createCourseData(String city, String country, String coursename) {
-        HashMap<String, String> vals = new HashMap<>();
+    private HashMap<String, Object> createCourseData(String city, String country, String coursename) {
+        HashMap<String, Object> vals = new HashMap<>();
         vals.put("country", country);
         vals.put("city", city);
         vals.put("coursename", coursename);
