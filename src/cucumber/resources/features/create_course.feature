@@ -13,16 +13,15 @@ Feature: Create Course
       |instructor    | Terry         |
     Then Course should save and successfully saved message should appear
 
-  @now
   Scenario Outline: Creating course with unknown location
     When Add a course with location "<city>", "<country>"
     Then Course should <expected result>
 
     Examples:
-      | city     | country   | expected result                                   |
+      | city     | country      | expected result                                   |
       #---------------------------------------------------------------------------
       | Foobar$$$   | China     | not save and show error messagea                  |
-      | Chengdu  | China     | save and successfully saved message should appear |
+      | Chengdu     | China     | save and successfully saved message should appear |
 
 
 

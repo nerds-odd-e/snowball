@@ -100,7 +100,6 @@ public class CourseTests {
     @Then("^Course should not save and show error messagea$")
     public void courseShowErrorMassage() {
         driver.expectRedirect(add_course_url);
-        System.out.println(driver.getCurrentUrl());
         assertThat(driver.getCurrentUrl(), containsString("status=failed&msg=CityName%20is%20invalid"));
     }
 

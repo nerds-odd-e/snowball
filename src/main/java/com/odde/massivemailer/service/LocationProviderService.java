@@ -84,4 +84,17 @@ public class LocationProviderService {
             throw new RuntimeException("location service failed", e);
         }
     }
+
+    public Location getCoordinate(String location) {
+        Location coordinate;
+        try {
+            coordinate = getLocationForName(location);
+        } catch (GeoServiceException e) {
+            throw (new RuntimeException("Location Service is not available", e));
+        }
+        if (coordinate == null) {
+            throw (new RuntimeException("CityName is invalid"));
+        }
+        return coordinate;
+    }
 }

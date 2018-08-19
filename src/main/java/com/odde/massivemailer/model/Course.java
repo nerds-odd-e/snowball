@@ -1,7 +1,6 @@
 package com.odde.massivemailer.model;
 
 import com.odde.massivemailer.service.LocationProviderService;
-import com.odde.massivemailer.service.exception.GeoServiceException;
 import org.apache.commons.lang3.StringUtils;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.annotations.Table;
@@ -13,19 +12,13 @@ public class Course extends ApplicationModel {
     public Course() {
     }
 
-    public Course(String title, String content, String location)  {
+    public Course(String title, String content, String location) {
         setCourseName(title);
         setCourseDetails(content);
         setLocation(location);
-        try {
-            setGeoCoordinates();
-        } catch (GeoServiceException e) {
-            throw(new RuntimeException("cannot find location", e));
-        }
     }
 
-
-    public static Course createCourse(Map map) throws Exception {
+    public static Course createCourse(Map map) {
         Course course = new Course(map);
         course.saveIt();
         return course;
@@ -33,10 +26,10 @@ public class Course extends ApplicationModel {
 
 
     public Course(Map<String, Object> map) {
-        this((String)map.get("coursename"), (String)map.get("coursedetails"), locationToAddress(map.get("city"), map.get("country")));
+        this((String) map.get("coursename"), (String) map.get("coursedetails"), locationToAddress(map.get("city"), map.get("country")));
         String[] keys = {"address", "duration", "instructor", "startdate"};
 
-        for (String key :keys) {
+        for (String key : keys) {
             set(key, map.get(key));
         }
     }
@@ -51,22 +44,11 @@ public class Course extends ApplicationModel {
         return location;
     }
 
-    private void setGeoCoordinates() throws GeoServiceException {
-        String locationName = getLocation();
-        if (StringUtils.isEmpty(locationName)) {
-            return;
-        }
-        LocationProviderService locationProviderService = new LocationProviderService();
-        Location location = locationProviderService.getLocationForName(locationName);
-        set("latitude", location.getLat());
-        set("longitude", location.getLng());
-    }
-
     public static List<Course> findAllCourseNearTo(Location geoCordinate) {
         List<Course> nearbyCources = new ArrayList<>();
         List<Course> allCourse = Course.findAll();
-        for (Course course: allCourse) {
-            if(course.isNearTo(geoCordinate))
+        for (Course course : allCourse) {
+            if (course.isNearTo(geoCordinate))
                 nearbyCources.add(course);
         }
         return nearbyCources;
@@ -86,6 +68,11 @@ public class Course extends ApplicationModel {
 
     public void setLocation(String location) {
         set("location", location);
+        if (StringUtils.isEmpty(location))
+            return;
+        Location coordinate = new LocationProviderService().getCoordinate(location);
+        set("latitude", coordinate.getLat());
+        set("longitude", coordinate.getLng());
     }
 
     public void setCourseDetails(String details) {
@@ -132,7 +119,7 @@ public class Course extends ApplicationModel {
         return (double) get(name);
     }
 
-     public static Course getCourseByName(String name) {
+    public static Course getCourseByName(String name) {
         LazyList<Course> list = where("coursename = ?", name);
         if (list.size() > 0)
             return list.get(0);

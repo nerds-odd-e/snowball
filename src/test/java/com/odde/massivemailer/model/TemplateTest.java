@@ -29,7 +29,7 @@ public class TemplateTest {
         course = new Course();
         course.setCourseName("CSD");
         course.setInstructor("Roof-TheExpert");
-        course.setLocation("18RobertsLane,Singapore");
+        course.setLocation("Singapore/Singapore");
         //
         contactPerson = new ContactPerson("Madhan", "Madhan@CS.com", "Karunakaran", "CS", "Singapore/Singapore");
         //
