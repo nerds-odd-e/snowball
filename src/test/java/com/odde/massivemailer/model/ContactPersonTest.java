@@ -1,14 +1,10 @@
 package com.odde.massivemailer.model;
 
 import com.odde.TestWithDB;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-
-
-import java.time.LocalDate;
 
 
 import java.util.ArrayList;
@@ -161,7 +157,7 @@ public class ContactPersonTest {
     public void test_create_contacts_should_create_same_details_that_was_requested() {
 
         String csvData = preparecsvDataForTest();
-        ContactPerson.createContacts(csvData);
+        ContactPerson.createContactsFromCSVData(csvData);
 
         List<ContactPerson> contacts = ContactPerson.prepareContactsList(csvData);
 
@@ -201,7 +197,7 @@ public class ContactPersonTest {
 
     private List<ContactPerson> createContactsForTest() {
         String csvData = preparecsvDataForTest();
-        ContactPerson.createContacts(csvData);
+        ContactPerson.createContactsFromCSVData(csvData);
 
         return ContactPerson.prepareContactsList(csvData);
     }

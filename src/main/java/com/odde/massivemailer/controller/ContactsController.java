@@ -5,6 +5,8 @@ import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.model.User;
 import com.odde.massivemailer.serialiser.AppGson;
 import com.odde.massivemailer.service.MailService;
+import org.javalite.activejdbc.LazyList;
+import org.javalite.activejdbc.Model;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -17,18 +19,16 @@ import java.io.IOException;
 public class ContactsController extends AppController {
     private static final long serialVersionUID = 1L;
 
-	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String convertedContactToJSON = null;
-        if (req.getParameter("email") == null) {
-            convertedContactToJSON = AppGson.getGson().toJson(ContactPerson.findAll());
-        } else {
-            convertedContactToJSON = AppGson.getGson().toJson(ContactPerson.getContactByEmail(req.getParameter("email")));
+	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		String email = req.getParameter("email");
+		if (email == null) {
+			respondWithJSON(resp, ContactPerson.findAll());
+			return;
         }
-        ServletOutputStream outputStream = resp.getOutputStream();
-        outputStream.print(convertedContactToJSON);
+		respondWithJSON(resp, ContactPerson.getContactByEmail(email));
     }
 
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
 		String emailAddress = req.getParameter("email");
         if(!ContactPerson.isValidEmail(emailAddress)) {

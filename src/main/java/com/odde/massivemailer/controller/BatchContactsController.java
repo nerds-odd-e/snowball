@@ -2,7 +2,6 @@ package com.odde.massivemailer.controller;
 
 import com.odde.massivemailer.model.ContactPerson;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,12 +13,9 @@ public class BatchContactsController extends AppController {
 
     private static final long serialVersionUID = 1L;
 
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String resultMsg = "add_contact_batch.jsp";
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String data = req.getParameter("data");
-
-        ContactPerson.createContacts(data);
-
-        resp.sendRedirect(resultMsg);
+        ContactPerson.createContactsFromCSVData(data);
+        resp.sendRedirect("add_contact_batch.jsp");
     }
 }

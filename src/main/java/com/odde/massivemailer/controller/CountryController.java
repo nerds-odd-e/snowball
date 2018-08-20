@@ -13,13 +13,7 @@ import java.util.List;
 
 @WebServlet("/countries")
 public class CountryController extends AppController {
-
-    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ServletOutputStream outputStream = resp.getOutputStream();
-
-        LocationProviderService service = new LocationProviderService();
-        List<String> countries = service.getAllCountryNames();
-        Gson gson = new Gson();
-        outputStream.print(gson.toJson(countries));
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        respondWithJSON(resp, new LocationProviderService().getAllCountryNames());
     }
 }

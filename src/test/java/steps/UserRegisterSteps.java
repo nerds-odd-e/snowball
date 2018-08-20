@@ -62,18 +62,10 @@ public class UserRegisterSteps {
         driver.visit(sentMail.getContent());
     }
 
-    @When("^\"([^\"]*)\" set password to \"([^\"]*)\"$")
-    public void set_password_to(String name, String password) throws Throwable {
+    @When("set password to \"([^\"]*)\", password confirmation to \"([^\"]*)\"$")
+    public void set_password_to(String password, String confirm) throws Throwable {
         site.initializePasswordPage().setPassword(password);
-    }
-
-    @When("^\"([^\"]*)\" set password_confirm to \"([^\"]*)\"$")
-    public void set_password_confirm_to(String name, String password) throws Throwable {
-        site.initializePasswordPage().setPasswordConfirm(password);
-    }
-
-    @When("^\"([^\"]*)\" clicks submit button$")
-    public void clicks_submit_button(String name) throws Throwable {
+        site.initializePasswordPage().setPasswordConfirm(confirm);
         site.initializePasswordPage().submit();
     }
 

@@ -1,6 +1,5 @@
 Feature: Login
   User should be able to login
-  if email address and password are valid
 
   Background:
     Given There are 3 courses

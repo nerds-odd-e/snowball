@@ -30,7 +30,7 @@ public class CoursesController extends AppController {
 
         try {
 
-            Map map = getParameterFromRequest(req, new String[]{"coursename", "country", "city", "address", "coursedetails", "duration", "instructor", "startdate"});
+            Map map = getParameterFromRequest(req, "coursename", "country", "city", "address", "coursedetails", "duration", "instructor", "startdate");
 
             Course.createCourse(map);
 
@@ -44,7 +44,7 @@ public class CoursesController extends AppController {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         LoginedUserEmail loginedUserEmail = new LoginedUserEmail(request.getCookies());
-        if (loginedUserEmail.isEmailValid() == false) {
+        if (!loginedUserEmail.isEmailValid()) {
             response.getOutputStream().print(AppGson.getGson().toJson(Course.findAll()));
             return;
         }

@@ -96,7 +96,7 @@ public class ContactPerson extends ApplicationModel {
     }
 
 
-    public static void createContacts(String csvData) {
+    public static void createContactsFromCSVData(String csvData) {
 
         List<ContactPerson> contacts = prepareContactsList(csvData);
 
