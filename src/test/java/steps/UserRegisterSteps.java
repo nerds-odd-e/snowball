@@ -42,7 +42,7 @@ public class UserRegisterSteps {
 
     @And("^Page Should Fail$")
     public void pageShouldFail() throws Throwable {
-        assertTrue(driver.getCurrentUrl().contains("status=failed"));
+        assertTrue(driver.getCurrentUrl().contains("status=fail"));
     }
 
     @When("^Admin add a new contact \"([^\"]*)\" with email: \"([^\"]*)\"$")

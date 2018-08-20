@@ -37,4 +37,12 @@ public class AppController extends HttpServlet {
         ServletOutputStream outputStream = resp.getOutputStream();
         outputStream.print(convertedContactToJSON);
     }
+
+    protected void respondWithRedirectAndErrorMessage(HttpServletResponse resp, String page, String message) throws IOException {
+        resp.sendRedirect(page +"?" + "status=fail&msg="+ message);
+    }
+
+    protected void respondWithRedirectAndSuccessMessage(HttpServletResponse resp, String page, String message) throws IOException {
+        resp.sendRedirect(page +"?" + "status=success&msg="+ message);
+    }
 }

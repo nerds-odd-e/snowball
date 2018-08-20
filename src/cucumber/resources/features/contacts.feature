@@ -4,7 +4,7 @@ Feature: Contacts
 
   Scenario Outline: Adding contact with invalid email address
     When Admin add a new contact "<name>" with invalid email: "<email>"
-    Then Contact page show "error message"
+    Then Contact page show "email is invalid"
     And  "<email>" was not contained at Contact List Page
     And  Mail was not sent
 
