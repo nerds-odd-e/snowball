@@ -25,7 +25,7 @@ import java.util.stream.Stream;
 public class CoursesController extends AppController {
     private static final long serialVersionUID = 1L;
 
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String resultMsg = "";
 
         try {
@@ -37,7 +37,6 @@ public class CoursesController extends AppController {
             resultMsg = "status=success&msg=Add course successfully";
         } catch (Exception e) {
             resultMsg = "status=failed&msg=" + e.getMessage();
-
         }
         resp.sendRedirect("add_course.jsp?" + resultMsg);
     }

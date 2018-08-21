@@ -2,7 +2,6 @@ Feature: Send all events to contacts with the same location as the event - Singa
   As the admin I want to send all the registered events in a single email to the contacts in the same location
   so that I can gather as many people as possible in the event
 
-  @slow
   Scenario Outline: upcoming courses notification
     Given there are <sg courses/contacts> courses and contacts in Singapore, Singapore
     Given there are <tokyo> courses and contacts in Tokyo, Japan

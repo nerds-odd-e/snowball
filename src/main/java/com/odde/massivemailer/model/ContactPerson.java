@@ -41,6 +41,10 @@ public class ContactPerson extends ApplicationModel {
     public ContactPerson() {
     }
 
+    @Override
+    protected void beforeValidation() {
+    }
+
     public ContactPerson(String name, String email, String lastname) {
         this(name, email, lastname, "");
     }
@@ -60,15 +64,16 @@ public class ContactPerson extends ApplicationModel {
         setLocation(location);
         if (!StringUtils.isEmpty(getLocation())) {
             LocationProviderService locationProviderService = new LocationProviderService();
+            Location locationDetails;
             try {
-                Location locationDetails = locationProviderService.getLocationForName(getLocation());
-
-                if (locationDetails != null) {
-                    set(LATITUDE, locationDetails.getLat());
-                    set(LONGITUDE, locationDetails.getLng());
-                }
+                locationDetails = locationProviderService.getLocationForName(getLocation());
             } catch (GeoServiceException e) {
                 throw new RuntimeException("failed to get location.", e);
+            }
+
+            if (locationDetails != null) {
+                set(LATITUDE, locationDetails.getLat());
+                set(LONGITUDE, locationDetails.getLng());
             }
         }
     }
