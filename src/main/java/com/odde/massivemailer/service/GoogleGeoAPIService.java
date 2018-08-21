@@ -4,7 +4,6 @@ import com.google.maps.errors.ApiException;
 import com.google.maps.model.AddressComponent;
 import com.google.maps.model.AddressComponentType;
 import com.google.maps.model.GeocodingResult;
-import com.google.maps.model.LatLng;
 import com.odde.massivemailer.model.Location;
 import com.google.maps.*;
 import com.odde.massivemailer.service.exception.GeoServiceException;
@@ -14,7 +13,7 @@ public class GoogleGeoAPIService {
 
     public Location getGeocode(String country, String city) throws GeoServiceException {
         if (country == null) {
-            return new Location(null, Location.INVALID_LATITUDE, Location.INVALID_LONGTITUDE);
+            return Location.nullLocation();
         }
         try {
             return getLocationFromGoogle(country, city);
@@ -26,7 +25,7 @@ public class GoogleGeoAPIService {
     private Location getLocationFromGoogle(String country, String city) throws InterruptedException, ApiException, IOException {
         GeocodingResult geocodingResult = getGeocodingResult(country, city);
         if( geocodingResult == null ){
-            return null;
+            return Location.nullLocation();
         }
 
         AddressComponent[] addressComponents = geocodingResult.addressComponents;

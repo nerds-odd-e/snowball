@@ -1,47 +1,29 @@
 package com.odde.massivemailer.model;
 
+import com.odde.massivemailer.model.callback.LocationCallbacks;
+import com.odde.massivemailer.model.validator.LocationValidator;
 import com.odde.massivemailer.service.LocationProviderService;
-import org.apache.commons.lang3.StringUtils;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.annotations.Table;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Table("courses")
 public class Course extends ApplicationModel {
+    static {
+        validateWith(new LocationValidator("city"));
+        callbackWith(new LocationCallbacks());
+    }
+
     public Course() {
     }
 
-    public Course(String title, String content, String location) {
-        setCourseName(title);
-        setCourseDetails(content);
-        setLocation(location);
-    }
-
     public static Course createCourse(Map map) {
-        Course course = new Course(map);
+        Course course = new Course().fromMap(map);
         course.saveIt();
         return course;
-    }
-
-
-    public Course(Map<String, Object> map) {
-        this((String) map.get("coursename"), (String) map.get("coursedetails"), locationToAddress(map.get("city"), map.get("country")));
-        String[] keys = {"address", "duration", "instructor", "startdate"};
-
-        for (String key : keys) {
-            set(key, map.get(key));
-        }
-    }
-
-    private static String locationToAddress(Object city, Object country) {
-        String location;
-        if (city == null) {
-            location = (String) country;
-        } else {
-            location = country + "/" + city;
-        }
-        return location;
     }
 
     public static List<Course> findAllCourseNearTo(Location geoCordinate) {
@@ -66,15 +48,6 @@ public class Course extends ApplicationModel {
         set("instructor", instructor);
     }
 
-    public void setLocation(String location) {
-        set("location", location);
-        if (StringUtils.isEmpty(location))
-            return;
-        Location coordinate = new LocationProviderService().getCoordinate(location);
-        set("latitude", coordinate.getLat());
-        set("longitude", coordinate.getLng());
-    }
-
     public void setCourseDetails(String details) {
         set("coursedetails", details);
     }
@@ -88,7 +61,7 @@ public class Course extends ApplicationModel {
     }
 
     public String getLocation() {
-        return getAttribute("location");
+        return LocationProviderService.locationString(getAttribute("city"), getAttribute("country"));
     }
 
     private Location getGeoCoordinates() {

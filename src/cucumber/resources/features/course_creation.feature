@@ -18,9 +18,9 @@ Feature: Create Course
     Then Course should <expected result>
 
     Examples:
-      | city     | country      | expected result                                   |
+      | city        | country      | expected result                                |
       #---------------------------------------------------------------------------
-      | Foobar$$$   | China     | not save and show error messagea                  |
+      | NotExist    | Japan     | not save and show error messagea                  |
       | Chengdu     | China     | save and successfully saved message should appear |
 
 

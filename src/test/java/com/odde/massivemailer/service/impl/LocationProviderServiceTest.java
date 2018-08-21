@@ -25,11 +25,6 @@ public class LocationProviderServiceTest {
     }
 
     @Test
-    public void getSupportedLocations() throws Exception {
-        assert(locationProviderService.getSupportedLocations().size()>0);
-    }
-
-    @Test
     public void getSingaporeByName() throws Exception{
         Location singapore = locationProviderService.getLocationForName("Singapore/Singapore");
         assertNotNull(singapore);
@@ -46,7 +41,8 @@ public class LocationProviderServiceTest {
     @Test
     public void getUnknownCity() throws Exception {
         Location location = locationProviderService.getLocationForName("foobar/hogehoge");
-        assertNull(location);
+        assertNull(location.getLat());
+        assertNull(location.getLng());
     }
 
     @Test

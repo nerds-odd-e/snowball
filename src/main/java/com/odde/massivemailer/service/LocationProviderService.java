@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -23,8 +22,14 @@ public class LocationProviderService {
     public LocationProviderService() {
     }
 
-    public List<String> getSupportedLocations() {
-        return new ArrayList(locations.keySet());
+    public static String locationString(Object city, Object country) {
+        String location;
+        if (city == null) {
+            location = (String) country;
+        } else {
+            location = country + DELIMITER + city;
+        }
+        return location;
     }
 
     public Location getLocationForName(String locationString) throws GeoServiceException {
@@ -42,6 +47,7 @@ public class LocationProviderService {
 
     public static void resetLocations() {
         locations = new TreeMap<>();
+        locations.put("Japan/NotExist", Location.nullLocation());
         locations.put("Singapore/Singapore", new Location("Singapore/Singapore", 1.3521, 103.8198));
         locations.put("Thailand/Bangkok", new Location("Thailand/Bangkok", 13.7563, 100.5018));
         locations.put("Tokyo", new Location("Tokyo", 35.6895, 139.6917));
@@ -60,7 +66,7 @@ public class LocationProviderService {
 
     public void addLat_LongToMemory(String country, String city) throws GeoServiceException {
         Location location = getLocation(country, city);
-        locations.put(country + "/" + city, location);
+        locations.put(locationString(city, country), location);
     }
 
     private Location getLocation(String country, String city) throws GeoServiceException {
@@ -91,9 +97,6 @@ public class LocationProviderService {
             coordinate = getLocationForName(location);
         } catch (GeoServiceException e) {
             throw (new RuntimeException("Location Service is not available", e));
-        }
-        if (coordinate == null) {
-            throw (new RuntimeException("CityName is invalid"));
         }
         return coordinate;
     }

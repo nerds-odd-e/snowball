@@ -15,8 +15,8 @@ public class GoogleGeoAPIServiceTest {
         Location location = geoAPIService.getGeocode(null, null);
 
         assertEquals(location.getName(), null);
-        assert location.getLat() == Location.INVALID_LATITUDE;
-        assert location.getLng() == Location.INVALID_LONGTITUDE;
+        assert location.getLat() == null;
+        assert location.getLng() == null;
     }
 
     @Test

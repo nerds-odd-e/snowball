@@ -29,9 +29,7 @@ public class CoursesController extends AppController {
         String resultMsg = "";
 
         try {
-
             Map map = getParameterFromRequest(req, "coursename", "country", "city", "address", "coursedetails", "duration", "instructor", "startdate");
-
             Course.createCourse(map);
 
             resultMsg = "status=success&msg=Add course successfully";

@@ -3,23 +3,25 @@ package com.odde.massivemailer.model;
 import com.google.maps.model.LatLng;
 
 public class Location {
-    public static double INVALID_LONGTITUDE = -1;
-    public static double INVALID_LATITUDE = -1;
     public static final int CLOSE_BY_DISTANCE = 2000;
 
     private String cityAndCountry;
     private String countryCode;
     private String countryName;
-    private double lat;
-    private double lng;
+    private Double lat;
+    private Double lng;
 
-    public Location(String name, double lat, double lng) {
+    public Location(String name, Double lat, Double lng) {
         this.cityAndCountry = name;
         this.lat = lat;
         this.lng = lng;
     }
 
     public Location() {
+    }
+
+    public static Location nullLocation() {
+        return new Location(null, null, null);
     }
 
     private double toRadian(double x) {
@@ -55,11 +57,11 @@ public class Location {
         return countryName;
     }
 
-    public double getLat() {
+    public Double getLat() {
         return lat;
     }
 
-    public double getLng() {
+    public Double getLng() {
         return lng;
     }
 

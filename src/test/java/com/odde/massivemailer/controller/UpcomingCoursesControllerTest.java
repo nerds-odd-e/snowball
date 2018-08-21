@@ -1,10 +1,11 @@
 package com.odde.massivemailer.controller;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.model.*;
+import com.odde.massivemailer.model.ContactPerson;
+import com.odde.massivemailer.model.Course;
+import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.service.GMailService;
 import com.odde.massivemailer.service.UpcomingCourseMailComposer;
-import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +18,6 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -29,10 +29,10 @@ import static org.mockito.Mockito.*;
 @RunWith(TestWithDB.class)
 public class UpcomingCoursesControllerTest {
 
-    private final Course singaporeEvent = new Course("Scrum In Singapore", "", "Singapore/Singapore");
-    private final Course singaporeEventTwo = new Course("A-TDD In Singapore", "", "Singapore/Singapore");
-    private final Course bangkokEvent = new Course("Code Smells In Bangkok", "", "Bangkok/Thailand");
-    private final Course tokyoEvent = new Course("Code Refactoring In Tokyo", "", "Tokyo/Japan");
+    private final Course singaporeEvent = new Course().set("coursename", "Scrum In Singapore", "city", "Singapore", "country", "Singapore");
+    private final Course singaporeEventTwo = new Course().set("coursename", "A-TDD In Singapore", "city", "Singapore", "country", "Singapore");
+    private final Course bangkokEvent = new Course().set("coursename", "Code Smells In Bangkok", "city", "Bangkok", "country", "Thailand");
+    private final Course tokyoEvent = new Course().set("coursename", "Code Refactoring In Tokyo", "city", "Tokyo", "country", "Japan");
 
     private final ContactPerson singaporeContact = new ContactPerson("testName1", "test1@gmail.com", "test1LastName", "", "Singapore/Singapore");
     private final ContactPerson singaporeContactTwo = new ContactPerson("testName2", "test2@gmail.com", "test2LastName", "", "Singapore/Singapore");

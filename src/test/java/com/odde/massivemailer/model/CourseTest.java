@@ -34,7 +34,7 @@ public class CourseTest {
         map.put("duration", "15");
         map.put("instructor", "instructor");
         map.put("startdate", "2017-11-09");
-        aCourse = new Course(map);
+        aCourse = new Course().fromMap(map);
         GivenIhaveThreeCourcesInSG_Kl_USA();
     }
 
@@ -53,7 +53,7 @@ public class CourseTest {
     @Test
     public void whereNearTo_should_return_emptyList() {
 
-        Location unknownGeolocation =  new Location("unknown/unknown",-999999999,-9999999);
+        Location unknownGeolocation =  new Location("unknown/unknown",-999999999.0,-9999999.0);
 
         assertEquals(0, Course.findAllCourseNearTo(unknownGeolocation).size());
     }
@@ -91,7 +91,7 @@ public class CourseTest {
         map.put("city", city);
         map.put("instructor", instructor);
         map.put("coursedetails", "This is a great course");
-        Course course = new Course(map);
+        Course course = new Course().fromMap(map);
         course.saveIt();
         return course;
     }

@@ -2,18 +2,19 @@ package com.odde.massivemailer.controller;
 
 import com.google.gson.internal.LinkedTreeMap;
 import com.odde.TestWithDB;
-import com.odde.massivemailer.model.*;
+import com.odde.massivemailer.model.ContactPerson;
+import com.odde.massivemailer.model.Course;
+import com.odde.massivemailer.model.Location;
+import com.odde.massivemailer.model.Participant;
 import com.odde.massivemailer.serialiser.AppGson;
 import com.odde.massivemailer.service.LocationProviderService;
 import com.odde.massivemailer.service.exception.GeoServiceException;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import java.io.IOException;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 @RunWith(TestWithDB.class)
 public class CoursesControllerTest {
@@ -34,30 +36,39 @@ public class CoursesControllerTest {
     }
 
     @Test
-    public void shouldCreateACourseWithOnlyCourseName() throws ServletException, IOException {
+    public void shouldCreateACourseWithOnlyCourseName() throws IOException {
         request.setParameter("coursename", "test couree");
         controller.doPost(request, response);
-        Assert.assertEquals("add_course.jsp?status=success&msg=Add course successfully",response.getRedirectedUrl());
-        Assert.assertEquals("test couree", Course.getCourseByName("test couree").getCoursename());
+        assertEquals("add_course.jsp?status=success&msg=Add course successfully",response.getRedirectedUrl());
+        assertEquals("test couree", Course.getCourseByName("test couree").getCoursename());
     }
 
     @Test
-    public void shouldCreateACourseWithCourseName_Location() throws ServletException, IOException, GeoServiceException {
+    public void shouldCreateACourseWithCourseName_Location() throws IOException, GeoServiceException {
         request.setParameter("coursename", "test couree");
         request.setParameter("country", "Japan");
         request.setParameter("city", "Osaka");
         controller.doPost(request, response);
 
-        Assert.assertEquals("Japan/Osaka", Course.getCourseByName("test couree").getLocation());
+        assertEquals("Japan/Osaka", Course.getCourseByName("test couree").getLocation());
 
         LocationProviderService service = new LocationProviderService();
         Location storedLocation = service.getLocationForName("Japan/Osaka");
-       // assertEquals("Japan", storedLocation.getCountryName());
         assertEquals("Japan/Osaka", storedLocation.getName());
     }
 
     @Test
-    public void mustNotContainAnyCourseWhenCurrentUserIsNotAContact() throws IOException, ServletException {
+    public void shouldNotCreateACourseWithWrongLocationInformation() throws IOException, GeoServiceException {
+        request.setParameter("coursename", "test couree");
+        request.setParameter("country", "FooBar");
+        request.setParameter("city", "FooBarXXX");
+        controller.doPost(request, response);
+        assertNull(Course.getCourseByName("test couree"));
+        assertEquals("add_course.jsp?status=failed&msg={ city=<cannot be located> }",response.getRedirectedUrl());
+    }
+
+    @Test
+    public void mustNotContainAnyCourseWhenCurrentUserIsNotAContact() throws IOException {
         createCourse("Bob's course");
         Cookie sessionCookie = new Cookie("session_id", "non_contact@gmail.com");
         request.setCookies(new Cookie[]{sessionCookie});
@@ -66,7 +77,7 @@ public class CoursesControllerTest {
     }
 
     @Test
-    public void mustNotContainCourseDoseNotBelongToCurrentUser() throws IOException, ServletException {
+    public void mustNotContainCourseDoseNotBelongToCurrentUser() throws IOException {
         ContactPerson mary = createContactPerson("mary@example.com");
         createCourse("Bob's course");
 
@@ -77,7 +88,7 @@ public class CoursesControllerTest {
     }
 
     @Test
-    public void mustContainAllCourseWithoutEmail() throws IOException, ServletException {
+    public void mustContainAllCourseWithoutEmail() throws IOException {
         Course bobsCourse = createCourse("Bob's course");
         Course anotherCourse = createCourse("anotherCourse");
 
@@ -91,7 +102,7 @@ public class CoursesControllerTest {
     }
 
     @Test
-    public void mustContainCourseBelongToCurrentUser() throws IOException, ServletException {
+    public void mustContainCourseBelongToCurrentUser() throws IOException {
         ContactPerson bob = createContactPerson("bob@example.com");
         Course bobsCourse = createCourse("Bob's course");
         createCourse("anotherCourse");
@@ -115,7 +126,7 @@ public class CoursesControllerTest {
         courseValue.put("city", "Tokyo");
         courseValue.put("country", "Japan");
 
-        Course course = new Course(courseValue);
+        Course course = new Course().fromMap(courseValue);
         course.setCourseName(courseName);
         course.saveIt();
         return course;

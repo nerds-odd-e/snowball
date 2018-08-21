@@ -18,7 +18,7 @@ public class LocationTest {
 
     @Before
     public void initialize() {
-        baseCity = new Location("Base City",0,0);
+        baseCity = new Location("Base City",0.0,0.0);
     }
 
     @Parameters

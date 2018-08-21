@@ -26,7 +26,7 @@ public class CourseFactory {
         params.put("longitude", 100.0);
 
         try {
-            return new Course(params);
+            return new Course().fromMap(params);
         } catch (Exception e) {
             e.printStackTrace();
         }

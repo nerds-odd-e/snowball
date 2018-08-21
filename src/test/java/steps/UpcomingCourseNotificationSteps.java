@@ -7,16 +7,11 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.flywaydb.core.internal.util.StringUtils;
-
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
 import static junit.framework.TestCase.assertTrue;
-
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
 
 public class UpcomingCourseNotificationSteps {
     private MassiveMailerSite site = new MassiveMailerSite();
@@ -56,7 +51,7 @@ public class UpcomingCourseNotificationSteps {
         }
 
         for (int i = 0; i < courses; i++) {
-            Course course  = new Course("Event " + i + " in " + city,"Event " + i + " in " + city,country + "/" + city);
+            Course course  = Course.create("coursename", "Event " + i + " in " + city, "coursedetails", "Event " + i + " in " + city, "country", country, "city", city);
             assertTrue(course.saveIt());
         }
     }
