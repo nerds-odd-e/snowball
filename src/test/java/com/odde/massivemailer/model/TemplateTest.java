@@ -25,15 +25,20 @@ public class TemplateTest {
         template.setSubject("Greeting {FirstName}");
         template.setTemplateName("MyDefaultTemplate");
         template.setContent("Hi {FirstName} {LastName}. Please find course details - {CourseName}");
-        //
+
         course = new Course();
         course.setCourseName("CSD");
         course.setInstructor("Roof-TheExpert");
         course.set("city", "Singapore");
         course.set("country", "Singapore");
-        //
-        contactPerson = new ContactPerson("Madhan", "Madhan@CS.com", "Karunakaran", "CS", "Singapore/Singapore");
-        //
+
+        contactPerson = new ContactPerson().set(
+                "firstname", "Madhan",
+                "email", "Madhan@CS.com",
+                "lastname", "Karunakaran",
+                "company", "CS",
+                "country", "Singapore",
+                "city", "Singapore");
 
         template2 = new Template("DefaultTestTemplate", "Greetings {FirstName}", "Dear {FirstName} {LastName}. Please find the details of the course {CourseName} {Location} {Instructor} ");
 

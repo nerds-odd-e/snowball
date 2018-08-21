@@ -6,6 +6,8 @@ import com.odde.massivemailer.model.Course;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.odde.massivemailer.factory.ContactFactory.uniqueContact;
+
 public class CourseFactory {
 
     private Course csd_course;
@@ -45,7 +47,7 @@ public class CourseFactory {
 
     public ContactPerson contact_alex() {
         if (contact_alex == null) {
-            contact_alex = new ContactPerson("John", "john@gmail.com", "Doe", "ComA");
+            contact_alex = uniqueContact().set("firstname", "alex");
             contact_alex.saveIt();
         }
         return contact_alex;

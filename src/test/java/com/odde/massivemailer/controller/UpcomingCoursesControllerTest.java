@@ -20,6 +20,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import static com.odde.massivemailer.factory.ContactFactory.uniqueContact;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -34,10 +35,10 @@ public class UpcomingCoursesControllerTest {
     private final Course bangkokEvent = new Course().set("coursename", "Code Smells In Bangkok", "city", "Bangkok", "country", "Thailand");
     private final Course tokyoEvent = new Course().set("coursename", "Code Refactoring In Tokyo", "city", "Tokyo", "country", "Japan");
 
-    private final ContactPerson singaporeContact = new ContactPerson("testName1", "test1@gmail.com", "test1LastName", "", "Singapore/Singapore");
-    private final ContactPerson singaporeContactTwo = new ContactPerson("testName2", "test2@gmail.com", "test2LastName", "", "Singapore/Singapore");
-    private final ContactPerson tokyoContact = new ContactPerson("testName3", "test3@gmail.com", "test3LastName", "", "Tokyo/Japan");
-    private final ContactPerson noLocContact= new ContactPerson("testName4", "test4@gmail.com", "test4LastName", "", null);
+    private final ContactPerson singaporeContact = uniqueContact().set("city", "Singapore", "country", "Singapore");
+    private final ContactPerson singaporeContactTwo = uniqueContact().set("city", "Singapore", "country", "Singapore");
+    private final ContactPerson tokyoContact = uniqueContact().set("city", "Tokyo", "country", "Japan");
+    private final ContactPerson noLocContact= uniqueContact();
 
     private final ArgumentCaptor<Mail> mailArgument = ArgumentCaptor.forClass(Mail.class);
     private final ArgumentCaptor<List<Course>> coursesArgument = ArgumentCaptor.forClass(List.class);
@@ -90,7 +91,7 @@ public class UpcomingCoursesControllerTest {
     @Test
     public void send1EventTo1ContactsAsMail() throws Exception {
         singaporeEvent.saveIt();
-        new ContactPerson("testName", "test1@gmail.com", "testLastName","","Singapore/Singapore").saveIt();
+        singaporeContact.saveIt();
         upcomingCoursesController.doPost(request, response);
         assertEquals("course_list.jsp?message=1 emails sent.", response.getRedirectedUrl());
     }
@@ -104,7 +105,6 @@ public class UpcomingCoursesControllerTest {
         assertEquals("course_list.jsp?message=2 emails sent.", response.getRedirectedUrl());
     }
 
-
     @Test
     public void contactMustReceiveEventInEmailWhenHavingSameLocationAsEvent() throws Exception {
         singaporeEvent.saveIt();
@@ -116,7 +116,7 @@ public class UpcomingCoursesControllerTest {
     @Test
     public void contactMustNotReceiveEventInEmailWhenContactHasNoLocation() throws Exception {
         singaporeEvent.saveIt();
-        new ContactPerson("testName1", "test1@gmail.com", "test1LastName").saveIt();
+        uniqueContact().saveIt();
         upcomingCoursesController.doPost(request, response);
         assertEquals("course_list.jsp?message=0 emails sent.", response.getRedirectedUrl());
     }

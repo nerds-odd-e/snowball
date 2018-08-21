@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
 @WebServlet("/contacts")
 public class ContactsController extends AppController {
@@ -31,7 +32,8 @@ public class ContactsController extends AppController {
             return;
         }
         try {
-            ContactPerson.createContact(req.getParameter("city"), req.getParameter("country"), emailAddress, req.getParameter("name"), req.getParameter("lastname"), req.getParameter("company"));
+            Map map = getParameterFromRequest(req, "city", "country", "email", "firstname", "lastname", "company");
+            ContactPerson.createContact(map);
         } catch (Exception e) {
             respondWithRedirectAndErrorMessage(resp, "contactlist.jsp", e.getMessage());
             return;

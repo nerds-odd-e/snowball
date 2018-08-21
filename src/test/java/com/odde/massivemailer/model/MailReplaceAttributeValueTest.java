@@ -12,7 +12,11 @@ import static org.junit.Assert.assertEquals;
 @RunWith(Parameterized.class)
 public class MailReplaceAttributeValueTest {
 
-	private ContactPerson contact = new ContactPerson("John", "john@gmail.com", "Doe", "Edd-o");
+	private ContactPerson contact = new ContactPerson().set(
+			"firstname", "John",
+			"email", "john@gmail.com",
+			"lastname", "Doe",
+			"company", "Edd-o");
 	private Mail mail = new Mail();
 
 	@Parameterized.Parameters

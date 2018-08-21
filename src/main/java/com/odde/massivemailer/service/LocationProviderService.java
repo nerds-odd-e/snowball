@@ -45,6 +45,16 @@ public class LocationProviderService {
         return null;
     }
 
+    private Location getLocationForCityAndCountry(String city, String country) throws GeoServiceException {
+        String locationString = locationString(city, country);
+        if (locations.containsKey(locationString)) {
+            return locations.get(locationString);
+        }
+        Location location = getLocation(country, city);
+        locations.put(locationString, location);
+        return location;
+    }
+
     public static void resetLocations() {
         locations = new TreeMap<>();
         locations.put("Japan/NotExist", Location.nullLocation());
@@ -91,13 +101,12 @@ public class LocationProviderService {
         }
     }
 
-    public Location getCoordinate(String location) {
-        Location coordinate;
+    public Location getCoordinate(String city, String country) {
         try {
-            coordinate = getLocationForName(location);
+            return getLocationForCityAndCountry(city, country);
         } catch (GeoServiceException e) {
             throw (new RuntimeException("Location Service is not available", e));
         }
-        return coordinate;
     }
+
 }

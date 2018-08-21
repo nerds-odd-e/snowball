@@ -64,7 +64,7 @@ public class CoursesControllerTest {
         request.setParameter("city", "FooBarXXX");
         controller.doPost(request, response);
         assertNull(Course.getCourseByName("test couree"));
-        assertEquals("add_course.jsp?status=failed&msg={ city=<cannot be located> }",response.getRedirectedUrl());
+        assertEquals("add_course.jsp?status=fail&msg={ city=<cannot be located> }",response.getRedirectedUrl());
     }
 
     @Test

@@ -2,8 +2,6 @@ package com.odde.massivemailer.controller;
 
 import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.*;
-import com.odde.massivemailer.service.MailService;
-
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -68,7 +66,9 @@ public class SendPreviewMail extends AppController {
         String action = req.getParameter("action");
 
         if("preview".equalsIgnoreCase(action)) {
-            ContactPerson admin = new ContactPerson("Admin","admin@odd-e.com","admin","odd-e","Singapore");
+            ContactPerson admin = new ContactPerson().set(
+                    "firstname", "Admin",
+                    "email", "admin@odd-e.com");
             contactPerson.add(admin);
 
 

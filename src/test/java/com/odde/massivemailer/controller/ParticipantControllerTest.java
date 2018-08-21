@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
+import static com.odde.massivemailer.factory.ContactFactory.uniqueContact;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
 
@@ -35,13 +36,13 @@ public class  ParticipantControllerTest {
 
     @Test
     public void returnParticipantsInCourse() throws Exception {
-        ContactPerson newPerson = new ContactPerson("John", "john@gmail.com", "Doe", "ComA");
+        ContactPerson newPerson = uniqueContact();
         newPerson.save();
 
         Course newCourse = dataMother.build_csd_course();
         newCourse.save();
 
-        ContactPerson savedPerson = ContactPerson.getContactByEmail("john@gmail.com");
+        ContactPerson savedPerson = ContactPerson.getContactByEmail(newPerson.getEmail());
         Course savedCourse = Course.getCourseByName("CSD_NEW");
 
         Assert.assertNotNull(savedPerson);
@@ -53,8 +54,7 @@ public class  ParticipantControllerTest {
 
         request.setParameter("courseId", String.valueOf(savedCourse.getId()));
         controller.doGet(request, response);
-        //System.out.println(response.getContentAsString());
-        assertThat(response.getContentAsString(), containsString("\"email\":\"john@gmail.com\""));
+        assertThat(response.getContentAsString(), containsString("\"email\":\""+newPerson.getEmail()+"\""));
     }
 
 }

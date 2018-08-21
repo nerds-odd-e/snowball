@@ -8,7 +8,6 @@ import com.odde.massivemailer.model.SentMail;
 import com.odde.massivemailer.service.GMailService;
 import org.javalite.activejdbc.LazyList;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -18,15 +17,14 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import javax.servlet.ServletException;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.verify;
 
 
 @RunWith(TestWithDB.class)
@@ -77,7 +75,7 @@ public class SendMailControllerTest {
 
 
     @Test
-    public void testProcessRequest() throws SQLException, IOException {
+    public void testProcessRequest() {
 
         mockRecipient("name1@gmail.com;name2@gmail.com");
         Mail mail = postAndGetMailBeingSent();
@@ -101,13 +99,13 @@ public class SendMailControllerTest {
 
 
     @Test
-    public void testProcessRequestByCompany() throws SQLException, IOException {
+    public void testProcessRequestByCompany() {
 
         mockRecipient("company:abc");
         String[] companyRecipients = {"ab1@abc.com", "ab2@abc.com", "ab3@abc.com"};
 
         for (int i = 0; i < companyRecipients.length; ++i) {
-            new ContactPerson("", companyRecipients[i], "", "abc").saveIt();
+            new ContactPerson().set("email", companyRecipients[i], "company", "abc").saveIt();
         }
 
         Mail mail = postAndGetMailBeingSent();
@@ -121,7 +119,7 @@ public class SendMailControllerTest {
     }
 
     @Test
-    public void ProcessRequestMustHandleCompany() throws SQLException, IOException {
+    public void ProcessRequestMustHandleCompany() {
         String company = "abc";
 
         new ContactPeopleBuilder(company)
@@ -141,7 +139,7 @@ public class SendMailControllerTest {
     }
 
     @Test
-    public void ProcessRequestMustHandleCompanyWithSpace() throws SQLException {
+    public void ProcessRequestMustHandleCompanyWithSpace() {
         String company = "abc def";
 
         new ContactPeopleBuilder(company)
@@ -169,13 +167,13 @@ public class SendMailControllerTest {
         }
 
         public ContactPeopleBuilder add(final String email) {
-            new ContactPerson("", email, "", company).saveIt();
+            new ContactPerson().set("email", email, "company", company).saveIt();
             return this;
         }
     }
 
     @Test
-    public void ProcessRequestMustHandleCompanyWithSpaceButWtf() throws SQLException {
+    public void ProcessRequestMustHandleCompanyWithSpaceButWtf() {
         String company = "abc def";
         new ContactPeopleBuilder(company)
                 .add("ab1@abc.com")
@@ -194,7 +192,7 @@ public class SendMailControllerTest {
     }
 
     @Test
-    public void ProcessRequestMustHandleCompanyWithSpaceButNoQuotesWtf() throws SQLException {
+    public void ProcessRequestMustHandleCompanyWithSpaceButNoQuotesWtf() {
         String company = "abc def";
 
         new ContactPeopleBuilder(company)
@@ -214,7 +212,7 @@ public class SendMailControllerTest {
     }
 
     @Test
-    public void SendMailMustSaveNotification() throws ServletException, IOException {
+    public void SendMailMustSaveNotification() throws IOException {
         mockRecipient("terry@odd-e.com");
 
         controller.doPost(request, response);

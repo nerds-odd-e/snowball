@@ -5,9 +5,6 @@ import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.model.User;
 import com.odde.massivemailer.service.GMailService;
-import com.odde.massivemailer.service.MailService;
-import org.javalite.activejdbc.LazyList;
-import org.javalite.activejdbc.Model;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,11 +18,9 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import javax.servlet.ServletException;
 import java.io.IOException;
 
+import static com.odde.massivemailer.factory.ContactFactory.uniqueContact;
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.verify;
 
 @RunWith(TestWithDB.class)
@@ -54,31 +49,36 @@ public class ContactsControllerTest {
 
     @Test
     public void returnContactsInJSON() throws Exception {
-        new ContactPerson("John", "john@gmail.com", "Doe", "ComA").saveIt();
-        new ContactPerson("Peter", "peter@gmail.com", "Toh", "ComA").saveIt();
+        ContactPerson contactPerson1 = uniqueContact();
+        ContactPerson contactPerson2 = uniqueContact();
+        contactPerson1.saveIt();
+        contactPerson2.saveIt();
 
         controller.doGet(request, response);
 
-        assertThat(response.getContentAsString(), containsString("\"email\":\"john@gmail.com\""));
-        assertThat(response.getContentAsString(), containsString("\"firstname\":\"Peter\""));
+        assertThat(response.getContentAsString(), containsString("\"email\":\""+contactPerson1.getEmail()+"\""));
+        assertThat(response.getContentAsString(), containsString("\"firstname\":\""+ contactPerson2.getName()+"\""));
     }
 
     @Test
     public void searchContactsInJSON() throws Exception {
-        new ContactPerson("John", "john@gmail.com", "Doe", "ComA").saveIt();
-        new ContactPerson("Peter", "peter@gmail.com", "Toh", "ComA").saveIt();
-        request.setParameter("email", "john@gmail.com");
+        ContactPerson contactPerson1 = uniqueContact();
+        ContactPerson contactPerson2 = uniqueContact();
+        contactPerson1.saveIt();
+        contactPerson2.saveIt();
+        request.setParameter("email", contactPerson1.getEmail());
         controller.doGet(request, response);
 
-        assertThat(response.getContentAsString(), containsString("\"email\":\"john@gmail.com\""));
-        assertTrue(!response.getContentAsString().contains("\"email\":\"peter@gmail.com\""));
+        assertThat(response.getContentAsString(), containsString("\"email\":\""+contactPerson1.getEmail()+"\""));
+        assertTrue(!response.getContentAsString().contains("\"email\":\""+contactPerson2.getEmail()+"m\""));
     }
 
     @Test
     public void addAnExistingContact() throws Exception {
-        new ContactPerson("John", "john@gmail.com", "Doe", "ComA").saveIt();
+        ContactPerson contactPerson1 = uniqueContact();
+        contactPerson1.saveIt();
         assertEquals(1, (long) ContactPerson.count());
-        request.setParameter("email", "john@gmail.com");
+        request.setParameter("email", contactPerson1.getEmail());
         request.setParameter("country", "Singapore");
         request.setParameter("city", "Singapore");
         controller.doPost(request, response);
@@ -90,7 +90,7 @@ public class ContactsControllerTest {
     public void addNewContact() throws Exception {
         request.setParameter("company", "odd-e");
         request.setParameter("lastname", "Smith");
-        request.setParameter("name", "Mark");
+        request.setParameter("firstname", "Mark");
         request.setParameter("email", "newbie@example.com");
         request.setParameter("country", "Singapore");
         request.setParameter("city", "Singapore");
@@ -106,7 +106,7 @@ public class ContactsControllerTest {
     public void mustSendAnEmailContainingPasswordSettingURLWithTokenWhenAddContact() throws ServletException, IOException {
         request.setParameter("company", "odd-e");
         request.setParameter("lastname", "Smith");
-        request.setParameter("name", "Mark");
+        request.setParameter("firstname", "Mark");
         request.setParameter("email", "newbie@gmail.com");
         request.setParameter("country", "Singapore");
         request.setParameter("city", "Singapore");

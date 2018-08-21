@@ -34,7 +34,7 @@ public class EnrollParticipantControllerTest {
     }
 
     @Test
-    public void saveParticipantInCourse() throws Throwable {
+    public void saveParticipantInCourse() {
         request.setParameter("courseId", "123");
         request.setParameter("participants", "tom@example.com\tTom\tSmith\tCS\tSingapore\tSingapore");
         controller.doPost(request, response);
@@ -48,7 +48,7 @@ public class EnrollParticipantControllerTest {
     }
 
     @Test
-    public void saveParticipantsInCourse() throws Throwable {
+    public void saveParticipantsInCourse() {
         request.setParameter("courseId", "123");
         String inputTsvLines = Stream.of(
                 "tom@example.com\tTom\tSmith\tCS\tSingapore\tSingapore",
@@ -69,8 +69,8 @@ public class EnrollParticipantControllerTest {
 
     @Test
     public void saveParticipantInCourseWithError() throws Throwable {
-        String takamiyaEmail = "takemiya@\tKeisuke\tSmith\tCS\tSingapore\tSingapore";
-        String odaEmail = "odashota.com\tKeisuke\tSmith\tCS\tSingapore\tSingapore";
+        String takamiyaEmail = "takemiya@  Keisuke  Smith  CS  Singapore  Singapore";
+        String odaEmail = "odashota.com  Keisuke  Smith  CS  Singapore  Singapore";
         request.setParameter("courseId", "123");
         String testLine = takamiyaEmail + "\n" + odaEmail;
         request.setParameter("participants", testLine);

@@ -11,6 +11,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 
 import java.io.IOException;
 
+import static com.odde.massivemailer.factory.ContactFactory.uniqueContact;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
 
@@ -24,7 +25,7 @@ public class CourseDetailControllerTest {
 
     @Test
     public void doGet_containsTitle() throws IOException {
-        Course.createIt("coursename", "CSD Tokyo", "coursedetails", "hoge", "city", "Tokyo");
+        Course.createIt("coursename", "CSD Tokyo", "coursedetails", "hoge");
         String id = Course.getCourseByName("CSD Tokyo").getId().toString();
         request.setParameter("id", id);
         controller.doGet(request, response);
@@ -35,9 +36,9 @@ public class CourseDetailControllerTest {
 
     @Test
     public void doGet_containsCourseParticipants() throws IOException {
-        Course.createIt("coursename", "CSD Tokyo", "coursedetails", "hoge", "city", "Tokyo");
+        Course.createIt("coursename", "CSD Tokyo", "coursedetails", "hoge");
         Integer courseId = Integer.valueOf(Course.getCourseByName("CSD Tokyo").getId().toString());
-        new ContactPerson("Tommy", "tommy@example.com", "Smith", "BIZ", "Tokyo").save();
+        uniqueContact().set("firstname", "Tommy", "email", "tommy@example.com").saveIt();
         Integer participantId = Integer.valueOf(ContactPerson.getContactByEmail("tommy@example.com").getId().toString());
         new Participant(participantId, courseId).save();
 

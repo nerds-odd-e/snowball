@@ -1,17 +1,16 @@
 package com.odde.massivemailer.controller;
 
-import com.odde.massivemailer.model.*;
-import com.odde.massivemailer.service.*;
-import org.joda.time.DateTime;
+import com.odde.massivemailer.model.ContactPerson;
+import com.odde.massivemailer.model.Course;
+import com.odde.massivemailer.service.UpcomingCourseMailComposer;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
-import java.time.*;
+import java.util.List;
 
 @WebServlet("/sendAllCourses")
 public class UpcomingCoursesController extends AppController {
@@ -19,14 +18,14 @@ public class UpcomingCoursesController extends AppController {
     private UpcomingCourseMailComposer mailComposer = new UpcomingCourseMailComposer();
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.sendRedirect(doSendAllMails());
     }
 
     private String doSendAllMails() throws IOException {
         int totalMailsSent = 0;
         String courseIDs = "";
-        List<ContactPerson> contactList = ContactPerson.whereHasLocation();
+        List<ContactPerson> contactList = ContactPerson.findAll();
         for (ContactPerson person : contactList) {
             List<Course> nearCourses = Course.findAllCourseNearTo(person.getGeoCoordinates());
             if (nearCourses.isEmpty()) {

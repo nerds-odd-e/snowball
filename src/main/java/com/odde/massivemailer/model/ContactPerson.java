@@ -1,9 +1,8 @@
 package com.odde.massivemailer.model;
 
+import com.odde.massivemailer.model.callback.LocationCallbacks;
+import com.odde.massivemailer.model.validator.LocationValidator;
 import com.odde.massivemailer.model.validator.UniquenessValidator;
-import com.odde.massivemailer.service.LocationProviderService;
-import com.odde.massivemailer.service.exception.GeoServiceException;
-import org.apache.commons.lang3.StringUtils;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.annotations.Table;
 
@@ -34,72 +33,17 @@ public class ContactPerson extends ApplicationModel {
     static {
         validatePresenceOf("email");
         validateWith(new UniquenessValidator("email"));
+        validateWith(new LocationValidator("city"));
+        callbackWith(new LocationCallbacks());
     }
 
     public Map<String, String> attributes = new HashMap<>();
 
-    public ContactPerson() {
+    public static ContactPerson createContact(Map map) {
+        ContactPerson model = new ContactPerson().fromMap(map);
+        model.saveIt();
+        return model;
     }
-
-    @Override
-    protected void beforeValidation() {
-    }
-
-    public ContactPerson(String name, String email, String lastname) {
-        this(name, email, lastname, "");
-    }
-
-    public ContactPerson(String name, String email, String lastname, String company) {
-        setName(name);
-        setEmail(email);
-        setLastname(lastname);
-        setCompany(company);
-    }
-
-    public ContactPerson(String name, String email, String lastname, String company, String location) {
-        setName(name);
-        setEmail(email);
-        setLastname(lastname);
-        setCompany(company);
-        setLocation(location);
-        if (!StringUtils.isEmpty(getLocation())) {
-            LocationProviderService locationProviderService = new LocationProviderService();
-            Location locationDetails;
-            try {
-                locationDetails = locationProviderService.getLocationForName(getLocation());
-            } catch (GeoServiceException e) {
-                throw new RuntimeException("failed to get location.", e);
-            }
-
-            if (locationDetails != null) {
-                set(LATITUDE, locationDetails.getLat());
-                set(LONGITUDE, locationDetails.getLng());
-            }
-        }
-    }
-
-    public ContactPerson(String name, String email, String lastname, String company, String location, String coursesList, String dateSent) {
-        setName(name);
-        setEmail(email);
-        setLastname(lastname);
-        setCompany(company);
-        setLocation(location);
-        setCourseList(coursesList);
-        setSentDate(dateSent);
-    }
-
-    public static List<ContactPerson> whereHasLocation() {
-        return where(LOCATION + "<>''");
-    }
-
-    public static boolean createContact(String city, String country, String email, String name, String lastname, String company) {
-        String location = country + "/" + city;
-        new LocationProviderService().cacheLocation(city, country, location);
-
-        ContactPerson contact = new ContactPerson(name, email, lastname, company, location);
-        return contact.saveIt();
-    }
-
 
     public static void createContactsFromCSVData(String csvData) {
 
@@ -121,10 +65,14 @@ public class ContactPerson extends ApplicationModel {
             String currentContact = contactPersonList[i];
             String[] contactInformation = currentContact.split(",");
 
-            ContactPerson contactPerson = new ContactPerson(
-                    contactInformation[FIRSTNAME_INDEX], contactInformation[EMAIL_INDEX], contactInformation[LASTNAME_INDEX],
-                    contactInformation[COMPANY_INDEX],
-                    contactInformation[CITY_INDEX] + "/" + contactInformation[COUNTRY_INDEX]);
+            Map<String, String> map = new HashMap<>();
+            map.put("firstname", contactInformation[FIRSTNAME_INDEX]);
+            map.put("email", contactInformation[EMAIL_INDEX]);
+            map.put("lastname", contactInformation[LASTNAME_INDEX]);
+            map.put("company", contactInformation[COMPANY_INDEX]);
+            map.put("city", contactInformation[CITY_INDEX]);
+            map.put("country", contactInformation[COUNTRY_INDEX]);
+            ContactPerson contactPerson = new ContactPerson().fromMap(map);
             contacts.add(contactPerson);
         }
 
@@ -252,11 +200,7 @@ public class ContactPerson extends ApplicationModel {
 
         Participant contactParticipant = new Participant(new Integer(participantId), new Integer(courseId));
 
-        return contactParticipant.save();
-    }
-
-    public String errorMessage() {
-        return "Unable to register participants";
+        return contactParticipant.saveIt();
     }
 
     public void setCourseList(String coursesList) {
@@ -290,7 +234,4 @@ public class ContactPerson extends ApplicationModel {
         return Objects.hash(getAttributes());
     }
 
-    public String getPassword() {
-        return "abcd1234";
-    }
 }

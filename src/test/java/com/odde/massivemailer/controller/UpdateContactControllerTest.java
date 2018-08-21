@@ -1,17 +1,14 @@
 package com.odde.massivemailer.controller;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-
 import com.odde.TestWithDB;
+import com.odde.massivemailer.model.ContactPerson;
 import org.junit.Before;
 import org.junit.Test;
-
-import com.odde.massivemailer.model.ContactPerson;
 import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+
+import static org.junit.Assert.assertEquals;
 
 @RunWith(TestWithDB.class)
 public class UpdateContactControllerTest {
@@ -29,7 +26,13 @@ public class UpdateContactControllerTest {
 
     @Test
     public void editExistingContact() throws Exception {
-        new ContactPerson("John", "john@gmail.com", "Doe", "ComA", "Singapore/Singapore").saveIt();
+        new ContactPerson().set(
+                "firstname", "John",
+                "email", "john@gmail.com",
+                "lastname", "Doe",
+                "company", "ComA",
+                "city", "Singapore",
+                "country", "Singapore").saveIt();
         assertEquals(1, (long) ContactPerson.count());
         request.setParameter("email", "john@gmail.com");
         request.setParameter("country", "China");

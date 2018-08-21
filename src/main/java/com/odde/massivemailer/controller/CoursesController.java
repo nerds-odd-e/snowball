@@ -7,13 +7,11 @@ import com.odde.massivemailer.serialiser.AppGson;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -31,12 +29,10 @@ public class CoursesController extends AppController {
         try {
             Map map = getParameterFromRequest(req, "coursename", "country", "city", "address", "coursedetails", "duration", "instructor", "startdate");
             Course.createCourse(map);
-
-            resultMsg = "status=success&msg=Add course successfully";
+            respondWithRedirectAndSuccessMessage(resp, "add_course.jsp", "Add course successfully");
         } catch (Exception e) {
-            resultMsg = "status=failed&msg=" + e.getMessage();
+            respondWithRedirectAndErrorMessage(resp, "add_course.jsp", e.getMessage());
         }
-        resp.sendRedirect("add_course.jsp?" + resultMsg);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {

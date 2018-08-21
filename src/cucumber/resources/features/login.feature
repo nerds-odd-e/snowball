@@ -4,11 +4,11 @@ Feature: Login
   Background:
     Given There are 3 courses
     And I enroll participants to "CSD-1" from course detail page
-      | JohnSmith@mail.com	Tom	Smith	CS	Singapore |
-      | JaneDoe@mail.com	John	Fisher	CS	Singapore |
+      | JohnSmith@mail.com	Tom	Smith	CS	Singapore Singapore |
+      | JaneDoe@mail.com	John	Fisher	CS	Singapore Singapore |
     And I enroll participants to "CSD-2" from course detail page
-      | john@example.com	john	jon	CS	Singapore    |
-      | JaneDoe@mail.com	John	Fisher	CS	Singapore |
+      | john@example.com	john	jon	CS	Singapore Singapore    |
+      | JaneDoe@mail.com	John	Fisher	CS	Singapore Singapore |
 
   Scenario Outline: login
     Given There are users as bellow

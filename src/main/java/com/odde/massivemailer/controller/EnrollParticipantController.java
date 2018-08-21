@@ -31,6 +31,7 @@ public class EnrollParticipantController extends AppController {
 
         public DBRecord(String[] line, String courseId) {
             this.line = line;
+            System.out.printf(line[0]);
             this.courseId = courseId;
         }
 
@@ -41,14 +42,20 @@ public class EnrollParticipantController extends AppController {
         }
 
         public void save() {
-            ContactPerson contactPerson = new ContactPerson(line[1], line[0], line[2], line[3], line[4]);
+            ContactPerson contactPerson = new ContactPerson().set(
+                    "email", line[0],
+                    "firstname", line[1],
+                    "lastname", line[2],
+                    "company", line[3],
+                    "city", line[4],
+                    "country", line[5]);
             contactPerson.save();
             Integer contactPersonId = Integer.parseInt(ContactPerson.getContactByEmail(line[0]).getId().toString());
             new Participant(contactPersonId, Integer.parseInt(this.courseId)).save();
         }
 
         public String getSingleLine() {
-            return Stream.of(line).collect(Collectors.joining("\t"));
+            return Stream.of(line).collect(Collectors.joining("  "));
         }
     }
 
@@ -61,7 +68,7 @@ public class EnrollParticipantController extends AppController {
         String courseId = request.getParameter("courseId");
 
         String[] participantsLines = request.getParameter("participants").split("\n");
-        Map<ValidationResult, List<DBRecord>> validatedRecords = Arrays.stream(participantsLines).map(line -> line.split("\t"))
+        Map<ValidationResult, List<DBRecord>> validatedRecords = Arrays.stream(participantsLines).map(line -> line.split("\\s+"))
                 .map(DBRecord.mapper(courseId))
                 .collect(Collectors.groupingBy(record -> {
                     if (record.validate()) return ValidationResult.Valid;

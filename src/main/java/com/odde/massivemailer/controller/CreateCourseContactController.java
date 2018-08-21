@@ -20,9 +20,7 @@ public class CreateCourseContactController extends AppController{
             String particpantEmail = req.getParameter("participantEmail");
 
             ContactPerson contact = ContactPerson.getContactByEmail(particpantEmail);
-            if(!contact.AddToCourse(courseId)) {
-                resultMsg = contact.errorMessage();
-            }
+            contact.AddToCourse(courseId);
 
         } catch (Exception e){
             resultMsg = "Unable to register participants";

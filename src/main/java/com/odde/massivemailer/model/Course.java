@@ -48,10 +48,6 @@ public class Course extends ApplicationModel {
         set("instructor", instructor);
     }
 
-    public void setCourseDetails(String details) {
-        set("coursedetails", details);
-    }
-
     public String getCoursename() {
         return getAttribute("coursename");
     }
