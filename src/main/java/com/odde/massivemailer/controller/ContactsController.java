@@ -1,8 +1,6 @@
 package com.odde.massivemailer.controller;
 
-import com.odde.massivemailer.controller.config.ApplicationConfiguration;
 import com.odde.massivemailer.model.ContactPerson;
-import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.model.User;
 
 import javax.servlet.annotation.WebServlet;
@@ -25,26 +23,14 @@ public class ContactsController extends AppController {
     }
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-
-        String emailAddress = req.getParameter("email");
-        if (!ContactPerson.isValidEmail(emailAddress)) {
-            respondWithRedirectAndErrorMessage(resp, "add_contact.jsp", "email is invalid");
+        Map map = getParameterFromRequest(req, "city", "country", "email", "firstname", "lastname", "company");
+        ContactPerson contact = new ContactPerson().fromMap(map);
+        if (!contact.save()) {
+            respondWithRedirectAndError(resp, "add_contact.jsp", contact.errors());
             return;
         }
-        try {
-            Map map = getParameterFromRequest(req, "city", "country", "email", "firstname", "lastname", "company");
-            ContactPerson.createContact(map);
-        } catch (Exception e) {
-            respondWithRedirectAndErrorMessage(resp, "contactlist.jsp", e.getMessage());
-            return;
-        }
-        User user = new User(emailAddress);
-        if (user.saveIt()) {
-            Mail email = new Mail();
-            email.setSubject("");
-            email.setContent(new ApplicationConfiguration().getRoot() + "initialPassword?token=" + user.getToken());
-            email.sendMailToRecipient(emailAddress, getMailService());
-        }
+        User.createUnconfirmedUser(contact.getEmail(), getMailService());
         respondWithRedirectAndSuccessMessage(resp, "contactlist.jsp", "Add contact successfully");
     }
+
 }

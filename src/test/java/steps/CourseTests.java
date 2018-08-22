@@ -66,7 +66,7 @@ public class CourseTests {
     @Given("^There are (\\d+) courses$")
     public void there_are_courses(int num) throws Throwable {
         for (int i = 1; i <= num; i++){
-            Course.createCourse(createCourseData("Tokyo", "Japan", "CSD-" + i));
+            new Course().fromMap(createCourseData("Tokyo", "Japan", "CSD-" + i)).saveIt();
         }
     }
 
@@ -97,7 +97,7 @@ public class CourseTests {
     @Then("^Course should not save and show error messagea$")
     public void courseShowErrorMassage() {
         driver.expectRedirect(add_course_url);
-        assertThat(driver.getCurrentUrl(), containsString("status=fail&msg={%20city=%3Ccannot%20be%20located%3E%20}"));
+        assertThat(driver.getCurrentUrl(), containsString("status=fail&msg={%20city:%22cannot%20be%20located%22%20}"));
     }
 
 }

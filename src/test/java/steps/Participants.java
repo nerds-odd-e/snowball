@@ -3,7 +3,6 @@ package steps;
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Course;
 import com.odde.massivemailer.model.Participant;
-import com.odde.massivemailer.serialiser.AppGson;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -16,7 +15,7 @@ public class Participants {
     @When("^the course \"([^\"]*)\" is selected$")
     public void the_course_is_selected(String courseName) throws Throwable {
         Course course = Course.getCourseByName(courseName);
-        List<Participant> partcipants = Participant.whereHasCourseId(String.valueOf(course.getId()));
+        List<Participant> partcipants = Participant.whereHasCourseId(course.getLongId());
         List<ContactPerson> participantDetails = new ArrayList<ContactPerson>();
         for (Participant partcipant:partcipants) {
             participantDetails.add(ContactPerson.findById(partcipant.getContactPersonId()));

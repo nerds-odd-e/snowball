@@ -85,7 +85,6 @@ public class ContactPersonTest {
 
         List<ContactPerson> contacts = ContactPerson.prepareContactsList(csvData);
 
-        //assertEquals(contacts.get(0).getEmail(), "balakg@gmail.com");
         assertTrue(isEquals(contacts, "balakg@gmail.com"));
         assertFalse(isEquals(contacts, "forshailesh@gmail.com"));
 
@@ -97,26 +96,6 @@ public class ContactPersonTest {
 
     private boolean isEquals(List<ContactPerson> newContacts, String email) {
         return newContacts.get(0).equals(ContactPerson.getContactByEmail(email));
-    }
-
-    @Test
-    public void willReturnTrueIfEmailIsValid() {
-        assertTrue(ContactPerson.isValidEmail("abc@email.com"));
-    }
-
-    @Test
-    public void willReturnFalseIfEmailIsInvalid() {
-        assertFalse(ContactPerson.isValidEmail("abc"));
-    }
-
-    @Test
-    public void willReturnTrueIfCountryIsValid() {
-        assertTrue(ContactPerson.isValidCountry("singapore"));
-    }
-
-    @Test
-    public void willReturnFalseIfCountryIsInvalid() {
-        assertFalse(ContactPerson.isValidCountry("Mingjia"));
     }
 
     private List<ContactPerson> createContactsForTest() {

@@ -8,7 +8,6 @@ import org.javalite.activejdbc.annotations.Table;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Table("courses")
 public class Course extends ApplicationModel {
@@ -18,12 +17,6 @@ public class Course extends ApplicationModel {
     }
 
     public Course() {
-    }
-
-    public static Course createCourse(Map map) {
-        Course course = new Course().fromMap(map);
-        course.saveIt();
-        return course;
     }
 
     public static List<Course> findAllCourseNearTo(Location geoCordinate) {
@@ -80,11 +73,11 @@ public class Course extends ApplicationModel {
         return getAttribute("instructor");
     }
 
-    public String getAttribute(String name) {
+    private String getAttribute(String name) {
         return (String) get(name);
     }
 
-    public double getDoubleAttribute(String name) {
+    private double getDoubleAttribute(String name) {
         return (double) get(name);
     }
 

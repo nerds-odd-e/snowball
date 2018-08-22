@@ -1,7 +1,6 @@
 package com.odde.massivemailer.controller;
 
 import com.odde.massivemailer.model.ContactPerson;
-import com.odde.massivemailer.model.Course;
 import com.odde.massivemailer.model.Participant;
 import com.odde.massivemailer.serialiser.AppGson;
 
@@ -18,7 +17,7 @@ public class ParticipantController extends AppController {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         ServletOutputStream outputStream = response.getOutputStream();
         String courseId = request.getParameter("courseId");
-        List<Participant> partcipants = Participant.whereHasCourseId(courseId);
+        List<Participant> partcipants = Participant.whereHasCourseId(Long.parseLong(courseId));
         List<ContactPerson> participantDetails = new ArrayList<ContactPerson>();
         for (Participant partcipant:partcipants) {
             participantDetails.add(ContactPerson.findById(partcipant.getContactPersonId()));

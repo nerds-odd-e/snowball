@@ -50,7 +50,7 @@ public class UpcomingCourseNotificationSteps {
             assertTrue(ContactPerson.create(
                     "city", city,
                     "country", country,
-                    "email", "test@test" + i + "_"+city+".com").saveIt());
+                    "email", "test@test" + i + "-"+city+".com").saveIt());
         }
 
         for (int i = 0; i < courses; i++) {

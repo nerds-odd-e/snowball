@@ -2,10 +2,7 @@ package com.odde.massivemailer.controller;
 
 import com.google.gson.internal.LinkedTreeMap;
 import com.odde.TestWithDB;
-import com.odde.massivemailer.model.ContactPerson;
-import com.odde.massivemailer.model.Course;
-import com.odde.massivemailer.model.Location;
-import com.odde.massivemailer.model.Participant;
+import com.odde.massivemailer.model.*;
 import com.odde.massivemailer.serialiser.AppGson;
 import com.odde.massivemailer.service.LocationProviderService;
 import com.odde.massivemailer.service.exception.GeoServiceException;
@@ -64,11 +61,12 @@ public class CoursesControllerTest {
         request.setParameter("city", "FooBarXXX");
         controller.doPost(request, response);
         assertNull(Course.getCourseByName("test couree"));
-        assertEquals("add_course.jsp?status=fail&msg={ city=<cannot be located> }",response.getRedirectedUrl());
+        assertEquals("add_course.jsp?status=fail&msg={ city:\"cannot be located\" }",response.getRedirectedUrl());
     }
 
     @Test
     public void mustNotContainAnyCourseWhenCurrentUserIsNotAContact() throws IOException {
+        new User("non_contact@gmail.com").saveIt();
         createCourse("Bob's course");
         Cookie sessionCookie = new Cookie("session_id", "non_contact@gmail.com");
         request.setCookies(new Cookie[]{sessionCookie});
@@ -78,7 +76,7 @@ public class CoursesControllerTest {
 
     @Test
     public void mustNotContainCourseDoseNotBelongToCurrentUser() throws IOException {
-        ContactPerson mary = createContactPerson("mary@example.com");
+        ContactPerson mary = createContactPersonWithUserAccount("mary@example.com");
         createCourse("Bob's course");
 
         Cookie sessionCookie = new Cookie("session_id", mary.getEmail());
@@ -103,7 +101,7 @@ public class CoursesControllerTest {
 
     @Test
     public void mustContainCourseBelongToCurrentUser() throws IOException {
-        ContactPerson bob = createContactPerson("bob@example.com");
+        ContactPerson bob = createContactPersonWithUserAccount("bob@example.com");
         Course bobsCourse = createCourse("Bob's course");
         createCourse("anotherCourse");
 
@@ -132,10 +130,11 @@ public class CoursesControllerTest {
         return course;
     }
 
-    private ContactPerson createContactPerson(String email) {
+    private ContactPerson createContactPersonWithUserAccount(String email) {
         ContactPerson contactPerson = new ContactPerson();
         contactPerson.setEmail(email);
         contactPerson.saveIt();
+        new User(email).saveIt();
         return contactPerson;
     }
 }

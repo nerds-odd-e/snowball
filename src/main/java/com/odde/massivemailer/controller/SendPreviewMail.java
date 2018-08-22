@@ -73,7 +73,7 @@ public class SendPreviewMail extends AppController {
 
 
         }else{
-            List<Participant> partcipants = Participant.whereHasCourseId(course.getId().toString());
+            List<Participant> partcipants = Participant.whereHasCourseId(course.getLongId());
             for (Participant participant:partcipants) {
                 contactPerson.add(ContactPerson.getContactById(participant.getContactPersonId()));
             }

@@ -1,8 +1,6 @@
 package com.odde.massivemailer.model;
 
-import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
-import org.omg.CORBA.BAD_CONTEXT;
 
 import java.util.List;
 
@@ -33,11 +31,8 @@ public class Participant extends ApplicationModel {
         return (Integer) get("contact_person_id");
     }
 
-    public static List<Participant> whereHasCourseId(String courseId) {
-        return where("course_id = " + courseId );
+    public static List<Participant> whereHasCourseId(Long courseId) {
+        return where("course_id = ?", courseId );
     }
 
-    public static List<Participant> whereHasContactPersonId(String contactPersonId) {
-        return where("contact_person_id = " + contactPersonId );
-    }
 }

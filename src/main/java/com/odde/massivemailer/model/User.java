@@ -1,5 +1,8 @@
 package com.odde.massivemailer.model;
 
+import com.odde.massivemailer.controller.config.ApplicationConfiguration;
+import com.odde.massivemailer.exception.EmailException;
+import com.odde.massivemailer.service.MailService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.javalite.activejdbc.LazyList;
@@ -13,7 +16,8 @@ public class User extends ApplicationModel {
     private static final String HASHED_PASSWORD = "hashed_password";
     private static final String EMAIL = "email";
 
-    public User(){}
+    public User(){
+    }
 
     public User(String email) {
         set(this.EMAIL, email);
@@ -22,6 +26,16 @@ public class User extends ApplicationModel {
 
     private static String createToken() {
         return RandomStringUtils.randomAlphanumeric(100);
+    }
+
+    public static void createUnconfirmedUser(String email1, MailService mailService) throws EmailException {
+        User user = new User(email1);
+        if (user.saveIt()) {
+            Mail email = new Mail();
+            email.setSubject("");
+            email.setContent(new ApplicationConfiguration().getRoot() + "initialPassword?token=" + user.getToken());
+            email.sendMailToRecipient(email1, mailService);
+        }
     }
 
     public void setPassword(String password) {

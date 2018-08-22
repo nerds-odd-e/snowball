@@ -6,12 +6,8 @@ import com.odde.massivemailer.model.validator.UniquenessValidator;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.annotations.Table;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 
 @Table("contact_people")
@@ -32,18 +28,13 @@ public class ContactPerson extends ApplicationModel {
 
     static {
         validatePresenceOf("email");
+        validateEmailOf("email").message("email is invalid");
         validateWith(new UniquenessValidator("email"));
         validateWith(new LocationValidator("city"));
         callbackWith(new LocationCallbacks());
     }
 
     public Map<String, String> attributes = new HashMap<>();
-
-    public static ContactPerson createContact(Map map) {
-        ContactPerson model = new ContactPerson().fromMap(map);
-        model.saveIt();
-        return model;
-    }
 
     public static void createContactsFromCSVData(String csvData) {
 
@@ -95,32 +86,6 @@ public class ContactPerson extends ApplicationModel {
         if (list.size() > 0)
             return list.get(0);
         return null;
-    }
-
-    public static boolean isValidEmail(String email) {
-        String emailPattern = "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
-        Pattern p = Pattern.compile(emailPattern);
-        Matcher m = p.matcher(email);
-        return m.matches();
-    }
-
-    static boolean isValidCountry(String country) {
-        return validCountryList().contains(country.toLowerCase());
-    }
-
-    private static List<String> validCountryList() {
-        String csvFile = "src/main/resources/csv/countries.csv";
-        String line = "";
-        List<String> validCountries = new ArrayList<>();
-
-        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
-            while ((line = br.readLine()) != null) {
-                validCountries.add(line.toLowerCase());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return validCountries;
     }
 
     public Double getLatitude() {
@@ -234,4 +199,14 @@ public class ContactPerson extends ApplicationModel {
         return Objects.hash(getAttributes());
     }
 
+    public List<Participant> getParticipants() {
+        return Participant.where("contact_person_id = ?", getId());
+    }
+
+    public List<Course> getCourseParticipation() {
+        List<Participant> participants = getParticipants();
+        return participants.stream().
+                <Course>map(participant -> Course.findById(participant.getCourseId())).
+                collect(Collectors.toList());
+    }
 }

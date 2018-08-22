@@ -26,7 +26,6 @@ Feature: Contacts
   Scenario: Contacts with duplicate email is not allowed
     Given "terry@odd-e.com" which in "China" and "Chengdu" is a contact already
     When Add A Contact "terry@odd-e.com" at "China" and "Chengdu"
-    Then Page Should Contain "terry@odd-e.com"
     And Page Should Fail
 
   Scenario: Edit Location Information of Contact

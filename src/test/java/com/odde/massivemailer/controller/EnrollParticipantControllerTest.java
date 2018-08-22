@@ -39,7 +39,7 @@ public class EnrollParticipantControllerTest {
         request.setParameter("participants", "tom@example.com\tTom\tSmith\tCS\tSingapore\tSingapore");
         controller.doPost(request, response);
 
-        List<Participant> participants = Participant.whereHasCourseId("123");
+        List<Participant> participants = Participant.whereHasCourseId(123L);
         ContactPerson contactByEmail = ContactPerson.getContactByEmail("tom@example.com");
 
         assertEquals("course_detail.jsp?id=123&errors=", response.getRedirectedUrl());
@@ -57,7 +57,7 @@ public class EnrollParticipantControllerTest {
         request.setParameter("participants", inputTsvLines);
         controller.doPost(request, response);
 
-        List<Participant> participants = Participant.whereHasCourseId("123");
+        List<Participant> participants = Participant.whereHasCourseId(123l);
         ContactPerson tom = ContactPerson.getContactByEmail("tom@example.com");
         ContactPerson carry = ContactPerson.getContactByEmail("carry@example.com");
 

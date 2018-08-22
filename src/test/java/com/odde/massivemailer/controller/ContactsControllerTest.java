@@ -83,7 +83,7 @@ public class ContactsControllerTest {
         request.setParameter("city", "Singapore");
         controller.doPost(request, response);
         assertEquals(1, (long) ContactPerson.count());
-        assertEquals("contactlist.jsp?status=fail&msg={ email=<should be unique> }", response.getRedirectedUrl());
+        assertEquals("add_contact.jsp?status=fail&msg={ email:\"should be unique\" }", response.getRedirectedUrl());
     }
 
     @Test

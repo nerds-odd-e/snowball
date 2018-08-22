@@ -2,7 +2,6 @@ package steps;
 
 import com.odde.massivemailer.model.SentMail;
 import cucumber.api.DataTable;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -15,9 +14,7 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
 public class UserRegisterSteps {
 
@@ -36,12 +33,12 @@ public class UserRegisterSteps {
     }
 
     @Then("^Page Should Contain \"([^\"]*)\"$")
-    public void pageShouldContain(String text) throws Throwable {
+    public void pageShouldContain(String text) {
         driver.pageShouldContain(text);
     }
 
     @And("^Page Should Fail$")
-    public void pageShouldFail() throws Throwable {
+    public void pageShouldFail() {
         assertTrue(driver.getCurrentUrl().contains("status=fail"));
     }
 
@@ -51,31 +48,31 @@ public class UserRegisterSteps {
     }
 
     @Then("^An confirmation email is sent to \"([^\"]*)\" from: \"([^\"]*)\"$")
-    public void an_confirmation_email_is_sent_to_from(String email, String fromAddres) throws Throwable {
+    public void an_confirmation_email_is_sent_to_from(String email, String fromAddres) {
         String expectUrl = site.baseUrl() + "initialPassword?token=";
         sentMail = SentMail.getSentMailBy(email);
         assertTrue(sentMail.getContent().contains(expectUrl));
     }
 
     @When("^\"([^\"]*)\" click the link in the email$")
-    public void click_the_link_in_the_email(String arg1) throws Throwable {
+    public void click_the_link_in_the_email(String arg1) {
         driver.visit(sentMail.getContent());
     }
 
     @When("set password to \"([^\"]*)\", password confirmation to \"([^\"]*)\"$")
-    public void set_password_to(String password, String confirm) throws Throwable {
+    public void set_password_to(String password, String confirm) {
         site.initializePasswordPage().setPassword(password);
         site.initializePasswordPage().setPasswordConfirm(confirm);
         site.initializePasswordPage().submit();
     }
 
     @Then("^Show valid information$")
-    public void show_valid_information() throws Throwable {
+    public void show_valid_information() {
         driver.pageShouldContain("Success!!");
     }
 
     @Then("^Show invalid information$")
-    public void show_invalid_information() throws Throwable {
+    public void show_invalid_information() {
         driver.pageShouldContain("Error!");
     }
 
@@ -85,24 +82,24 @@ public class UserRegisterSteps {
     }
 
     @Then("^Contact page show \"([^\"]*)\"$")
-    public void contact_page_show(String errorMsg) throws Throwable {
+    public void contact_page_show(String errorMsg) {
         driver.pageShouldContain(errorMsg);
     }
 
     @Then("^Contact was not created$")
-    public void contact_was_not_created(String email) throws Throwable {
+    public void contact_was_not_created(String email) {
 
     }
 
     @Then("^\"([^\"]*)\" was not contained at Contact List Page$")
-    public void was_not_contained_at_Contact_List_Page(String email) throws Throwable {
+    public void was_not_contained_at_Contact_List_Page(String email) {
         driver.visit(site.baseUrl() + "contactlist.jsp");
     	String contactTable = driver.findElementById("contactTable").getText();
         assertFalse(contactTable.contains(email));
     }
 
     @Then("^Mail was not sent$")
-    public void mail_was_not_sent() throws Throwable {
+    public void mail_was_not_sent() {
     }
 
     @When("^Admin add a new contact \"([^\"]*)\" with valid email: \"([^\"]*)\"$")
@@ -111,13 +108,13 @@ public class UserRegisterSteps {
     }
 
     @Then("^Contact list page show \"([^\"]*)\"$")
-    public void contact_list_page_show(String email) throws Throwable {
+    public void contact_list_page_show(String email) {
         String contactTable = driver.findElementById("contactTable").getText();
         assertTrue(contactTable.contains(email));
     }
 
     @When("^\"([^\"]*)\" change the token in the url to \"([^\"]*)\" and access the new url$")
-    public void change_the_token_in_the_url_to_and_access_the_new_url(String name, String token) throws Throwable {
+    public void change_the_token_in_the_url_to_and_access_the_new_url(String name, String token) {
         driver.visit(site.baseUrl() + "initialize_password.jsp?token=" + token);
         site.initializePasswordPage().setPassword("123");
         site.initializePasswordPage().setPasswordConfirm("123");
@@ -125,7 +122,7 @@ public class UserRegisterSteps {
     }
 
     @Then("^\"([^\"]*)\" message is shown$")
-    public void message_is_shown(String msg) throws Throwable {
+    public void message_is_shown(String msg) {
         String bodyText = driver.getBodyText();
         assertThat(bodyText, containsString(msg));
     }
@@ -151,13 +148,13 @@ public class UserRegisterSteps {
     }
 
     @When("^I upload the CSV file$")
-    public void i_upload_the_CSV_file() throws Throwable {
+    public void i_upload_the_CSV_file() {
         site.visit("add_contact_batch.jsp");
         driver.clickUpload();
     }
 
     @Then("^There must be two more contacts added$")
-    public void there_must_be_two_more_contacts_added(DataTable emailList) throws Throwable {
+    public void there_must_be_two_more_contacts_added(DataTable emailList) {
         driver.expectAlert("Batch Contacts Uploaded");
         checkContactsAreCreated(emailList.asList(String.class));
         deleteCSVFile();
