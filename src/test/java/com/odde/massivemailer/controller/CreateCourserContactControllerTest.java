@@ -45,7 +45,7 @@ public class CreateCourserContactControllerTest  {
 
         controller.doPost(request,response);
 
-        List<ContactPerson> participants = course.getParticipants();
+        List<ContactPerson> participants = course.participants();
         assertEquals(participant.getId(), new Long(participants.get(participants.size() - 1).getId().toString()));
     }
 

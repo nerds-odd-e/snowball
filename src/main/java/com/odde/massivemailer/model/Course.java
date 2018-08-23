@@ -95,14 +95,15 @@ public class Course extends ApplicationModel {
         return null;
     }
 
-    private List<Participant> participants() {
+    private List<Participant> participations() {
         return Participant.where("course_id = ?", getId());
     }
 
-    public List<ContactPerson> getParticipants() {
+    public List<ContactPerson> participants() {
         List<ContactPerson> participantDetails = new ArrayList<>();
-        for (Participant partcipant: participants())
-            participantDetails.add(findById(partcipant.getContactPersonId()));
+        for (Participant partcipant: participations())
+            participantDetails.add(partcipant.getContactPerson());
         return participantDetails;
     }
+
 }

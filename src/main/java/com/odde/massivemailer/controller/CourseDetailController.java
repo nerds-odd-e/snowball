@@ -34,7 +34,7 @@ public class CourseDetailController extends AppController{
         String courseId = request.getParameter("id");
         Course course = Course.getCourseById(Integer.parseInt(courseId));
 
-        List<CourseDetailDTO.ParticipantDTO> participants = course.getParticipants().stream()
+        List<CourseDetailDTO.ParticipantDTO> participants = course.participants().stream()
                 .map(contactPerson -> new CourseDetailDTO.ParticipantDTO(contactPerson.getEmail(), contactPerson.getName()))
                 .collect(Collectors.toList());
         CourseDetailDTO result = new CourseDetailDTO(course.getCoursename(), participants);

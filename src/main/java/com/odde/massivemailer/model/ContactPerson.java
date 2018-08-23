@@ -12,13 +12,13 @@ import java.util.stream.Collectors;
 
 @Table("contact_people")
 public class ContactPerson extends ApplicationModel {
-    public static final String FIRSTNAME = "FirstName";
-    public static final String LASTNAME = "LastName";
-    public static final String EMAIL = "Email";
-    public static final String COMPANY = "Company";
-    public static final String LOCATION = "Location";
-    public static final String LONGITUDE = "Longitude";
-    public static final String LATITUDE = "Latitude";
+    private static final String FIRSTNAME = "FirstName";
+    private static final String LASTNAME = "LastName";
+    private static final String EMAIL = "Email";
+    private static final String COMPANY = "Company";
+    private static final String LOCATION = "Location";
+    private static final String LONGITUDE = "Longitude";
+    private static final String LATITUDE = "Latitude";
     private static final int EMAIL_INDEX = 0;
     private static final int FIRSTNAME_INDEX = 1;
     private static final int LASTNAME_INDEX = 2;
@@ -82,17 +82,17 @@ public class ContactPerson extends ApplicationModel {
     }
 
     public static ContactPerson getContactById(Integer contactId) {
-        LazyList<ContactPerson> list = where("id = ?", contactId.intValue());
+        LazyList<ContactPerson> list = where("id = ?", contactId);
         if (list.size() > 0)
             return list.get(0);
         return null;
     }
 
-    public Double getLatitude() {
+    Double getLatitude() {
         return getDoubleAttribute(LATITUDE);
     }
 
-    public Double getLongitude() {
+    Double getLongitude() {
         return getDoubleAttribute(LONGITUDE);
     }
 
@@ -133,18 +133,18 @@ public class ContactPerson extends ApplicationModel {
         set(name.toLowerCase(), value);
     }
 
-    public double getDoubleAttribute(String name) {
+    private double getDoubleAttribute(String name) {
         return (double) get(name);
     }
 
-    public String getAttribute(String name) {
+    String getAttribute(String name) {
         Object o = get(name);
         if (o != null)
             return o.toString();
         return "";
     }
 
-    public Set<String> getAttributeKeys() {
+    Set<String> getAttributeKeys() {
         return getMetaModel().getAttributeNamesSkipId();
     }
 
@@ -160,23 +160,23 @@ public class ContactPerson extends ApplicationModel {
         return new Location(getLocation(), getDoubleAttribute(LATITUDE), getDoubleAttribute(LONGITUDE));
     }
 
-    public boolean AddToCourse(String courseId) {
+    public void AddToCourse(String courseId) {
         int participantId = (int) getId();
 
-        Participant contactParticipant = new Participant(new Integer(participantId), new Integer(courseId));
+        Participant contactParticipant = new Participant(participantId, new Integer(courseId));
 
-        return contactParticipant.saveIt();
+        contactParticipant.saveIt();
     }
 
     public void setCourseList(String coursesList) {
         set("courses_sent", coursesList);
     }
 
-    public Object getCoursesList() {
+    Object getCoursesList() {
         return get("courses_sent");
     }
 
-    public Object getSentDate() {
+    Object getSentDate() {
         return get("date_sent");
     }
 
@@ -205,8 +205,7 @@ public class ContactPerson extends ApplicationModel {
 
     public List<Course> getCourseParticipation() {
         List<Participant> participants = getParticipants();
-        return participants.stream().
-                <Course>map(participant -> Course.findById(participant.getCourseId())).
-                collect(Collectors.toList());
+        return participants.stream(). map(Participant::getCourse). collect(Collectors.toList());
     }
+
 }

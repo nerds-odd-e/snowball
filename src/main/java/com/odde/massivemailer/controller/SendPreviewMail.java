@@ -73,7 +73,7 @@ public class SendPreviewMail extends AppController {
 
 
         }else{
-            contactPerson = course.getParticipants();
+            contactPerson = course.participants();
         }
 
         List<Template> precourseTemplates =Template.findByTemplateName("Pre-course Template");
