@@ -3,7 +3,7 @@ package com.odde.massivemailer.controller;
 import com.odde.TestWithDB;
 import com.odde.massivemailer.factory.CourseFactory;
 import com.odde.massivemailer.model.ContactPerson;
-import com.odde.massivemailer.model.Participant;
+import com.odde.massivemailer.model.Course;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.odde.massivemailer.factory.CourseFactory.uniqueCourse;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(TestWithDB.class)
@@ -35,11 +36,12 @@ public class EnrollParticipantControllerTest {
 
     @Test
     public void saveParticipantInCourse() {
+        Course course = uniqueCourse().set("id", "123");
         request.setParameter("courseId", "123");
         request.setParameter("participants", "tom@example.com\tTom\tSmith\tCS\tSingapore\tSingapore");
         controller.doPost(request, response);
 
-        List<Participant> participants = Participant.whereHasCourseId(123L);
+        List<ContactPerson> participants = course.getParticipants();
         ContactPerson contactByEmail = ContactPerson.getContactByEmail("tom@example.com");
 
         assertEquals("course_detail.jsp?id=123&errors=", response.getRedirectedUrl());
@@ -49,6 +51,7 @@ public class EnrollParticipantControllerTest {
 
     @Test
     public void saveParticipantsInCourse() {
+        Course course = uniqueCourse().set("id", "123");
         request.setParameter("courseId", "123");
         String inputTsvLines = Stream.of(
                 "tom@example.com\tTom\tSmith\tCS\tSingapore\tSingapore",
@@ -57,7 +60,7 @@ public class EnrollParticipantControllerTest {
         request.setParameter("participants", inputTsvLines);
         controller.doPost(request, response);
 
-        List<Participant> participants = Participant.whereHasCourseId(123l);
+        List<ContactPerson> participants = course.getParticipants();
         ContactPerson tom = ContactPerson.getContactByEmail("tom@example.com");
         ContactPerson carry = ContactPerson.getContactByEmail("carry@example.com");
 

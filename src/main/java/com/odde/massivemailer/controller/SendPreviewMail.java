@@ -73,17 +73,12 @@ public class SendPreviewMail extends AppController {
 
 
         }else{
-            List<Participant> partcipants = Participant.whereHasCourseId(course.getLongId());
-            for (Participant participant:partcipants) {
-                contactPerson.add(ContactPerson.getContactById(participant.getContactPersonId()));
-            }
-
+            contactPerson = course.getParticipants();
         }
 
         List<Template> precourseTemplates =Template.findByTemplateName("Pre-course Template");
         Template precourseTemplate = precourseTemplates.get(0);
         emails=precourseTemplate.getPopulatedEmailTemplate(course,contactPerson);
-
 
         return emails;
     }

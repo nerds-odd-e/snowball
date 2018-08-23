@@ -31,8 +31,4 @@ public class Participant extends ApplicationModel {
         return (Integer) get("contact_person_id");
     }
 
-    public static List<Participant> whereHasCourseId(Long courseId) {
-        return where("course_id = ?", courseId );
-    }
-
 }

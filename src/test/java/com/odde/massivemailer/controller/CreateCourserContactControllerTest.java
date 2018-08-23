@@ -4,7 +4,6 @@ import com.odde.TestWithDB;
 import com.odde.massivemailer.factory.CourseFactory;
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Course;
-import com.odde.massivemailer.model.Participant;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,8 +45,8 @@ public class CreateCourserContactControllerTest  {
 
         controller.doPost(request,response);
 
-        List<Participant> participants = course.participants();
-        assertEquals(participant.getId(), new Long(participants.get(participants.size() - 1).getContactPersonId()));
+        List<ContactPerson> participants = course.getParticipants();
+        assertEquals(participant.getId(), new Long(participants.get(participants.size() - 1).getId().toString()));
     }
 
 }

@@ -12,6 +12,12 @@ public class CourseFactory {
 
     private Course csd_course;
     private ContactPerson contact_alex;
+    static int uniq_id = 0;
+
+    public static Course uniqueCourse() {
+        uniq_id += 1;
+        return Course.create();
+    }
 
     public Course build_csd_course() {
         Map<String, Object> params = new HashMap<>();

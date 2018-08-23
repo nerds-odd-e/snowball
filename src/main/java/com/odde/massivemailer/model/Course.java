@@ -95,7 +95,14 @@ public class Course extends ApplicationModel {
         return null;
     }
 
-    public List<Participant> participants() {
-        return Participant.where("course_id = ?", getId().toString());
+    private List<Participant> participants() {
+        return Participant.where("course_id = ?", getId());
+    }
+
+    public List<ContactPerson> getParticipants() {
+        List<ContactPerson> participantDetails = new ArrayList<>();
+        for (Participant partcipant: participants())
+            participantDetails.add(findById(partcipant.getContactPersonId()));
+        return participantDetails;
     }
 }
