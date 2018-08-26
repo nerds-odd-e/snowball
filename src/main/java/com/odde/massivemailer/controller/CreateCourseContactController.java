@@ -13,8 +13,6 @@ public class CreateCourseContactController extends AppController{
     private static final long serialVersionUID = 1L;
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        String resultMsg = "Successfull!";
         try {
             String courseId = req.getParameter("courseId");
             String particpantEmail = req.getParameter("participantEmail");
@@ -23,10 +21,9 @@ public class CreateCourseContactController extends AppController{
             contact.AddToCourse(courseId);
 
         } catch (Exception e){
-            resultMsg = "Unable to register participants";
+            respondWithRedirectAndErrorMessage(resp, "registerParticipant.jsp", "Unable to register participants");
+            return;
         }
-
-        resp.sendRedirect("registerParticpant.jsp?"+ resultMsg);
-
+        respondWithRedirectAndSuccessMessage(resp, "registerParticipant.jsp", "Successfull!");
     }
 }

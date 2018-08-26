@@ -34,7 +34,7 @@ public class CreateCourserContactControllerTest  {
         request.setParameter("courseId", course.getId().toString());
         request.setParameter("participantEmail", new String[]{ "doesn't_exist"});
         controller.doPost(request,response);
-        assertEquals("registerParticpant.jsp?Unable to register participants", response.getRedirectedUrl());
+        assertEquals("registerParticipant.jsp?status=fail&msg=Unable to register participants", response.getRedirectedUrl());
     }
 
     @Test

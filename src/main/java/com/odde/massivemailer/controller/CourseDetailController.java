@@ -1,5 +1,6 @@
 package com.odde.massivemailer.controller;
 
+import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Course;
 
 import javax.servlet.annotation.WebServlet;
@@ -12,19 +13,19 @@ import java.util.stream.Collectors;
 @WebServlet("/course/detail")
 public class CourseDetailController extends AppController{
     public static class CourseDetailDTO {
-        public static class ParticipantDTO {
+        static class ParticipantDTO {
             String email;
             String name;
 
-            public ParticipantDTO(String email, String name) {
-                this.email = email;
-                this.name = name;
+            ParticipantDTO(ContactPerson contactPerson) {
+                this.email = contactPerson.getEmail();
+                this.name = contactPerson.getName();
             }
         }
         String courseName;
         List<ParticipantDTO> participants;
 
-        public CourseDetailDTO(String courseName, List<ParticipantDTO> participants) {
+        CourseDetailDTO(String courseName, List<ParticipantDTO> participants) {
             this.courseName = courseName;
             this.participants = participants;
         }
@@ -35,7 +36,7 @@ public class CourseDetailController extends AppController{
         Course course = Course.getCourseById(Integer.parseInt(courseId));
 
         List<CourseDetailDTO.ParticipantDTO> participants = course.participants().stream()
-                .map(contactPerson -> new CourseDetailDTO.ParticipantDTO(contactPerson.getEmail(), contactPerson.getName()))
+                .map(CourseDetailDTO.ParticipantDTO::new)
                 .collect(Collectors.toList());
         CourseDetailDTO result = new CourseDetailDTO(course.getCoursename(), participants);
         respondWithJSON(response, result);

@@ -17,8 +17,6 @@ public class CoursesController extends AppController {
     private static final long serialVersionUID = 1L;
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String resultMsg = "";
-
         Map map = getParameterFromRequest(req, "coursename", "country", "city", "address", "coursedetails", "duration", "instructor", "startdate");
         Course course = new Course().fromMap(map);
         if (!course.save()) {
