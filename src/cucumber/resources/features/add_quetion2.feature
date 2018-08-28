@@ -24,5 +24,9 @@ Feature: add question
     And Add a question that has 6 options
     Then Error message appears and stay at the same page
 
-
+  @developing
+  Scenario: correct answer text is nothing
+    When a trainer enters the question edit page
+    And Add a question that has correct answer text is nothing
+    Then Error message appears and stay at the same page
 
