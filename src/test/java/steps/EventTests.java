@@ -53,4 +53,5 @@ public class EventTests {
         addEventAndSelectLocationFromDropdownAndTextBox(courseName, country, city, date);
         clickRegisterEvent();
     }
+
 }
