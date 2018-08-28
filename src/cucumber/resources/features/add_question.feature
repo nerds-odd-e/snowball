@@ -77,3 +77,15 @@ Feature: Add Question
     And trainer add a question
     And  none of options is selected as correct answer
     Then Error message appears and stay at the same page
+
+  @developing
+  Scenario: trainer add a question that has skipped option lines
+    When a trainer enters the question edit page
+    And trainer add a question
+    And  options includes blank options (blank lines) before the last option
+    Then Error message appears and stay at the same page
+
+  @developing
+  Scenario: trainer checks the list of questions
+    When a trainer enters the question list page
+    Then options, description, correct answer and advise appears for all questions
