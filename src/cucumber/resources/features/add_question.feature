@@ -9,9 +9,14 @@ Feature: Add Question
     And add question option1 "must be 3!"
     And add question option2 "of course 2."
     And he set the option 2 as the correct answer
+    And he set the advise "you should read a math book"
+    And he press the "<add_button>"
+    And he enters the question list page
     Then he should see the question "what is 1+1?" in the question list
     And the option 1 should be "must be 3!"
-    And the correct answer should be option 2
+    And the option 2 should be "of course 2."
+    And option 2 (the correct answer) is highlighted
+    And the advise should be "you should read a math book"
 
   @developing
   Scenario: Adding a new question with over length description
@@ -84,13 +89,33 @@ Feature: Add Question
     Then Error message appears and stay at the same page
 
   @developing
-  Scenario: trainer add a question that has skipped option lines
-    When a trainer enters the question edit page
-    And trainer add a question
-    And  options includes blank options (blank lines) before the last option
+  Scenario: trainer add a question that has skipped option lines (option 1 & 3)
+    Given a trainer enters the question edit page
+    When he add a question description "what is 2*2?"
+    And add question option1 "3."
+    And add question option3 "4."
+    And he set the option 3 as the correct answer
+    And he set the advise "you should read a math book"
+    And he press the "<add_button>"
     Then Error message appears and stay at the same page
 
   @developing
-  Scenario: trainer checks the list of questions
-    When a trainer enters the question list page
-    Then options, description, correct answer and advise appears for all questions
+  Scenario: trainer add a question that has skipped option lines (only option 3)
+    Given a trainer enters the question edit page
+    When he add a question description "what is 2*2?"
+    And add question option3 "4."
+    And he set the option 3 as the correct answer
+    And he set the advise "you should read a math book"
+    And he press the "<add_button>"
+    Then Error message appears and stay at the same page
+
+  @developing
+  Scenario: trainer add a question that has skipped option lines (option 1 & 4, 2 blank lines)
+    Given a trainer enters the question edit page
+    When he add a question description "what is 2*2?"
+    And add question option1 "1."
+    And add question option4 "of course 4."
+    And he set the option 4 as the correct answer
+    And he set the advise "you should read a math book"
+    And he press the "<add_button>"
+    Then Error message appears and stay at the same page
