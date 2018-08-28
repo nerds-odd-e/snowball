@@ -89,33 +89,21 @@ Feature: Add Question
     Then Error message appears and stay at the same page
 
   @developing
-  Scenario: trainer add a question that has skipped option lines (option 1 & 3)
+  Scenario Outline: trainer add a question that has skipped option lines
     Given a trainer enters the question edit page
     When he add a question description "what is 2*2?"
-    And add question option1 "3."
-    And add question option3 "4."
-    And he set the option 3 as the correct answer
+    And add question option1 "<option1>"
+    And add question option2 "<option2>"
+    And add question option3 "<option3>"
+    And add question option4 "<option4>"
+    And add question option5 "<option5>"
+    And he set the <correct answer> as the correct answer
     And he set the advise "you should read a math book"
     And he press the "<add_button>"
-    Then he see the message "Error. Blank option must not be included before the bottom option" and stay at the same page
+    Then he see the message "<error message>" and stay at the same page
 
-  @developing
-  Scenario: trainer add a question that has skipped option lines (only option 3)
-    Given a trainer enters the question edit page
-    When he add a question description "what is 2*2?"
-    And add question option3 "4."
-    And he set the option 3 as the correct answer
-    And he set the advise "you should read a math book"
-    And he press the "<add_button>"
-    Then he see the message "Error. Blank option must not be included before the bottom option" and stay at the same page
-
-  @developing
-  Scenario: trainer add a question that has skipped option lines (option 1 & 4. 2 blank lines)
-    Given a trainer enters the question edit page
-    When he add a question description "what is 2*2?"
-    And add question option1 "1."
-    And add question option4 "of course 4."
-    And he set the option 4 as the correct answer
-    And he set the advise "you should read a math book"
-    And he press the "<add_button>"
-    Then he see the message "Error. Blank option must not be included before the bottom option" and stay at the same page
+    Examples:
+    | option1 | option2 | option3 | option4 | option5 | correct answer | error message |
+    | 3.      |         | 4.      |         |         | option3        | Error. Blank option must not be included before the bottom option |
+    |         |         | 4.      |         |         | option3        | Error. Blank option must not be included before the bottom option |
+    | 1.      |         |         | 4.      |         | option4        | Error. Blank option must not be included before the bottom option |
