@@ -3,9 +3,9 @@ Feature:
 
 #  @developing
     ## 初期表示：質問とoptionsが表示されていること
+  @now
   Scenario: User can start test
-    Given User is student
-    And User clicks "start test" button
+    Given User clicks "start test" button
     Then User go to the test page
     And User should see a question and options
 

@@ -4,24 +4,22 @@ import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import steps.driver.WebDriverWrapper;
+import steps.site.MassiveMailerSite;
 
 public class OneQuestionOnlyStep {
-    @Given("^User is student$")
-    public void user_is_student() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
+
+    private MassiveMailerSite site = new MassiveMailerSite();
+    private WebDriverWrapper driver = site.getDriver();
 
     @Given("^User clicks \"([^\"]*)\" button$")
     public void user_clicks_button(String arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        site.visit("question");
     }
 
     @Then("^User go to the test page$")
     public void user_go_to_the_test_page() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        driver.expectElementWithIdToContainText("description", "What is scrum?");
     }
 
     @Then("^User should see a question and options$")
