@@ -33,7 +33,6 @@ Feature:
 
   #  @developing
 # (０〜８回回答済み)正解を選択して回答ボタンを押下すると次のランダムQuestionに遷移すること
-  @now
   Scenario Outline: Student can take a random question 10 times
     Given Student as user
     And Student want to take random test

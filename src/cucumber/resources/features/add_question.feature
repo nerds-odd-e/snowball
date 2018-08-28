@@ -8,9 +8,9 @@ Feature: Add Question
     When he add a question description "what is 1+1?"
     And add question option1 "must be 3!"
     And add question option2 "of course 2."
-    And he set the option 2 as the correct answer
+    And he set the option2 as the correct answer
     And he set the advise "you should read a math book"
-    And he press the "<add_button>"
+    And he press the "add_button"
     And he enters the question list page
     Then he should see the question "what is 1+1?" in the question list
     And the option 1 should be "must be 3!"

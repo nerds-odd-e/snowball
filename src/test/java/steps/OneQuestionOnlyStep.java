@@ -1,6 +1,7 @@
 package steps;
 
 import cucumber.api.PendingException;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -8,9 +9,14 @@ import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
 public class OneQuestionOnlyStep {
-
     private MassiveMailerSite site = new MassiveMailerSite();
     private WebDriverWrapper driver = site.getDriver();
+
+    @Given("^User is student$")
+    public void user_is_student() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
 
     @Given("^User clicks \"([^\"]*)\" button$")
     public void user_clicks_button(String arg1) throws Throwable {
@@ -110,5 +116,40 @@ public class OneQuestionOnlyStep {
     public void student_pressed_button(String arg1) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
+    }
+
+    @Given("^a trainer enters the question edit page$")
+    public void aTrainerEntersTheQuestionEditPage() throws Throwable {
+        site.visit("add_question.jsp");
+    }
+
+    @When("^he add a question description \"([^\"]*)\"$")
+    public void heAddAQuestionDescription(String description) throws Throwable {
+        driver.setTextField("description", description);
+    }
+
+    @And("^add question option(\\d+) \"([^\"]*)\"$")
+    public void addQuestionOption(int option_id, String text) throws Throwable {
+        driver.setTextField("option" + option_id, text);
+    }
+
+    @And("^he set the option(\\d+) as the correct answer$")
+    public void heSetTheOptionAsTheCorrectAnswer(int option_id) throws Throwable {
+        driver.clickById("option" + option_id);
+    }
+
+    @And("^he set the advise \"([^\"]*)\"$")
+    public void heSetTheAdvise(String advice) throws Throwable {
+        driver.setTextField("advice", advice);
+    }
+
+    @And("^he press the \"([^\"]*)\"$")
+    public void hePressThe(String buttonName) throws Throwable {
+        driver.clickButtonByName(buttonName);
+    }
+
+    @And("^he enters the question list page$")
+    public void heEntersTheQuestionListPage() throws Throwable {
+        site.visit("question_list.jsp");
     }
 }

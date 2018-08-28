@@ -69,32 +69,32 @@
                                             <span class="input-group-addon">
                                             <input type="radio" id="option1" name="option" aria-label="Radio button for following text input">
                                             </span>
-                                            <input type="text" class="form-control" aria-label="Text input with radio button" width="100%">
+                                            <input type="text" class="form-control" name="option1" aria-label="Text input with radio button" width="100%">
                                           </div>
                                           <div class="input-group-prepend">
                                             <div class="input-group-text">
                                             <input type="radio" id="option2" name="option" aria-label="Radio button for following text input">
                                             </div>
                                           </div>
-                                          <input type="text" class="form-control" aria-label="Text input with radio button">
+                                          <input type="text" class="form-control" name="option2" name="option1" aria-label="Text input with radio button">
                                           <div class="input-group-prepend">
                                             <div class="input-group-text">
                                             <input type="radio" id="option3" name="option" aria-label="Radio button for following text input">
                                             </div>
                                           </div>
-                                          <input type="text" class="form-control" aria-label="Text input with radio button">
+                                          <input type="text" class="form-control" name="option3" aria-label="Text input with radio button">
                                           <div class="input-group-prepend">
                                             <div class="input-group-text">
                                             <input type="radio" id="option4" name="option" aria-label="Radio button for following text input">
                                             </div>
                                           </div>
-                                          <input type="text" class="form-control" aria-label="Text input with radio button">
+                                          <input type="text" class="form-control" name="option4" aria-label="Text input with radio button">
                                           <div class="input-group-prepend">
                                             <div class="input-group-text">
                                             <input type="radio" id="option5" name="option" aria-label="Radio button for following text input">
                                             </div>
                                           </div>
-                                          <input type="text" class="form-control" aria-label="Text input with radio button">
+                                          <input type="text" class="form-control" name="option5" aria-label="Text input with radio button">
                                         </div>
                                         </div>
 										<div class="col-lg-11">
@@ -112,8 +112,8 @@
 									<br> <br>
 									<div class="row">
 										<div class="col-lg-12">
-											<button type="button" class="btn btn-default"
-												id="add_button" value="add" disabled>Add</button>
+											<button type="button" class="btn btn-default" name="add_button"
+												id="add_button" value="add" >Add</button>
 										</div>
 									</div>
 								</div>
@@ -130,6 +130,4 @@
 	src="resources/lib/bootstrap/js/jquery.js"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="resources/js/addContact.js"></script>
-<script type="text/javascript" src="resources/js/populateCountriesDropdown.js"></script>
 </html>
