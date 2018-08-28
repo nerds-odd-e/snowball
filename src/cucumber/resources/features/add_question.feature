@@ -102,7 +102,7 @@ Feature: Add Question
     And he press the "<add_button>"
     Then he see the message "<error message>" and stay at the same page
 
-    Examples:
+  Examples:
     | option1 | option2 | option3 | option4 | option5 | correct answer | error message |
     | 3.      |         | 4.      |         |         | option3        | Error. Blank option must not be included before the bottom option |
     |         |         | 4.      |         |         | option3        | Error. Blank option must not be included before the bottom option |
