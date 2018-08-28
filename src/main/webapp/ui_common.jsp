@@ -41,6 +41,12 @@
                 <li><a id="emailtracking" href="email_tracking.jsp"><span
                         class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                         Email Tracking</a></li>
+                <li><a href="question_list.jsp"><span
+                        class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                        Question List</a></li>
+                <ul><li><a href="add_question.jsp"><span
+                                        class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add
+                                        Question</a></li>
             </ul>
         </div>
     <!-- /.navbar-collapse -->
