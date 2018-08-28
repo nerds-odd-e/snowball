@@ -97,7 +97,7 @@ Feature: Add Question
     And he set the option 3 as the correct answer
     And he set the advise "you should read a math book"
     And he press the "<add_button>"
-    Then Error message appears and stay at the same page
+    Then he see the message "Error. Blank option must not be included before the bottom option" and stay at the same page
 
   @developing
   Scenario: trainer add a question that has skipped option lines (only option 3)
@@ -107,10 +107,10 @@ Feature: Add Question
     And he set the option 3 as the correct answer
     And he set the advise "you should read a math book"
     And he press the "<add_button>"
-    Then Error message appears and stay at the same page
+    Then he see the message "Error. Blank option must not be included before the bottom option" and stay at the same page
 
   @developing
-  Scenario: trainer add a question that has skipped option lines (option 1 & 4, 2 blank lines)
+  Scenario: trainer add a question that has skipped option lines (option 1 & 4. 2 blank lines)
     Given a trainer enters the question edit page
     When he add a question description "what is 2*2?"
     And add question option1 "1."
@@ -118,4 +118,4 @@ Feature: Add Question
     And he set the option 4 as the correct answer
     And he set the advise "you should read a math book"
     And he press the "<add_button>"
-    Then Error message appears and stay at the same page
+    Then he see the message "Error. Blank option must not be included before the bottom option" and stay at the same page
