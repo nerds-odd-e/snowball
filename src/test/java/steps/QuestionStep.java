@@ -145,4 +145,13 @@ public class QuestionStep {
     public void errorMessageAppearsAndStayAtTheSamePage(String errorMessage) {
         driver.expectElementWithIdToContainValue("message", errorMessage);
     }
+
+    @When("^trainer inputs question:$")
+    public void trainerInputsQuestion(DataTable questionData) throws Throwable {
+        List<List<String>> data = questionData.raw();
+        driver.setTextField(data.get(0).get(0), data.get(0).get(1));
+        driver.setTextField(data.get(1).get(0), data.get(1).get(1));
+        driver.setTextField(data.get(2).get(0), data.get(2).get(1));
+        driver.setTextField(data.get(3).get(0), data.get(3).get(1));
+    }
 }
