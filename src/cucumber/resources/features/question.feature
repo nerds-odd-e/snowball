@@ -4,7 +4,6 @@ Feature:
   Background:
     Given User is in the test page
 
-  @developing
   Scenario: 初期表示：質問とoptionsが表示されていること
     When User clicks "start test" button
     Then User go to the test page
@@ -15,8 +14,7 @@ Feature:
       | option3     | Scrum is Soccer   |
       | option4     | Scrum is Sumo     |
       | option5     | None of the above |
-
-  @developing
+    
   Scenario Outline: 正解または不正解を選んで、回答ボタンを押下するとEndOfTestまたはAdviceに遷移すること
     When User chooses "<selected_option>"
     And User clicks the answer button
@@ -31,16 +29,10 @@ Feature:
       | option5 | end_of_test |
 
   @developing
-  Scenario: テストページで正解を選んで、回答ボタンを押下するとEndOfTestに遷移すること
-    When User chooses the correct option
-    And User clicks the answer button
-    Then User should see the "end of test" page
-
-  @developing
   Scenario: テストページで不正解を選んで、回答ボタンを押下するとAdviceページが表示されること
     When User chooses the incorrect option
     And User clicks the answer button
     Then User go to the "Advice" page
-    And User should see correct option highlighted in "green"
-    And User should see selected incorrect option highlighted in "red"
+    And User should see "correct" option highlighted and text "None of the above"
+    And User should see "selected incorrect" option highlighted and text "Scrum is Baseball"
     And User should see "advice text"

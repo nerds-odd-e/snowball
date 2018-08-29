@@ -6,9 +6,12 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
@@ -79,16 +82,12 @@ public class QuestionStep {
         driver.pageShouldContain(pageName);
     }
 
-    @Then("^User should see correct option highlighted in \"([^\"]*)\"$")
-    public void user_should_see_correct_option_highlighted_in(String arg1) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
-
-    @Then("^User should see selected incorrect option highlighted in \"([^\"]*)\"$")
-    public void user_should_see_selected_incorrect_option_highlighted_in(String arg1) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    @Then("^User should see \"([^\"]*)\" option highlighted and text \"([^\"]*)\"$")
+    public void user_should_see_option_highlighted_and_text(String clazz, String text) throws Throwable {
+        String cssSelector = "." + clazz.replace(" ", ".");
+        List<WebElement> elements = driver.findElements(By.cssSelector(cssSelector));
+        assertEquals(elements.size(), 1);
+        assertEquals(elements.get(0).getText(), text);
     }
 
     @Then("^User should see \"([^\"]*)\"$")

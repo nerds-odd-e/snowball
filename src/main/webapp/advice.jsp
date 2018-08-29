@@ -16,6 +16,8 @@
 <link href="resources/lib/bootstrap/css/plugins/morris.css"
 	rel="stylesheet">
 
+<link href="resources/question.css" rel="stylesheet">
+
 <!-- Custom Fonts -->
 <link
 	href="resources/lib/bootstrap/font-awesome/css/font-awesome.min.css"
@@ -29,23 +31,23 @@
         <ul>
             <li>
                 <input for="option1" type="radio" name="optionIds" disabled/>
-                <label id="option1" >&nbsp;Scrum is Rugby</label>
+                <label id="option1" >Scrum is Rugby</label>
             </li>
             <li>
                 <input for="option2" type="radio" name="optionIds" checked="checked" disabled/>
-                <label id="option2" class="text-danger">&nbsp;Scrum is Baseball</label>
+                <label id="option2" class="incorrect selected">Scrum is Baseball</label>
             </li>
             <li>
                 <input for="option3" type="radio" name="optionIds" disabled/>
-                <label id="option3" >&nbsp;Scrum is Soccer</label>
+                <label id="option3" >Scrum is Soccer</label>
             </li>
             <li>
                 <input for="option4" type="radio" name="optionIds" disabled/>
-                <label id="option4" >&nbsp;Scrum is Sumo</label>
+                <label id="option4" >Scrum is Sumo</label>
             </li>
             <li>
                 <input for="option5" type="radio" name="optionIds" disabled/>
-                <label id="option5" class="text-success" >&nbsp;None of the above</label>
+                <label id="option5" class="correct" >None of the above</label>
             </li>
         </ul>
         <div id="advice" class="jumbotron">Scrum is a framework for agile development.
