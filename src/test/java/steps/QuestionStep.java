@@ -42,8 +42,7 @@ public class QuestionStep {
 
     @When("^User chooses the correct option$")
     public void user_chooses_the_correct_option() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        driver.clickById("option5");
     }
 
     @When("^User clicks the answer button$")
