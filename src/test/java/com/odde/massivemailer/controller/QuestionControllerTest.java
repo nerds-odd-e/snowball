@@ -1,6 +1,5 @@
 package com.odde.massivemailer.controller;
 
-import com.odde.massivemailer.model.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -21,7 +20,7 @@ public class QuestionControllerTest {
     }
 
     @Test
-    public void showInitialPasswordViewSuccessfully() throws Exception {
+    public void showQuestionPage() throws Exception {
         controller.doGet(request,response);
         assertEquals("question.jsp", response.getRedirectedUrl());
     }
