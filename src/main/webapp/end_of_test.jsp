@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Login</title>
+<title>End of Test</title>
 <!-- Bootstrap Core CSS -->
 <link href="resources/lib/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -23,9 +23,8 @@
 </head>
 <body>
 <div id="page-wrapper">
-    <form name="question" id="questionForm" method="post"
-        action="question">
     <div class="container-fluid">
+        <h1 id="title">end of test</h1>
         <h1>Online Test</h1>
         <h2 id="description">What is scrum?</h2>
         <ul>
@@ -50,11 +49,7 @@
                 <label id="option5" >&nbsp;None of the above</label>
             </li>
         </ul>
-        <div class="col-lg-12">
-            <input type="submit" id="answer" value="Answer">
-        </div>
     </div>
-    </form>
 </div>
 </body>
 <!-- jQuery -->

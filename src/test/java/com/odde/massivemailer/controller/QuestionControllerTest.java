@@ -24,4 +24,10 @@ public class QuestionControllerTest {
         controller.doGet(request,response);
         assertEquals("question.jsp", response.getRedirectedUrl());
     }
+
+    @Test
+    public void showEndOfTestPage() throws Exception {
+        controller.doPost(request,response);
+        assertEquals("end_of_test.jsp", response.getRedirectedUrl());
+    }
 }

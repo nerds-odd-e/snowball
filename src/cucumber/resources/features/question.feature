@@ -14,7 +14,7 @@ Feature:
       | option5     | None of the above |
 
   @developing
-  Scenario: テストページで正解を選んで、回答ボタンを押下するとEndOfTestが表示されること
+  Scenario: テストページで正解を選んで、回答ボタンを押下するとEndOfTestに遷移すること
     Given User is in the test page
     When User chooses the correct option
     And User clicks the answer button
