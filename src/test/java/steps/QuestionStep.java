@@ -55,7 +55,7 @@ public class QuestionStep {
     }
 
     @Then("^User should see the \"([^\"]*)\" page$")
-    public void user_should_see_the_page(String arg1) throws Throwable {
+    public void user_should_see_the_page(String pageName) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }
@@ -65,4 +65,29 @@ public class QuestionStep {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }
+
+    @Then("^User go to the \"([^\"]*)\" page$")
+    public void user_go_to_the_page(String arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Then("^User should see correct option highlighted in \"([^\"]*)\"$")
+    public void user_should_see_correct_option_highlighted_in(String arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Then("^User should see selected incorrect option highlighted in \"([^\"]*)\"$")
+    public void user_should_see_selected_incorrect_option_highlighted_in(String arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Then("^User should see \"([^\"]*)\"$")
+    public void user_should_see(String arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
 }
