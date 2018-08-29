@@ -30,29 +30,25 @@
         <h2 id="description">What is scrum?</h2>
         <ul>
             <li>
-                <input for="option1" type="radio" name="option" />
-                <label id="option1" >&nbsp;Scrum is Rugby</label>
+                <label id="option1" ><input for="option1" type="radio" name="optionIds" value="1"/>&nbsp;Scrum is Rugby</label>
             </li>
             <li>
-                <input for="option2" type="radio" name="option" />
-                <label id="option2" >&nbsp;Scrum is Baseball</label>
+                <label id="option2" ><input for="option2" type="radio" name="optionIds" value="2"/>&nbsp;Scrum is Baseball</label>
             </li>
             <li>
-                <input for="option3" type="radio" name="option" />
-                <label id="option3" >&nbsp;Scrum is Soccer</label>
+                <label id="option3" ><input for="option3" type="radio" name="optionIds" value="3"/>&nbsp;Scrum is Soccer</label>
             </li>
             <li>
-                <input for="option4" type="radio" name="option" />
-                <label id="option4" >&nbsp;Scrum is Sumo</label>
+                <label id="option4" ><input for="option4" type="radio" name="optionIds" value="4"/>&nbsp;Scrum is Sumo</label>
             </li>
             <li>
-                <input for="option5" type="radio" name="option" />
-                <label id="option5" >&nbsp;None of the above</label>
+                <label id="option5" ><input for="option5" type="radio" name="optionIds" value="5" checked/>&nbsp;None of the above</label>
             </li>
         </ul>
         <div class="col-lg-12">
             <input type="submit" id="answer" value="Answer">
         </div>
+        <input id="questionId" type="hidden" name="questionId" value="1">
     </div>
     </form>
 </div>

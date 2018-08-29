@@ -28,23 +28,23 @@
         <h2 id="description">What is scrum?</h2>
         <ul>
             <li>
-                <input for="option1" type="radio" name="option" disabled/>
+                <input for="option1" type="radio" name="optionIds" disabled/>
                 <label id="option1" >&nbsp;Scrum is Rugby</label>
             </li>
             <li>
-                <input for="option2" type="radio" name="option" checked="checked" disabled/>
+                <input for="option2" type="radio" name="optionIds" checked="checked" disabled/>
                 <label id="option2" class="text-danger">&nbsp;Scrum is Baseball</label>
             </li>
             <li>
-                <input for="option3" type="radio" name="option" disabled/>
+                <input for="option3" type="radio" name="optionIds" disabled/>
                 <label id="option3" >&nbsp;Scrum is Soccer</label>
             </li>
             <li>
-                <input for="option4" type="radio" name="option" disabled/>
+                <input for="option4" type="radio" name="optionIds" disabled/>
                 <label id="option4" >&nbsp;Scrum is Sumo</label>
             </li>
             <li>
-                <input for="option5" type="radio" name="option" disabled/>
+                <input for="option5" type="radio" name="optionIds" disabled/>
                 <label id="option5" class="text-success" >&nbsp;None of the above</label>
             </li>
         </ul>
