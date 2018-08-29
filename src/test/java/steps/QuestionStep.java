@@ -64,9 +64,8 @@ public class QuestionStep {
     }
 
     @Then("^User go to the \"([^\"]*)\" page$")
-    public void user_go_to_the_page(String arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void user_go_to_the_page(String pageName) throws Throwable {
+        driver.pageShouldContain(pageName);
     }
 
     @Then("^User should see correct option highlighted in \"([^\"]*)\"$")
