@@ -88,7 +88,22 @@ public class QuestionStep {
         driver.visit(site.baseUrl() + "add_question.jsp");
     }
 
-    private void addQuestionWithDumyData() {
+    @When("^trainer add a new question with description that have \"([^\"]*)\"$")
+    public void trainerAddANewQuestionWithDescriptionThatHave(int description_length) throws Throwable {
+        String description = "";
+        for (int i = 0; i < description_length; i++) {
+            description += "a";
+        }
+        driver.setTextField("description", description);
+    }
+
+    @When("^option(\\d+) is selected as correct answer$")
+    public void optionIsSelectedAsCorrectAnswer(String optionId) throws Throwable {
+        driver.clickButton("option"+optionId );
+    }
+
+    @When("^sets default value$")
+    public void setsDefaultValue() throws Throwable {
         driver.setTextField("description", "dumy description");
         driver.setTextField("option1", "dumy option1");
         driver.setTextField("option2", "dumy option2");
@@ -97,7 +112,6 @@ public class QuestionStep {
 
     @When("^trainer add a new question with advice that have \"([^\"]*)\"$")
     public void trainerAddANewQuestionWithAdviceThatHave(int description_length) {
-        this.addQuestionWithDumyData();
         driver.setTextField("description", getStringOfLength(description_length));
     }
 

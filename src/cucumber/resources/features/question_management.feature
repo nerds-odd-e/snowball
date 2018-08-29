@@ -66,9 +66,10 @@ Feature: Question management
       |5,0,0,0,0     |You need to input at least 2 options|
       |101,10,0,0,0  |Option is over length               |
 
-  @now
+  @developing
   Scenario Outline: Add a new question with invalid advice
     When trainer add a new question with advice that have "<advice length>"
+    And sets default value
     And option2 is selected as correct answer
     And trainer press the "add_button"
     Then Error message "<error message>" appears and stay at the same page
