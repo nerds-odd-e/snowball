@@ -45,9 +45,27 @@ Feature: Question management
     And option2 is green
 
   @developing
-  Scenario: Adding a new question with over length description
-    When Trainer add a new question that the "<description>" is over length
-    Then Error message "The description is over length" appears and stay at the same page
+  Scenario Outline: Add a new question with invalid description
+    When Trainer add a new question with <description>
+    Then Error message "<error message>" appears and stay at the same page
+
+    Examples:
+      |description|error message                 |
+      |over length|The description is over length|
+      |empty      |The description is empty      |
+
+  @developing
+  Scenario Outline: Add a new question with invalid option
+    When Trainer add a new question with options that have "<option lengths>"
+    Then Error message "<error message>" appears and stay at the same page
+    Examples:
+      |option lengths|error message                       |
+      |0,0,0,0,0     |All options are empty               |
+      |10,0,5,0,0    |Please input options in order       |
+      |5,0,0,0,0     |You need to input at least 2 options|
+      |101,10,0,0,0  |Option is over length               |
+
+
 
   @developing
   Scenario: Adding a new question with over length option
@@ -74,11 +92,7 @@ Feature: Question management
     When Add a question that has correct answer text is nothing
     Then Error message appears and stay at the same page
 
-  @developing
-  Scenario: trainer add a question with an empty description
-    When trainer add a question
-    And "<description>" is empty
-    Then Error message appears and stay at the same page
+
 
   @developing
   Scenario: trainer add a question with empty options
