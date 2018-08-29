@@ -115,6 +115,16 @@ public class QuestionStep {
         driver.clickButton("option"+optionId );
     }
 
+    @Given("^User is in Advice page$")
+    public void user_is_in_Advice_page() throws Throwable {
+        site.visit("advice");
+    }
+
+    @When("^User clicks the next button$")
+    public void user_clicks_the_next_button() throws Throwable {
+        driver.clickButton("next");
+    }
+
     @When("^sets default value$")
     public void setsDefaultValue() {
         driver.setTextField("description", "dumy description");

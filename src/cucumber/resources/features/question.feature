@@ -14,7 +14,7 @@ Feature:
       | option3     | Scrum is Soccer   |
       | option4     | Scrum is Sumo     |
       | option5     | None of the above |
-    
+
   Scenario Outline: 正解または不正解を選んで、回答ボタンを押下するとEndOfTestまたはAdviceに遷移すること
     When User chooses "<selected_option>"
     And User clicks the answer button
@@ -36,3 +36,9 @@ Feature:
     And User should see "correct" option highlighted and text "None of the above"
     And User should see "selected incorrect" option highlighted and text "Scrum is Baseball"
     And User should see "advice text"
+
+  @developing
+  Scenario: AdviceページからNextボタンを押下するとEnd of pageが表示されること
+    Given User is in Advice page
+    When User clicks the next button
+    Then Redirected to "end_of_test" page
