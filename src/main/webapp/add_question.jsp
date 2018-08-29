@@ -51,7 +51,9 @@
 									<h3 class="panel-title">Question Information</h3>
 								</div>
 								<div class="panel-body">
-
+                                    <div class="alert alert-danger" role="alert" id="message">
+                                        Advice is over length
+                                    </div>
 									<div class="row">
 										<div class="col-lg-1">Description:</div>
 										<div class="col-lg-11">

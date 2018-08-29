@@ -2,6 +2,7 @@ package steps;
 
 import cucumber.api.DataTable;
 import cucumber.api.PendingException;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -116,7 +117,7 @@ public class QuestionStep {
     }
 
     @When("^sets default value$")
-    public void setsDefaultValue() throws Throwable {
+    public void setsDefaultValue() {
         driver.setTextField("description", "dumy description");
         driver.setTextField("option1", "dumy option1");
         driver.setTextField("option2", "dumy option2");
@@ -128,11 +129,21 @@ public class QuestionStep {
         driver.setTextField("description", getStringOfLength(description_length));
     }
 
-    private String getStringOfLength(int description_length) {
+    private String getStringOfLength(int descriptionLength) {
         String description = "";
-        for (int i = 0; i < description_length; i++) {
+        for (int i = 0; i < descriptionLength; i++) {
             description += "a";
         }
         return description;
+    }
+
+    @And("^trainer press the \"([^\"]*)\"$")
+    public void trainerPressThe(String buttonName) {
+        driver.clickButtonByName(buttonName);
+    }
+
+    @Then("^Error message \"([^\"]*)\" appears and stay at the same page$")
+    public void errorMessageAppearsAndStayAtTheSamePage(String errorMessage) {
+        driver.expectElementWithIdToContainValue("message", errorMessage);
     }
 }
