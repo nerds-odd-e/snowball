@@ -10,9 +10,17 @@ import steps.site.MassiveMailerSite;
 
 import java.util.Map;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 public class QuestionStep {
     private MassiveMailerSite site = new MassiveMailerSite();
     private WebDriverWrapper driver = site.getDriver();
+
+    @Given("^User is in the test page$")
+    public void user_is_in_the_test_page() {
+        site.visit("question");
+    }
 
     @When("^User clicks \"([^\"]*)\" button$")
     public void user_clicks_button(String arg1) {
@@ -35,19 +43,24 @@ public class QuestionStep {
         driver.expectElementWithIdToContainText("option5", questionMap.get("option5"));
     }
 
-    @Given("^User is in the test page$")
-    public void user_is_in_the_test_page() {
-        site.visit("question");
-    }
-
-    @When("^User chooses the correct option$")
-    public void user_chooses_the_correct_option() {
-        driver.clickById("option5");
+    @When("^User chooses \"([^\"]*)\"$")
+    public void user_chooses(String selected_option) throws Throwable {
+        driver.clickById(selected_option);
     }
 
     @When("^User clicks the answer button$")
     public void user_clicks_the_answer_button() {
         driver.clickButton("answer");
+    }
+
+    @Then("^Redirected to \"([^\"]*)\" page$")
+    public void redirected_to_page(String redirected_page) throws Throwable {
+        assertTrue(driver.getCurrentUrl().contains(redirected_page));
+    }
+
+    @When("^User chooses the correct option$")
+    public void user_chooses_the_correct_option() {
+        driver.clickById("option5");
     }
 
     @Then("^User should see the \"([^\"]*)\" page$")

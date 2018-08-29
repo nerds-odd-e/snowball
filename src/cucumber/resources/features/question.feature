@@ -16,12 +16,19 @@ Feature:
       | option4     | Scrum is Sumo     |
       | option5     | None of the above |
 
-  @now
-  Scenario: テストページで正解を選んで、回答ボタンを押下するとEndOfTestに遷移すること
-    When User chooses the correct option
+  @developing
+  Scenario Outline: 正解または不正解を選んで、回答ボタンを押下するとEndOfTestまたはAdviceに遷移すること
+    When User chooses "<selected_option>"
     And User clicks the answer button
-    Then User should see the "end of test" page
+    Then Redirected to "<redirected_page>" page
 
+    Examples:
+      | selected_option | redirected_page |
+      | option1 | advice |
+      | option2 | advice |
+      | option3 | advice |
+      | option4 | advice |
+      | option5 | end_of_test |
 
   @developing
   Scenario: テストページで正解を選んで、回答ボタンを押下するとEndOfTestに遷移すること
