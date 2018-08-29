@@ -5,7 +5,7 @@ Feature: Question management
   Background:
     Given a trainer enters the question edit page
 
-  @developing
+  @now
   Scenario: trainer add a question with 2 options
     When trainer inputs question:
       | description  |  "what is 1+1?"  |
