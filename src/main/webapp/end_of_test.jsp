@@ -25,7 +25,10 @@
 <div id="page-wrapper">
     <div class="container-fluid">
         <h1 id="title">End Of Test</h1>
-        <p>:)</p>
+        <p>
+            Thank you for your hard work.
+            It will be about two hours soon. Why do not you take a break?:)
+        </p>
     </div>
 </div>
 </body>
