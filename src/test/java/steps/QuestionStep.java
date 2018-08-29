@@ -38,8 +38,7 @@ public class QuestionStep {
 
     @Given("^User is in the test page$")
     public void user_is_in_the_test_page() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        site.visit("question");
     }
 
     @When("^User chooses the correct option$")
@@ -50,8 +49,7 @@ public class QuestionStep {
 
     @When("^User clicks the answer button$")
     public void user_clicks_the_answer_button() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        driver.clickButton("answer");
     }
 
     @Then("^User should see the \"([^\"]*)\" page$")
@@ -62,8 +60,7 @@ public class QuestionStep {
 
     @When("^User chooses the incorrect option$")
     public void user_chooses_the_incorrect_option() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        driver.clickById("option2");
     }
 
     @Then("^User go to the \"([^\"]*)\" page$")

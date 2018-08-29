@@ -48,6 +48,7 @@
                 <label id="option5" >&nbsp;None of the above</label>
             </li>
         </ul>
+        <button id="answer" type="submit" class="primary button">Answer</button>
     </div>
 </div>
 </body>
