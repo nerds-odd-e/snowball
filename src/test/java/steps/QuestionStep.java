@@ -85,4 +85,24 @@ public class QuestionStep {
         throw new PendingException();
     }
 
+    @Given("^a trainer enters the question edit page$")
+    public void aTrainerEntersTheQuestionEditPage() throws Throwable {
+        driver.visit(site.baseUrl() + "add_question.jsp");
+    }
+
+    @When("^trainer add a new question with description that have \"([^\"]*)\"$")
+    public void trainerAddANewQuestionWithDescriptionThatHave(int description_length) throws Throwable {
+        String description = "";
+        for (int i = 0; i < description_length; i++) {
+            description += "a";
+        }
+        driver.setTextField("description", description);
+    }
+
+    private void addQuestionWithDumyData() {
+        driver.setTextField("description", "dumy description");
+        driver.setTextField("option1", "dumy option1");
+        driver.setTextField("option2", "dumy option2");
+        driver.setTextField("advice", "dumy advice");
+    }
 }

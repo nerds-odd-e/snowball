@@ -48,7 +48,6 @@ Feature: Question management
     When trainer add a new question with description that have "<description length>"
     And trainer press the "add_button"
     Then Error message "<error message>" appears and stay at the same page
-
     Examples:
       |description length|error message                 |
       |501               |The description is over length|
