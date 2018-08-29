@@ -22,8 +22,34 @@
 	rel="stylesheet" type="text/css">
 </head>
 <body>
-<h1>Online Test</h1>
-<p id="description">What is scrum?</p>
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <h1>Online Test</h1>
+        <h2 id="description">What is scrum?</h2>
+        <ul>
+            <li>
+                <input for="option1" type="radio" name="option" />
+                <label id="option1" >&nbsp;Scrum is Rugby</label>
+            </li>
+            <li>
+                <input for="option2" type="radio" name="option" />
+                <label id="option2" >&nbsp;Scrum is Baseball</label>
+            </li>
+            <li>
+                <input for="option3" type="radio" name="option" />
+                <label id="option3" >&nbsp;Scrum is Soccer</label>
+            </li>
+            <li>
+                <input for="option4" type="radio" name="option" />
+                <label id="option4" >&nbsp;Scrum is Sumo</label>
+            </li>
+            <li>
+                <input for="option5" type="radio" name="option" />
+                <label id="option5" >&nbsp;None of the above</label>
+            </li>
+        </ul>
+    </div>
+</div>
 </body>
 <!-- jQuery -->
 <script type="text/javascript"
