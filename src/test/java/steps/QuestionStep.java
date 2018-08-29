@@ -52,8 +52,8 @@ public class QuestionStep {
     }
 
     @Then("^User should see the \"([^\"]*)\" page$")
-    public void user_should_see_the_page(String pageName) {
-        driver.expectElementWithIdToContainText("title", "end of test");
+    public void user_should_see_the_page(String pageName) throws Throwable {
+        driver.expectElementWithIdToContainText("title", "End Of Test");
     }
 
     @When("^User chooses the incorrect option$")
