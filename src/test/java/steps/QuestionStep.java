@@ -59,4 +59,10 @@ public class QuestionStep {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }
+
+    @When("^User chooses the incorrect option$")
+    public void user_chooses_the_incorrect_option() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
 }
