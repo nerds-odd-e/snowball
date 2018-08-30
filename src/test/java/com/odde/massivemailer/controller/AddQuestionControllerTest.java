@@ -1,6 +1,7 @@
 package com.odde.massivemailer.controller;
 
 import com.odde.TestWithDB;
+import com.odde.massivemailer.model.Options;
 import com.odde.massivemailer.model.Question;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,10 +29,40 @@ public class AddQuestionControllerTest {
 	public void addQuestiondTest() {
 		long count = Question.count();
 		request.setParameter("description", "What is Scrum?");
+		request.setParameter("advice", "some nice advice");
 		controller.doPost(request, response);
 		assertEquals(count + 1, (long) Question.count());
-		Question question = (Question) Question.getLast();
+		Question question = Question.getLast();
 		assertEquals("What is Scrum?",  question.getDescription());
+		assertEquals("some nice advice",  question.getAdvice());
 	}
 
+	@Test
+	public void add1OptionTest() {
+		long count = Options.count();
+		request.setParameter("advice", "some nice advice");
+		request.setParameter("description", "What is Scrum?");
+
+		request.setParameter("option1", "Scrum");
+		controller.doPost(request, response);
+		assertEquals(count + 1, (long) Options.count());
+		Options option1 = Options.getById(1);
+		assertEquals("Scrum",  option1.getDescription());
+	}
+
+	@Test
+	public void addOptionTest() {
+		long count = Options.count();
+		request.setParameter("advice", "some nice advice");
+		request.setParameter("description", "What is Scrum?");
+
+		request.setParameter("option1", "Scrum");
+		request.setParameter("option2", "Soccer");
+		controller.doPost(request, response);
+		assertEquals(count + 2, (long) Options.count());
+		Options option1 = Options.getById(1);
+		assertEquals("Scrum",  option1.getDescription());
+		Options option2 = Options.getById(2);
+		assertEquals("Soccer",  option2.getDescription());
+	}
 }

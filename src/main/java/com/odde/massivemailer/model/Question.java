@@ -23,4 +23,5 @@ public class Question extends ApplicationModel{
 	public void setAdvice(String advice) {
 		set("advice", advice);
 	}
+	public String getAdvice() {return (String) get("advice"); }
 }
