@@ -49,6 +49,7 @@
             <input type="submit" id="answer" value="Answer">
         </div>
         <input id="questionId" type="hidden" name="questionId" value="1">
+        <input id="from" type="hidden" name="from" value="question">
     </div>
     </form>
 </div>

@@ -61,7 +61,10 @@
         </ul>
         <div id="advice" class="jumbotron">Scrum is a framework for agile development.
         </div>
-        <button id="next" type="submit" class="btn-primary btn">Next</button>
+        <form action="question" method="post">
+            <input type="submit" id="next" value="Next" class="btn-primary btn"/>
+            <input id="from" type="hidden" name="from" value="advice">
+        </form>
     </div>
 </div>
 </body>

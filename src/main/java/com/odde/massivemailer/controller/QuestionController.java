@@ -17,6 +17,11 @@ public class QuestionController extends AppController {
     }
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String from = req.getParameter("from");
+        if ("advice".equals(from)) {
+            resp.sendRedirect("end_of_test.jsp");
+            return;
+        }
 
         String optionId = req.getParameter("optionId");
         String correctOption = "5";

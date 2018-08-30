@@ -49,7 +49,7 @@ public class QuestionStep {
     }
 
     @When("^User chooses \"([^\"]*)\"$")
-    public void user_chooses(String selected_option) throws Throwable {
+    public void user_chooses(String selected_option) {
         driver.clickById(selected_option);
     }
 
@@ -59,7 +59,7 @@ public class QuestionStep {
     }
 
     @Then("^Redirected to \"([^\"]*)\" page$")
-    public void redirected_to_page(String redirected_page) throws Throwable {
+    public void redirected_to_page(String redirected_page) {
         assertTrue(driver.getCurrentUrl().contains(redirected_page));
     }
 
@@ -69,7 +69,7 @@ public class QuestionStep {
     }
 
     @Then("^User should see the \"([^\"]*)\" page$")
-    public void user_should_see_the_page(String pageName) throws Throwable {
+    public void user_should_see_the_page(String pageName) {
         driver.expectElementWithIdToContainText("title", "End Of Test");
     }
 
@@ -84,7 +84,7 @@ public class QuestionStep {
     }
 
     @Then("^User should see \"([^\"]*)\" option highlighted and text \"([^\"]*)\"$")
-    public void user_should_see_option_highlighted_and_text(String clazz, String text) throws Throwable {
+    public void user_should_see_option_highlighted_and_text(String clazz, String text) {
         String cssSelector = "." + clazz.replace(" ", ".");
         List<WebElement> elements = driver.findElements(By.cssSelector(cssSelector));
         assertEquals(elements.size(), 1);
@@ -103,7 +103,7 @@ public class QuestionStep {
     }
 
     @When("^trainer add a new question with description that have \"([^\"]*)\"$")
-    public void trainerAddANewQuestionWithDescriptionThatHave(int description_length) throws Throwable {
+    public void trainerAddANewQuestionWithDescriptionThatHave(int description_length) {
         String description = "";
         for (int i = 0; i < description_length; i++) {
             description += "a";
@@ -112,17 +112,17 @@ public class QuestionStep {
     }
 
     @When("^option(\\d+) is selected as correct answer$")
-    public void optionIsSelectedAsCorrectAnswer(String optionId) throws Throwable {
+    public void optionIsSelectedAsCorrectAnswer(String optionId) {
         driver.clickButton("option"+optionId );
     }
 
     @Given("^User is in Advice page$")
-    public void user_is_in_Advice_page() throws Throwable {
-        site.visit("advice");
+    public void user_is_in_Advice_page() {
+        site.visit("advice.jsp");
     }
 
     @When("^User clicks the next button$")
-    public void user_clicks_the_next_button() throws Throwable {
+    public void user_clicks_the_next_button() {
         driver.clickButton("next");
     }
 

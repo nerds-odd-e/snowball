@@ -1,6 +1,7 @@
 package com.odde.massivemailer.controller;
 
 import com.google.common.collect.Lists;
+import cucumber.api.java.gl.E;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -47,6 +48,7 @@ public class QuestionControllerTest {
 
         request.addParameter("optionId", optionId);
         request.addParameter("questionId", "1");
+        request.addParameter("from", "question");
 
         controller.doPost(request, response);
 
@@ -56,4 +58,14 @@ public class QuestionControllerTest {
         String selectedOption = (String) request.getAttribute("selectedOption");
         assertEquals("2", selectedOption);
     }
+
+    @Test
+    public void checkFromAdvice() throws Exception {
+
+        request.addParameter("from", "advice");
+
+        controller.doPost(request, response);
+        assertEquals("end_of_test.jsp", response.getRedirectedUrl());
+    }
+
 }
