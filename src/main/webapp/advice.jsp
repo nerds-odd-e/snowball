@@ -30,6 +30,13 @@
 	String selectedOption = (String) request.getAttribute("selectedOption");
 	final String correctClass = "correct";
 	final String incorrectClass = "selected incorrect";
+	String[] optionMessages = {
+        "Scrum is Rugby",
+        "Scrum is Baseball",
+        "Scrum is Soccer",
+        "Scrum is Sumo",
+        "None of the above"
+	};
 %>
 
 <div id="page-wrapper">
@@ -37,27 +44,16 @@
         <h1>Advice</h1>
         <h2 id="description">What is scrum?</h2>
         <ul>
+            <%
+               for (int i=1; i <= optionMessages.length; ++i) {
+            %>
             <li>
-
-                <input for="option1" type="radio" name="optionId" <%= selectedOption.equals("1") ? "checked" : "" %> disabled/>
-                <label id="option1" class="<%= selectedOption.equals("1") ? incorrectClass : "" %>  <%= correctOption.equals("1") ? correctClass : "" %> ">Scrum is Rugby</label>
+                <input for="option<%= i %>" type="radio" name="optionId" <%= selectedOption.equals(String.valueOf(i)) ? "checked" : "" %> disabled/>
+                <label id="option<%= i %>" class="<%= selectedOption.equals(String.valueOf(i)) ? incorrectClass : "" %> <%= correctOption.equals(String.valueOf(i)) ? correctClass : "" %>" ><%= optionMessages[i - 1] %></label>
             </li>
-            <li>
-                <input for="option2" type="radio" name="optionId" <%= selectedOption.equals("2") ? "checked" : "" %> disabled/>
-                <label id="option2" class="<%= selectedOption.equals("2") ? incorrectClass : "" %> <%= correctOption.equals("2") ? correctClass : "" %>">Scrum is Baseball</label>
-            </li>
-            <li>
-                <input for="option3" type="radio" name="optionId" <%= selectedOption.equals("3") ? "checked" : "" %> disabled/>
-                <label id="option3" class="<%= selectedOption.equals("3") ? incorrectClass : "" %> <%= correctOption.equals("3") ? correctClass : "" %>">Scrum is Soccer</label>
-            </li>
-            <li>
-                <input for="option4" type="radio" name="optionId" <%= selectedOption.equals("4") ? "checked" : "" %> disabled/>
-                <label id="option4" class="<%= selectedOption.equals("4") ? incorrectClass : "" %> <%= correctOption.equals("4") ? correctClass : "" %>">Scrum is Sumo</label>
-            </li>
-            <li>
-                <input for="option5" type="radio" name="optionId" <%= selectedOption.equals("5") ? "checked" : "" %> disabled/>
-                <label id="option5" class="<%= selectedOption.equals("5") ? incorrectClass : "" %> <%= correctOption.equals("5") ? correctClass : "" %>" >None of the above</label>
-            </li>
+            <%
+               }
+            %>
         </ul>
         <div id="advice" class="jumbotron">Scrum is a framework for agile development.
         </div>
