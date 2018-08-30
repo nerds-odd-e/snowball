@@ -125,7 +125,6 @@ public class QuestionStep {
         driver.clickButton("next");
     }
 
-<<<<<<< HEAD
     @When("^sets default value$")
     public void setsDefaultValue() {
         driver.setTextField("description", "dumy description");
