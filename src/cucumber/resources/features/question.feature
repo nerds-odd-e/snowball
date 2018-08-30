@@ -14,6 +14,7 @@ Feature:
       | option4     | Scrum is Sumo     |
       | option5     | None of the above |
 
+  @developing
   Scenario Outline: 正解または不正解を選んで、回答ボタンを押下するとEndOfTestまたはAdviceに遷移すること
     Given User is in the test page
     And There is a question "What is Scrum"
@@ -46,7 +47,6 @@ Feature:
       | option3          | Scrum is Soccer   |
       | option4          | Scrum is Sumo     |
 
-  @now
   Scenario: AdviceページからNextボタンを押下するとEnd of pageが表示されること
     Given User arrives at advice page
     When User clicks the next button
