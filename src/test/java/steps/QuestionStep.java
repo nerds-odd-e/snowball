@@ -72,9 +72,9 @@ public class QuestionStep {
         driver.expectElementWithIdToContainText("title", "End Of Test");
     }
 
-    @When("^User chooses the incorrect option$")
-    public void user_chooses_the_incorrect_option() {
-        driver.clickById("option2");
+    @When("^User chooses the \"([^\"]*)\" option$")
+    public void user_chooses_the_option(String incorrectId) throws Throwable {
+        driver.clickById(incorrectId);
     }
 
     @Then("^User go to the \"([^\"]*)\" page$")

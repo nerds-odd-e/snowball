@@ -24,29 +24,37 @@
 	rel="stylesheet" type="text/css">
 </head>
 <body>
+
+<%
+	String correctOptions = (String) request.getAttribute("correctOption");
+%>
+
+
+
+
 <div id="page-wrapper">
     <div class="container-fluid">
         <h1>Advice</h1>
         <h2 id="description">What is scrum?</h2>
         <ul>
             <li>
-                <input for="option1" type="radio" name="optionIds" disabled/>
+                <input for="option1" type="radio" name="optionId" disabled/>
                 <label id="option1" >Scrum is Rugby</label>
             </li>
             <li>
-                <input for="option2" type="radio" name="optionIds" checked="checked" disabled/>
+                <input for="option2" type="radio" name="optionId" checked="checked" disabled/>
                 <label id="option2" class="incorrect selected">Scrum is Baseball</label>
             </li>
             <li>
-                <input for="option3" type="radio" name="optionIds" disabled/>
+                <input for="option3" type="radio" name="optionId" disabled/>
                 <label id="option3" >Scrum is Soccer</label>
             </li>
             <li>
-                <input for="option4" type="radio" name="optionIds" disabled/>
+                <input for="option4" type="radio" name="optionId" disabled/>
                 <label id="option4" >Scrum is Sumo</label>
             </li>
             <li>
-                <input for="option5" type="radio" name="optionIds" disabled/>
+                <input for="option5" type="radio" name="optionId" disabled/>
                 <label id="option5" class="correct" >None of the above</label>
             </li>
         </ul>

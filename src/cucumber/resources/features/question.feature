@@ -24,21 +24,27 @@ Feature:
 
     Examples:
       | selected_option | redirected_page |
-      | option1 | advice |
-      | option2 | advice |
-      | option3 | advice |
-      | option4 | advice |
-      | option5 | end_of_test |
+      | option1         | advice          |
+      | option2         | advice          |
+      | option3         | advice          |
+      | option4         | advice          |
+      | option5         | end_of_test     |
 
   @developing
-  Scenario: テストページで不正解を選んで、回答ボタンを押下するとAdviceページが表示されること
-    Given There is a question "What is Scrum"
-    When User chooses the incorrect option
+  Scenario Outline: テストページで不正解を選んで、回答ボタンを押下するとAdviceページが表示されること
+    When User chooses the "<incorrect option>" option
     And User clicks the answer button
     Then User go to the "Advice" page
     And User should see "correct" option highlighted and text "None of the above"
-    And User should see "selected incorrect" option highlighted and text "Scrum is Baseball"
+    And User should see "selected incorrect" option highlighted and text "<text>"
     And User should see "advice text"
+
+    Examples:
+      | incorrect option | text              |
+      | option1          | Scrum is Rugby    |
+      | option2          | Scrum is Baseball |
+      | option3          | Scrum is Soccer   |
+      | option4          | Scrum is Sumo     |
 
   @developing
   Scenario: AdviceページからNextボタンを押下するとEnd of pageが表示されること

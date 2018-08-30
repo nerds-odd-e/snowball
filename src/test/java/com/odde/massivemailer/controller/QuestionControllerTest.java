@@ -32,9 +32,9 @@ public class QuestionControllerTest {
     @Test
     public void postCorrect() throws Exception {
 
-        String[] optionIds = {"5"};
+        String optionId = "5";
 
-        request.addParameter("optionIds", optionIds);
+        request.addParameter("optionId", optionId);
         request.addParameter("questionId", "1");
 
         controller.doPost(request,response);
@@ -43,12 +43,17 @@ public class QuestionControllerTest {
 
     @Test
     public void postIncorrect() throws ServletException, IOException {
-        String[] optionIds = {"2"};
+        String optionId = "2";
 
-        request.addParameter("optionIds", optionIds);
+        request.addParameter("optionId", optionId);
         request.addParameter("questionId", "1");
 
         controller.doPost(request, response);
-        assertEquals("advice.jsp", response.getRedirectedUrl());
+
+        String correctOption = (String) request.getAttribute("correctOption");
+        assertEquals("5", correctOption);
+
+        String selectedOption = (String) request.getAttribute("selectedOption");
+        assertEquals("2", selectedOption);
     }
 }

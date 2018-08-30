@@ -2,11 +2,13 @@ package com.odde.massivemailer.controller;
 
 import com.odde.massivemailer.model.User;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 
 @WebServlet("/question")
 public class QuestionController extends AppController {
@@ -16,7 +18,7 @@ public class QuestionController extends AppController {
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String optionId = req.getParameter("optionIds");
+        String optionId = req.getParameter("optionId");
         String correctOption = "5";
 
         if (correctOption.equals(optionId)) {
@@ -24,6 +26,10 @@ public class QuestionController extends AppController {
             return;
         }
 
-        resp.sendRedirect("advice.jsp");
+        req.setAttribute("correctOption", correctOption);
+        req.setAttribute("selectedOption", optionId);
+
+        RequestDispatcher dispatch = req.getRequestDispatcher("advice.jsp");
+        dispatch.forward(req, resp);
     }
 }
