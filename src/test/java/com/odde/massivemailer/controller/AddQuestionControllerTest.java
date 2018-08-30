@@ -55,4 +55,17 @@ public class AddQuestionControllerTest {
 		Options option2 = Options.getById(2);
 		assertEquals("Soccer",  option2.getDescription());
 	}
+
+	@Test
+	public void addCorrectAnswerTest() {
+		request.setParameter("advice", "some nice advice");
+		request.setParameter("description", "What is Scrum?");
+		request.setParameter("option1", "Soccer");
+		request.setParameter("option2", "Scrum");
+		request.setParameter("is_correct", "1");
+		controller.doPost(request, response);
+
+		Options option2 = Options.getById(2);
+		assertEquals(1, option2.getIsCorrect());
+	}
 }

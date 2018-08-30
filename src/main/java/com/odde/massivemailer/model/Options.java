@@ -24,4 +24,6 @@ public class Options extends ApplicationModel{
 	public static Options getById(int id) {
 		return (Options) findAll().get(id-1);
 	}
+
+	public int getIsCorrect () {return (Integer) get("is_correct"); }
 }

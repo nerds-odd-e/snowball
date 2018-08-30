@@ -15,10 +15,14 @@ public class AddQuestionController extends AppController {
 				.saveIt();
 
 		for (int i = 1; i < 3; i++) {
+			int is_correct = 0;
+			if(i == 2){
+				is_correct = 1;
+			}
 			new Options()
 					.set("description", req.getParameter("option" + i))
 					.set("question_id", question.getLast().getQuestionId())
-					.set("is_correct", 0)
+					.set("is_correct", is_correct)
 					.saveIt();
 		}
 	}
