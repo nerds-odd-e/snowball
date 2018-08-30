@@ -197,12 +197,22 @@ public class QuestionStep {
     }
 
     @Given("^There is a question \"([^\"]*)\"$")
-    public void there_is_a_question(String arg1) throws Throwable {
+    public void there_is_a_question(String arg1) {
     }
 
     @When("^User clicks \"([^\"]*)\" button on menu$")
-    public void user_clicks_button_on_menu(String link) throws Throwable {
+    public void user_clicks_button_on_menu(String link) {
         driver.clickById("start_test");
     }
 
+    @Given("^User answered \"([^\"]*)\" times in the test page$")
+    public void user_answered_times_in_the_test_page(String answeredCount) {
+        driver.expectElementWithIdToContainText("answeredCount", answeredCount);
+        driver.pageShouldContain("Online Test");
+    }
+
+    @Then("^Move to next question page$")
+    public void move_to_next_question_page() {
+        driver.pageShouldContain("Online Test");
+    }
 }

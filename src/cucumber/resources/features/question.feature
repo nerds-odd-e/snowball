@@ -50,3 +50,20 @@ Feature:
     Given User arrives at advice page
     When User clicks the next button
     Then Move to "End Of Test" page
+
+  @developing
+  Scenario Outline: 次のテストがある時に、正解を選んで、回答ボタンを押下すると次のテストページが表示されること
+    Given User is in the test page
+    And User answered "<answered_count>" times in the test page
+    When User chooses "<selected_option>"
+    And User clicks the answer button
+    Then Move to next question page
+
+    Examples:
+      | answered_count |
+      | 0              |
+      | 1              |
+      | 2              |
+      | 3              |
+      | 4              |
+      | 5              |
