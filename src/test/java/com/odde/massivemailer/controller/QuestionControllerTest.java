@@ -30,7 +30,8 @@ public class QuestionControllerTest {
     }
 
     @Test
-    public void showEndOfTestPage() throws Exception {
+    public void postCorrect() throws Exception {
+
         String[] optionIds = {"5"};
 
         request.addParameter("optionIds", optionIds);
