@@ -97,9 +97,8 @@ public class QuestionStep {
     }
 
     @Then("^User should see \"([^\"]*)\"$")
-    public void user_should_see(String arg1) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void user_should_see(String text) {
+        driver.expectElementWithIdToContainValue("advice", text);
     }
 
     @Given("^a trainer enters the question edit page$")

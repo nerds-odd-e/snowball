@@ -37,7 +37,7 @@ Feature:
     Then User go to the "Advice" page
     And User should see "correct" option highlighted and text "None of the above"
     And User should see "selected incorrect" option highlighted and text "<text>"
-    And User should see "advice text"
+    And User should see "Scrum is a framework for agile development."
 
     Examples:
       | incorrect option | text              |
