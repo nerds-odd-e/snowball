@@ -26,11 +26,9 @@
 <body>
 
 <%
-	String correctOptions = (String) request.getAttribute("correctOption");
+	String correctOption = (String) request.getAttribute("correctOption");
+	String selectedOption = (String) request.getAttribute("selectedOption");
 %>
-
-
-
 
 <div id="page-wrapper">
     <div class="container-fluid">
@@ -38,23 +36,24 @@
         <h2 id="description">What is scrum?</h2>
         <ul>
             <li>
-                <input for="option1" type="radio" name="optionId" disabled/>
+
+                <input for="option1" type="radio" name="optionId" <%= selectedOption.equals("1") ? "checked" : "" %> disabled/>
                 <label id="option1" >Scrum is Rugby</label>
             </li>
             <li>
-                <input for="option2" type="radio" name="optionId" checked="checked" disabled/>
+                <input for="option2" type="radio" name="optionId" <%= selectedOption.equals("2") ? "checked" : "" %> disabled/>
                 <label id="option2" class="incorrect selected">Scrum is Baseball</label>
             </li>
             <li>
-                <input for="option3" type="radio" name="optionId" disabled/>
+                <input for="option3" type="radio" name="optionId" <%= selectedOption.equals("3") ? "checked" : "" %> disabled/>
                 <label id="option3" >Scrum is Soccer</label>
             </li>
             <li>
-                <input for="option4" type="radio" name="optionId" disabled/>
+                <input for="option4" type="radio" name="optionId" <%= selectedOption.equals("4") ? "checked" : "" %> disabled/>
                 <label id="option4" >Scrum is Sumo</label>
             </li>
             <li>
-                <input for="option5" type="radio" name="optionId" disabled/>
+                <input for="option5" type="radio" name="optionId" <%= selectedOption.equals("5") ? "checked" : "" %> disabled/>
                 <label id="option5" class="correct" >None of the above</label>
             </li>
         </ul>
