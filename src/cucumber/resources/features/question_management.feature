@@ -5,7 +5,6 @@ Feature: Question management
   Background:
     Given a trainer enters the question edit page
 
-  @developing
   Scenario: trainer add a question with 2 options
     When trainer inputs question:
       | description  |  what is 1+1?  |
@@ -19,7 +18,7 @@ Feature: Question management
       | option1      |  must be 3!    |
       | option2      |  of course 2.  |
       | advice       | you should read a math book |
-    And "of course 2." is green
+    And row of option2 is green
 
   @developing
   Scenario: trainer add a question with 5 options

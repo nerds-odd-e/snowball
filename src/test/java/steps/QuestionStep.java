@@ -179,12 +179,12 @@ public class QuestionStep {
         });
     }
 
-    @And("^\"([^\"]*)\" is green$")
-    public void isGreen(String optionContent) throws Throwable {
+    @And("^row of option(\\d+) is green$")
+    public void rowOfOptionIsGreen(int optionID) {
         String clazz = "bg-success";
         String cssSelector = "." + clazz.replace(" ", ".");
         List<WebElement> elements = driver.findElements(By.cssSelector(cssSelector));
         assertEquals(1, elements.size());
-        assertEquals(optionContent, elements.get(0).getText());
+        assertEquals("option" + optionID + "row", elements.get(0).getAttribute("id"));
     }
 }

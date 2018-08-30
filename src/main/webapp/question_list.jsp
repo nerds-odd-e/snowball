@@ -32,7 +32,7 @@
 				<!-- Page Heading -->
 				<div class="row">
 					<div class="col-lg-12">
-						<h1 class="page-header">Contact List</h1>
+						<h1 class="page-header">Question List</h1>
 					</div>
 				</div>
 				<!-- /.row -->
@@ -41,20 +41,25 @@
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="panel panel-default">
-                            <table class="table table-responsive table-striped">
+                            <table class="table table-responsive table-bordered">
                                 <thead>
-                                    <tr>
-                                        <th>Description</th>
-                                        <th>Option1</th>
-                                        <th>Option2</th>
-                                        <th>Advice</th>
-                                    </tr>
+                                    <th>Question 1</th>
                                 </thead>
                                 <tbody id="questionTable">
                                     <tr>
+                                        <th>Description</th>
                                         <td id="description">what is 1+1?</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Option1</th>
                                         <td id="option1">must be 3!</td>
-                                        <td id="option2" class="bg-success">of course 2.</td>
+                                    </tr>
+                                    <tr id="option2row" class="bg-success">
+                                        <th>Option2</th>
+                                        <td id="option2">of course 2.</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Advice</th>
                                         <td id="advice">you should read a math book</td>
                                     </tr>
                                 </tbody>
