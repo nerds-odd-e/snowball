@@ -20,26 +20,26 @@ Feature: Question management
       | advice       | you should read a math book |
     And row of option2 is green
 
-  @developing
+  @now
   Scenario: trainer add a question with 5 options
     When trainer inputs question:
-      | description  |  "what is 1+1?"  |
-      | option1      |  "must be 1!"    |
-      | option2      |  "of course 2."  |
-      | option3      |  "must be 3!"    |
-      | option4      |  "of course 4."  |
-      | option5      |  "of course 5."  |
-      | advice       | "you should read a math book" |
+      | description  | what is 1+1?  |
+      | option1      | must be 1!    |
+      | option2      | of course 2.  |
+      | option3      | must be 3!    |
+      | option4      | of course 4.  |
+      | option5      | of course 5.  |
+      | advice       | you should read a math book |
     And trainer set the option2 as the correct answer
     And trainer press the "add_button"
     Then trainer should see question in question list:
-      | description  |  "what is 1+1?"  |
-      | option1      |  "must be 1!"    |
-      | option2      |  "of course 2."  |
-      | option3      |  "must be 3!"    |
-      | option4      |  "of course 4."  |
-      | option5      |  "of course 5."  |
-      | advice       | "you should read a math book" |
+      | description  | what is 1+1?  |
+      | option1      | must be 1!    |
+      | option2      | of course 2.  |
+      | option3      | must be 3!    |
+      | option4      | of course 4.  |
+      | option5      | of course 5.  |
+      | advice       | you should read a math book |
     And option2 is green
 
   @developing

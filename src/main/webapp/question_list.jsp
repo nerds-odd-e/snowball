@@ -59,6 +59,18 @@
                                         <td id="option2">of course 2.</td>
                                     </tr>
                                     <tr>
+                                        <th>Option3</th>
+                                        <td id="option3">must be 3!</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Option4</th>
+                                        <td id="option4">of course 4.</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Option5</th>
+                                        <td id="option5">of course 5.</td>
+                                    </tr>
+                                    <tr>
                                         <th>Advice</th>
                                         <td id="advice">you should read a math book</td>
                                     </tr>
