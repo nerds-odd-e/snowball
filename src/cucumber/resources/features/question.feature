@@ -20,15 +20,15 @@ Feature:
     And There is a question "What is Scrum"
     When User chooses "<selected_option>"
     And User clicks the answer button
-    Then Redirected to "<redirected_page>" page
+    Then Move to "<page_content>" page
 
     Examples:
-      | selected_option | redirected_page |
-      | option1         | advice          |
-      | option2         | advice          |
-      | option3         | advice          |
-      | option4         | advice          |
-      | option5         | end_of_test     |
+      | selected_option | page_content |
+      | option1         | Advice          |
+      | option2         | Advice          |
+      | option3         | Advice          |
+      | option4         | Advice          |
+      | option5         | End Of Test     |
 
   Scenario Outline: テストページで不正解を選んで、回答ボタンを押下するとAdviceページが表示されること
     Given User is in the test page

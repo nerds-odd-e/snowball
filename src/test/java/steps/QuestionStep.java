@@ -63,9 +63,9 @@ public class QuestionStep {
         driver.clickButton("answer");
     }
 
-    @Then("^Redirected to \"([^\"]*)\" page$")
-    public void redirected_to_page(String redirected_page) {
-        assertTrue(driver.getCurrentUrl().contains(redirected_page));
+    @Then("^Move to \"([^\"]*)\" page$")
+    public void move_to_page(String redirected_page) {
+        driver.pageShouldContain(redirected_page);
     }
 
     @When("^User chooses the correct option$")
