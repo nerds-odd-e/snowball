@@ -1,14 +1,11 @@
 package com.odde.massivemailer.controller;
 
-import com.odde.massivemailer.model.User;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
 
 @WebServlet("/question")
 public class QuestionController extends AppController {
@@ -33,6 +30,15 @@ public class QuestionController extends AppController {
 
         req.setAttribute("correctOption", correctOption);
         req.setAttribute("selectedOption", optionId);
+
+        String[] options = {
+                "Scrum is Rugby",
+                "Scrum is Baseball",
+                "Scrum is Soccer",
+                "Scrum is Sumo",
+                "None of the above"
+        };
+        req.setAttribute("options", options);
 
         RequestDispatcher dispatch = req.getRequestDispatcher("advice.jsp");
         dispatch.forward(req, resp);

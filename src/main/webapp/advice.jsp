@@ -28,15 +28,9 @@
 <%
 	String correctOption = (String) request.getAttribute("correctOption");
 	String selectedOption = (String) request.getAttribute("selectedOption");
+	String[] options = (String[]) request.getAttribute("options");
 	final String correctClass = "correct";
 	final String incorrectClass = "selected incorrect";
-	String[] optionMessages = {
-        "Scrum is Rugby",
-        "Scrum is Baseball",
-        "Scrum is Soccer",
-        "Scrum is Sumo",
-        "None of the above"
-	};
 %>
 
 <div id="page-wrapper">
@@ -45,11 +39,11 @@
         <h2 id="description">What is scrum?</h2>
         <ul>
             <%
-               for (int i=1; i <= optionMessages.length; ++i) {
+               for (int i=1; i <= options.length; ++i) {
             %>
             <li>
                 <input for="option<%= i %>" type="radio" name="optionId" <%= selectedOption.equals(String.valueOf(i)) ? "checked" : "" %> disabled/>
-                <label id="option<%= i %>" class="<%= selectedOption.equals(String.valueOf(i)) ? incorrectClass : "" %> <%= correctOption.equals(String.valueOf(i)) ? correctClass : "" %>" ><%= optionMessages[i - 1] %></label>
+                <label id="option<%= i %>" class="<%= selectedOption.equals(String.valueOf(i)) ? incorrectClass : "" %> <%= correctOption.equals(String.valueOf(i)) ? correctClass : "" %>" ><%= options[i - 1] %></label>
             </li>
             <%
                }

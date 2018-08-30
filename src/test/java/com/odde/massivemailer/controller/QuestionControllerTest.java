@@ -57,6 +57,18 @@ public class QuestionControllerTest {
 
         String selectedOption = (String) request.getAttribute("selectedOption");
         assertEquals("2", selectedOption);
+
+        String[] options = (String[]) request.getAttribute("options");
+        String[] expectedOptions = {
+                "Scrum is Rugby",
+                "Scrum is Baseball",
+                "Scrum is Soccer",
+                "Scrum is Sumo",
+                "None of the above"
+        };
+        for (int i = 0; i < options.length; ++i) {
+            assertEquals(expectedOptions[i], options[i]);
+        }
     }
 
     @Test
