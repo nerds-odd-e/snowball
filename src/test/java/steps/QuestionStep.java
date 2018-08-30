@@ -1,5 +1,8 @@
 package steps;
 
+import com.odde.massivemailer.model.Options;
+import com.odde.massivemailer.model.Questions;
+import com.odde.massivemailer.model.User;
 import cucumber.api.DataTable;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
@@ -165,10 +168,11 @@ public class QuestionStep {
 
     @When("^trainer inputs question:$")
     public void trainerInputsQuestion(DataTable questionData) throws Throwable {
-        Map<String, String> questions = questionData.asMap(String.class, String.class);
-        questions.forEach((column, value) -> {
-            driver.setTextField(column, value);
-        });
+        List<List<String>> data = questionData.raw();
+        driver.setTextField(data.get(0).get(0), data.get(0).get(1));
+        driver.setTextField(data.get(1).get(0), data.get(1).get(1));
+        driver.setTextField(data.get(2).get(0), data.get(2).get(1));
+        driver.setTextField(data.get(3).get(0), data.get(3).get(1));
     }
 
     @And("^trainer set the option(\\d+) as the correct answer$")
