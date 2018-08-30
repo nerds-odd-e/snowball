@@ -21,7 +21,7 @@ public class AddQuestionController extends AppController {
 			}
 			new Options()
 					.set("description", req.getParameter("option" + i))
-					.set("question_id", question.getLast().getQuestionId())
+					.set("question_id", question.getLast().getId())
 					.set("is_correct", is_correct)
 					.saveIt();
 		}

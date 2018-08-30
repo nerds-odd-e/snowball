@@ -26,7 +26,22 @@ public class QuestionStep {
 
     @Given("^User is in the test page$")
     public void user_is_in_the_test_page() {
+        setup();
         site.visit("question");
+    }
+
+    private void setup() {
+        Question question = new Question();
+        question.setAdvice("Scrum is a framework for agile development.");
+        question.setDescription("What is scrum?");
+        question.setIsMultiQuestion(false);
+        question.saveIt();
+
+        Options options = new Options();
+        options.setIsCorrect(false);
+        options.setDescription("Scrum is Rugby");
+        options.setQuestionId((long)question.getId());
+        options.saveIt();
     }
 
     @Given("^User is in the top page$")
@@ -220,4 +235,6 @@ public class QuestionStep {
     public void is_shown(String currentPage) throws Throwable {
         driver.pageShouldContain(currentPage);
     }
+
+
 }

@@ -1,29 +1,40 @@
 package com.odde.massivemailer.model;
 
-import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
 
 
 @Table("options")
-public class Options extends ApplicationModel{
-	private String option;
+public class Options extends ApplicationModel {
 
-	public String getOption(){
-		return this.option;
-	}
+    public int getIsCorrect() {
+        return (Integer) get("is_correct");
+    }
 
-	public void setOption(String option){
-		this.option = option;
-		set("description", option);
-	}
+    public void setOption(String option) {
+        set("description", option);
+    }
 
-	public String getDescription() {
-		return (String) get("description");
-	}
+    public String getDescription() {
+        return (String) get("description");
+    }
 
-	public static Options getById(int id) {
-		return (Options) findAll().get(id-1);
-	}
+    public void setIsCorrect(boolean isCorrect) {
+        set("is_correct", isCorrect ? 1 : 0);
+    }
 
-	public int getIsCorrect () {return (Integer) get("is_correct"); }
+    public static Options getById(int id) {
+        return (Options) findAll().get(id - 1);
+    }
+
+    public void setDescription(String description) {
+        set("description", description);
+    }
+
+    public void setQuestionId(long questionId) {
+        set("question_id", questionId);
+    }
+
+    public long getQuestionId() {
+        return (long)get("question_id");
+    }
 }
