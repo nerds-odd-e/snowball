@@ -26,13 +26,14 @@ public class AddQuestionControllerTest {
 
 
 	@Test
-	public void addQuestiondTest() {
+	public void addQuestionTest() {
 		long count = Question.count();
 		request.setParameter("description", "What is Scrum?");
 		request.setParameter("advice", "some nice advice");
 		request.setParameter("option1", "Scrum");
 		request.setParameter("option2", "Soccer");
 		controller.doPost(request, response);
+
 		assertEquals(count + 1, (long) Question.count());
 		Question question = Question.getLast();
 		assertEquals("What is Scrum?",  question.getDescription());
@@ -44,10 +45,10 @@ public class AddQuestionControllerTest {
 		long count = Options.count();
 		request.setParameter("advice", "some nice advice");
 		request.setParameter("description", "What is Scrum?");
-
 		request.setParameter("option1", "Scrum");
 		request.setParameter("option2", "Soccer");
 		controller.doPost(request, response);
+
 		assertEquals(count + 2, (long) Options.count());
 		Options option1 = Options.getById(1);
 		assertEquals("Scrum",  option1.getDescription());

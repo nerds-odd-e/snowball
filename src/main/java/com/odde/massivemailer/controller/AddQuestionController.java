@@ -8,21 +8,19 @@ import javax.servlet.http.HttpServletResponse;
 
 public class AddQuestionController extends AppController {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) {
-		new Question()
-				.set("description", req.getParameter("description"))
+		Question question = new Question();
+				question.set("description", req.getParameter("description"))
 				.set("is_multi_question", 0)
 				.set("advice", req.getParameter("advice"))
 				.saveIt();
-		new Options()
-				.set("description", req.getParameter("option1"))
-				.set("question_id", 0)
-				.set("is_correct", 0)
-				.saveIt();
-		new Options()
-				.set("description", req.getParameter("option2"))
-				.set("question_id", 0)
-				.set("is_correct", 0)
-				.saveIt();
+
+		for (int i = 1; i < 3; i++) {
+			new Options()
+					.set("description", req.getParameter("option" + i))
+					.set("question_id", question.getLast().getQuestionId())
+					.set("is_correct", 0)
+					.saveIt();
+		}
 	}
 
 

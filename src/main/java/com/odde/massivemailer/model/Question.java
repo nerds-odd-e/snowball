@@ -16,12 +16,11 @@ public class Question extends ApplicationModel{
 	public void setDescription(String description){
 		set("description", description);
 	}
-	public void setIsMultiQuestion(int isMultiQuestion){
-		set("is_multi_question", isMultiQuestion);
-	}
 
 	public void setAdvice(String advice) {
 		set("advice", advice);
 	}
 	public String getAdvice() {return (String) get("advice"); }
+
+	public int getQuestionId() {return (Integer) get("id"); }
 }
