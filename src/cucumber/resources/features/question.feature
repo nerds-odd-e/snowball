@@ -27,7 +27,7 @@ Feature:
       | option2         | Advice          |
       | option3         | Advice          |
       | option4         | Advice          |
-      | option5         | End Of Test     |
+      | option5         | Question        |
 
   Scenario Outline: テストページで不正解を選んで、回答ボタンを押下するとAdviceページが表示されること
     Given User is in the test page

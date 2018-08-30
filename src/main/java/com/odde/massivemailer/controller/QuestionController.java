@@ -5,18 +5,26 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet("/question")
 public class QuestionController extends AppController {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession(true);
+        session.setAttribute("answeredCount", 0);
         resp.sendRedirect("question.jsp");
     }
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession(true);
+        int answeredCount = (int) session.getAttribute("answeredCount");
+        answeredCount++;
+        session.setAttribute("answeredCount", answeredCount);
+
         String from = req.getParameter("from");
         if ("advice".equals(from)) {
-            resp.sendRedirect("end_of_test.jsp");
+            resp.sendRedirect(getRedirectPageName(answeredCount));
             return;
         }
 
@@ -24,7 +32,7 @@ public class QuestionController extends AppController {
         String correctOption = "5";
 
         if (correctOption.equals(optionId)) {
-            resp.sendRedirect("end_of_test.jsp");
+            resp.sendRedirect(getRedirectPageName(answeredCount));
             return;
         }
 
@@ -43,4 +51,14 @@ public class QuestionController extends AppController {
         RequestDispatcher dispatch = req.getRequestDispatcher("advice.jsp");
         dispatch.forward(req, resp);
     }
+
+    private String getRedirectPageName(int answeredCount) {
+        String redirectPageName = "end_of_test.jsp";
+        if (answeredCount < 10) {
+            redirectPageName = "question.jsp";
+        }
+        return redirectPageName;
+    }
+
+
 }

@@ -8,6 +8,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
@@ -22,6 +23,7 @@ public class QuestionControllerTest {
         controller = new QuestionController();
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
+        request.getSession().setAttribute("answeredCount", 3);
     }
 
     @Test
@@ -37,6 +39,22 @@ public class QuestionControllerTest {
 
         request.addParameter("optionId", optionId);
         request.addParameter("questionId", "1");
+        request.getSession().setAttribute("answeredCount", 3);
+
+        controller.doPost(request,response);
+        assertEquals("question.jsp", response.getRedirectedUrl());
+        HttpSession session = request.getSession();
+        assertEquals(4, (int) session.getAttribute("answeredCount"));
+    }
+
+    @Test
+    public void postCorrectOptionInTheLastQuestion() throws Exception {
+
+        String optionId = "5";
+
+        request.addParameter("optionId", optionId);
+        request.addParameter("questionId", "1");
+        request.getSession().setAttribute("answeredCount", 10);
 
         controller.doPost(request,response);
         assertEquals("end_of_test.jsp", response.getRedirectedUrl());
@@ -72,9 +90,19 @@ public class QuestionControllerTest {
     }
 
     @Test
-    public void checkFromAdvice() throws Exception {
+    public void checkFromAdvicePageToQuestionPage() throws Exception {
 
         request.addParameter("from", "advice");
+
+        controller.doPost(request, response);
+        assertEquals("question.jsp", response.getRedirectedUrl());
+    }
+
+    @Test
+    public void checkFromAdvicePageToEndOfTestPage() throws Exception {
+
+        request.addParameter("from", "advice");
+        request.getSession().setAttribute("answeredCount", 10);
 
         controller.doPost(request, response);
         assertEquals("end_of_test.jsp", response.getRedirectedUrl());
