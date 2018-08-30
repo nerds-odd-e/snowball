@@ -49,4 +49,4 @@ Feature:
   Scenario: AdviceページからNextボタンを押下するとEnd of pageが表示されること
     Given User arrives at advice page
     When User clicks the next button
-    Then Redirected to "end_of_test" page
+    Then Move to "End Of Test" page
