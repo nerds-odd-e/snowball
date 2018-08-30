@@ -167,11 +167,10 @@ public class QuestionStep {
 
     @When("^trainer inputs question:$")
     public void trainerInputsQuestion(DataTable questionData) throws Throwable {
-        List<List<String>> data = questionData.raw();
-        driver.setTextField(data.get(0).get(0), data.get(0).get(1));
-        driver.setTextField(data.get(1).get(0), data.get(1).get(1));
-        driver.setTextField(data.get(2).get(0), data.get(2).get(1));
-        driver.setTextField(data.get(3).get(0), data.get(3).get(1));
+        Map<String, String> questions = questionData.asMap(String.class, String.class);
+        questions.forEach((column, value) -> {
+            driver.setTextField(column, value);
+        });
     }
 
     @And("^trainer set the option(\\d+) as the correct answer$")
