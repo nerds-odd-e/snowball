@@ -159,11 +159,10 @@ public class QuestionStep {
 
     @When("^trainer inputs question:$")
     public void trainerInputsQuestion(DataTable questionData) throws Throwable {
-        List<List<String>> data = questionData.raw();
-        driver.setTextField(data.get(0).get(0), data.get(0).get(1));
-        driver.setTextField(data.get(1).get(0), data.get(1).get(1));
-        driver.setTextField(data.get(2).get(0), data.get(2).get(1));
-        driver.setTextField(data.get(3).get(0), data.get(3).get(1));
+        Map<String, String> questions = questionData.asMap(String.class, String.class);
+        questions.forEach((column, value) -> {
+            driver.setTextField(column, value);
+        });
     }
 
     @And("^trainer set the option(\\d+) as the correct answer$")
@@ -174,19 +173,18 @@ public class QuestionStep {
     @Then("^trainer should see question in question list:$")
     public void trainerShouldSeeQuestionInQuestionList(DataTable questionData) {
         driver.visit(site.baseUrl() + "question_list.jsp");
-        List<List<String>> data = questionData.raw();
-        assertEquals(driver.findElementById(data.get(0).get(0)).getText(), data.get(0).get(1));
-        assertEquals(driver.findElementById(data.get(1).get(0)).getText(), data.get(1).get(1));
-        assertEquals(driver.findElementById(data.get(2).get(0)).getText(), data.get(2).get(1));
-        assertEquals(driver.findElementById(data.get(3).get(0)).getText(), data.get(3).get(1));
+        Map<String, String> questions = questionData.asMap(String.class, String.class);
+        questions.forEach((column, value) -> {
+            assertEquals(value, driver.findElementById(column).getText());
+        });
     }
 
-    @And("^option(\\d+) is green$")
-    public void optionIsGreen(int optionID) {
+    @And("^\"([^\"]*)\" is green$")
+    public void isGreen(String optionContent) throws Throwable {
         String clazz = "bg-success";
         String cssSelector = "." + clazz.replace(" ", ".");
         List<WebElement> elements = driver.findElements(By.cssSelector(cssSelector));
-        assertEquals(elements.size(), 1);
-        assertEquals(elements.get(0).getText(), "of course 2.");
+        assertEquals(1, elements.size());
+        assertEquals(optionContent, elements.get(0).getText());
     }
 }
