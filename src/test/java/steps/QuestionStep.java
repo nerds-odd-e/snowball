@@ -208,11 +208,16 @@ public class QuestionStep {
     @Given("^User answered \"([^\"]*)\" times in the test page$")
     public void user_answered_times_in_the_test_page(String answeredCount) {
         driver.expectElementWithIdToContainText("answeredCount", answeredCount);
-        driver.pageShouldContain("Online Test");
+        driver.pageShouldContain("Question");
     }
 
     @Then("^Move to next question page$")
     public void move_to_next_question_page() {
-        driver.pageShouldContain("Online Test");
+        driver.pageShouldContain("Question");
+    }
+
+    @Then("^\"([^\"]*)\" is shown$")
+    public void is_shown(String currentPage) throws Throwable {
+        driver.pageShouldContain(currentPage);
     }
 }

@@ -58,12 +58,13 @@ Feature:
     When User chooses "<selected_option>"
     And User clicks the answer button
     Then Move to next question page
+    And "<current_page>" is shown
 
     Examples:
-      | answered_count |
-      | 0              |
-      | 1              |
-      | 2              |
-      | 3              |
-      | 4              |
-      | 5              |
+      | answered_count | current_page |
+      | 0              | Question |
+      | 1              | Question |
+      | 2              | Question |
+      | 3              | Question |
+      | 4              | Question |
+      | 5              | Question |

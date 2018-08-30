@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Online Test</title>
+<title>Question</title>
 <!-- Bootstrap Core CSS -->
 <link href="resources/lib/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -26,7 +26,7 @@
     <form name="question" id="questionForm" method="post"
         action="question">
     <div class="container-fluid">
-        <h1>Online Test</h1>
+        <h1>Question</h1>
         <h2 id="description">What is scrum?</h2>
         <ul>
             <li>
