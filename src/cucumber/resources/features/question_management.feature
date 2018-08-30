@@ -20,7 +20,7 @@ Feature: Question management
       | advice       | you should read a math book |
     And row of option2 is green
 
-  @now
+  @developing
   Scenario: trainer add a question with 5 options
     When trainer inputs question:
       | description  | what is 1+1?  |
