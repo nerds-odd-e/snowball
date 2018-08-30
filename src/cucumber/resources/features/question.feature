@@ -30,7 +30,6 @@ Feature:
       | option4         | advice          |
       | option5         | end_of_test     |
 
-  @developing
   Scenario Outline: テストページで不正解を選んで、回答ボタンを押下するとAdviceページが表示されること
     When User chooses the "<incorrect option>" option
     And User clicks the answer button
