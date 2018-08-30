@@ -65,39 +65,46 @@
 
 									<div class="row">
 										<div class="col-lg-1">Options:</div>
-										<div class="col-lg-1">
-                                        <div class="input-group">
+										<div class="col-lg-11">
+
                                           <div class="input-group">
                                             <span class="input-group-addon">
                                             <input type="radio" id="option1" name="option" aria-label="Radio button for following text input">
                                             </span>
                                             <input type="text" class="form-control" name="option1" aria-label="Text input with radio button" width="100%">
                                           </div>
-                                          <div class="input-group-prepend">
-                                            <div class="input-group-text">
+                                          <br>
+
+                                          <div class="input-group">
+                                            <span class="input-group-addon">
                                             <input type="radio" id="option2" name="option" aria-label="Radio button for following text input">
-                                            </div>
+                                            </span>
+                                            <input type="text" class="form-control" name="option2" aria-label="Text input with radio button" width="100%">
                                           </div>
-                                          <input type="text" class="form-control" name="option2" name="option1" aria-label="Text input with radio button">
-                                          <div class="input-group-prepend">
-                                            <div class="input-group-text">
+                                          <br>
+
+                                          <div class="input-group">
+                                            <span class="input-group-addon">
                                             <input type="radio" id="option3" name="option" aria-label="Radio button for following text input">
-                                            </div>
+                                            </span>
+                                            <input type="text" class="form-control" name="option3" aria-label="Text input with radio button" width="100%">
                                           </div>
-                                          <input type="text" class="form-control" name="option3" aria-label="Text input with radio button">
-                                          <div class="input-group-prepend">
-                                            <div class="input-group-text">
+                                          <br>
+
+                                          <div class="input-group">
+                                            <span class="input-group-addon">
                                             <input type="radio" id="option4" name="option" aria-label="Radio button for following text input">
-                                            </div>
+                                            </span>
+                                            <input type="text" class="form-control" name="option4" aria-label="Text input with radio button" width="100%">
                                           </div>
-                                          <input type="text" class="form-control" name="option4" aria-label="Text input with radio button">
-                                          <div class="input-group-prepend">
-                                            <div class="input-group-text">
+                                          <br>
+
+                                          <div class="input-group">
+                                            <span class="input-group-addon">
                                             <input type="radio" id="option5" name="option" aria-label="Radio button for following text input">
-                                            </div>
+                                            </span>
+                                            <input type="text" class="form-control" name="option5" aria-label="Text input with radio button" width="100%">
                                           </div>
-                                          <input type="text" class="form-control" name="option5" aria-label="Text input with radio button">
-                                        </div>
                                         </div>
 										<div class="col-lg-11">
 										</div>
