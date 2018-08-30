@@ -1,8 +1,7 @@
 package steps;
 
 import com.odde.massivemailer.model.Options;
-import com.odde.massivemailer.model.Questions;
-import com.odde.massivemailer.model.User;
+import com.odde.massivemailer.model.Question;
 import cucumber.api.DataTable;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.And;

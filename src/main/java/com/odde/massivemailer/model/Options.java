@@ -20,6 +20,7 @@ public class Options extends Model{
 	}
 	public void setOption(String option){
 		this.option = option;
+		set("description", option);
 	}
 	public void setIsCorrect(int isCorrect){
 		this.isCorrect = isCorrect;
