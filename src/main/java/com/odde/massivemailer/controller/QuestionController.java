@@ -16,16 +16,12 @@ public class QuestionController extends AppController {
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String[] optionIds = req.getParameterValues("optionIds");
-        String[] correctOptions = {"5"};
+        String optionId = req.getParameter("optionIds");
+        String correctOption = "5";
 
-        for (String optionId: optionIds) {
-            for (String correctOption: correctOptions) {
-                if (optionId.equals(correctOption)) {
-                    resp.sendRedirect("end_of_test.jsp");
-                    return;
-                }
-            }
+        if (correctOption.equals(optionId)) {
+            resp.sendRedirect("end_of_test.jsp");
+            return;
         }
 
         resp.sendRedirect("advice.jsp");
