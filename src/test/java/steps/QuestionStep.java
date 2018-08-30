@@ -27,6 +27,11 @@ public class QuestionStep {
         site.visit("question");
     }
 
+    @Given("^User is in the top page$")
+    public void user_is_in_the_top_page() throws Throwable {
+        site.visit("");
+    }
+
     @When("^User clicks \"([^\"]*)\" button$")
     public void user_clicks_button(String arg1) {
         site.visit("question");
@@ -189,4 +194,14 @@ public class QuestionStep {
         assertEquals(1, elements.size());
         assertEquals("option" + optionID + "row", elements.get(0).getAttribute("id"));
     }
+
+    @Given("^There is a question \"([^\"]*)\"$")
+    public void there_is_a_question(String arg1) throws Throwable {
+    }
+
+    @When("^User clicks \"([^\"]*)\" button on menu$")
+    public void user_clicks_button_on_menu(String link) throws Throwable {
+        driver.clickById("start_test");
+    }
+
 }
