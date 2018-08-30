@@ -116,9 +116,11 @@ public class QuestionStep {
         driver.clickButton("option"+optionId );
     }
 
-    @Given("^User is in Advice page$")
-    public void user_is_in_Advice_page() {
-        site.visit("advice.jsp");
+    @Given("^User arrives at advice page$")
+    public void user_arrives_at_advice_page() {
+        site.visit("question");
+        driver.clickById("option1");
+        driver.clickButton("answer");
     }
 
     @When("^User clicks the next button$")

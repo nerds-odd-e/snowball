@@ -45,7 +45,8 @@ Feature:
       | option3          | Scrum is Soccer   |
       | option4          | Scrum is Sumo     |
 
+  @now
   Scenario: AdviceページからNextボタンを押下するとEnd of pageが表示されること
-    Given User is in Advice page
+    Given User arrives at advice page
     When User clicks the next button
     Then Redirected to "end_of_test" page

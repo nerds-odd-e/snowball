@@ -63,7 +63,7 @@
         </div>
         <form action="question" method="post">
             <input type="submit" id="next" value="Next" class="btn-primary btn"/>
-            <input id="from" type="hidden" name="from" value="advice">
+            <input id="from" type="hidden" name="from" value="advice"/>
         </form>
     </div>
 </div>
