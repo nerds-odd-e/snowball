@@ -31,7 +31,7 @@ public class AppController extends HttpServlet {
         return mailService;
     }
 
-    HashMap<String, String> getParameterFromRequest(HttpServletRequest req, String... reqFields) {
+    protected HashMap<String, String> getParameterFromRequest(HttpServletRequest req, String... reqFields) {
         HashMap<String, String> map = new HashMap<>();
         for (String field : reqFields)
             map.put(field, req.getParameter(field));
