@@ -36,6 +36,10 @@ public class QuestionController extends AppController {
             return;
         }
 
+        forwardAdvicePage(req, resp, optionId, correctOption);
+    }
+
+    private void forwardAdvicePage(HttpServletRequest req, HttpServletResponse resp, String optionId, String correctOption) throws ServletException, IOException {
         req.setAttribute("correctOption", correctOption);
         req.setAttribute("selectedOption", optionId);
 
