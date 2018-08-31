@@ -44,9 +44,20 @@ function generateQuestionTables(question) {
     var tables = '<div class="panel panel-default">'
                  + '<table class="table table-responsive table-bordered">'
                  + '<thead>'
-                 + '<th>' + question.description + '</th>';
-                 + '</thead><tbody id="questionTable"><tr>';
-
+                 + '<th>' + 'Question 1' + '</th>'
+                 + '</thead><tbody id="questionTable"><tr><th>Description</th>'
+                 + '<td id="description">' + question.description + '</td></tr>';
+    for(i = 1; i <= Object.keys(question.options).length; i ++) {
+        if (question.correct_answer == 'option' + i) {
+            tables += '<tr id="option' + i + 'row" class="bg-success">';
+        } else {
+            tables += '<tr id="option' + i + 'row">';
+        }
+        tables +=  '<th>Option' + i + '</th>'
+                 + '<td id="option' + i + '">' + question.options['option' + i] + '</td></tr>';
+    }
+    tables += '<tr><th>Advice</th><td id="advice">' + question.advice + '</td></tr></tbody></table></div>';
+    return tables;
 }
 
 function Question(attributes) {

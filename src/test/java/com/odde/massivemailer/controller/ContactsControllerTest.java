@@ -23,6 +23,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.verify;
 
+
 @RunWith(TestWithDB.class)
 public class ContactsControllerTest {
     private ContactsController controller;
@@ -110,6 +111,7 @@ public class ContactsControllerTest {
         request.setParameter("email", "newbie@gmail.com");
         request.setParameter("country", "Singapore");
         request.setParameter("city", "Singapore");
+
         controller.doPost(request, response);
 
 		verify(gmailService).send(mailCaptor.capture());
@@ -117,5 +119,4 @@ public class ContactsControllerTest {
 
         assertThat(mail.getContent(), containsString("http://localhost:8070/massive_mailer/initialPassword?token="));
     }
-
 }

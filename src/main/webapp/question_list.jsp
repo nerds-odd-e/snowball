@@ -106,7 +106,7 @@
 	src="resources/lib/bootstrap/js/jquery.js"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
-<!-- <script type="text/javascript" src="resources/js/questionList.js"></script> -->
+<script type="text/javascript" src="resources/js/questionList.js"></script>
 </html>
 
 
