@@ -57,4 +57,21 @@ Adding the following to the /etc/hosts will solve the problem:
 ::1         localhost mbpro.local
 ```
 
+#### MySQL Setup
 
+In order to run the `LOAD DATA INFILE` command you first need to add a configuration file as follows:
+
+1. Stop the MySQL server
+
+`mysql.server stop`
+
+2. Create a file `/etc/my.cnf` with the following contents:
+
+```
+[mysqld]
+secure-file-priv=""
+```
+
+3. Start the MySQL server
+
+`mysql.server start`

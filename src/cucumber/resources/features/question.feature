@@ -23,11 +23,11 @@ Feature:
 
     Examples:
       | selected_option | page_content |
-      | option1         | Advice          |
-      | option2         | Advice          |
-      | option3         | Advice          |
-      | option4         | Advice          |
-      | option5         | Question        |
+      | option1         | Advice       |
+      | option2         | Advice       |
+      | option3         | Advice       |
+      | option4         | Advice       |
+      | option5         | Question     |
 
   Scenario Outline: テストページで不正解を選んで、回答ボタンを押下するとAdviceページが表示されること
     Given User is in the test page
@@ -46,9 +46,21 @@ Feature:
       | option3          | Scrum is Soccer   |
       | option4          | Scrum is Sumo     |
 
-  Scenario: テストに10問連続で正解するとEnd of test pageが表示されること
+  Scenario: テストに10問正解するとEnd of test pageが表示されること
     Given User is in the test page
     And There are 10 questions
-    And User visit in 10 th question page
+    And User answered correctly the 10 th question page
     Then "End Of Test" is shown
 
+  Scenario Outline: Adviceページから1問残っていればQuestionページ、残っていなければEnd Of Testページが表示されること
+    Given User is in the test page
+    And User answered correctly the <number_of_questions> th question page
+    And User chooses the "option2" option
+    And User clicks the answer button
+    When User clicks the next button
+    Then "<page_content>" is shown
+
+    Examples:
+      | number_of_questions | page_content |
+      | 8                   | Question     |
+      | 9                   | End Of Test  |

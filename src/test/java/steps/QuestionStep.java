@@ -232,8 +232,8 @@ public class QuestionStep {
         assertEquals(questionCount, QuestionController.MAX_QUESTION_COUNT);
     }
 
-    @Given("^User visit in (\\d+) th question page$")
-    public void user_visit_in_th_question_page(int answeredCount) throws Throwable {
+    @Given("^User answered correctly the (\\d+) th question page$")
+    public void user_answered_correctly_the(int answeredCount) throws Throwable {
         for (int i = 0; i < answeredCount; ++i) {
             driver.clickById("option5");
             driver.clickButton("answer");
@@ -250,4 +250,11 @@ public class QuestionStep {
         assertEquals(true, driver.getCurrentUrl().endsWith("add_question.jsp"));
         assertEquals(Question.findAll().size(), 1);
     }
+
+    @Given("^There are \"([^\"]*)\" questions remaining$")
+    public void there_are_questions_remaining(String arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
 }
