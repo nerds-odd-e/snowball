@@ -57,11 +57,16 @@ public class Question extends ApplicationModel {
                 .saveIt();
     }
 
-    public static Question getOne () {
-        List<Question> questions = Question.findBySQL("select * from questions limit 1");
+    public static Question getOne() {
+        List<Question> questions = getList(1);
         if (questions.size() == 0) {
             return null;
         }
         return questions.get(0);
     }
+
+    public static List<Question> getList(int rows) {
+        return Question.findBySQL("select * from questions limit ? ", rows);
+    }
+
 }
