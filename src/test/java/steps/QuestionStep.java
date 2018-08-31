@@ -9,6 +9,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.javalite.activejdbc.Base;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import steps.driver.WebDriverWrapper;
@@ -32,17 +33,11 @@ public class QuestionStep {
     }
 
     private void setup() {
-        Question question = new Question();
-        question.setAdvice("Scrum is a framework for agile development.");
-        question.setDescription("What is scrum?");
-        question.setIsMultiQuestion(false);
-        question.saveIt();
+        String csv_path = getClass().getResource("/csv/questions.csv").getPath();
+        String query = String.format("LOAD DATA INFILE '%s' INTO TABLE questions " +
+                "FIELDS TERMINATED BY ',' ENCLOSED BY '\"' (description, is_multi_question, advice);", csv_path);
+        Base.exec(query);
 
-        Options options = new Options();
-        options.setIsCorrect(false);
-        options.setDescription("Scrum is Rugby");
-        options.setQuestionId((long)question.getId());
-        options.saveIt();
     }
 
     @Given("^User is in the top page$")
