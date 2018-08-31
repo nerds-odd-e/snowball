@@ -2,12 +2,18 @@ package com.odde.massivemailer.model;
 
 import org.javalite.activejdbc.annotations.Table;
 
+import java.util.List;
+
 
 @Table("options")
 public class Options extends ApplicationModel {
 
-    public int getIsCorrect() {
-        return (Integer) get("is_correct");
+    public static List<Options> findByQuestionId(int i) {
+        return Options.where("question_id=?", i);
+    }
+
+    public boolean getIsCorrect() {
+        return (int)get("is_correct") == 1;
     }
 
     public void setOption(String option) {
@@ -30,11 +36,11 @@ public class Options extends ApplicationModel {
         set("description", description);
     }
 
-    public void setQuestionId(long questionId) {
+    public void setQuestionId(int questionId) {
         set("question_id", questionId);
     }
 
-    public long getQuestionId() {
-        return (long)get("question_id");
+    public int getQuestionId() {
+        return (int)get("question_id");
     }
 }

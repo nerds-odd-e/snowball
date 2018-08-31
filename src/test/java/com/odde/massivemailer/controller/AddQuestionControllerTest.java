@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(TestWithDB.class)
 public class AddQuestionControllerTest {
@@ -69,7 +70,7 @@ public class AddQuestionControllerTest {
 		controller.doPost(request, response);
 
 		Options option2 = Options.getById(2);
-		assertEquals(1, option2.getIsCorrect());
+		assertTrue(option2.getIsCorrect());
 	}
 
 	@Test
