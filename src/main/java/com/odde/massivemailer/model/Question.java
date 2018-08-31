@@ -49,21 +49,19 @@ public class Question extends ApplicationModel {
         return (String) get("advice");
     }
 
-<<<<<<<HEAD
-
     public void addOption(boolean is_correct, String parameter) {
         new Options()
                 .set("description", parameter)
                 .set("question_id", getLast().getId())
                 .set("is_correct", is_correct)
                 .saveIt();
-=======
-        public static Question getOne () {
-            List<Question> questions = Question.findBySQL("select * from questions limit 1");
-            if (questions.size() == 0) {
-                return null;
-            }
-            return questions.get(0);
->>>>>>>add DB unit test for question
-        }
     }
+
+    public static Question getOne () {
+        List<Question> questions = Question.findBySQL("select * from questions limit 1");
+        if (questions.size() == 0) {
+            return null;
+        }
+        return questions.get(0);
+    }
+}
