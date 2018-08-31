@@ -46,12 +46,6 @@ Feature:
       | option3          | Scrum is Soccer   |
       | option4          | Scrum is Sumo     |
 
-  Scenario: AdviceページからNextボタンを押下するとEnd of pageが表示されること
-    Given User arrives at advice page
-    When User clicks the next button
-    Then Move to "End Of Test" page
-
-  @now
   Scenario: テストに10問連続で正解するとEnd of test pageが表示されること
     Given User is in the test page
     And There are 10 questions
