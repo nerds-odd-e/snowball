@@ -104,7 +104,6 @@ public class AddQuestionControllerTest {
 		}
 	}
 
-	@Test
 	public void addCorrectAnswerChangedTest() {
 		request.setParameter("advice", "some nice advice");
 		request.setParameter("description", "What is Scrum?");
@@ -114,6 +113,6 @@ public class AddQuestionControllerTest {
 		controller.doPost(request, response);
 
 		Options option1 = Options.getById(0);
-		assertEquals(1, option1.getIsCorrect());
+		assertTrue(option1.getIsCorrect());
 	}
 }
