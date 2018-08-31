@@ -36,6 +36,7 @@ public class AddQuestionControllerTest {
 		request.setParameter("advice", "some nice advice");
 		request.setParameter("option1", "Scrum");
 		request.setParameter("option2", "Soccer");
+		request.setParameter("check", "1");
 		controller.doPost(request, response);
 
 		assertEquals(count + 1, (long) Question.count());
@@ -51,6 +52,7 @@ public class AddQuestionControllerTest {
 		request.setParameter("description", "What is Scrum?");
 		request.setParameter("option1", "Scrum");
 		request.setParameter("option2", "Soccer");
+		request.setParameter("check", "1");
 		controller.doPost(request, response);
 
 		assertEquals(count + 2, (long) Options.count());
@@ -66,7 +68,7 @@ public class AddQuestionControllerTest {
 		request.setParameter("description", "What is Scrum?");
 		request.setParameter("option1", "Soccer");
 		request.setParameter("option2", "Scrum");
-		request.setParameter("is_correct", "1");
+		request.setParameter("check", "2");
 		controller.doPost(request, response);
 
 		Options option2 = Options.getById(2);
@@ -86,7 +88,7 @@ public class AddQuestionControllerTest {
 		request.setParameter("advice", "some nice advice");
 		request.setParameter("description", "What is Scrum?");
 		setOptionContent(option_content);
-		request.setParameter("is_correct", "1");
+		request.setParameter("check", "1");
 		controller.doPost(request, response);
 
 		assertEquals(count + 5, (long) Options.count());
@@ -100,5 +102,18 @@ public class AddQuestionControllerTest {
 		for (int i = 0; i < option_content.length; i++) {
 			request.setParameter("option" + (i+1), option_content[i]);
 		}
+	}
+
+	@Test
+	public void addCorrectAnswerChangedTest() {
+		request.setParameter("advice", "some nice advice");
+		request.setParameter("description", "What is Scrum?");
+		request.setParameter("option1", "Soccer");
+		request.setParameter("option2", "Scrum");
+		request.setParameter("check", "0");
+		controller.doPost(request, response);
+
+		Options option1 = Options.getById(0);
+		assertEquals(1, option1.getIsCorrect());
 	}
 }

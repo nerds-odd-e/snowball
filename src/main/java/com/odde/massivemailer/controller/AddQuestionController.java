@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.io.IOException;
 
+import static java.lang.Integer.parseInt;
+
 @WebServlet("/addQuestion")
 public class AddQuestionController extends AppController {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) {
@@ -17,9 +19,10 @@ public class AddQuestionController extends AppController {
 		Question question = Question.createSingleChoiceQuestion(content);
 
 		int num_options = getNumOptions(req);
+		String correct_answer = req.getParameter("check");
 		for (int i = 1; i <= num_options; i++) {
 			String parameter = req.getParameter("option" + i);
-			question.addOption(i == 2, parameter);
+			question.addOption(i == parseInt(correct_answer), parameter);
 		}
 
 		try {
