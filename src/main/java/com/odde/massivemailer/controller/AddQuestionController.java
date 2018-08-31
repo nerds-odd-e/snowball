@@ -2,12 +2,15 @@ package com.odde.massivemailer.controller;
 
 import com.odde.massivemailer.model.Question;
 
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.io.IOException;
 
+@WebServlet("/addQuestion")
 public class AddQuestionController extends AppController {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) {
 		HashMap<String, String> content = getParameterFromRequest(req, "description", "advice");
@@ -17,6 +20,12 @@ public class AddQuestionController extends AppController {
 		for (int i = 1; i <= num_options; i++) {
 			String parameter = req.getParameter("option" + i);
 			question.addOption(i == 2, parameter);
+		}
+
+		try {
+			resp.sendRedirect("add_question.jsp");
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 

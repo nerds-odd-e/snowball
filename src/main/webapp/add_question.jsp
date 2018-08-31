@@ -24,7 +24,7 @@
         <jsp:include page="ui_common.jsp" />
 		<div id="page-wrapper">
 			<form name="addQuestion" id="addQuestion" method="post"
-				action="contacts">
+				action="addQuestion">
 
 				<div class="container-fluid">
 
@@ -69,7 +69,7 @@
 
                                           <div class="input-group">
                                             <span class="input-group-addon">
-                                            <input type="radio" id="option1" name="option" aria-label="Radio button for following text input">
+                                            <input type="radio" id="option1" name="optioncheck" value="option1" aria-label="Radio button for following text input">
                                             </span>
                                             <input type="text" class="form-control" name="option1" aria-label="Text input with radio button" width="100%">
                                           </div>
@@ -77,7 +77,7 @@
 
                                           <div class="input-group">
                                             <span class="input-group-addon">
-                                            <input type="radio" id="option2" name="option" aria-label="Radio button for following text input">
+                                            <input type="radio" id="option2" name="optioncheck" value="option2" aria-label="Radio button for following text input">
                                             </span>
                                             <input type="text" class="form-control" name="option2" aria-label="Text input with radio button" width="100%">
                                           </div>
@@ -85,7 +85,7 @@
 
                                           <div class="input-group">
                                             <span class="input-group-addon">
-                                            <input type="radio" id="option3" name="option" aria-label="Radio button for following text input">
+                                            <input type="radio" id="option3" name="optioncheck" value="option3" aria-label="Radio button for following text input">
                                             </span>
                                             <input type="text" class="form-control" name="option3" aria-label="Text input with radio button" width="100%">
                                           </div>
@@ -93,7 +93,7 @@
 
                                           <div class="input-group">
                                             <span class="input-group-addon">
-                                            <input type="radio" id="option4" name="option" aria-label="Radio button for following text input">
+                                            <input type="radio" id="option4" name="optioncheck" value="option4" aria-label="Radio button for following text input">
                                             </span>
                                             <input type="text" class="form-control" name="option4" aria-label="Text input with radio button" width="100%">
                                           </div>
@@ -101,7 +101,7 @@
 
                                           <div class="input-group">
                                             <span class="input-group-addon">
-                                            <input type="radio" id="option5" name="option" aria-label="Radio button for following text input">
+                                            <input type="radio" id="option5" name="optioncheck" value="option5" aria-label="Radio button for following text input">
                                             </span>
                                             <input type="text" class="form-control" name="option5" aria-label="Text input with radio button" width="100%">
                                           </div>
@@ -121,7 +121,7 @@
 									<br> <br>
 									<div class="row">
 										<div class="col-lg-12">
-											<button type="button" class="btn btn-default" name="add_button"
+											<button type="submit" class="btn btn-default" name="add_button"
 												id="add_button" value="add" >Add</button>
 										</div>
 									</div>

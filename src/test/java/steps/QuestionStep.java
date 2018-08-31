@@ -245,5 +245,9 @@ public class QuestionStep {
         driver.pageShouldContain(currentPage);
     }
 
-
+    @Then("^reload the addQuestion page$")
+    public void reloadTheAddQuestionPage() throws Throwable {
+        assertEquals(true, driver.getCurrentUrl().endsWith("add_question.jsp"));
+        assertEquals(Question.findAll().size(), 1);
+    }
 }
