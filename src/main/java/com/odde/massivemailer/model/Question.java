@@ -66,7 +66,7 @@ public class Question extends ApplicationModel {
     }
 
     public static List<Question> getList(int rows) {
-        return Question.findBySQL("select * from questions limit ? ", rows);
+        return Question.findBySQL("select * from questions order by rand() limit ?", rows);
     }
 
 }

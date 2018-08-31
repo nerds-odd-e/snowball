@@ -8,7 +8,8 @@ import org.junit.runner.RunWith;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 @RunWith(Enclosed.class)
 public class QuestionTest {
@@ -48,7 +49,7 @@ public class QuestionTest {
         }
 
         @Test
-        public void testShouldFind10rows() throws Exception {
+        public void testShouldFind3rows() throws Exception {
             int rows = 3;
             List<Question> questionList = Question.getList(rows);
             assertEquals(3, questionList.size());
