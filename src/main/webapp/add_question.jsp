@@ -69,7 +69,7 @@
 
                                           <div class="input-group">
                                             <span class="input-group-addon">
-                                            <input type="radio" id="option1" name="optioncheck" value="option1" aria-label="Radio button for following text input">
+                                            <input type="radio" id="option1" name="check" value="check1" aria-label="Radio button for following text input">
                                             </span>
                                             <input type="text" class="form-control" name="option1" aria-label="Text input with radio button" width="100%">
                                           </div>
@@ -77,7 +77,7 @@
 
                                           <div class="input-group">
                                             <span class="input-group-addon">
-                                            <input type="radio" id="option2" name="optioncheck" value="option2" aria-label="Radio button for following text input">
+                                            <input type="radio" id="option2" name="check" value="check2" aria-label="Radio button for following text input">
                                             </span>
                                             <input type="text" class="form-control" name="option2" aria-label="Text input with radio button" width="100%">
                                           </div>
@@ -85,7 +85,7 @@
 
                                           <div class="input-group">
                                             <span class="input-group-addon">
-                                            <input type="radio" id="option3" name="optioncheck" value="option3" aria-label="Radio button for following text input">
+                                            <input type="radio" id="option3" name="check" value="check3" aria-label="Radio button for following text input">
                                             </span>
                                             <input type="text" class="form-control" name="option3" aria-label="Text input with radio button" width="100%">
                                           </div>
@@ -93,7 +93,7 @@
 
                                           <div class="input-group">
                                             <span class="input-group-addon">
-                                            <input type="radio" id="option4" name="optioncheck" value="option4" aria-label="Radio button for following text input">
+                                            <input type="radio" id="option4" name="check" value="check4" aria-label="Radio button for following text input">
                                             </span>
                                             <input type="text" class="form-control" name="option4" aria-label="Text input with radio button" width="100%">
                                           </div>
@@ -101,7 +101,7 @@
 
                                           <div class="input-group">
                                             <span class="input-group-addon">
-                                            <input type="radio" id="option5" name="optioncheck" value="option5" aria-label="Radio button for following text input">
+                                            <input type="radio" id="option5" name="check" value="check5" aria-label="Radio button for following text input">
                                             </span>
                                             <input type="text" class="form-control" name="option5" aria-label="Text input with radio button" width="100%">
                                           </div>
