@@ -9,6 +9,9 @@ import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.junit.Assert.assertEquals;
 
 @RunWith(TestWithDB.class)
@@ -67,5 +70,34 @@ public class AddQuestionControllerTest {
 
 		Options option2 = Options.getById(2);
 		assertEquals(1, option2.getIsCorrect());
+	}
+
+	@Test
+	public void add5OptionsTest() {
+		long count = Options.count();
+		String[] option_content = {
+				"Soccer",
+				"Scrum",
+				"Football",
+				"Baseball",
+				"Kendo"
+		};
+		request.setParameter("advice", "some nice advice");
+		request.setParameter("description", "What is Scrum?");
+		setOptionContent(option_content);
+		request.setParameter("is_correct", "1");
+		controller.doPost(request, response);
+
+		assertEquals(count + 5, (long) Options.count());
+ 		for (int i = 0; i < 5; i++) {
+			Options option = Options.getById(i + 1);
+			assertEquals(option_content[i],  option.getDescription());
+		}
+	}
+
+	private void setOptionContent(String[] option_content) {
+		for (int i = 0; i < option_content.length; i++) {
+			request.setParameter("option" + (i+1), option_content[i]);
+		}
 	}
 }
