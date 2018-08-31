@@ -1,5 +1,6 @@
 package steps;
 
+import com.odde.massivemailer.controller.QuestionController;
 import com.odde.massivemailer.model.Options;
 import com.odde.massivemailer.model.Question;
 import cucumber.api.DataTable;
@@ -229,6 +230,19 @@ public class QuestionStep {
     @Then("^Move to next question page$")
     public void move_to_next_question_page() {
         driver.pageShouldContain("Question");
+    }
+
+    @Given("^There are (\\d+) questions$")
+    public void there_are_questions(int questionCount) throws Throwable {
+        assertEquals(questionCount, QuestionController.MAX_QUESTION_COUNT);
+    }
+
+    @Given("^User visit in (\\d+) th question page$")
+    public void user_visit_in_th_question_page(int answeredCount) throws Throwable {
+        for (int i = 0; i < answeredCount; ++i) {
+            driver.clickById("option5");
+            driver.clickButton("answer");
+        }
     }
 
     @Then("^\"([^\"]*)\" is shown$")

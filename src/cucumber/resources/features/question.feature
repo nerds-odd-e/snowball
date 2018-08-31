@@ -51,20 +51,10 @@ Feature:
     When User clicks the next button
     Then Move to "End Of Test" page
 
-  @developing
-  Scenario Outline: 次のテストがある時に、正解を選んで、回答ボタンを押下すると次のテストページが表示されること
+  @now
+  Scenario: テストに10問連続で正解するとEnd of test pageが表示されること
     Given User is in the test page
-    And User answered "<answered_count>" times in the test page
-    When User chooses "<selected_option>"
-    And User clicks the answer button
-    Then Move to next question page
-    And "<current_page>" is shown
+    And There are 10 questions
+    And User visit in 10 th question page
+    Then "End Of Test" is shown
 
-    Examples:
-      | answered_count | current_page |
-      | 0              | Question |
-      | 1              | Question |
-      | 2              | Question |
-      | 3              | Question |
-      | 4              | Question |
-      | 5              | Question |

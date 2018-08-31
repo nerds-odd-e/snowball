@@ -10,6 +10,9 @@ import java.io.IOException;
 
 @WebServlet("/question")
 public class QuestionController extends AppController {
+
+    public static final int MAX_QUESTION_COUNT = 10;
+
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(true);
         session.setAttribute("answeredCount", 0);
@@ -19,14 +22,15 @@ public class QuestionController extends AppController {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(true);
         int answeredCount = (int) session.getAttribute("answeredCount");
-        answeredCount++;
-        session.setAttribute("answeredCount", answeredCount);
 
         String from = req.getParameter("from");
         if ("advice".equals(from)) {
             resp.sendRedirect(getRedirectPageName(answeredCount));
             return;
         }
+
+        answeredCount++;
+        session.setAttribute("answeredCount", answeredCount);
 
         String optionId = req.getParameter("optionId");
         String correctOption = "5";
@@ -58,7 +62,7 @@ public class QuestionController extends AppController {
 
     private String getRedirectPageName(int answeredCount) {
         String redirectPageName = "end_of_test.jsp";
-        if (answeredCount < 10) {
+        if (answeredCount < MAX_QUESTION_COUNT) {
             redirectPageName = "question.jsp";
         }
         return redirectPageName;

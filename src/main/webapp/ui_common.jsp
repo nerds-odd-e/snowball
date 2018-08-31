@@ -47,7 +47,7 @@
                 <ul><li><a href="add_question.jsp"><span
                                         class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add
                                         Question</a></li></ul>
-                <li><a id="start_test" href="question.jsp"><span
+                <li><a id="start_test" href="question"><span
                         class="glyphicon glyphicon-file" aria-hidden="true"></span>
                         Start Test</a></li>
             </ul>
