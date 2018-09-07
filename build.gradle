@@ -1,38 +1,21 @@
-import org.apache.tools.ant.taskdefs.condition.Os
-
 buildscript {
     repositories {
         jcenter()
         mavenCentral()
     }
+
     dependencies {
         classpath "com.github.samueltbrown:gradle-cucumber-plugin:0.8"
-        classpath "info.cukes:cucumber-core:1.2.2"
-        classpath group: 'org.javalite', name: 'activejdbc-gradle-plugin', version: '2.0'
-        classpath "com.google.code.gson:gson:2.8.0"
-    }
-}
-
-plugins {
-    id 'com.craigburke.karma' version '1.4.4'
-    id "org.roboscratch.robot" version "0.1.1"
-}
-
-allprojects {
-    repositories {
-        maven { url 'https://jitpack.io' }
+        classpath group: 'org.javalite', name: 'activejdbc-gradle-plugin', version: '2.2'
     }
 }
 
 ext {
-    phantomJsVersion = "1.9.8"
     groovyVersion = '2.4.5'
     gebVersion = '1.1.1'
     seleniumVersion = '3.7.1'
-    cucumberJvmVersion = '1.2.4'
-    chromeDriverVersion = '2.24'
+    cucumberJvmVersion = '1.2.5'
     assertJVersion = "3.10.0"
-
     ciBuild = System.getenv('SNAP_CI')
 }
 
@@ -42,7 +25,6 @@ apply plugin: 'war'
 apply plugin: 'org.javalite.activejdbc'
 apply from: 'gradle/gretty.gradle'
 apply from: "gradle/idea/idea.gradle"
-apply from: "gradle/osSpecificDownloads.gradle"
 
 group = 'com.odde'
 version = '0.0.1-SNAPSHOT'
@@ -59,32 +41,12 @@ configurations {
     }
 }
 
-repositories {
-    jcenter()
-    mavenCentral()
-}
-
 gretty {
     httpPort = 8070
     if(project.gradle.startParameter.taskNames.any{e -> e.startsWith('cucumber')}) {
         jvmArgs = ["-Dactive_env=test"]
         httpPort = 8060
     }
-}
-
-karma {
-    basePath = '../src/main/'
-    colors = false
-    profile('default'){
-        libraryBases = ['webapp/resources/lib/**/']
-        libraryFiles = ['jquery.js', 'bootstrap.js'] // <1>
-        sourceBases = ['webapp/resources/js/']
-        sourceFiles = ['**/*.js'] // <2>
-        testBases = ['../test/javascript/']
-        testFiles = ['**/*Test.js'] // <3>
-    }
-    browsers = ['PhantomJS']
-    frameworks = ['jasmine']
 }
 
 cucumber {
@@ -102,27 +64,16 @@ cucumber {
 }
 
 tasks.cucumber {
-    if(!Os.isFamily(Os.FAMILY_MAC)) {
-        dependsOn unzipPhantomJs
-    }
     dependsOn assemble, testClasses, 'appBeforeIntegrationTest'
     finalizedBy 'appAfterIntegrationTest'
 
-    //def phantomJsFilename = Os.isFamily(Os.FAMILY_WINDOWS) ? "phantomjs.exe" : "bin/phantomjs"
     jvmOptions.systemProperties("webdriver.chrome.driver": "/usr/local/bin/chromedriver")
     jvmOptions.systemProperties([
-            //"phantomjs.binary.path": Os.isFamily(Os.FAMILY_MAC) ? file("$projectDir/node_modules/phantomjs/bin/phantomjs") : new File(unzipPhantomJs.outputs.files.singleFile, phantomJsFilename).absolutePath,
             "geb.cucumber.step.packages": "steps",
             "geb.env": System.getProperty("geb.env"),
-            "webdriver": "chrome", //System.getProperty("webdriver")
+            "webdriver": "chrome",
             "active_env": "test",
     ])
-    doFirst {
-        gretty {
-            jvmArgs = ["-Dactive_env=test"]
-            httpPort = 8060
-        }
-    }
 }
 
 task cucumber_now {
@@ -135,14 +86,9 @@ task cucumber_now {
     }
 }
 
-if([':test','test'].intersect(project.gradle.startParameter.taskNames)) {
-    project.gradle.startParameter.excludedTaskNames = ['karmaRun']
-}
-
 dependencies {
 
     compile group: 'com.sun.mail', name: 'javax.mail', version: '1.5.4'
-    compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.8.11.2'
     compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.6'
     compile group: 'com.google.code.gson', name: 'gson', version: '1.7.1'
     compile group: 'com.icegreen', name: 'greenmail', version: '1.4.1'
@@ -156,7 +102,7 @@ dependencies {
 
     compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
     compile group: 'org.javalite', name: 'db-migrator-maven-plugin', version: '1.4.11'
-    compile group: 'org.javalite', name: 'activejdbc', version: '2.0'
+    compile group: 'org.javalite', name: 'activejdbc', version: '2.2'
 
     testCompile "org.seleniumhq.selenium:selenium-api:$seleniumVersion"
     testCompile "org.seleniumhq.selenium:selenium-java:$seleniumVersion"
@@ -166,9 +112,7 @@ dependencies {
     testCompile "info.cukes:cucumber-junit:$cucumberJvmVersion"
     testCompile "org.assertj:assertj-core:$assertJVersion"
     compile 'org.flywaydb:flyway-core:3.2.1'
-    testCompile 'com.github.detro:ghostdriver:2.1.0'
 
-    // https://mvnrepository.com/artifact/com.google.maps/google-maps-services
     compile group: "com.google.maps", name: "google-maps-services", version: "0.2.4"
 }
 
