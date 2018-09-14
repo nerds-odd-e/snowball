@@ -1,8 +1,6 @@
 package steps;
 
 import com.odde.massivemailer.controller.QuestionController;
-import com.odde.massivemailer.model.Options;
-import com.odde.massivemailer.model.Question;
 import cucumber.api.DataTable;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
@@ -15,7 +13,6 @@ import org.openqa.selenium.WebElement;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
-import javax.xml.bind.Element;
 import java.util.List;
 import java.util.Map;
 
@@ -114,20 +111,6 @@ public class QuestionStep {
         driver.expectElementWithIdToContainValue("advice", text);
     }
 
-    @Given("^a trainer enters the question edit page$")
-    public void aTrainerEntersTheQuestionEditPage() {
-        driver.visit(site.baseUrl() + "add_question.jsp");
-    }
-
-    @When("^trainer add a new question with description that have \"([^\"]*)\"$")
-    public void trainerAddANewQuestionWithDescriptionThatHave(int description_length) {
-        String description = "";
-        for (int i = 0; i < description_length; i++) {
-            description += "a";
-        }
-        driver.setTextField("description", description);
-    }
-
     @When("^option(\\d+) is selected as correct answer$")
     public void optionIsSelectedAsCorrectAnswer(String optionId) {
         driver.clickButton("option"+optionId );
@@ -143,68 +126,6 @@ public class QuestionStep {
     @When("^User clicks the next button$")
     public void user_clicks_the_next_button() {
         driver.clickButton("next");
-    }
-
-    @When("^sets default value$")
-    public void setsDefaultValue() {
-        driver.setTextField("description", "dumy description");
-        driver.setTextField("option1", "dumy option1");
-        driver.setTextField("option2", "dumy option2");
-        driver.setTextField("advice", "dumy advice");
-    }
-
-    @When("^trainer add a new question with advice that have \"([^\"]*)\"$")
-    public void trainerAddANewQuestionWithAdviceThatHave(int description_length) {
-        driver.setTextField("description", getStringOfLength(description_length));
-    }
-
-    private String getStringOfLength(int descriptionLength) {
-        String description = "";
-        for (int i = 0; i < descriptionLength; i++) {
-            description += "a";
-        }
-        return description;
-    }
-
-    @And("^trainer press the \"([^\"]*)\"$")
-    public void trainerPressThe(String buttonName) {
-        driver.clickButtonByName(buttonName);
-    }
-
-    @Then("^Error message \"([^\"]*)\" appears and stay at the same page$")
-    public void errorMessageAppearsAndStayAtTheSamePage(String errorMessage) {
-        driver.expectElementWithIdToContainValue("message", errorMessage);
-    }
-
-    @When("^trainer inputs question:$")
-    public void trainerInputsQuestion(DataTable questionData) throws Throwable {
-        Map<String, String> questions = questionData.asMap(String.class, String.class);
-        questions.forEach((column, value) -> {
-            driver.setTextField(column, value);
-        });
-    }
-
-    @And("^trainer set the option(\\d+) as the correct answer$")
-    public void trainerSetTheOptionAsTheCorrectAnswer(int optionID) {
-        driver.clickButton("option" + String.valueOf(optionID));
-    }
-
-    @Then("^trainer should see question in question list:$")
-    public void trainerShouldSeeQuestionInQuestionList(DataTable questionData) {
-        driver.visit(site.baseUrl() + "question_list.jsp");
-        Map<String, String> questions = questionData.asMap(String.class, String.class);
-        questions.forEach((column, value) -> {
-            assertEquals(value, driver.findElementById(column).getText());
-        });
-    }
-
-    @And("^row of option(\\d+) is green$")
-    public void rowOfOptionIsGreen(int optionID) {
-        String clazz = "bg-success";
-        String cssSelector = "." + clazz.replace(" ", ".");
-        List<WebElement> elements = driver.findElements(By.cssSelector(cssSelector));
-        assertEquals(1, elements.size());
-        assertEquals("option" + optionID + "row", elements.get(0).getAttribute("id"));
     }
 
     @Given("^There is a question \"([^\"]*)\"$")
@@ -243,12 +164,6 @@ public class QuestionStep {
     @Then("^\"([^\"]*)\" is shown$")
     public void is_shown(String currentPage) throws Throwable {
         driver.pageShouldContain(currentPage);
-    }
-
-    @Then("^reload the addQuestion page$")
-    public void reloadTheAddQuestionPage() throws Throwable {
-        assertEquals(true, driver.getCurrentUrl().endsWith("add_question.jsp"));
-        assertEquals(Question.findAll().size(), 1);
     }
 
     @Given("^There are \"([^\"]*)\" questions remaining$")
