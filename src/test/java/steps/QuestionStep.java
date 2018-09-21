@@ -25,16 +25,7 @@ public class QuestionStep {
 
     @Given("^User is in the test page$")
     public void user_is_in_the_test_page() {
-        setup();
         site.visit("question");
-    }
-
-    private void setup() {
-        String csv_path = getClass().getResource("/csv/questions.csv").getPath();
-        String query = String.format("LOAD DATA INFILE '%s' INTO TABLE questions " +
-                "FIELDS TERMINATED BY ',' ENCLOSED BY '\"' (description, is_multi_question, advice);", csv_path);
-        Base.exec(query);
-
     }
 
     @Given("^User is in the top page$")
