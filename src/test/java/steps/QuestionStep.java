@@ -183,8 +183,20 @@ public class QuestionStep {
         throw new PendingException();
     }
 
+    @Given("^Question is \"([^\"]*)\"$")
+    public void question_is(String arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
     @When("^User's \"([^\"]*)\"$")
     public void user_s(String arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Then("^Question \"([^\"]*)\" is shown$")
+    public void question_is_shown(String arg1) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }
@@ -197,6 +209,12 @@ public class QuestionStep {
 
     @Then("^On advise, \"([^\"]*)\"$")
     public void on_advise(String arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Then("^Answer button is shown$")
+    public void answer_button_is_shown() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }

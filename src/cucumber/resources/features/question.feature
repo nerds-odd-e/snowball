@@ -84,3 +84,11 @@ Feature:
      | number_of_question | page_content |
      | 1                  | Question     |
      | 9                  | End Of Test  |
+
+  @developing
+  Scenario: 未回答でNEXTを押したときに、同じQuestionページに遷移する事
+    Given User is in the test page
+    And Question is "What is Scrum?"
+    When User clicks the answer button
+    Then Question "What is Scrum?" is shown
+    And Answer button is shown
