@@ -1,11 +1,13 @@
 package com.odde.massivemailer.model;
 
+import edu.emory.mathcs.backport.java.util.Arrays;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class QuestionTest {
     @Test
@@ -19,4 +21,12 @@ public class QuestionTest {
         assertNotNull(question.getOptions());
     }
 
+    @Test
+    public void testAnswered() {
+        Option[] options = {new Option(1L, "Rugby", false)};
+        Question question = new Question("What is Scrum?", Arrays.asList(options), null);
+
+        boolean isAnswered = question.isAnswered();
+        assertFalse(isAnswered);
+    }
 }

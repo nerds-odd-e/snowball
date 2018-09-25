@@ -26,4 +26,7 @@ public class Question {
         return description;
     }
 
+    public boolean isAnswered() {
+        return false;
+    }
 }
