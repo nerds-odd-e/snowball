@@ -3,11 +3,9 @@ package steps;
 import com.odde.massivemailer.controller.QuestionController;
 import cucumber.api.DataTable;
 import cucumber.api.PendingException;
-import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.javalite.activejdbc.Base;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import steps.driver.WebDriverWrapper;
@@ -15,9 +13,9 @@ import steps.site.MassiveMailerSite;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class QuestionStep {
     private MassiveMailerSite site = new MassiveMailerSite();
@@ -57,6 +55,26 @@ public class QuestionStep {
     @When("^User chooses \"([^\"]*)\"$")
     public void user_chooses(String selected_option) {
         driver.clickById(selected_option);
+    }
+
+    @Given("^There is a dataset question \"([^\"]*)\"$")
+    public void there_is_a_dataset_question(String arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Given("^There are dataset questions$")
+    public void there_are_dataset_questions() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+
+    @When("^User chooses dataset \"([^\"]*)\"$")
+    public void user_chooses_dataset_option(String selected_option_text) {
+        List<WebElement> labels = driver.findElements(By.cssSelector("label"));
+        Optional<WebElement> optOption = labels.stream().filter(l -> l.getText().contains(selected_option_text)).findFirst();
+        optOption.ifPresent(option -> driver.clickById(option.getAttribute("id")));
     }
 
     @When("^User clicks the answer button$")
@@ -117,10 +135,6 @@ public class QuestionStep {
     @When("^User clicks the next button$")
     public void user_clicks_the_next_button() {
         driver.clickButton("next");
-    }
-
-    @Given("^There is a question \"([^\"]*)\"$")
-    public void there_is_a_question(String arg1) {
     }
 
     @When("^User clicks \"([^\"]*)\" button on menu$")
