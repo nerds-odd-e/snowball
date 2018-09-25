@@ -61,17 +61,17 @@ Feature:
 
    @developing
    Scenario Outline: アドバイス有無、解答正誤、によってのアドバイスページの表示有無
-     Given On question, "<QuestionHasAdvise>"
-     When  User's "<answerIsRight>"
-     Then  User "<canGoAdvicePage>"
-     And  On advise, "<AdvicePageHasAdvise>"
+     Given On question, "<question_has_advise>"
+     When  User's "<answer_is_right>"
+     Then  User "<can_go_advice_page>"
+     And  On advise, "<advise_page_has_advise>"
 
      Examples:
-     | QuestionHasAdvise | answerIsRight | canGoAdvicePage | AdvicePageHasAdvise |
-     | true      | true          | false           | false     |
-     | true      | false         | true            | true      |
-     | false     | true          | false           | false     |
-     | false     | false         | true            | false     |
+     | question_has_advise | answer_is_right | can_go_advice_page | advise_page_has_advise |
+     | true                | true            | false              | false                  |
+     | true                | false           | true               | true                   |
+     | false               | true            | false              | false                  |
+     | false               | false           | true               | false                  |
 
    @developing
    Scenario Outline: アドバイスページからNEXTボタンを押したとき、問題の進行によりFinishページが表示
