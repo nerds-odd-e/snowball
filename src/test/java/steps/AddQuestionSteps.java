@@ -59,9 +59,7 @@ public class AddQuestionSteps {
     @When("^load the form$")
     public void load_the_form() throws Throwable {
         site.visit("add_question.jsp");
-        final WebElement form = driver.findElements(By.tagName("form")).get(0);
-        final WebElement questionBody = form.findElement(By.name("question_body"));
-        questionBody.sendKeys("body");
+        driver.setTextField("question_body", "body");
     }
 
     @Then("^I can input the question_body$")
