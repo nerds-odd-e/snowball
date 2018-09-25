@@ -1,7 +1,7 @@
 Feature: Student Score
   User should be able to view their score
 
-  @now @developing
+  @developing
   Scenario Outline: Students can view their scores
     Given There are <questions> questions and <points> points
     When Test is finished
