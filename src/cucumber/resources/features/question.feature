@@ -58,3 +58,17 @@ Feature:
       | number_of_questions | page_content |
       | 8                   | Question     |
       | 9                   | End Of Test  |
+
+   @now
+   Scenario Outline: アドバイス有無、解答正誤、によってのアドバイスページの表示有無
+     Given On question, "<QuestionHasAdvise>"
+     When  User's "<answerIsRight>"
+     Then  User "<canGoAdvicePage>"
+     And  On advise, "<AdvicePageHasAdvise>"
+
+     Examples:
+     | QuestionHasAdvise | answerIsRight | canGoAdvicePage | AdvicePageHasAdvise |
+     | true      | true          | false           | false     |
+     | true      | false         | true            | true      |
+     | false     | true          | false           | false     |
+     | false     | false         | true            | false     |

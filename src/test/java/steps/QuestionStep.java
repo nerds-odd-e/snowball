@@ -177,4 +177,28 @@ public class QuestionStep {
         throw new PendingException();
     }
 
+    @Given("^On question, \"([^\"]*)\"$")
+    public void on_question(String arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @When("^User's \"([^\"]*)\"$")
+    public void user_s(String arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Then("^User \"([^\"]*)\"$")
+    public void user(String arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Then("^On advise, \"([^\"]*)\"$")
+    public void on_advise(String arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
 }
