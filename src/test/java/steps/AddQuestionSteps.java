@@ -6,6 +6,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import steps.driver.UiElement;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
@@ -44,8 +45,8 @@ public class AddQuestionSteps {
 
     @Then("^Reset form$")
     public void reset_form() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        final WebElement form = driver.findElements(By.tagName("form")).get(0);
+        assertEquals("", form.findElement(By.name("question_body")).getText());
     }
 
 }
