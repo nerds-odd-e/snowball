@@ -4,8 +4,13 @@ import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AddQuestionSteps {
     private MassiveMailerSite site = new MassiveMailerSite();
@@ -27,8 +32,8 @@ public class AddQuestionSteps {
 
     @Then("^Display registered contents$")
     public void display_registered_contents() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+      final WebElement question = driver.findElements(By.className("question")).get(0);
+      assertEquals("body", question.findElement(By.className("question_body")).getText());
     }
 
     @Then("^Reset form$")

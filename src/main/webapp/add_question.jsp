@@ -28,6 +28,12 @@
 
         <input id="save_button" type="button">
     </form>
+
+    <div class="question">
+      <p class="question_body">
+        body
+      </p>
+    </div>
 </body>
 <!-- jQuery -->
 <script type="text/javascript"
