@@ -33,6 +33,15 @@
       <p class="question_body">
         body
       </p>
+      <div class="answers">
+          <p class="answer">
+            answer_1
+          </p>
+          <p class="answer">
+            answer_2
+          </p>
+      </div>
+
     </div>
 </body>
 <!-- jQuery -->

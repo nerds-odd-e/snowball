@@ -9,6 +9,8 @@ import org.openqa.selenium.WebElement;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -32,8 +34,12 @@ public class AddQuestionSteps {
 
     @Then("^Display registered contents$")
     public void display_registered_contents() throws Throwable {
-      final WebElement question = driver.findElements(By.className("question")).get(0);
-      assertEquals("body", question.findElement(By.className("question_body")).getText());
+        final WebElement question = driver.findElements(By.className("question")).get(0);
+        assertEquals("body", question.findElement(By.className("question_body")).getText());
+        final WebElement answers = question.findElement(By.className("answers"));
+        final List<WebElement> answerList = answers.findElements(By.className("answer"));
+        assertEquals("answer_1", answerList.get(0).getText());
+        assertEquals("answer_2", answerList.get(1).getText());
     }
 
     @Then("^Reset form$")
