@@ -59,7 +59,7 @@ Feature:
       | 8                   | Question     |
       | 9                   | End Of Test  |
 
-   @now
+   @developing
    Scenario Outline: アドバイス有無、解答正誤、によってのアドバイスページの表示有無
      Given On question, "<QuestionHasAdvise>"
      When  User's "<answerIsRight>"
@@ -72,3 +72,15 @@ Feature:
      | true      | false         | true            | true      |
      | false     | true          | false           | false     |
      | false     | false         | true            | false     |
+
+   @developing
+   Scenario Outline: アドバイスページからNEXTボタンを押したとき、問題の進行によりFinishページが表示
+     Given On question progress, "<number_of_question>" of 2
+     When User clicks incorrect answer
+     And User clicks correct answer
+     Then "<page_content>" is shown
+
+     Examples:
+     | number_of_question | page_content |
+     | 1                  | Question     |
+     | 9                  | End Of Test  |

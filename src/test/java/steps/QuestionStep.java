@@ -201,4 +201,23 @@ public class QuestionStep {
         throw new PendingException();
     }
 
+    @Given("^On question progress, \"(\\d+)\" of 2$")
+    public void on_question_progress_of(int arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @When("^User clicks incorrect answer$")
+    public void user_clicks_incorrect_answer() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @When("^User clicks correct answer$")
+    public void user_clicks_correct_answer() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+
 }
