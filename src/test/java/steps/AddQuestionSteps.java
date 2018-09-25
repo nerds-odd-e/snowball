@@ -19,6 +19,7 @@ public class AddQuestionSteps {
     private MassiveMailerSite site = new MassiveMailerSite();
     private WebDriverWrapper driver = site.getDriver();
 
+    // After make a question the form is reset
     @Given("^no question registered$")
     public void no_question_registered() throws Throwable {
         site.addQuestionPage();
@@ -47,6 +48,32 @@ public class AddQuestionSteps {
     public void reset_form() throws Throwable {
         final WebElement form = driver.findElements(By.tagName("form")).get(0);
         assertEquals("", form.findElement(By.name("question_body")).getText());
+    }
+
+    // I can set the question fields
+    @Given("^there are no questions$")
+    public void there_are_no_questions() throws Throwable {
+        site.addQuestionPage();
+    }
+
+    @When("^load the form$")
+    public void load_the_form() throws Throwable {
+        site.visit("add_question.jsp");
+        final WebElement form = driver.findElements(By.tagName("form")).get(0);
+        final WebElement questionBody = form.findElement(By.name("question_body"));
+        questionBody.sendKeys("body");
+    }
+
+    @Then("^I can input the question_body$")
+    public void i_can_input_the_question_body() throws Throwable {
+        final WebElement form = driver.findElements(By.tagName("form")).get(0);
+        assertEquals("body", form.findElement(By.name("question_body")).getAttribute("value"));
+    }
+
+    @Then("^Click the save button$")
+    public void click_the_save_button() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
     }
 
 }

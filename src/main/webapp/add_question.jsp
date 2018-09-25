@@ -22,7 +22,7 @@
 </head>
 <body>
     <form action="submit" method="POST">
-        <input type="text" name="question_body" value="abc">
+        <input type="text" name="question_body">
         <input type="text" name="answer_1">
         <input type="text" name="answer_2">
 
