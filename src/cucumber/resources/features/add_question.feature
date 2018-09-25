@@ -13,4 +13,3 @@ Feature: AddQuestion
     Given there are no questions
     When load the form
     Then I can input the question_body
-    And Click the save button

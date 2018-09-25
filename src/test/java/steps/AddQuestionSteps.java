@@ -70,10 +70,4 @@ public class AddQuestionSteps {
         assertEquals("body", form.findElement(By.name("question_body")).getAttribute("value"));
     }
 
-    @Then("^Click the save button$")
-    public void click_the_save_button() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
-
 }
