@@ -49,6 +49,8 @@ public class MassiveMailerSite {
         return new InitializePasswordPage(this);
     }
 
+
+
     private String allEmailsThatGotMessages() {
         return SentMail.findAll().stream().map(m ->
                 String.format("\t\t%s: %s", m.get("receivers").toString(), m.get("subject").toString())
@@ -70,4 +72,7 @@ public class MassiveMailerSite {
         }
     }
 
+    public AddQuestionPage addQuestionPage() {
+        return new AddQuestionPage(this);
+    }
 }
