@@ -19,4 +19,8 @@ public class OnlineTest {
     public List<Question> getQuestions() {
         return questions;
     }
+
+    public int countAnsweredQuestions() {
+        return (int) questions.stream().filter(t -> t.isAnswered()).count();
+    }
 }

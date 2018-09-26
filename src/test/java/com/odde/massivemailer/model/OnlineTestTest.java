@@ -4,6 +4,7 @@ import org.junit.Test;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -34,5 +35,30 @@ public class OnlineTestTest {
         questions.add(new Question("", new ArrayList<>(), ""));
         OnlineTest onlineTest = OnlineTest.createTestWithQuestions(questions, 10);
         assertEquals(1, onlineTest.getQuestions().size());
+    }
+
+    @Test
+    public void countAnsweredQuestions() {
+        // given
+        ArrayList<Option> options = new ArrayList<>();
+        ArrayList<Question> questions = new ArrayList<>();
+        Question question1 = new Question("", options, null, null);
+        Question question2 = new Question("", options, null, null);
+        questions.add(question1);
+        questions.add(question2);
+
+        OnlineTest onlineTest = new OnlineTest(questions);
+
+        // when
+        question1.setAnsweredOptionId(1L);
+        int count1 = onlineTest.countAnsweredQuestions();
+        // then
+        assertEquals(1, count1);
+
+        // when
+        question2.setAnsweredOptionId(1L);
+        int count2 = onlineTest.countAnsweredQuestions();
+        // then
+        assertEquals(2, count2);
     }
 }

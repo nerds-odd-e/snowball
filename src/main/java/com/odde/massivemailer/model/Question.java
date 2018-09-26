@@ -36,4 +36,8 @@ public class Question {
     boolean isAnswered() {
         return Objects.nonNull(answeredOptionId);
     }
+
+    public void setAnsweredOptionId(long l) {
+        answeredOptionId = l;
+    }
 }
