@@ -24,17 +24,24 @@ public class QuestionController extends AppController {
         session.setAttribute("answeredCount", 0);
 
         // FIXME: use Generate Test
-        List<Question> questions = new ArrayList<>();
+        OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
+        if (onlineTest == null) {
+            ArrayList<Option> options = new ArrayList<>();
+            options.add(new Option(1L, "Yes", false));
+            options.add(new Option(2L, "No", true));
+            List<Question> questions = new ArrayList<>();
+            Question question = new Question("Is same of feature and story?", options, "");
+            questions.add(question);
+            onlineTest = new OnlineTest(questions);
 
-        ArrayList<Option> options = new ArrayList<>();
-        options.add(new Option(1L, "Yes", false));
-        options.add(new Option(2L, "No", true));
-        Question question = new Question("Is same of feature and story?", options, "");
-        questions.add(question);
-        OnlineTest onlineTest = new OnlineTest(questions);
+            session.setAttribute("onlineTest", onlineTest);
+            req.setAttribute("onlineTest", onlineTest);
+        }
 
-        session.setAttribute("onlineTest", onlineTest);
-        req.setAttribute("onlineTest", onlineTest);
+        int allQuestionCount = onlineTest.getQuestions().size();
+        int currentQuestionNumber = onlineTest.countAnsweredQuestions() + 1;
+        String progressState = currentQuestionNumber + "/" + allQuestionCount;
+        session.setAttribute("progressState", progressState);
         resp.sendRedirect("question.jsp");
     }
 

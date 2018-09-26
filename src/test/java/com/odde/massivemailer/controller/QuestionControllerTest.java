@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+import java.util.ArrayList;
 
 import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.Assert.assertEquals;
@@ -126,6 +127,38 @@ public class QuestionControllerTest {
 
         controller.doPost(request, response);
         assertEquals("end_of_test.jsp", response.getRedirectedUrl());
+    }
+
+    @Test
+    public void shouldShowProgressStateOnFirstPage() throws Exception {
+        ArrayList<Question> questions = new ArrayList<>();
+        Question question1 = new Question("", null, null, null);
+        Question question2 = new Question("", null, null, null);
+        questions.add(question1);
+        questions.add(question2);
+
+        OnlineTest onlineTest = new OnlineTest(questions);
+        request.getSession().setAttribute("onlineTest", onlineTest);
+        controller.doGet(request,response);
+
+        String progressState = (String) request.getSession().getAttribute("progressState");
+        assertEquals("1/2", progressState);
+    }
+
+    @Test
+    public void shouldShowProgressStateLastPage() throws Exception {
+        ArrayList<Question> questions = new ArrayList<>();
+        Question question1 = new Question("", null, null, 1L);
+        Question question2 = new Question("", null, null, null);
+        questions.add(question1);
+        questions.add(question2);
+
+        OnlineTest onlineTest = new OnlineTest(questions);
+        request.getSession().setAttribute("onlineTest", onlineTest);
+        controller.doGet(request,response);
+
+        String progressState = (String) request.getSession().getAttribute("progressState");
+        assertEquals("2/2", progressState);
     }
 
 }
