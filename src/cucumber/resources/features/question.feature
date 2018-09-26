@@ -1,18 +1,16 @@
 Feature:
   User can take an online test :)
 
+  @now
   Scenario: 初期表示：質問とoptionsが表示されていること
     Given User is in the top page
-    And There is a dataset question "What is Scrum"
+    And There is a question "Is same of feature and story"
     When User clicks "Start Test" button on menu
     Then User go to the test page
     And User should see a question and options
-      | description | What is scrum?    |
-      | option1     | Scrum is Rugby    |
-      | option2     | Scrum is Baseball |
-      | option3     | Scrum is Soccer   |
-      | option4     | Scrum is Sumo     |
-      | option5     | None of the above |
+      | description | Is same of feature and story?|
+      | option1     | Yes    |
+      | option2     | No |
 
   @developing
   Scenario Outline: 最後の問題の時に、正解または不正解を選んで、回答ボタンを押下するとEndOfTestまたはAdviceに遷移すること

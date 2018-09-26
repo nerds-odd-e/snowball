@@ -23,4 +23,8 @@ public class OnlineTest {
     public int countAnsweredQuestions() {
         return (int) questions.stream().filter(t -> t.isAnswered()).count();
     }
+
+    public Question getCurrentQuestion() {
+        return questions.get(0);
+    }
 }

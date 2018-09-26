@@ -1,6 +1,7 @@
 package com.odde.massivemailer.controller;
 
 import com.google.common.collect.Lists;
+import com.odde.massivemailer.model.OnlineTest;
 import cucumber.api.java.gl.E;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +12,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class QuestionControllerTest {
     private QuestionController controller;
@@ -30,6 +33,13 @@ public class QuestionControllerTest {
     public void showQuestionPage() throws Exception {
         controller.doGet(request,response);
         assertEquals("question.jsp", response.getRedirectedUrl());
+    }
+
+    @Test
+    public void setSessionInFirstRequest() throws Exception {
+        controller.doGet(request, response);
+        HttpSession session = request.getSession();
+        assertThat(session.getAttribute("onlineTest"), instanceOf(OnlineTest.class));
     }
 
     @Test

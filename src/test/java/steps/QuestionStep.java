@@ -57,6 +57,11 @@ public class QuestionStep {
         driver.clickById(selected_option);
     }
 
+    @Given("^There is a question \"([^\"]*)\"$")
+    public void there_is_a_question(String arg1) {
+        driver.pageShouldContain("Is same of feature and story?");
+    }
+
     @Given("^There is a dataset question \"([^\"]*)\"$")
     public void there_is_a_dataset_question(String arg1) throws Throwable {
         // Write code here that turns the phrase above into concrete actions

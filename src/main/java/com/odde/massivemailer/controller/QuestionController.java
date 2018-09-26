@@ -1,5 +1,9 @@
 package com.odde.massivemailer.controller;
 
+import com.odde.massivemailer.model.OnlineTest;
+import com.odde.massivemailer.model.Question;
+import edu.emory.mathcs.backport.java.util.Arrays;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -7,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet("/question")
 public class QuestionController extends AppController {
@@ -16,6 +22,14 @@ public class QuestionController extends AppController {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(true);
         session.setAttribute("answeredCount", 0);
+
+        List<Question> questions = new ArrayList<>();
+        Question question = new Question("Is same of feature and story?", new ArrayList<>(), "");
+        questions.add(question);
+        OnlineTest onlineTest = OnlineTest.createTestWithQuestions(questions, 0);
+
+        session.setAttribute("onlineTest", onlineTest);
+        req.setAttribute("onlineTest", onlineTest);
         resp.sendRedirect("question.jsp");
     }
 
