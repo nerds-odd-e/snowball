@@ -42,6 +42,7 @@ public class QuestionStep {
         driver.expectElementWithIdToContainText("description", questionMap.get("description"));
         driver.expectElementWithIdToContainText("option1", questionMap.get("option1"));
         driver.expectElementWithIdToContainText("option2", questionMap.get("option2"));
+        driver.expectElementWithIdToContainText("option3", questionMap.get("option3"));
     }
 
     @When("^User chooses \"([^\"]*)\"$")

@@ -29,6 +29,7 @@ public class QuestionController extends AppController {
             ArrayList<Option> options = new ArrayList<>();
             options.add(new Option(1L, "Yes", false));
             options.add(new Option(2L, "No", true));
+            options.add(new Option(3L, "I have no idea.", false));
             List<Question> questions = new ArrayList<>();
             Question question = new Question("Is same of feature and story?", options, "");
             questions.add(question);

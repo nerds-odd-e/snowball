@@ -9,6 +9,7 @@ Feature:
       | description | Is same of feature and story? |
       | option1     | Yes                           |
       | option2     | No                            |
+      | option3     | I have no idea.               |
 
   @developing
   Scenario Outline: 最後の問題の時に、正解または不正解を選んで、回答ボタンを押下するとEndOfTestまたはAdviceに遷移すること

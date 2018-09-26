@@ -46,12 +46,11 @@
         <ul>
             <% if (question.isPresent()) { %>
                 <% List<Option> options = question.get().getOptions(); %>
-                <li>
-                    <label id="option1" ><input for="option1" type="radio" name="optionId" value="1" checked/><%= options.get(0).getValue() %></label>
-                </li>
-                <li>
-                    <label id="option2" ><input for="option2" type="radio" name="optionId" value="2"/><%= options.get(1).getValue() %></label>
-                </li>
+                <% for (int i=0; i < options.size(); ++i) { %>
+                    <li>
+                        <label id="option<%=i+1%>" ><input for="option<%=i+1%>" type="radio" name="optionId" value="<%=i+1%>" checked/><%= options.get(i).getValue() %></label>
+                    </li>
+                <% } %>
             <% } %>
         </ul>
         <div class="col-lg-12">
