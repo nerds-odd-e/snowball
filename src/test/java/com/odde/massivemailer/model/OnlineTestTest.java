@@ -54,12 +54,6 @@ public class OnlineTestTest {
         int count1 = onlineTest.countAnsweredQuestions();
         // then
         assertEquals(1, count1);
-
-        // when
-        question2.setAnsweredOptionId(1L);
-        int count2 = onlineTest.countAnsweredQuestions();
-        // then
-        assertEquals(2, count2);
     }
 
     @Test
