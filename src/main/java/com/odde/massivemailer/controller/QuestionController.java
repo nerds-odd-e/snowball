@@ -13,6 +13,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @WebServlet("/question")
 public class QuestionController extends AppController {
@@ -48,22 +50,27 @@ public class QuestionController extends AppController {
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(true);
-        int answeredCount = (int) session.getAttribute("answeredCount");
+        OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
 
         String from = req.getParameter("from");
         if ("advice".equals(from)) {
-            resp.sendRedirect(getRedirectPageName(answeredCount));
+            resp.sendRedirect(getRedirectPageName(session, onlineTest));
             return;
         }
 
-        answeredCount++;
-        session.setAttribute("answeredCount", answeredCount);
-
         String optionId = req.getParameter("optionId");
         String correctOption = "2";
+        onlineTest.getCurrentQuestion().ifPresent(q -> {
+            if (correctOption.equals(optionId)) {
+                q.setAnsweredOptionId(Long.parseLong(optionId));
+                List<Question> filteredQuestions = onlineTest.getQuestions().stream().filter(q2 -> q2.getDescription().equals(q.getDescription())).collect(Collectors.toList());
+                filteredQuestions.add(q);
+                session.setAttribute("onlineTest", new OnlineTest(filteredQuestions));
+            }
+        });
 
         if (correctOption.equals(optionId)) {
-            resp.sendRedirect(getRedirectPageName(answeredCount));
+            resp.sendRedirect(getRedirectPageName(session, onlineTest));
             return;
         }
 
@@ -87,10 +94,11 @@ public class QuestionController extends AppController {
         dispatch.forward(req, resp);
     }
 
-    private String getRedirectPageName(int answeredCount) {
-        String redirectPageName = "end_of_test.jsp";
-        if (answeredCount < MAX_QUESTION_COUNT) {
-            redirectPageName = "question.jsp";
+    private String getRedirectPageName(HttpSession session, OnlineTest onlineTest) {
+        String redirectPageName = "question.jsp";
+        if (onlineTest.isOver()) {
+            session.removeAttribute("onlineTest");
+            redirectPageName = "end_of_test.jsp";
         }
         return redirectPageName;
     }
