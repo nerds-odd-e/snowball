@@ -1,4 +1,4 @@
-Feature: AddQuestion
+Feature: QuestionCreation
 
 
   @developing @javascript
