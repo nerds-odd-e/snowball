@@ -27,7 +27,13 @@
         action="question">
     <div class="container-fluid">
         <h1>Question</h1>
-        <h2 id="description"><%= request.getAttribute("onlineTest").getCurrentQuestion().getDescription() %></h2>
+        <%@ page import = "com.odde.massivemailer.model.OnlineTest" %>
+        <%
+            OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
+        %>
+        <h2 id="description">
+            <%= onlineTest.getCurrentQuestion().getDescription() %>
+        </h2>
         <ul>
             <li>
                 <label id="option1" ><input for="option1" type="radio" name="optionId" value="1" checked/>Scrum is Rugby</label>

@@ -23,6 +23,7 @@ public class QuestionController extends AppController {
         HttpSession session = req.getSession(true);
         session.setAttribute("answeredCount", 0);
 
+        // FIXME: use Generate Test
         List<Question> questions = new ArrayList<>();
         Question question = new Question("Is same of feature and story?", new ArrayList<>(), "");
         questions.add(question);

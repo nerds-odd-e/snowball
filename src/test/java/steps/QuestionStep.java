@@ -36,11 +36,6 @@ public class QuestionStep {
         site.visit("question");
     }
 
-    @Then("^User go to the test page$")
-    public void user_go_to_the_test_page() {
-        driver.expectElementWithIdToContainText("description", "What is scrum?");
-    }
-
     @Then("^User should see a question and options$")
     public void user_should_see_a_question_and_options(DataTable question) {
         Map<String, String> questionMap = question.asMap(String.class, String.class);
