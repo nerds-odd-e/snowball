@@ -59,7 +59,7 @@ public class QuestionController extends AppController {
         session.setAttribute("answeredCount", answeredCount);
 
         String optionId = req.getParameter("optionId");
-        String correctOption = "5";
+        String correctOption = "2";
 
         if (correctOption.equals(optionId)) {
             resp.sendRedirect(getRedirectPageName(answeredCount));

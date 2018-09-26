@@ -56,7 +56,7 @@ public class QuestionControllerTest {
     @Test
     public void postCorrect() throws Exception {
 
-        String optionId = "5";
+        String optionId = "2";
 
         request.addParameter("optionId", optionId);
         request.addParameter("questionId", "1");
@@ -71,7 +71,7 @@ public class QuestionControllerTest {
     @Test
     public void postCorrectOptionInTheLastQuestion() throws Exception {
 
-        String optionId = "5";
+        String optionId = "2";
 
         request.addParameter("optionId", optionId);
         request.addParameter("questionId", "1");
@@ -83,7 +83,7 @@ public class QuestionControllerTest {
 
     @Test
     public void postIncorrect() throws ServletException, IOException {
-        String optionId = "2";
+        String optionId = "1";
 
         request.addParameter("optionId", optionId);
         request.addParameter("questionId", "1");
@@ -92,10 +92,10 @@ public class QuestionControllerTest {
         controller.doPost(request, response);
 
         String correctOption = (String) request.getAttribute("correctOption");
-        assertEquals("5", correctOption);
+        assertEquals("2", correctOption);
 
         String selectedOption = (String) request.getAttribute("selectedOption");
-        assertEquals("2", selectedOption);
+        assertEquals("1", selectedOption);
 
         String[] options = (String[]) request.getAttribute("options");
         String[] expectedOptions = {
