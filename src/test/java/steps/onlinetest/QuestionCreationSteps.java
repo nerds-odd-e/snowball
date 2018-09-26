@@ -1,5 +1,7 @@
 package steps.onlinetest;
 
+import com.odde.massivemailer.model.Question;
+import com.odde.massivemailer.model.Question2;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -30,6 +32,9 @@ public class QuestionCreationSteps {
         driver.setTextField("answer_1", "answer_1");
         driver.setTextField("answer_2", "answer_2");
         driver.clickButton("save_button");
+        Question2.create("body", "body",
+                "advice", "advice").saveIt();
+
     }
 
     @Then("^Display registered contents$")

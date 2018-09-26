@@ -7,6 +7,5 @@ $(document).ready(function() {
 });
 
 function submitForm() {
-	// document.forms[0].submit();
 	$("#input_question_body").val("");
 }
