@@ -22,7 +22,7 @@
 </head>
 <body>
     <form action="submit" method="POST">
-        <input type="text" name="question_body">
+        <input id="input_question_body" type="text" name="question_body">
         <input type="text" name="answer_1">
         <input type="text" name="answer_2">
 
@@ -49,4 +49,6 @@
 	src="resources/lib/bootstrap/js/jquery.js"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="resources/js/addQuestion.js"></script>
 </html>
