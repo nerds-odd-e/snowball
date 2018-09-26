@@ -3,7 +3,6 @@ package com.odde.massivemailer.controller;
 import com.odde.massivemailer.model.OnlineTest;
 import com.odde.massivemailer.model.Option;
 import com.odde.massivemailer.model.Question;
-import edu.emory.mathcs.backport.java.util.Arrays;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -32,7 +31,7 @@ public class QuestionController extends AppController {
         options.add(new Option(2L, "No", true));
         Question question = new Question("Is same of feature and story?", options, "");
         questions.add(question);
-        OnlineTest onlineTest = OnlineTest.createTestWithQuestions(questions, 0);
+        OnlineTest onlineTest = new OnlineTest(questions);
 
         session.setAttribute("onlineTest", onlineTest);
         req.setAttribute("onlineTest", onlineTest);

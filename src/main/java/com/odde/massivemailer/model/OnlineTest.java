@@ -13,10 +13,6 @@ public class OnlineTest {
         this.questions = questions;
     }
 
-    public static OnlineTest createTestWithQuestions(List<Question> questions, int i) {
-        return new OnlineTest(questions);
-    }
-
     public List<Question> getQuestions() {
         return questions;
     }

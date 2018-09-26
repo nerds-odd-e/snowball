@@ -1,10 +1,10 @@
 package com.odde.massivemailer.model;
 
+import com.odde.massivemailer.service.OnlineTestService;
 import org.junit.Test;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +25,7 @@ public class OnlineTestTest {
     @Test
     public void shouldCreateATestWithNoQuestionsWhenTheQuestionListIsEmpty() {
         List<Question> questions = new ArrayList<>();
-        OnlineTest onlineTest = OnlineTest.createTestWithQuestions(questions, 10);
+        OnlineTest onlineTest = new OnlineTestService().generateFromQuestions(questions);
         assertEquals(0, onlineTest.getQuestions().size());
     }
 
@@ -34,7 +34,7 @@ public class OnlineTestTest {
 
         List<Question> questions = new ArrayList<>();
         questions.add(new Question("", new ArrayList<>(), ""));
-        OnlineTest onlineTest = OnlineTest.createTestWithQuestions(questions, 10);
+        OnlineTest onlineTest = new OnlineTestService().generateFromQuestions(questions);
         assertEquals(1, onlineTest.getQuestions().size());
     }
 
@@ -48,7 +48,7 @@ public class OnlineTestTest {
         questions.add(question1);
         questions.add(question2);
 
-        OnlineTest onlineTest = new OnlineTest(questions);
+        OnlineTest onlineTest = new OnlineTestService().generateFromQuestions(questions);
 
         // when
         question1.setAnsweredOptionId(1L);
@@ -62,7 +62,7 @@ public class OnlineTestTest {
         List<Question> questions = new ArrayList<>();
         Question question = new Question("Is same of feature and story?", new ArrayList<>(), "");
         questions.add(question);
-        OnlineTest onlineTest = OnlineTest.createTestWithQuestions(questions, 0);
+        OnlineTest onlineTest = new OnlineTestService().generateFromQuestions(questions);
         assertEquals(onlineTest.getCurrentQuestion(), Optional.of(question));
     }
 }
