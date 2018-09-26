@@ -86,7 +86,7 @@ public class QuestionStep {
 
     @When("^User chooses the correct option$")
     public void user_chooses_the_correct_option() {
-        driver.clickById("option5");
+        driver.clickById("option2");
     }
 
     @Then("^User should see the \"([^\"]*)\" page$")
@@ -158,7 +158,7 @@ public class QuestionStep {
     @Given("^User answered correctly the (\\d+) th question page$")
     public void user_answered_correctly_the(int answeredCount) throws Throwable {
         for (int i = 0; i < answeredCount; ++i) {
-            driver.clickById("option5");
+            driver.clickById("option2");
             driver.clickButton("answer");
         }
     }
