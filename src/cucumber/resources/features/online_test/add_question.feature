@@ -1,7 +1,7 @@
 Feature: AddQuestion
 
 
-  @now @developing @javascript
+  @developing @javascript
   Scenario: After make a question the form is reset
     Given no question registered
     When Push submit with required fields
