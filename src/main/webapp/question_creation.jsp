@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ page import="java.util.List"%>
+<%@ page import="com.odde.massivemailer.model.Question2" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -25,26 +27,20 @@
         <input id="input_question_body" type="text" name="question_body">
         <input type="text" name="answer_1">
         <input type="text" name="answer_2">
+        <input id="input_question_advice" type="text" name="question_advice">
 
         <input id="save_button" type="button">
     </form>
-
-    <%= request.getAttribute("contents1") %>
-
-    <div class="question">
-      <p class="question_body">
-        body
-      </p>
-      <div class="answers">
-          <p class="answer">
-            answer_1
-          </p>
-          <p class="answer">
-            answer_2
-          </p>
-      </div>
-
-    </div>
+   <%
+       for (Question2 question : (List<Question2>)request.getAttribute("questions")) {
+   %>
+       <div class="question">
+       <p><%= question.get("body") %></p>
+       <p><%= question.get("advice") %></p>
+       </div>
+   <%
+       }
+   %>
 </body>
 <!-- jQuery -->
 <script type="text/javascript"

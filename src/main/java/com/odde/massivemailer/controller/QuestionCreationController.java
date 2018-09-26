@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/question/creation")
@@ -16,8 +17,7 @@ public class QuestionCreationController extends AppController {
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Question2> questions = Question2.findAll();
-        // req.setAttribute("questions" , questions);
-        req.setAttribute("contents1" , "contents1");
+        req.setAttribute("questions" , questions);
         RequestDispatcher dispatcher = req.getRequestDispatcher("/question_creation.jsp");
         dispatcher.forward(req, resp);
     }

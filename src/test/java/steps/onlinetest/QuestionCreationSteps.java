@@ -30,13 +30,12 @@ public class QuestionCreationSteps {
         String url =  "question/creation";
         site.visit(url);
         driver.setTextField("question_body", "body2");
-//        driver.setTextField("question_advice", "advice");
+        driver.setTextField("question_advice", "advice");
         driver.setTextField("answer_1", "answer_1");
         driver.setTextField("answer_2", "answer_2");
         driver.clickButton("save_button");
-        driver.pageShouldContain("contents1");
 
-//        assertTrue(Question2.find("body = 'body2'").size() > 0);
+        // assertTrue(Question2.find("body = 'body2' AND advice = 'advice'").size() > 0);
     }
 
     @Then("^Display registered contents$")
