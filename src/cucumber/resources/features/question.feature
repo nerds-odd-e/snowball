@@ -36,14 +36,12 @@ Feature:
       | Scrum is Rugby       | Advice       |
       | None of the above    | Question     |
 
-  @developing
   Scenario: テストに10問正解するとEnd of test pageが表示されること
     Given User is in the test page
     And There are 10 questions
     And User answered correctly the 10 th question page
     Then "End Of Test" is shown
 
-  @developing
   Scenario Outline: Adviceページから1問残っていればQuestionページ、残っていなければEnd Of Testページが表示されること
     Given User is in the test page
     And User answered correctly the <number_of_questions> th question page
