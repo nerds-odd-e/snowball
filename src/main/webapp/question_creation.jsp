@@ -29,6 +29,8 @@
         <input id="save_button" type="button">
     </form>
 
+    <%= request.getAttribute("contents1") %>
+
     <div class="question">
       <p class="question_body">
         body

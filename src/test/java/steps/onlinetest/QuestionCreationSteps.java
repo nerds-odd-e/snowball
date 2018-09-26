@@ -27,14 +27,16 @@ public class QuestionCreationSteps {
 
     @When("^Push submit with required fields$")
     public void push_submit_with_required_fields() throws Throwable {
-        site.visit("add_question.jsp");
-        driver.setTextField("question_body", "body");
+        String url =  "question/creation";
+        site.visit(url);
+        driver.setTextField("question_body", "body2");
+//        driver.setTextField("question_advice", "advice");
         driver.setTextField("answer_1", "answer_1");
         driver.setTextField("answer_2", "answer_2");
         driver.clickButton("save_button");
-        Question2.create("body", "body",
-                "advice", "advice").saveIt();
+        driver.pageShouldContain("contents1");
 
+//        assertTrue(Question2.find("body = 'body2'").size() > 0);
     }
 
     @Then("^Display registered contents$")
@@ -61,7 +63,7 @@ public class QuestionCreationSteps {
 
     @When("^load the form$")
     public void load_the_form() throws Throwable {
-        site.visit("add_question.jsp");
+        site.visit("question_creation.jsp");
         driver.setTextField("question_body", "body");
     }
 
