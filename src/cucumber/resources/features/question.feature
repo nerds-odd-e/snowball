@@ -76,13 +76,13 @@ Feature:
    Scenario Outline: アドバイスページからNEXTボタンを押したとき、問題の進行によりFinishページが表示
      Given On question progress, "<number_of_question>" of 2
      When User clicks incorrect answer
-     And User clicks correct answer
+     And User clicks the "Next" button
      Then "<page_content>" is shown
 
      Examples:
      | number_of_question | page_content |
      | 1                  | Question     |
-     | 9                  | End Of Test  |
+     | 2                  | End Of Test  |
 
   @developing
   Scenario: 未回答でNEXTを押したときに、同じQuestionページに遷移する事
