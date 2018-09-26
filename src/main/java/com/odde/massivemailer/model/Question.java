@@ -1,9 +1,12 @@
 package com.odde.massivemailer.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Question {
+
+    private static List<Question> questions;
 
     private String description;
     private List<Option> options;
@@ -19,6 +22,14 @@ public class Question {
         this.options = options;
         this.advice = advice;
         this.answeredOptionId = answeredOptionId;
+    }
+
+    public static List<Question> fetchAll() {
+        return questions;
+    }
+
+    public static void deleteAll() {
+        questions = new ArrayList<>();
     }
 
     public List<Option> getOptions() {
@@ -39,5 +50,18 @@ public class Question {
 
     public void setAnsweredOptionId(long l) {
         answeredOptionId = l;
+    }
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "description='" + description + '\'' +
+                ", options=" + options +
+                ", advice='" + advice + '\'' +
+                '}';
+    }
+
+    public void save() {
+        Question.questions.add(this);
     }
 }
