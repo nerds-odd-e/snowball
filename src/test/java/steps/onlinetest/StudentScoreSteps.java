@@ -1,16 +1,12 @@
-package steps.online_test;
+package steps.onlinetest;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.Then;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import steps.driver.WebDriverFactory;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
