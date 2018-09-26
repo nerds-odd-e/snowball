@@ -2,6 +2,7 @@ package com.odde.massivemailer.controller;
 
 import com.google.common.collect.Lists;
 import com.odde.massivemailer.model.OnlineTest;
+import com.odde.massivemailer.model.Question;
 import cucumber.api.java.gl.E;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,10 +12,12 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class QuestionControllerTest {
     private QuestionController controller;
@@ -39,7 +42,14 @@ public class QuestionControllerTest {
     public void setSessionInFirstRequest() throws Exception {
         controller.doGet(request, response);
         HttpSession session = request.getSession();
-        assertThat(session.getAttribute("onlineTest"), instanceOf(OnlineTest.class));
+        Object obj = session.getAttribute("onlineTest");
+        assertThat(obj, instanceOf(OnlineTest.class));
+        OnlineTest onlineTest = (OnlineTest) obj;
+        List<Question> questions = onlineTest.getQuestions();
+        assertTrue(questions.size() > 0);
+        for (Question question : questions) {
+            assertTrue(question.getOptions().size() > 1);
+        }
     }
 
     @Test

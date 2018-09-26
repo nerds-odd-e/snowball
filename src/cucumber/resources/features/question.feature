@@ -6,12 +6,9 @@ Feature:
     Given User is in the top page
     When User clicks "Start Test" button on menu
     Then User should see a question and options
-      | description | Is same of feature and story?|
-      | option1     | Scrum is Rugby    |
-      | option2     | Scrum is Baseball |
-      | option3     | Scrum is Soccer   |
-      | option4     | Scrum is Sumo     |
-      | option5     | None of the above |
+      | description | Is same of feature and story? |
+      | option1     | Yes                           |
+      | option2     | No                            |
 
   @developing
   Scenario Outline: 最後の問題の時に、正解または不正解を選んで、回答ボタンを押下するとEndOfTestまたはAdviceに遷移すること

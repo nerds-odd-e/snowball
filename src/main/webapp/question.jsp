@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"
 	import = "java.util.Optional"
+	import = "java.util.List"
 	import = "com.odde.massivemailer.model.OnlineTest"
 	import = "com.odde.massivemailer.model.Question"
+	import = "com.odde.massivemailer.model.Option"
 	%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -42,21 +44,15 @@
             <% } %>
         </h2>
         <ul>
-            <li>
-                <label id="option1" ><input for="option1" type="radio" name="optionId" value="1" checked/>Scrum is Rugby</label>
-            </li>
-            <li>
-                <label id="option2" ><input for="option2" type="radio" name="optionId" value="2"/>Scrum is Baseball</label>
-            </li>
-            <li>
-                <label id="option3" ><input for="option3" type="radio" name="optionId" value="3"/>Scrum is Soccer</label>
-            </li>
-            <li>
-                <label id="option4" ><input for="option4" type="radio" name="optionId" value="4"/>Scrum is Sumo</label>
-            </li>
-            <li>
-                <label id="option5" ><input for="option5" type="radio" name="optionId" value="5"/>None of the above</label>
-            </li>
+            <% if (question.isPresent()) { %>
+                <% List<Option> options = question.get().getOptions(); %>
+                <li>
+                    <label id="option1" ><input for="option1" type="radio" name="optionId" value="1" checked/><%= options.get(0).getValue() %></label>
+                </li>
+                <li>
+                    <label id="option2" ><input for="option2" type="radio" name="optionId" value="2"/><%= options.get(1).getValue() %></label>
+                </li>
+            <% } %>
         </ul>
         <div class="col-lg-12">
             <input type="submit" id="answer" value="Answer">
