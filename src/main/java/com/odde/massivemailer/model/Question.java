@@ -33,7 +33,7 @@ public class Question {
         return description;
     }
 
-    public boolean isAnswered() {
+    boolean isAnswered() {
         return Objects.nonNull(answeredOptionId);
     }
 }
