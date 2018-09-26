@@ -1,7 +1,7 @@
 Feature:
   User can take an online test :)
 
-  @now
+  @developing
   Scenario: 初期表示：質問とoptionsが表示されていること
     Given User is in the top page
     When User clicks "Start Test" button on menu

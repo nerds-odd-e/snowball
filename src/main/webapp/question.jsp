@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"
+	import = "java.util.Optional"
+	import = "com.odde.massivemailer.model.OnlineTest"
+	import = "com.odde.massivemailer.model.Question"
+	%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -27,12 +31,15 @@
         action="question">
     <div class="container-fluid">
         <h1>Question</h1>
-        <%@ page import = "com.odde.massivemailer.model.OnlineTest" %>
+
         <%
             OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
+            Optional<Question> question = onlineTest.getCurrentQuestion();
         %>
         <h2 id="description">
-            <%= onlineTest.getCurrentQuestion().getDescription() %>
+            <% if (question.isPresent()) { %>
+                <%= question.get().getDescription() %>
+            <% } %>
         </h2>
         <ul>
             <li>

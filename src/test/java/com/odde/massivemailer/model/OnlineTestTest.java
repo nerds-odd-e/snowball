@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -62,6 +63,6 @@ public class OnlineTestTest {
         Question question = new Question("Is same of feature and story?", new ArrayList<>(), "");
         questions.add(question);
         OnlineTest onlineTest = OnlineTest.createTestWithQuestions(questions, 0);
-        assertEquals(onlineTest.getCurrentQuestion(), question);
+        assertEquals(onlineTest.getCurrentQuestion(), Optional.of(question));
     }
 }

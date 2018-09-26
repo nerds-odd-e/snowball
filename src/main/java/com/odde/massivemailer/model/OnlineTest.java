@@ -3,6 +3,7 @@ package com.odde.massivemailer.model;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 public class OnlineTest {
     private List<Question> questions;
@@ -24,7 +25,7 @@ public class OnlineTest {
         return (int) questions.stream().filter(t -> t.isAnswered()).count();
     }
 
-    public Question getCurrentQuestion() {
-        return questions.get(0);
+    public Optional<Question> getCurrentQuestion() {
+        return questions.stream().filter(o -> !o.isAnswered()).findFirst();
     }
 }
