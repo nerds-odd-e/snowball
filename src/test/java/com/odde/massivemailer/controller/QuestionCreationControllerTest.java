@@ -1,9 +1,6 @@
 package com.odde.massivemailer.controller;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.factory.CourseFactory;
-import com.odde.massivemailer.model.ContactPerson;
-import com.odde.massivemailer.model.Course;
 import com.odde.massivemailer.model.Question;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,9 +8,6 @@ import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @RunWith(TestWithDB.class)

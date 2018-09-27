@@ -1,10 +1,8 @@
 package com.odde.massivemailer.controller;
 
-import com.google.common.collect.Lists;
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.OnlineTest;
 import com.odde.massivemailer.model.Question;
-import cucumber.api.java.gl.E;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,13 +12,11 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.hamcrest.Matchers.instanceOf;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(TestWithDB.class)
 public class QuestionControllerTest {
