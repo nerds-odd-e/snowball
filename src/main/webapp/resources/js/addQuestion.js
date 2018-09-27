@@ -1,3 +1,4 @@
+/*
 $(document).ready(function() {
 
 	$("#save_button").click(function() {
@@ -9,3 +10,7 @@ $(document).ready(function() {
 function submitForm() {
 	$("#input_question_body").val("");
 }
+
+function doPost() {
+    $("")
+}*/

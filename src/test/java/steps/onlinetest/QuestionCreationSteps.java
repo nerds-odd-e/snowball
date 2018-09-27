@@ -37,7 +37,7 @@ public class QuestionCreationSteps {
         driver.setTextField("answer_2", "answer_2");
         driver.clickButton("save_button");
 
-//        assertTrue(Question.find("body = 'body2' AND advice = 'advice'").size() > 0);
+        assertTrue(Question.find("body = 'body2' AND advice = 'advice'").size() > 0);
     }
 
     @Then("^Display registered contents$")

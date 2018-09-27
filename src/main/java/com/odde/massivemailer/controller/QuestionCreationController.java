@@ -23,5 +23,8 @@ public class QuestionCreationController extends AppController {
     }
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Question.create("body", "body2",
+                "advice", "advice").saveIt();
+        resp.sendRedirect("/massive_mailer/question/creation");
     }
 }

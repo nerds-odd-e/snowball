@@ -23,20 +23,20 @@
 	rel="stylesheet" type="text/css">
 </head>
 <body>
-    <form action="submit" method="POST">
+    <form action="/massive_mailer/question/creation" method="POST">
         <input id="input_question_body" type="text" name="question_body">
         <input type="text" name="answer_1">
         <input type="text" name="answer_2">
         <input id="input_question_advice" type="text" name="question_advice">
 
-        <input id="save_button" type="button">
+        <input id="save_button" type="submit">
     </form>
    <%
        for (Question question : (List<Question>)request.getAttribute("questions")) {
    %>
        <div class="question">
-       <p class="question_body"><%= question.get("body") %></p>
-       <p><%= question.get("advice") %></p>
+            <p class="question_body"><%= question.get("body") %></p>
+            <p><%= question.get("advice") %></p>
        </div>
    <%
        }
