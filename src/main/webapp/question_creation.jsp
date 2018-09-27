@@ -24,10 +24,10 @@
 </head>
 <body>
     <form action="/massive_mailer/question/creation" method="POST">
-        <input id="input_question_body" type="text" name="question_body">
+        <input id="input_question_body" type="text" name="body">
         <input type="text" name="answer_1">
         <input type="text" name="answer_2">
-        <input id="input_question_advice" type="text" name="question_advice">
+        <input id="input_question_advice" type="text" name="advice">
 
         <input id="save_button" type="submit">
     </form>
@@ -35,7 +35,7 @@
        for (Question question : (List<Question>)request.getAttribute("questions")) {
    %>
        <div class="question">
-            <p class="question_body"><%= question.get("body") %></p>
+            <p class="body"><%= question.get("body") %></p>
             <p><%= question.get("advice") %></p>
        </div>
    <%
@@ -47,6 +47,4 @@
 	src="resources/lib/bootstrap/js/jquery.js"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript"
-	src="resources/js/addQuestion.js"></script>
 </html>

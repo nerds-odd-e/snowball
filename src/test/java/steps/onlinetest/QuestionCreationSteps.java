@@ -31,8 +31,8 @@ public class QuestionCreationSteps {
     public void push_submit_with_required_fields() throws Throwable {
         String url =  "question/creation";
         site.visit(url);
-        driver.setTextField("question_body", "body2");
-        driver.setTextField("question_advice", "advice");
+        driver.setTextField("body", "body2");
+        driver.setTextField("advice", "advice");
         driver.setTextField("answer_1", "answer_1");
         driver.setTextField("answer_2", "answer_2");
         driver.clickButton("save_button");
@@ -43,7 +43,7 @@ public class QuestionCreationSteps {
     @Then("^Display registered contents$")
     public void display_registered_contents() throws Throwable {
         final WebElement question = driver.findElements(By.className("question")).get(0);
-        assertEquals("body", question.findElement(By.className("question_body")).getText());
+        assertEquals("body", question.findElement(By.className("body")).getText());
         // FIXME コメントアウトハズス
         //        final WebElement answers = question.findElement(By.className("answers"));
 //        final List<WebElement> answerList = answers.findElements(By.className("answer"));
@@ -54,6 +54,6 @@ public class QuestionCreationSteps {
     @Then("^Reset form$")
     public void reset_form() throws Throwable {
         final WebElement form = driver.findElements(By.tagName("form")).get(0);
-        assertEquals("", form.findElement(By.name("question_body")).getText());
+        assertEquals("", form.findElement(By.name("body")).getText());
     }
 }

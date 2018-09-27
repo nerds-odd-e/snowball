@@ -23,7 +23,7 @@ public class CreateCourserContactControllerTest  {
     Course course = dataMother.csd_course();
 
     @Before
-    public void setUpMockService() {
+    public void setUpMockServicCreateCourserContactControllerTeste() {
         controller = new CreateCourseContactController();
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();

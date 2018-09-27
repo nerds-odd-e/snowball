@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet("/question/creation")
 public class QuestionCreationController extends AppController {
@@ -23,8 +24,9 @@ public class QuestionCreationController extends AppController {
     }
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Question.create("body", "body2",
-                "advice", "advice").saveIt();
+        Map map = getParameterFromRequest(req, "body", "advice");
+        Question.create("body", map.get("body"),
+                "advice", map.get("advice")).saveIt();
         resp.sendRedirect("/massive_mailer/question/creation");
     }
 }
