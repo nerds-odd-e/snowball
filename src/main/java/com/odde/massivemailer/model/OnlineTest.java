@@ -1,7 +1,5 @@
 package com.odde.massivemailer.model;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,5 +21,12 @@ public class OnlineTest {
 
     public Optional<Question> getCurrentQuestion() {
         return questions.stream().filter(o -> !o.isAnswered()).findFirst();
+    }
+
+    @Override
+    public String toString() {
+        return "OnlineTest{" +
+                "questions=" + questions +
+                '}';
     }
 }

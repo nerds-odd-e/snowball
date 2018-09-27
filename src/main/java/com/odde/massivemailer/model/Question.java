@@ -47,4 +47,13 @@ public class Question extends ApplicationModel {
         answeredOptionId = l;
     }
 
+    @Override
+    public String toString() {
+        return "Question{" +
+                "Id=" + getId() +
+                "description=" + getDescription() +
+                "advice=" + getAdvice() +
+                "answeredOptionId=" + answeredOptionId +
+                '}';
+    }
 }
