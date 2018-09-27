@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.List"%>
-<%@ page import="com.odde.massivemailer.model.Question2" %>
+<%@ page import="com.odde.massivemailer.model.Question" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -32,7 +32,7 @@
         <input id="save_button" type="button">
     </form>
    <%
-       for (Question2 question : (List<Question2>)request.getAttribute("questions")) {
+       for (Question question : (List<Question>)request.getAttribute("questions")) {
    %>
        <div class="question">
        <p class="question_body"><%= question.get("body") %></p>

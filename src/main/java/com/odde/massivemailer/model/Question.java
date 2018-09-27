@@ -1,47 +1,42 @@
 package com.odde.massivemailer.model;
 
-import java.util.ArrayList;
+import org.javalite.activejdbc.annotations.Table;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class Question {
+@Table("questions")
+public class Question extends ApplicationModel {
 
-    private static List<Question> questions;
-
-    private String description;
-    private List<Option> options;
-    private String advice;
     private Long answeredOptionId;
+
+    public Question() {
+    }
 
     public Question(String description, List<Option> options, String advice) {
         this(description, options, advice, null);
     }
 
     public Question(String description, List<Option> options, String advice, Long answeredOptionId) {
-        this.description = description;
-        this.options = options;
-        this.advice = advice;
         this.answeredOptionId = answeredOptionId;
-    }
-
-    public static List<Question> fetchAll() {
-        return questions;
-    }
-
-    public static void deleteAll() {
-        questions = new ArrayList<>();
+        set("body", description);
+        set("advice", advice);
     }
 
     public List<Option> getOptions() {
-        return options;
+        return Arrays.asList(
+                new Option(1L, "hoge1", true),
+                new Option(2L, "hoge2", true)
+        );
     }
 
     public String getAdvice() {
-        return advice;
+        return getString("advice");
     }
 
     public String getDescription() {
-        return description;
+        return getString("body");
     }
 
     boolean isAnswered() {
@@ -52,16 +47,4 @@ public class Question {
         answeredOptionId = l;
     }
 
-    @Override
-    public String toString() {
-        return "Question{" +
-                "description='" + description + '\'' +
-                ", options=" + options +
-                ", advice='" + advice + '\'' +
-                '}';
-    }
-
-    public void save() {
-        Question.questions.add(this);
-    }
 }

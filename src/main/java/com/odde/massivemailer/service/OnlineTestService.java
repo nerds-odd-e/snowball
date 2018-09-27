@@ -9,7 +9,7 @@ import java.util.List;
 public class OnlineTestService {
 
     public OnlineTest generate() {
-        List<Question> allQuestions = Question.fetchAll();
+        List<Question> allQuestions = Question.findAll();
         return generateFromQuestions(allQuestions);
     }
 

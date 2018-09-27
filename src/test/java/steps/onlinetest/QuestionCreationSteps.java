@@ -1,17 +1,13 @@
 package steps.onlinetest;
 
 import com.odde.massivemailer.model.Question;
-import com.odde.massivemailer.model.Question2;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.javalite.activejdbc.Model;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -23,8 +19,8 @@ public class QuestionCreationSteps {
     // After make a question the form is reset
     @Given("^no question registered$")
     public void no_question_registered() throws Throwable {
-        Question2.deleteAll();
-        assertTrue(Question2.create("body", "body",
+        Question.deleteAll();
+        assertTrue(Question.create("body", "body",
                 "advice", "advice").saveIt());
 
 
@@ -41,7 +37,7 @@ public class QuestionCreationSteps {
         driver.setTextField("answer_2", "answer_2");
         driver.clickButton("save_button");
 
-//        assertTrue(Question2.find("body = 'body2' AND advice = 'advice'").size() > 0);
+//        assertTrue(Question.find("body = 'body2' AND advice = 'advice'").size() > 0);
     }
 
     @Then("^Display registered contents$")

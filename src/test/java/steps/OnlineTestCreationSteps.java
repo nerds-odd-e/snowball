@@ -19,7 +19,7 @@ public class OnlineTestCreationSteps {
     public void there_are_questions_in_the_system(int n) throws Throwable {
         Question.deleteAll();
         IntStream.rangeClosed(1, n)
-                .forEach(i -> new Question(String.valueOf(i), new ArrayList<>(), "advice").save());
+                .forEach(i -> new Question(String.valueOf(i), new ArrayList<>(), "advice").saveIt());
     }
 
     @When("^I start an online test$")
