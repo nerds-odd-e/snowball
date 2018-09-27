@@ -1,6 +1,7 @@
 package com.odde.massivemailer.controller;
 
 import com.odde.massivemailer.model.Question;
+import com.odde.massivemailer.model.QuestionOption;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 @WebServlet("/question/creation")
 public class QuestionCreationController extends AppController {
@@ -24,9 +26,17 @@ public class QuestionCreationController extends AppController {
     }
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Map map = getParameterFromRequest(req, "body", "advice");
-        Question.create("body", map.get("body"),
-                "advice", map.get("advice")).saveIt();
+        Map map = getParameterFromRequest(req, "body", "advice", "answer_1", "answer_2", "answer_3", "answer_4", "answer_5", "answer_6");
+        Question question = Question.create("body", map.get("body"),
+                "advice", map.get("advice"));
+        question.saveIt();
+
+        question.getId();
+
+        IntStream.rangeClosed(0, 5).forEach(i -> {
+            if(!map.get("answer_"+ (i + 1)).toString().isEmpty())
+                QuestionOption.create("question_id", question.getId(), "body", map.get("answer_" + (i + 1)), "correct", i == 0).saveIt();
+        });
         resp.sendRedirect("/massive_mailer/question/creation");
     }
 }

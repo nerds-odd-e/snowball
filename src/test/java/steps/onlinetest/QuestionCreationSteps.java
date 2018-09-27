@@ -1,9 +1,11 @@
 package steps.onlinetest;
 
 import com.odde.massivemailer.model.Question;
+import com.odde.massivemailer.model.QuestionOption;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.mockito.Answers;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import steps.driver.WebDriverWrapper;
@@ -19,11 +21,10 @@ public class QuestionCreationSteps {
     // After make a question the form is reset
     @Given("^no question registered$")
     public void no_question_registered() throws Throwable {
+        QuestionOption.deleteAll();
         Question.deleteAll();
         assertTrue(Question.create("body", "body",
                 "advice", "advice").saveIt());
-
-
         site.addQuestionPage();
     }
 
@@ -41,7 +42,11 @@ public class QuestionCreationSteps {
         driver.setTextField("answer_6", "answer_6");
         driver.clickButton("save_button");
 
+        Question question = (Question) Question.find("body = 'body2' AND advice = 'advice'").get(0);
+
         assertTrue(Question.find("body = 'body2' AND advice = 'advice'").size() > 0);
+        assertEquals(6, QuestionOption.find("question_id = " + question.get("id")).size());
+
     }
 
     @Then("^Display registered contents$")
