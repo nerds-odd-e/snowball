@@ -4,7 +4,7 @@ import com.odde.TestWithDB;
 import com.odde.massivemailer.factory.CourseFactory;
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Course;
-import com.odde.massivemailer.model.Question2;
+import com.odde.massivemailer.model.Question;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,6 +35,6 @@ public class QuestionCreationControllerTest {
         request.setParameter("advice", "advice");
         controller.doPost(request,response);
 
-        assertTrue(Question2.find("body = 'body3' AND advice = 'advice'").size() > 0);
+        assertTrue(Question.find("body = 'body3' AND advice = 'advice'").size() > 0);
     }
 }
