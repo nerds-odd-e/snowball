@@ -34,7 +34,7 @@ public class QuestionCreationController extends AppController {
         question.getId();
 
         IntStream.rangeClosed(0, 5).forEach(i -> {
-            if(!map.get("answer_"+ (i + 1)).toString().isEmpty())
+            if(map.get("answer_"+ (i + 1)) != null && !map.get("answer_"+ (i + 1)).toString().isEmpty())
                 QuestionOption.create("question_id", question.getId(), "body", map.get("answer_" + (i + 1)), "correct", i == 0).saveIt();
         });
         resp.sendRedirect("/massive_mailer/question/creation");
