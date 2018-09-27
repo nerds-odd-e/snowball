@@ -48,7 +48,7 @@ public class QuestionControllerTest {
         List<Question> questions = onlineTest.getQuestions();
         assertTrue(questions.size() > 0);
         for (Question question : questions) {
-            assertTrue(question.getOptions().size() > 1);
+            assertTrue(question.getQuestionOptions().size() > 1);
         }
     }
 

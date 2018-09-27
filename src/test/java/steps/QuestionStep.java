@@ -1,6 +1,8 @@
 package steps;
 
 import com.odde.massivemailer.controller.QuestionController;
+import com.odde.massivemailer.model.Question;
+import com.odde.massivemailer.model.QuestionOption;
 import cucumber.api.DataTable;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
@@ -20,6 +22,38 @@ import static org.junit.Assert.assertEquals;
 public class QuestionStep {
     private MassiveMailerSite site = new MassiveMailerSite();
     private WebDriverWrapper driver = site.getDriver();
+
+    @Given("^There is a a Single Question with (\\d+) options$")
+    public void there_is_a_a_Single_Question_with_options(int arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        Question.deleteAll();
+
+        Question question2 = new Question("description", null, "advice");
+        question2.saveIt();
+        long questionId = question2.getLongId();
+
+        QuestionOption.deleteAll();
+        new QuestionOption(questionId, "option1", true).saveIt();
+        new QuestionOption(questionId, "option2", false).saveIt();
+    }
+
+    @Given("^I start the test$")
+    public void i_start_the_test() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @When("^I make the right answer$")
+    public void i_make_the_right_answer() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Then("^I should see the End of Test page$")
+    public void i_should_see_the_End_of_Test_page() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
 
     @Given("^User is in the test page$")
     public void user_is_in_the_test_page() {

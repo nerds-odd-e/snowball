@@ -12,19 +12,19 @@ public class QuestionTest {
     @Test
     public void questionShouldHaveDescriptionAndOptionsAndAdvice() {
         String description = "";
-        List<Option> options = new ArrayList<>();
+        List<QuestionOption> questionOptions = new ArrayList<>();
         String advice = "advice";
-        Question question = new Question(description, options, advice);
+        Question question = new Question(description, questionOptions, advice);
         assertNotNull(question.getDescription());
         assertNotNull(question.getAdvice());
-        assertNotNull(question.getOptions());
+        assertNotNull(question.getQuestionOptions());
     }
 
     @Test
     public void questionIsAnswered() {
         Long OptionId = 1L;
-        Option[] options = {new Option(OptionId, "Rugby", false)};
-        Question question = new Question("What is Scrum?", Arrays.asList(options), null, OptionId);
+        QuestionOption[] questionOptions = {new QuestionOption(OptionId, "Rugby", false)};
+        Question question = new Question("What is Scrum?", Arrays.asList(questionOptions), null, OptionId);
 
         boolean isAnswered = question.isAnswered();
         assertTrue(isAnswered);
@@ -32,8 +32,8 @@ public class QuestionTest {
 
     @Test
     public void questionIsNotAnswered() {
-        Option[] options = {new Option(1L, "Rugby", false)};
-        Question question = new Question("What is Scrum?", Arrays.asList(options), null, null);
+        QuestionOption[] questionOptions = {new QuestionOption(1L, "Rugby", false)};
+        Question question = new Question("What is Scrum?", Arrays.asList(questionOptions), null, null);
 
         boolean isAnswered = question.isAnswered();
         assertFalse(isAnswered);

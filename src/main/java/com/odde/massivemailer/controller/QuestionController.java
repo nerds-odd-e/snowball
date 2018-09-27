@@ -1,7 +1,7 @@
 package com.odde.massivemailer.controller;
 
 import com.odde.massivemailer.model.OnlineTest;
-import com.odde.massivemailer.model.Option;
+import com.odde.massivemailer.model.QuestionOption;
 import com.odde.massivemailer.model.Question;
 
 import javax.servlet.RequestDispatcher;
@@ -26,12 +26,12 @@ public class QuestionController extends AppController {
         // FIXME: use Generate Test
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
         if (onlineTest == null) {
-            ArrayList<Option> options = new ArrayList<>();
-            options.add(new Option(1L, "Yes", false));
-            options.add(new Option(2L, "No", true));
-            options.add(new Option(3L, "I have no idea.", false));
+            ArrayList<QuestionOption> questionOptions = new ArrayList<>();
+            questionOptions.add(new QuestionOption(1L, "Yes", false));
+            questionOptions.add(new QuestionOption(2L, "No", true));
+            questionOptions.add(new QuestionOption(3L, "I have no idea.", false));
             List<Question> questions = new ArrayList<>();
-            Question question = new Question("Is same of feature and story?", options, "");
+            Question question = new Question("Is same of feature and story?", questionOptions, "");
             questions.add(question);
             onlineTest = new OnlineTest(questions);
 

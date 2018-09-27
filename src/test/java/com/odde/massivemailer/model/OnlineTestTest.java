@@ -16,10 +16,10 @@ public class OnlineTestTest {
         Long id = 1L;
         String value = "";
         Boolean answer= false;
-        Option option = new Option(id, value, answer);
-        assertNotNull(option.getId());
-        assertNotNull(option.getValue());
-        assertNotNull(option.isAnswer());
+        QuestionOption questionOption = new QuestionOption(id, value, answer);
+        assertNotNull(questionOption.getId());
+        assertNotNull(questionOption.getBody());
+        assertNotNull(questionOption.isCorrect());
     }
 
     @Test
@@ -41,10 +41,10 @@ public class OnlineTestTest {
     @Test
     public void countAnsweredQuestions() {
         // given
-        ArrayList<Option> options = new ArrayList<>();
+        ArrayList<QuestionOption> questionOptions = new ArrayList<>();
         ArrayList<Question> questions = new ArrayList<>();
-        Question question1 = new Question("", options, null, null);
-        Question question2 = new Question("", options, null, null);
+        Question question1 = new Question("", questionOptions, null, null);
+        Question question2 = new Question("", questionOptions, null, null);
         questions.add(question1);
         questions.add(question2);
 

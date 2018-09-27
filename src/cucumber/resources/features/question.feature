@@ -2,6 +2,13 @@ Feature:
   User can take an online test :)
 
   @developing
+  Scenario: 最後の問題で正解するとテスト終了ページに遷移すること
+    Given There is a a Single Question with 2 options
+    And I start the test
+    When I make the right answer
+    Then I should see the End of Test page
+
+  @developing
   Scenario: 初期表示：質問とoptionsが表示されていること
     Given User is in the top page
     When User clicks "Start Test" button on menu
@@ -37,12 +44,14 @@ Feature:
       | Scrum is Rugby       | Advice       |
       | None of the above    | Question     |
 
+  @developing
   Scenario: テストに10問正解するとEnd of test pageが表示されること
     Given User is in the test page
     And There are 10 questions
     And User answered correctly the 10 th question page
     Then "End Of Test" is shown
 
+  @developing
   Scenario Outline: Adviceページから1問残っていればQuestionページ、残っていなければEnd Of Testページが表示されること
     Given User is in the test page
     And User answered correctly the <number_of_questions> th question page

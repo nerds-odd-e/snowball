@@ -14,20 +14,20 @@ public class Question extends ApplicationModel {
     public Question() {
     }
 
-    public Question(String description, List<Option> options, String advice) {
-        this(description, options, advice, null);
+    public Question(String description, List<QuestionOption> questionOptions, String advice) {
+        this(description, questionOptions, advice, null);
     }
 
-    public Question(String description, List<Option> options, String advice, Long answeredOptionId) {
+    public Question(String description, List<QuestionOption> questionOptions, String advice, Long answeredOptionId) {
         this.answeredOptionId = answeredOptionId;
         set("body", description);
         set("advice", advice);
     }
 
-    public List<Option> getOptions() {
+    public List<QuestionOption> getQuestionOptions() {
         return Arrays.asList(
-                new Option(1L, "hoge1", true),
-                new Option(2L, "hoge2", true)
+                new QuestionOption(1L, "hoge1", true),
+                new QuestionOption(2L, "hoge2", true)
         );
     }
 
