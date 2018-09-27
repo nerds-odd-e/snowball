@@ -1,6 +1,5 @@
 Feature: Online Test Creation
 
-  @developing
   Scenario Outline: The questions are randomly chosen and the test is generate
     Given There are "<n>" questions in the system
     When I start an online test
