@@ -17,17 +17,21 @@ public class OnlineTestServiceTest {
     @Before
     public void before() {
         Question.deleteAll();
-        Question.create("body", "body1", "advice", "advice1").saveIt();
-        Question.create("body", "body2", "advice", "advice2").saveIt();
-        Question.create("body", "body3", "advice", "advice3").saveIt();
-        Question.create("body", "body4", "advice", "advice4").saveIt();
-        Question.create("body", "body5", "advice", "advice5").saveIt();
-        Question.create("body", "body6", "advice", "advice6").saveIt();
-        Question.create("body", "body7", "advice", "advice7").saveIt();
-        Question.create("body", "body8", "advice", "advice8").saveIt();
-        Question.create("body", "body9", "advice", "advice9").saveIt();
-        Question.create("body", "body10", "advice", "advice10").saveIt();
+        newQuestion("body1", "advice1");
+        newQuestion("body2", "advice2");
+        newQuestion("body3", "advice3");
+        newQuestion("body4", "advice4");
+        newQuestion("body5", "advice5");
+        newQuestion("body6", "advice6");
+        newQuestion("body7", "advice7");
+        newQuestion("body8", "advice8");
+        newQuestion("body9", "advice9");
+        newQuestion("body10", "advice10");
 
+    }
+
+    private void newQuestion(String body, String advice) {
+        Question.create("body", body, "advice", advice).saveIt();
     }
 
     @Test
