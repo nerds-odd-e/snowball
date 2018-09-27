@@ -2,6 +2,7 @@ package steps;
 
 import com.odde.massivemailer.model.OnlineTest;
 import com.odde.massivemailer.model.Question;
+import com.odde.massivemailer.model.QuestionOption;
 import com.odde.massivemailer.service.OnlineTestService;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -17,6 +18,7 @@ public class OnlineTestCreationSteps {
 
     @Given("^There are \"([^\"]*)\" questions in the system$")
     public void there_are_questions_in_the_system(int n) throws Throwable {
+        QuestionOption.deleteAll();
         Question.deleteAll();
         IntStream.rangeClosed(1, n)
                 .forEach(i -> new Question(String.valueOf(i), new ArrayList<>(), "advice").saveIt());
