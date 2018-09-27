@@ -65,22 +65,4 @@ public class OnlineTestTest {
         OnlineTest onlineTest = new OnlineTestService().generateFromQuestions(questions);
         assertEquals(onlineTest.getCurrentQuestion(), Optional.of(question));
     }
-
-    @Test
-    public void shouldReturnTrueIsOver() {
-        List<Question> questions = new ArrayList<>();
-        ArrayList<Option> options = new ArrayList<>();
-        questions.add(new Question("", options, null, 1L));
-        OnlineTest onlineTest = new OnlineTestService().generateFromQuestions(questions);
-        assertTrue(onlineTest.isOver());
-    }
-
-    @Test
-    public void shouldReturnFalseIsOver() {
-        List<Question> questions = new ArrayList<>();
-        ArrayList<Option> options = new ArrayList<>();
-        questions.add(new Question("", options, null, null));
-        OnlineTest onlineTest = new OnlineTestService().generateFromQuestions(questions);
-        assertFalse(onlineTest.isOver());
-    }
 }

@@ -2,9 +2,7 @@ package com.odde.massivemailer.controller;
 
 import com.google.common.collect.Lists;
 import com.odde.massivemailer.model.OnlineTest;
-import com.odde.massivemailer.model.Option;
 import com.odde.massivemailer.model.Question;
-import com.odde.massivemailer.service.OnlineTestService;
 import cucumber.api.java.gl.E;
 import org.junit.Before;
 import org.junit.Test;
@@ -60,21 +58,14 @@ public class QuestionControllerTest {
 
         String optionId = "2";
 
-        ArrayList<Option> options = new ArrayList<>();
-        options.add(new Option(1L, "Yes", false));
-        options.add(new Option(2L, "No", true));
-        List<Question> questions = new ArrayList<>();
-        Question question = new Question("Is same of feature and story?", options, "");
-        Question question2 = new Question("", options, "");
-        questions.add(question);
-        questions.add(question2);
-        OnlineTest onlineTest = new OnlineTest(questions);
-        request.getSession().setAttribute("onlineTest", onlineTest);
         request.addParameter("optionId", optionId);
         request.addParameter("questionId", "1");
+        request.getSession().setAttribute("answeredCount", 3);
 
         controller.doPost(request,response);
         assertEquals("question.jsp", response.getRedirectedUrl());
+        HttpSession session = request.getSession();
+        assertEquals(4, (int) session.getAttribute("answeredCount"));
     }
 
     @Test
@@ -83,14 +74,8 @@ public class QuestionControllerTest {
         String optionId = "2";
 
         request.addParameter("optionId", optionId);
-        ArrayList<Option> options = new ArrayList<>();
-        options.add(new Option(1L, "Yes", false));
-        options.add(new Option(2L, "No", true));
-        List<Question> questions = new ArrayList<>();
-        Question question = new Question("Is same of feature and story?", options, "");
-        questions.add(question);
-        OnlineTest onlineTest = new OnlineTest(questions);
-        request.getSession().setAttribute("onlineTest", onlineTest);
+        request.addParameter("questionId", "1");
+        request.getSession().setAttribute("answeredCount", 10);
 
         controller.doPost(request,response);
         assertEquals("end_of_test.jsp", response.getRedirectedUrl());
@@ -99,15 +84,6 @@ public class QuestionControllerTest {
     @Test
     public void postIncorrect() throws ServletException, IOException {
         String optionId = "1";
-
-        ArrayList<Question> questions = new ArrayList<>();
-        Question question1 = new Question("", null, null, null);
-        Question question2 = new Question("", null, null, null);
-        questions.add(question1);
-        questions.add(question2);
-
-        OnlineTest onlineTest = new OnlineTest(questions);
-        request.getSession().setAttribute("onlineTest", onlineTest);
 
         request.addParameter("optionId", optionId);
         request.addParameter("questionId", "1");
@@ -137,14 +113,6 @@ public class QuestionControllerTest {
     @Test
     public void checkFromAdvicePageToQuestionPage() throws Exception {
 
-        ArrayList<Question> questions = new ArrayList<>();
-        Question question1 = new Question("", null, null, null);
-        Question question2 = new Question("", null, null, null);
-        questions.add(question1);
-        questions.add(question2);
-
-        OnlineTest onlineTest = new OnlineTest(questions);
-        request.getSession().setAttribute("onlineTest", onlineTest);
         request.addParameter("from", "advice");
 
         controller.doPost(request, response);
@@ -154,11 +122,6 @@ public class QuestionControllerTest {
     @Test
     public void checkFromAdvicePageToEndOfTestPage() throws Exception {
 
-        List<Question> questions = new ArrayList<>();
-        ArrayList<Option> options = new ArrayList<>();
-        questions.add(new Question("", options, null, 1L));
-        OnlineTest onlineTest = new OnlineTestService().generateFromQuestions(questions);
-        request.getSession().setAttribute("onlineTest", onlineTest);
         request.addParameter("from", "advice");
         request.getSession().setAttribute("answeredCount", 10);
 

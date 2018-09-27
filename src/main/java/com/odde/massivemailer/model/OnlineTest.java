@@ -24,8 +24,4 @@ public class OnlineTest {
     public Optional<Question> getCurrentQuestion() {
         return questions.stream().filter(o -> !o.isAnswered()).findFirst();
     }
-
-    public boolean isOver() {
-        return questions.size() == countAnsweredQuestions();
-    }
 }
