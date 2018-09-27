@@ -24,6 +24,10 @@ public class OnlineTestCreationSteps {
                 .forEach(i -> new Question(String.valueOf(i), new ArrayList<>(), "advice").saveIt());
     }
 
+    @Given("^More than one question registered in all categories$")
+    public void more_than_one_question_registered_in_all_categories() throws Throwable {
+    }
+
     @When("^I start an online test$")
     public void i_start_an_online_test() throws Throwable {
         onlineTestService = new OnlineTestService();
@@ -35,5 +39,10 @@ public class OnlineTestCreationSteps {
         System.out.println(onlineTest.getQuestions());
         assertEquals(m, onlineTest.getQuestions().size());
     }
+
+    @Then("^The problem in the test includes four categories$")
+    public void the_problem_in_the_test_includes_four_categories() throws Throwable {
+    }
+
 
 }

@@ -32,6 +32,7 @@ public class QuestionCreationSteps {
     public void push_submit_with_required_fields() throws Throwable {
         String url =  "question/creation";
         site.visit(url);
+        driver.setDropdownValue("category","1");
         driver.setTextField("body", "body2");
         driver.setTextField("advice", "advice");
         driver.setTextField("answer_1", "answer_1");
