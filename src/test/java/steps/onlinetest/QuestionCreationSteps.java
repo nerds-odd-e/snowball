@@ -35,6 +35,10 @@ public class QuestionCreationSteps {
         driver.setTextField("advice", "advice");
         driver.setTextField("answer_1", "answer_1");
         driver.setTextField("answer_2", "answer_2");
+        driver.setTextField("answer_3", "answer_3");
+        driver.setTextField("answer_4", "answer_4");
+        driver.setTextField("answer_5", "answer_5");
+        driver.setTextField("answer_6", "answer_6");
         driver.clickButton("save_button");
 
         assertTrue(Question.find("body = 'body2' AND advice = 'advice'").size() > 0);

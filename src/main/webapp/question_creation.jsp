@@ -27,6 +27,10 @@
         <input id="input_question_body" type="text" name="body">
         <input type="text" name="answer_1">
         <input type="text" name="answer_2">
+        <input type="text" name="answer_3">
+        <input type="text" name="answer_4">
+        <input type="text" name="answer_5">
+        <input type="text" name="answer_6">
         <input id="input_question_advice" type="text" name="advice">
 
         <input id="save_button" type="submit">
