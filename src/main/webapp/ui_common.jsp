@@ -44,7 +44,7 @@
                 <li><a href="question_list.jsp"><span
                         class="glyphicon glyphicon-file" aria-hidden="true"></span>
                         Question List</a></li>
-                <ul><li><a href="add_question.jsp"><span
+                <ul><li><a href="/massive_mailer/question/creation"><span
                                         class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add
                                         Question</a></li></ul>
                 <li><a id="start_test" href="question"><span
