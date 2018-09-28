@@ -47,6 +47,10 @@
        <div class="question">
             <p class="body"><%= question.get("body") %></p>
             <p><%= question.get("advice") %></p>
+            <ul class="answers">
+                <li class="answer_1">answer_1</li>
+                <li class="answer_2">answer_2</li>
+            </ul>
        </div>
    <%
        }

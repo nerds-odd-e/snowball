@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
+
 @WebServlet("/question/creation")
 public class QuestionCreationController extends AppController {
 
@@ -30,6 +31,8 @@ public class QuestionCreationController extends AppController {
                 "advice", map.get("advice"),
                 "category", map.get("category"));
         question.saveIt();
+
+
 
         IntStream.rangeClosed(0, 5).forEach(i -> {
             if(map.get("answer_"+ (i + 1)) != null && !map.get("answer_"+ (i + 1)).toString().isEmpty())
