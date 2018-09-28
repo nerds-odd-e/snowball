@@ -35,7 +35,7 @@
 
 <div id="page-wrapper">
     <div class="container-fluid">
-        <h1>Advice</h1>
+        <h1 id="title">Advice</h1>
         <h2 id="description">What is scrum?</h2>
         <ul>
             <%

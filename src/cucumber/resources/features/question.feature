@@ -7,6 +7,12 @@ Feature:
     When I make the right answer
     Then I should see the End of Test page
 
+  Scenario: 最後の問題で間違えるとアドバイスページに遷移すること
+    Given There is a a Single Question with 2 options
+    And I start the test
+    When I make the incorrect answer
+    Then I should see the Advice page
+
   @developing
   Scenario: 初期表示：質問とoptionsが表示されていること
     Given User is in the top page

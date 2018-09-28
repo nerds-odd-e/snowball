@@ -53,6 +53,17 @@ public class QuestionStep {
         driver.expectElementWithIdToContainText("title", "End Of Test");
     }
 
+    @When("^I make the incorrect answer$")
+    public void i_make_the_incorrect_answer() throws Throwable {
+        driver.clickById("option2");
+        driver.clickButton("answer");
+    }
+
+    @Then("^I should see the Advice page$")
+    public void i_should_see_the_Advice_page() throws Throwable {
+        driver.expectElementWithIdToContainText("title", "Advice");
+    }
+
     @Given("^User is in the test page$")
     public void user_is_in_the_test_page() {
         site.visit("question");
