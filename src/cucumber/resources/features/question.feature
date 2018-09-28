@@ -1,12 +1,14 @@
 Feature:
   User can take an online test :)
 
+  @developing
   Scenario: 最後の問題で正解するとテスト終了ページに遷移すること
     Given There is a a Single Question with 2 options
     And I start the test
     When I make the right answer
     Then I should see the End of Test page
 
+  @developing
   Scenario: 最後の問題で間違えるとアドバイスページに遷移すること
     Given There is a a Single Question with 2 options
     And I start the test
