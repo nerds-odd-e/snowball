@@ -2,6 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.List"%>
 <%@ page import="com.odde.massivemailer.model.Question" %>
+<%@ page import="com.odde.massivemailer.model.QuestionOption" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -48,8 +49,11 @@
             <p class="body"><%= question.get("body") %></p>
             <p><%= question.get("advice") %></p>
             <ul class="answers">
-                <li class="answer_1">answer_1</li>
-                <li class="answer_2">answer_2</li>
+                <%
+                       for (QuestionOption questionOption : (List<QuestionOption>)question.getQuestionOptions()) {
+                %>
+                    <li><%= questionOption.get("body") %></li>
+                 <% } %>
             </ul>
        </div>
    <%

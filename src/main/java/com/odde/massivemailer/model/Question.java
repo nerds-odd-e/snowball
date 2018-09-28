@@ -25,10 +25,7 @@ public class Question extends ApplicationModel {
     }
 
     public List<QuestionOption> getQuestionOptions() {
-        return Arrays.asList(
-                new QuestionOption(1L, "hoge1", true),
-                new QuestionOption(2L, "hoge2", true)
-        );
+        return QuestionOption.find("question_id = " + getId());
     }
 
     public String getAdvice() {
