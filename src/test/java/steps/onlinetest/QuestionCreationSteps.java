@@ -5,11 +5,12 @@ import com.odde.massivemailer.model.QuestionOption;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.mockito.Answers;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -45,9 +46,14 @@ public class QuestionCreationSteps {
 
         Question question = (Question) Question.find("body = 'body2' AND advice = 'advice'").get(0);
 
-        assertTrue(Question.find("body = 'body2' AND advice = 'advice'").size() > 0);
-        assertEquals(6, QuestionOption.find("question_id = " + question.get("id")).size());
+        List<Question> questions = Question.find("body = 'body2' AND advice = 'advice'");
 
+        assertEquals(1, questions.size());
+        Question latestQuestion = questions.get(questions.size() - 1);
+        assertEquals("body2", latestQuestion.get("body"));
+        assertEquals("advice", latestQuestion.get("advice"));
+
+        assertEquals(6, QuestionOption.find("question_id = " + question.get("id")).size());
     }
 
     @Then("^Display registered contents$")
