@@ -2,7 +2,6 @@ package com.odde.massivemailer.model;
 
 import org.javalite.activejdbc.annotations.Table;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,14 +13,15 @@ public class Question extends ApplicationModel {
     public Question() {
     }
 
-    public Question(String description, List<QuestionOption> questionOptions, String advice) {
-        this(description, questionOptions, advice, null);
+    public Question(String description, List<QuestionOption> questionOptions, String advice, String category) {
+        this(description, questionOptions, advice, category,null);
     }
 
-    public Question(String description, List<QuestionOption> questionOptions, String advice, Long answeredOptionId) {
+    public Question(String description, List<QuestionOption> questionOptions, String advice, String category, Long answeredOptionId) {
         this.answeredOptionId = answeredOptionId;
         set("body", description);
         set("advice", advice);
+        set("category", category);
     }
 
     public List<QuestionOption> getQuestionOptions() {
@@ -52,5 +52,14 @@ public class Question extends ApplicationModel {
                 "advice=" + getAdvice() +
                 "answeredOptionId=" + answeredOptionId +
                 '}';
+    }
+
+    public String getCategory() {
+        return getString("category");
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.toString().equals(obj.toString());
     }
 }

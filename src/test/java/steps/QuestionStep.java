@@ -28,7 +28,7 @@ public class QuestionStep {
         // Write code here that turns the phrase above into concrete actions
         Question.deleteAll();
 
-        Question question2 = new Question("description", null, "advice");
+        Question question2 = new Question("description", null, "advice","Scrum");
         question2.saveIt();
         long questionId = question2.getLongId();
 

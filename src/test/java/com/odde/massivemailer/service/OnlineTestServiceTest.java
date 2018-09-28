@@ -3,11 +3,17 @@ package com.odde.massivemailer.service;
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.OnlineTest;
 import com.odde.massivemailer.model.Question;
+import com.odde.massivemailer.model.QuestionOption;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 
@@ -17,21 +23,17 @@ public class OnlineTestServiceTest {
     @Before
     public void before() {
         Question.deleteAll();
-        newQuestion("body1", "advice1");
-        newQuestion("body2", "advice2");
-        newQuestion("body3", "advice3");
-        newQuestion("body4", "advice4");
-        newQuestion("body5", "advice5");
-        newQuestion("body6", "advice6");
-        newQuestion("body7", "advice7");
-        newQuestion("body8", "advice8");
-        newQuestion("body9", "advice9");
-        newQuestion("body10", "advice10");
-
+        QuestionOption.deleteAll();
+        IntStream.rangeClosed(0, 100).forEach(i -> {
+            newQuestion("body"+i, "advice"+i, "Scrum");
+        });
+        newQuestion("body101", "advice101", "Technical practice");
+        newQuestion("body102", "advice102", "Organization");
+        newQuestion("body103", "advice103", "Scaling");
     }
 
-    private void newQuestion(String body, String advice) {
-        Question.create("body", body, "advice", advice).saveIt();
+    private void newQuestion(String body, String advice, String category) {
+        Question.create("body", body, "advice", advice, "category", category).saveIt();
     }
 
     @Test
@@ -45,4 +47,12 @@ public class OnlineTestServiceTest {
         );
     }
 
+    @Test
+    public void generatedTestShouldHasFourCategories() {
+        OnlineTest generate1 = new OnlineTestService().generate();
+        Set<String> categories = generate1.getQuestions().stream()
+                .map(Question::getCategory)
+                .collect(Collectors.toSet());
+        assertEquals(4, categories.size());
+    }
 }

@@ -9,6 +9,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.junit.Assert.assertEquals;
@@ -20,8 +21,26 @@ public class OnlineTestCreationSteps {
     public void there_are_questions_in_the_system(int n) throws Throwable {
         QuestionOption.deleteAll();
         Question.deleteAll();
-        IntStream.rangeClosed(1, n)
-                .forEach(i -> new Question(String.valueOf(i), new ArrayList<>(), "advice").saveIt());
+        IntStream.rangeClosed(1, n).forEach(i -> {
+            String category = null;
+            switch (i % 4) {
+                case 0:
+                    category = "Scrum";
+                    break;
+                case 1:
+                    category = "Technical practice";
+                    break;
+                case 2:
+                    category = "Organization";
+                    break;
+                case 3:
+                    category = "Scaling";
+                    break;
+                default:
+                    throw new RuntimeException();
+            }
+            new Question(String.valueOf(i), new ArrayList<>(), "advice", category, null).saveIt();
+        });
     }
 
     @Given("^More than one question registered in all categories$")
@@ -36,8 +55,9 @@ public class OnlineTestCreationSteps {
     @Then("^An online test with \"([^\"]*)\" questions is generated$")
     public void an_online_test_with_questions_is_generated(int m) throws Throwable {
         OnlineTest onlineTest = onlineTestService.generate();
-        System.out.println(onlineTest.getQuestions());
         assertEquals(m, onlineTest.getQuestions().size());
+        int categorySize = onlineTest.getQuestions().stream().map(Question::getCategory).collect(Collectors.toSet()).size();
+        assertEquals(4, categorySize);
     }
 
     @Then("^The problem in the test includes four categories$")

@@ -170,12 +170,12 @@ public class QuestionControllerTest {
     private void setOnlineTestToSession(int answeredQuestionCount, int unansweredQuestionCount) {
         ArrayList<Question> questions = new ArrayList<>();
         for (long i = 0; i < answeredQuestionCount; i++) {
-            Question question = new Question("", null, null, 1L);
+            Question question = new Question("", null, null, "Scrum", 1L);
             question.setId(i);
             questions.add(question);
         }
         for (long i = 0; i < unansweredQuestionCount; i++) {
-            Question question = new Question("", null, null, null);
+            Question question = new Question("", null, null,"Scrum",null);
             question.setId(i + answeredQuestionCount);
             questions.add(question);
         }

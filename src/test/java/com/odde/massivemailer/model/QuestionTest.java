@@ -14,7 +14,7 @@ public class QuestionTest {
         String description = "";
         List<QuestionOption> questionOptions = new ArrayList<>();
         String advice = "advice";
-        Question question = new Question(description, questionOptions, advice);
+        Question question = new Question(description, questionOptions, advice, "Scrum");
         assertNotNull(question.getDescription());
         assertNotNull(question.getAdvice());
         assertNotNull(question.getQuestionOptions());
@@ -24,7 +24,7 @@ public class QuestionTest {
     public void questionIsAnswered() {
         Long OptionId = 1L;
         QuestionOption[] questionOptions = {new QuestionOption(OptionId, "Rugby", false)};
-        Question question = new Question("What is Scrum?", Arrays.asList(questionOptions), null, OptionId);
+        Question question = new Question("What is Scrum?", Arrays.asList(questionOptions), null, "Scrum",OptionId);
 
         boolean isAnswered = question.isAnswered();
         assertTrue(isAnswered);
@@ -33,7 +33,7 @@ public class QuestionTest {
     @Test
     public void questionIsNotAnswered() {
         QuestionOption[] questionOptions = {new QuestionOption(1L, "Rugby", false)};
-        Question question = new Question("What is Scrum?", Arrays.asList(questionOptions), null, null);
+        Question question = new Question("What is Scrum?", Arrays.asList(questionOptions), null, "Scrum",null);
 
         boolean isAnswered = question.isAnswered();
         assertFalse(isAnswered);

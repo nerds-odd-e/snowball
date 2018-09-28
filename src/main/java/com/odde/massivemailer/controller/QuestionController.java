@@ -31,7 +31,7 @@ public class QuestionController extends AppController {
             questionOptions.add(new QuestionOption(2L, "No", false));
             questionOptions.add(new QuestionOption(3L, "I have no idea.", false));
             List<Question> questions = new ArrayList<>();
-            Question question = new Question("Is same of feature and story?", questionOptions, "");
+            Question question = new Question("Is same of feature and story?", questionOptions, "","Scrum");
             question.setId(10L);
             questions.add(question);
             onlineTest = new OnlineTest(questions);

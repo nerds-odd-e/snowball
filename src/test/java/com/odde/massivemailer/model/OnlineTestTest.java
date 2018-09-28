@@ -1,7 +1,9 @@
 package com.odde.massivemailer.model;
 
+import com.odde.TestWithDB;
 import com.odde.massivemailer.service.OnlineTestService;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@RunWith(TestWithDB.class)
 public class OnlineTestTest {
     @Test
     public void optionShouldHaveIdAndValueAndAnswer() {
@@ -33,7 +36,7 @@ public class OnlineTestTest {
     public void shouldCreateATestWithOnequestionWhenTheQuestionListHasOne() {
 
         List<Question> questions = new ArrayList<>();
-        questions.add(new Question("", new ArrayList<>(), ""));
+        questions.add(new Question("", new ArrayList<>(), "","Scrum"));
         OnlineTest onlineTest = new OnlineTestService().generateFromQuestions(questions);
         assertEquals(1, onlineTest.getQuestions().size());
     }
@@ -43,8 +46,8 @@ public class OnlineTestTest {
         // given
         ArrayList<QuestionOption> questionOptions = new ArrayList<>();
         ArrayList<Question> questions = new ArrayList<>();
-        Question question1 = new Question("", questionOptions, null, null);
-        Question question2 = new Question("", questionOptions, null, null);
+        Question question1 = new Question("", questionOptions, null, "Scrum", null);
+        Question question2 = new Question("", questionOptions, null, "Scrum", null);
         questions.add(question1);
         questions.add(question2);
 
@@ -60,7 +63,7 @@ public class OnlineTestTest {
     @Test
     public void shouldReturnCurrentQuestion() {
         List<Question> questions = new ArrayList<>();
-        Question question = new Question("Is same of feature and story?", new ArrayList<>(), "");
+        Question question = new Question("Is same of feature and story?", new ArrayList<>(), "","Scrum");
         questions.add(question);
         OnlineTest onlineTest = new OnlineTestService().generateFromQuestions(questions);
         assertEquals(onlineTest.getCurrentQuestion(), Optional.of(question));

@@ -9,8 +9,6 @@ Feature: Online Test Creation
 
     Examples:
       | n  | m  |
-      | 0  | 0  |
-      | 1  | 1  |
       | 4  | 4  |
       | 10 | 10 |
       | 15 | 10 |
