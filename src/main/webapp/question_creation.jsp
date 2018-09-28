@@ -25,10 +25,10 @@
 <body>
     <form action="/massive_mailer/question/creation" method="POST">
         <select name = "category">
-        <option value="1">scrum</option>
-        <option value="2">Technical practice</option>
-        <option value="3">Organization</option>
-        <option value="4">Scaling</option>
+        <option value="Scrum">Scrum</option>
+        <option value="Technical practice">Technical practice</option>
+        <option value="Organization">Organization</option>
+        <option value="Scaling">Scaling</option>
         </select>
         <input id="input_question_body" type="text" name="body">
         <input type="text" name="answer_1">

@@ -24,13 +24,14 @@ public class QuestionCreationControllerTest {
     }
 
     @Test
-    public void shouldNotAddNonexistingParticipant() throws Exception {
+    public void shouldNotAddNonExistingParticipant() throws Exception {
+        request.setParameter("category","Organization");
         request.setParameter("body", "body3");
         request.setParameter("advice", "advice");
         request.setParameter("answer_1", "answer_1");
         request.setParameter("answer_2", "answer_2");
         controller.doPost(request,response);
 
-        assertTrue(Question.find("body = 'body3' AND advice = 'advice'").size() > 0);
+        assertTrue(Question.find("body = 'body3' AND advice = 'advice' AND category = 'Organization'").size() > 0);
     }
 }

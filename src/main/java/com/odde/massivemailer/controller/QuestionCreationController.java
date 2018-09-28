@@ -24,9 +24,11 @@ public class QuestionCreationController extends AppController {
     }
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Map map = getParameterFromRequest(req, "body", "advice", "answer_1", "answer_2", "answer_3", "answer_4", "answer_5", "answer_6");
-        Question question = Question.create("body", map.get("body"),
-                "advice", map.get("advice"));
+        Map map = getParameterFromRequest(req, "body", "advice", "category", "answer_1", "answer_2", "answer_3", "answer_4", "answer_5", "answer_6");
+        Question question = Question.create(
+                "body", map.get("body"),
+                "advice", map.get("advice"),
+                "category", map.get("category"));
         question.saveIt();
 
         IntStream.rangeClosed(0, 5).forEach(i -> {
