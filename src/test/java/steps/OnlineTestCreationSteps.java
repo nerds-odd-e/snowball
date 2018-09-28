@@ -36,8 +36,6 @@ public class OnlineTestCreationSteps {
                 case 3:
                     category = "Scaling";
                     break;
-                default:
-                    throw new RuntimeException();
             }
             new Question(String.valueOf(i), new ArrayList<>(), "advice", category, null).saveIt();
         });
