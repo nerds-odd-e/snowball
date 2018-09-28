@@ -30,7 +30,7 @@ public class QuestionCreationSteps {
         String url = "question/creation";
 
         site.visit(url);
-        driver.setDropdownValue("category", "Scrum");
+        driver.setDropdownValue("category", "Technical practice");
         driver.setTextField("body", body);
         driver.setTextField("advice", advice);
 
@@ -55,6 +55,7 @@ public class QuestionCreationSteps {
     @Then("^Display registered contents with (\\d+) answers$")
     public void display_registered_contents_with_answers(int numOfAnswers) throws Throwable {
         final WebElement question = driver.findElements(By.className("question")).get(0);
+        assertEquals("Technical practice", question.findElement(By.className("category")).getText());
         assertEquals("body", question.findElement(By.className("body")).getText());
         final WebElement answers = question.findElement(By.className("answers"));
         final List<WebElement> answerList = answers.findElements(By.cssSelector("li"));

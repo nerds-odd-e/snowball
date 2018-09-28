@@ -3,7 +3,6 @@ package com.odde.massivemailer.controller;
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.OnlineTest;
 import com.odde.massivemailer.model.Question;
-import com.odde.massivemailer.model.QuestionOption;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -73,8 +72,6 @@ public class QuestionControllerTest {
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
         assertEquals(1, onlineTest.countAnsweredQuestions());
     }
-
-
 
     @Test
     public void postIncorrect() throws ServletException, IOException {

@@ -46,6 +46,7 @@
        for (Question question : (List<Question>)request.getAttribute("questions")) {
    %>
        <div class="question">
+            <p class="category"><%= question.get("category") %></p>
             <p class="body"><%= question.get("body") %></p>
             <p><%= question.get("advice") %></p>
             <ul class="answers">
