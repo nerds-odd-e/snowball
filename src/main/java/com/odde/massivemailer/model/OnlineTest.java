@@ -35,7 +35,7 @@ public class OnlineTest {
         return getQuestions().stream()
                 .map(question -> {
                     if (question.getLongId().toString().equals(questionId)) {
-                        return new Question(question.getDescription(), question.getQuestionOptions(), question.getAdvice(), Long.parseLong(questionId));
+                        return new Question(question.getDescription(), question.getQuestionOptions(), question.getAdvice(),"Scrum", Long.parseLong(questionId));
                     } else {
                         return question;
                     }
