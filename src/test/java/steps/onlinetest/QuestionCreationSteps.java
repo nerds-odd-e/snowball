@@ -32,8 +32,10 @@ public class QuestionCreationSteps {
     @When("^Push submit with required fields$")
     public void push_submit_with_required_fields() throws Throwable {
         String url =  "question/creation";
+        String categoryName = "Scrum";
+
         site.visit(url);
-        driver.setDropdownValue("category","1");
+        driver.setDropdownValue("category",categoryName);
         driver.setTextField("body", "body2");
         driver.setTextField("advice", "advice");
         driver.setTextField("answer_1", "answer_1");
@@ -44,7 +46,7 @@ public class QuestionCreationSteps {
         driver.setTextField("answer_6", "answer_6");
         driver.clickButton("save_button");
 
-        Question question = (Question) Question.find("body = 'body2' AND advice = 'advice'").get(0);
+        Question question = (Question) Question.find("body = 'body2' AND advice = 'advice' AND category = '" + categoryName + "'").get(0);
 
         List<Question> questions = Question.find("body = 'body2' AND advice = 'advice'");
 
@@ -52,6 +54,8 @@ public class QuestionCreationSteps {
         Question latestQuestion = questions.get(questions.size() - 1);
         assertEquals("body2", latestQuestion.get("body"));
         assertEquals("advice", latestQuestion.get("advice"));
+        assertEquals(categoryName, latestQuestion.get("category"));
+
 
         assertEquals(6, QuestionOption.find("question_id = " + question.get("id")).size());
     }
