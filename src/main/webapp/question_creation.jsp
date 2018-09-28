@@ -9,46 +9,76 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Contact List</title>
 <!-- Bootstrap Core CSS -->
-<link href="resources/lib/bootstrap/css/bootstrap.min.css"
+<link href="/massive_mailer/resources/lib/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
 
 <!-- Custom CSS -->
-<link href="resources/lib/bootstrap/css/sb-admin.css" rel="stylesheet">
+<link href="/massive_mailer/resources/lib/bootstrap/css/sb-admin.css" rel="stylesheet">
 
-<link href="resources/lib/bootstrap/css/plugins/morris.css"
+<link href="/massive_mailer/resources/lib/bootstrap/css/plugins/morris.css"
 	rel="stylesheet">
 
 <!-- Custom Fonts -->
 <link
-	href="resources/lib/bootstrap/font-awesome/css/font-awesome.min.css"
+	href="/massive_mailer/resources/lib/bootstrap/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
 </head>
 <body>
+    <jsp:include page="ui_common.jsp" />
+    <div id="page-wrapper">
     <form action="/massive_mailer/question/creation" method="POST">
-        <select name = "category">
-        <option value="Scrum">Scrum</option>
-        <option value="Technical practice">Technical practice</option>
-        <option value="Organization">Organization</option>
-        <option value="Scaling">Scaling</option>
-        </select>
-        <input id="input_question_body" type="text" name="body">
-        <input type="text" name="answer_1">
-        <input type="text" name="answer_2">
-        <input type="text" name="answer_3">
-        <input type="text" name="answer_4">
-        <input type="text" name="answer_5">
-        <input type="text" name="answer_6">
-        <input id="input_question_advice" type="text" name="advice">
-
-        <input id="save_button" type="submit">
+        <div class="form-group">
+            <label for="category">category</label>
+            <select name = "category">
+                <option value="Scrum">Scrum</option>
+                <option value="Technical practice">Technical practice</option>
+                <option value="Organization">Organization</option>
+                <option value="Scaling">Scaling</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="body">question</label>
+            <input id="input_question_body" type="text" name="body">
+        </div>
+        <div class="form-group">
+            <label for="answer_1">answer 1</label>
+            <input type="text" name="answer_1">
+        </div>
+        <div class="form-group">
+            <label for="answer_2">answer 2</label>
+            <input type="text" name="answer_2">
+        </div>
+        <div class="form-group">
+            <label for="answer_3">answer 3</label>
+            <input type="text" name="answer_3">
+        </div>
+        <div class="form-group">
+            <label for="answer_4">answer 4</label>
+            <input type="text" name="answer_4">
+        </div>
+        <div class="form-group">
+            <label for="answer_5">answer 5</label>
+            <input type="text" name="answer_5">
+        </div>
+        <div class="form-group">
+            <label for="answer_6">answer 6</label>
+            <input type="text" name="answer_6">
+        </div>
+        <div class="form-group">
+            <label for="advice">advice</label>
+            <input id="input_question_advice" type="text" name="advice">
+        </div>
+        <div class="form-group">
+            <input id="save_button" type="submit" class="btn btn-warning">
+        </div>
     </form>
+    <div class="row">
    <%
        for (Question question : (List<Question>)request.getAttribute("questions")) {
    %>
-       <div class="question">
+       <div class="question col-sm-3 text-center">
             <p class="category"><%= question.get("category") %></p>
-            <p class="body"><%= question.get("body") %></p>
-            <p><%= question.get("advice") %></p>
+            <h3 class="body"><%= question.get("body") %></h3>
             <ul class="answers">
                 <%
                        for (QuestionOption questionOption : (List<QuestionOption>)question.getQuestionOptions()) {
@@ -56,10 +86,14 @@
                     <li><%= questionOption.get("body") %></li>
                  <% } %>
             </ul>
+            <p><%= question.get("advice") %></p>
+
        </div>
    <%
        }
    %>
+   </div>
+   </div>
 </body>
 <!-- jQuery -->
 <script type="text/javascript"
