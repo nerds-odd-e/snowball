@@ -39,20 +39,18 @@ public class QuestionStep {
 
     @Given("^I start the test$")
     public void i_start_the_test() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        site.visit("question");
     }
 
     @When("^I make the right answer$")
     public void i_make_the_right_answer() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        driver.clickById("option1");
+        driver.clickButton("answer");
     }
 
     @Then("^I should see the End of Test page$")
     public void i_should_see_the_End_of_Test_page() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        driver.expectElementWithIdToContainText("title", "End Of Test");
     }
 
     @Given("^User is in the test page$")

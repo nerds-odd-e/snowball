@@ -1,8 +1,8 @@
 package com.odde.massivemailer.controller;
 
 import com.odde.massivemailer.model.OnlineTest;
-import com.odde.massivemailer.model.QuestionOption;
 import com.odde.massivemailer.model.Question;
+import com.odde.massivemailer.model.QuestionOption;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -27,11 +27,12 @@ public class QuestionController extends AppController {
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
         if (onlineTest == null) {
             ArrayList<QuestionOption> questionOptions = new ArrayList<>();
-            questionOptions.add(new QuestionOption(1L, "Yes", false));
-            questionOptions.add(new QuestionOption(2L, "No", true));
+            questionOptions.add(new QuestionOption(1L, "Yes", true));
+            questionOptions.add(new QuestionOption(2L, "No", false));
             questionOptions.add(new QuestionOption(3L, "I have no idea.", false));
             List<Question> questions = new ArrayList<>();
             Question question = new Question("Is same of feature and story?", questionOptions, "");
+            question.setId(10L);
             questions.add(question);
             onlineTest = new OnlineTest(questions);
 
@@ -48,22 +49,27 @@ public class QuestionController extends AppController {
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(true);
-        int answeredCount = (int) session.getAttribute("answeredCount");
+        OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
 
-        String from = req.getParameter("from");
-        if ("advice".equals(from)) {
-            resp.sendRedirect(getRedirectPageName(answeredCount));
+        int answeredCount = onlineTest.countAnsweredQuestions();
+        int maxQuestionSize = onlineTest.getQuestions().size();
+
+        if ("advice".equals(req.getParameter("from"))) {
+            resp.sendRedirect(getRedirectPageName(answeredCount, maxQuestionSize));
             return;
         }
 
-        answeredCount++;
-        session.setAttribute("answeredCount", answeredCount);
-
+        String questionId = req.getParameter("questionId");
         String optionId = req.getParameter("optionId");
-        String correctOption = "2";
+
+        List<Question> updatedQuestions = onlineTest.createUpdatedQuestions(questionId);
+        OnlineTest updatedOnlineTest = new OnlineTest(updatedQuestions);
+        session.setAttribute("onlineTest", updatedOnlineTest);
+
+        String correctOption = "1";
 
         if (correctOption.equals(optionId)) {
-            resp.sendRedirect(getRedirectPageName(answeredCount));
+            resp.sendRedirect(getRedirectPageName(answeredCount + 1, maxQuestionSize));
             return;
         }
 
@@ -87,9 +93,9 @@ public class QuestionController extends AppController {
         dispatch.forward(req, resp);
     }
 
-    private String getRedirectPageName(int answeredCount) {
+    private String getRedirectPageName(int answeredCount, int maxQuestionSize) {
         String redirectPageName = "end_of_test.jsp";
-        if (answeredCount < MAX_QUESTION_COUNT) {
+        if (answeredCount < maxQuestionSize) {
             redirectPageName = "question.jsp";
         }
         return redirectPageName;

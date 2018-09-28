@@ -55,46 +55,38 @@ public class QuestionControllerTest {
     @Test
     public void postCorrect() throws Exception {
 
-        String optionId = "2";
-
-        request.addParameter("optionId", optionId);
-        request.addParameter("questionId", "1");
-        request.getSession().setAttribute("answeredCount", 3);
-
-        controller.doPost(request,response);
-        assertEquals("question.jsp", response.getRedirectedUrl());
-        HttpSession session = request.getSession();
-        assertEquals(4, (int) session.getAttribute("answeredCount"));
-    }
-
-    @Test
-    public void postCorrectOptionInTheLastQuestion() throws Exception {
-
-        String optionId = "2";
-
-        request.addParameter("optionId", optionId);
-        request.addParameter("questionId", "1");
-        request.getSession().setAttribute("answeredCount", 10);
-
-        controller.doPost(request,response);
-        assertEquals("end_of_test.jsp", response.getRedirectedUrl());
-    }
-
-    @Test
-    public void postIncorrect() throws ServletException, IOException {
         String optionId = "1";
 
         request.addParameter("optionId", optionId);
         request.addParameter("questionId", "1");
+        setOnlineTestToSession(0, 2);
+
+        controller.doPost(request,response);
+        assertEquals("question.jsp", response.getRedirectedUrl());
+        HttpSession session = request.getSession();
+
+        OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
+        assertEquals(1, onlineTest.countAnsweredQuestions());
+    }
+
+
+
+    @Test
+    public void postIncorrect() throws ServletException, IOException {
+        String optionId = "2";
+
+        request.addParameter("optionId", optionId);
+        request.addParameter("questionId", "1");
         request.addParameter("from", "question");
+        setOnlineTestToSession(0, 2);
 
         controller.doPost(request, response);
 
         String correctOption = (String) request.getAttribute("correctOption");
-        assertEquals("2", correctOption);
+        assertEquals("1", correctOption);
 
         String selectedOption = (String) request.getAttribute("selectedOption");
-        assertEquals("1", selectedOption);
+        assertEquals("2", selectedOption);
 
         String[] options = (String[]) request.getAttribute("options");
         String[] expectedOptions = {
@@ -113,6 +105,7 @@ public class QuestionControllerTest {
     public void checkFromAdvicePageToQuestionPage() throws Exception {
 
         request.addParameter("from", "advice");
+        setOnlineTestToSession(1,1);
 
         controller.doPost(request, response);
         assertEquals("question.jsp", response.getRedirectedUrl());
@@ -122,7 +115,8 @@ public class QuestionControllerTest {
     public void checkFromAdvicePageToEndOfTestPage() throws Exception {
 
         request.addParameter("from", "advice");
-        request.getSession().setAttribute("answeredCount", 10);
+
+        setOnlineTestToSession(2, 0);
 
         controller.doPost(request, response);
         assertEquals("end_of_test.jsp", response.getRedirectedUrl());
@@ -146,18 +140,42 @@ public class QuestionControllerTest {
 
     @Test
     public void shouldShowProgressStateLastPage() throws Exception {
-        ArrayList<Question> questions = new ArrayList<>();
-        Question question1 = new Question("", null, null, 1L);
-        Question question2 = new Question("", null, null, null);
-        questions.add(question1);
-        questions.add(question2);
-
-        OnlineTest onlineTest = new OnlineTest(questions);
-        request.getSession().setAttribute("onlineTest", onlineTest);
+        setOnlineTestToSession(1, 1);
         controller.doGet(request,response);
 
         String progressState = (String) request.getSession().getAttribute("progressState");
         assertEquals("2/2", progressState);
     }
 
+    @Test
+    public void postCorrectOptionInTheLastQuestion() throws Exception {
+
+        String optionId = "1";
+
+        request.addParameter("optionId", optionId);
+        request.addParameter("questionId", "1");
+
+
+        setOnlineTestToSession(1, 1);
+
+        controller.doPost(request,response);
+        assertEquals("end_of_test.jsp", response.getRedirectedUrl());
+    }
+
+    private void setOnlineTestToSession(int answeredQuestionCount, int unansweredQuestionCount) {
+        ArrayList<Question> questions = new ArrayList<>();
+        for (long i = 0; i < answeredQuestionCount; i++) {
+            Question question = new Question("", null, null, 1L);
+            question.setId(i);
+            questions.add(question);
+        }
+        for (long i = 0; i < unansweredQuestionCount; i++) {
+            Question question = new Question("", null, null, null);
+            question.setId(i + answeredQuestionCount);
+            questions.add(question);
+        }
+
+        OnlineTest onlineTest = new OnlineTest(questions);
+        request.getSession().setAttribute("onlineTest", onlineTest);
+    }
 }

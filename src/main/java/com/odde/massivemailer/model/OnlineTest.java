@@ -2,6 +2,7 @@ package com.odde.massivemailer.model;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class OnlineTest {
     private List<Question> questions;
@@ -28,5 +29,16 @@ public class OnlineTest {
         return "OnlineTest{" +
                 "questions=" + questions +
                 '}';
+    }
+
+    public List<Question> createUpdatedQuestions(String questionId) {
+        return getQuestions().stream()
+                .map(question -> {
+                    if (question.getLongId().toString().equals(questionId)) {
+                        return new Question(question.getDescription(), question.getQuestionOptions(), question.getAdvice(), Long.parseLong(questionId));
+                    } else {
+                        return question;
+                    }
+                }).collect(Collectors.toList());
     }
 }

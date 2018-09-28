@@ -1,7 +1,6 @@
 Feature:
   User can take an online test :)
 
-  @developing
   Scenario: 最後の問題で正解するとテスト終了ページに遷移すること
     Given There is a a Single Question with 2 options
     And I start the test

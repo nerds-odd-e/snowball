@@ -4,7 +4,7 @@
 	import = "java.util.List"
 	import = "com.odde.massivemailer.model.OnlineTest"
 	import = "com.odde.massivemailer.model.Question"
-	import = "com.odde.massivemailer.model.Option"
+	import = "com.odde.massivemailer.model.QuestionOption"
 %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -45,10 +45,10 @@
         </h2>
         <ul>
             <% if (question.isPresent()) { %>
-                <% List<Option> options = question.get().getOptions(); %>
+                <% List<QuestionOption> options = question.get().getQuestionOptions(); %>
                 <% for (int i=0; i < options.size(); ++i) { %>
                     <li>
-                        <label id="option<%=i+1%>" ><input for="option<%=i+1%>" type="radio" name="optionId" value="<%=i+1%>" checked/><%= options.get(i).getValue() %></label>
+                        <label id="option<%=i+1%>" ><input for="option<%=i+1%>" type="radio" name="optionId" value="<%=i+1%>" checked/><%= options.get(i).getBody() %></label>
                     </li>
                 <% } %>
             <% } %>
