@@ -1,6 +1,8 @@
 Feature: Advice page
   Users will be redirected to the advice page when they answer wrongly
 
+  @developing
+  @now
   Scenario Outline:
     Given User is in the test page
 
