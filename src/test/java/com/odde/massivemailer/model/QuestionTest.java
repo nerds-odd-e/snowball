@@ -3,7 +3,6 @@ package com.odde.massivemailer.model;
 import com.odde.TestWithDB;
 import org.javalite.activejdbc.validation.ValidationException;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -79,7 +78,7 @@ public class QuestionTest {
     @Test
     public void shouldFetchOptionsForQuestion() {
         Question question = Question.createIt("description","desc1","is_multi_question", "0", "advice", null);
-        AnswerOption answerOption1 = AnswerOption.createIt("description","desc","question_id",question.getLongId(), "is_correct", 0);
+        AnswerOption.createIt("description","desc","question_id",question.getLongId(), "is_correct", 0);
         assertThat(question.getOptions(), is(not(empty())));
     }
 
@@ -87,9 +86,9 @@ public class QuestionTest {
     public void shouldFetchOptionsForQuestionWithSameQuestionId() {
         Question question = Question.createIt("description","desc1","is_multi_question", "0", "advice", null);
         Long expectedQuestionId = question.getLongId();
-        AnswerOption answerOption1 = AnswerOption.createIt("description","desc","question_id",question.getLongId(), "is_correct", 0);
-        AnswerOption answerOption2 = AnswerOption.createIt("description","desc","question_id",question.getLongId(), "is_correct", 0);
-        AnswerOption answerOption3 = AnswerOption.createIt("description","desc","question_id",question.getLongId(), "is_correct", 0);
+        AnswerOption.createIt("description","desc","question_id",question.getLongId(), "is_correct", 0);
+        AnswerOption.createIt("description","desc","question_id",question.getLongId(), "is_correct", 0);
+        AnswerOption.createIt("description","desc","question_id",question.getLongId(), "is_correct", 0);
 
         question.getOptions().forEach(option -> assertThat(option.getQuestionId(), is(equalTo(expectedQuestionId))));
     }
