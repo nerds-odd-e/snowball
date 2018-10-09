@@ -21,6 +21,8 @@ public class QuestionResponse extends ApplicationModel{
         validatePresenceOf(TEST_ID, QUESTION_ID, IS_ANSWER_CORRECT);
     }
 
+    public QuestionResponse(){}
+
     public QuestionResponse(String testId, String questionId, Boolean isAnswerCorrect) {
         set(TEST_ID, testId);
         set(QUESTION_ID, questionId);
