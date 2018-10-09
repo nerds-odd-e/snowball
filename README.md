@@ -20,6 +20,16 @@ Database names:
 * development: massive_mailer_development
 * production: massive_mailer_production
 
+###### DB migration
+
+We have a very simple DB migration system. It will run and re-run before application start up or before each test case.
+
+The migration scripts are at: `src/main/resource/db.migration/`
+
+The naming convesion is "4digits_the_rest_of_the_name.sql".
+
+The first four digits are the id of the migration, which will be persisited into the database. The db migration will ignore any migration that is older than the largest id ran last time.
+
 ##### Run Production
 
 `gradle appStart -DACTIVE_ENV=production`

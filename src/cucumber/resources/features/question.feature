@@ -1,7 +1,6 @@
 Feature:
   User can take an online test :)
 
-  @now
   Scenario: 初期表示：質問とoptionsが表示されていること
     Given User is in the top page
     And There is a question "What is Scrum"
@@ -30,6 +29,7 @@ Feature:
       | option4         | Advice       |
       | option5         | Question     |
 
+  @now
   Scenario Outline: テストページで不正解を選んで、回答ボタンを押下するとAdviceページが表示されること
     Given User is in the test page
     And There is a question "What is Scrum"
