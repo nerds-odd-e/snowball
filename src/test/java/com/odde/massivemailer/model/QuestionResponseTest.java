@@ -14,8 +14,6 @@ public class QuestionResponseTest {
 
     @Test
     public void shouldBeAbleToPersistQuestionResponse(){
-        QuestionResponse questionResponse = QuestionResponse.createIt("TestId1","QuestionId1",true);
-        assertThat(questionResponse.getLongId(), is(not(nullValue())));
     }
 
 }
