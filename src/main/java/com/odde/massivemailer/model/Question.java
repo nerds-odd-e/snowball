@@ -47,8 +47,9 @@ public class Question extends ApplicationModel {
         setAttribute(ADVICE, advice);
     }
 
-    public Collection<Option> getOptions() {
-        return Collections.singleton(new Option());
+    public Collection<AnswerOption> getOptions() {
+
+        return Collections.singleton(new AnswerOption());
     }
 
     private void setAttribute(String name, String value) {

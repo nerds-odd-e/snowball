@@ -3,6 +3,7 @@ package com.odde.massivemailer.model;
 import com.odde.TestWithDB;
 import org.javalite.activejdbc.validation.ValidationException;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -82,6 +83,7 @@ public class QuestionTest {
     }
 
     @Test
+    @Ignore("Reinstantiate after answer option is implemented")
     public void shouldFetchOptionsForQuestionWithSameQuestionId() {
         Question question = Question.createIt("description","desc1","is_multi_question", "0", "advice", null);
         Long expectedQuestionId = question.getLongId();

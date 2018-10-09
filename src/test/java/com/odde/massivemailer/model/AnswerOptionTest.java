@@ -10,12 +10,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(TestWithDB.class)
-public class OptionTest {
+public class AnswerOptionTest {
 
     @Test
     public void shouldBeAbleToPersistOption(){
-        Option option = Option.createIt("","","","");
-        assertThat(option.getLongId(), is(not(nullValue())));
+        AnswerOption answerOption = AnswerOption.createIt("description","desc","question_id",1, "is_correct", 0);
+        assertThat(answerOption.getLongId(), is(not(nullValue())));
     }
 
 }
