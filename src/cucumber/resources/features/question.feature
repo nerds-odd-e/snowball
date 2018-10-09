@@ -1,7 +1,6 @@
 Feature:
   User can take an online test :)
 
-  @now
   Scenario: 初期表示：質問とoptionsが表示されていること
     Given User is in the top page
     And There is a question "What is Scrum"
