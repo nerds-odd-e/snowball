@@ -29,6 +29,7 @@ Feature:
       | option4         | Advice       |
       | option5         | Question     |
 
+  @now
   Scenario Outline: テストページで不正解を選んで、回答ボタンを押下するとAdviceページが表示されること
     Given User is in the test page
     And There is a question "What is Scrum"
