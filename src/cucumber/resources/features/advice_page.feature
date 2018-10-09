@@ -1,6 +1,8 @@
-Feature:
- Advice page shown when user answers wrongly
+Feature: Advice page
+  Users will be redirected to the advice page when they answer wrongly
 
+  @developing
+  @now
   Scenario Outline:
     Given User is in the test page
 
@@ -20,10 +22,13 @@ Feature:
       | option4          | Scrum is Sumo     | Scrum is a framework for agile development.|
 
   @now
-  @developing
-  Scenario: Proceed to next question
+  Scenario Outline: Exiting the Advice page
     Given I take the test
+    And there are "<pending>" questions
     And I'm on Advice Page
-    And there are more questions
-    When I click on Next Question
-    Then I should see the Next Question Page
+    When I click on the "<next>" button
+    Then I should see the "<nextPage>" page
+    Examples:
+      | pending | next   | nextPage |
+      | True    | Next   | Question |
+      | False   | Finish | Summary  |

@@ -49,7 +49,7 @@ public class Question extends ApplicationModel {
 
     public Collection<AnswerOption> getOptions() {
 
-        return Collections.singleton(new AnswerOption());
+        return AnswerOption.getForQuestion(this.getLongId());
     }
 
     private void setAttribute(String name, String value) {
