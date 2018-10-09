@@ -159,8 +159,44 @@ public class QuestionStep {
 
     @Given("^There are \"([^\"]*)\" questions remaining$")
     public void there_are_questions_remaining(String arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actionsthrow new Exception();
+    }
+
+    @Given("^There is only one question$")
+    public void there_is_only_one_question() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+
+    }
+
+    @When("^User selects the correct answer$")
+    public void user_selects_the_correct_answer() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+
+    }
+
+    @When("^User Clicks on the next Button$")
+    public void user_Clicks_on_the_next_Button() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+    }
+
+    @Then("^User sees the Summary Page$")
+    public void user_sees_the_Summary_Page() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+    }
+
+    @Given("^There are two questions$")
+    public void there_are_two_questions() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+    }
+
+    @When("^User Clicks on the Next Button in the first question$")
+    public void user_Clicks_on_the_Next_Button_in_the_first_question() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+    }
+
+    @Then("^User should see second question$")
+    public void user_should_see_second_question() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
     }
 
 }
