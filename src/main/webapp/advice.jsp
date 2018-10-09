@@ -31,12 +31,16 @@
 	String[] options = (String[]) request.getAttribute("options");
 	final String correctClass = "correct";
 	final String incorrectClass = "selected incorrect";
+	final String questionText= (String) request.getAttribute("questionText");
+	final String adviceText= (String) request.getAttribute("adviceText");
+	out.println(options);
+	out.println(questionText);
 %>
 
 <div id="page-wrapper">
     <div class="container-fluid">
         <h1>Advice</h1>
-        <h2 id="description">What is scrum?</h2>
+        <h2 id="questionText"><%= questionText %></h2>
         <ul>
             <%
                for (int i=1; i <= options.length; ++i) {
@@ -49,8 +53,7 @@
                }
             %>
         </ul>
-        <div id="advice" class="jumbotron">Scrum is a framework for agile development.
-        </div>
+        <div id="advice" class="jumbotron"><%= adviceText %></div>
         <form action="question" method="post">
             <input type="submit" id="next" value="Next" class="btn-primary btn"/>
             <input id="from" type="hidden" name="from" value="advice"/>
