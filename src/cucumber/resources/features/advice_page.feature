@@ -2,6 +2,7 @@ Feature: Advice page
   Users will be redirected to the advice page when they answer wrongly
 
   @developing
+
   Scenario Outline:
     Given User is in the test page
 
@@ -21,7 +22,6 @@ Feature: Advice page
       | option4          | Scrum is Sumo     | Scrum is a framework for agile development.|
 
   @developing
-  @now
   Scenario Outline: Exiting the Advice page
     Given I take the test
     And I'm on Advice Page

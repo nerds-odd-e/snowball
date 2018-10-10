@@ -1,6 +1,8 @@
 package com.odde.massivemailer.controller;
 
 import com.odde.massivemailer.model.AdviceResponse;
+import com.odde.massivemailer.model.AnswerOption;
+import com.odde.massivemailer.model.Question;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import static com.odde.massivemailer.util.QuestionUtil.getCorrectOptionId;
 import java.util.Arrays;
 
 @WebServlet("/question")
@@ -19,12 +28,14 @@ public class QuestionController extends AppController {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(true);
         session.setAttribute("answeredCount", 0);
+        session.setAttribute("correctlyAnsweredCount", 0);
         resp.sendRedirect("question.jsp");
     }
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(true);
         int answeredCount = (int) session.getAttribute("answeredCount");
+        int correctlyAnsweredCount = (int) session.getAttribute("correctlyAnsweredCount");
 
         String from = req.getParameter("from");
 
@@ -34,29 +45,34 @@ public class QuestionController extends AppController {
         }
 
         answeredCount++;
+
         session.setAttribute("answeredCount", answeredCount);
 
-        String optionId = req.getParameter("optionId");
-        String correctOption = "5";
+        String answeredOptionId = req.getParameter("optionId");
+        Long questionId = Long.parseLong(req.getParameter("questionId"));
+        Collection<AnswerOption> optionsByQuestionId = AnswerOption.getForQuestion(questionId);
 
-        if (correctOption.equals(optionId)) {
+
+        String correctOption = getCorrectOptionId(optionsByQuestionId);
+
+
+        if(correctOption.equals(answeredOptionId)){
+            session.setAttribute("correctlyAnsweredCount", ++correctlyAnsweredCount);
             resp.sendRedirect(getRedirectPageName(answeredCount));
             return;
         }
 
-        AdviceResponse adviceResponse = new AdviceResponse();
-        // to do - set attributes of adviceResponse here
-        // for testing
-        adviceResponse.setQuestion("What is scrum?");
+        Optional<Question> questionOptional = Question.getById(questionId);
+        Question question = questionOptional.isPresent()?questionOptional.get(): new Question();
 
-        adviceResponse.setOptions(Arrays.asList("Scrum is Rugby",
-                "Scrum is Baseball",
-                "Scrum is Soccer",
-                "Scrum is Sumo",
-                "None of the above"));
+        AdviceResponse adviceResponse = new AdviceResponse();
+        adviceResponse.setQuestion(question.getDescription());
+
+        List<String> optionsString = optionsByQuestionId.stream().map(o-> o.getDescription()).collect(Collectors.toList());
+        adviceResponse.setOptions(optionsString);
         adviceResponse.setCorrectOption(correctOption);
-        adviceResponse.setAdviceText("Scrum is a framework for agile development.");
-        adviceResponse.setSelectedOption(optionId);
+        adviceResponse.setAdviceText(question.getAdvice());
+        adviceResponse.setSelectedOption(answeredOptionId);
         forwardAdvicePage(req, resp, adviceResponse);
     }
 
@@ -64,7 +80,7 @@ public class QuestionController extends AppController {
         req.setAttribute("correctOption", adviceResponse.getCorrectOption());
         req.setAttribute("selectedOption", adviceResponse.getSelectedOption());
 
-        String[] options = (String[]) adviceResponse.getOptions().toArray();
+        String[] options = adviceResponse.getOptions().toArray(new String[adviceResponse.getOptions().size()]);
 
         req.setAttribute("options", options);
         req.setAttribute("adviceText", adviceResponse.getAdviceText());
