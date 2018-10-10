@@ -4,13 +4,9 @@ import com.odde.massivemailer.controller.QuestionController;
 import com.odde.massivemailer.model.AnswerOption;
 import com.odde.massivemailer.model.Question;
 import cucumber.api.DataTable;
-import cucumber.api.PendingException;
-import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.javalite.activejdbc.Base;
-import org.javalite.activejdbc.Model;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import steps.driver.WebDriverWrapper;
@@ -20,7 +16,6 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class QuestionStep {
     private MassiveMailerSite site = new MassiveMailerSite();
@@ -59,7 +54,7 @@ public class QuestionStep {
 
     @Given("^There is a question \"([^\"]*)\"$")
     public void there_is_a_question(String description) {
-        question = Question.createIt("description", description, "is_multi_question", "0", "advice", "adv1");
+        question = Question.createIt("description", description, "advice", "adv1");
         Long id = (Long)question.getId();
         AnswerOption answerOption1 = AnswerOption.createIt("description", "Scrum is Rugby", "question_id", id, "is_correct", 0);
         AnswerOption answerOption2 = AnswerOption.createIt("description", "Scrum is Baseball", "question_id", id, "is_correct", 0);
@@ -195,7 +190,7 @@ public class QuestionStep {
     public void user_should_see_option_highlighted_and_text(String clazz, String text) {
         String cssSelector = "." + clazz.replace(" ", ".");
         List<WebElement> elements = driver.findElements(By.cssSelector(cssSelector));
-        assertEquals(elements.size(), 1);
+        assertEquals(1, elements.size());
         assertEquals(elements.get(0).getText(), text);
     }
 

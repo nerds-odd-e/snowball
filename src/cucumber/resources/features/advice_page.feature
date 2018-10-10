@@ -2,7 +2,6 @@ Feature: Advice page
   Users will be redirected to the advice page when they answer wrongly
 
   @developing
-  @now
   Scenario:
     Given User is in the Question page
     When User selects the wrong option

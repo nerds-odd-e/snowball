@@ -35,6 +35,15 @@ public class LaunchQuestionControllerTest {
     }
 
     @Test
+    public void mustSetCorrectlyAnsweredQuestionsToZero()
+            throws Exception {
+        controller.doGet(request, response);
+        int correctlyAnsweredCount = (int) request.getSession().getAttribute("correctlyAnsweredCount");
+        assertEquals(0, correctlyAnsweredCount);
+    }
+
+
+    @Test
     public void mustGetQuesrtionId()
             throws Exception {
         Question question = Question.createIt("description", "desc1", "advice", "adv1");

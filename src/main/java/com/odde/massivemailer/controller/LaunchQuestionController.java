@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 import java.util.stream.Stream;
 
 @WebServlet("/launchQuestion")
@@ -20,7 +19,7 @@ public class LaunchQuestionController extends AppController {
 
         Stream<Long> questionIds = Question.getAllIds();
         session.setAttribute("questionIds", questionIds);
-
+        session.setAttribute("correctlyAnsweredCount", 0);
         resp.sendRedirect("question.jsp");
     }
 }
