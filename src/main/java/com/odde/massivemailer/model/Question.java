@@ -21,9 +21,9 @@ public class Question extends ApplicationModel {
         callbackWith(new QuestionCallbacks());
     }
 
-    public static Stream<Object> getAllIds() {
+    public static Stream<Long> getAllIds() {
         LazyList<Model> ids = findBySQL("SELECT id FROM questions");
-        return ids.stream().map(Model::getId);
+        return ids.stream().map(Model::getLongId);
     }
 
     public static Optional<Question> getById(Long questionId) {
