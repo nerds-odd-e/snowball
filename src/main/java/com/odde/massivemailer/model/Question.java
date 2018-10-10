@@ -32,6 +32,14 @@ public class Question extends ApplicationModel {
     }
 
     public static Question createWithOptions(String description, String advice, List<AnswerOption> answerOptions) {
+        if(answerOptions == null || answerOptions.size()<2) {
+            throw new IllegalArgumentException("Question should have at least two options.");
+        }
+
+        if(answerOptions.stream().filter(AnswerOption::isCorrect).count() != 1) {
+            throw new IllegalArgumentException("Question should have exactly one correct answer option");
+        }
+
         Question question = Question.createIt(DESCRIPTION, description, ADVICE, advice);
         answerOptions.forEach(option -> option.addToQuestion(question.getLongId()));
         return question;

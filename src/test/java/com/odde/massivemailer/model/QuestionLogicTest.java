@@ -32,4 +32,22 @@ public class QuestionLogicTest {
         assertEquals(expectedAnswerOptions.size(), actualAnswerOptions.size());
         assertTrue(expectedAnswerOptions.containsAll(actualAnswerOptions));
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldNotCreateQuestionWithLessThanTwoAnswerOptions() {
+        List<AnswerOption> expectedAnswerOptions = IntStream.range(0, 1).mapToObj(index -> AnswerOption.newInstance("option desc"+index, index%4==0)).collect(Collectors.toList());
+        Question.createWithOptions("des1", "adv1", expectedAnswerOptions);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldNotCreateQuestionWithMultipleCorrectOptions() {
+        List<AnswerOption> expectedAnswerOptions = IntStream.range(0, 4).mapToObj(index -> AnswerOption.newInstance("option desc"+index, index%2==0)).collect(Collectors.toList());
+        Question.createWithOptions("des1", "adv1", expectedAnswerOptions);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldNotCreateQuestionWithoutCorrectAnswerOptions() {
+        List<AnswerOption> expectedAnswerOptions = IntStream.range(0, 4).mapToObj(index -> AnswerOption.newInstance("option desc"+index, false)).collect(Collectors.toList());
+        Question.createWithOptions("des1", "adv1", expectedAnswerOptions);
+    }
 }
