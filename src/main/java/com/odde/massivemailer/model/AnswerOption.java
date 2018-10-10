@@ -40,7 +40,7 @@ public class AnswerOption extends ApplicationModel{
         return answerOption.stream().findFirst();
     }
 
-    public static AnswerOption newInstance(String description, boolean isCorrect) {
+    public static AnswerOption create(String description, boolean isCorrect) {
         return new AnswerOption(description, isCorrect);
     }
 

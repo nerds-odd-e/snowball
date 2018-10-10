@@ -18,7 +18,7 @@ public class QuestionLogicTest {
 
     @Test
     public void shouldCreateQuestionHavingDescriptionAndAdviceAndAnswerOptions() {
-        List<AnswerOption> expectedAnswerOptions = IntStream.range(0, 4).mapToObj(index -> AnswerOption.newInstance("option desc"+index, index%4==0)).collect(Collectors.toList());
+        List<AnswerOption> expectedAnswerOptions = IntStream.range(0, 4).mapToObj(index -> AnswerOption.create("option desc"+index, index%4==0)).collect(Collectors.toList());
         Question expected  = Question.createWithOptions("des1", "adv1", expectedAnswerOptions);
 
         Optional<Question> actualOptional  = Question.getById(expected.getLongId());
@@ -35,19 +35,19 @@ public class QuestionLogicTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldNotCreateQuestionWithLessThanTwoAnswerOptions() {
-        List<AnswerOption> expectedAnswerOptions = IntStream.range(0, 1).mapToObj(index -> AnswerOption.newInstance("option desc"+index, index%4==0)).collect(Collectors.toList());
+        List<AnswerOption> expectedAnswerOptions = IntStream.range(0, 1).mapToObj(index -> AnswerOption.create("option desc"+index, index%4==0)).collect(Collectors.toList());
         Question.createWithOptions("des1", "adv1", expectedAnswerOptions);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldNotCreateQuestionWithMultipleCorrectOptions() {
-        List<AnswerOption> expectedAnswerOptions = IntStream.range(0, 4).mapToObj(index -> AnswerOption.newInstance("option desc"+index, index%2==0)).collect(Collectors.toList());
+        List<AnswerOption> expectedAnswerOptions = IntStream.range(0, 4).mapToObj(index -> AnswerOption.create("option desc"+index, index%2==0)).collect(Collectors.toList());
         Question.createWithOptions("des1", "adv1", expectedAnswerOptions);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldNotCreateQuestionWithoutCorrectAnswerOptions() {
-        List<AnswerOption> expectedAnswerOptions = IntStream.range(0, 4).mapToObj(index -> AnswerOption.newInstance("option desc"+index, false)).collect(Collectors.toList());
+        List<AnswerOption> expectedAnswerOptions = IntStream.range(0, 4).mapToObj(index -> AnswerOption.create("option desc"+index, false)).collect(Collectors.toList());
         Question.createWithOptions("des1", "adv1", expectedAnswerOptions);
     }
 }
