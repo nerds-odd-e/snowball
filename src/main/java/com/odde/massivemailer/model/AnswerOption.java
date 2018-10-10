@@ -18,7 +18,9 @@ public class AnswerOption extends ApplicationModel{
         validatePresenceOf(DESCRIPTION, QUESTION_ID, IS_CORRECT);
     }
 
-    public AnswerOption() {}
+    public AnswerOption() {
+        //required by framework :(
+    }
 
     private AnswerOption(String description, boolean isCorrect) {
         set(DESCRIPTION, description);

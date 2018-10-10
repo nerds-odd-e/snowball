@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(TestWithDB.class)
-public class QuestionLogicTest {
+public class QuestionWithOptionsTest {
 
     @Test
     public void shouldCreateQuestionHavingDescriptionAndAdviceAndAnswerOptions() {
@@ -40,7 +40,7 @@ public class QuestionLogicTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void shouldNotCreateQuestionWithMultipleCorrectOptions() {
+    public void shouldNotCreateQuestionWithMultipleCorrectAnswerOptions() {
         List<AnswerOption> expectedAnswerOptions = IntStream.range(0, 4).mapToObj(index -> AnswerOption.create("option desc"+index, index%2==0)).collect(Collectors.toList());
         Question.createWithOptions("des1", "adv1", expectedAnswerOptions);
     }

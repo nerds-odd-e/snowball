@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -19,7 +20,8 @@ public class AnswerOptionTest {
 
     @Test
     public void shouldBeAbleToPersist() {
-        AnswerOption answerOption = AnswerOption.createIt("description", "desc", "question_id", 1, "is_correct", 0);
+        AnswerOption answerOption = AnswerOption.create("desc", false);
+        answerOption.addToQuestion(1L);
 
         Optional<AnswerOption> actual = AnswerOption.getById(answerOption.getLongId());
 
@@ -29,10 +31,10 @@ public class AnswerOptionTest {
 
     @Test
     public void shouldSaveAndReadIsCorrectProperly() {
-        AnswerOption wrongOption = new AnswerOption("desc1", 1, false);
-        AnswerOption rightOption = new AnswerOption("desc2", 1, true);
-        wrongOption.saveIt();
-        rightOption.saveIt();
+        AnswerOption wrongOption = AnswerOption.create("desc1", false);
+        AnswerOption rightOption = AnswerOption.create("desc2", true);
+        wrongOption.addToQuestion(1L);
+        rightOption.addToQuestion(1L);
 
         Optional<AnswerOption> wrongFromDb = AnswerOption.getById(wrongOption.getLongId());
         assertTrue(wrongFromDb.isPresent());
@@ -47,9 +49,10 @@ public class AnswerOptionTest {
 
     @Test
     public void shouldReturnOptionsForQuestion() {
-        AnswerOption.createIt("description","desc","question_id",1, "is_correct", 0);
-        AnswerOption.createIt("description","desc","question_id",1, "is_correct", 0);
-        AnswerOption.createIt("description","desc","question_id",2, "is_correct", 0);
+        IntStream.range(0, 3).forEach(i -> {
+            AnswerOption answerOption = AnswerOption.create("desc", false);
+            answerOption.addToQuestion(i%2 ==0 ? 1L : 2L);
+        });
 
         Collection<AnswerOption> optionsForQuestion = AnswerOption.getForQuestion(1L);
         assertThat(optionsForQuestion.size(), is(2));
