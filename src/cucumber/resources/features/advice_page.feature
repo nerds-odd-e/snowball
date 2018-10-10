@@ -2,18 +2,22 @@ Feature: Advice page
   Users will be redirected to the advice page when they answer wrongly
 
   @developing
+  @now
+  Scenario:
+    Given User is in the Question page
+    When User selects the wrong option
+    When User answers the question wrongly
+    Then User should go to the Advice page
 
+  @developing
   Scenario Outline:
     Given User is in the test page
-
     And There is a question "What is Scrum"
     When User chooses the "<incorrect option>" option
     And User clicks the answer button
-    Then User go to the "Advice" page
     And User should see "correct" option highlighted and text "None of the above"
     And User should see "selected incorrect" option highlighted and text "<text>"
     And User should see "<advice>"
-
     Examples:
       | incorrect option | text              | advice                                     |
       | option1          | Scrum is Rugby    | Scrum is a framework for agile development.|

@@ -1,5 +1,6 @@
 package steps;
 
+import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -16,6 +17,7 @@ public class AdviceSteps {
 
     @Given("^I take the test$")
     public void i_take_the_test() throws Throwable {
+        site.visit("question");
         // TODO create test session
     }
 
@@ -26,7 +28,6 @@ public class AdviceSteps {
 
     @Given("^I'm on Advice Page$")
     public void i_m_on_Advice_Page() throws Throwable {
-        site.visit("question");
         UiElement option1 = driver.findElementById("option1");
         option1.click();
         UiElement nextButton = driver.findElementById("answer");
@@ -43,5 +44,28 @@ public class AdviceSteps {
     public void i_should_see_the_page(String expectedPageTitle) throws Throwable {
         String title = driver.getCurrentTitle();
         assertEquals(expectedPageTitle, title);
+    }
+
+    @Given("^User is in the Question page$")
+    public void userIsInTheQuestionPage() throws Throwable {
+        site.visit("launchQuestion");
+    }
+
+    @When("^User selects the wrong option$")
+    public void userSelectsTheWrongOption() throws Throwable {
+        UiElement wrongOption = driver.findElementById("option1");
+        wrongOption.click();
+    }
+
+    @When("^User answers the question wrongly$")
+    public void userAnswersTheQuestionWrongly() throws Throwable {
+        UiElement nextButton = driver.findElementById("answer");
+        nextButton.click();
+    }
+
+    @Then("^User should go to the Advice page$")
+    public void userShouldGoToTheAdvicePage() throws Throwable {
+        String title = driver.getCurrentTitle();
+        assertEquals("Question", title);
     }
 }

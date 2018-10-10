@@ -17,8 +17,10 @@ public class LaunchQuestionController extends AppController {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(true);
         session.setAttribute("answeredCount", 0);
+
         Stream<Long> questionIds = Question.getAllIds();
         session.setAttribute("questionIds", questionIds);
+
         resp.sendRedirect("question.jsp");
     }
 }
