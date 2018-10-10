@@ -2,7 +2,6 @@ Feature: Advice page
   Users will be redirected to the advice page when they answer wrongly
 
   @developing
-  @now
   Scenario Outline:
     Given User is in the test page
 
@@ -21,14 +20,14 @@ Feature: Advice page
       | option3          | Scrum is Soccer   | Scrum is a framework for agile development.|
       | option4          | Scrum is Sumo     | Scrum is a framework for agile development.|
 
+  @developing
   @now
   Scenario Outline: Exiting the Advice page
     Given I take the test
-    And there are "<pending>" questions
     And I'm on Advice Page
-    When I click on the "<next>" button
+    And there are "<additional>" questions remaining
+    When I click on the Next button
     Then I should see the "<nextPage>" page
     Examples:
-      | pending | next   | nextPage |
-      | True    | Next   | Question |
-      | False   | Finish | Summary  |
+      | additional | nextPage |
+      | 1          | Question |

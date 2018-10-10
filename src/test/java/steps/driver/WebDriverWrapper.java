@@ -51,6 +51,10 @@ public class WebDriverWrapper {
 
     }
 
+    public String getCurrentTitle() {
+        return driver.getTitle();
+    }
+
     public void visit(String url) {
         driver.get(url);
     }

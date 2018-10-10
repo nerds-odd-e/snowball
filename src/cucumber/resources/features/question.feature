@@ -29,7 +29,6 @@ Feature:
       | option4         | Advice       |
       | option5         | Question     |
 
-@now
   Scenario Outline: テストページで不正解を選んで、回答ボタンを押下するとAdviceページが表示されること
     Given User is in the test page
     And There is a question "What is Scrum"
@@ -66,7 +65,6 @@ Feature:
       | 8                   | Question     |
       | 9                   | End Of Test  |
 
- @now
  Scenario: User selects the correct answer and click on the Next Button
    Given User is in the test page
    And There is only one question
@@ -74,7 +72,6 @@ Feature:
    And User Clicks on the next Button
    Then User sees the Summary Page
 
- @now
 Scenario: User selects the correct answer and click on the Next Button
    Given User is in the test page
    And There are two questions
