@@ -2,6 +2,7 @@ package com.odde.massivemailer.controller;
 
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.Question;
+import com.odde.massivemailer.model.Quiz;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +12,8 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(TestWithDB.class)
 public class LaunchQuestionControllerTest {
@@ -35,21 +38,16 @@ public class LaunchQuestionControllerTest {
     }
 
     @Test
-    public void mustSetCorrectlyAnsweredQuestionsToZero()
-            throws Exception {
+    public void mustGetQuesrtionId()     throws Exception {
         controller.doGet(request, response);
-        int correctlyAnsweredCount = (int) request.getSession().getAttribute("correctlyAnsweredCount");
-        assertEquals(0, correctlyAnsweredCount);
-    }
+        Quiz quiz = (Quiz) request.getSession().getAttribute("quiz");
+        Question initialQuestion = (Question) request.getSession().getAttribute("question");
+        Integer correctlyAnsweredQuestions = (Integer) request.getSession().getAttribute("correctlyAnsweredQuestions");
 
-
-    @Test
-    public void mustGetQuesrtionId()
-            throws Exception {
-        Question question = Question.createIt("description", "desc1", "advice", "adv1");
-        controller.doGet(request, response);
-        Stream<Long> questsion_ids = (Stream<Long>) request.getSession().getAttribute("questionIds");
-        assertEquals(question.getLongId(), questsion_ids.findFirst().get());
+        assertNotNull(quiz);
+        assertNotNull(initialQuestion);
+        assertNotNull(correctlyAnsweredQuestions);
+        assertTrue(correctlyAnsweredQuestions.equals(0));
     }
 
 

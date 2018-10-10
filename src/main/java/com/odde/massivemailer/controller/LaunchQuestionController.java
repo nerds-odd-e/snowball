@@ -1,6 +1,7 @@
 package com.odde.massivemailer.controller;
 
 import com.odde.massivemailer.model.Question;
+import com.odde.massivemailer.model.Quiz;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,11 +16,13 @@ public class LaunchQuestionController extends AppController {
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(true);
-        session.setAttribute("answeredCount", 0);
-
         Stream<Long> questionIds = Question.getAllIds();
-        session.setAttribute("questionIds", questionIds);
-        session.setAttribute("correctlyAnsweredCount", 0);
+        Quiz quiz = Quiz.create(5);
+
+        session.setAttribute("answeredCount", 0);
+        session.setAttribute("correctlyAnsweredQuestions", 0);
+        session.setAttribute("quiz", quiz);
+        session.setAttribute("question", quiz.getNextQuestion());
         resp.sendRedirect("question.jsp");
     }
 }

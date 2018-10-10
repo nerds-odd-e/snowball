@@ -27,28 +27,18 @@
         action="question">
     <div class="container-fluid">
         <h1>Question</h1>
-        <h2 id="description">What is scrum?</h2>
+        <h2 id="description">${sessionScope.question.getDescription()}</h2>
         <ul>
+        <c:forEach items="${sessionScope.question.getOptions()}" var="option">
             <li>
-                <label id="option1" ><input for="option1" type="radio" name="optionId" value="1" checked/>Scrum is Rugby</label>
+                <input type="radio" name="optionId" value="${option.getLongId()}" checked/>${option.getDescription()}</label>
             </li>
-            <li>
-                <label id="option2" ><input for="option2" type="radio" name="optionId" value="2"/>Scrum is Baseball</label>
-            </li>
-            <li>
-                <label id="option3" ><input for="option3" type="radio" name="optionId" value="3"/>Scrum is Soccer</label>
-            </li>
-            <li>
-                <label id="option4" ><input for="option4" type="radio" name="optionId" value="4"/>Scrum is Sumo</label>
-            </li>
-            <li>
-                <label id="option5" ><input for="option5" type="radio" name="optionId" value="5"/>None of the above</label>
-            </li>
+        </c:forEach>
         </ul>
         <div class="col-lg-12">
             <input type="submit" id="answer" value="Answer">
         </div>
-        <input id="questionId" type="hidden" name="questionId" value="1">
+        <input id="questionId" type="hidden" name="questionId" value="${sessionScope.question.getLongId()}">
         <input id="from" type="hidden" name="from" value="question">
     </div>
     </form>
