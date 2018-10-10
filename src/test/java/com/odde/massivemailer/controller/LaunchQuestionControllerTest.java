@@ -39,7 +39,7 @@ public class LaunchQuestionControllerTest {
             throws Exception {
         Question question = Question.createIt("description", "desc1", "advice", "adv1");
         controller.doGet(request, response);
-        Stream<Long> questsion_ids = (Stream<Long>) request.getSession().getAttribute("QUESTSION_IDS");
+        Stream<Long> questsion_ids = (Stream<Long>) request.getSession().getAttribute("questionIds");
         assertEquals(question.getLongId(), questsion_ids.findFirst().get());
     }
 
