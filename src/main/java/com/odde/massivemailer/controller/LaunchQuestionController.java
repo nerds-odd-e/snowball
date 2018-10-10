@@ -19,10 +19,7 @@ public class LaunchQuestionController extends AppController {
         session.setAttribute("answeredCount", 0);
         Stream<Long> questionIds = Question.getAllIds();
         session.setAttribute("questionIds", questionIds);
-        Question.getById(questionIds.findFirst().get());
         resp.sendRedirect("question.jsp");
     }
-
-
 }
 
