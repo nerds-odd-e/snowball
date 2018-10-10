@@ -6,5 +6,5 @@ Feature: Test Results page
     Given The user took a test with 10 questions
     And He answered 6 questions correctly
     When User is on the Test Results page
-    Then  The Test results page displays "You can improve" and "50%"
+    Then  The Test results page displays "You can improve" and "60%"
 

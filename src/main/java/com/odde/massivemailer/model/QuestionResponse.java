@@ -7,9 +7,6 @@ import java.util.Map;
 
 @Table("question_responses")
 public class QuestionResponse extends ApplicationModel{
-    //private String questionId;
-    //private String testId;
-    //private Boolean isAnswerCorrect;
 
     private static final String TEST_ID = "test_id";
     private static final String QUESTION_ID = "question_id";
@@ -22,12 +19,6 @@ public class QuestionResponse extends ApplicationModel{
     }
 
     public QuestionResponse(){}
-
-    public QuestionResponse(String testId, String questionId, Boolean isAnswerCorrect) {
-        set(TEST_ID, testId);
-        set(QUESTION_ID, questionId);
-        set(IS_ANSWER_CORRECT, isAnswerCorrect);
-    }
 
 
 }
