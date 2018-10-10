@@ -55,6 +55,8 @@
         <form action="question" method="post">
             <input type="submit" id="next" value="Next" class="btn-primary btn"/>
             <input id="from" type="hidden" name="from" value="advice"/>
+            <input id="questionId" type="hidden" name="questionId" value="advice"/>
+            <input id="optionId" type="hidden" name="optionId" value="advice"/>
         </form>
     </div>
 </div>

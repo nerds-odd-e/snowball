@@ -1,16 +1,23 @@
 package com.odde.massivemailer.model;
 
+import com.google.common.annotations.VisibleForTesting;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Quiz {
 
-    private Quiz(){
+    @VisibleForTesting
+    protected Quiz(){
 
     }
 
     public static Quiz create(int numberOfQuestions){
         return new Quiz();
+    }
+
+    public int getNumberOfAnsweredQuestions(){
+        return 0;
     }
 
     public Question getNextQuestion() {

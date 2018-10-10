@@ -3,10 +3,8 @@ package com.odde.massivemailer.controller;
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.AnswerOption;
 import com.odde.massivemailer.model.Question;
-import org.assertj.core.util.Lists;
-import org.javalite.activejdbc.Model;
+import com.odde.massivemailer.model.Quiz;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -17,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Collection;
 
-import static com.odde.massivemailer.controller.QuestionController.MAX_QUESTION_COUNT;
+import static com.odde.massivemailer.controller.QuestionControllerTest.MyQuiz.alwaysHavingNextQuestion;
 import static com.odde.massivemailer.util.QuestionUtil.getCorrectOptionId;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -34,19 +32,19 @@ public class QuestionControllerTest {
         controller = new QuestionController();
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
-        request.getSession().setAttribute("answeredCount", 3);
         request.getSession().setAttribute("correctlyAnsweredCount", 3);
+        request.getSession().setAttribute("quiz", Quiz.create(5));
         question = createQuestionWithOptions();
     }
 
     public Question createQuestionWithOptions(){
         Question question = Question.createIt("description", "desc1", "advice", "adv1");
         Long id = (Long)question.getId();
-        AnswerOption answerOption1 = AnswerOption.createIt("description", "desc1", "question_id", id, "is_correct", 0);
-        AnswerOption answerOption2 = AnswerOption.createIt("description", "desc2", "question_id", id, "is_correct", 0);
-        AnswerOption answerOption3 = AnswerOption.createIt("description", "desc3", "question_id", id, "is_correct", 0);
-        AnswerOption answerOption4 = AnswerOption.createIt("description", "desc4", "question_id", id, "is_correct", 0);
-        AnswerOption answerOption5 = AnswerOption.createIt("description", "desc5", "question_id", id, "is_correct", 1);
+        AnswerOption.createIt("description", "desc1", "question_id", id, "is_correct", 0);
+        AnswerOption.createIt("description", "desc2", "question_id", id, "is_correct", 0);
+        AnswerOption.createIt("description", "desc3", "question_id", id, "is_correct", 0);
+        AnswerOption.createIt("description", "desc4", "question_id", id, "is_correct", 0);
+        AnswerOption.createIt("description", "desc5", "question_id", id, "is_correct", 1);
 
         return question;
     }
@@ -66,12 +64,13 @@ public class QuestionControllerTest {
 
         request.addParameter("optionId", optionId);
         request.addParameter("questionId", questionId.toString());
-        request.getSession().setAttribute("answeredCount", 3);
+        request.getSession().setAttribute("quiz", alwaysHavingNextQuestion());
+
 
         controller.doPost(request,response);
         assertEquals("question.jsp", response.getRedirectedUrl());
-        HttpSession session = request.getSession();
-        assertEquals(4, (int) session.getAttribute("answeredCount"));
+//        HttpSession session = request.getSession();
+//        assertEquals(4, (int) session.getAttribute("answeredCount"));
     }
 
     @Test
@@ -125,6 +124,8 @@ public class QuestionControllerTest {
     public void checkFromAdvicePageToQuestionPage() throws Exception {
 
         request.addParameter("from", "advice");
+        request.addParameter("questionId", "1");
+        request.getSession().setAttribute("quiz", alwaysHavingNextQuestion());
 
         controller.doPost(request, response);
         assertEquals("question.jsp", response.getRedirectedUrl());
@@ -134,15 +135,15 @@ public class QuestionControllerTest {
     public void checkFromAdvicePageToEndOfTestPage() throws Exception {
 
         request.addParameter("from", "advice");
-        request.getSession().setAttribute("answeredCount", 10);
+        request.addParameter("questionId", "1");
 
         controller.doPost(request, response);
         assertEquals("end_of_test.jsp", response.getRedirectedUrl());
     }
 
 
-    // ===========
 
+    // ===========
     @Test
     public void firstDoPost() throws ServletException, IOException {
         controller.doGet(request,response);
@@ -161,14 +162,14 @@ public class QuestionControllerTest {
         request.addParameter("optionId", optionId);
         request.addParameter("questionId", questionId.toString());
         request.addParameter("from", "question");
-        request.getSession().setAttribute("answeredCount", 3);
         request.getSession().setAttribute("correctlyAnsweredCount", 3);
+        request.getSession().setAttribute("quiz", alwaysHavingNextQuestion());
 
 
         controller.doPost(request, response);
         assertEquals("question.jsp", response.getRedirectedUrl());
         HttpSession session = request.getSession();
-        assertEquals(4, (int) session.getAttribute("answeredCount"));
+//        assertEquals(4, (int) session.getAttribute("answeredCount"));
         assertEquals(4, (int) session.getAttribute("correctlyAnsweredCount"));
     }
 
@@ -181,13 +182,12 @@ public class QuestionControllerTest {
         request.addParameter("optionId", optionId);
         request.addParameter("questionId", questionId.toString());
         request.addParameter("from", "question");
-        request.getSession().setAttribute("answeredCount", 9);
         request.getSession().setAttribute("correctlyAnsweredCount", 3);
 
         controller.doPost(request, response);
         assertEquals("end_of_test.jsp", response.getRedirectedUrl());
         HttpSession session = request.getSession();
-        assertEquals(MAX_QUESTION_COUNT, (int) session.getAttribute("answeredCount"));
+//        assertEquals(MAX_QUESTION_COUNT, (int) session.getAttribute("answeredCount"));
         assertEquals(4, (int) session.getAttribute("correctlyAnsweredCount"));
     }
 
@@ -201,13 +201,12 @@ public class QuestionControllerTest {
         request.addParameter("optionId", optionId);
         request.addParameter("questionId", questionId.toString());
         request.addParameter("from", "question");
-        request.getSession().setAttribute("answeredCount", 3);
         request.getSession().setAttribute("correctlyAnsweredCount", 3);
 
         controller.doPost(request, response);
         assertEquals("advice.jsp", response.getForwardedUrl());
         HttpSession session = request.getSession();
-        assertEquals(4, (int) session.getAttribute("answeredCount"));
+//        assertEquals(4, (int) session.getAttribute("answeredCount"));
         assertEquals(3, (int) session.getAttribute("correctlyAnsweredCount"));
     }
 
@@ -227,7 +226,7 @@ public class QuestionControllerTest {
         controller.doPost(request, response);
         assertEquals("advice.jsp", response.getForwardedUrl());
         HttpSession session = request.getSession();
-        assertEquals(MAX_QUESTION_COUNT, (int) session.getAttribute("answeredCount"));
+//        assertEquals(MAX_QUESTION_COUNT, (int) session.getAttribute("answeredCount"));
         assertEquals(3, (int) session.getAttribute("correctlyAnsweredCount"));
     }
 
@@ -247,6 +246,28 @@ public class QuestionControllerTest {
         controller.doPost(request, response);
         HttpSession session = request.getSession();
         assertNull(session.getAttribute("options"));
+    }
+
+
+    protected static class MyQuiz extends Quiz {
+
+        static Quiz alwaysHavingNextQuestion() {
+            MyQuiz myQuiz = new MyQuiz();
+            myQuiz.hasNextQuestion = true;
+            return myQuiz;
+        }
+
+        private boolean hasNextQuestion;
+
+        @Override
+        public boolean hasNextQuestion() {
+            return hasNextQuestion;
+        }
+
+        @Override
+        public int getNumberOfAnsweredQuestions() {
+            return 3;
+        }
     }
 
 }
