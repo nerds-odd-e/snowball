@@ -11,7 +11,7 @@ public class QuestionCallbacks extends CallbackAdapter {
     @Override
     public void beforeValidation(Model m) {
         ApplicationModel model = (ApplicationModel)m;
-        if (!model.anyDirtyAttributes("description", "advice", "is_multi_question"))
+        if (!model.anyDirtyAttributes("description", "advice"))
             return;
         String advice = model.getString("advice");
         model.set("advice", defaultIfEmpty(advice, ""));

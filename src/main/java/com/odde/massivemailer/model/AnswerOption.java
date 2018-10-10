@@ -20,10 +20,15 @@ public class AnswerOption extends ApplicationModel{
 
     public AnswerOption() {}
 
+    private AnswerOption(String description, boolean isCorrect) {
+        set(DESCRIPTION, description);
+        setIsCorrect(isCorrect);
+    }
+
     public AnswerOption(String description, long questionId, boolean isCorrect) {
         set(DESCRIPTION, description);
         set(QUESTION_ID, questionId);
-        set(IS_CORRECT, isCorrect);
+        setIsCorrect(isCorrect);
     }
 
     public static Collection<AnswerOption> getForQuestion(Long questionId) {
@@ -33,6 +38,10 @@ public class AnswerOption extends ApplicationModel{
     static Optional<AnswerOption> getById(Long optionId) {
         LazyList<AnswerOption> answerOption = where("id = ?", optionId);
         return answerOption.stream().findFirst();
+    }
+
+    public static AnswerOption newInstance(String description, boolean isCorrect) {
+        return new AnswerOption(description, isCorrect);
     }
 
     public Long getQuestionId() {
@@ -45,5 +54,30 @@ public class AnswerOption extends ApplicationModel{
 
     public boolean isCorrect() {
         return getInteger(IS_CORRECT) == 1;
+    }
+
+    public void setIsCorrect(boolean isCorrect) {
+        set(IS_CORRECT, isCorrect ? 1 : 0);
+    }
+
+    void addToQuestion(Long questionLongId) {
+        set(QUESTION_ID, questionLongId);
+        saveIt();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AnswerOption)) return false;
+        if (!super.equals(o)) return false;
+        AnswerOption that = (AnswerOption) o;
+        return Objects.equals(getQuestionId(), that.getQuestionId()) &&
+                Objects.equals(getDescription(), that.getDescription()) &&
+                Objects.equals(isCorrect(), that.isCorrect());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getQuestionId(), getDescription(), isCorrect());
     }
 }

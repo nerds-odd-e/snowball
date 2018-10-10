@@ -31,6 +31,12 @@ public class Question extends ApplicationModel {
         return question.stream().findFirst();
     }
 
+    public static Question createWithOptions(String description, String advice, List<AnswerOption> answerOptions) {
+        Question question = Question.createIt(DESCRIPTION, description, ADVICE, advice);
+        answerOptions.forEach(option -> option.addToQuestion(question.getLongId()));
+        return question;
+    }
+
     public String getDescription() {
         return getString(DESCRIPTION);
     }

@@ -24,7 +24,7 @@ public class QuestionTest {
     @Test
     public void shouldReturnAListOfIds() {
         //given
-        Question.createIt("description","desc1","is_multi_question", "0", "advice","adv1");
+        Question.createIt("description","desc1", "advice","adv1");
         //when
         List<Object> allIds = Question.getAllIds().collect(Collectors.toList());
         //then
@@ -42,7 +42,7 @@ public class QuestionTest {
 
     @Test
     public void shouldGetQuestionById() {
-        Question question1 = Question.createIt("description","desc1","is_multi_question", "0", "advice","adv1");
+        Question question1 = Question.createIt("description","desc1", "advice","adv1");
         Long id = question1.getLongId();
 
         Optional<Question> question = Question.getById(id);
@@ -54,7 +54,7 @@ public class QuestionTest {
 
     @Test
     public void shouldReturnEmptyOptionalIfInvalidId() {
-        Question question1 = Question.createIt("description","desc1","is_multi_question", "0", "advice","adv1");
+        Question question1 = Question.createIt("description","desc1", "advice","adv1");
         Long id = question1.getLongId();
 
         Optional<Question> question = Question.getById(id+10);
@@ -64,27 +64,27 @@ public class QuestionTest {
 
     @Test(expected = ValidationException.class)
     public void shouldNotAllowEmptyDescription() {
-        Question.createIt("description", null, "is_multi_question", "0", "advice","adv1");
+        Question.createIt("description", null, "advice","adv1");
 
     }
 
     @Test
     public void shouldAllowEmptyAdvice() {
-        Question question1 = Question.createIt("description","desc1","is_multi_question", "0", "advice", null);
+        Question question1 = Question.createIt("description","desc1", "advice", null);
         assertThat(question1.getLongId(), is(not(nullValue())));
         assertThat(question1.getAdvice(), isEmptyString());
     }
 
     @Test
     public void shouldFetchOptionsForQuestion() {
-        Question question = Question.createIt("description","desc1","is_multi_question", "0", "advice", null);
+        Question question = Question.createIt("description","desc1", "advice", null);
         AnswerOption.createIt("description","desc","question_id",question.getLongId(), "is_correct", 0);
         assertThat(question.getOptions(), is(not(empty())));
     }
 
     @Test
     public void shouldFetchOptionsForQuestionWithSameQuestionId() {
-        Question question = Question.createIt("description","desc1","is_multi_question", "0", "advice", null);
+        Question question = Question.createIt("description","desc1", "advice", null);
         Long expectedQuestionId = question.getLongId();
         AnswerOption.createIt("description","desc","question_id",question.getLongId(), "is_correct", 0);
         AnswerOption.createIt("description","desc","question_id",question.getLongId(), "is_correct", 0);
