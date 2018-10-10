@@ -33,8 +33,6 @@
 	final String incorrectClass = "selected incorrect";
 	final String questionText= (String) request.getAttribute("questionText");
 	final String adviceText= (String) request.getAttribute("adviceText");
-	out.println(options);
-	out.println(questionText);
 %>
 
 <div id="page-wrapper">
