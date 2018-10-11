@@ -12,12 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
-
-import static com.odde.massivemailer.util.QuestionUtil.getCorrectOptionId;
 
 @WebServlet("/question")
 public class QuestionController extends AppController {
@@ -36,21 +32,19 @@ public class QuestionController extends AppController {
         Quiz quiz = (Quiz) session.getAttribute("quiz");
 
         String from = req.getParameter("from");
-        final boolean moreQuestionsExist = quiz.hasNextQuestion();
         String answeredOptionId = req.getParameter("optionId");
-        Long questionId = Long.parseLong(req.getParameter("questionId"));
-        Collection<AnswerOption> optionsByQuestionId = AnswerOption.getForQuestion(questionId);
-        String correctOption = getCorrectOptionId(optionsByQuestionId);
-        boolean correctAnswer = correctOption.equals(answeredOptionId);
+
+        Question currentQuestion = quiz.getCurrentQuestion().get();
+        boolean correctAnswer = currentQuestion.verifyAnswer(answeredOptionId);
 
         if ("advice".equals(from) || correctAnswer){
             if(correctAnswer){
                 correctlyAnsweredCount++;
             }
             session.setAttribute("correctlyAnsweredCount", correctlyAnsweredCount);
-            session.setAttribute("questionId", questionId);
             session.setAttribute("optionId", answeredOptionId);
 
+            final boolean moreQuestionsExist = quiz.hasNextQuestion();
             if(moreQuestionsExist){
                 Question nextQuestion = quiz.getCurrentQuestion().get();
                 session.setAttribute("question", nextQuestion);
@@ -59,16 +53,14 @@ public class QuestionController extends AppController {
             return;
         }
 
-        Optional<Question> questionOptional = Question.getById(questionId);
-        Question question = questionOptional.isPresent()?questionOptional.get(): new Question();
-
         AdviceResponse adviceResponse = new AdviceResponse();
-        adviceResponse.setQuestion(question.getDescription());
+        adviceResponse.setQuestion(currentQuestion.getDescription());
 
-        List<String> optionsString = optionsByQuestionId.stream().map(AnswerOption::getDescription).collect(Collectors.toList());
+        String correctOption = currentQuestion.getOptions().stream().filter(AnswerOption::isCorrect).findFirst().get().getLongId().toString(); //TODO: remove when advice page refactored to use quiz
+        List<String> optionsString = currentQuestion.getOptions().stream().map(AnswerOption::getDescription).collect(Collectors.toList());
         adviceResponse.setOptions(optionsString);
         adviceResponse.setCorrectOption(correctOption);
-        adviceResponse.setAdviceText(question.getAdvice());
+        adviceResponse.setAdviceText(currentQuestion.getAdvice());
         adviceResponse.setSelectedOption(answeredOptionId);
         forwardAdvicePage(req, resp, adviceResponse);
     }

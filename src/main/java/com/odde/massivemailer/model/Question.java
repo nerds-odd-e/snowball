@@ -1,6 +1,7 @@
 package com.odde.massivemailer.model;
 
 import com.odde.massivemailer.model.callback.QuestionCallbacks;
+import org.apache.commons.lang3.StringUtils;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
@@ -64,6 +65,13 @@ public class Question extends ApplicationModel {
     public Collection<AnswerOption> getOptions() {
 
         return AnswerOption.getForQuestion(this.getLongId());
+    }
+
+    public boolean verifyAnswer(String answeredOptionId) {
+        Collection<AnswerOption> optionsByQuestionId = getOptions();
+        Optional<AnswerOption> correctId = optionsByQuestionId.stream().filter(AnswerOption::isCorrect).findFirst();
+        String correctOption = correctId.isPresent() ? correctId.get().getId().toString() : StringUtils.EMPTY;
+        return correctOption.equals(answeredOptionId);
     }
 
     private void setAttribute(String name, String value) {

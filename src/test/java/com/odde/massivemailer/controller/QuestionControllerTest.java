@@ -4,6 +4,7 @@ import com.odde.TestWithDB;
 import com.odde.massivemailer.model.AnswerOption;
 import com.odde.massivemailer.model.Question;
 import com.odde.massivemailer.model.Quiz;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,12 +15,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.stream.IntStream;
+import java.util.Optional;
 
-import static com.odde.massivemailer.controller.QuestionControllerTest.MyQuiz.alwaysHavingNextQuestion;
-import static com.odde.massivemailer.util.QuestionUtil.getCorrectOptionId;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @RunWith(TestWithDB.class)
 public class QuestionControllerTest {
@@ -28,6 +29,7 @@ public class QuestionControllerTest {
     private MockHttpServletResponse response;
     private Question question;
     private LaunchQuestionController launchQuestionController;
+    private Quiz quiz;
 
     @Before
     public void setUpMockService() {
@@ -36,8 +38,11 @@ public class QuestionControllerTest {
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
         request.getSession().setAttribute("correctlyAnsweredCount", 3);
-        request.getSession().setAttribute("quiz", new Quiz());
         question = createQuestionWithOptions();
+        quiz = mock(Quiz.class);
+        when(quiz.getNextQuestion()).thenReturn(question);
+        when(quiz.getCurrentQuestion()).thenReturn(Optional.of(question));
+        request.getSession().setAttribute("quiz", quiz);
     }
 
 
@@ -61,15 +66,15 @@ public class QuestionControllerTest {
 
     @Test
     public void doPostAnswerAdditionalQuestionAnswerCountIncreases() throws Exception {
+        when(quiz.hasNextQuestion()).thenReturn(true);
 
         Long questionId = (Long) question.getId();
-        Collection<AnswerOption> options = AnswerOption.getForQuestion(questionId);
-        String optionId = getCorrectOptionId(options);
+        Collection<AnswerOption> options = question.getOptions();
+        Optional<AnswerOption> correctId = options.stream().filter(AnswerOption::isCorrect).findFirst();
+        String optionId = correctId.isPresent() ? correctId.get().getId().toString() : StringUtils.EMPTY;
 
         request.addParameter("optionId", optionId);
         request.addParameter("questionId", questionId.toString());
-        request.getSession().setAttribute("quiz", alwaysHavingNextQuestion());
-
 
         controller.doPost(request,response);
         assertEquals("question.jsp", response.getRedirectedUrl());
@@ -81,8 +86,9 @@ public class QuestionControllerTest {
     public void postCorrectOptionInTheLastQuestion() throws Exception {
 
         Long questionId = (Long) question.getId();
-        Collection<AnswerOption> options = AnswerOption.getForQuestion(questionId);
-        String optionId = getCorrectOptionId(options);
+        Collection<AnswerOption> options = question.getOptions();
+        Optional<AnswerOption> correctId = options.stream().filter(AnswerOption::isCorrect).findFirst();
+        String optionId = correctId.isPresent() ? correctId.get().getId().toString() : StringUtils.EMPTY;
 
         request.addParameter("optionId", optionId);
         request.addParameter("questionId", questionId.toString());
@@ -96,8 +102,9 @@ public class QuestionControllerTest {
     public void postIncorrect() throws ServletException, IOException {
 
         Long questionId = (Long) question.getId();
-        Collection<AnswerOption> options = AnswerOption.getForQuestion(questionId);
-        String correctOptionId = getCorrectOptionId(options);
+        Collection<AnswerOption> options = question.getOptions();
+        Optional<AnswerOption> correctId = options.stream().filter(AnswerOption::isCorrect).findFirst();
+        String correctOptionId = correctId.isPresent() ? correctId.get().getId().toString() : StringUtils.EMPTY;
 
         String optionId = options.stream().findFirst().get().getId().toString();
 
@@ -126,10 +133,10 @@ public class QuestionControllerTest {
 
     @Test
     public void checkFromAdvicePageToQuestionPage() throws Exception {
+        when(quiz.hasNextQuestion()).thenReturn(true);
 
         request.addParameter("from", "advice");
         request.addParameter("questionId", "1");
-        request.getSession().setAttribute("quiz", alwaysHavingNextQuestion());
 
         controller.doPost(request, response);
         assertEquals("question.jsp", response.getRedirectedUrl());
@@ -158,17 +165,17 @@ public class QuestionControllerTest {
 
     @Test
     public void doPostWithCorrectAnsweredOption() throws ServletException, IOException {
+        when(quiz.hasNextQuestion()).thenReturn(true);
 
         Long questionId = (Long) question.getId();
-        Collection<AnswerOption> options = AnswerOption.getForQuestion(questionId);
-        String optionId = getCorrectOptionId(options);
+        Collection<AnswerOption> options = question.getOptions();
+        Optional<AnswerOption> correctId = options.stream().filter(AnswerOption::isCorrect).findFirst();
+        String optionId = correctId.isPresent() ? correctId.get().getId().toString() : StringUtils.EMPTY;
 
         request.addParameter("optionId", optionId);
         request.addParameter("questionId", questionId.toString());
         request.addParameter("from", "question");
         request.getSession().setAttribute("correctlyAnsweredCount", 3);
-        request.getSession().setAttribute("quiz", alwaysHavingNextQuestion());
-
 
         controller.doPost(request, response);
         assertEquals("question.jsp", response.getRedirectedUrl());
@@ -181,8 +188,9 @@ public class QuestionControllerTest {
     public void doPostAtLastQuestionWithCorrectAnsweredOption() throws ServletException, IOException {
 
         Long questionId = (Long) question.getId();
-        Collection<AnswerOption> options = AnswerOption.getForQuestion(questionId);
-        String optionId = getCorrectOptionId(options);
+        Collection<AnswerOption> options = question.getOptions();
+        Optional<AnswerOption> correctId = options.stream().filter(AnswerOption::isCorrect).findFirst();
+        String optionId = correctId.isPresent() ? correctId.get().getId().toString() : StringUtils.EMPTY;
         request.addParameter("optionId", optionId);
         request.addParameter("questionId", questionId.toString());
         request.addParameter("from", "question");
@@ -199,7 +207,7 @@ public class QuestionControllerTest {
     public void doPostWithIncorrectAnsweredOption() throws ServletException, IOException {
 
         Long questionId = (Long) question.getId();
-        Collection<AnswerOption> options = AnswerOption.getForQuestion(questionId);
+        Collection<AnswerOption> options = question.getOptions();
         String optionId = options.stream().findFirst().get().getId().toString();
 
         request.addParameter("optionId", optionId);
@@ -218,7 +226,7 @@ public class QuestionControllerTest {
     public void doPostAtLastQuestionWithIncorrectAnsweredOption() throws ServletException, IOException {
 
         Long questionId = (Long) question.getId();
-        Collection<AnswerOption> options = AnswerOption.getForQuestion(questionId);
+        Collection<AnswerOption> options = question.getOptions();
         String optionId = options.stream().findFirst().get().getId().toString();
 
         request.addParameter("optionId", optionId);
@@ -238,7 +246,7 @@ public class QuestionControllerTest {
     public void doPostWithNoOptionsInDatabase() throws ServletException, IOException {
 
         Long questionId = (Long) question.getId();
-        Collection<AnswerOption> options = AnswerOption.getForQuestion(questionId);
+        Collection<AnswerOption> options = question.getOptions();
         String optionId = options.stream().findFirst().get().getId().toString();
 
         request.addParameter("optionId", optionId);
@@ -251,27 +259,4 @@ public class QuestionControllerTest {
         HttpSession session = request.getSession();
         assertNull(session.getAttribute("options"));
     }
-
-
-    protected static class MyQuiz extends Quiz {
-
-        static Quiz alwaysHavingNextQuestion() {
-            MyQuiz myQuiz = new MyQuiz();
-            myQuiz.hasNextQuestion = true;
-            return myQuiz;
-        }
-
-        private boolean hasNextQuestion;
-
-        @Override
-        public boolean hasNextQuestion() {
-            return hasNextQuestion;
-        }
-
-        @Override
-        public int getNumberOfAnsweredQuestions() {
-            return 3;
-        }
-    }
-
 }

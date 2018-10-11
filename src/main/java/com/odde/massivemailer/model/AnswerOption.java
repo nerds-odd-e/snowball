@@ -33,7 +33,7 @@ public class AnswerOption extends ApplicationModel{
         setIsCorrect(isCorrect);
     }
 
-    public static Collection<AnswerOption> getForQuestion(Long questionId) {
+    static Collection<AnswerOption> getForQuestion(Long questionId) {
         return where("question_id = ?", questionId);
     }
 
