@@ -41,7 +41,7 @@ public class QuestionControllerTest {
         question = createQuestionWithOptions();
         quiz = mock(Quiz.class);
         when(quiz.getNextQuestion()).thenReturn(question);
-        when(quiz.getCurrentQuestion()).thenReturn(Optional.of(question));
+        when(quiz.getCurrentQuestion()).thenReturn(question);
         request.getSession().setAttribute("quiz", quiz);
     }
 
@@ -114,21 +114,8 @@ public class QuestionControllerTest {
 
         controller.doPost(request, response);
 
-        String correctOption = (String) request.getAttribute("correctOption");
-        assertEquals(correctOptionId, correctOption);
-
         String selectedOption = (String) request.getAttribute("selectedOption");
         assertEquals(optionId, selectedOption);
-
-        String[] shownList = (String[])request.getAttribute("options");
-        String[] expectedList ={"desc1",
-                "desc2",
-                "desc3",
-                "desc4",
-                "desc5"};
-        for (int i = 0; i < shownList.length; ++i) {
-            assertEquals(expectedList[i], shownList[i]);
-        }
     }
 
     @Test

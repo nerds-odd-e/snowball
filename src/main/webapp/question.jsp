@@ -22,6 +22,17 @@
 	rel="stylesheet" type="text/css">
 </head>
 <body>
+
+<%
+    Quiz quiz = (Quiz) request.getSession().getAttribute("quiz");
+    Question question = null;
+    if(quiz.hasNextQuestion()){
+        question = quiz.getNextQuestion();
+    } else {
+        response.sendRedirect("index.jsp");
+    }
+%>
+
 <div id="page-wrapper">
     <form name="question" id="questionForm" method="post"
         action="question">

@@ -26,13 +26,13 @@
 <body>
 
 <%
-	String correctOption = (String) request.getAttribute("correctOption");
+    Quiz quiz = (Quiz) request.getSession().getAttribute("quiz");
+	String correctOption = quiz.getCurrentQuestion().getCorrectOption();
 	String selectedOption = (String) request.getAttribute("selectedOption");
-	String[] options = (String[]) request.getAttribute("options");
 	final String correctClass = "correct";
 	final String incorrectClass = "selected incorrect";
-	final String questionText= (String) request.getAttribute("questionText");
-	final String adviceText= (String) request.getAttribute("adviceText");
+	final String questionText = quiz.getCurrentQuestion().getDescription();
+	final String adviceText = quiz.getCurrentQuestion().getAdvice();
 %>
 
 <div id="page-wrapper">

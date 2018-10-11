@@ -2,6 +2,7 @@ package com.odde.massivemailer.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -16,14 +17,14 @@ public class Quiz {
         numberOfAnsweredQuestions = 0;
     }
 
-    public Optional<Question> getCurrentQuestion() {
+    public Question getCurrentQuestion() {
         if (!hasNextQuestion()) {
-            return Optional.empty();
+            throw new NoSuchElementException("Quiz not started");
         }
         Optional<Question> question = Question.getById(questionIds.get(numberOfAnsweredQuestions));
         numberOfAnsweredQuestions++;
 
-        return question;
+        return question.get();
     }
 
     public Question getNextQuestion() {

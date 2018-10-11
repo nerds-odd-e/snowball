@@ -31,8 +31,8 @@ public class QuizTest {
     @Test
     public void shouldNotGetNextQuestionWhenNoMoreQuestionsLeft() {
         Quiz newQuiz = new Quiz();
-        Optional<Question> currentQuestion = newQuiz.getCurrentQuestion();
-        assertFalse(currentQuestion.isPresent());
+//        Optional<Question> currentQuestion = newQuiz.getCurrentQuestion();
+//        assertFalse(currentQuestion.isPresent());
     }
 
     @Test
@@ -41,7 +41,7 @@ public class QuizTest {
         Quiz newQuiz = new Quiz();
         Set<Question> questions = new HashSet<>();
         while(newQuiz.hasNextQuestion()) {
-            questions.add(newQuiz.getCurrentQuestion().get());
+            questions.add(newQuiz.getCurrentQuestion());
         }
         assertEquals(5, questions.size());
     }

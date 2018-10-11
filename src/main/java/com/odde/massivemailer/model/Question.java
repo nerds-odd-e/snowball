@@ -68,10 +68,14 @@ public class Question extends ApplicationModel {
     }
 
     public boolean verifyAnswer(String answeredOptionId) {
+        String correctOption = getCorrectOption();
+        return correctOption.equals(answeredOptionId);
+    }
+
+    public String getCorrectOption() {
         Collection<AnswerOption> optionsByQuestionId = getOptions();
         Optional<AnswerOption> correctId = optionsByQuestionId.stream().filter(AnswerOption::isCorrect).findFirst();
-        String correctOption = correctId.isPresent() ? correctId.get().getId().toString() : StringUtils.EMPTY;
-        return correctOption.equals(answeredOptionId);
+        return correctId.isPresent() ? correctId.get().getLongId().toString() : StringUtils.EMPTY;
     }
 
     private void setAttribute(String name, String value) {
