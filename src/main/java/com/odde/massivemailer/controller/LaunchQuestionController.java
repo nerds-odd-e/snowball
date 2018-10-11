@@ -20,7 +20,7 @@ public class LaunchQuestionController extends AppController {
         Quiz quiz = Quiz.create(5);
 
         session.setAttribute("answeredCount", 0);
-        session.setAttribute("correctlyAnsweredQuestions", 0);
+        session.setAttribute("correctlyAnsweredCount", 0);
         session.setAttribute("quiz", quiz);
         session.setAttribute("question", quiz.getNextQuestion());
         resp.sendRedirect("question.jsp");
