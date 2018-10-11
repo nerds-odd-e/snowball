@@ -36,7 +36,6 @@ public class QuestionController extends AppController {
                 correctlyAnsweredCount++;
             }
             session.setAttribute("correctlyAnsweredCount", correctlyAnsweredCount);
-            session.setAttribute("optionId", answeredOptionId);
 
             resp.sendRedirect(getRedirectPageName(quiz.hasNextQuestion()));
             return;
