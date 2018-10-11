@@ -2,6 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.odde.massivemailer.model.Quiz" %>
+<%@ page import="com.odde.massivemailer.model.Question" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -28,12 +29,19 @@
 
 <%
     Quiz quiz = (Quiz) request.getSession().getAttribute("quiz");
-	String correctOption = quiz.getCurrentQuestion().getCorrectOption();
-	String selectedOption = (String) request.getAttribute("selectedOption");
+    Question question = quiz.getCurrentQuestion();
+	Long correctOption = Long.parseLong((String)quiz.getCurrentQuestion().getCorrectOption());
+	Long selectedOption = Long.parseLong((String)request.getAttribute("selectedOption"));
 	final String correctClass = "correct";
 	final String incorrectClass = "selected incorrect";
 	final String questionText = quiz.getCurrentQuestion().getDescription();
 	final String adviceText = quiz.getCurrentQuestion().getAdvice();
+	pageContext.setAttribute("question", question);
+	pageContext.setAttribute("selectedOption", selectedOption);
+	pageContext.setAttribute("correctOption", correctOption);
+
+
+
 %>
 
 <div id="page-wrapper">
@@ -41,16 +49,26 @@
         <h1>Advice</h1>
         <h2 id="questionText"><%= questionText %></h2>
         <ul>
-            <%
-               for (int i=1; i <= options.length; ++i) {
-            %>
+
+       <c:forEach items="${question.getOptions()}" var="option">
             <li>
-                <input for="option<%= i %>" type="radio" name="optionId" <%= selectedOption.equals(String.valueOf(i)) ? "checked" : "" %> disabled/>
-                <label id="option<%= i %>" class="<%= selectedOption.equals(String.valueOf(i)) ? incorrectClass : "" %> <%= correctOption.equals(String.valueOf(i)) ? correctClass : "" %>" ><%= options[i - 1] %></label>
+                 <c:set var="optionId">${option.longId}</c:set>
+
+                 <c:choose>
+                    <c:when test="${selectedOption == optionId}">
+                       <input type="radio" name="optionId" value="${option.getLongId()}" checked/><label class="selected incorrect"/>${option.getDescription()}</label>
+                    </c:when>
+                    <c:when test="${correctOption == optionId}">
+                        <input type="radio" name="optionId" value="${option.getLongId()}" /><label class="correct"/>${option.getDescription()}</label>
+                    </c:when>
+
+                    <c:otherwise >
+                        <input type="radio" name="optionId" value="${option.getLongId()}"/><label> ${option.getDescription()}</label>
+                    </c:otherwise>
+                 </c:choose>
             </li>
-            <%
-               }
-            %>
+       </c:forEach>
+
         </ul>
         <div id="advice" class="jumbotron"><%= adviceText %></div>
         <form action="question" method="post">

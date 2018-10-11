@@ -30,13 +30,22 @@ public class Quiz {
 
     public Question getNextQuestion() {
 
-        List<AnswerOption> options = new ArrayList<>();
-        options.add(AnswerOption.create("Option1", false));
-        options.add(AnswerOption.create("Option2", false));
-        options.add(AnswerOption.create("Option3", false));
-        options.add(AnswerOption.create("Option4", false));
-        options.add(AnswerOption.create("Option5", true));
-        return Question.createWithOptions("What is Scrum??????", "Scrum is a framework for agile development.",options );
+        return getQuestion();
+    }
+
+    private Question question;
+
+    private Question getQuestion() {
+        if (question == null) {
+            List<AnswerOption> options = new ArrayList<>();
+            options.add(AnswerOption.create("Option1", false));
+            options.add(AnswerOption.create("Option2", false));
+            options.add(AnswerOption.create("Option3", false));
+            options.add(AnswerOption.create("Option4", false));
+            options.add(AnswerOption.create("Option5", true));
+            question = Question.createWithOptions("What is Scrum??????", "Scrum is a framework for agile development.",options );
+        }
+        return question;
     }
 
     public boolean hasNextQuestion() {
