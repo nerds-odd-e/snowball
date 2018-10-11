@@ -18,39 +18,23 @@ public class Quiz {
     }
 
     public Question getCurrentQuestion() {
-//        if (!hasNextQuestion()) {
-//            throw new NoSuchElementException("Quiz not started");
-//        }
-//        Optional<Question> question = Question.getById(questionIds.get(numberOfAnsweredQuestions));
-//        numberOfAnsweredQuestions++;
-//
-//        return question.get();
-        return getNextQuestion();
+        if (!hasNextQuestion()) {
+          throw new NoSuchElementException("No more questions left.");
+        }
+        return Question.getById(questionIds.get(numberOfAnsweredQuestions)).get();
     }
 
     public Question getNextQuestion() {
-
-        return getQuestion();
-    }
-
-    private Question question;
-
-    private Question getQuestion() {
-        if (question == null) {
-            List<AnswerOption> options = new ArrayList<>();
-            options.add(AnswerOption.create("Option1", false));
-            options.add(AnswerOption.create("Option2", false));
-            options.add(AnswerOption.create("Option3", false));
-            options.add(AnswerOption.create("Option4", false));
-            options.add(AnswerOption.create("Option5", true));
-            question = Question.createWithOptions("What is Scrum??????", "Scrum is a framework for agile development.",options );
+        if (!hasNextQuestion()) {
+            throw new NoSuchElementException("Quiz not started");
         }
-        return question;
+        Optional<Question> question = Question.getById(questionIds.get(numberOfAnsweredQuestions));
+        numberOfAnsweredQuestions++;
+        return question.get();
     }
 
     public boolean hasNextQuestion() {
-    //    return questionIds.size()>this.getNumberOfAnsweredQuestions();
-    return true;
+        return questionIds.size()>this.getNumberOfAnsweredQuestions();
     }
 
     public int getNumberOfAnsweredQuestions() {
