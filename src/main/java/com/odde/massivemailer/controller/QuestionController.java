@@ -32,19 +32,26 @@ public class QuestionController extends AppController {
         Quiz quiz = (Quiz) session.getAttribute("quiz");
 
         String from = req.getParameter("from");
+
+        final boolean moreQuestionsExist = quiz.hasNextQuestion();
+
+        if ("advice".equals(from)) {
+            resp.sendRedirect(getRedirectPageName(moreQuestionsExist));
+            return;
+        }
+
         String answeredOptionId = req.getParameter("optionId");
 
         Question currentQuestion = quiz.getCurrentQuestion().get();
         boolean correctAnswer = currentQuestion.verifyAnswer(answeredOptionId);
 
-        if ("advice".equals(from) || correctAnswer){
-            if(correctAnswer){
-                correctlyAnsweredCount++;
-            }
+        if (correctAnswer){
+
+            correctlyAnsweredCount++;
+
             session.setAttribute("correctlyAnsweredCount", correctlyAnsweredCount);
             session.setAttribute("optionId", answeredOptionId);
 
-            final boolean moreQuestionsExist = quiz.hasNextQuestion();
             if(moreQuestionsExist){
                 Question nextQuestion = quiz.getCurrentQuestion().get();
                 session.setAttribute("question", nextQuestion);
@@ -85,6 +92,7 @@ public class QuestionController extends AppController {
         }
         return redirectPageName;
     }
+
     private void getNextQuestion(HttpServletRequest request) {
         HttpSession session = request.getSession();
         Quiz inProgressQuiz = (Quiz) session.getAttribute("quiz");
@@ -96,5 +104,4 @@ public class QuestionController extends AppController {
             session.removeAttribute("question");
         }
     }
-
 }
