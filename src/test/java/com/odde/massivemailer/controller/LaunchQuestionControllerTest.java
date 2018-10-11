@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
@@ -22,12 +23,15 @@ public class LaunchQuestionControllerTest {
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
 
+
     @Before
     public void setUpMockService() {
         controller = new LaunchQuestionController();
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
         request.getSession().setAttribute("answeredCount", 0);
+        mockQuestion(5);
+
     }
 
     @Test
@@ -38,7 +42,7 @@ public class LaunchQuestionControllerTest {
     }
 
     @Test
-    public void mustGetQuesrtionId()     throws Exception {
+    public void mustGetQuestionId() throws Exception {
         controller.doGet(request, response);
         Quiz quiz = (Quiz) request.getSession().getAttribute("quiz");
         Question initialQuestion = (Question) request.getSession().getAttribute("question");
@@ -50,6 +54,9 @@ public class LaunchQuestionControllerTest {
         assertTrue(correctlyAnsweredQuestions.equals(0));
     }
 
+    private void mockQuestion(int numberOfQuestion) {
+        IntStream.range(0, numberOfQuestion).forEach(index -> Question.createIt("description", "desc" + index, "advice", "adv" + index));
+    }
 
 }
 

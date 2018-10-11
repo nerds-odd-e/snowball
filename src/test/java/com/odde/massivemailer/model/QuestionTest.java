@@ -26,7 +26,7 @@ public class QuestionTest {
         //given
         Question.createIt("description","desc1", "advice","adv1");
         //when
-        List<Object> allIds = Question.getAllIds().collect(Collectors.toList());
+        List<Object> allIds = Question.getNRandomIds(1).collect(Collectors.toList());
         //then
         assertThat(allIds, is(not(empty())));
         assertThat(allIds.size(), is(1));
@@ -35,7 +35,7 @@ public class QuestionTest {
     @Test
     public void shouldReturnEmptyListIfNoQuestionsArePresent() {
         //when
-        List<Object> allIds = Question.getAllIds().collect(Collectors.toList());
+        List<Object> allIds = Question.getNRandomIds(5).collect(Collectors.toList());
         //then
         assertThat(allIds, is(empty()));
     }

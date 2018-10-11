@@ -26,8 +26,7 @@ public class QuestionController extends AppController {
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession(true);
-        session.setAttribute("answeredCount", 0);
-        session.setAttribute("correctlyAnsweredCount", 0);
+        getNextQuestion(req);
         resp.sendRedirect("question.jsp");
     }
 
@@ -53,7 +52,7 @@ public class QuestionController extends AppController {
             session.setAttribute("optionId", answeredOptionId);
 
             if(moreQuestionsExist){
-                Question nextQuestion = quiz.getNextQuestion();
+                Question nextQuestion = quiz.getCurrentQuestion().get();
                 session.setAttribute("question", nextQuestion);
             }
             resp.sendRedirect(getRedirectPageName(moreQuestionsExist));
@@ -94,6 +93,16 @@ public class QuestionController extends AppController {
         }
         return redirectPageName;
     }
+    private void getNextQuestion(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Quiz inProgressQuiz = (Quiz) session.getAttribute("quiz");
 
+        if (inProgressQuiz.hasNextQuestion()) {
+            Question nextQuestion = inProgressQuiz.getCurrentQuestion().get();
+            session.setAttribute("question", nextQuestion);
+        } else {
+            session.removeAttribute("question");
+        }
+    }
 
 }

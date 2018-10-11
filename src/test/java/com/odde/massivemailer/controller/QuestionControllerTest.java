@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.stream.IntStream;
 
 import static com.odde.massivemailer.controller.QuestionControllerTest.MyQuiz.alwaysHavingNextQuestion;
 import static com.odde.massivemailer.util.QuestionUtil.getCorrectOptionId;
@@ -26,16 +27,19 @@ public class QuestionControllerTest {
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
     private Question question;
+    private LaunchQuestionController launchQuestionController;
 
     @Before
     public void setUpMockService() {
         controller = new QuestionController();
+        launchQuestionController = new LaunchQuestionController();
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
         request.getSession().setAttribute("correctlyAnsweredCount", 3);
-        request.getSession().setAttribute("quiz", Quiz.create(5));
+        request.getSession().setAttribute("quiz", new Quiz());
         question = createQuestionWithOptions();
     }
+
 
     public Question createQuestionWithOptions(){
         Question question = Question.createIt("description", "desc1", "advice", "adv1");
@@ -143,10 +147,10 @@ public class QuestionControllerTest {
 
 
 
-    // ===========
+
     @Test
     public void firstDoPost() throws ServletException, IOException {
-        controller.doGet(request,response);
+        launchQuestionController.doGet(request, response);
         HttpSession session = request.getSession();
         assertEquals(0, (int) session.getAttribute("answeredCount"));
         assertEquals(0, (int) session.getAttribute("correctlyAnsweredCount"));
