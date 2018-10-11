@@ -40,7 +40,6 @@
         </div>
         <input id="questionId" type="hidden" name="questionId" value="${sessionScope.question.getLongId()}">
         <input id="from" type="hidden" name="from" value="question">
-        <input id="getNextQuestion" type="button" name="getNextQuestion" value="Click here">
     </div>
     </form>
 </div>
