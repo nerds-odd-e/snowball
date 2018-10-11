@@ -1,6 +1,5 @@
 package com.odde.massivemailer.controller;
 
-import com.odde.massivemailer.model.Question;
 import com.odde.massivemailer.model.Quiz;
 
 import javax.servlet.ServletException;
@@ -9,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.stream.Stream;
 
 @WebServlet("/launchQuestion")
 public class LaunchQuestionController extends AppController {

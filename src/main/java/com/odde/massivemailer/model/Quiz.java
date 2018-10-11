@@ -18,13 +18,14 @@ public class Quiz {
     }
 
     public Question getCurrentQuestion() {
-        if (!hasNextQuestion()) {
-            throw new NoSuchElementException("Quiz not started");
-        }
-        Optional<Question> question = Question.getById(questionIds.get(numberOfAnsweredQuestions));
-        numberOfAnsweredQuestions++;
-
-        return question.get();
+//        if (!hasNextQuestion()) {
+//            throw new NoSuchElementException("Quiz not started");
+//        }
+//        Optional<Question> question = Question.getById(questionIds.get(numberOfAnsweredQuestions));
+//        numberOfAnsweredQuestions++;
+//
+//        return question.get();
+        return getNextQuestion();
     }
 
     public Question getNextQuestion() {
@@ -39,7 +40,8 @@ public class Quiz {
     }
 
     public boolean hasNextQuestion() {
-        return questionIds.size()>this.getNumberOfAnsweredQuestions();
+    //    return questionIds.size()>this.getNumberOfAnsweredQuestions();
+    return true;
     }
 
     public int getNumberOfAnsweredQuestions() {

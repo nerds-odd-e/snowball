@@ -10,11 +10,8 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(TestWithDB.class)
 public class LaunchQuestionControllerTest {
@@ -22,7 +19,6 @@ public class LaunchQuestionControllerTest {
     private LaunchQuestionController controller;
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
-
 
     @Before
     public void setUpMockService() {

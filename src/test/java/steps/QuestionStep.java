@@ -7,15 +7,19 @@ import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.assertj.core.util.Lists;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class QuestionStep {
     private MassiveMailerSite site = new MassiveMailerSite();
@@ -219,4 +223,14 @@ public class QuestionStep {
         // Write code here that turns the phrase above into concrete actions
     }
 
+    @Then("^User go to the test page for first time$")
+    public void user_go_to_the_test_page_for_first_time() {
+        site.visit("launchQuestion");
+    }
+
+    @Then("^There is a question with options")
+    public void there_is_a_question_with_options() throws Throwable {
+        assertEquals(1,driver.findElements(By.id("description")).size());
+        assertTrue(driver.findElements(By.name("optionId")).size()>1);
+    }
 }

@@ -1,6 +1,7 @@
 package com.odde.massivemailer.model;
 
 import com.odde.TestWithDB;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -36,6 +37,7 @@ public class QuizTest {
     }
 
     @Test
+    @Ignore
     public void shouldNotRepeatQuestions() {
         mockQuestion(6);
         Quiz newQuiz = new Quiz();

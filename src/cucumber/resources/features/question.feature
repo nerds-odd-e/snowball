@@ -86,3 +86,10 @@ Feature:
    When User selects the correct answer
    And User Clicks on the Next Button in the first question
    Then User should see second question
+
+@now
+  Scenario: User starts a test
+    Given User is in the top page
+    And User clicks "Start Test" button on menu
+    Then User go to the test page for first time
+    And There is a question with options

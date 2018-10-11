@@ -30,19 +30,23 @@
     Question question = null;
     if(quiz.hasNextQuestion()){
         question = quiz.getNextQuestion();
+        pageContext.setAttribute("question", question);
     } else {
         response.sendRedirect("index.jsp");
     }
 %>
+
 
 <div id="page-wrapper">
     <form name="question" id="questionForm" method="post"
         action="question">
     <div class="container-fluid">
         <h1>Question</h1>
-        <h2 id="description">${sessionScope.question.getDescription()}</h2>
+         <c:if test="${not empty question }" >
+            <h2 id="description">${question.getDescription()}</h2>
+          </c:if>
         <ul>
-        <c:forEach items="${sessionScope.question.getOptions()}" var="option">
+        <c:forEach items="${question.getOptions()}" var="option">
             <li>
                 <input type="radio" name="optionId" value="${option.getLongId()}" checked/>${option.getDescription()}</label>
             </li>
