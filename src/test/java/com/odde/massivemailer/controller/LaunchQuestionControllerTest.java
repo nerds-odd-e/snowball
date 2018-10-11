@@ -45,11 +45,9 @@ public class LaunchQuestionControllerTest {
     public void mustGetQuestionId() throws Exception {
         controller.doGet(request, response);
         Quiz quiz = (Quiz) request.getSession().getAttribute("quiz");
-        Question initialQuestion = (Question) request.getSession().getAttribute("question");
         Integer correctlyAnsweredQuestions = (Integer) request.getSession().getAttribute("correctlyAnsweredCount");
 
         assertNotNull(quiz);
-        assertNotNull(initialQuestion);
         assertNotNull(correctlyAnsweredQuestions);
         assertTrue(correctlyAnsweredQuestions.equals(0));
     }
