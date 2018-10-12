@@ -39,9 +39,6 @@
 	pageContext.setAttribute("question", question);
 	pageContext.setAttribute("selectedOption", selectedOption);
 	pageContext.setAttribute("correctOption", correctOption);
-
-
-
 %>
 
 <div id="page-wrapper">

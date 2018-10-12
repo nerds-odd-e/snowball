@@ -15,6 +15,7 @@ Feature:
       | option4     | Scrum is Sumo     |
       | option5     | None of the above |
 
+  @developing
   Scenario Outline: User navigates to advice or next question page
     Given User is taking a quiz with 2 questions
     And User is on the first question
@@ -23,8 +24,8 @@ Feature:
     Then Move to "<page_content>" page
     Examples:
       | selected_option | page_content |
-      | wrong           | Advice       |
-      | correct         | Question     |
+      | wrongOption     | Advice       |
+      | correctOption   | Question     |
 
   @developing
   Scenario Outline: テストページで不正解を選んで、回答ボタンを押下するとAdviceページが表示されること

@@ -28,7 +28,7 @@
 <%
     Quiz quiz = (Quiz) request.getSession().getAttribute("quiz");
     Question question = null;
-    question = quiz.getCurrentQuestion();
+    question = quiz.getNextQuestion();
     pageContext.setAttribute("question", question);
 
 %>

@@ -30,7 +30,7 @@ public class QuizTest {
     @Test(expected = NoSuchElementException.class)
     public void shouldNotGetNextQuestionWhenNoMoreQuestionsLeft() {
         Quiz newQuiz = new Quiz();
-        newQuiz.getCurrentQuestion();
+        newQuiz.getNextQuestion();
     }
 
     @Test
@@ -39,8 +39,7 @@ public class QuizTest {
         Quiz newQuiz = new Quiz();
         Set<Question> questions = new HashSet<>();
         while(newQuiz.hasNextQuestion()) {
-            questions.add(newQuiz.getCurrentQuestion());
-            newQuiz.incrementAnsweredQuestions();
+            questions.add(newQuiz.getNextQuestion());
         }
         assertEquals(5, questions.size());
     }

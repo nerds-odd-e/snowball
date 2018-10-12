@@ -108,6 +108,7 @@ public class QuestionStep {
             optionToPick = (long) correctOption.getId();
         }
         String optionSelector = "input[value='" + optionToPick + "']";
+        System.out.println(driver.findElements(By.cssSelector(optionSelector)));
         WebElement option = driver.findElements(By.cssSelector(optionSelector)).get(0);
         option.click();
     }
