@@ -18,9 +18,6 @@ public class Quiz {
     }
 
     public Question getCurrentQuestion() {
-        if (!hasNextQuestion()) {
-          throw new NoSuchElementException("No more questions left.");
-        }
         return Question.getById(questionIds.get(numberOfAnsweredQuestions-1)).get();
     }
 

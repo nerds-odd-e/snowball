@@ -33,7 +33,7 @@ public class QuizTest {
     @Test(expected = NoSuchElementException.class)
     public void shouldNotGetNextQuestionWhenNoMoreQuestionsLeft() {
         Quiz newQuiz = new Quiz();
-        Question currentQuestion = newQuiz.getCurrentQuestion();
+        Question currentQuestion = newQuiz.getNextQuestion();
     }
 
     @Test
