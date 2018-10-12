@@ -23,6 +23,9 @@ public class Quiz {
     }
 
     public Question getCurrentQuestion() {
+        if (!hasNextQuestion()) {
+            throw new NoSuchElementException("Quiz not started");
+        }
         return Question.getById(questionIds.get(numberOfAnsweredQuestions)).get();
     }
 

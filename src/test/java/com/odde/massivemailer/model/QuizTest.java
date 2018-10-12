@@ -1,13 +1,11 @@
 package com.odde.massivemailer.model;
 
 import com.odde.TestWithDB;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.HashSet;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.IntStream;
 
@@ -43,7 +41,6 @@ public class QuizTest {
         while(newQuiz.hasNextQuestion()) {
             questions.add(newQuiz.getCurrentQuestion());
             newQuiz.incrementAnsweredQuestions();
-            questions.add(newQuiz.getCurrentQuestion());
         }
         assertEquals(5, questions.size());
     }
