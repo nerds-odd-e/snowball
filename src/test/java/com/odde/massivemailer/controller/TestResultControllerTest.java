@@ -6,13 +6,15 @@ import com.odde.massivemailer.model.Question;
 import com.odde.massivemailer.model.QuestionResponse;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
+import javax.servlet.ServletException;
 import java.io.IOException;
+
+import static org.junit.Assert.assertEquals;
 
 @RunWith(TestWithDB.class)
 public class TestResultControllerTest {
@@ -26,35 +28,24 @@ public class TestResultControllerTest {
         controller = new TestResultController();
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
-        prepareQuestionResponse();
     }
 
-    private void prepareQuestionResponse() {
-        for(int i=0;i<10;i++) {
-            QuestionResponse qr = new QuestionResponse().createIt("testid-01", "1", i<6);
-            qr.saveIt();
+    private void prepareQuestionResponse(int numberOfCorrectAnswer, int totalNumberOfQuestions) {
+        for(int i = 0; i< totalNumberOfQuestions; i++) {
+            QuestionResponse qr = QuestionResponse.createIt("test_id", "test-001",
+                    "question_id", i,
+                    "is_answer_correct", i< numberOfCorrectAnswer);
         }
+        assertEquals(10, QuestionResponse.where("test_id = ? ","test-001" ).size());
     }
 
 
     @Test
-    @Ignore
-    public void showTestResultPage() throws IOException {
+    public void itMustForwardToTestResultPage() throws IOException, ServletException {
+        prepareQuestionResponse(6, 10);
+        request.setParameter("quizId","test-001");
         controller.doGet(request, response);
-        Assert.assertEquals("test_result.jsp", response.getRedirectedUrl());
-        Assert.assertTrue(response.getContentAsString().contains("60%"));
+        assertEquals("test_result.jsp", response.getForwardedUrl());
     }
-
-    private Question createQuestionWithOptions(){
-        Question question = Question.createIt("description", "desc1", "advice", "adv1");
-        Long id = (Long)question.getId();
-        AnswerOption.createIt("description", "desc1", "question_id", id, "is_correct", 0);
-        AnswerOption.createIt("description", "desc2", "question_id", id, "is_correct", 0);
-        AnswerOption.createIt("description", "desc3", "question_id", id, "is_correct", 0);
-        AnswerOption.createIt("description", "desc4", "question_id", id, "is_correct", 0);
-        AnswerOption.createIt("description", "desc5", "question_id", id, "is_correct", 1);
-
-        return question;
-    }
-
 }
+

@@ -19,6 +19,7 @@ public class DBConnectionFactory {
         Base.exec("DELETE FROM contact_people");
         Base.exec("DELETE FROM courses");
         Base.exec("DELETE FROM questions");
+        Base.exec("DELETE FROM question_responses");
         Base.exec("DELETE FROM options");
     }
 

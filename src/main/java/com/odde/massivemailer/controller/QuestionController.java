@@ -42,7 +42,7 @@ public class QuestionController extends AppController {
     }
 
     private String getRedirectPageName(boolean moreQuestionsExist) {
-        String redirectPageName = "end_of_test.jsp";
+        String redirectPageName = "testresult";
         if (moreQuestionsExist) {
             redirectPageName = "question.jsp";
         }

@@ -25,11 +25,11 @@
 		<div id="page-wrapper">
 	        <h1> Test Results </h1>
 			Thank you for doing the test. You have answered
-			<span id="correctAnswers" name="correctAnswers">6 </span> out of
-			<span id="totalQuestions" name="totalQuestions">10 </span>.
-			(<span id="percentage" name="percentage"> 60% </span>
+			<span id="correctAnswers" name="correctAnswers"><%= request.getAttribute("correctAnswers") %></span> out of
+			<span id="totalQuestions" name="totalQuestions"><%= request.getAttribute("totalQuestions") %> </span>.
+			<br/>Your score : <span id="percentage" name="percentage"><%= request.getAttribute("percentage") %>%</span>
 
-			<div id="message" name="message">You can improve</div>
+			<div id="message" name="message"><%=request.getAttribute("message") %></div>
 		</div>
 </body>
 <!-- jQuery -->
