@@ -2,41 +2,35 @@ package com.odde.massivemailer.model;
 
 import com.odde.TestWithDB;
 import org.javalite.activejdbc.validation.ValidationException;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.isEmptyString;
 
 @RunWith(TestWithDB.class)
 public class QuestionTest {
 
     @Test
     public void shouldReturnAListOfIds() {
-        //given
         Question.createIt("description","desc1", "advice","adv1");
-        //when
+
         List<Object> allIds = Question.getNRandomIds(1).collect(Collectors.toList());
-        //then
+
         assertThat(allIds, is(not(empty())));
         assertThat(allIds.size(), is(1));
     }
 
     @Test
     public void shouldReturnEmptyListIfNoQuestionsArePresent() {
-        //when
         List<Object> allIds = Question.getNRandomIds(5).collect(Collectors.toList());
-        //then
         assertThat(allIds, is(empty()));
     }
 
@@ -45,21 +39,16 @@ public class QuestionTest {
         Question question1 = Question.createIt("description","desc1", "advice","adv1");
         Long id = question1.getLongId();
 
-        Optional<Question> question = Question.getById(id);
-
-        Assert.assertTrue("Saved question is not retrieved from DB by id.", question.isPresent());
-        Question actual = question.get();
+        Question actual = Question.getById(id);
         assertThat(actual, is(equalTo(question1)));
     }
 
-    @Test
-    public void shouldReturnEmptyOptionalIfInvalidId() {
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowExxxceptionIfInvalidId() {
         Question question1 = Question.createIt("description","desc1", "advice","adv1");
         Long id = question1.getLongId();
 
-        Optional<Question> question = Question.getById(id+10);
-
-        Assert.assertFalse(question.isPresent());
+        Question.getById(id+10);
     }
 
     @Test(expected = ValidationException.class)

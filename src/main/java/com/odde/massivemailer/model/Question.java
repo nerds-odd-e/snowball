@@ -22,22 +22,22 @@ public class Question extends ApplicationModel {
         callbackWith(new QuestionCallbacks());
     }
 
-    public static Stream<Long> getNRandomIds(int count) {
+    static Stream<Long> getNRandomIds(int count) {
         LazyList<Model> ids = findBySQL("SELECT id FROM questions ORDER BY RAND() LIMIT ?", count);
         return ids.stream().map(Model::getLongId);
     }
 
-    public static Stream<Long> getNQuestions(int count) {
+    static Stream<Long> getNQuestions(int count) {
         LazyList<Model> ids = findBySQL("SELECT id FROM questions LIMIT ?", count);
         return ids.stream().map(Model::getLongId);
     }
 
-    public static Optional<Question> getById(Long questionId) {
+    static Question getById(Long questionId) {
         LazyList<Question> question = where("id = ?", questionId);
-        return question.stream().findFirst();
+        return question.stream().findFirst().orElseThrow(() -> new IllegalArgumentException("No question found by given id."));
     }
 
-    public static Question createWithOptions(String description, String advice, List<AnswerOption> answerOptions) {
+    static Question createWithOptions(String description, String advice, List<AnswerOption> answerOptions) {
         if(answerOptions == null || answerOptions.size()<2) {
             throw new IllegalArgumentException("Question should have at least two options.");
         }
@@ -80,7 +80,7 @@ public class Question extends ApplicationModel {
     public String getCorrectOption() {
         Collection<AnswerOption> optionsByQuestionId = getOptions();
         Optional<AnswerOption> correctId = optionsByQuestionId.stream().filter(AnswerOption::isCorrect).findFirst();
-        return correctId.isPresent() ? correctId.get().getLongId().toString() : StringUtils.EMPTY;
+        return correctId.map(answerOption -> answerOption.getLongId().toString()).orElse(StringUtils.EMPTY);
     }
 
     private void setAttribute(String name, String value) {

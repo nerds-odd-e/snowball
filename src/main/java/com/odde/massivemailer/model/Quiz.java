@@ -6,9 +6,10 @@ import java.util.stream.Collectors;
 
 public class Quiz {
 
+    private static final int NUMBER_OF_QUESTIONS=5;
+
     private List<Long> questionIds;
     private int numberOfAnsweredQuestions;
-    private int NUMBER_OF_QUESTIONS=5;
 
     public Quiz(){
         questionIds = Question.getNQuestions(NUMBER_OF_QUESTIONS).collect(Collectors.toList());
@@ -26,18 +27,18 @@ public class Quiz {
         if (!hasNextQuestion()) {
             throw new NoSuchElementException("Quiz not started");
         }
-        return Question.getById(questionIds.get(numberOfAnsweredQuestions)).get();
+        return Question.getById(questionIds.get(numberOfAnsweredQuestions));
     }
 
     public boolean hasNextQuestion() {
         return questionIds.size() > this.getNumberOfAnsweredQuestions();
     }
 
-    public int getNumberOfAnsweredQuestions() {
+    private int getNumberOfAnsweredQuestions() {
         return this.numberOfAnsweredQuestions;
     }
 
-    public int getNumberOfQuestions() {
+    int getNumberOfQuestions() {
         return (questionIds!=null) ? questionIds.size() : 0;
     }
 }
