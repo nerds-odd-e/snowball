@@ -1,24 +1,20 @@
 package steps;
 
-import com.odde.massivemailer.controller.QuestionController;
 import com.odde.massivemailer.model.AnswerOption;
 import com.odde.massivemailer.model.Question;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.assertj.core.util.Lists;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class QuestionStep {
@@ -26,7 +22,7 @@ public class QuestionStep {
     private WebDriverWrapper driver = site.getDriver();
     private Question question;
 
-    public void setupQuestion(){
+    public void setupQuestion() {
 
     }
 
@@ -59,7 +55,7 @@ public class QuestionStep {
     @Given("^There is a question \"([^\"]*)\"$")
     public void there_is_a_question(String description) {
         question = Question.createIt("description", description, "advice", "adv1");
-        Long id = (Long)question.getId();
+        Long id = (Long) question.getId();
         AnswerOption answerOption1 = AnswerOption.createIt("description", "Scrum is Rugby", "question_id", id, "is_correct", 0);
         AnswerOption answerOption2 = AnswerOption.createIt("description", "Scrum is Baseball", "question_id", id, "is_correct", 0);
         AnswerOption answerOption3 = AnswerOption.createIt("description", "Scrum is Soccer", "question_id", id, "is_correct", 0);
@@ -71,11 +67,6 @@ public class QuestionStep {
     public void user_answered_times_in_the_test_page(String answeredCount) {
         driver.expectElementWithIdToContainText("answeredCount", answeredCount);
         driver.pageShouldContain("Question");
-    }
-
-    @Given("^There are (\\d+) questions$")
-    public void there_are_questions(int questionCount) throws Throwable {
-        assertEquals(questionCount, QuestionController.MAX_QUESTION_COUNT);
     }
 
     @Given("^User answered correctly the (\\d+) th question page$")
@@ -98,7 +89,7 @@ public class QuestionStep {
     }
 
     @Given("^There are two questions$")
-    public void there_are_two_questions() throws Throwable {
+    public void there_are_two_questions()  {
         // Write code here that turns the phrase above into concrete actions
     }
 
@@ -130,7 +121,7 @@ public class QuestionStep {
 
     @When("^option(\\d+) is selected as correct answer$")
     public void optionIsSelectedAsCorrectAnswer(String optionId) {
-        driver.clickButton("option"+optionId );
+        driver.clickButton("option" + optionId);
     }
 
     @When("^User clicks the next button$")
@@ -223,6 +214,20 @@ public class QuestionStep {
         // Write code here that turns the phrase above into concrete actions
     }
 
+    @Given("^There are (\\d+)  questions at the beginning$")
+    public void there_is_a_question(int numberOfQuestions) {
+        for (int i = 0; i < numberOfQuestions; i++) {
+            question = Question.createIt("description", "some description " + i, "advice", "adv1");
+            Long id = (Long) question.getId();
+            AnswerOption answerOption1 = AnswerOption.createIt("description", "Scrum is Rugby", "question_id", id, "is_correct", 0);
+            AnswerOption answerOption2 = AnswerOption.createIt("description", "Scrum is Baseball", "question_id", id, "is_correct", 0);
+            AnswerOption answerOption3 = AnswerOption.createIt("description", "Scrum is Soccer", "question_id", id, "is_correct", 0);
+            AnswerOption answerOption4 = AnswerOption.createIt("description", "Scrum is Sumo", "question_id", id, "is_correct", 0);
+            AnswerOption answerOptiom5 = AnswerOption.createIt("description", "None of the above", "question_id", id, "is_correct", 1);
+        }
+    }
+
+
     @Then("^User go to the test page for first time$")
     public void user_go_to_the_test_page_for_first_time() {
         site.visit("launchQuestion");
@@ -230,7 +235,7 @@ public class QuestionStep {
 
     @Then("^There is a question with options")
     public void there_is_a_question_with_options() throws Throwable {
-        assertEquals(1,driver.findElements(By.id("description")).size());
-        assertTrue(driver.findElements(By.name("optionId")).size()>1);
+        assertEquals(1, driver.findElements(By.id("description")).size());
+        assertTrue(driver.findElements(By.name("optionId")).size() > 1);
     }
 }
