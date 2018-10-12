@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.HashSet;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.IntStream;
@@ -29,21 +30,19 @@ public class QuizTest {
         assertEquals(5, newQuiz.getNumberOfQuestions());
     }
 
-    @Test
+    @Test(expected = NoSuchElementException.class)
     public void shouldNotGetNextQuestionWhenNoMoreQuestionsLeft() {
         Quiz newQuiz = new Quiz();
-//        Optional<Question> currentQuestion = newQuiz.getCurrentQuestion();
-//        assertFalse(currentQuestion.isPresent());
+        Question currentQuestion = newQuiz.getCurrentQuestion();
     }
 
     @Test
-    @Ignore
     public void shouldNotRepeatQuestions() {
         mockQuestion(6);
         Quiz newQuiz = new Quiz();
         Set<Question> questions = new HashSet<>();
         while(newQuiz.hasNextQuestion()) {
-            questions.add(newQuiz.getCurrentQuestion());
+            questions.add(newQuiz.getNextQuestion());
         }
         assertEquals(5, questions.size());
     }
