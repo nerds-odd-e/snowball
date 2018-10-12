@@ -40,7 +40,6 @@ public class QuestionControllerTest {
         request.getSession().setAttribute("correctlyAnsweredCount", 3);
         question = createQuestionWithOptions();
         quiz = mock(Quiz.class);
-        when(quiz.getNextQuestion()).thenReturn(question);
         when(quiz.getCurrentQuestion()).thenReturn(question);
         request.getSession().setAttribute("quiz", quiz);
     }

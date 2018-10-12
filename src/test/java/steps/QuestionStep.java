@@ -21,46 +21,47 @@ public class QuestionStep {
     private MassiveMailerSite site = new MassiveMailerSite();
     private WebDriverWrapper driver = site.getDriver();
     private Question question;
+    private AnswerOption wrongOption;
+    private AnswerOption correctOption;
 
-    public void setupQuestion() {
+    public void setupQuestion(){
 
     }
 
-    @Given("^test question with 5 options and 5th correct$")
-    public void bbbbb() {
-        question = Question.createIt("description", "ffffff", "advice", "eeee", "is_multi_question", "0");
-        AnswerOption option1 = new AnswerOption("option1", question.getLongId(), false);
-        option1.saveIt();
-
-        question.getOptions();
+    @Given("^User is taking a quiz with 2 questions$")
+    public void user_is_taking_a_quiz_with_2_questions() {
+        question = Question.createIt("description", "MyTest", "advice", "eeee");
+        wrongOption = new AnswerOption("wrongOption", question.getLongId(), false);
+        wrongOption.saveIt();
+        correctOption = new AnswerOption("correctOption", question.getLongId(), true);
+        correctOption.saveIt();
+        Question question2 = Question.createIt("description", "q2", "advice", "Q2 advice");
+        AnswerOption q2o1 = new AnswerOption("q2 option 1", question2.getLongId(), false);
+        q2o1.saveIt();
+        AnswerOption q202 = new AnswerOption("q2 option 2", question2.getLongId(), true);
+        q202.saveIt();
     }
 
-    @Given("^User is in the test page$")
+    @Given("^User is on the first question$")
     public void user_is_in_the_test_page() {
-        site.visit("question");
+        site.visit("launchQuestion");
     }
 
     @Given("^User is in the top page$")
     public void user_is_in_the_top_page() throws Throwable {
+        question = Question.createIt("description", "MyTest", "advice", "eeee");
+        wrongOption = new AnswerOption("wrongOption", question.getLongId(), false);
+        wrongOption.saveIt();
+        correctOption = new AnswerOption("correctOption", question.getLongId(), true);
+        correctOption.saveIt();
         site.visit("");
     }
 
     @Given("^User arrives at advice page$")
     public void user_arrives_at_advice_page() {
         site.visit("question");
-        driver.clickById("option1");
+        driver.clickById("wrongOption");
         driver.clickButton("answer");
-    }
-
-    @Given("^There is a question \"([^\"]*)\"$")
-    public void there_is_a_question(String description) {
-        question = Question.createIt("description", description, "advice", "adv1");
-        Long id = (Long) question.getId();
-        AnswerOption answerOption1 = AnswerOption.createIt("description", "Scrum is Rugby", "question_id", id, "is_correct", 0);
-        AnswerOption answerOption2 = AnswerOption.createIt("description", "Scrum is Baseball", "question_id", id, "is_correct", 0);
-        AnswerOption answerOption3 = AnswerOption.createIt("description", "Scrum is Soccer", "question_id", id, "is_correct", 0);
-        AnswerOption answerOption4 = AnswerOption.createIt("description", "Scrum is Sumo", "question_id", id, "is_correct", 0);
-        AnswerOption answerOptiom5 = AnswerOption.createIt("description", "None of the above", "question_id", id, "is_correct", 1);
     }
 
     @Given("^User answered \"([^\"]*)\" times in the test page$")
@@ -98,9 +99,17 @@ public class QuestionStep {
         site.visit("question");
     }
 
-    @When("^User chooses \"([^\"]*)\"$")
-    public void user_chooses(String selected_option) {
-        driver.clickById(selected_option);
+    @When("^User chooses the \"([^\"]*)\" answer$")
+    public void userChoosesTheAnswer(String answer) throws Throwable {
+        long optionToPick;
+        if (answer.equals("wrong")) {
+            optionToPick = (long) wrongOption.getId();
+        } else {
+            optionToPick = (long) correctOption.getId();
+        }
+        String optionSelector = "input[value='" + optionToPick + "']";
+        WebElement option = driver.findElements(By.cssSelector(optionSelector)).get(0);
+        option.click();
     }
 
     @When("^User clicks the answer button$")
@@ -115,7 +124,6 @@ public class QuestionStep {
 
     @When("^User chooses the \"([^\"]*)\" option$")
     public void user_chooses_the_option(String incorrectId) throws Throwable {
-        System.out.println(incorrectId);
         driver.clickById(incorrectId);
     }
 
@@ -159,7 +167,7 @@ public class QuestionStep {
     public void user_should_see_a_question_and_options(DataTable question) {
         Map<String, String> questionMap = question.asMap(String.class, String.class);
         driver.expectElementWithIdToContainText("description", questionMap.get("description"));
-        driver.expectElementWithIdToContainText("option1", questionMap.get("option1"));
+        driver.expectElementWithIdToContainText("wrongOption", questionMap.get("wrongOption"));
         driver.expectElementWithIdToContainText("option2", questionMap.get("option2"));
         driver.expectElementWithIdToContainText("option3", questionMap.get("option3"));
         driver.expectElementWithIdToContainText("option4", questionMap.get("option4"));

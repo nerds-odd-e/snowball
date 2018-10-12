@@ -158,5 +158,9 @@ public class WebDriverWrapper {
     public List<WebElement> findElements(By by) {
         return driver.findElements(by);
     }
+
+    public String getBodyHTML() {
+        return findElements(By.tagName("body")).get(0).getAttribute("outerHTML");
+    }
 }
 

@@ -27,6 +27,11 @@ public class Question extends ApplicationModel {
         return ids.stream().map(Model::getLongId);
     }
 
+    public static Stream<Long> getNQuestions(int count) {
+        LazyList<Model> ids = findBySQL("SELECT id FROM questions LIMIT ?", count);
+        return ids.stream().map(Model::getLongId);
+    }
+
     public static Optional<Question> getById(Long questionId) {
         LazyList<Question> question = where("id = ?", questionId);
         return question.stream().findFirst();

@@ -14,22 +14,16 @@ Feature:
       | option4     | Scrum is Sumo     |
       | option5     | None of the above |
 
-  @developing
-  Scenario Outline: 正解または不正解を選んで、回答ボタンを押下するとEndOfTestまたはAdviceに遷移すること
-    Given test question with 5 options and 5th correct
-    And User is in the test page
-    And There is a question "What is Scrum"
-    When User chooses "<selected_option>"
+  Scenario Outline: User navigates to advice or next question page
+    Given User is taking a quiz with 2 questions
+    And User is on the first question
+    When User chooses the "<selected_option>" answer
     And User clicks the answer button
     Then Move to "<page_content>" page
-
     Examples:
       | selected_option | page_content |
-      | option1         | Advice       |
-      | option2         | Advice       |
-      | option3         | Advice       |
-      | option4         | Advice       |
-      | option5         | Question     |
+      | wrong           | Advice       |
+      | correct         | Question     |
 
   @developing
   Scenario Outline: テストページで不正解を選んで、回答ボタンを押下するとAdviceページが表示されること
@@ -57,7 +51,7 @@ Feature:
     Then "End Of Test" is shown
 
   @developing
-  Scenario Outline: Adviceページから1問残っていればQuestionページ、残っていなければEnd Of Testページが表示されること
+  Scenario Outline: User goes to end of test if he has answered all questions
     Given User is in the test page
     And User answered correctly the <number_of_questions> th question page
     And User chooses the "option2" option
@@ -87,7 +81,6 @@ Feature:
    And User Clicks on the Next Button in the first question
    Then User should see second question
 
-@now
   Scenario: User starts a test
     Given User is in the top page
     And There are 5  questions at the beginning

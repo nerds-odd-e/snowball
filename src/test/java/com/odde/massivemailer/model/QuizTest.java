@@ -12,7 +12,6 @@ import java.util.Set;
 import java.util.stream.IntStream;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 
 @RunWith(TestWithDB.class)
 public class QuizTest {
@@ -42,7 +41,9 @@ public class QuizTest {
         Quiz newQuiz = new Quiz();
         Set<Question> questions = new HashSet<>();
         while(newQuiz.hasNextQuestion()) {
-            questions.add(newQuiz.getNextQuestion());
+            questions.add(newQuiz.getCurrentQuestion());
+            newQuiz.incrementAnsweredQuestions();
+            questions.add(newQuiz.getCurrentQuestion());
         }
         assertEquals(5, questions.size());
     }
