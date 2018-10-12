@@ -21,7 +21,7 @@ public class Quiz {
         if (!hasNextQuestion()) {
           throw new NoSuchElementException("No more questions left.");
         }
-        return Question.getById(questionIds.get(numberOfAnsweredQuestions)).get();
+        return Question.getById(questionIds.get(numberOfAnsweredQuestions-1)).get();
     }
 
     public Question getNextQuestion() {
