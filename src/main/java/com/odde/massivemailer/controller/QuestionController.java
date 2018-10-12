@@ -24,26 +24,18 @@ public class QuestionController extends AppController {
         HttpSession session = req.getSession(true);
         int correctlyAnsweredCount = (int) session.getAttribute("correctlyAnsweredCount");
         Quiz quiz = (Quiz) session.getAttribute("quiz");
-
-        String from = req.getParameter("from");
         String answeredOptionId = req.getParameter("optionId");
 
         Question currentQuestion = quiz.getCurrentQuestion();
-
         boolean correctAnswer = currentQuestion.verifyAnswer(answeredOptionId);
 
-        if ("advice".equals(from) || correctAnswer){
-            if(correctAnswer){
-                quiz.incrementAnsweredQuestions();
-                correctlyAnsweredCount++;
-            }
+        if(correctAnswer){
+            correctlyAnsweredCount++;
             session.setAttribute("correctlyAnsweredCount", correctlyAnsweredCount);
-
             resp.sendRedirect(getRedirectPageName(quiz.hasNextQuestion()));
             return;
         }
 
-        quiz.incrementAnsweredQuestions();
         req.setAttribute("selectedOption",answeredOptionId);
         RequestDispatcher dispatch = req.getRequestDispatcher("advice.jsp");
         dispatch.forward(req, resp);

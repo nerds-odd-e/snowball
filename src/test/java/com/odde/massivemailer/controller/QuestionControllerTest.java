@@ -73,7 +73,6 @@ public class QuestionControllerTest {
         String optionId = correctId.isPresent() ? correctId.get().getId().toString() : StringUtils.EMPTY;
 
         request.addParameter("optionId", optionId);
-        request.addParameter("questionId", questionId.toString());
 
         controller.doPost(request,response);
         assertEquals("question.jsp", response.getRedirectedUrl());
@@ -90,8 +89,6 @@ public class QuestionControllerTest {
         String optionId = correctId.isPresent() ? correctId.get().getId().toString() : StringUtils.EMPTY;
 
         request.addParameter("optionId", optionId);
-        request.addParameter("questionId", questionId.toString());
-        request.getSession().setAttribute("answeredCount", 10);
 
         controller.doPost(request,response);
         assertEquals("end_of_test.jsp", response.getRedirectedUrl());
@@ -108,8 +105,6 @@ public class QuestionControllerTest {
         String optionId = options.stream().findFirst().get().getId().toString();
 
         request.addParameter("optionId", optionId);
-        request.addParameter("questionId", questionId.toString());
-        request.addParameter("from", "question");
 
         controller.doPost(request, response);
 
@@ -121,7 +116,6 @@ public class QuestionControllerTest {
     public void firstDoPost() throws ServletException, IOException {
         launchQuestionController.doGet(request, response);
         HttpSession session = request.getSession();
-        assertEquals(0, (int) session.getAttribute("answeredCount"));
         assertEquals(0, (int) session.getAttribute("correctlyAnsweredCount"));
     }
 
@@ -135,8 +129,6 @@ public class QuestionControllerTest {
         String optionId = correctId.isPresent() ? correctId.get().getId().toString() : StringUtils.EMPTY;
 
         request.addParameter("optionId", optionId);
-        request.addParameter("questionId", questionId.toString());
-        request.addParameter("from", "question");
         request.getSession().setAttribute("correctlyAnsweredCount", 3);
 
         controller.doPost(request, response);
@@ -154,8 +146,6 @@ public class QuestionControllerTest {
         Optional<AnswerOption> correctId = options.stream().filter(AnswerOption::isCorrect).findFirst();
         String optionId = correctId.isPresent() ? correctId.get().getId().toString() : StringUtils.EMPTY;
         request.addParameter("optionId", optionId);
-        request.addParameter("questionId", questionId.toString());
-        request.addParameter("from", "question");
         request.getSession().setAttribute("correctlyAnsweredCount", 3);
 
         controller.doPost(request, response);
@@ -173,8 +163,6 @@ public class QuestionControllerTest {
         String optionId = options.stream().findFirst().get().getId().toString();
 
         request.addParameter("optionId", optionId);
-        request.addParameter("questionId", questionId.toString());
-        request.addParameter("from", "question");
         request.getSession().setAttribute("correctlyAnsweredCount", 3);
 
         controller.doPost(request, response);
@@ -192,9 +180,6 @@ public class QuestionControllerTest {
         String optionId = options.stream().findFirst().get().getId().toString();
 
         request.addParameter("optionId", optionId);
-        request.addParameter("questionId", questionId.toString());
-        request.addParameter("from", "question");
-        request.getSession().setAttribute("answeredCount", 9);
         request.getSession().setAttribute("correctlyAnsweredCount", 3);
 
         controller.doPost(request, response);
@@ -212,9 +197,6 @@ public class QuestionControllerTest {
         String optionId = options.stream().findFirst().get().getId().toString();
 
         request.addParameter("optionId", optionId);
-        request.addParameter("questionId", questionId.toString());
-        request.addParameter("from", "question");
-        request.getSession().setAttribute("answeredCount", 9);
         request.getSession().setAttribute("correctlyAnsweredCount", 3);
 
         controller.doPost(request, response);
