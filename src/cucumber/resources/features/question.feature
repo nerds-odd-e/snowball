@@ -1,5 +1,6 @@
 Feature:
   User can take an online test :)
+
   @developing
   Scenario: 初期表示：質問とoptionsが表示されていること
     Given User is in the top page
@@ -44,13 +45,6 @@ Feature:
       | option4          | Scrum is Sumo     |
 
   @developing
-  Scenario: テストに10問正解するとEnd of test pageが表示されること
-    Given User is in the test page
-    And There are 10  questions at the beginning
-    And User answered correctly the 10 th question page
-    Then "End Of Test" is shown
-
-  @developing
   Scenario Outline: User goes to end of test if he has answered all questions
     Given User is in the test page
     And User answered correctly the <number_of_questions> th question page
@@ -64,22 +58,13 @@ Feature:
       | 8                   | Question     |
       | 9                   | End Of Test  |
 
- @developing
- Scenario: User selects the correct answer and click on the Next Button
-   Given User is in the test page
-   And There is only one question
-   When User selects the correct answer
-   And User Clicks on the next Button
-   Then User sees the Summary Page
-
-
- @developing
- Scenario: User selects the correct answer and click on the Next Button
-   Given User is in the test page
-   And There are 2 questions at the beginning
-   When User selects the correct answer
-   And User Clicks on the Next Button in the first question
-   Then User should see second question
+  @developing
+  Scenario: User selects the correct answer and click on the Next Button
+    Given User is in the test page
+    And There is only one question
+    When User selects the correct answer
+    And User Clicks on the next Button
+    Then User sees the Summary Page
 
   Scenario: User starts a test
     Given User is in the top page

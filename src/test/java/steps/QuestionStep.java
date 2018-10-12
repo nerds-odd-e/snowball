@@ -49,11 +49,11 @@ public class QuestionStep {
 
     @Given("^User is in the top page$")
     public void user_is_in_the_top_page() throws Throwable {
-        question = Question.createIt("description", "MyTest", "advice", "eeee");
-        wrongOption = new AnswerOption("wrongOption", question.getLongId(), false);
-        wrongOption.saveIt();
-        correctOption = new AnswerOption("correctOption", question.getLongId(), true);
-        correctOption.saveIt();
+        Question question = Question.createIt("description", "MyTest", "advice", "eeee");
+        AnswerOption option1 = new AnswerOption("wrongOption", question.getLongId(), false);
+        option1.saveIt();
+        AnswerOption option2 = new AnswerOption("correctOption", question.getLongId(), true);
+        option2.saveIt();
         site.visit("");
     }
 
