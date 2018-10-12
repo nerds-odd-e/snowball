@@ -52,8 +52,6 @@
         <div class="col-lg-12">
             <input type="submit" id="answer" value="Answer">
         </div>
-        <input id="questionId" type="hidden" name="questionId" value="${sessionScope.question.getLongId()}">
-        <input id="from" type="hidden" name="from" value="question">
     </div>
     </form>
 </div>

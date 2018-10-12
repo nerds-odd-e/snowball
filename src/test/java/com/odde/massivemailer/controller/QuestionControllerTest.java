@@ -47,7 +47,7 @@ public class QuestionControllerTest {
 
 
     public Question createQuestionWithOptions(){
-        Question question = Question.createIt("description", "desc1", "advice", "adv1");
+        Question question = Question.createIt("description", "What is Scrum?", "advice", "Scrum is a coding practice.");
         Long id = (Long)question.getId();
         AnswerOption.createIt("description", "desc1", "question_id", id, "is_correct", 0);
         AnswerOption.createIt("description", "desc2", "question_id", id, "is_correct", 0);
@@ -117,30 +117,6 @@ public class QuestionControllerTest {
         String selectedOption = (String) request.getAttribute("selectedOption");
         assertEquals(optionId, selectedOption);
     }
-
-    @Test
-    public void checkFromAdvicePageToQuestionPage() throws Exception {
-        when(quiz.hasNextQuestion()).thenReturn(true);
-
-        request.addParameter("from", "advice");
-        request.addParameter("questionId", "1");
-
-        controller.doPost(request, response);
-        assertEquals("question.jsp", response.getRedirectedUrl());
-    }
-
-    @Test
-    public void checkFromAdvicePageToEndOfTestPage() throws Exception {
-
-        request.addParameter("from", "advice");
-        request.addParameter("questionId", "1");
-
-        controller.doPost(request, response);
-        assertEquals("end_of_test.jsp", response.getRedirectedUrl());
-    }
-
-
-
 
     @Test
     public void firstDoPost() throws ServletException, IOException {

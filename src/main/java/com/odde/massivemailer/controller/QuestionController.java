@@ -14,8 +14,6 @@ import java.io.IOException;
 @WebServlet("/question")
 public class QuestionController extends AppController {
 
-    public static final int MAX_QUESTION_COUNT = 10;
-
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.sendRedirect("question.jsp");
     }
@@ -24,19 +22,14 @@ public class QuestionController extends AppController {
         HttpSession session = req.getSession(true);
         int correctlyAnsweredCount = (int) session.getAttribute("correctlyAnsweredCount");
         Quiz quiz = (Quiz) session.getAttribute("quiz");
-
-        String from = req.getParameter("from");
         String answeredOptionId = req.getParameter("optionId");
 
         Question currentQuestion = quiz.getCurrentQuestion();
         boolean correctAnswer = currentQuestion.verifyAnswer(answeredOptionId);
 
-        if ("advice".equals(from) || correctAnswer){
-            if(correctAnswer){
-                correctlyAnsweredCount++;
-            }
+        if(correctAnswer){
+            correctlyAnsweredCount++;
             session.setAttribute("correctlyAnsweredCount", correctlyAnsweredCount);
-
             resp.sendRedirect(getRedirectPageName(quiz.hasNextQuestion()));
             return;
         }

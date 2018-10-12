@@ -19,16 +19,18 @@ public class TestWithDB extends BlockJUnit4ClassRunner {
     protected void runChild(FrameworkMethod method, RunNotifier notifier) {
         Base.openTransaction();
         super.runChild(method, notifier);
-        Base.rollbackTransaction();
+//        Base.rollbackTransaction();
+        Base.commitTransaction();
     }
 
     @Override
     public void run(RunNotifier notifier) {
-        Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/massive_mailer_unittest", "root", "");
+        Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/massive_mailer_development", "root", "");
         dbMigrateIfNeeded();
         Base.openTransaction();
         super.run(notifier);
-        Base.rollbackTransaction();
+//        Base.rollbackTransaction();
+        Base.commitTransaction();
         Base.close();
     }
 
