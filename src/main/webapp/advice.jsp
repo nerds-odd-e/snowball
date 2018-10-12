@@ -52,18 +52,17 @@
 
        <c:forEach items="${question.getOptions()}" var="option">
             <li>
-                 <c:set var="optionId">${option.longId}</c:set>
-
+                 <c:set var="optionId">${option.getLongId()}</c:set>
                  <c:choose>
                     <c:when test="${selectedOption == optionId}">
-                       <input type="radio" name="optionId" value="${option.getLongId()}" checked/><label class="selected incorrect"/>${option.getDescription()}</label>
+                       <input type="radio" name="optionId" value="${option.getLongId()}" checked disabled/><label class="selected incorrect"/>${option.getDescription()}</label>
                     </c:when>
                     <c:when test="${correctOption == optionId}">
-                        <input type="radio" name="optionId" value="${option.getLongId()}" /><label class="correct"/>${option.getDescription()}</label>
+                        <input type="radio" name="optionId" value="${option.getLongId()}" disabled/><label class="correct"/>${option.getDescription()}</label>
                     </c:when>
 
                     <c:otherwise >
-                        <input type="radio" name="optionId" value="${option.getLongId()}"/><label> ${option.getDescription()}</label>
+                        <input type="radio" name="optionId" value="${option.getLongId()}" disabled/><label> ${option.getDescription()}</label>
                     </c:otherwise>
                  </c:choose>
             </li>
