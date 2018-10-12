@@ -28,12 +28,9 @@
 <%
     Quiz quiz = (Quiz) request.getSession().getAttribute("quiz");
     Question question = null;
-    if(quiz.hasNextQuestion()){
-        question = quiz.getNextQuestion();
-        pageContext.setAttribute("question", question);
-    } else {
-        response.sendRedirect("index.jsp");
-    }
+    question = quiz.getNextQuestion();
+    pageContext.setAttribute("question", question);
+
 %>
 
 

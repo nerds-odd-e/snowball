@@ -15,6 +15,10 @@ public class LaunchQuestionController extends AppController {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(true);
         Quiz quiz = new Quiz();
+        if(!quiz.hasNextQuestion()){
+            resp.sendRedirect("add_question.jsp");
+            return;
+        }
         session.setAttribute("answeredCount", 0);
         session.setAttribute("correctlyAnsweredCount", 0);
         session.setAttribute("quiz", quiz);

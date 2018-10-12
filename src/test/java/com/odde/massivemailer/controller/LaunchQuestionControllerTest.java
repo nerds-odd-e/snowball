@@ -26,19 +26,21 @@ public class LaunchQuestionControllerTest {
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
         request.getSession().setAttribute("answeredCount", 0);
-        mockQuestion(5);
+
 
     }
 
     @Test
     public void redirect_to_question_jsp()
             throws Exception {
+        mockQuestion(5);
         controller.doGet(request, response);
         assertEquals("question.jsp", response.getRedirectedUrl());
     }
 
     @Test
     public void mustGetQuestionId() throws Exception {
+        mockQuestion(5);
         controller.doGet(request, response);
         Quiz quiz = (Quiz) request.getSession().getAttribute("quiz");
         Integer correctlyAnsweredQuestions = (Integer) request.getSession().getAttribute("correctlyAnsweredCount");
@@ -46,6 +48,12 @@ public class LaunchQuestionControllerTest {
         assertNotNull(quiz);
         assertNotNull(correctlyAnsweredQuestions);
         assertTrue(correctlyAnsweredQuestions.equals(0));
+    }
+
+    @Test
+    public void redirectToAddQuestionPageIfNoQuestionsInQuiz() throws Exception {
+        controller.doGet(request,response);
+        assertEquals("add_question.jsp", response.getRedirectedUrl());
     }
 
     private void mockQuestion(int numberOfQuestion) {
