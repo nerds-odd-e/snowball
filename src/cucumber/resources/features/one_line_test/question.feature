@@ -1,8 +1,10 @@
+@nod
 Feature:
   User can take an online test :)
 
   Scenario: Displaying the question
     Given There is a question "What is scrum?"
+    And User is on the first question
     And User should see a question and options
       | description | What is scrum?    |
       | option1     | Scrum is Rugby    |
@@ -53,5 +55,5 @@ Feature:
     And User answered correctly the 2 th question page
     When User chooses the "wrongOption" answer
     And User clicks the answer button
-    And User Clicks on the next Button
+    And User clicks the next button
     Then "End Of Test" should be shown

@@ -1,7 +1,6 @@
 package steps;
 
 import com.odde.massivemailer.factory.QuestionBuilder;
-import com.odde.massivemailer.model.Question;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -19,7 +18,6 @@ import static org.junit.Assert.assertEquals;
 public class QuestionStep {
     private MassiveMailerSite site = new MassiveMailerSite();
     private WebDriverWrapper driver = site.getDriver();
-    private Question question;
 
     @Given("^User is in the test page$")
     public void userIsInTheTestPage() throws Throwable {
@@ -41,7 +39,7 @@ public class QuestionStep {
     @Given("^User is taking a quiz with (\\d+) questions$")
     public void user_is_taking_a_quiz_with_n_questions(int n) {
         for (int i = 0; i < n; i++)
-            question = new QuestionBuilder()
+            new QuestionBuilder()
                     .aQuestion()
                     .withWrongOption("wrongOption")
                     .withCorrectOption("correctOption")
@@ -103,21 +101,6 @@ public class QuestionStep {
     @When("^User clicks the next button$")
     public void user_clicks_the_next_button() {
         driver.clickButton("next");
-    }
-
-    @When("^User Clicks on the next Button$")
-    public void user_Clicks_on_the_next_Button() {
-        // Write code here that turns the phrase above into concrete actions
-    }
-
-    @When("^User Clicks on the Next Button in the first question$")
-    public void user_Clicks_on_the_Next_Button_in_the_first_question() {
-        // Write code here that turns the phrase above into concrete actions
-    }
-
-    @Then("^User go to the test page$")
-    public void user_go_to_the_test_page() {
-        driver.expectElementWithIdToContainText("description", question.getDescription());
     }
 
     @Then("^User should see a question and options$")
