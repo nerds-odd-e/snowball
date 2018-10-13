@@ -113,7 +113,7 @@ public class InitializePasswordControllerTest {
     }
 
     @Test
-    public void initialPasswordValidate() throws Exception {
+    public void initialPasswordValidate() {
         boolean isValidate = User.validatePassword("abcd1234");
         assertTrue(isValidate);
     }

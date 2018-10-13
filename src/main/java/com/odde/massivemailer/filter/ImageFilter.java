@@ -9,7 +9,7 @@ import javax.servlet.annotation.WebFilter;
 public class ImageFilter implements Filter {
     static final String TOKEN = "token";
 
-    public void init(FilterConfig config) throws ServletException {
+    public void init(FilterConfig config) {
     }
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)

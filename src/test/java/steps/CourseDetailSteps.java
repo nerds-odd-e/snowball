@@ -4,7 +4,7 @@ import com.odde.massivemailer.model.Course;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;;
+import cucumber.api.java.en.When;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
@@ -37,7 +37,7 @@ public class CourseDetailSteps {
     }
 
     @Then("^participant with correct information appears on \"([^\"]*)\" course detail page$")
-    public void participantWithCorrectInformationAppearsOnCourseDetailPage(String courseName, DataTable participants) throws Throwable {
+    public void participantWithCorrectInformationAppearsOnCourseDetailPage(String courseName, DataTable participants) {
         String tableContent = driver.findElementById("courseTable").getText();
         participants.asLists(String.class).forEach(participant -> {
             assertTrue(tableContent.contains(participant.get(0)));
@@ -46,7 +46,7 @@ public class CourseDetailSteps {
     }
 
     @And("^participant with invalid information appears in the enroll form$")
-    public void carryAppearsInTheEnrollForm(DataTable participantsData) throws Throwable {
+    public void carryAppearsInTheEnrollForm(DataTable participantsData) {
         String errorParticipantData = participantsData.asList(String.class).get(0);
         Optional<String> error = driver.executeJavaScript("return document.getElementById('participants').value");
         assertTrue(error.isPresent());

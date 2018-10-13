@@ -40,7 +40,7 @@ public class TestTemplateService {
 
 
     @Test
-    public void templateMustNotBeNull() throws Exception {
+    public void templateMustNotBeNull() {
 
         Template templateActual = null;
         Assert.assertNotNull(template);
@@ -51,33 +51,28 @@ public class TestTemplateService {
 
 
     @Test
-    public void templateMustContainFirstName() throws Exception
-    {
+    public void templateMustContainFirstName() {
         Assert.assertTrue(template.getString("Content").contains("{FirstName}"));
     }
 
     @Test
-    public void templateMustContainLasttName() throws Exception
-    {
+    public void templateMustContainLasttName() {
         Assert.assertTrue(template.getString("Content").contains("{LastName}"));
     }
 
     @Test
-    public void templateMustContainCourse() throws Exception
-    {
+    public void templateMustContainCourse() {
         Assert.assertTrue(template.getString("Content").contains("{CourseName}"));
 }
 
 
     @Test
-    public void templateMustContainInstructor() throws Exception
-    {
+    public void templateMustContainInstructor() {
         Assert.assertTrue(template.getString("Content").contains("{Instructor}"));
     }
 
     @Test
-    public void templateMustContainLocation() throws Exception
-    {
+    public void templateMustContainLocation() {
         Assert.assertTrue(template.getString("Content").contains("{Location}"));
     }
 

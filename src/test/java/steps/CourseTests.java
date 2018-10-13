@@ -51,7 +51,7 @@ public class CourseTests {
     }
 
     @When("^Add a course with location \"([^\"]*)\", \"([^\"]*)\"$")
-    public void add_a_course_with_location(String city, String country) throws Throwable {
+    public void add_a_course_with_location(String city, String country) {
         visitCreateCoursePage();
         addCourseWithLocationAndCourseName(city, country, "CSD");
 
@@ -64,7 +64,7 @@ public class CourseTests {
     }
 
     @Given("^There are (\\d+) courses$")
-    public void there_are_courses(int num) throws Throwable {
+    public void there_are_courses(int num) {
         for (int i = 1; i <= num; i++){
             new Course().fromMap(createCourseData("Tokyo", "Japan", "CSD-" + i)).saveIt();
         }

@@ -15,7 +15,7 @@ public class TrackEmailSteps {
     private WebDriverWrapper driver = site.getDriver();
 
     @Given("^I send an email to \"(.*)\"$")
-    public void i_send_an_email_to_Terry(String recipient) throws Throwable {
+    public void i_send_an_email_to_Terry(String recipient) {
         sendEmail(recipient, "Subject");
     }
 
@@ -29,7 +29,7 @@ public class TrackEmailSteps {
     }
 
     @When("^\"(.*)\" does not open the email$")
-    public void terry_does_not_open_the_email(String receipient) throws Throwable {
+    public void terry_does_not_open_the_email(String receipient) {
     }
 
     @Then("^I should see that \"(.*)\" has not opened the email$")

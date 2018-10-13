@@ -34,18 +34,18 @@ public class UpcomingCourseNotificationSteps {
     }
 
     @Given("^the send mail history is empty$")
-    public void the_send_mail_history_is_empty() throws Throwable {
+    public void the_send_mail_history_is_empty() {
         SentMail.deleteAll();
     }
 
     @When("^I send the upcoming courses emails$")
-    public void sendTheUpcomingCourseEmails() throws Throwable {
+    public void sendTheUpcomingCourseEmails() {
         site.visit("course_list.jsp");
         driver.clickButton("send_button");
     }
 
     @Given("^there are (\\d+)/(\\d+) courses and contacts in (.*?), (.*?)$")
-    public void there_are_in_Singapore_Singapore(int courses, int contacts, String city, String country) throws Throwable {
+    public void there_are_in_Singapore_Singapore(int courses, int contacts, String city, String country) {
         for (int i = 0; i < contacts; i++) {
             assertTrue(ContactPerson.create(
                     "city", city,
@@ -60,7 +60,7 @@ public class UpcomingCourseNotificationSteps {
     }
 
     @Then("^there should be in total (\\d+) courses in all the emails$")
-    public void there_are_in_total_in_all_the_emails(int courses) throws Throwable {
+    public void there_are_in_total_in_all_the_emails(int courses) {
         int sum = SentMail.findAll().stream().map(mail-> StringUtils.countOccurrencesOf(((SentMail)mail).getContent(), "Event")).mapToInt(Integer::intValue).sum();
         assertEquals(courses, sum);
     }

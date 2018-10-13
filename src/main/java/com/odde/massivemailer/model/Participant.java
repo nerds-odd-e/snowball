@@ -14,10 +14,10 @@ public class Participant extends ApplicationModel {
     }
 
     ContactPerson getContactPerson() {
-        return ContactPerson.findById((Integer) get("contact_person_id"));
+        return ContactPerson.findById(get("contact_person_id"));
     }
 
     Course getCourse() {
-        return Course.findById((Integer) get("course_id"));
+        return Course.findById(get("course_id"));
     }
 }

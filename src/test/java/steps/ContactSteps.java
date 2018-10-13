@@ -84,7 +84,7 @@ public class ContactSteps {
     }
 
     @And("^Contacts page should contain exactly (\\d+) \"([^\"]*)\"$")
-    public void contactsListPageShouldContain(int count, String email) throws Throwable {
+    public void contactsListPageShouldContain(int count, String email) {
         site.visit("contactlist.jsp");
         pageShouldContainExactlyNElements(count, email);
     }

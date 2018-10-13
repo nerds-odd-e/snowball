@@ -55,7 +55,7 @@ public class CoursesControllerTest {
     }
 
     @Test
-    public void shouldNotCreateACourseWithWrongLocationInformation() throws IOException, GeoServiceException {
+    public void shouldNotCreateACourseWithWrongLocationInformation() throws IOException {
         request.setParameter("coursename", "test couree");
         request.setParameter("country", "FooBar");
         request.setParameter("city", "FooBarXXX");

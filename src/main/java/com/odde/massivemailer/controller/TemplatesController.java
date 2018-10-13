@@ -12,7 +12,7 @@ import java.io.IOException;
 @WebServlet("/templates")
 public class TemplatesController extends AppController {
 
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String templateId = req.getParameter("templateList");
         String resultMsg = "status=fail&msg=Update template failure";
 
@@ -26,7 +26,7 @@ public class TemplatesController extends AppController {
         resp.sendRedirect("sendemail.jsp?" + resultMsg);
     }
 
-    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String convertedContactToJSON = AppGson.getGson().toJson(Template.findAll());
         resp.getWriter().write(convertedContactToJSON);
     }

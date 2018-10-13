@@ -39,7 +39,7 @@ public class CourseTest {
     }
 
     @Test
-    public void testCreateCourseShouldHaveCorrectInformation() throws Exception {
+    public void testCreateCourseShouldHaveCorrectInformation() {
 
         assertEquals("Scrum", aCourse.getCoursename());
         assertEquals("country/city", aCourse.getLocation());
@@ -85,7 +85,7 @@ public class CourseTest {
         usaCourse = CreateCourseInDB("New York","America", "Kim");
     }
 
-    private Course CreateCourseInDB(String country, String city, String instructor) throws Exception {
+    private Course CreateCourseInDB(String country, String city, String instructor) {
         map.put("coursename", "Scrum");
         map.put("country", country);
         map.put("city", city);

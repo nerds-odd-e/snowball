@@ -12,7 +12,7 @@ import java.io.IOException;
 @WebServlet("/launchQuestion")
 public class LaunchQuestionController extends AppController {
 
-    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession(true);
         Quiz quiz = new Quiz(getQuestionCount(req));
         if(!quiz.hasNextQuestion()){

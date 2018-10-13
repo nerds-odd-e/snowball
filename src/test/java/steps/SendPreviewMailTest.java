@@ -20,23 +20,23 @@ public class SendPreviewMailTest {
     }
 
     @Given("^there is a student with information \"([^\"]*)\" loaded for this course$")
-    public void there_are_students_with_email_loaded_for_this_course(String information) throws Throwable {
+    public void there_are_students_with_email_loaded_for_this_course(String information) {
         if (information.isEmpty()) return;
         site.enrollParticipantPage().enrollParticipants(A_COURSE, information);
     }
 
     @When("^i send preview email for this course$")
-    public void i_send_preview_email_for_this_course() throws Throwable {
+    public void i_send_preview_email_for_this_course() {
         site.courseListPage().sendPreviewEmailFor(A_COURSE);
     }
 
     @Then("^\"([^\"]*)\" should receive the pre-course email$")
-    public void should_receive_the_pre_course_email(String email) throws Throwable {
+    public void should_receive_the_pre_course_email(String email) {
         site.ExpectNoEmailTo(email);
     }
 
     @When("^i send precourse email for this course$")
-    public void i_send_precourse_email_for_this_course() throws Throwable {
+    public void i_send_precourse_email_for_this_course() {
         site.courseListPage().sendPrecourseEmailFor(A_COURSE);
         driver.pageShouldContain("Successfully");
     }
@@ -47,12 +47,12 @@ public class SendPreviewMailTest {
     }
 
     @Then("^\"([^\"]*)\" shouldn't receive any email$")
-    public void shouldn_t_receive_email(String email) throws Throwable {
+    public void shouldn_t_receive_email(String email) {
         site.ExpectEmailTo(email);
     }
 
     @Then("^all participants below should receive the pre-course email$")
-    public void allParticipantsBelowShouldReceiveThePreCourseEmail(DataTable emails) throws Throwable {
+    public void allParticipantsBelowShouldReceiveThePreCourseEmail(DataTable emails) {
         emails.asList(String.class).stream().forEach((email) -> site.ExpectEmailTo(email));
     }
 }

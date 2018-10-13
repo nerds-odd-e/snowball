@@ -11,7 +11,7 @@ import java.io.IOException;
 @WebServlet("/initialPassword")
 public class InitializePasswordController extends AppController {
 
-    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String token = req.getParameter("token");
         if (User.fetchUserByToken(token) == null) {
             resp.sendRedirect("initialize_password_token_error.jsp");
@@ -20,7 +20,7 @@ public class InitializePasswordController extends AppController {
         resp.sendRedirect("initialize_password.jsp?token=" + token);
     }
 
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String password = req.getParameter("password");
         String passwordConfirm = req.getParameter("password_confirm");
         String token = req.getParameter("token");

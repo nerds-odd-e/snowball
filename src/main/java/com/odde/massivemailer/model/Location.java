@@ -28,8 +28,6 @@ public class Location {
         return x * Math.PI / 180;
     }
 
-    ;
-
     public int distanceFrom(Location geoCoordinate) {
         double earthRadiusInKm = 6378.137;
         double differenceOfLatInRadian = toRadian(geoCoordinate.lat - lat);
@@ -42,8 +40,6 @@ public class Location {
         Double distanceInKm = earthRadiusInKm * angularDistance;
         return distanceInKm.intValue();
     }
-
-    ;
 
     public String getName() {
         return this.cityAndCountry;

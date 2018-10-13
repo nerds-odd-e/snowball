@@ -1,15 +1,16 @@
 package com.odde.massivemailer.controller;
 
 import com.odde.massivemailer.exception.EmailException;
-import com.odde.massivemailer.model.*;
+import com.odde.massivemailer.model.ContactPerson;
+import com.odde.massivemailer.model.Course;
+import com.odde.massivemailer.model.Mail;
+import com.odde.massivemailer.model.Template;
 
-import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class SendPreviewMail extends AppController {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+            throws IOException {
 
 
         try {
@@ -49,14 +50,11 @@ public class SendPreviewMail extends AppController {
 
             e.printStackTrace();
 
-        } catch (SQLException e) {
-
-            e.printStackTrace();
         }
 
     }
 
-    public List<Mail>  processRequest(HttpServletRequest req) throws SQLException {
+    public List<Mail>  processRequest(HttpServletRequest req) {
         List<Mail> emails = new ArrayList<>();
 
         List<ContactPerson> contactPerson = new ArrayList<ContactPerson>();

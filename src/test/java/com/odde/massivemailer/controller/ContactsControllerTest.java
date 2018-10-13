@@ -104,7 +104,7 @@ public class ContactsControllerTest {
     }
 
     @Test
-    public void mustSendAnEmailContainingPasswordSettingURLWithTokenWhenAddContact() throws ServletException, IOException {
+    public void mustSendAnEmailContainingPasswordSettingURLWithTokenWhenAddContact() throws IOException {
         request.setParameter("company", "odd-e");
         request.setParameter("lastname", "Smith");
         request.setParameter("firstname", "Mark");

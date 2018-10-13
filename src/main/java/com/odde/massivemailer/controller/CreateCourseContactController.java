@@ -12,7 +12,7 @@ import java.io.IOException;
 public class CreateCourseContactController extends AppController{
     private static final long serialVersionUID = 1L;
 
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
             String courseId = req.getParameter("courseId");
             String particpantEmail = req.getParameter("participantEmail");

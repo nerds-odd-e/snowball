@@ -20,7 +20,7 @@ public class User extends ApplicationModel {
     }
 
     public User(String email) {
-        set(this.EMAIL, email);
+        set(EMAIL, email);
         set("token", createToken());
     }
 
@@ -91,6 +91,6 @@ public class User extends ApplicationModel {
     }
 
     public String getEmail() {
-        return getString(this.EMAIL);
+        return getString(EMAIL);
     }
 }

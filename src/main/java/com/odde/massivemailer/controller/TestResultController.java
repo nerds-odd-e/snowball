@@ -13,7 +13,7 @@ import java.util.List;
 @WebServlet("/testresult")
 public class TestResultController extends AppController{
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String quizId=(String) request.getParameter("quizId");
+        String quizId= request.getParameter("quizId");
 
         // Get Question Responses
         List<QuestionResponse>  questionResponseList = QuestionResponse.where(" test_id = ? ", quizId);

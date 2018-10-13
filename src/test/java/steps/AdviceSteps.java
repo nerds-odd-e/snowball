@@ -16,18 +16,18 @@ public class AdviceSteps {
     private WebDriverWrapper driver = site.getDriver();
 
     @Given("^I take the test$")
-    public void i_take_the_test() throws Throwable {
+    public void i_take_the_test() {
         site.visit("question");
         // TODO create test session
     }
 
     @Given("^there are \"([^\"]*)\" questions remaining$")
-    public void there_are_questions_remaining(String qnsLeft) throws Throwable {
+    public void there_are_questions_remaining(String qnsLeft) {
         // TODO add question to test session
     }
 
     @Given("^I'm on Advice Page$")
-    public void i_m_on_Advice_Page() throws Throwable {
+    public void i_m_on_Advice_Page() {
         UiElement option1 = driver.findElementById("option1");
         option1.click();
         UiElement nextButton = driver.findElementById("answer");
@@ -35,36 +35,36 @@ public class AdviceSteps {
     }
 
     @When("^I click on the Next button$")
-    public void i_click_on_the_button() throws Throwable {
+    public void i_click_on_the_button() {
         UiElement nextButton = driver.findElementById("next");
         nextButton.click();
     }
 
     @Then("^I should see the \"([^\"]*)\" page$")
-    public void i_should_see_the_page(String expectedPageTitle) throws Throwable {
+    public void i_should_see_the_page(String expectedPageTitle) {
         String title = driver.getCurrentTitle();
         assertEquals(expectedPageTitle, title);
     }
 
     @Given("^User is in the Question page$")
-    public void userIsInTheQuestionPage() throws Throwable {
+    public void userIsInTheQuestionPage() {
         site.visit("launchQuestion");
     }
 
     @When("^User selects the wrong option$")
-    public void userSelectsTheWrongOption() throws Throwable {
+    public void userSelectsTheWrongOption() {
         UiElement wrongOption = driver.findElementById("option1");
         wrongOption.click();
     }
 
     @When("^User answers the question wrongly$")
-    public void userAnswersTheQuestionWrongly() throws Throwable {
+    public void userAnswersTheQuestionWrongly() {
         UiElement nextButton = driver.findElementById("answer");
         nextButton.click();
     }
 
     @Then("^User should go to the Advice page$")
-    public void userShouldGoToTheAdvicePage() throws Throwable {
+    public void userShouldGoToTheAdvicePage() {
         String title = driver.getCurrentTitle();
         assertEquals("Question", title);
     }

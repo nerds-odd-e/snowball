@@ -118,7 +118,7 @@ public class Mail {
     }
 
     public List<Message> createMessages(Session session) throws EmailException,
-            AddressException, MessagingException {
+            MessagingException {
 
         List<Message> returnMsg = new ArrayList<Message>();
 

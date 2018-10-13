@@ -48,7 +48,7 @@ public class SendMailController extends AppController {
             if (recipient.startsWith("company:")) {
 
                 String[] aaa = recipient.split(":");
-                String company = aaa[1].toString();
+                String company = aaa[1];
                 List<ContactPerson> contactList = getContactPersons(company);
                 if (contactList.isEmpty()) {
                     throw new SQLException();
@@ -63,7 +63,7 @@ public class SendMailController extends AppController {
         return recipientList;
     }
 
-    private List<ContactPerson> getContactPersons(String company) throws SQLException {
+    private List<ContactPerson> getContactPersons(String company) {
         List<ContactPerson> contactList;
 
         company = company.replaceAll("\"", "");

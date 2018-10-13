@@ -20,7 +20,7 @@ public class AddContactPage {
         addContact(email, country, city);
     }
 
-    public void addContact(String email, String country, String city) throws Throwable {
+    public void addContact(String email, String country, String city) {
         driver.setTextField("email", email);
         driver.setDropdownValue("country", country);
         driver.setTextField("city", city);

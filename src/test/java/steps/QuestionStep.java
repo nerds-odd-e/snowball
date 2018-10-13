@@ -20,12 +20,12 @@ public class QuestionStep {
     private WebDriverWrapper driver = site.getDriver();
 
     @Given("^User is in the test page$")
-    public void userIsInTheTestPage() throws Throwable {
+    public void userIsInTheTestPage() {
         site.visit("launchQuestion");
     }
 
     @Given("^There is a question \"([^\"]*)\"$")
-    public void thereIsAQuestion(String questionDescription) throws Throwable {
+    public void thereIsAQuestion(String questionDescription) {
         new QuestionBuilder()
                 .aQuestion(questionDescription, "Scrum is a framework for agile development.")
                 .withWrongOption("Scrum is Rugby")

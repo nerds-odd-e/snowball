@@ -17,7 +17,7 @@ public class TrackEmailWithMultipleRecipientsSteps {
     private WebDriverWrapper driver = site.getDriver();
 
     @Given("^I send an email to multiple recipients$")
-    public void i_send_an_email_to_multiple_recipients() throws Throwable {
+    public void i_send_an_email_to_multiple_recipients() {
         site.visit("");
         driver.setTextField("recipient", "recipient@odd-e.com;recipient2@odd-e.com");
         driver.setTextField("subject", "Subject");
@@ -27,7 +27,7 @@ public class TrackEmailWithMultipleRecipientsSteps {
     }
 
     @When("^no recipient opens their email$")
-    public void no_recipient_opens_their_email() throws Throwable {
+    public void no_recipient_opens_their_email() {
     }
 
     @When("^all recipients opens their email$")
@@ -43,15 +43,15 @@ public class TrackEmailWithMultipleRecipientsSteps {
     }
 
     @When("^no recipients did not open their email$")
-    public void no_recipients_did_not_open_their_email() throws Throwable {
+    public void no_recipients_did_not_open_their_email() {
     }
 
     @When("^all recipients did not open their email$")
-    public void all_recipients_did_not_open_their_email() throws Throwable {
+    public void all_recipients_did_not_open_their_email() {
     }
 
     @When("^all other recipients did not open their email$")
-    public void all_other_recipients_did_not_open_their_email() throws Throwable {
+    public void all_other_recipients_did_not_open_their_email() {
     }
 
     @Then("^I must see that no recipient has opened their email$")

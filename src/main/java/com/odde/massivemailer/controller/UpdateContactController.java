@@ -15,7 +15,7 @@ import com.odde.massivemailer.service.LocationProviderService;
 public class UpdateContactController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         ContactPerson contactPerson = ContactPerson.getContactByEmail(req.getParameter("email"));
 
         LocationProviderService locationProviderService = new LocationProviderService();

@@ -16,16 +16,16 @@ public class EmailSteps {
     private WebDriverWrapper driver = site.getDriver();
 
     @Given("^Visit Send Mail Page$")
-    public void visitSendMailPage() throws Throwable {
+    public void visitSendMailPage() {
         site.visit("");
     }
 
     @When("^I Click Send Email$")
-    public void clickSendEmail() throws Throwable {
+    public void clickSendEmail() {
         driver.clickButton("send_button");
     }
     @Then("^I should get an element with message \"([^\"]*)\"$")
-    public void iShouldGetAnElementWithMessage(String msg) throws Throwable {
+    public void iShouldGetAnElementWithMessage(String msg) {
         driver.expectElementWithIdToContainText("email_result", msg);
     }
 
@@ -37,17 +37,17 @@ public class EmailSteps {
     }
 
     @Given("^Add Email Recipient \"(.*)\"$")
-    public void addEmailRecipient(String recipient) throws Throwable {
+    public void addEmailRecipient(String recipient) {
         driver.setTextField("recipient", recipient);
     }
 
     @Given("^Email Subject is \"(.*)\"$")
-    public void addEmailSubject(String content) throws Throwable {
+    public void addEmailSubject(String content) {
         driver.setTextField("subject", content);
     }
 
     @Given("^Email Content is \"(.*)\"$")
-    public void addEmailContent(String content) throws Throwable {
+    public void addEmailContent(String content) {
         driver.setTextField("content", content);
     }
 
@@ -57,7 +57,7 @@ public class EmailSteps {
     }
 
     @Then("^It should send (\\d+) emails$")
-    public void it_should_send(int expected_email_count) throws Throwable {
+    public void it_should_send(int expected_email_count) {
         assertThat(SentMail.count(), is((long)expected_email_count));
     }
 

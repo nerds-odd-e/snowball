@@ -15,12 +15,12 @@ public class UpdateTemplateTests {
     private String sendemail_url = site.baseUrl()+ "sendemail.jsp";
 
     @Given("^Visit Edit Template Page$")
-    public void visitEditTemplatePage() throws Throwable {
+    public void visitEditTemplatePage() {
         driver.visit(sendemail_url);
     }
 
     @When("^I update the contents of template$")
-    public void updateTemplateWithGivenDetails(DataTable templateDetails) throws Throwable {
+    public void updateTemplateWithGivenDetails(DataTable templateDetails) {
         List<List<String>> templates = templateDetails.raw();
         templates = templates.subList(1, templates.size());
         for(List<String> val:templates){
@@ -30,12 +30,12 @@ public class UpdateTemplateTests {
     }
 
     @When("^I click on update button$")
-    public void clickUpdateTemplate() throws Throwable {
+    public void clickUpdateTemplate() {
         driver.clickButton("update_button");
     }
 
     @Then("^Template contents should be update and I should get an element with message \"<success>\"$")
-    public void shouldGetSuccessMessage() throws Throwable {
+    public void shouldGetSuccessMessage() {
         driver.expectRedirect(sendemail_url);
     }
 }

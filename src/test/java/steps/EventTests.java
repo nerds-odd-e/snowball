@@ -12,19 +12,19 @@ public class EventTests {
     private WebDriverWrapper driver = site.getDriver();
 
     @Given("^I am on Add Event page$")
-    public void visitAddEventPage() throws Throwable {
+    public void visitAddEventPage() {
         site.visit("add_course.jsp");
     }
 
     @When("^Create course \"([^\"]*)\" in \"([^\"]*)\"$")
-    public void addEventAndSelectLocationFromDropdown(String courseName, String location, String date) throws Throwable {
+    public void addEventAndSelectLocationFromDropdown(String courseName, String location, String date) {
         driver.setTextField("coursename", courseName);
         driver.setTextField("coursedetails", "nothing important");
         driver.setTextField("startdate", date);
         driver.setDropdownValue("location", location);
     }
 
-    public void addEventAndSelectLocationFromDropdownAndTextBox(String courseName, String country, String city, String date) throws Throwable {
+    public void addEventAndSelectLocationFromDropdownAndTextBox(String courseName, String country, String city, String date) {
         driver.setTextField("coursename", courseName);
         driver.setTextField("coursedetails", "nothing important");
         driver.setTextField("startdate", date);
@@ -33,12 +33,12 @@ public class EventTests {
     }
 
     @When("^I click the save button$")
-    public void clickRegisterEvent() throws Throwable {
+    public void clickRegisterEvent() {
         driver.clickButton("save_button");
     }
 
     @Then("^Course save page should display \"([^\"]*)\"$")
-    public void eventListPageShouldContain(String message) throws Throwable {
+    public void eventListPageShouldContain(String message) {
         driver.pageShouldContain(message);
     }
 
