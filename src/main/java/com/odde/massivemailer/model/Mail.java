@@ -6,7 +6,6 @@ import com.odde.massivemailer.service.MailService;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
@@ -113,10 +112,6 @@ public class Mail {
         return template;
     }
 
-    public void setMessage(MimeMessage message) {
-        this.message = message;
-    }
-
     public List<Message> createMessages(Session session) throws EmailException,
             MessagingException {
 
@@ -158,14 +153,6 @@ public class Mail {
         }
 
         return sentMail;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
     }
 
     public void setMessageId(long messageId) {

@@ -1,10 +1,7 @@
 package com.odde.massivemailer.controller;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.model.AnswerOption;
-import com.odde.massivemailer.model.Question;
 import com.odde.massivemailer.model.QuestionResponse;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,7 +29,7 @@ public class TestResultControllerTest {
 
     private void prepareQuestionResponse(int numberOfCorrectAnswer, int totalNumberOfQuestions) {
         for(int i = 0; i< totalNumberOfQuestions; i++) {
-            QuestionResponse qr = QuestionResponse.createIt("test_id", "test-001",
+            QuestionResponse.createIt("test_id", "test-001",
                     "question_id", i,
                     "is_answer_correct", i< numberOfCorrectAnswer);
         }

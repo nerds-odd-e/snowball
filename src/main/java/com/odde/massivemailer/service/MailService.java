@@ -26,8 +26,8 @@ public interface MailService {
         if (!isMailServiceMocked()) {
             MailConfiguration config = new MailConfiguration(System.getenv("MM_EMAIL_USERID"),
                     System.getenv(EMAIL_PASSWORD),
-                    ServerConfig.get(SMTP_ADDR, SMTP_PORT),
-                    ServerConfig.get(IMAP_HOST, IMAP_PORT));
+                    ServerConfig.get(SMTP_ADDR, SMTP_PORT)
+                    );
             final Session mailSession = createMailSession();
             ms = new GMailService(config, mailSession);
         }

@@ -12,8 +12,4 @@ public class AddContactBatchPage {
         this.driver = site.getDriver();
     }
 
-    public void addContactBatch() {
-        site.visit("add_contact_batch.jsp");
-        driver.clickButton("batchFile");
-    }
 }

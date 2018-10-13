@@ -3,7 +3,6 @@ package com.odde.massivemailer.controller;
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.User;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -12,9 +11,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import javax.servlet.ServletException;
 import java.io.IOException;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(TestWithDB.class)
 public class InitializePasswordControllerTest {
@@ -98,18 +95,6 @@ public class InitializePasswordControllerTest {
         controller.doPost(request, response);
         assertEquals("initialize_password.jsp?error=error", response.getRedirectedUrl());
 
-    }
-
-    @Ignore
-    public void invalidTokenError() throws Exception {
-        User user = new User("megumi@gmail.com");
-        user.saveIt();
-        request.setParameter("token", "123123");
-        request.setParameter("password","sdfgsdfgsdg");
-        request.setParameter("password_confirm", "sdfgsdfgsdg");
-        controller.doPost(request, response);
-
-        assertTrue(response.getRedirectedUrl().contains("initialize_password_token_error.jsp"));
     }
 
     @Test

@@ -1,7 +1,6 @@
 package com.odde.massivemailer.controller;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.factory.CourseFactory;
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Course;
 import org.junit.Before;
@@ -24,7 +23,6 @@ public class EnrollParticipantControllerTest {
     private EnrollParticipantController controller;
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
-    CourseFactory dataMother = new CourseFactory();
 
     @Before
     public void setUpMockService() {

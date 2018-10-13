@@ -53,6 +53,7 @@ public class WebDriverWrapper {
 
     }
 
+    @SuppressWarnings("unused")
     public String getCurrentTitle() {
         return driver.getTitle();
     }
@@ -153,6 +154,7 @@ public class WebDriverWrapper {
         return new WebDriverWait(driver, 10);
     }
 
+    @SuppressWarnings("unused")
     public void waitForDisplayed(String domId) {
         getWait().until(webDriver -> webDriver.findElement(By.id(domId)).isDisplayed());
     }
@@ -161,6 +163,7 @@ public class WebDriverWrapper {
         return driver.findElements(by);
     }
 
+    @SuppressWarnings("unused")
     public String getBodyHTML() {
         return findElements(By.tagName("body")).get(0).getAttribute("outerHTML");
     }

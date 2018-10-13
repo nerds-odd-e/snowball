@@ -81,13 +81,6 @@ public class ContactPerson extends ApplicationModel {
         return null;
     }
 
-    public static ContactPerson getContactById(Integer contactId) {
-        LazyList<ContactPerson> list = where("id = ?", contactId);
-        if (list.size() > 0)
-            return list.get(0);
-        return null;
-    }
-
     Double getLatitude() {
         return getDoubleAttribute(LATITUDE);
     }

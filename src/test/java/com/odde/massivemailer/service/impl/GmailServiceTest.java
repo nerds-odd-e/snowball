@@ -7,11 +7,10 @@ import com.odde.TestWithDB;
 import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.service.GMailService;
-import com.odde.massivemailer.service.MailService;
 import com.odde.massivemailer.service.MailConfiguration;
+import com.odde.massivemailer.service.MailService;
 import com.odde.massivemailer.service.ServerConfig;
 import com.odde.massivemailer.util.NotificationUtil;
-import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +20,6 @@ import javax.mail.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
-import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.mockito.Matchers.any;
@@ -45,7 +43,6 @@ public class GmailServiceTest {
         MailConfiguration config = new MailConfiguration("myodde@gmail.com"
                 , "myodde@gmail.com"
                 , ServerConfig.get("localhost", 3025)
-                , ServerConfig.get("localhost", 3026)
         );
         gmailWithGreenMail = new GMailService(config, this.session);
     }
@@ -68,8 +65,7 @@ public class GmailServiceTest {
         MailConfiguration config = new MailConfiguration(
                 "fakeUser@gmail.com",
                 "fakeUserPassword",
-                ServerConfig.get("smtp.gmail.com", 587),
-                ServerConfig.get("imap.gmail.com", 143)
+                ServerConfig.get("smtp.gmail.com", 587)
         ) {
             @Override
             public Transport getSmtpTransport(Session session) {
