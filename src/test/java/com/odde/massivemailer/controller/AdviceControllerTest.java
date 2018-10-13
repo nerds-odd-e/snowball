@@ -30,7 +30,7 @@ public class AdviceControllerTest {
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
 
-        request.getSession().setAttribute("quiz", new Quiz());
+        request.getSession().setAttribute("quiz", new Quiz(5));
         request.getSession().setAttribute("correctlyAnsweredCount", CORRECTLY_ANSWERED_QUESTIONS);
     }
 

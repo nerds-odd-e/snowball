@@ -1,19 +1,18 @@
 package com.odde.massivemailer.model;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Quiz {
 
     private List<Long> questionIds;
     private int numberOfAnsweredQuestions;
-    private int NUMBER_OF_QUESTIONS=5;
+    private int number_of_questions =5;
 
-    public Quiz(){
-        questionIds = Question.getNRandomIds(NUMBER_OF_QUESTIONS).collect(Collectors.toList());
+    public Quiz(int questionCount) {
+        number_of_questions = questionCount;
+        questionIds = Question.getNRandomIds(number_of_questions).collect(Collectors.toList());
         numberOfAnsweredQuestions = 0;
     }
 

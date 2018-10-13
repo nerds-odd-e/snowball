@@ -14,7 +14,7 @@ public class LaunchQuestionController extends AppController {
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(true);
-        Quiz quiz = new Quiz();
+        Quiz quiz = new Quiz(getQuestionCount(req));
         if(!quiz.hasNextQuestion()){
             resp.sendRedirect("add_question.jsp");
             return;
@@ -23,6 +23,13 @@ public class LaunchQuestionController extends AppController {
         session.setAttribute("correctlyAnsweredCount", 0);
         session.setAttribute("quiz", quiz);
         resp.sendRedirect("question.jsp");
+    }
+
+    private int getQuestionCount(HttpServletRequest req) {
+        String questionCountStr = req.getParameter("question_count");
+        if (questionCountStr == null)
+            return 10;
+        return Integer.parseInt(questionCountStr);
     }
 }
 

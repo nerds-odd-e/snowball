@@ -16,27 +16,27 @@ public class QuizTest {
 
     @Test
     public void shouldNotGetANewQuizWithNQuestionIdsIfEnoughQuestionsInDatabase() {
-        Quiz newQuiz = new Quiz();
+        Quiz newQuiz = new Quiz(5);
         assertEquals(0, newQuiz.getNumberOfQuestions());
     }
 
     @Test
     public void shouldGetNextQuestionWhenHaveMoreQuestionsAvailable() {
         mockQuestion(5);
-        Quiz newQuiz = new Quiz();
+        Quiz newQuiz = new Quiz(5);
         assertEquals(5, newQuiz.getNumberOfQuestions());
     }
 
     @Test(expected = NoSuchElementException.class)
     public void shouldNotGetNextQuestionWhenNoMoreQuestionsLeft() {
-        Quiz newQuiz = new Quiz();
+        Quiz newQuiz = new Quiz(5);
         newQuiz.getNextQuestion();
     }
 
     @Test
     public void shouldNotRepeatQuestions() {
         mockQuestion(6);
-        Quiz newQuiz = new Quiz();
+        Quiz newQuiz = new Quiz(5);
         Set<Question> questions = new HashSet<>();
         while(newQuiz.hasNextQuestion()) {
             questions.add(newQuiz.getNextQuestion());

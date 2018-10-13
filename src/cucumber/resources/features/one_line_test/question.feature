@@ -1,10 +1,8 @@
-@now
 Feature:
   User can take an online test :)
 
-  Scenario: 初期表示：質問とoptionsが表示されていること
+  Scenario: Displaying the question
     Given There is a question "What is scrum?"
-    Given User is in the test page
     And User should see a question and options
       | description | What is scrum?    |
       | option1     | Scrum is Rugby    |
@@ -41,29 +39,19 @@ Feature:
       | Scrum is Sumo     |
 
   Scenario Outline: User goes to end of test if he has answered all questions
-    Given User is in the test page
+    Given User is taking a quiz with 3 questions
     And User answered correctly the <number_of_questions> th question page
-    And User chooses the "option2" option
-    And User clicks the answer button
-    When User clicks the next button
-    Then "<page_content>" is shown
+    Then "<page_content>" should be shown
 
     Examples:
       | number_of_questions | page_content |
-      | 8                   | Question     |
-      | 9                   | End Of Test  |
+      | 2                   | Question     |
+      | 3                   | End Of Test  |
 
-  @developing
-  Scenario: User selects the correct answer and click on the Next Button
-    Given User is in the test page
-    And There is only one question
-    When User selects the correct answer
+  Scenario: User goes to end of test if he has answered last questions wrong
+    Given User is taking a quiz with 3 questions
+    And User answered correctly the 2 th question page
+    When User chooses the "wrongOption" answer
+    And User clicks the answer button
     And User Clicks on the next Button
-    Then User sees the Summary Page
-
-  Scenario: User starts a test
-    Given User is in the top page
-    And There are 5  questions at the beginning
-    And User clicks "Start Test" button on menu
-    Then User go to the test page for first time
-    And There is a question with options
+    Then "End Of Test" should be shown

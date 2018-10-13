@@ -1,7 +1,6 @@
 package steps;
 
 import com.odde.massivemailer.factory.QuestionBuilder;
-import com.odde.massivemailer.model.AnswerOption;
 import com.odde.massivemailer.model.Question;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
@@ -16,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class QuestionStep {
     private MassiveMailerSite site = new MassiveMailerSite();
@@ -40,14 +38,15 @@ public class QuestionStep {
                 .please();
     }
 
-    @Given("^User is taking a quiz with 2 questions$")
-    public void user_is_taking_a_quiz_with_2_questions() {
-        for (int i = 0; i < 2; i++)
+    @Given("^User is taking a quiz with (\\d+) questions$")
+    public void user_is_taking_a_quiz_with_n_questions(int n) {
+        for (int i = 0; i < n; i++)
             question = new QuestionBuilder()
                     .aQuestion()
                     .withWrongOption("wrongOption")
                     .withCorrectOption("correctOption")
                     .please();
+        site.visit(String.format("launchQuestion?question_count=%d", n));
     }
 
     @Given("^User is on the first question$")
@@ -71,25 +70,9 @@ public class QuestionStep {
     @Given("^User answered correctly the (\\d+) th question page$")
     public void user_answered_correctly_the(int answeredCount) {
         for (int i = 0; i < answeredCount; ++i) {
-            driver.clickById("option5");
+            driver.clickRadioButton("correctOption");
             driver.clickButton("answer");
         }
-    }
-
-    @Given("^There are \"([^\"]*)\" questions remaining$")
-    public void there_are_questions_remaining(String arg1) {
-        // Write code here that turns the phrase above into concrete actionsthrow new Exception();
-    }
-
-    @Given("^There is only one question$")
-    public void there_is_only_one_question() {
-        // Write code here that turns the phrase above into concrete actions
-
-    }
-
-    @Given("^There are two questions$")
-    public void there_are_two_questions() {
-        // Write code here that turns the phrase above into concrete actions
     }
 
     @When("^User clicks \"([^\"]*)\" button$")
@@ -112,11 +95,6 @@ public class QuestionStep {
         driver.clickById("option5");
     }
 
-    @When("^User chooses the \"([^\"]*)\" option$")
-    public void user_chooses_the_option(String incorrectId) {
-        driver.clickById(incorrectId);
-    }
-
     @When("^option(\\d+) is selected as correct answer$")
     public void optionIsSelectedAsCorrectAnswer(String optionId) {
         driver.clickButton("option" + optionId);
@@ -125,12 +103,6 @@ public class QuestionStep {
     @When("^User clicks the next button$")
     public void user_clicks_the_next_button() {
         driver.clickButton("next");
-    }
-
-    @When("^User selects the correct answer$")
-    public void user_selects_the_correct_answer() {
-        // Write code here that turns the phrase above into concrete actions
-
     }
 
     @When("^User Clicks on the next Button$")
@@ -187,44 +159,9 @@ public class QuestionStep {
         driver.pageShouldContain("Question");
     }
 
-    @Then("^\"([^\"]*)\" is shown$")
+    @Then("^\"([^\"]*)\" should be shown$")
     public void is_shown(String currentPage) {
         driver.pageShouldContain(currentPage);
-    }
-
-    @Then("^User sees the Summary Page$")
-    public void user_sees_the_Summary_Page() {
-        // Write code here that turns the phrase above into concrete actions
-    }
-
-    @Then("^User should see second question$")
-    public void user_should_see_second_question() {
-        // Write code here that turns the phrase above into concrete actions
-    }
-
-    @Given("^There are (\\d+)  questions at the beginning$")
-    public void there_is_a_question(int numberOfQuestions) {
-        for (int i = 0; i < numberOfQuestions; i++) {
-            Question question = Question.createIt("description", "some description " + i, "advice", "adv1");
-            Long id = (Long) question.getId();
-            AnswerOption answerOption1 = AnswerOption.createIt("description", "Scrum is Rugby", "question_id", id, "is_correct", 0);
-            AnswerOption answerOption2 = AnswerOption.createIt("description", "Scrum is Baseball", "question_id", id, "is_correct", 0);
-            AnswerOption answerOption3 = AnswerOption.createIt("description", "Scrum is Soccer", "question_id", id, "is_correct", 0);
-            AnswerOption answerOption4 = AnswerOption.createIt("description", "Scrum is Sumo", "question_id", id, "is_correct", 0);
-            AnswerOption answerOptiom5 = AnswerOption.createIt("description", "None of the above", "question_id", id, "is_correct", 1);
-        }
-    }
-
-
-    @Then("^User go to the test page for first time$")
-    public void user_go_to_the_test_page_for_first_time() {
-        site.visit("launchQuestion");
-    }
-
-    @Then("^There is a question with options")
-    public void there_is_a_question_with_options() {
-        assertEquals(1, driver.findElements(By.id("description")).size());
-        assertTrue(driver.findElements(By.name("optionId")).size() > 1);
     }
 
 }
