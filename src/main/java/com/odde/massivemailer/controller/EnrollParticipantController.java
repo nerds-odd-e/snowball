@@ -31,7 +31,6 @@ public class EnrollParticipantController extends AppController {
 
         public DBRecord(String[] line, String courseId) {
             this.line = line;
-            System.out.printf(line[0]);
             this.courseId = courseId;
         }
 

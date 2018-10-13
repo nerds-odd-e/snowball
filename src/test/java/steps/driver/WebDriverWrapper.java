@@ -15,6 +15,8 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.*;
@@ -161,6 +163,26 @@ public class WebDriverWrapper {
 
     public String getBodyHTML() {
         return findElements(By.tagName("body")).get(0).getAttribute("outerHTML");
+    }
+
+    public void clickRadioButton(String text) {
+        getElementBySelectorAndText("input", text).click();
+    }
+
+    private WebElement getElementBySelectorAndText(String selector, String text) {
+        Stream<WebElement> webElementStream = findElements(By.cssSelector(selector)).stream().map(e -> e.findElement(By.xpath("./..")));
+        return webElementStream
+                .filter(e-> e.getText().equals(text))
+                .findFirst()
+                .orElseThrow(() -> {
+                    return new AssertionError(
+                            String.format("Can not find element with selector `%s` and text `%s`, but found %s",
+                                    selector,
+                                    text,
+                                    webElementStream.map(e->e.getText()).collect(Collectors.joining( "," ) )
+                                    ));
+                })
+                .findElement(By.cssSelector(selector));
     }
 }
 

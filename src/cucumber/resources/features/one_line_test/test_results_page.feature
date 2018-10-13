@@ -1,8 +1,6 @@
 Feature: Test Results page
   Users will be shown the test results when they have answered all the questions in the test
 
-  @developing
-  @now
   Scenario Outline:
     Given User finished a exam with <correctanswer> out of <totalquestion> score
     When User is on the Test Results page

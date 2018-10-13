@@ -1,6 +1,5 @@
 package steps;
 import com.odde.massivemailer.model.QuestionResponse;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -22,9 +21,7 @@ public class TestResultsSteps {
 
     @Then("^The Test results page displays \"([^\"]*)\" and \"([^\"]*)\"$")
     public void theTestResultsPageDisplaysAnd(String message, String percentage) {
-        System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
         driver.expectElementWithIdToContainText("percentage", percentage);
-        System.out.println(message);
         driver.expectElementWithIdToContainText("message", message);
 
     }

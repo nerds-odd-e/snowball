@@ -21,24 +21,19 @@ public class QuestionStep {
     private MassiveMailerSite site = new MassiveMailerSite();
     private WebDriverWrapper driver = site.getDriver();
     private Question question;
-    private AnswerOption wrongOption;
-    private AnswerOption correctOption;
-
-    public void setupQuestion(){
-
-    }
 
     @Given("^User is taking a quiz with 2 questions$")
     public void user_is_taking_a_quiz_with_2_questions() {
         question = Question.createIt("description", "MyTest", "advice", "eeee");
-        wrongOption = new AnswerOption("wrongOption", question.getLongId(), false);
+        AnswerOption wrongOption = new AnswerOption("wrongOption", question.getLongId(), false);
         wrongOption.saveIt();
-        correctOption = new AnswerOption("correctOption", question.getLongId(), true);
+        AnswerOption correctOption = new AnswerOption("correctOption", question.getLongId(), true);
         correctOption.saveIt();
+        System.out.println("correct id is "+ correctOption.getString("id"));
         Question question2 = Question.createIt("description", "q2", "advice", "Q2 advice");
-        AnswerOption q2o1 = new AnswerOption("q2 option 1", question2.getLongId(), false);
+        AnswerOption q2o1 = new AnswerOption("wrongOption", question2.getLongId(), false);
         q2o1.saveIt();
-        AnswerOption q202 = new AnswerOption("q2 option 2", question2.getLongId(), true);
+        AnswerOption q202 = new AnswerOption("correctOption", question2.getLongId(), true);
         q202.saveIt();
     }
 
@@ -48,7 +43,7 @@ public class QuestionStep {
     }
 
     @Given("^User is in the top page$")
-    public void user_is_in_the_top_page() throws Throwable {
+    public void user_is_in_the_top_page() {
         Question question = Question.createIt("description", "MyTest", "advice", "eeee");
         AnswerOption option1 = new AnswerOption("wrongOption", question.getLongId(), false);
         option1.saveIt();
@@ -71,7 +66,7 @@ public class QuestionStep {
     }
 
     @Given("^User answered correctly the (\\d+) th question page$")
-    public void user_answered_correctly_the(int answeredCount) throws Throwable {
+    public void user_answered_correctly_the(int answeredCount) {
         for (int i = 0; i < answeredCount; ++i) {
             driver.clickById("option5");
             driver.clickButton("answer");
@@ -79,12 +74,12 @@ public class QuestionStep {
     }
 
     @Given("^There are \"([^\"]*)\" questions remaining$")
-    public void there_are_questions_remaining(String arg1) throws Throwable {
+    public void there_are_questions_remaining(String arg1) {
         // Write code here that turns the phrase above into concrete actionsthrow new Exception();
     }
 
     @Given("^There is only one question$")
-    public void there_is_only_one_question() throws Throwable {
+    public void there_is_only_one_question() {
         // Write code here that turns the phrase above into concrete actions
 
     }
@@ -100,17 +95,8 @@ public class QuestionStep {
     }
 
     @When("^User chooses the \"([^\"]*)\" answer$")
-    public void userChoosesTheAnswer(String answer) throws Throwable {
-        long optionToPick;
-        if (answer.equals("wrong")) {
-            optionToPick = (long) wrongOption.getId();
-        } else {
-            optionToPick = (long) correctOption.getId();
-        }
-        String optionSelector = "input[value='" + optionToPick + "']";
-        System.out.println(driver.findElements(By.cssSelector(optionSelector)));
-        WebElement option = driver.findElements(By.cssSelector(optionSelector)).get(0);
-        option.click();
+    public void userChoosesTheAnswer(String answer) {
+        driver.clickRadioButton(answer);
     }
 
     @When("^User clicks the answer button$")
@@ -124,7 +110,7 @@ public class QuestionStep {
     }
 
     @When("^User chooses the \"([^\"]*)\" option$")
-    public void user_chooses_the_option(String incorrectId) throws Throwable {
+    public void user_chooses_the_option(String incorrectId) {
         driver.clickById(incorrectId);
     }
 
@@ -144,18 +130,18 @@ public class QuestionStep {
     }
 
     @When("^User selects the correct answer$")
-    public void user_selects_the_correct_answer() throws Throwable {
+    public void user_selects_the_correct_answer() {
         // Write code here that turns the phrase above into concrete actions
 
     }
 
     @When("^User Clicks on the next Button$")
-    public void user_Clicks_on_the_next_Button() throws Throwable {
+    public void user_Clicks_on_the_next_Button() {
         // Write code here that turns the phrase above into concrete actions
     }
 
     @When("^User Clicks on the Next Button in the first question$")
-    public void user_Clicks_on_the_Next_Button_in_the_first_question() throws Throwable {
+    public void user_Clicks_on_the_Next_Button_in_the_first_question() {
         // Write code here that turns the phrase above into concrete actions
     }
 
@@ -209,17 +195,17 @@ public class QuestionStep {
     }
 
     @Then("^\"([^\"]*)\" is shown$")
-    public void is_shown(String currentPage) throws Throwable {
+    public void is_shown(String currentPage) {
         driver.pageShouldContain(currentPage);
     }
 
     @Then("^User sees the Summary Page$")
-    public void user_sees_the_Summary_Page() throws Throwable {
+    public void user_sees_the_Summary_Page() {
         // Write code here that turns the phrase above into concrete actions
     }
 
     @Then("^User should see second question$")
-    public void user_should_see_second_question() throws Throwable {
+    public void user_should_see_second_question() {
         // Write code here that turns the phrase above into concrete actions
     }
 
@@ -243,7 +229,7 @@ public class QuestionStep {
     }
 
     @Then("^There is a question with options")
-    public void there_is_a_question_with_options() throws Throwable {
+    public void there_is_a_question_with_options() {
         assertEquals(1, driver.findElements(By.id("description")).size());
         assertTrue(driver.findElements(By.name("optionId")).size() > 1);
     }

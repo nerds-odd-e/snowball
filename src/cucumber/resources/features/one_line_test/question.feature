@@ -1,7 +1,6 @@
 Feature:
   User can take an online test :)
 
-  @developing
   Scenario: 初期表示：質問とoptionsが表示されていること
     Given User is in the top page
     And There is a question "What is scrum?"
@@ -15,7 +14,7 @@ Feature:
       | option4     | Scrum is Sumo     |
       | option5     | None of the above |
 
-  @developing
+  @now
   Scenario Outline: User navigates to advice or next question page
     Given User is taking a quiz with 2 questions
     And User is on the first question
@@ -27,7 +26,6 @@ Feature:
       | wrongOption     | Advice       |
       | correctOption   | Question     |
 
-  @developing
   Scenario Outline: テストページで不正解を選んで、回答ボタンを押下するとAdviceページが表示されること
     Given User is in the test page
     And There is a question "What is scrum?"
@@ -45,7 +43,6 @@ Feature:
       | option3          | Scrum is Soccer   |
       | option4          | Scrum is Sumo     |
 
-  @developing
   Scenario Outline: User goes to end of test if he has answered all questions
     Given User is in the test page
     And User answered correctly the <number_of_questions> th question page
