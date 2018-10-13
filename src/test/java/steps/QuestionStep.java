@@ -23,9 +23,26 @@ public class QuestionStep {
     private WebDriverWrapper driver = site.getDriver();
     private Question question;
 
+    @Given("^User is in the test page$")
+    public void userIsInTheTestPage() throws Throwable {
+        site.visit("launchQuestion");
+    }
+
+    @Given("^There is a question \"([^\"]*)\"$")
+    public void thereIsAQuestion(String questionDescription) throws Throwable {
+        new QuestionBuilder()
+                .aQuestion(questionDescription)
+                .withWrongOption("Scrum is Rugby")
+                .withWrongOption("Scrum is Baseball")
+                .withWrongOption("Scrum is Soccer")
+                .withWrongOption("Scrum is Sumo")
+                .withCorrectOption("None of the above")
+                .please();
+    }
+
     @Given("^User is taking a quiz with 2 questions$")
     public void user_is_taking_a_quiz_with_2_questions() {
-        for(int i = 0; i < 2; i ++)
+        for (int i = 0; i < 2; i++)
             question = new QuestionBuilder()
                     .aQuestion()
                     .withWrongOption("wrongOption")
@@ -36,16 +53,6 @@ public class QuestionStep {
     @Given("^User is on the first question$")
     public void user_is_in_the_test_page() {
         site.visit("launchQuestion");
-    }
-
-    @Given("^User is in the top page$")
-    public void user_is_in_the_top_page() {
-        Question question = Question.createIt("description", "MyTest", "advice", "eeee");
-        AnswerOption option1 = new AnswerOption("wrongOption", question.getLongId(), false);
-        option1.saveIt();
-        AnswerOption option2 = new AnswerOption("correctOption", question.getLongId(), true);
-        option2.saveIt();
-        site.visit("");
     }
 
     @Given("^User arrives at advice page$")
@@ -81,7 +88,7 @@ public class QuestionStep {
     }
 
     @Given("^There are two questions$")
-    public void there_are_two_questions()  {
+    public void there_are_two_questions() {
         // Write code here that turns the phrase above into concrete actions
     }
 
@@ -120,11 +127,6 @@ public class QuestionStep {
         driver.clickButton("next");
     }
 
-    @When("^User clicks \"([^\"]*)\" button on menu$")
-    public void user_clicks_button_on_menu(String link) {
-        driver.clickById("start_test");
-    }
-
     @When("^User selects the correct answer$")
     public void user_selects_the_correct_answer() {
         // Write code here that turns the phrase above into concrete actions
@@ -150,11 +152,11 @@ public class QuestionStep {
     public void user_should_see_a_question_and_options(DataTable question) {
         Map<String, String> questionMap = question.asMap(String.class, String.class);
         driver.expectElementWithIdToContainText("description", questionMap.get("description"));
-        driver.expectElementWithIdToContainText("wrongOption", questionMap.get("wrongOption"));
-        driver.expectElementWithIdToContainText("option2", questionMap.get("option2"));
-        driver.expectElementWithIdToContainText("option3", questionMap.get("option3"));
-        driver.expectElementWithIdToContainText("option4", questionMap.get("option4"));
-        driver.expectElementWithIdToContainText("option5", questionMap.get("option5"));
+        driver.expectRadioButtonWithText(questionMap.get("option1"));
+        driver.expectRadioButtonWithText(questionMap.get("option2"));
+        driver.expectRadioButtonWithText(questionMap.get("option3"));
+        driver.expectRadioButtonWithText(questionMap.get("option4"));
+        driver.expectRadioButtonWithText(questionMap.get("option5"));
     }
 
     @Then("^It should move to \"([^\"]*)\" page$")
@@ -229,4 +231,5 @@ public class QuestionStep {
         assertEquals(1, driver.findElements(By.id("description")).size());
         assertTrue(driver.findElements(By.name("optionId")).size() > 1);
     }
+
 }

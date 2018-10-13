@@ -10,7 +10,11 @@ public class QuestionBuilder {
     }
 
     public QuestionBuilder aQuestion() {
-        currentQuestion = Question.createIt("description", "MyTest", "advice", "eeee");
+        return aQuestion("myTest");
+    }
+
+    public QuestionBuilder aQuestion(String questionDescription) {
+        currentQuestion = Question.createIt("description", questionDescription, "advice", "eeee");
         return this;
     }
 
@@ -23,5 +27,4 @@ public class QuestionBuilder {
         currentQuestion.createCorrectOption(optionText);
         return this;
     }
-
 }

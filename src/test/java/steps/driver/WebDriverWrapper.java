@@ -166,10 +166,10 @@ public class WebDriverWrapper {
     }
 
     public void clickRadioButton(String text) {
-        getElementBySelectorAndText("input", text).click();
+        getRadioButtonBySelectorAndText("input", text).click();
     }
 
-    private WebElement getElementBySelectorAndText(String selector, String text) {
+    private WebElement getRadioButtonBySelectorAndText(String selector, String text) {
         Stream<WebElement> webElementStream = findElements(By.cssSelector(selector)).stream().map(e -> e.findElement(By.xpath("./..")));
         return webElementStream
                 .filter(e-> e.getText().equals(text))
@@ -183,6 +183,10 @@ public class WebDriverWrapper {
                                     ));
                 })
                 .findElement(By.cssSelector(selector));
+    }
+
+    public void expectRadioButtonWithText(String optionText) {
+        getRadioButtonBySelectorAndText("input[type='radio']", optionText);
     }
 }
 

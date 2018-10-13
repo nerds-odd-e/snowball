@@ -1,11 +1,10 @@
+@now
 Feature:
   User can take an online test :)
 
   Scenario: 初期表示：質問とoptionsが表示されていること
-    Given User is in the top page
-    And There is a question "What is scrum?"
-    When User clicks "Start Test" button on menu
-    Then User go to the test page
+    Given There is a question "What is scrum?"
+    Given User is in the test page
     And User should see a question and options
       | description | What is scrum?    |
       | option1     | Scrum is Rugby    |
@@ -14,7 +13,6 @@ Feature:
       | option4     | Scrum is Sumo     |
       | option5     | None of the above |
 
-  @now
   Scenario Outline: User navigates to advice or next question page
     Given User is taking a quiz with 2 questions
     And User is on the first question
