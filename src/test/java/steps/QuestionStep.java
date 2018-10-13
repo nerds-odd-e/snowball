@@ -1,5 +1,6 @@
 package steps;
 
+import com.odde.massivemailer.factory.QuestionBuilder;
 import com.odde.massivemailer.model.AnswerOption;
 import com.odde.massivemailer.model.Question;
 import cucumber.api.DataTable;
@@ -24,17 +25,12 @@ public class QuestionStep {
 
     @Given("^User is taking a quiz with 2 questions$")
     public void user_is_taking_a_quiz_with_2_questions() {
-        question = Question.createIt("description", "MyTest", "advice", "eeee");
-        AnswerOption wrongOption = new AnswerOption("wrongOption", question.getLongId(), false);
-        wrongOption.saveIt();
-        AnswerOption correctOption = new AnswerOption("correctOption", question.getLongId(), true);
-        correctOption.saveIt();
-        System.out.println("correct id is "+ correctOption.getString("id"));
-        Question question2 = Question.createIt("description", "q2", "advice", "Q2 advice");
-        AnswerOption q2o1 = new AnswerOption("wrongOption", question2.getLongId(), false);
-        q2o1.saveIt();
-        AnswerOption q202 = new AnswerOption("correctOption", question2.getLongId(), true);
-        q202.saveIt();
+        for(int i = 0; i < 2; i ++)
+            question = new QuestionBuilder()
+                    .aQuestion()
+                    .withWrongOption("wrongOption")
+                    .withCorrectOption("correctOption")
+                    .please();
     }
 
     @Given("^User is on the first question$")
@@ -161,7 +157,7 @@ public class QuestionStep {
         driver.expectElementWithIdToContainText("option5", questionMap.get("option5"));
     }
 
-    @Then("^Move to \"([^\"]*)\" page$")
+    @Then("^It should move to \"([^\"]*)\" page$")
     public void move_to_page(String redirected_page) {
         driver.pageShouldContain(redirected_page);
     }
@@ -212,7 +208,7 @@ public class QuestionStep {
     @Given("^There are (\\d+)  questions at the beginning$")
     public void there_is_a_question(int numberOfQuestions) {
         for (int i = 0; i < numberOfQuestions; i++) {
-            question = Question.createIt("description", "some description " + i, "advice", "adv1");
+            Question question = Question.createIt("description", "some description " + i, "advice", "adv1");
             Long id = (Long) question.getId();
             AnswerOption answerOption1 = AnswerOption.createIt("description", "Scrum is Rugby", "question_id", id, "is_correct", 0);
             AnswerOption answerOption2 = AnswerOption.createIt("description", "Scrum is Baseball", "question_id", id, "is_correct", 0);

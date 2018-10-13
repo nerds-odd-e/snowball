@@ -101,4 +101,12 @@ public class Question extends ApplicationModel {
     public int hashCode() {
         return Objects.hash(getDescription(), getAdvice());
     }
+
+    public void createWrongOption(String optionText) {
+        AnswerOption.createIt("description", optionText, "question_id", getLongId(), "is_correct", 0);
+    }
+
+    public void createCorrectOption(String optionText) {
+        AnswerOption.createIt("description", optionText, "question_id", getLongId(), "is_correct", 1);
+    }
 }

@@ -20,7 +20,7 @@ Feature:
     And User is on the first question
     When User chooses the "<selected_option>" answer
     And User clicks the answer button
-    Then Move to "<page_content>" page
+    Then It should move to "<page_content>" page
     Examples:
       | selected_option | page_content |
       | wrongOption     | Advice       |
