@@ -24,22 +24,21 @@ Feature:
       | wrongOption     | Advice       |
       | correctOption   | Question     |
 
-  Scenario Outline: テストページで不正解を選んで、回答ボタンを押下するとAdviceページが表示されること
-    Given User is in the test page
-    And There is a question "What is scrum?"
-    When User chooses the "<incorrect option>" option
+  Scenario Outline: advice page should include clear feedback
+    Given There is a question "What is scrum?"
+    And User is in the test page
+    When User chooses the "<incorrect option>" answer
     And User clicks the answer button
-    Then User go to the "Advice" page
-    And User should see "correct" option highlighted and text "None of the above"
-    And User should see "selected incorrect" option highlighted and text "<text>"
+    Then User should see "correct" option highlighted and text "None of the above"
+    And User should see "selected incorrect" option highlighted and text "<incorrect option>"
     And User should see "Scrum is a framework for agile development."
 
     Examples:
-      | incorrect option | text              |
-      | option1          | Scrum is Rugby    |
-      | option2          | Scrum is Baseball |
-      | option3          | Scrum is Soccer   |
-      | option4          | Scrum is Sumo     |
+      | incorrect option  |
+      | Scrum is Rugby    |
+      | Scrum is Baseball |
+      | Scrum is Soccer   |
+      | Scrum is Sumo     |
 
   Scenario Outline: User goes to end of test if he has answered all questions
     Given User is in the test page

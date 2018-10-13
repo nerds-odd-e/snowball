@@ -31,7 +31,7 @@ public class QuestionStep {
     @Given("^There is a question \"([^\"]*)\"$")
     public void thereIsAQuestion(String questionDescription) throws Throwable {
         new QuestionBuilder()
-                .aQuestion(questionDescription)
+                .aQuestion(questionDescription, "Scrum is a framework for agile development.")
                 .withWrongOption("Scrum is Rugby")
                 .withWrongOption("Scrum is Baseball")
                 .withWrongOption("Scrum is Soccer")
@@ -167,11 +167,6 @@ public class QuestionStep {
     @Then("^User should see the \"([^\"]*)\" page$")
     public void user_should_see_the_page(String pageName) {
         driver.expectElementWithIdToContainText("title", "End Of Test");
-    }
-
-    @Then("^User go to the \"([^\"]*)\" page$")
-    public void user_go_to_the_page(String pageName) {
-        driver.pageShouldContain(pageName);
     }
 
     @Then("^User should see \"([^\"]*)\" option highlighted and text \"([^\"]*)\"$")

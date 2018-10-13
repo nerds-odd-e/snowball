@@ -170,8 +170,7 @@ public class WebDriverWrapper {
     }
 
     private WebElement getRadioButtonBySelectorAndText(String selector, String text) {
-        Stream<WebElement> webElementStream = findElements(By.cssSelector(selector)).stream().map(e -> e.findElement(By.xpath("./..")));
-        return webElementStream
+        return getWebElementStreamOfParents(selector)
                 .filter(e-> e.getText().equals(text))
                 .findFirst()
                 .orElseThrow(() -> {
@@ -179,10 +178,14 @@ public class WebDriverWrapper {
                             String.format("Can not find element with selector `%s` and text `%s`, but found %s",
                                     selector,
                                     text,
-                                    webElementStream.map(e->e.getText()).collect(Collectors.joining( "," ) )
+                                    getWebElementStreamOfParents(selector).map(e->e.getText()).collect(Collectors.joining( "," ) )
                                     ));
                 })
                 .findElement(By.cssSelector(selector));
+    }
+
+    private Stream<WebElement> getWebElementStreamOfParents(String selector) {
+        return findElements(By.cssSelector(selector)).stream().map(e -> e.findElement(By.xpath("./..")));
     }
 
     public void expectRadioButtonWithText(String optionText) {

@@ -10,11 +10,11 @@ public class QuestionBuilder {
     }
 
     public QuestionBuilder aQuestion() {
-        return aQuestion("myTest");
+        return aQuestion("myTest", null);
     }
 
-    public QuestionBuilder aQuestion(String questionDescription) {
-        currentQuestion = Question.createIt("description", questionDescription, "advice", "eeee");
+    public QuestionBuilder aQuestion(String questionDescription, String advice) {
+        currentQuestion = Question.createIt("description", questionDescription, "advice", advice);
         return this;
     }
 
