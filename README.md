@@ -30,9 +30,9 @@ The naming convesion is "4digits_the_rest_of_the_name.sql".
 
 The first four digits are the id of the migration, which will be persisited into the database. The db migration will ignore any migration that is older than the largest id ran last time.
 
-##### Run Production
+##### Run development app
 
-`gradle appStart -DACTIVE_ENV=production`
+`gradle appStart
 
 ##### Run Junit tests
 
@@ -48,14 +48,15 @@ The first four digits are the id of the migration, which will be persisited into
 npm install
 npm test
 ```
-* Make sure firefox binary is in the path export PATH=$PATH:/Applications/Firefox.app/Contents/MacOS˜
 
 #### IntelliJ Integration
 
-http://javalite.io/intellij_idea_integration
+This project use ActiveJDBC, which need an extra process named "Instrument" before compiling. To better integrate
+with intelliJ, we need to let IntelliJ use gradle for compiling.
 
-In IntelliJ's Project Structure, change the output path of the massive_mailer_test module to:
-<project_dir>/build/classes/java/main
+IntelliJ -> Preferences... -> Build, Execution, Deployment -> Build Tools -> Gradle -> Running
+
+Check the "Delegate build/run to gradle"
 
 #### Mac Setup
 
@@ -67,7 +68,7 @@ Adding the following to the /etc/hosts will solve the problem:
 ::1         localhost mbpro.local
 ```
 
-#### MySQL Setup
+#### MySQLn Server Setup
 
 In order to run the `LOAD DATA INFILE` command you first need to add a configuration file as follows:
 
