@@ -6,13 +6,11 @@ import java.util.stream.Collectors;
 
 public class Quiz {
 
-    private List<Long> questionIds;
+    private final List<Long> questionIds;
     private int numberOfAnsweredQuestions;
-    private int number_of_questions =5;
 
     public Quiz(int questionCount) {
-        number_of_questions = questionCount;
-        questionIds = Question.getNRandomIds(number_of_questions).collect(Collectors.toList());
+        questionIds = Question.getNRandomIds(questionCount).collect(Collectors.toList());
         numberOfAnsweredQuestions = 0;
     }
 
@@ -33,7 +31,7 @@ public class Quiz {
         return questionIds.size()>this.getNumberOfAnsweredQuestions();
     }
 
-    public int getNumberOfAnsweredQuestions() {
+    private int getNumberOfAnsweredQuestions() {
         return this.numberOfAnsweredQuestions;
     }
 

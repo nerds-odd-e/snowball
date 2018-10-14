@@ -56,7 +56,7 @@ public class TemplateTest {
     @Test
     public void mustReturnEmptyEmailWhenNOParticipantsInCourse() {
 
-        Assert.assertEquals(0, template.getPopulatedEmailTemplate(course, new ArrayList<ContactPerson>()).size());
+        Assert.assertEquals(0, template.getPopulatedEmailTemplate(course, new ArrayList<>()).size());
     }
 
     @Test

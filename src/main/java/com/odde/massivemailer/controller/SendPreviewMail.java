@@ -54,10 +54,10 @@ public class SendPreviewMail extends AppController {
 
     }
 
-    public List<Mail>  processRequest(HttpServletRequest req) {
-        List<Mail> emails = new ArrayList<>();
+    private List<Mail>  processRequest(HttpServletRequest req) {
+        List<Mail> emails;
 
-        List<ContactPerson> contactPerson = new ArrayList<ContactPerson>();
+        List<ContactPerson> contactPerson = new ArrayList<>();
         String courseId = req.getParameter("courseId");
         Course course = Course.getCourseById(new Integer(courseId));
 

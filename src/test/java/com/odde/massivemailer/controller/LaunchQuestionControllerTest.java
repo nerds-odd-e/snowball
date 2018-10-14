@@ -33,21 +33,21 @@ public class LaunchQuestionControllerTest {
     @Test
     public void redirect_to_question_jsp()
             throws Exception {
-        mockQuestion(5);
+        mockQuestion();
         controller.doGet(request, response);
         assertEquals("question.jsp", response.getRedirectedUrl());
     }
 
     @Test
     public void mustGetQuestionId() throws Exception {
-        mockQuestion(5);
+        mockQuestion();
         controller.doGet(request, response);
         Quiz quiz = (Quiz) request.getSession().getAttribute("quiz");
         Integer correctlyAnsweredQuestions = (Integer) request.getSession().getAttribute("correctlyAnsweredCount");
 
         assertNotNull(quiz);
         assertNotNull(correctlyAnsweredQuestions);
-        assertTrue(correctlyAnsweredQuestions.equals(0));
+        assertEquals(0, (int) correctlyAnsweredQuestions);
     }
 
     @Test
@@ -56,8 +56,8 @@ public class LaunchQuestionControllerTest {
         assertEquals("add_question.jsp", response.getRedirectedUrl());
     }
 
-    private void mockQuestion(int numberOfQuestion) {
-        IntStream.range(0, numberOfQuestion).forEach(index -> Question.createIt("description", "desc" + index, "advice", "adv" + index));
+    private void mockQuestion() {
+        IntStream.range(0, 5).forEach(index -> Question.createIt("description", "desc" + index, "advice", "adv" + index));
     }
 
 }

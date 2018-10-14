@@ -22,13 +22,12 @@ import java.net.UnknownHostException;
 import java.util.Arrays;
 
 import static junit.framework.TestCase.assertEquals;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 @RunWith(TestWithDB.class)
 public class GmailServiceTest {
 
-    private static String[] RECIPIENTS = new String[]{"myodde@gmail.com",
+    private static final String[] RECIPIENTS = new String[]{"myodde@gmail.com",
             "kit.sumate@gmail.com"};
 
     private Session session;
@@ -74,9 +73,7 @@ public class GmailServiceTest {
             }
         };
 
-        GMailService gmailService = new GMailService(config, this.session);
-
-        return gmailService;
+        return new GMailService(config, this.session);
     }
 
 

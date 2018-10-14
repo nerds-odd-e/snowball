@@ -1,6 +1,5 @@
 package com.odde.massivemailer.service;
 
-import com.google.maps.GeoApiContext;
 import com.odde.massivemailer.model.Location;
 import org.junit.Test;
 
@@ -14,7 +13,7 @@ public class GoogleGeoAPIServiceTest {
 
         Location location = geoAPIService.getGeocode(null, null);
 
-        assertEquals(location.getName(), null);
+        assertNull(location.getName());
         assert location.getLat() == null;
         assert location.getLng() == null;
     }

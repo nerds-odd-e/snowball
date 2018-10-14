@@ -19,8 +19,8 @@ public class CreateCourserContactControllerTest  {
     private CreateCourseContactController controller;
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
-    CourseFactory dataMother = new CourseFactory();
-    Course course = dataMother.csd_course();
+    private final CourseFactory dataMother = new CourseFactory();
+    private final Course course = dataMother.csd_course();
 
     @Before
     public void setUpMockService() {

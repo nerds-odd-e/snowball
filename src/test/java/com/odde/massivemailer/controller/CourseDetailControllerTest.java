@@ -18,9 +18,9 @@ import static org.junit.Assert.assertThat;
 @RunWith(TestWithDB.class)
 public class CourseDetailControllerTest {
 
-    private CourseDetailController controller = new CourseDetailController();
-    private MockHttpServletRequest request = new MockHttpServletRequest();
-    private MockHttpServletResponse response = new MockHttpServletResponse();
+    private final CourseDetailController controller = new CourseDetailController();
+    private final MockHttpServletRequest request = new MockHttpServletRequest();
+    private final MockHttpServletResponse response = new MockHttpServletResponse();
 
 
     @Test

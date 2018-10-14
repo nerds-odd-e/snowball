@@ -10,9 +10,9 @@ package steps;
         import java.util.List;
 
 public class UpdateTemplateTests {
-    private MassiveMailerSite site = new MassiveMailerSite();
-    private WebDriverWrapper driver = site.getDriver();
-    private String sendemail_url = site.baseUrl()+ "sendemail.jsp";
+    private final MassiveMailerSite site = new MassiveMailerSite();
+    private final WebDriverWrapper driver = site.getDriver();
+    private final String sendemail_url = site.baseUrl()+ "sendemail.jsp";
 
     @Given("^Visit Edit Template Page$")
     public void visitEditTemplatePage() {

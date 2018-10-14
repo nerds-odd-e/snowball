@@ -15,10 +15,16 @@ import static org.junit.Assert.assertTrue;
 @RunWith(TestWithDB.class)
 public class QuestionWithOptionsTest {
 
+    private Question createWithOptions(List<AnswerOption> answerOptions) {
+        Question question = Question.createIt("description", "des1", "advice", "adv1");
+        answerOptions.forEach(option -> option.addToQuestion(question.getLongId()));
+        return question;
+    }
+
     @Test
     public void shouldCreateQuestionHavingDescriptionAndAdviceAndAnswerOptions() {
         List<AnswerOption> expectedAnswerOptions = IntStream.range(0, 4).mapToObj(index -> AnswerOption.create("option desc"+index, index%4==0)).collect(Collectors.toList());
-        Question expected  = Question.createWithOptions("des1", "adv1", expectedAnswerOptions);
+        Question expected  = createWithOptions(expectedAnswerOptions);
 
         Question actual = Question.getById(expected.getLongId());
         assertEquals(expected, actual);
@@ -27,23 +33,5 @@ public class QuestionWithOptionsTest {
 
         assertEquals(expectedAnswerOptions.size(), actualAnswerOptions.size());
         assertTrue(expectedAnswerOptions.containsAll(actualAnswerOptions));
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldNotCreateQuestionWithLessThanTwoAnswerOptions() {
-        List<AnswerOption> expectedAnswerOptions = IntStream.range(0, 1).mapToObj(index -> AnswerOption.create("option desc"+index, index%4==0)).collect(Collectors.toList());
-        Question.createWithOptions("des1", "adv1", expectedAnswerOptions);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldNotCreateQuestionWithMultipleCorrectAnswerOptions() {
-        List<AnswerOption> expectedAnswerOptions = IntStream.range(0, 4).mapToObj(index -> AnswerOption.create("option desc"+index, index%2==0)).collect(Collectors.toList());
-        Question.createWithOptions("des1", "adv1", expectedAnswerOptions);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldNotCreateQuestionWithoutCorrectAnswerOptions() {
-        List<AnswerOption> expectedAnswerOptions = IntStream.range(0, 4).mapToObj(index -> AnswerOption.create("option desc"+index, false)).collect(Collectors.toList());
-        Question.createWithOptions("des1", "adv1", expectedAnswerOptions);
     }
 }

@@ -5,6 +5,7 @@ import com.odde.massivemailer.model.Question;
 public class QuestionBuilder {
     private Question currentQuestion;
 
+    @SuppressWarnings("UnusedReturnValue")
     public Question please() {
         return currentQuestion;
     }

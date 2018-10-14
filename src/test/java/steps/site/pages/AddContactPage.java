@@ -4,8 +4,8 @@ import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
 public class AddContactPage {
-    private MassiveMailerSite site;
-    private WebDriverWrapper driver;
+    private final MassiveMailerSite site;
+    private final WebDriverWrapper driver;
 
     public AddContactPage(MassiveMailerSite massiveMailerSite) {
         site = massiveMailerSite;
@@ -13,7 +13,7 @@ public class AddContactPage {
         site.visit("add_contact.jsp");
     }
 
-    public void addContactWithLocationString(String email, String location) throws Throwable {
+    public void addContactWithLocationString(String email, String location) {
         String[] location_parts = location.split("/");
         String country = location_parts[0];
         String city = location_parts[1];
@@ -27,7 +27,7 @@ public class AddContactPage {
         driver.clickButton("add_button");
     }
 
-    public void addContactWithAllInput(String email, String country, String city, String name, String lastName, String company) throws Throwable {
+    public void addContactWithAllInput(String email, String country, String city, String name, String lastName, String company) {
         driver.setTextField("name", name);
         driver.setTextField("lastname", lastName);
         driver.setTextField("company", company);

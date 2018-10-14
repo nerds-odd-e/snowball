@@ -17,9 +17,9 @@ import java.util.*;
 import static org.junit.Assert.*;
 
 public class LoginTests{
-    private MassiveMailerSite site = new MassiveMailerSite();
-    private WebDriverWrapper driver = site.getDriver();
-    private String login_url = site.baseUrl() + "login.jsp";
+    private final MassiveMailerSite site = new MassiveMailerSite();
+    private final WebDriverWrapper driver = site.getDriver();
+    private final String login_url = site.baseUrl() + "login.jsp";
 
     private void visitLoginPage() {
         driver.visit(login_url);
@@ -43,9 +43,9 @@ public class LoginTests{
     public void there_are_users_as_bellow(DataTable userTable) {
         User.deleteAll();
         Map<String, String> vals = userTable.asMap(String.class, String.class);
-        vals.entrySet().forEach(entry -> {
-            User user = new User(entry.getKey());
-            user.setPassword(entry.getValue());
+        vals.forEach((key, value) -> {
+            User user = new User(key);
+            user.setPassword(value);
             user.saveIt();
         });
     }

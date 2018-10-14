@@ -8,9 +8,9 @@ import steps.site.MassiveMailerSite;
 
 public class ListEmailStepDefs {
 
-    private MassiveMailerSite site = new MassiveMailerSite();
-    private WebDriverWrapper driver = site.getDriver();
-    TrackEmailSteps emailSteps = new TrackEmailSteps();
+    private final MassiveMailerSite site = new MassiveMailerSite();
+    private final WebDriverWrapper driver = site.getDriver();
+    private final TrackEmailSteps emailSteps = new TrackEmailSteps();
 
     @Given("^Terry sends an email$")
     public void terry_sends_an_email() {

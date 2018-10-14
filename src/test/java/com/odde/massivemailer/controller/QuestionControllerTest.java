@@ -45,7 +45,7 @@ public class QuestionControllerTest {
     }
 
 
-    public Question createQuestionWithOptions(){
+    private Question createQuestionWithOptions(){
         Question question = Question.createIt("description", "What is Scrum?", "advice", "Scrum is a coding practice.");
         Long id = (Long)question.getId();
         AnswerOption.createIt("description", "desc1", "question_id", id, "is_correct", 0);
@@ -67,7 +67,6 @@ public class QuestionControllerTest {
     public void doPostAnswerAdditionalQuestionAnswerCountIncreases() throws Exception {
         when(quiz.hasNextQuestion()).thenReturn(true);
 
-        Long questionId = (Long) question.getId();
         Collection<AnswerOption> options = question.getOptions();
         Optional<AnswerOption> correctId = options.stream().filter(AnswerOption::isCorrect).findFirst();
         String optionId = correctId.isPresent() ? correctId.get().getId().toString() : StringUtils.EMPTY;
@@ -76,14 +75,11 @@ public class QuestionControllerTest {
 
         controller.doPost(request,response);
         assertEquals("question.jsp", response.getRedirectedUrl());
-//        HttpSession session = request.getSession();
-//        assertEquals(4, (int) session.getAttribute("answeredCount"));
     }
 
     @Test
     public void postCorrectOptionInTheLastQuestion() throws Exception {
 
-        Long questionId = (Long) question.getId();
         Collection<AnswerOption> options = question.getOptions();
         Optional<AnswerOption> correctId = options.stream().filter(AnswerOption::isCorrect).findFirst();
         String optionId = correctId.isPresent() ? correctId.get().getId().toString() : StringUtils.EMPTY;
@@ -97,23 +93,16 @@ public class QuestionControllerTest {
     @Test
     public void postIncorrect() throws ServletException, IOException {
 
-        Long questionId = (Long) question.getId();
         Collection<AnswerOption> options = question.getOptions();
-        Optional<AnswerOption> correctId = options.stream().filter(AnswerOption::isCorrect).findFirst();
-        String correctOptionId = correctId.isPresent() ? correctId.get().getId().toString() : StringUtils.EMPTY;
-
         String optionId = options.stream().findFirst().get().getId().toString();
-
         request.addParameter("optionId", optionId);
-
         controller.doPost(request, response);
-
         String selectedOption = (String) request.getAttribute("selectedOption");
         assertEquals(optionId, selectedOption);
     }
 
     @Test
-    public void firstDoPost() throws ServletException, IOException {
+    public void firstDoPost() throws IOException {
         launchQuestionController.doGet(request, response);
         HttpSession session = request.getSession();
         assertEquals(0, (int) session.getAttribute("correctlyAnsweredCount"));
@@ -123,7 +112,6 @@ public class QuestionControllerTest {
     public void doPostWithCorrectAnsweredOption() throws ServletException, IOException {
         when(quiz.hasNextQuestion()).thenReturn(true);
 
-        Long questionId = (Long) question.getId();
         Collection<AnswerOption> options = question.getOptions();
         Optional<AnswerOption> correctId = options.stream().filter(AnswerOption::isCorrect).findFirst();
         String optionId = correctId.isPresent() ? correctId.get().getId().toString() : StringUtils.EMPTY;
@@ -134,14 +122,11 @@ public class QuestionControllerTest {
         controller.doPost(request, response);
         assertEquals("question.jsp", response.getRedirectedUrl());
         HttpSession session = request.getSession();
-//        assertEquals(4, (int) session.getAttribute("answeredCount"));
         assertEquals(4, (int) session.getAttribute("correctlyAnsweredCount"));
     }
 
     @Test
     public void doPostAtLastQuestionWithCorrectAnsweredOption() throws ServletException, IOException {
-
-        Long questionId = (Long) question.getId();
         Collection<AnswerOption> options = question.getOptions();
         Optional<AnswerOption> correctId = options.stream().filter(AnswerOption::isCorrect).findFirst();
         String optionId = correctId.isPresent() ? correctId.get().getId().toString() : StringUtils.EMPTY;
@@ -151,14 +136,11 @@ public class QuestionControllerTest {
         controller.doPost(request, response);
         assertEquals("end_of_test.jsp", response.getRedirectedUrl());
         HttpSession session = request.getSession();
-//        assertEquals(MAX_QUESTION_COUNT, (int) session.getAttribute("answeredCount"));
         assertEquals(4, (int) session.getAttribute("correctlyAnsweredCount"));
     }
 
     @Test
     public void doPostWithIncorrectAnsweredOption() throws ServletException, IOException {
-
-        Long questionId = (Long) question.getId();
         Collection<AnswerOption> options = question.getOptions();
         String optionId = options.stream().findFirst().get().getId().toString();
 
@@ -168,14 +150,11 @@ public class QuestionControllerTest {
         controller.doPost(request, response);
         assertEquals("advice.jsp", response.getForwardedUrl());
         HttpSession session = request.getSession();
-//        assertEquals(4, (int) session.getAttribute("answeredCount"));
         assertEquals(3, (int) session.getAttribute("correctlyAnsweredCount"));
     }
 
     @Test
     public void doPostAtLastQuestionWithIncorrectAnsweredOption() throws ServletException, IOException {
-
-        Long questionId = (Long) question.getId();
         Collection<AnswerOption> options = question.getOptions();
         String optionId = options.stream().findFirst().get().getId().toString();
 
@@ -185,14 +164,12 @@ public class QuestionControllerTest {
         controller.doPost(request, response);
         assertEquals("advice.jsp", response.getForwardedUrl());
         HttpSession session = request.getSession();
-//        assertEquals(MAX_QUESTION_COUNT, (int) session.getAttribute("answeredCount"));
         assertEquals(3, (int) session.getAttribute("correctlyAnsweredCount"));
     }
 
     @Test
     public void doPostWithNoOptionsInDatabase() throws ServletException, IOException {
 
-        Long questionId = (Long) question.getId();
         Collection<AnswerOption> options = question.getOptions();
         String optionId = options.stream().findFirst().get().getId().toString();
 

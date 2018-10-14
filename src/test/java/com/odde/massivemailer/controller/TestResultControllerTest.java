@@ -27,11 +27,11 @@ public class TestResultControllerTest {
         response = new MockHttpServletResponse();
     }
 
-    private void prepareQuestionResponse(int numberOfCorrectAnswer, int totalNumberOfQuestions) {
-        for(int i = 0; i< totalNumberOfQuestions; i++) {
+    private void prepareQuestionResponse() {
+        for(int i = 0; i< 10; i++) {
             QuestionResponse.createIt("test_id", "test-001",
                     "question_id", i,
-                    "is_answer_correct", i< numberOfCorrectAnswer);
+                    "is_answer_correct", i< 6);
         }
         assertEquals(10, QuestionResponse.where("test_id = ? ","test-001" ).size());
     }
@@ -39,7 +39,7 @@ public class TestResultControllerTest {
 
     @Test
     public void itMustForwardToTestResultPage() throws IOException, ServletException {
-        prepareQuestionResponse(6, 10);
+        prepareQuestionResponse();
         request.setParameter("quizId","test-001");
         controller.doGet(request, response);
         assertEquals("test_result.jsp", response.getForwardedUrl());

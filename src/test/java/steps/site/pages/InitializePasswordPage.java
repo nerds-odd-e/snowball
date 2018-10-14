@@ -5,7 +5,7 @@ import steps.site.MassiveMailerSite;
 
 public class InitializePasswordPage {
 
-    private WebDriverWrapper driver;
+    private final WebDriverWrapper driver;
 
     public InitializePasswordPage(MassiveMailerSite site) {
         this.driver = site.getDriver();

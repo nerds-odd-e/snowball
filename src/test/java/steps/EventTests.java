@@ -8,8 +8,8 @@ import steps.site.MassiveMailerSite;
 
 public class EventTests {
 
-    private MassiveMailerSite site = new MassiveMailerSite();
-    private WebDriverWrapper driver = site.getDriver();
+    private final MassiveMailerSite site = new MassiveMailerSite();
+    private final WebDriverWrapper driver = site.getDriver();
 
     @Given("^I am on Add Event page$")
     public void visitAddEventPage() {
@@ -24,7 +24,7 @@ public class EventTests {
         driver.setDropdownValue("location", location);
     }
 
-    public void addEventAndSelectLocationFromDropdownAndTextBox(String courseName, String country, String city, String date) {
+    private void addEventAndSelectLocationFromDropdownAndTextBox(String courseName, String country, String city, String date) {
         driver.setTextField("coursename", courseName);
         driver.setTextField("coursedetails", "nothing important");
         driver.setTextField("startdate", date);
@@ -42,13 +42,7 @@ public class EventTests {
         driver.pageShouldContain(message);
     }
 
-    void addCourse(String courseName, String location, String date) throws Throwable {
-        visitAddEventPage();
-        addEventAndSelectLocationFromDropdown(courseName, location, date);
-        clickRegisterEvent();
-    }
-
-    void addCourseWithCountryAndCity(String courseName, String country, String city, String date) throws Throwable {
+    void addCourseWithCountryAndCity(String courseName, String country, String city, String date) {
         visitAddEventPage();
         addEventAndSelectLocationFromDropdownAndTextBox(courseName, country, city, date);
         clickRegisterEvent();

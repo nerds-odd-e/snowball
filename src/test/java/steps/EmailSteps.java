@@ -12,8 +12,8 @@ import static org.junit.Assert.assertThat;
 
 public class EmailSteps {
 
-    private MassiveMailerSite site = new MassiveMailerSite();
-    private WebDriverWrapper driver = site.getDriver();
+    private final MassiveMailerSite site = new MassiveMailerSite();
+    private final WebDriverWrapper driver = site.getDriver();
 
     @Given("^Visit Send Mail Page$")
     public void visitSendMailPage() {
@@ -30,7 +30,7 @@ public class EmailSteps {
     }
 
     @Given("^Default Email with Recipients \"([^\"]*)\"$")
-    public void defaultEmailWithRecipients(String recipients) throws Throwable {
+    public void defaultEmailWithRecipients(String recipients) {
         addEmailRecipient(recipients);
         addEmailSubject("default subject");
         addEmailContent("default content");

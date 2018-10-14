@@ -89,7 +89,7 @@ public class Course extends ApplicationModel {
     }
 
     public static Course getCourseById(Integer id) {
-        LazyList<Course> list = where("id = ?", id.intValue());
+        LazyList<Course> list = where("id = ?", id);
         if (list.size() > 0)
             return list.get(0);
         return null;

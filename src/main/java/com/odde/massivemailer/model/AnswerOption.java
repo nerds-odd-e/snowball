@@ -12,8 +12,6 @@ public class AnswerOption extends ApplicationModel{
     private static final String IS_CORRECT = "is_correct";
     private static final String QUESTION_ID = "question_id";
 
-    public Map<String, String> attributes = new HashMap<>();
-
     static {
         validatePresenceOf(DESCRIPTION, QUESTION_ID, IS_CORRECT);
     }

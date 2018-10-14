@@ -1,6 +1,5 @@
 package com.odde.massivemailer.controller;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;

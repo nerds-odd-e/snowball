@@ -34,7 +34,7 @@ public class EnrollParticipantController extends AppController {
             this.courseId = courseId;
         }
 
-        public boolean validate() {
+        boolean validate() {
             Pattern pattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
             Matcher matcher = pattern.matcher(line[0]);
             return matcher.find();

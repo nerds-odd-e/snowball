@@ -7,8 +7,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.DoubleFunction;
-import java.util.function.Function;
 
 public class DBMigrater {
     public void migrate() {
@@ -20,7 +18,7 @@ public class DBMigrater {
                 last_migration_name = "";
             }
         } catch (DBException e) {
-            System.out.printf("Migration for the first time...\n");
+            System.out.print("Migration for the first time...\n");
         }
 
         for (String migration : migrationFiles()) {
@@ -52,7 +50,7 @@ public class DBMigrater {
             while ((resource = br.readLine()) != null) {
                 filenames.add(resource);
             }
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
 
         return filenames;
@@ -63,15 +61,13 @@ public class DBMigrater {
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(path)))) {
             String line = reader.readLine();
-            List<String> lines = new ArrayList<String>();
+            List<String> lines = new ArrayList<>();
 
             while (line != null) {
                 lines.add(line);
                 line = reader.readLine();
             }
             return String.join("\n", lines);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

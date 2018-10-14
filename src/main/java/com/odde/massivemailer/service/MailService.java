@@ -10,8 +10,6 @@ public interface MailService {
     String EMAIL_PASSWORD = "MM_EMAIL_PASSWORD";
     String SMTP_ADDR = "smtp.gmail.com";
     int SMTP_PORT = 587;
-    int IMAP_PORT = 143;
-    String IMAP_HOST = "imap.gmail.com";
 
     void send(Mail email) throws EmailException;
 

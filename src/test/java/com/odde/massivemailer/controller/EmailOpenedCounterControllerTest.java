@@ -9,19 +9,17 @@ import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import javax.servlet.ServletException;
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
 
 
 @RunWith(TestWithDB.class)
 public class EmailOpenedCounterControllerTest {
-    EmailOpenedCounterController emailOpenedCounterController = new EmailOpenedCounterController();
-    SentMailFactory sentMailFactory = new SentMailFactory();
-    MockHttpServletRequest req = new MockHttpServletRequest();
-    MockHttpServletResponse res = new MockHttpServletResponse();
+    private final EmailOpenedCounterController emailOpenedCounterController = new EmailOpenedCounterController();
+    private final SentMailFactory sentMailFactory = new SentMailFactory();
+    private final MockHttpServletRequest req = new MockHttpServletRequest();
+    private final MockHttpServletResponse res = new MockHttpServletResponse();
 
     @Test
     public void returnEmailSubject() throws Exception {
@@ -38,7 +36,7 @@ public class EmailOpenedCounterControllerTest {
     }
 
     @Test
-    public void returnWarningMessage() throws ServletException, IOException {
+    public void returnWarningMessage() throws IOException {
         emailOpenedCounterController.doGet(req, res);
         assertEquals("{'error': 'null id'}", res.getContentAsString());
     }

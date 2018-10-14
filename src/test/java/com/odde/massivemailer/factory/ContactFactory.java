@@ -3,7 +3,7 @@ package com.odde.massivemailer.factory;
 import com.odde.massivemailer.model.ContactPerson;
 
 public class ContactFactory {
-    static int uniq_id = 0;
+    private static int uniq_id = 0;
 
     public static ContactPerson uniqueContact() {
         uniq_id += 1;

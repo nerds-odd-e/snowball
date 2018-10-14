@@ -3,7 +3,6 @@ package com.odde.massivemailer.model.validator;
 import org.javalite.activejdbc.DB;
 import org.javalite.activejdbc.MetaModel;
 import org.javalite.activejdbc.Model;
-import org.javalite.activejdbc.ModelDelegate;
 import org.javalite.activejdbc.validation.ValidatorAdapter;
 
 import static org.javalite.activejdbc.ModelDelegate.metaModelOf;

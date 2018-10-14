@@ -11,7 +11,7 @@ public class NotificationUtil {
 
     private static void addVisit(Mail mail) {
 
-        List<SentMailVisit> sentMailVisits = null;
+        List<SentMailVisit> sentMailVisits;
         if (mail.getSentMail().getSentMailVisits() == null) {
             sentMailVisits = new ArrayList<>();
             mail.getSentMail().setSentMailVisits(sentMailVisits);

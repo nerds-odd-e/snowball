@@ -23,9 +23,9 @@ import static org.junit.Assert.assertNull;
 
 @RunWith(TestWithDB.class)
 public class CoursesControllerTest {
-    private CoursesController controller = new CoursesController();
-    private MockHttpServletRequest request = new MockHttpServletRequest();
-    private MockHttpServletResponse response = new MockHttpServletResponse();
+    private final CoursesController controller = new CoursesController();
+    private final MockHttpServletRequest request = new MockHttpServletRequest();
+    private final MockHttpServletResponse response = new MockHttpServletResponse();
 
     @Before
     public void setUp() {

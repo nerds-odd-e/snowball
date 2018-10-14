@@ -24,7 +24,6 @@ public class Mail {
     private List<String> receipts;
     private String subject;
     private String content;
-    private String key;
     private long messageId;
     private SentMail sentMail;
 
@@ -104,7 +103,7 @@ public class Mail {
     public String ReplaceAttibute(String template, ContactPerson contact) {
 
         for (String attr : contact.getAttributeKeys()) {
-            String regexp = "(?i)(^|[^\\{])(\\{" + attr + "\\})([^\\}]|$)";
+            String regexp = "(?i)(^|[^{])(\\{" + attr + "})([^}]|$)";
 
             template = template.replaceAll(regexp, "$1" + contact.getAttribute(attr) + "$3");
         }
@@ -115,7 +114,7 @@ public class Mail {
     public List<Message> createMessages(Session session) throws EmailException,
             MessagingException {
 
-        List<Message> returnMsg = new ArrayList<Message>();
+        List<Message> returnMsg = new ArrayList<>();
 
         List<SentMailVisit> sentMailVisits = sentMail.getSentMailVisits();
 

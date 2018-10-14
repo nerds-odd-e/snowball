@@ -7,7 +7,7 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
 
-public class DateUtil {
+class DateUtil {
     
     private static final ZoneOffset OFFSET = OffsetDateTime.now().getOffset();
 

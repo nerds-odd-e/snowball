@@ -42,7 +42,7 @@ public class SendMailController extends AppController {
     }
 
     private ArrayList<String> getRecipients(StringTokenizer st) throws SQLException {
-        ArrayList<String> recipientList = new ArrayList<String>();
+        ArrayList<String> recipientList = new ArrayList<>();
         while (st.hasMoreTokens()) {
             String recipient = st.nextToken();
             if (recipient.startsWith("company:")) {

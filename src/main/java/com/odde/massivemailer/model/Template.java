@@ -1,7 +1,6 @@
 package com.odde.massivemailer.model;
 
 
-import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
 
 
@@ -39,7 +38,7 @@ public class Template extends ApplicationModel {
 
 
     public List<Mail> getPopulatedEmailTemplate(Course course, List<ContactPerson> courseParticipants) {
-        List<Mail> mails = new ArrayList<Mail>();
+        List<Mail> mails = new ArrayList<>();
 
         String content;
         String contactEmailId;

@@ -6,8 +6,7 @@ import steps.site.MassiveMailerSite;
 
 public class EnrollParticipantPage {
     private final MassiveMailerSite site;
-    private WebDriverWrapper driver;
-    private String courseDetailUrl = "course_detail.jsp";
+    private final WebDriverWrapper driver;
 
     public EnrollParticipantPage(MassiveMailerSite site) {
         this.site = site;
@@ -16,7 +15,7 @@ public class EnrollParticipantPage {
 
     public void enrollParticipants(String courseName, String participants) {
         Course course = Course.getCourseByName(courseName);
-        driver.visit(site.baseUrl() + courseDetailUrl + "?id=" + course.getId().toString());
+        driver.visit(site.baseUrl() + "course_detail.jsp?id=" + course.getId().toString());
         driver.executeJavaScript("document.getElementById('participants').value = '" + participants + "';");
         driver.clickButton("add_button");
     }

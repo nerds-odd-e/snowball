@@ -4,8 +4,8 @@ import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
 public class CourseListPage {
-    private WebDriverWrapper driver;
-    private MassiveMailerSite site;
+    private final WebDriverWrapper driver;
+    private final MassiveMailerSite site;
 
     public CourseListPage(MassiveMailerSite site) {
 

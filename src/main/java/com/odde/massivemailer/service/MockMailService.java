@@ -2,9 +2,6 @@ package com.odde.massivemailer.service;
 
 import com.odde.massivemailer.model.Mail;
 
-import javax.mail.Message;
-import java.util.List;
-
 public class MockMailService implements MailService {
 
     @Override

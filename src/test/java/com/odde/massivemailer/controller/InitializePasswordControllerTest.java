@@ -8,7 +8,6 @@ import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import javax.servlet.ServletException;
 import java.io.IOException;
 
 import static org.junit.Assert.*;
@@ -36,7 +35,7 @@ public class InitializePasswordControllerTest {
     }
 
     @Test
-    public void showInitialPasswordViewFailWithDBNoExistsToken() throws ServletException, IOException {
+    public void showInitialPasswordViewFailWithDBNoExistsToken() throws IOException {
         request.setParameter("token", "123123");
         controller.doGet(request,response);
         assertTrue(response.getRedirectedUrl().contains("initialize_password_token_error.jsp"));

@@ -9,7 +9,7 @@ import org.javalite.activejdbc.Model;
 import java.lang.reflect.Type;
 import java.util.Set;
 
-public abstract class ActiveSerialiser implements JsonSerializer {
+abstract class ActiveSerialiser implements JsonSerializer {
     @Override
     public JsonElement serialize(Object src, Type typeOfSrc, JsonSerializationContext context) {
             return getJsonElement((Model) src);

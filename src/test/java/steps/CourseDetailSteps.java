@@ -16,9 +16,9 @@ import static org.junit.Assert.assertTrue;
 
 public class CourseDetailSteps {
 
-    private MassiveMailerSite site = new MassiveMailerSite();
-    private WebDriverWrapper driver = site.getDriver();
-    private String courseDetailUrl = site.baseUrl() + "course_detail.jsp";
+    private final MassiveMailerSite site = new MassiveMailerSite();
+    private final WebDriverWrapper driver = site.getDriver();
+    private final String courseDetailUrl = site.baseUrl() + "course_detail.jsp";
 
     @When("^I visit \"([^\"]*)\" detail page from course list page$")
     public void iVisitDetailPage(String courseName) {

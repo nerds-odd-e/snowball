@@ -22,7 +22,7 @@ public class  ParticipantControllerTest {
     private ParticipantController controller;
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
-    CourseFactory dataMother = new CourseFactory();
+    private final CourseFactory dataMother = new CourseFactory();
 
 
 

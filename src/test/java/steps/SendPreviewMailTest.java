@@ -9,12 +9,12 @@ import steps.site.MassiveMailerSite;
 
 
 public class SendPreviewMailTest {
-    private MassiveMailerSite site = new MassiveMailerSite();
-    private WebDriverWrapper driver = site.getDriver();
-    public static final String A_COURSE = "A course";
+    private final MassiveMailerSite site = new MassiveMailerSite();
+    private final WebDriverWrapper driver = site.getDriver();
+    private static final String A_COURSE = "A course";
 
     @Given("^there is a course starting from \"([^\"]*)\"$")
-    public void there_is_a_course_starting_from(String date) throws Throwable {
+    public void there_is_a_course_starting_from(String date) {
         EventTests eventTests = new EventTests();
         eventTests.addCourseWithCountryAndCity(A_COURSE, "Singapore","Singapore", date);
     }
@@ -42,7 +42,7 @@ public class SendPreviewMailTest {
     }
 
     @Given("^There is a contact \"([^\"]*)\" at Tokyo$")
-    public void there_is_a_contact_at_Tokyo(String email) throws Throwable {
+    public void there_is_a_contact_at_Tokyo(String email) {
         site.addContactPage().addContact(email, "Japan", "Tokyo");
     }
 
@@ -53,6 +53,6 @@ public class SendPreviewMailTest {
 
     @Then("^all participants below should receive the pre-course email$")
     public void allParticipantsBelowShouldReceiveThePreCourseEmail(DataTable emails) {
-        emails.asList(String.class).stream().forEach((email) -> site.ExpectEmailTo(email));
+        emails.asList(String.class).forEach(site::ExpectEmailTo);
     }
 }

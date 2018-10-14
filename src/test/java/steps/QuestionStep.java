@@ -16,8 +16,8 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 
 public class QuestionStep {
-    private MassiveMailerSite site = new MassiveMailerSite();
-    private WebDriverWrapper driver = site.getDriver();
+    private final MassiveMailerSite site = new MassiveMailerSite();
+    private final WebDriverWrapper driver = site.getDriver();
 
     @Given("^User is in the test page$")
     public void userIsInTheTestPage() {

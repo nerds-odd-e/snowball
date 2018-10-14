@@ -34,15 +34,15 @@ public class ContactPerson extends ApplicationModel {
         callbackWith(new LocationCallbacks());
     }
 
-    public Map<String, String> attributes = new HashMap<>();
+    public final Map<String, String> attributes = new HashMap<>();
 
     public static void createContactsFromCSVData(String csvData) {
 
         List<ContactPerson> contacts = prepareContactsList(csvData);
 
-        for (int i = 0; i < contacts.size(); i++) {
+        for (ContactPerson contact1 : contacts) {
             ContactPerson contact;
-            contact = contacts.get(i);
+            contact = contact1;
             contact.saveIt();
         }
     }

@@ -15,7 +15,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import javax.servlet.ServletException;
 import java.io.IOException;
 
 import static com.odde.massivemailer.factory.ContactFactory.uniqueContact;
@@ -100,7 +99,7 @@ public class ContactsControllerTest {
         assertEquals("contactlist.jsp?status=success&msg=Add contact successfully", response.getRedirectedUrl());
 
         User user = User.findFirst("email = ?", request.getParameter("email"));
-        assertTrue(user != null);
+        assertNotNull(user);
     }
 
     @Test

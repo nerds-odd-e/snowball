@@ -15,15 +15,10 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static com.odde.massivemailer.factory.ContactFactory.uniqueContact;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 
@@ -40,18 +35,11 @@ public class UpcomingCoursesControllerTest {
     private final ContactPerson tokyoContact = uniqueContact().set("city", "Tokyo", "country", "Japan");
     private final ContactPerson noLocContact= uniqueContact();
 
-    private final ArgumentCaptor<Mail> mailArgument = ArgumentCaptor.forClass(Mail.class);
     private final ArgumentCaptor<List<Course>> coursesArgument = ArgumentCaptor.forClass(List.class);
-    private final String linebreak = "<br/>\n";
 
     private UpcomingCoursesController upcomingCoursesController;
 
     private MockHttpServletRequest request;
-
-    LocalDate date = LocalDate.now();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    String text = date.format(formatter);
-    LocalDate parsedDate = LocalDate.parse(text, formatter);
 
     private MockHttpServletResponse response;
     @Mock
@@ -64,7 +52,7 @@ public class UpcomingCoursesControllerTest {
     private Mail mail;
 
     @Before
-    public void setUpMockService() throws IOException {
+    public void setUpMockService() {
         MockitoAnnotations.initMocks(this);
         upcomingCoursesController = new UpcomingCoursesController();
         upcomingCoursesController.setMailService(gmailService);

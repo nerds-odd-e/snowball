@@ -4,16 +4,15 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import cucumber.api.junit.Cucumber;
-import org.junit.runner.RunWith;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
+import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
 
 public class GDPRSteps {
-    private MassiveMailerSite site = new MassiveMailerSite();
-    private WebDriverWrapper driver = site.getDriver();
+    private final MassiveMailerSite site = new MassiveMailerSite();
+    private final WebDriverWrapper driver = site.getDriver();
 
     @Given("^Visit Front page$")
     @When("^I open the main page$")
@@ -38,6 +37,6 @@ public class GDPRSteps {
 
     @And("^Trigger button should exist in page$")
     public void triggerButtonShouldExist() {
-        assertTrue(driver.findElementById("triggerBtn") != null);
+        assertNotNull(driver.findElementById("triggerBtn"));
     }
 }

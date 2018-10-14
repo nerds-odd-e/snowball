@@ -3,10 +3,8 @@ package steps.site.pages;
 import com.odde.massivemailer.model.SentMailVisit;
 import steps.site.MassiveMailerSite;
 
-import java.sql.SQLException;
-
 public class ImagePage {
-    private MassiveMailerSite site;
+    private final MassiveMailerSite site;
 
     public ImagePage(MassiveMailerSite site) {
         this.site = site;

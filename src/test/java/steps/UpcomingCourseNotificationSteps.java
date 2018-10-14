@@ -14,11 +14,11 @@ import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 public class UpcomingCourseNotificationSteps {
-    private MassiveMailerSite site = new MassiveMailerSite();
-    private WebDriverWrapper driver = site.getDriver();
+    private final MassiveMailerSite site = new MassiveMailerSite();
+    private final WebDriverWrapper driver = site.getDriver();
 
     @When("^We create (\\d+) contacts at (.*?), (.*?)$")
-    public void createContactsForLocations(int numberOfContacts, String city, String country) throws Throwable {
+    public void createContactsForLocations(int numberOfContacts, String city, String country) {
         ContactSteps contactTests = new ContactSteps();
         for (int i = 0; i < numberOfContacts; i++) {
             contactTests.addAContact("test@test" + i + city+".com", country + "/"+city);
@@ -26,7 +26,7 @@ public class UpcomingCourseNotificationSteps {
     }
 
     @When("^We create (\\d+) courses at (.*?), (.*?)$")
-    public void createEventsForLocations(int numberOfCourses, String city, String country) throws Throwable {
+    public void createEventsForLocations(int numberOfCourses, String city, String country) {
             EventTests eventTests = new EventTests();
             for (int i = 0; i < numberOfCourses; i++) {
                 eventTests.addCourseWithCountryAndCity("Event " + i + city, country, city, "2017-05-17");

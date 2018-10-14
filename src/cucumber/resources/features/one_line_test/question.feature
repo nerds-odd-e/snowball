@@ -1,4 +1,3 @@
-@nod
 Feature:
   User can take an online test :)
 

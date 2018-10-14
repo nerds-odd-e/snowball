@@ -104,8 +104,8 @@ public class SendMailControllerTest {
         mockRecipient("company:abc");
         String[] companyRecipients = {"ab1@abc.com", "ab2@abc.com", "ab3@abc.com"};
 
-        for (int i = 0; i < companyRecipients.length; ++i) {
-            new ContactPerson().set("email", companyRecipients[i], "company", "abc").saveIt();
+        for (String companyRecipient : companyRecipients) {
+            new ContactPerson().set("email", companyRecipient, "company", "abc").saveIt();
         }
 
         Mail mail = postAndGetMailBeingSent();
@@ -160,13 +160,13 @@ public class SendMailControllerTest {
     }
 
     private class ContactPeopleBuilder {
-        private String company;
+        private final String company;
 
-        public ContactPeopleBuilder(final String company) {
+        ContactPeopleBuilder(final String company) {
             this.company = company;
         }
 
-        public ContactPeopleBuilder add(final String email) {
+        ContactPeopleBuilder add(final String email) {
             new ContactPerson().set("email", email, "company", company).saveIt();
             return this;
         }

@@ -13,7 +13,7 @@ import java.util.List;
 
 public class LocationProviderServiceTest {
 
-    LocationProviderService locationProviderService;
+    private final LocationProviderService locationProviderService;
 
     public LocationProviderServiceTest(){
         locationProviderService = new LocationProviderService();
@@ -56,8 +56,8 @@ public class LocationProviderServiceTest {
         locationProviderService.addLat_LongToMemory("Japan", "Kobe");
         Location storedLocation = locationProviderService.getLocationForName("Japan/Kobe");
         assertNotNull(storedLocation);
-        assertTrue(34.690083 == storedLocation.getLat());
-        assertTrue(135.1955112 == storedLocation.getLng());
+        assertEquals(34.690083, storedLocation.getLat(), 0.0);
+        assertEquals(135.1955112, storedLocation.getLng(), 0.0);
     }
 
     @Test

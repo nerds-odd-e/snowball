@@ -17,9 +17,9 @@ import static org.junit.Assert.assertThat;
 
 public class CourseTests {
 
-    private MassiveMailerSite site = new MassiveMailerSite();
-    private WebDriverWrapper driver = site.getDriver();
-    private String add_course_url = site.baseUrl() + "add_course.jsp";
+    private final MassiveMailerSite site = new MassiveMailerSite();
+    private final WebDriverWrapper driver = site.getDriver();
+    private final String add_course_url = site.baseUrl() + "add_course.jsp";
 
     @Given("^There is a course with below details$")
     public void thereIsACourseWithBelowDetails(DataTable dtCourseDetails) {
@@ -57,7 +57,7 @@ public class CourseTests {
 
     }
 
-    public void addCourseWithLocationAndCourseName(String city, String country, String courseName) {
+    private void addCourseWithLocationAndCourseName(String city, String country, String courseName) {
         HashMap<String, Object> vals = createCourseData(city, country, courseName);
         fill_in_course_data(vals);
         clickSaveCourse();

@@ -14,10 +14,10 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(TestWithDB.class)
 public class EmailHistoryControllerTest {
-    EmailHistoryController emailHistoryController;
-    SentMailFactory sentMailFactory = new SentMailFactory();
-    MockHttpServletRequest req = new MockHttpServletRequest();
-    MockHttpServletResponse res = new MockHttpServletResponse();
+    private EmailHistoryController emailHistoryController;
+    private final SentMailFactory sentMailFactory = new SentMailFactory();
+    private final MockHttpServletRequest req = new MockHttpServletRequest();
+    private final MockHttpServletResponse res = new MockHttpServletResponse();
 
     @Before
     public void setUpMockService() {

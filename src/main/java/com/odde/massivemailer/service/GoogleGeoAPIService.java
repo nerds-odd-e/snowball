@@ -18,7 +18,7 @@ public class GoogleGeoAPIService {
         try {
             return getLocationFromGoogle(country, city);
         } catch (InterruptedException | ApiException | IOException e) {
-            throw(new GeoServiceException(e));
+            throw(new GeoServiceException());
         }
     }
 

@@ -12,18 +12,22 @@ import java.util.stream.Collectors;
 
 @WebServlet("/course/detail")
 public class CourseDetailController extends AppController{
-    public static class CourseDetailDTO {
+    static class CourseDetailDTO {
         static class ParticipantDTO {
-            String email;
-            String name;
+            @SuppressWarnings("unused")
+            final String email;
+            @SuppressWarnings("unused")
+            final String name;
 
             ParticipantDTO(ContactPerson contactPerson) {
                 this.email = contactPerson.getEmail();
                 this.name = contactPerson.getName();
             }
         }
-        String courseName;
-        List<ParticipantDTO> participants;
+        @SuppressWarnings("unused")
+        final String courseName;
+        @SuppressWarnings("unused")
+        final List<ParticipantDTO> participants;
 
         CourseDetailDTO(String courseName, List<ParticipantDTO> participants) {
             this.courseName = courseName;

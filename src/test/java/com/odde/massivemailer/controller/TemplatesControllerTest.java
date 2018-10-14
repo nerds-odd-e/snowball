@@ -15,10 +15,10 @@ import static org.junit.Assert.assertThat;
 @RunWith(TestWithDB.class)
 public class TemplatesControllerTest {
 
-	TemplatesController templateCtrl = new TemplatesController();
+	private final TemplatesController templateCtrl = new TemplatesController();
 
-	MockHttpServletRequest req = new MockHttpServletRequest();
-	MockHttpServletResponse res = new MockHttpServletResponse();
+	private final MockHttpServletRequest req = new MockHttpServletRequest();
+	private final MockHttpServletResponse res = new MockHttpServletResponse();
 
 	@Before
 	public void setUp(){

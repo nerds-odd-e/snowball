@@ -4,7 +4,6 @@ import com.odde.TestWithDB;
 import com.odde.massivemailer.model.Template;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -16,14 +15,7 @@ import java.util.List;
 @RunWith(TestWithDB.class)
 public class TestTemplateService {
 
-    Template template;
-
-    @BeforeClass
-    public static void updateTheDBWithSampleTemplate() {
-        //DBMigrater migrater = new DBMigrater();
-        //migrater.migrate();
-
-    }
+    private Template template;
 
     @Before
     public void setup() {
@@ -42,7 +34,6 @@ public class TestTemplateService {
     @Test
     public void templateMustNotBeNull() {
 
-        Template templateActual = null;
         Assert.assertNotNull(template);
 
     }

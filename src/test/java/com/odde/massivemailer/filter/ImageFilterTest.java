@@ -16,16 +16,13 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletResponse;
 import java.io.IOException;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
 
 @RunWith(TestWithDB.class)
 public class ImageFilterTest {
     private ImageFilter filter;
 
-    private MockHttpServletRequest request = new MockHttpServletRequest();
+    private final MockHttpServletRequest request = new MockHttpServletRequest();
 
     @Mock
     private ServletResponse response;

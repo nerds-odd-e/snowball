@@ -18,17 +18,17 @@ import static org.junit.Assert.*;
 
 public class UserRegisterSteps {
 
-    private MassiveMailerSite site = new MassiveMailerSite();
-    private WebDriverWrapper driver = site.getDriver();
+    private final MassiveMailerSite site = new MassiveMailerSite();
+    private final WebDriverWrapper driver = site.getDriver();
     private SentMail sentMail = null;
 
     @Given("^\"([^\"]*)\" which in \"([^\"]*)\" and \"([^\"]*)\" is a contact already$")
-    public void is_a_contact_already(String email, String country, String city) throws Throwable {
+    public void is_a_contact_already(String email, String country, String city) {
         site.addContactPage().addContact(email, country, city);
     }
 
     @When("^Add A Contact \"([^\"]*)\" at \"([^\"]*)\" and \"([^\"]*)\"$")
-    public void addAContact(String email, String country, String city) throws Throwable {
+    public void addAContact(String email, String country, String city) {
         site.addContactPage().addContact(email, country, city);
     }
 
@@ -43,7 +43,7 @@ public class UserRegisterSteps {
     }
 
     @When("^Admin add a new contact \"([^\"]*)\" with email: \"([^\"]*)\"$")
-    public void admin_add_a_new_contact_with_email(String name, String email) throws Throwable {
+    public void admin_add_a_new_contact_with_email(String name, String email) {
         site.addContactPage().addContact(email, "Japan", "Tokyo");
     }
 
@@ -77,7 +77,7 @@ public class UserRegisterSteps {
     }
 
     @When("^Admin add a new contact \"([^\"]*)\" with invalid email: \"([^\"]*)\"$")
-    public void admin_add_a_new_contact_with_invalid_email(String name, String email) throws Throwable {
+    public void admin_add_a_new_contact_with_invalid_email(String name, String email) {
         site.addContactPage().addContact(email, "Japan", "Tokyo");
     }
 
@@ -103,7 +103,7 @@ public class UserRegisterSteps {
     }
 
     @When("^Admin add a new contact \"([^\"]*)\" with valid email: \"([^\"]*)\"$")
-    public void admin_add_a_new_contact_with_valid_email(String name, String email) throws Throwable {
+    public void admin_add_a_new_contact_with_valid_email(String name, String email) {
         site.addContactPage().addContact(email, "Japan", "Tokyo");
     }
 

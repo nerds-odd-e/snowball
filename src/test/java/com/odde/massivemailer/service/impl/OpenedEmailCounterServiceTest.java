@@ -12,7 +12,7 @@ import java.util.TimeZone;
 import static org.junit.Assert.assertEquals;
 
 public class OpenedEmailCounterServiceTest {
-    long email_id = 123L;
+    private final long email_id = 123L;
 
     @Test
     public void shouldReturnEmptyJasonWhenNobodyOpenedTheEmail() {

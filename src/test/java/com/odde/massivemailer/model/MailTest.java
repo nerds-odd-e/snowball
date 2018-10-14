@@ -11,14 +11,10 @@ import org.junit.runner.RunWith;
 import javax.mail.Message;
 import javax.mail.Session;
 import java.net.InetAddress;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 @RunWith(TestWithDB.class)
 public class MailTest {
@@ -31,7 +27,7 @@ public class MailTest {
 		Mail mail = new Mail();
 		mail.setContent("content");
 		mail.setSubject("subject");
-		mail.setReceipts(Arrays.asList("test@gmail.com"));
+		mail.setReceipts(Collections.singletonList("test@gmail.com"));
 		NotificationUtil.addSentMail(mail);
 
 		List<Message> messages = mail.createMessages(session);
@@ -55,7 +51,7 @@ public class MailTest {
 		mail.setMessageId(System.currentTimeMillis());
 		mail.setContent("content {FirstName}, {Company}");
 		mail.setSubject("subject {LastName} - {Email}");
-		mail.setReceipts(Arrays.asList("test@gmail.com"));
+		mail.setReceipts(Collections.singletonList("test@gmail.com"));
 
 		NotificationUtil.addSentMail(mail);
 
@@ -75,7 +71,7 @@ public class MailTest {
 		Mail mail = new Mail();
 		mail.setContent("content");
 		mail.setSubject("subject");
-		mail.setReceipts(Arrays.asList("test@gmail.com"));
+		mail.setReceipts(Collections.singletonList("test@gmail.com"));
 		NotificationUtil.addSentMail(mail);
 		List<Message> messages = mail.createMessages(session);
 		String[] address = messages.get(0).getFrom()[0].toString().split("<");
@@ -142,7 +138,7 @@ public class MailTest {
         m.setReceipts(receipts);
         MailService service = new MockMailService();
         SentMail sentmail= m.sendMailWith(service);
-        assertEquals(true, sentmail.getId()!=null);
+		assertNotNull(sentmail.getId());
     }
 
 }

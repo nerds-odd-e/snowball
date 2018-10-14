@@ -15,10 +15,10 @@ import static org.junit.Assert.*;
 @RunWith(TestWithDB.class)
 public class UpcomingCourseMailComposerTest {
     @Test
-    public void WithContactInfo() throws Exception {
+    public void WithContactInfo() {
         UpcomingCourseMailComposer composer = new UpcomingCourseMailComposer();
         ContactPerson contact = new ContactPerson();
-        List<Course> courses = new ArrayList<Course>();
+        List<Course> courses = new ArrayList<>();
         Mail mail = composer.createUpcomingCourseMail(contact, courses);
         assertEquals(contact.getEmail(), mail.getReceipts().get(0));
     }

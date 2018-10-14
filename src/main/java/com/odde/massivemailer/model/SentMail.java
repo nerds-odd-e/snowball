@@ -10,7 +10,7 @@ public class SentMail extends ApplicationModel {
 
     private List<SentMailVisit> sentMailVisits;
 
-    public Date getSentDate() {
+    private Date getSentDate() {
         return (Date) get("sent_at");
     }
 
@@ -80,7 +80,7 @@ public class SentMail extends ApplicationModel {
 
 
     public String extract() {
-        ArrayList<String> sarray = new ArrayList<String>();
+        ArrayList<String> sarray = new ArrayList<>();
         int count = 0;
         for (SentMailVisit detail : getSentMailVisits()) {
             count += detail.getReadCount();

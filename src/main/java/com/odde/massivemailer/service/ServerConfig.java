@@ -4,7 +4,7 @@ public class ServerConfig {
     private final String host;
     private final int port;
 
-    public ServerConfig(String host, int port) {
+    private ServerConfig(String host, int port) {
         this.host = host;
         this.port = port;
     }

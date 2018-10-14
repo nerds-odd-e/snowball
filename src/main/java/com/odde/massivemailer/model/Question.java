@@ -15,8 +15,6 @@ public class Question extends ApplicationModel {
     private static final String DESCRIPTION = "description";
     private static final String ADVICE = "advice";
 
-    public Map<String, String> attributes = new HashMap<>();
-
     static {
         validatePresenceOf("description");
         callbackWith(new QuestionCallbacks());
@@ -27,28 +25,9 @@ public class Question extends ApplicationModel {
         return ids.stream().map(Model::getLongId);
     }
 
-    static Stream<Long> getNQuestions(int count) {
-        LazyList<Model> ids = findBySQL("SELECT id FROM questions LIMIT ?", count);
-        return ids.stream().map(Model::getLongId);
-    }
-
     static Question getById(Long questionId) {
         LazyList<Question> question = where("id = ?", questionId);
         return question.stream().findFirst().orElseThrow(() -> new IllegalArgumentException("No question found by given id."));
-    }
-
-    static Question createWithOptions(String description, String advice, List<AnswerOption> answerOptions) {
-        if(answerOptions == null || answerOptions.size()<2) {
-            throw new IllegalArgumentException("Question should have at least two options.");
-        }
-
-        if(answerOptions.stream().filter(AnswerOption::isCorrect).count() != 1) {
-            throw new IllegalArgumentException("Question should have exactly one correct answer option");
-        }
-
-        Question question = Question.createIt(DESCRIPTION, description, ADVICE, advice);
-        answerOptions.forEach(option -> option.addToQuestion(question.getLongId()));
-        return question;
     }
 
     public String getDescription() {
@@ -57,14 +36,6 @@ public class Question extends ApplicationModel {
 
     public String getAdvice() {
         return getString(ADVICE);
-    }
-
-    public void setDescription(String description) {
-        setAttribute(DESCRIPTION, description);
-    }
-
-    public void setAdvice(String advice) {
-        setAttribute(ADVICE, advice);
     }
 
     public Collection<AnswerOption> getOptions() {
@@ -81,11 +52,6 @@ public class Question extends ApplicationModel {
         Collection<AnswerOption> optionsByQuestionId = getOptions();
         Optional<AnswerOption> correctId = optionsByQuestionId.stream().filter(AnswerOption::isCorrect).findFirst();
         return correctId.map(answerOption -> answerOption.getLongId().toString()).orElse(StringUtils.EMPTY);
-    }
-
-    private void setAttribute(String name, String value) {
-        attributes.put(name, value);
-        set(name.toLowerCase(), value);
     }
 
     @Override

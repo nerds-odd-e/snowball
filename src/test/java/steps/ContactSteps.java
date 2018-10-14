@@ -1,35 +1,28 @@
 package steps;
 
-import com.odde.massivemailer.model.ContactPerson;
-import cucumber.api.DataTable;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import steps.driver.UiElement;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
-
-import java.io.File;
-import java.io.PrintWriter;
-import java.util.List;
 
 import static org.junit.Assert.*;
 
 
 public class ContactSteps {
 
-    private MassiveMailerSite site = new MassiveMailerSite();
-    private WebDriverWrapper driver = site.getDriver();
+    private final MassiveMailerSite site = new MassiveMailerSite();
+    private final WebDriverWrapper driver = site.getDriver();
 
     @When("^Add A Contact \"([^\"]*)\" at \"([^\"]*)\"$")
-    public void addAContact(String email, String location) throws Throwable {
+    public void addAContact(String email, String location) {
         site.addContactPage().addContactWithLocationString(email, location);
     }
 
     @When("^Add A Contact \"([^\"]*)\" at \"([^\"]*)\" and \"([^\"]*)\" for \"([^\"]*)\", \"([^\"]*)\" from \"([^\"]*)\"$")
-    public void addAContactWithAllInputs(String email, String country, String city, String name, String lastName, String company) throws Throwable {
+    public void addAContactWithAllInputs(String email, String country, String city, String name, String lastName, String company) {
         site.addContactPage().addContactWithAllInput(email, country, city, name, lastName, company);
     }
 
@@ -129,7 +122,7 @@ public class ContactSteps {
     }
 
     @When("^I add the contact whose name is \"([^\"]*)\" and lastname is \"([^\"]*)\" and company is \"([^\"]*)\" and email is \"([^\"]*)\" and location is \"([^\"]*)\" and \"([^\"]*)\"$")
-    public void iAddTheContactWhoseNameIsAndLastnameIsAndCompanyIsAndEmailIsAndLocationIsAnd(String name, String lastname, String company, String email, String country, String city) throws Throwable {
+    public void iAddTheContactWhoseNameIsAndLastnameIsAndCompanyIsAndEmailIsAndLocationIsAnd(String name, String lastname, String company, String email, String country, String city) {
         assertNotNull(name);
         assertNotNull(lastname);
         assertNotNull(company);

@@ -22,7 +22,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.*;
 
 public class WebDriverWrapper {
-    private WebDriver driver;
+    private final WebDriver driver;
 
     public Optional<String> executeJavaScript(String script) {
         return Optional.ofNullable(((JavascriptExecutor) driver).executeScript(script))
@@ -68,13 +68,14 @@ public class WebDriverWrapper {
     }
 
     public void isAtURL(String url) {
-        assertTrue(driver.getCurrentUrl().equals(url));
+        assertEquals(driver.getCurrentUrl(), url);
     }
 
     public String getCurrentUrl() {
         return driver.getCurrentUrl();
     }
 
+    @SuppressWarnings("WeakerAccess")
     public UiElement findElementByName(String name) {
         return new SeleniumWebElement(driver.findElement(By.name(name)));
     }
@@ -176,14 +177,12 @@ public class WebDriverWrapper {
         return getWebElementStreamOfParents(selector)
                 .filter(e-> e.getText().equals(text))
                 .findFirst()
-                .orElseThrow(() -> {
-                    return new AssertionError(
-                            String.format("Can not find element with selector `%s` and text `%s`, but found %s",
-                                    selector,
-                                    text,
-                                    getWebElementStreamOfParents(selector).map(e->e.getText()).collect(Collectors.joining( "," ) )
-                                    ));
-                })
+                .orElseThrow(() -> new AssertionError(
+                        String.format("Can not find element with selector `%s` and text `%s`, but found %s",
+                                selector,
+                                text,
+                                getWebElementStreamOfParents(selector).map(WebElement::getText).collect(Collectors.joining( "," ) )
+                                )))
                 .findElement(By.cssSelector(selector));
     }
 

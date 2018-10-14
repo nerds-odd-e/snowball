@@ -4,13 +4,11 @@ import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.Mail;
 
 import javax.mail.*;
-import javax.mail.search.FlagTerm;
-import java.util.Arrays;
 import java.util.List;
 
 public class GMailService implements MailService {
 
-    private MailConfiguration mailConfig;
+    private final MailConfiguration mailConfig;
     public final Session session;
 
     public GMailService(MailConfiguration config, Session session) {

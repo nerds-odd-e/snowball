@@ -8,7 +8,6 @@ import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import javax.servlet.ServletException;
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
@@ -35,13 +34,13 @@ public class AdviceControllerTest {
     }
 
     @Test
-    public void shouldNotRemoveQuizFromSessionAttributes() throws ServletException, IOException {
+    public void shouldNotRemoveQuizFromSessionAttributes() throws IOException {
         controller.doPost(request, response);
         assertNotNull(request.getSession().getAttribute("quiz"));
     }
 
     @Test
-    public void shouldNotChangeCorectlyAnsweredCountFromSessionAttributes() throws ServletException, IOException {
+    public void shouldNotChangeCorectlyAnsweredCountFromSessionAttributes() throws IOException {
         controller.doPost(request,response);
         int correctlyAnsweredCount = (Integer)request.getSession().getAttribute("correctlyAnsweredCount");
         assertEquals(CORRECTLY_ANSWERED_QUESTIONS, correctlyAnsweredCount);

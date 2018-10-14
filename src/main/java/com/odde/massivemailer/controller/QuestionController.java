@@ -14,8 +14,6 @@ import java.io.IOException;
 @WebServlet("/question")
 public class QuestionController extends AppController {
 
-    public static final int MAX_QUESTION_COUNT = 10;
-
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.sendRedirect("question.jsp");
     }

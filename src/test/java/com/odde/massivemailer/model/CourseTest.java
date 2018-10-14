@@ -24,7 +24,7 @@ public class CourseTest {
     private static Course usaCourse;
 
     @Before
-    public void Setup()throws Exception{
+    public void Setup() {
         map = new HashMap<String, Object>();
         map.put("coursename", "Scrum");
         map.put("country", "country");
@@ -79,7 +79,7 @@ public class CourseTest {
         assertEquals(klCourse, courses.get(1));
     }
 
-    private void GivenIhaveThreeCourcesInSG_Kl_USA() throws Exception {
+    private void GivenIhaveThreeCourcesInSG_Kl_USA() {
         sgCourse = CreateCourseInDB("Singapore","Singapore", "Stanly");
         klCourse = CreateCourseInDB("Kula Lumpur","Malaysia", "Terry");
         usaCourse = CreateCourseInDB("New York","America", "Kim");

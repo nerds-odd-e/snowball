@@ -54,7 +54,7 @@ public class AppController extends HttpServlet {
 
     protected void respondWithRedirectAndError(HttpServletResponse resp, String page, Errors errors) throws IOException {
         respondWithRedirectAndErrorMessage(resp, page,
-                errors.toString().replaceAll("\\=\\<", ":\"").replaceAll("\\>", "\""));
+                errors.toString().replaceAll("=<", ":\"").replaceAll(">", "\""));
     }
 
     protected User getCurrentUser(HttpServletRequest request) {
@@ -68,9 +68,7 @@ public class AppController extends HttpServlet {
         Cookie[] cookies = request.getCookies();
         if (!ArrayUtils.isEmpty(cookies)) {
             Optional<Cookie> sessionCookie = Stream.of(cookies).filter(cookie -> "session_id".equals(cookie.getName())).findFirst();
-            sessionCookie.ifPresent(cookie -> {
-                email[0] = cookie.getValue();
-            });
+            sessionCookie.ifPresent(cookie -> email[0] = cookie.getValue());
         }
         return email[0];
     }

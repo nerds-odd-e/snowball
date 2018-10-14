@@ -90,7 +90,7 @@ public class LocationProviderService {
     }
 
     public void cacheLocation(String city, String country, String location) {
-        Location storedLocation = null;
+        Location storedLocation;
         try {
             storedLocation = getLocationForName(location);
             if (storedLocation == null) {
