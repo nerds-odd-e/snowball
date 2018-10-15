@@ -7,18 +7,18 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Contact List</title>
 <!-- Bootstrap Core CSS -->
-<link href="resources/lib/bootstrap/css/bootstrap.min.css"
+<link href="/resources/lib/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
 
 <!-- Custom CSS -->
-<link href="resources/lib/bootstrap/css/sb-admin.css" rel="stylesheet">
+<link href="/resources/lib/bootstrap/css/sb-admin.css" rel="stylesheet">
 
-<link href="resources/lib/bootstrap/css/plugins/morris.css"
+<link href="/resources/lib/bootstrap/css/plugins/morris.css"
 	rel="stylesheet">
 
 <!-- Custom Fonts -->
 <link
-	href="resources/lib/bootstrap/font-awesome/css/font-awesome.min.css"
+	href="/resources/lib/bootstrap/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -33,7 +33,7 @@
                         class="icon-bar"></span> <span class="icon-bar"></span> <span
                         class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Massive Mailer</a>
+                <a class="navbar-brand" href="/index.html">Massive Mailer</a>
             </div>
         <!-- /.navbar-collapse -->
         </nav>

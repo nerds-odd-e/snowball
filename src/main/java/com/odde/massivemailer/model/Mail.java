@@ -89,7 +89,7 @@ public class Mail {
 
             InetAddress ip = InetAddress.getLocalHost();
 
-            String messageContent = "<html><body>" + content + "<img height=\"42\" width=\"42\" src=\"http://" + ip.getHostAddress() + ":8070/massive_mailer/resources/images/qrcode.png?token=" + sentMailVisit.getId() + "\"></img></body></html>";
+            String messageContent = "<html><body>" + content + "<img height=\"42\" width=\"42\" src=\"http://" + ip.getHostAddress() + ":8070/resources/images/qrcode.png?token=" + sentMailVisit.getId() + "\"></img></body></html>";
             message.setText(messageContent);
             message.setContent(messageContent, "text/html; charset=utf-8");
 

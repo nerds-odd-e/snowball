@@ -6,18 +6,18 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Contact List</title>
 <!-- Bootstrap Core CSS -->
-<link href="resources/lib/bootstrap/css/bootstrap.min.css"
+<link href="/resources/lib/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
 
 <!-- Custom CSS -->
-<link href="resources/lib/bootstrap/css/sb-admin.css" rel="stylesheet">
+<link href="/resources/lib/bootstrap/css/sb-admin.css" rel="stylesheet">
 
-<link href="resources/lib/bootstrap/css/plugins/morris.css"
+<link href="/resources/lib/bootstrap/css/plugins/morris.css"
 	rel="stylesheet">
 
 <!-- Custom Fonts -->
 <link
-	href="resources/lib/bootstrap/font-awesome/css/font-awesome.min.css"
+	href="/resources/lib/bootstrap/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -33,7 +33,7 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="index.html">Massive Mailer</a>
+			<a class="navbar-brand" href="/index.html">Massive Mailer</a>
 		</div>
 		<!-- Top Menu Items -->
 		<ul class="nav navbar-right top-nav">
@@ -52,13 +52,13 @@
 		<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
 		<div class="collapse navbar-collapse navbar-ex1-collapse">
 			<ul class="nav navbar-nav side-nav">
-				<li><a href="sendemail.jsp"><span
+				<li><a href="/sendemail.jsp"><span
 						class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
 						Send Mail</a></li>
-				<li class="active"><a href="add_contact.jsp"><span
+				<li class="active"><a href="/add_contact.jsp"><span
 						class="glyphicon glyphicon-user" aria-hidden="true"></span> Add
 						Contact</a></li>
-				<li><a href="contactlist.jsp"><span
+				<li><a href="/contactlist.jsp"><span
 						class="glyphicon glyphicon-user" aria-hidden="true"></span>
 						Contact List</a></li>
 			</ul>

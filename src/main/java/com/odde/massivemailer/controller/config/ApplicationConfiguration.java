@@ -9,7 +9,7 @@ public class ApplicationConfiguration implements Serializable {
     public String getRoot() {
         String env = System.getProperty("active_env");
         if ("test".equals(env))
-            return "http://localhost:8060/massive_mailer/";
-        return "http://localhost:8070/massive_mailer/";
+            return "http://localhost:8060/";
+        return "http://localhost:8070/";
     }
 }

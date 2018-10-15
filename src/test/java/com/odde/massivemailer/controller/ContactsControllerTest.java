@@ -116,6 +116,6 @@ public class ContactsControllerTest {
 		verify(gmailService).send(mailCaptor.capture());
 		Mail mail = mailCaptor.getValue();
 
-        assertThat(mail.getContent(), containsString("http://localhost:8070/massive_mailer/initialPassword?token="));
+        assertThat(mail.getContent(), containsString("http://localhost:8070/initialPassword?token="));
     }
 }

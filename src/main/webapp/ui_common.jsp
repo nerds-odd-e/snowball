@@ -10,44 +10,44 @@
                     class="icon-bar"></span> <span class="icon-bar"></span> <span
                     class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html">Massive Mailer</a>
+            <a class="navbar-brand" href="/index.html">Massive Mailer</a>
         </div>
         <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav side-nav">
-                <li><a href="sendemail.jsp"><span
+                <li><a href="/sendemail.jsp"><span
                         class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         Edit Template</a></li>
-                <li><a href="contactlist.jsp"><span
+                <li><a href="/contactlist.jsp"><span
                         class="glyphicon glyphicon-user" aria-hidden="true"></span>
                         Contact List</a></li>
-                <ul><li><a href="add_contact.jsp"><span
+                <ul><li><a href="/add_contact.jsp"><span
                                         class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add
                                         Contact</a></li>
-                      <li><a href="add_contact_batch.jsp"><span
+                      <li><a href="/add_contact_batch.jsp"><span
                                                               class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add
                                                               Contact Batch</a></li>
                                         </ul>
 
-                <li><a href="course_list.jsp"><span
+                <li><a href="/course_list.jsp"><span
                         class="glyphicon glyphicon-file" aria-hidden="true"></span> Course List
                         </a></li>
-                <ul><li><a href="add_course.jsp"><span
+                <ul><li><a href="/add_course.jsp"><span
                                        class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Course
                                        </a></li></ul>
-                <li><a href="enrollParticipant.jsp"><span
+                <li><a href="/enrollParticipant.jsp"><span
                         class="glyphicon glyphicon-user" aria-hidden="true"></span>
                         Enroll Participant</a></li>
-                <li><a id="emailtracking" href="email_tracking.jsp"><span
+                <li><a id="emailtracking" href="/email_tracking.jsp"><span
                         class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                         Email Tracking</a></li>
-                <li><a href="question_list.jsp"><span
+                <li><a href="/question_list.jsp"><span
                         class="glyphicon glyphicon-file" aria-hidden="true"></span>
                         Question List</a></li>
-                <ul><li><a href="add_question.jsp"><span
+                <ul><li><a href="/add_question.jsp"><span
                                         class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add
                                         Question</a></li></ul>
-                <li><a id="start_test" href="launchQuestion"><span
+                <li><a id="/start_test" href="/launchQuestion"><span
                         class="glyphicon glyphicon-file" aria-hidden="true"></span>
                         Start Test</a></li>
             </ul>

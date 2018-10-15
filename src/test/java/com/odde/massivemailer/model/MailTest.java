@@ -57,7 +57,7 @@ public class MailTest {
 
 		List<Message> messages = mail.createMessages(session);
 
-		assertEquals("<html><body>content TestName, CompanyName<img height=\"42\" width=\"42\" src=\"http://"+ InetAddress.getLocalHost().getHostAddress()+":8070/massive_mailer/resources/images/qrcode.png?token=" + mail.getSentMail().getSentMailVisits().get(0).getId() + "\"></img></body></html>", messages.get(0).getContent());
+		assertEquals("<html><body>content TestName, CompanyName<img height=\"42\" width=\"42\" src=\"http://"+ InetAddress.getLocalHost().getHostAddress()+":8070/resources/images/qrcode.png?token=" + mail.getSentMail().getSentMailVisits().get(0).getId() + "\"></img></body></html>", messages.get(0).getContent());
 		assertEquals("subject LastName - test@gmail.com", messages.get(0).getSubject());
 	}
 
