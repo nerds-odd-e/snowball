@@ -1,26 +1,23 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Login</title>
-<!-- Bootstrap Core CSS -->
-<link href="/resources/lib/bootstrap/css/bootstrap.min.css"
-	rel="stylesheet">
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<!-- Custom CSS -->
-<link href="/resources/lib/bootstrap/css/sb-admin.css" rel="stylesheet">
+<%
+	pageContext.setAttribute("request", request);
+%>
+<c:set var="error_message">
+    <%if("error".equals(request.getParameter("error"))){%>
+        <div class="alert alert-danger">
+            <p>Error!</p>
+        </div>
+    <%}%>
+</c:set>
 
-<link href="/resources/lib/bootstrap/css/plugins/morris.css"
-	rel="stylesheet">
-
-<!-- Custom Fonts -->
-<link
-	href="/resources/lib/bootstrap/font-awesome/css/font-awesome.min.css"
-	rel="stylesheet" type="text/css">
-</head>
-<body>
+<t:basic title="Login">
+    <jsp:attribute name="extra_foot">
+        <script type="text/javascript" src="/resources/js/addContact.js"></script>
+    </jsp:attribute>
+    <jsp:body>
 		<div id="page-wrapper">
 
 			<form name="Initialize-Password" id="initialize-password" method="post"
@@ -37,19 +34,14 @@
 
 					<div class="row">
 						<div class="col-lg-12">
-						    <%if("error".equals(request.getParameter("error"))){%>
-                                <div class="alert alert-danger">
-                                    <p>Error!</p>
-                                </div>
-                            <%}%>
-
+						    ${error_message}
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									<h3 class="panel-title">Initialize Password</h3>
 								</div>
 								<div class="panel-body">
 
-                                    <input type="hidden" class="form-control" name="token" id="token" value=<%=request.getParameter("token")%> >
+                                    <input type="hidden" class="form-control" name="token" id="token" value="${request.getParameter("token")}" >
 									<div class="row">
 										<div class="col-lg-1">Password:</div>
 										<div class="col-lg-11">
@@ -82,12 +74,5 @@
 
 			</form>
 		</div>
-</body>
-<!-- jQuery -->
-<script type="text/javascript"
-	src="resources/lib/bootstrap/js/jquery.js"></script>
-<!-- Bootstrap Core JavaScript -->
-<script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="resources/js/addContact.js"></script>
-<script type="text/javascript" src="resources/js/populateCountriesDropdown.js"></script>
-</html>
+    </jsp:body>
+</t:basic>

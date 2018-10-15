@@ -15,7 +15,7 @@
                       <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
                           <i class='fa fa-info-circle'></i>&nbsp;<b>
                           <span id='email_result'>
-            <%out.println(request.getParameter("status"));%>:<% out.println(request.getParameter("msg"));%>
+            <%out.println(request.getParameter("status"));%> : <% out.println(request.getParameter("msg"));%>
           </span></b></div> </div></div>
         <%
         }

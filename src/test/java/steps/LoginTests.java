@@ -14,6 +14,7 @@ import steps.site.MassiveMailerSite;
 
 import java.util.*;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.*;
 
 public class LoginTests{
@@ -60,7 +61,7 @@ public class LoginTests{
 
     @Then("^Show course list of current user$")
     public void show_course_list_of_current_user() {
-        assertTrue(driver.getCurrentUrl().contains("course_list"));
+        assertThat(driver.getCurrentUrl(), containsString("course_list"));
     }
 
     @Then("^I should move to page with url \"([^\"]*)\"$")
