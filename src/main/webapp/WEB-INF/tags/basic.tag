@@ -35,5 +35,6 @@
 <script type="text/javascript" src="/resources/js/populateCountriesDropdown.js"></script>
 <script type="text/javascript" src="/resources/js/showContact.js"></script>
 <script type="text/javascript" src="/resources/js/showParticipants.js"></script>
+<script type="text/javascript" src="/resources/js/showCourses.js"></script>
 <jsp:invoke fragment="extra_foot"/>
 </html>
