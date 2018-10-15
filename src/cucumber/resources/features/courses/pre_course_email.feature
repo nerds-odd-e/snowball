@@ -1,3 +1,4 @@
+@now
 Feature: send pre-course mail
   As a user I want to send preview mail to admin
 
