@@ -1,4 +1,4 @@
-package com.odde.massivemailer.model;
+package com.odde.massivemailer.model.onlinetest;
 
 import com.odde.TestWithDB;
 import org.junit.Test;

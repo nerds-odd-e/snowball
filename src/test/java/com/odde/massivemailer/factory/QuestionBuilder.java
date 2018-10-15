@@ -1,6 +1,6 @@
 package com.odde.massivemailer.factory;
 
-import com.odde.massivemailer.model.Question;
+import com.odde.massivemailer.model.onlinetest.Question;
 
 public class QuestionBuilder {
     private Question currentQuestion;

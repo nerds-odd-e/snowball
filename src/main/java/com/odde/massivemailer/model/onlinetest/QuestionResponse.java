@@ -1,9 +1,10 @@
-package com.odde.massivemailer.model;
+package com.odde.massivemailer.model.onlinetest;
 
+import com.odde.massivemailer.model.ApplicationModel;
 import org.javalite.activejdbc.annotations.Table;
 
 @Table("question_responses")
-public class QuestionResponse extends ApplicationModel{
+public class QuestionResponse extends ApplicationModel {
 
     private static final String TEST_ID = "test_id";
     private static final String QUESTION_ID = "question_id";

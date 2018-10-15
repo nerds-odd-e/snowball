@@ -1,5 +1,6 @@
-package com.odde.massivemailer.model;
+package com.odde.massivemailer.model.onlinetest;
 
+import com.odde.massivemailer.model.ApplicationModel;
 import com.odde.massivemailer.model.callback.QuestionCallbacks;
 import org.apache.commons.lang3.StringUtils;
 import org.javalite.activejdbc.LazyList;

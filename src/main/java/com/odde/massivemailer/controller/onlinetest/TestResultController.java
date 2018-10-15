@@ -1,7 +1,7 @@
 package com.odde.massivemailer.controller.onlinetest;
 
 import com.odde.massivemailer.controller.AppController;
-import com.odde.massivemailer.model.QuestionResponse;
+import com.odde.massivemailer.model.onlinetest.QuestionResponse;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

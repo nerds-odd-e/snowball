@@ -1,12 +1,13 @@
-package com.odde.massivemailer.model;
+package com.odde.massivemailer.model.onlinetest;
 
+import com.odde.massivemailer.model.ApplicationModel;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.annotations.Table;
 
 import java.util.*;
 
 @Table("options")
-public class AnswerOption extends ApplicationModel{
+public class AnswerOption extends ApplicationModel {
 
     private static final String DESCRIPTION = "description";
     private static final String IS_CORRECT = "is_correct";

@@ -1,9 +1,9 @@
 package com.odde.massivemailer.controller.onlinetest;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.model.AnswerOption;
-import com.odde.massivemailer.model.Question;
-import com.odde.massivemailer.model.Quiz;
+import com.odde.massivemailer.model.onlinetest.AnswerOption;
+import com.odde.massivemailer.model.onlinetest.Question;
+import com.odde.massivemailer.model.onlinetest.Quiz;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package com.odde.massivemailer.model;
+package com.odde.massivemailer.model.onlinetest;
 
 import java.util.List;
 import java.util.NoSuchElementException;

@@ -1,6 +1,7 @@
-package com.odde.massivemailer.model;
+package com.odde.massivemailer.model.onlinetest;
 
 import com.odde.TestWithDB;
+import com.odde.massivemailer.model.onlinetest.Question;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
