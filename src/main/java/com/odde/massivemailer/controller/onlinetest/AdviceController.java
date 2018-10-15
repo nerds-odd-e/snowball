@@ -1,5 +1,6 @@
-package com.odde.massivemailer.controller;
+package com.odde.massivemailer.controller.onlinetest;
 
+import com.odde.massivemailer.controller.AppController;
 import com.odde.massivemailer.model.Quiz;
 
 import javax.servlet.annotation.WebServlet;
@@ -9,7 +10,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet("/advice")
-public class AdviceController extends AppController{
+public class AdviceController extends AppController {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();

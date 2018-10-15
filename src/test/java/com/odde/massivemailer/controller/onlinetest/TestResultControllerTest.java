@@ -1,4 +1,4 @@
-package com.odde.massivemailer.controller;
+package com.odde.massivemailer.controller.onlinetest;
 
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.QuestionResponse;
