@@ -1,28 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Add Event</title>
-<!-- Bootstrap Core CSS -->
-<link href="/resources/lib/bootstrap/css/bootstrap.min.css"
-	rel="stylesheet">
-
-<!-- Custom CSS -->
-<link href="/resources/lib/bootstrap/css/sb-admin.css" rel="stylesheet">
-
-<link href="/resources/lib/bootstrap/css/plugins/morris.css"
-	rel="stylesheet">
-
-<!-- Custom Fonts -->
-<link
-	href="/resources/lib/bootstrap/font-awesome/css/font-awesome.min.css"
-	rel="stylesheet" type="text/css">
-</head>
-<body>
-        <jsp:include page="ui_common.jsp" />
-		<div id="page-wrapper">
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%
+	pageContext.setAttribute("request", request);
+%>
+<t:with_side_menu title="Enroll Participant">
+    <jsp:attribute name="extra_foot">
+        <script type="text/javascript" src="resources/js/enrollParticipant.js"></script>
+    </jsp:attribute>
+    <jsp:body>
 		    <!-- Modal -->
             <div class="modal fade" id="saveStatusModal" tabindex="-1" role="dialog" aria-labelledby="saveStatusModal">
               <div class="modal-dialog" role="document">
@@ -67,7 +52,7 @@
                                                     <select id="courses" class="form-control" name="courseId">
                                                     <option>Select the course</option>
                                                 </select>
-                                              <input type="hidden" id="courseId" name="courseId" value='<%=request.getParameter("courseId")%>'/>
+                                              <input type="hidden" id="courseId" name="courseId" value='${request.getParameter("courseId")}'/>
 
                                             </div>
 										</div>
@@ -91,13 +76,5 @@
 				</div>
 
 			</form>
-		</div>
-</body>
-<!-- jQuery -->
-<script type="text/javascript"
-	src="resources/lib/bootstrap/js/jquery.js"></script>
-<!-- Bootstrap Core JavaScript -->
-<script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="resources/js/enrollParticipant.js"></script>
-<script type="text/javascript" src="resources/js/populateLocationDropdown.js"></script>
-</html>
+    </jsp:body>
+</t:with_side_menu>
