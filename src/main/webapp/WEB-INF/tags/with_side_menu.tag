@@ -5,7 +5,7 @@
 <%@attribute name="extra_foot" fragment="true" %>
 <t:basic title="${title}" extra_head="${extra_head}" extra_foot="${extra_foot}">
     <jsp:body>
-        <jsp:include page="ui_common.jsp" />
+        <jsp:include page="/ui_common.jsp" />
 		<div id="page-wrapper">
             <jsp:doBody/>
 		</div>

@@ -35,7 +35,7 @@ public class LaunchQuestionControllerTest {
             throws Exception {
         mockQuestion();
         controller.doGet(request, response);
-        assertEquals("question.jsp", response.getRedirectedUrl());
+        assertEquals("/onlinetest/question.jsp", response.getRedirectedUrl());
     }
 
     @Test

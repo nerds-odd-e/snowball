@@ -19,11 +19,6 @@ public class QuestionStep {
     private final MassiveMailerSite site = new MassiveMailerSite();
     private final WebDriverWrapper driver = site.getDriver();
 
-    @Given("^User is in the test page$")
-    public void userIsInTheTestPage() {
-        site.visit("launchQuestion");
-    }
-
     @Given("^There is a question \"([^\"]*)\"$")
     public void thereIsAQuestion(String questionDescription) {
         new QuestionBuilder()
@@ -44,12 +39,12 @@ public class QuestionStep {
                     .withWrongOption("wrongOption")
                     .withCorrectOption("correctOption")
                     .please();
-        site.visit(String.format("launchQuestion?question_count=%d", n));
+        site.visit(String.format("onlinetest/launchQuestion?question_count=%d", n));
     }
 
     @Given("^User is on the first question$")
     public void user_is_in_the_test_page() {
-        site.visit("launchQuestion");
+        site.visit("onlinetest/launchQuestion");
     }
 
     @Given("^User arrives at advice page$")

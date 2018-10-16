@@ -41,13 +41,13 @@
                 <li><a id="emailtracking" href="/email_tracking.jsp"><span
                         class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                         Email Tracking</a></li>
-                <li><a href="/question_list.jsp"><span
+                <li><a href="/onlinetest/question_list.jsp"><span
                         class="glyphicon glyphicon-file" aria-hidden="true"></span>
                         Question List</a></li>
-                <ul><li><a href="/add_question.jsp"><span
+                <ul><li><a href="/onlinetest/add_question.jsp"><span
                                         class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add
                                         Question</a></li></ul>
-                <li><a id="/start_test" href="/launchQuestion"><span
+                <li><a id="start_test" href="/onlinetest/launchQuestion"><span
                         class="glyphicon glyphicon-file" aria-hidden="true"></span>
                         Start Test</a></li>
             </ul>

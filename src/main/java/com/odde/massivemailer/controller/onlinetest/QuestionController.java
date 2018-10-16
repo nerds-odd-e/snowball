@@ -12,11 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/question")
+@WebServlet("/onlinetest/question")
 public class QuestionController extends AppController {
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.sendRedirect("question.jsp");
+        resp.sendRedirect("/onlinetest/question.jsp");
     }
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -36,14 +36,14 @@ public class QuestionController extends AppController {
         }
 
         req.setAttribute("selectedOption",answeredOptionId);
-        RequestDispatcher dispatch = req.getRequestDispatcher("advice.jsp");
+        RequestDispatcher dispatch = req.getRequestDispatcher("/onlinetest/advice.jsp");
         dispatch.forward(req, resp);
     }
 
     private String getRedirectPageName(boolean moreQuestionsExist) {
-        String redirectPageName = "end_of_test.jsp";
+        String redirectPageName = "/onlinetest/end_of_test.jsp";
         if (moreQuestionsExist) {
-            redirectPageName = "question.jsp";
+            redirectPageName = "/onlinetest/question.jsp";
         }
         return redirectPageName;
     }

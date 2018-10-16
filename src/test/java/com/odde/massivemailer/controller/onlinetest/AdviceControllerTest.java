@@ -53,7 +53,7 @@ public class AdviceControllerTest {
         request.getSession().setAttribute("quiz", quiz);
 
         controller.doPost(request, response);
-        assertEquals("question.jsp", response.getRedirectedUrl());
+        assertEquals("/onlinetest/question.jsp", response.getRedirectedUrl());
     }
 
     @Test
@@ -63,7 +63,7 @@ public class AdviceControllerTest {
         request.getSession().setAttribute("quiz", quiz);
 
         controller.doPost(request, response);
-        assertEquals("end_of_test.jsp", response.getRedirectedUrl());
+        assertEquals("/onlinetest/end_of_test.jsp", response.getRedirectedUrl());
     }
 
 }

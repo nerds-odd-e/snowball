@@ -1,4 +1,3 @@
-@now
 Feature: User Confirmation
   After admin add a new Contact, a new user confirmation is created.
   The new user could set initial password for login,

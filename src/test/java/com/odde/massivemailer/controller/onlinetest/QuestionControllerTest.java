@@ -60,7 +60,7 @@ public class QuestionControllerTest {
     @Test
     public void showQuestionPage() throws Exception {
         controller.doGet(request,response);
-        assertEquals("question.jsp", response.getRedirectedUrl());
+        assertEquals("/onlinetest/question.jsp", response.getRedirectedUrl());
     }
 
     @Test
@@ -74,7 +74,7 @@ public class QuestionControllerTest {
         request.addParameter("optionId", optionId);
 
         controller.doPost(request,response);
-        assertEquals("question.jsp", response.getRedirectedUrl());
+        assertEquals("/onlinetest/question.jsp", response.getRedirectedUrl());
     }
 
     @Test
@@ -87,7 +87,7 @@ public class QuestionControllerTest {
         request.addParameter("optionId", optionId);
 
         controller.doPost(request,response);
-        assertEquals("end_of_test.jsp", response.getRedirectedUrl());
+        assertEquals("/onlinetest/end_of_test.jsp", response.getRedirectedUrl());
     }
 
     @Test
@@ -120,7 +120,7 @@ public class QuestionControllerTest {
         request.getSession().setAttribute("correctlyAnsweredCount", 3);
 
         controller.doPost(request, response);
-        assertEquals("question.jsp", response.getRedirectedUrl());
+        assertEquals("/onlinetest/question.jsp", response.getRedirectedUrl());
         HttpSession session = request.getSession();
         assertEquals(4, (int) session.getAttribute("correctlyAnsweredCount"));
     }
@@ -134,7 +134,7 @@ public class QuestionControllerTest {
         request.getSession().setAttribute("correctlyAnsweredCount", 3);
 
         controller.doPost(request, response);
-        assertEquals("end_of_test.jsp", response.getRedirectedUrl());
+        assertEquals("/onlinetest/end_of_test.jsp", response.getRedirectedUrl());
         HttpSession session = request.getSession();
         assertEquals(4, (int) session.getAttribute("correctlyAnsweredCount"));
     }
@@ -148,7 +148,7 @@ public class QuestionControllerTest {
         request.getSession().setAttribute("correctlyAnsweredCount", 3);
 
         controller.doPost(request, response);
-        assertEquals("advice.jsp", response.getForwardedUrl());
+        assertEquals("/onlinetest/advice.jsp", response.getForwardedUrl());
         HttpSession session = request.getSession();
         assertEquals(3, (int) session.getAttribute("correctlyAnsweredCount"));
     }
@@ -162,7 +162,7 @@ public class QuestionControllerTest {
         request.getSession().setAttribute("correctlyAnsweredCount", 3);
 
         controller.doPost(request, response);
-        assertEquals("advice.jsp", response.getForwardedUrl());
+        assertEquals("/onlinetest/advice.jsp", response.getForwardedUrl());
         HttpSession session = request.getSession();
         assertEquals(3, (int) session.getAttribute("correctlyAnsweredCount"));
     }

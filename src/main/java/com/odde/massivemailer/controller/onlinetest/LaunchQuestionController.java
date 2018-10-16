@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/launchQuestion")
+@WebServlet("/onlinetest/launchQuestion")
 public class LaunchQuestionController extends AppController {
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -22,7 +22,7 @@ public class LaunchQuestionController extends AppController {
         session.setAttribute("answeredCount", 0);
         session.setAttribute("correctlyAnsweredCount", 0);
         session.setAttribute("quiz", quiz);
-        resp.sendRedirect("question.jsp");
+        resp.sendRedirect("/onlinetest/question.jsp");
     }
 
     private int getQuestionCount(HttpServletRequest req) {

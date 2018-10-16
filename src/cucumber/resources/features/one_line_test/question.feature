@@ -25,7 +25,7 @@ Feature:
 
   Scenario Outline: advice page should include clear feedback
     Given There is a question "What is scrum?"
-    And User is in the test page
+    And User is on the first question
     When User chooses the "<incorrect option>" answer
     And User clicks the answer button
     Then User should see "correct" option highlighted and text "None of the above"
