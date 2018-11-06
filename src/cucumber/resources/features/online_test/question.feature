@@ -65,6 +65,7 @@ Feature:
     Then "End Of Test" should be shown
 
   @developing
+  @now
   Scenario Outline: 最後の問題が終わったらFinal Scoreを表示する
     Given 問題が<number_of_questions>問ある時
     And ユーザーが<number_of_correct>問正解したら

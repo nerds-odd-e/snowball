@@ -180,4 +180,21 @@ public class QuestionControllerTest {
         HttpSession session = request.getSession();
         assertNull(session.getAttribute("options"));
     }
+
+    @Test
+    public void doPostAtLastQuestionWithTestIdInSession() throws ServletException, IOException {
+        // given
+        Collection<AnswerOption> options = question.getOptions();
+        Optional<AnswerOption> correctId = options.stream().filter(AnswerOption::isCorrect).findFirst();
+        String optionId = correctId.isPresent() ? correctId.get().getId().toString() : StringUtils.EMPTY;
+        request.addParameter("optionId", optionId);
+        request.getSession().setAttribute("correctlyAnsweredCount", 3);
+        // when
+        controller.doPost(request, response);
+        Integer totalScore = (Integer)request.getAttribute("totalScore");
+        // then
+        assertEquals(new Integer(4), totalScore);
+
+    }
+
 }

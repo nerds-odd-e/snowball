@@ -32,6 +32,7 @@ public class QuestionController extends AppController {
             correctlyAnsweredCount++;
             session.setAttribute("correctlyAnsweredCount", correctlyAnsweredCount);
             resp.sendRedirect(getRedirectPageName(quiz.hasNextQuestion()));
+            req.setAttribute("totalScore", correctlyAnsweredCount);
             return;
         }
 
