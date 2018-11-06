@@ -112,6 +112,11 @@ public class QuestionStep {
         driver.expectRadioButtonWithText(questionMap.get("option5"));
     }
 
+    @Then("^User sees the question progress as \"([^\"]*)\"$")
+    public void user_sees_the_question_progress_as(String progress) throws Throwable {
+        driver.expectElementWithIdToContainText("progress", progress);
+    }
+
     @Then("^It should move to \"([^\"]*)\" page$")
     public void move_to_page(String redirected_page) {
         driver.pageShouldContain(redirected_page);

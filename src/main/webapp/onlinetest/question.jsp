@@ -32,6 +32,9 @@
                 <div class="col-lg-12">
                     <input type="submit" id="answer" value="Answer">
                 </div>
+                <div id="progress">
+                    "1/3"
+                </div>
             </div>
             </form>
         </div>

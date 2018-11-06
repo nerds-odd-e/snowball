@@ -12,6 +12,13 @@ Feature:
       | option4     | Scrum is Sumo     |
       | option5     | None of the above |
 
+  Scenario: Displaying the question progress
+    Given There is a question "What is scrum?"
+    And There is a question "What is Scrum Master?"
+    And There is a question "What is Product Owner?"
+    And User is on the first question
+    Then User sees the question progress as "1/3"
+
   Scenario Outline: User navigates to advice or next question page
     Given User is taking a quiz with 2 questions
     And User is on the first question
