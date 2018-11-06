@@ -182,4 +182,46 @@ public class QuestionStep {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }
+
+    @Given("^既に「スクラムにある役割は何がありますか？」という複数選択回答の問題がある$")
+    public void 既に_スクラムにある役割は何がありますか_という複数選択回答の問題がある() throws Throwable {
+//        new QuestionBuilder()
+//                .aQuestion("スクラムにある役割は何がありますか？", "スクラムにはPO,SM,チームがあります。")
+//                .withWrongOption("社長")
+//                .withWrongOption("CTO")
+//                .withCorrectOption("PO")
+//                .withCorrectOption("SM")
+//                .withCorrectOption("チーム")
+//                .please();        // Write code here that turns the phrase above into concrete actions
+    }
+
+    @When("^複数選択回答の問題が選ばれる$")
+    public void 複数選択回答の問題が選ばれる() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        site.visit("onlinetest/launchQuestion");
+    }
+
+    @Then("^問題を表示する$")
+    public void 問題を表示する() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        driver.expectElementWithIdToContainValue("answer", "question");
+    }
+
+    @Then("^選択された問題を表示する$")
+    public void 選択された問題を表示する() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        driver.expectElementWithIdToContainText("description", "question");
+    }
+
+    @Then("^選択肢のチェックボックスを表示する$")
+    public void 選択肢のチェックボックスを表示する() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        driver.expectCheckBoxWithText("PO");
+    }
+
+    @Then("^Answerボタンを表示する$")
+    public void answerボタンを表示する() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        driver.expectElementWithIdToContainText("answer", "answer");
+    }
 }

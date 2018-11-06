@@ -193,5 +193,11 @@ public class WebDriverWrapper {
     public void expectRadioButtonWithText(String optionText) {
         getRadioButtonBySelectorAndText("input[type='radio']", optionText);
     }
+
+    public void expectCheckBoxWithText(String optionText) {
+        getRadioButtonBySelectorAndText("input[type='checkbox']", optionText);
+    }
+
+
 }
 
