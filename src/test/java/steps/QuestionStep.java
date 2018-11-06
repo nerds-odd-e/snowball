@@ -168,4 +168,10 @@ public class QuestionStep {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }
+
+    @Then("^分母に(\\d+)が表示される$")
+    public void 分母にが表示される(int arg0) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
 }
