@@ -4,14 +4,14 @@ Feature:
   @developing
   Scenario Outline: Validation
     Given Add Questionを開いている
-    And Descriptionに"<description>" が入力されている
+    And Descriptionに"<description>" を入力する
     And option1に"<op1>"が入力されている
     And option2に"<op2>"が入力されている
     And option3に"<op3>"が入力されている
     And option4に"<op4>"が入力されている
     And option5に"<op5>"が入力されている
     And option6に"<op6>"が入力されている
-    And <selected>のoptionが選択されている
+    And "<selected>"のoptionが選択されている
     And adviceに "<advice>" が入力されている
     When Addボタンを押す
     Then "<messages>"というメッセージが表示される

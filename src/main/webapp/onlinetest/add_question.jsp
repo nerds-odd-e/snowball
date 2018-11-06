@@ -69,6 +69,13 @@
                                             </span>
                                             <input type="text" class="form-control" name="option5" aria-label="Text input with radio button" width="100%">
                                           </div>
+
+                                          <div class="input-group">
+                                            <span class="input-group-addon">
+                                            <input type="radio" id="option6" name="check" value="6" aria-label="Radio button for following text input">
+                                            </span>
+                                            <input type="text" class="form-control" name="option6" aria-label="Text input with radio button" width="100%">
+                                          </div>
                                         </div>
 										<div class="col-lg-11">
 										</div>
