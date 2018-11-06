@@ -9,9 +9,9 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.Color;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
-import org.openqa.selenium.support.Color;
 
 import java.util.List;
 import java.util.Map;
@@ -223,5 +223,36 @@ public class QuestionStep {
     public void answerボタンを表示する() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         driver.expectElementWithIdToContainText("answer", "answer");
+    }
+
+    @Given("^アドミンが質問を２個用意する$")
+    public void アドミンが質問を２個用意する() throws Throwable {
+        new QuestionBuilder()
+                .aQuestion("元気ですか？", "残念です")
+                .withWrongOption("はい")
+                .withWrongOption("いいえ")
+                .withCorrectOption("はい")
+                .please();
+        new QuestionBuilder()
+                .aQuestion("楽しいですか？", "残念です")
+                .withWrongOption("はい")
+                .withWrongOption("いいえ")
+                .withCorrectOption("はい")
+                .please();
+    }
+
+    @When("^ユーザーがブラウザの戻るを実行する$")
+    public void ユーザーがブラウザの戻るを実行する() throws Throwable {
+        this.driver.getNavigate().back();
+    }
+
+    @Then("^質問(\\d+)の画面に遷移する$")
+    public void 質問の画面に遷移する(int arg0) throws Throwable {
+        this.driver.expectElementWithIdToContainValue("numberOfAnsweredQuestions", "2");
+    }
+
+    @Then("^アドバイスページにいる$")
+    public void アドバイスページにいる() throws Throwable {
+        assertEquals("Advice", driver.getCurrentTitle());
     }
 }

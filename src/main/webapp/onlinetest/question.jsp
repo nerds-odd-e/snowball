@@ -32,9 +32,13 @@
                 <div class="col-lg-12">
                     <input type="submit" id="answer" value="Answer">
                 </div>
+<<<<<<< HEAD
                 <div id="progress">
                     ${quiz.getNumberOfAnsweredQuestions()}/${quiz.getNumberOfQuestions()}
                 </div>
+=======
+                <div id="numberOfAnsweredQuestions">${quiz.getNumberOfAnsweredQuestions()}</div>
+>>>>>>> add question back scenario
             </div>
             </form>
         </div>

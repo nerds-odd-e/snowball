@@ -89,3 +89,16 @@ Feature:
     And User answered correctly the 1 th question page
     Then 分母に1が表示される
 
+  @developing
+  Scenario Outline:
+    Given User is taking a quiz with 2 questions
+    And User is on the first question
+    When User chooses the "<incorrect option>" answer
+    And User clicks the answer button
+    Then アドバイスページにいる
+    When ユーザーがブラウザの戻るを実行する
+    Then 質問2の画面に遷移する
+
+    Examples:
+      | incorrect option |
+      | wrongOption      |

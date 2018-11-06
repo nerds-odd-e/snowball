@@ -198,6 +198,8 @@ public class WebDriverWrapper {
         getRadioButtonBySelectorAndText("input[type='checkbox']", optionText);
     }
 
-
+    public WebDriver.Navigation getNavigate() {
+        return this.driver.navigate();
+    }
 }
 
