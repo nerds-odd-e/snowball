@@ -18,6 +18,9 @@
                                     <div class="alert alert-danger" role="alert" id="message">
                                         Advice is over length
                                     </div>
+                                    <div class="alert alert-danger" role="alert" id="message">
+                                        入力が不適切です
+                                    </div>
 									<div class="row">
 										<div class="col-lg-1">Description:</div>
 										<div class="col-lg-11">

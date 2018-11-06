@@ -5,6 +5,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import steps.driver.UiElement;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
@@ -48,9 +49,8 @@ public class AddQuestionSteps {
     }
 
     @Then("^\"([^\"]*)\"というメッセージが表示される$")
-    public void というメッセージが表示される(String arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void というメッセージが表示される(String errorMessage) throws Throwable {
+        driver.expectElementWithIdToContainText("message", errorMessage);
     }
 
     @Given("^(\\d+)のoptionが選択されている$")
