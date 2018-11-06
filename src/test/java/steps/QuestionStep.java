@@ -9,6 +9,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
+import org.openqa.selenium.support.Color;
 
 import java.util.List;
 import java.util.Map;
@@ -119,12 +120,13 @@ public class QuestionStep {
         driver.expectElementWithIdToContainText("title", "End Of Test");
     }
 
-    @Then("^User should see \"([^\"]*)\" option highlighted and text \"([^\"]*)\"$")
-    public void user_should_see_option_highlighted_and_text(String clazz, String text) {
+    @Then("^User should see \"([^\"]*)\" option \"([^\"]*)\" and text \"([^\"]*)\"$")
+    public void user_should_see_option_highlighted_and_text(String clazz, String color, String text) {
         String cssSelector = "." + clazz.replace(" ", ".");
         List<WebElement> elements = driver.findElements(By.cssSelector(cssSelector));
         assertEquals(1, elements.size());
         assertEquals(elements.get(0).getText(), text);
+        assertEquals(elements.get(0).getCssValue("color"), Color.fromString(color).asRgba());
     }
 
     @Then("^User should see \"([^\"]*)\"$")

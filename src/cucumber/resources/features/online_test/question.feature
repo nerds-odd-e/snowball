@@ -27,9 +27,8 @@ Feature:
     Given There is a question "What is scrum?"
     And User is on the first question
     When User chooses the "<incorrect option>" answer
-    And User clicks the answer button
-    Then User should see "correct" option highlighted and text "None of the above"
-    And User should see "selected incorrect" option highlighted and text "<incorrect option>"
+    Then User should see "correct" option "#28a745" and text "None of the above"
+    And User should see "selected incorrect" option "#dc3545" and text "<incorrect option>"
     And User should see "Scrum is a framework for agile development."
 
     Examples:

@@ -19,7 +19,7 @@
 
 <t:basic title="Advice">
     <jsp:attribute name="extra_head">
-        <link href="resources/question.css" rel="stylesheet">
+        <link href="/resources/question.css" rel="stylesheet">
     </jsp:attribute>
     <jsp:body>
 
