@@ -2,6 +2,8 @@ package steps;
 
 import com.odde.massivemailer.factory.QuestionBuilder;
 import cucumber.api.DataTable;
+import cucumber.api.PendingException;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -144,4 +146,21 @@ public class QuestionStep {
         driver.pageShouldContain(currentPage);
     }
 
+    @Given("^問題が(\\d+)問ある時$")
+    public void 問題が問ある時(int totalQuestionCount) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @And("^ユーザーが(\\d+)問正解したら$")
+    public void ユーザーが問正解したら(int arg0) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Then("^\"([^\"]*)\" が表示される$")
+    public void が表示される(String message) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
 }

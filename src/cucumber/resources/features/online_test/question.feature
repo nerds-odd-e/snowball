@@ -56,3 +56,15 @@ Feature:
     And User clicks the answer button
     And User clicks the next button
     Then "End Of Test" should be shown
+
+  @developing
+  Scenario Outline: 最後の問題が終わったらFinal Scoreを表示する
+    Given 問題が<number_of_questions>問ある時
+    And ユーザーが<number_of_correct>問正解したら
+    Then "<message>" が表示される
+
+    Examples:
+      | number_of_questions | number_of_correct | message                             |
+      | 20                  | 20                | 20/20問 あなたの正解率は100%です。あなたはスクラムマスター！ |
+      | 20                  | 17                | 17/20問 あなたの正解率は85%です。あともう少し！        |
+      | 20                  | 16                | 16/20問 あなたの正解率は80%です。基本を学び直しましょう   |

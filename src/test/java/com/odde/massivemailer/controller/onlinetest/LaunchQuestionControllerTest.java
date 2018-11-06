@@ -3,6 +3,7 @@ package com.odde.massivemailer.controller.onlinetest;
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.onlinetest.Question;
 import com.odde.massivemailer.model.onlinetest.Quiz;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,9 +45,12 @@ public class LaunchQuestionControllerTest {
         controller.doGet(request, response);
         Quiz quiz = (Quiz) request.getSession().getAttribute("quiz");
         Integer correctlyAnsweredQuestions = (Integer) request.getSession().getAttribute("correctlyAnsweredCount");
+        String testId = (String) request.getSession().getAttribute("testId");
 
         assertNotNull(quiz);
         assertNotNull(correctlyAnsweredQuestions);
+        assertNotNull(testId);
+        assertTrue(StringUtils.isNotEmpty(testId));
         assertEquals(0, (int) correctlyAnsweredQuestions);
     }
 

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.UUID;
 
 @WebServlet("/onlinetest/launchQuestion")
 public class LaunchQuestionController extends AppController {
@@ -22,6 +23,7 @@ public class LaunchQuestionController extends AppController {
         session.setAttribute("answeredCount", 0);
         session.setAttribute("correctlyAnsweredCount", 0);
         session.setAttribute("quiz", quiz);
+        session.setAttribute("testId", UUID.randomUUID().toString());
         resp.sendRedirect("/onlinetest/question.jsp");
     }
 
