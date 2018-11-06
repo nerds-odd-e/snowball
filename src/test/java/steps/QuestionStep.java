@@ -50,6 +50,14 @@ public class QuestionStep {
         site.visit("onlinetest/launchQuestion");
     }
 
+    @Given("^User is on the second question$")
+    public void user_is_on_the_second_question() throws Throwable {
+        site.visit("onlinetest/launchQuestion");
+        driver.clickRadioButton("None of the above");
+        driver.clickButton("answer");
+        driver.pageShouldContain("Question");
+    }
+
     @Given("^User arrives at advice page$")
     public void user_arrives_at_advice_page() {
         site.visit("question");

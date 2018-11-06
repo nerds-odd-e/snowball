@@ -31,7 +31,7 @@ public class Quiz {
         return questionIds.size()>this.getNumberOfAnsweredQuestions();
     }
 
-    private int getNumberOfAnsweredQuestions() {
+    public int getNumberOfAnsweredQuestions() {
         return this.numberOfAnsweredQuestions;
     }
 
