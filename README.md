@@ -32,7 +32,9 @@ The first four digits are the id of the migration, which will be persisited into
 
 ##### Run development app
 
-`gradle appStart
+Go to the root directory of this project and:
+
+`./gradlew appStart
 
 ##### Run Junit tests
 
