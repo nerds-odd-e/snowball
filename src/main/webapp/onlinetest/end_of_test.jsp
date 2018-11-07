@@ -6,7 +6,7 @@
 
         <div class="container-fluid">
             <h1 id="title">End Of Test</h1>
-            <p id="total-count">${onlineTest.getNumberOfQuestions()}</p>
+            <p id="correct-count">1</p><p id="total-count">${onlineTest.getNumberOfQuestions()}</p>
             <p>
                 Thank you for your hard work.
                 It will be about two hours soon. Why do not you take a break?:)

@@ -262,4 +262,10 @@ public class QuestionStep {
     public void アドバイスページにいる() throws Throwable {
         assertEquals("Advice", driver.getCurrentTitle());
     }
+
+    @Then("^分子に(\\d+)が表示される$")
+    public void 分子にが表示される(int correctCount) throws Throwable {
+        UiElement element = driver.findElementById("correct-count");
+        assertEquals(String.valueOf(correctCount), element.getText());
+    }
 }

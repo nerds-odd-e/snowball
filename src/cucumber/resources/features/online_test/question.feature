@@ -92,6 +92,11 @@ Feature:
       | 1                   |
       | 2                   |
 
+  Scenario: テストの正答数が1問のとき最終ページの分子にnが表示される
+    Given User is taking a onlineTest with 1 questions
+    And  User answered correctly the 1 th question page
+    Then 分子に1が表示される
+
   @developing
   Scenario Outline:
     Given User is taking a onlineTest with 2 questions
