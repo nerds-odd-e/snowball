@@ -92,9 +92,8 @@ public class QuestionControllerTest {
 
     @Test
     public void postIncorrect() throws ServletException, IOException {
-
-        Long optionId = question.getFirstOptionId();
-        request.addParameter("optionId", optionId.toString());
+        String optionId = question.getFirstOptionId().toString();
+        request.addParameter("optionId", optionId);
         controller.doPost(request, response);
         String selectedOption = (String) request.getAttribute("selectedOption");
         assertEquals(optionId, selectedOption);
