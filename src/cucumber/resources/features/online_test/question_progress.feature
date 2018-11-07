@@ -1,4 +1,4 @@
-@now
+
 Feature:
   User can see his progress on the Question and Advice page :)
 
