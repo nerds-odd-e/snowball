@@ -93,9 +93,8 @@ public class QuestionControllerTest {
     @Test
     public void postIncorrect() throws ServletException, IOException {
 
-        Collection<AnswerOption> options = question.getOptions();
-        String optionId = options.stream().findFirst().get().getId().toString();
-        request.addParameter("optionId", optionId);
+        Long optionId = question.getFirstOptionId();
+        request.addParameter("optionId", optionId.toString());
         controller.doPost(request, response);
         String selectedOption = (String) request.getAttribute("selectedOption");
         assertEquals(optionId, selectedOption);
@@ -141,10 +140,8 @@ public class QuestionControllerTest {
 
     @Test
     public void doPostWithIncorrectAnsweredOption() throws ServletException, IOException {
-        Collection<AnswerOption> options = question.getOptions();
-        String optionId = options.stream().findFirst().get().getId().toString();
-
-        request.addParameter("optionId", optionId);
+        Long optionId = question.getFirstOptionId();
+        request.addParameter("optionId", optionId.toString());
         request.getSession().setAttribute("correctlyAnsweredCount", 3);
 
         controller.doPost(request, response);
@@ -155,10 +152,9 @@ public class QuestionControllerTest {
 
     @Test
     public void doPostAtLastQuestionWithIncorrectAnsweredOption() throws ServletException, IOException {
-        Collection<AnswerOption> options = question.getOptions();
-        String optionId = options.stream().findFirst().get().getId().toString();
+        Long optionId = question.getFirstOptionId();
+        request.addParameter("optionId", optionId.toString());
 
-        request.addParameter("optionId", optionId);
         request.getSession().setAttribute("correctlyAnsweredCount", 3);
 
         controller.doPost(request, response);
@@ -169,11 +165,9 @@ public class QuestionControllerTest {
 
     @Test
     public void doPostWithNoOptionsInDatabase() throws ServletException, IOException {
+        Long optionId = question.getFirstOptionId();
+        request.addParameter("optionId", optionId.toString());
 
-        Collection<AnswerOption> options = question.getOptions();
-        String optionId = options.stream().findFirst().get().getId().toString();
-
-        request.addParameter("optionId", optionId);
         request.getSession().setAttribute("correctlyAnsweredCount", 3);
 
         controller.doPost(request, response);

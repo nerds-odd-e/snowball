@@ -26,7 +26,6 @@ Feature:
     And User is on the second question
     Then User sees the question progress as "2/3"
 
-  @developing
   Scenario: Displaying the question progress of advice page ( 2 of 3 )
     Given There is a question "What is scrum?"
     And There is a question "What is Scrum Master?"
