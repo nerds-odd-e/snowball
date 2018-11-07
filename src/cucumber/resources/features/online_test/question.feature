@@ -88,7 +88,7 @@ Feature:
     And User answered correctly the 1 th question page
     Then 分母に1が表示される
 
-  @now
+  @developing
   Scenario Outline:
     Given User is taking a quiz with 2 questions
     And User is on the first question
