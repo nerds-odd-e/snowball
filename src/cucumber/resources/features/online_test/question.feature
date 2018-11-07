@@ -81,12 +81,16 @@ Feature:
       | number_of_questions | number_of_correct | message                             |
       | 20                  | 20                | 20/20問 あなたの正解率は100%です。あなたはスクラムマスター！ |
       | 20                  | 17                | 17/20問 あなたの正解率は85%です。あともう少し！        |
-      | 20                  | 16                | 16/20問 あなたの正解率は80%です。基本を学び直しましょう   |
+      | 20                  | 16                | 16/20問 あなたの正解率は80%です。基本を学び直しましょう    |
 
-  Scenario: テストが全1問のとき最終ページの分母に1が表示される
-    Given User is taking a quiz with 1 questions
-    And User answered correctly the 1 th question page
-    Then 分母に1が表示される
+  Scenario Outline: テストが全n問のとき最終ページの分母にnが表示される
+    Given User is taking a quiz with <number_of_questions> questions
+    And  User answered correctly the <number_of_questions> th question page
+    Then 分母に<number_of_questions>が表示される
+    Examples:
+      | number_of_questions |
+      | 1                   |
+      | 2                   |
 
   @developing
   Scenario Outline:
