@@ -32,7 +32,7 @@ public class QuestionController extends AppController {
         }
 
         if(isCorrectAnswer(onlineTest, answeredOptionId)){
-            onlineTest.getNextQuestion();
+            onlineTest.moveToNextQuestion();
             correctlyAnsweredCount++;
             session.setAttribute("correctlyAnsweredCount", correctlyAnsweredCount);
             resp.sendRedirect(getRedirectPageName(onlineTest.hasNextQuestion()));
@@ -40,7 +40,7 @@ public class QuestionController extends AppController {
             return;
         }
 
-        onlineTest.getNextQuestion();
+        onlineTest.moveToNextQuestion();
         req.setAttribute("selectedOption",answeredOptionId);
         RequestDispatcher dispatch = req.getRequestDispatcher("/onlinetest/advice.jsp");
         dispatch.forward(req, resp);

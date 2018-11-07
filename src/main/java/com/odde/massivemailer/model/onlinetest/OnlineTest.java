@@ -26,13 +26,12 @@ public class OnlineTest {
         if (!hasNextQuestion()) {
             throw new NoSuchElementException("OnlineTest not started");
         }
-        Question question = Question.getById(questionIds.get(numberOfAnsweredQuestions));
-        numberOfAnsweredQuestions++;
+        Question question = Question.getById(questionIds.get(numberOfAnsweredQuestions + 1));
         return question;
     }
 
     public boolean hasNextQuestion() {
-        return questionIds.size()>this.getNumberOfAnsweredQuestions();
+        return questionIds.size() > this.getNumberOfAnsweredQuestions();
     }
 
     public int getNumberOfAnsweredQuestions() {
@@ -45,5 +44,9 @@ public class OnlineTest {
 
     public int getNumberOfQuestions() {
         return (questionIds!=null) ? questionIds.size() : 0;
+    }
+
+    public void moveToNextQuestion() {
+        numberOfAnsweredQuestions++;
     }
 }

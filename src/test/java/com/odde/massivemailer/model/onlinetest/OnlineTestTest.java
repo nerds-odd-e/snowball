@@ -39,7 +39,8 @@ public class OnlineTestTest {
         OnlineTest newOnlineTest = new OnlineTest(5);
         Set<Question> questions = new HashSet<>();
         while(newOnlineTest.hasNextQuestion()) {
-            questions.add(newOnlineTest.getNextQuestion());
+            questions.add(newOnlineTest.getCurrentQuestion());
+            newOnlineTest.moveToNextQuestion();
         }
         assertEquals(5, questions.size());
     }
