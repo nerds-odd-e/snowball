@@ -25,8 +25,8 @@ public class QuestionController extends AppController {
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
         String answeredOptionId = req.getParameter("optionId");
 
-        String numberOfAnsweredQuestionsHiddenId = req.getParameter("numberOfAnsweredQuestionsHidden");
-        if(!numberOfAnsweredQuestionsHiddenId.equals(String.valueOf(onlineTest.getNumberOfAnsweredQuestions()))){
+        String numberOfAnsweredQuestions = req.getParameter("numberOfAnsweredQuestions");
+        if(!numberOfAnsweredQuestions.equals(String.valueOf(onlineTest.getNumberOfAnsweredQuestions()))){
             resp.sendRedirect(getRedirectPageName(onlineTest.hasNextQuestion()));
             return;
         }
