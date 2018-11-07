@@ -105,6 +105,9 @@ Feature:
     And User clicks the answer button
     Then アドバイスページにいる
     When ユーザーがブラウザの戻るを実行する
+    Then 質問1の画面に遷移する
+    When User chooses the "<incorrect option>" answer
+    And User clicks the answer button
     Then 質問2の画面に遷移する
 
     Examples:
