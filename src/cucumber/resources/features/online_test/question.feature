@@ -92,10 +92,15 @@ Feature:
       | 1                   |
       | 2                   |
 
-  Scenario: テストの正答数が1問のとき最終ページの分子にnが表示される
-    Given User is taking a onlineTest with 1 questions
-    And  User answered correctly the 1 th question page
-    Then 分子に1が表示される
+  @now
+  Scenario Outline: テストの正答数が2問のとき最終ページの分子に2が表示される
+    Given User is taking a onlineTest with <number_of_correct> questions
+    And  User answered correctly the <number_of_correct> th question page
+    Then 分子に<number_of_correct>が表示される
+    Examples:
+      | number_of_correct |
+      | 1                 |
+      | 2                 |
 
   @developing
   Scenario Outline:

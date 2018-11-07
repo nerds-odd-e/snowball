@@ -38,4 +38,9 @@ public class OnlineTest {
     public int getNumberOfQuestions() {
         return (questionIds!=null) ? questionIds.size() : 0;
     }
+
+    public boolean isCorrectAnswer(String answeredOptionId) {
+        Question currentQuestion = getCurrentQuestion();
+        return currentQuestion.verifyAnswer(answeredOptionId);
+    }
 }
