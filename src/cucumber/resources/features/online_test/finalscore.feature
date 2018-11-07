@@ -36,6 +36,7 @@ Feature:
       | 1                 |
       | 2                 |
 
+    @now
   Scenario: テストの正答率が50％の時、最終ページの回答率欄に50が表示される
     Given User is taking a onlineTest with 2 questions
     And  User answered correctly the 1 th question page

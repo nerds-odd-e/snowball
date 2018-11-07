@@ -50,7 +50,7 @@ public class OnlineTest {
         numberOfAnsweredQuestions++;
     }
 
-    public int getCorrectPercentage(int correctNumber) {
-        return correctNumber/getNumberOfQuestions() * 100;
+    public int getCorrectPercentage(double correctNumber) {
+        return (int) (correctNumber/getNumberOfQuestions() * 100);
     }
 }
