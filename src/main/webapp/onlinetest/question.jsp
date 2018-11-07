@@ -32,7 +32,7 @@
                 <div class="col-lg-12">
                     <input type="submit" id="answer" value="Answer">
                 </div>
-                <div id="progress">
+                <div style="float:right;" id="progress">
                     <span id="numberOfAnsweredQuestions">${onlineTest.getNumberOfAnsweredQuestions()}</span>/${onlineTest.getNumberOfQuestions()}
                 </div>
             </div>
