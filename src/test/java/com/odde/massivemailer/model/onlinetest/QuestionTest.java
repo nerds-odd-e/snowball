@@ -13,6 +13,7 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(TestWithDB.class)
 public class QuestionTest {
@@ -79,5 +80,21 @@ public class QuestionTest {
         AnswerOption.createIt("description","desc","question_id",question.getLongId(), "is_correct", 0);
 
         question.getOptions().forEach(option -> assertThat(option.getQuestionId(), is(equalTo(expectedQuestionId))));
+    }
+
+    @Test
+    public void shouldIsMultipleChoiceQuestion() {
+        Question question = Question.createIt("description","desc1", "advice","adv1");
+        AnswerOption.createIt("description","desc","question_id",question.getLongId(), "is_correct", 1);
+        AnswerOption.createIt("description","desc","question_id",question.getLongId(), "is_correct", 1);
+        assertEquals(question.getOptionType(),1);
+    }
+
+    @Test
+    public void shouldIsSingleChoiceQuestion() {
+        Question question = Question.createIt("description","desc1", "advice","adv1");
+        AnswerOption.createIt("description","desc","question_id",question.getLongId(), "is_correct", 1);
+        AnswerOption.createIt("description","desc","question_id",question.getLongId(), "is_correct", 0);
+        assertEquals(question.getOptionType(),0);
     }
 }

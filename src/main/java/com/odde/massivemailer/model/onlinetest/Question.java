@@ -81,4 +81,14 @@ public class Question extends ApplicationModel {
         Collection<AnswerOption> options = getOptions();
         return Long.valueOf(options.stream().findFirst().get().getId().toString());
     }
+
+    public int getOptionType() {
+        Collection<AnswerOption> options = getOptions();
+        int correctSize = (int) options.stream().filter(AnswerOption::isCorrect).count();
+        if(correctSize > 1) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 }
