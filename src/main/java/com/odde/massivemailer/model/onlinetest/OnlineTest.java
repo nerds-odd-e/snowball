@@ -39,6 +39,10 @@ public class OnlineTest {
         return this.numberOfAnsweredQuestions;
     }
 
+    public int getCurrentQuestionIndex() {
+        return this.numberOfAnsweredQuestions + 1;
+    }
+
     public int getNumberOfQuestions() {
         return (questionIds!=null) ? questionIds.size() : 0;
     }
