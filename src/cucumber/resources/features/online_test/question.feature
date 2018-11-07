@@ -83,7 +83,6 @@ Feature:
       | 20                  | 17                | 17/20問 あなたの正解率は85%です。あともう少し！        |
       | 20                  | 16                | 16/20問 あなたの正解率は80%です。基本を学び直しましょう   |
 
-  @developing
   Scenario: テストが全1問のとき最終ページの分母に1が表示される
     Given User is taking a quiz with 1 questions
     And User answered correctly the 1 th question page

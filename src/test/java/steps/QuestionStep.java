@@ -10,6 +10,7 @@ import cucumber.api.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.Color;
+import steps.driver.UiElement;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
@@ -178,9 +179,9 @@ public class QuestionStep {
     }
 
     @Then("^分母に(\\d+)が表示される$")
-    public void 分母にが表示される(int arg0) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void 分母にが表示される(int totalCount) throws Throwable {
+        UiElement element = driver.findElementById("total-count");
+        assertEquals("1", element.getText());
     }
 
     @Given("^既に「スクラムにある役割は何がありますか？」という複数選択回答の問題がある$")
