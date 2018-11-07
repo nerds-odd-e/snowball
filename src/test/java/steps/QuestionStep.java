@@ -185,22 +185,28 @@ public class QuestionStep {
     }
 
     @Given("^既に「スクラムにある役割は何がありますか？」という複数選択回答の問題がある$")
-    public void 既に_スクラムにある役割は何がありますか_という複数選択回答の問題がある() throws Throwable {
-//        new QuestionBuilder()
-//                .aQuestion("スクラムにある役割は何がありますか？", "スクラムにはPO,SM,チームがあります。")
-//                .withWrongOption("社長")
-//                .withWrongOption("CTO")
-//                .withCorrectOption("PO")
-//                .withCorrectOption("SM")
-//                .withCorrectOption("チーム")
-//                .please();        // Write code here that turns the phrase above into concrete actions
+    public void 既に_スクラムにある役割は何がありますか_という複数選択回答の問題がある() {
+        new QuestionBuilder()
+                .aQuestion("スクラムにある役割は何がありますか？", "スクラムにはPO,SM,チームがあります。")
+                .withWrongOption("社長")
+                .withWrongOption("CTO")
+                .withCorrectOption("PO")
+                .withCorrectOption("SM")
+                .withCorrectOption("チーム")
+                .please();
     }
 
-    @When("^複数選択回答の問題が選ばれる$")
-    public void 複数選択回答の問題が選ばれる() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
+    @And("^ユーザーの最初の問題です$")
+    public void ユーザーの最初の問題です() {
         site.visit("onlinetest/launchQuestion");
     }
+
+    @Then("^複数選択回答が表示されること$")
+    public void 複数選択回答が表示されること() throws Throwable {
+        int elementCount = driver.findElements(By.cssSelector("input[type=checkbox]")).size();
+        assertEquals(elementCount, 5);
+    }
+
 
     @Then("^問題を表示する$")
     public void 問題を表示する() throws Throwable {
