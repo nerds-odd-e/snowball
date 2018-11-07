@@ -1,7 +1,6 @@
 Feature:
   Admin can add questions
 
-  @now
   @developing
   Scenario: Display Add Question page
     Given Add Questionを開いている

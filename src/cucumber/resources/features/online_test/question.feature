@@ -87,9 +87,7 @@ Feature:
       | 1                 |
       | 2                 |
 
-  @developing
-    @now
-  Scenario Outline:
+  Scenario Outline: 一度アドバイスページから質問ページに戻ってもう一度Answerを押した時に正しい質問ページに遷移する
     Given User is taking a onlineTest with 2 questions
     And User is on the first question
     When User chooses the "<incorrect option>" answer
@@ -99,6 +97,22 @@ Feature:
     Then 質問1の画面に遷移する
     When User chooses the "<incorrect option>" answer
     And User clicks the answer button
+    Then 質問2の画面に遷移する
+
+    Examples:
+      | incorrect option |
+      | wrongOption      |
+
+  Scenario Outline:　一度一つ前のアドバイスページに戻ってもう一度Nextを押した時に正しい質問ページに遷移する
+    Given User is taking a onlineTest with 2 questions
+    And User is on the first question
+    When User chooses the "<incorrect option>" answer
+    And User clicks the answer button
+    Then アドバイスページにいる
+    When User clicks the next button
+    Then 質問2の画面に遷移する
+    When ユーザーがブラウザの戻るを実行する
+    And User clicks the next button
     Then 質問2の画面に遷移する
 
     Examples:
