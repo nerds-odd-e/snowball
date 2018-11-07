@@ -34,7 +34,7 @@
                     <input type="submit" id="answer" value="Answer">
                 </div>
                 <div style="float:right;" id="progress">
-                    <span id="currentQuestionIndex">${onlineTest.getNumberOfAnsweredQuestions()+1}</span>/${onlineTest.getNumberOfQuestions()}
+                    <span id="currentQuestionIndex">${onlineTest.getCurrentQuestionIndex()}</span>/${onlineTest.getNumberOfQuestions()}
                 </div>
             </div>
             </form>

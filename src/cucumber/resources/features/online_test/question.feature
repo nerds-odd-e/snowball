@@ -88,6 +88,7 @@ Feature:
       | 2                 |
 
   @developing
+    @now
   Scenario Outline:
     Given User is taking a onlineTest with 2 questions
     And User is on the first question
