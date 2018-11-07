@@ -26,6 +26,14 @@ Feature:
     And User is on the second question
     Then User sees the question progress as "2/3"
 
+  @developing
+  Scenario: Displaying the question progress of advice page ( 2 of 3 )
+    Given There is a question "What is scrum?"
+    And There is a question "What is Scrum Master?"
+    And There is a question "What is Product Owner?"
+    And User picked the wrong answer on the second question
+    Then User sees the question progress as "2/3"
+
   Scenario Outline: User navigates to advice or next question page
     Given User is taking a onlineTest with 2 questions
     And User is on the first question
