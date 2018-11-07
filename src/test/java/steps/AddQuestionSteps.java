@@ -24,20 +24,20 @@ public class AddQuestionSteps {
         driver.setTextField("description", description);
     }
 
-    @Given("^option(\\d+)に\"([^\"]*)\"が入力されている$")
-    public void option_に_が入力されている(int optionNumber, String optionName) throws Throwable {
+    @Given("^option(\\d+)に\"([^\"]*)\"を入力する$")
+    public void option_に_を入力する(int optionNumber, String optionName) throws Throwable {
         driver.setTextField("option" + optionNumber, optionName);
     }
 
-    @Given("^\"([^\"]*)\"のoptionが選択されている$")
-    public void のoptionが選択されている(String selectedNumber) throws Throwable {
+    @Given("^\"([^\"]*)\"番目のoptionを選択する$")
+    public void 番目のoptionを選択する(String selectedNumber) throws Throwable {
         if (!"".equals(selectedNumber)) {
             driver.clickById("option" + selectedNumber);
         }
     }
 
-    @Given("^adviceに \"([^\"]*)\" が入力されている$")
-    public void adviceに_が入力されている(String advice) throws Throwable {
+    @Given("^adviceに \"([^\"]*)\" を入力する$")
+    public void adviceに_を入力する(String advice) throws Throwable {
         driver.setTextField("advice", advice);
     }
 

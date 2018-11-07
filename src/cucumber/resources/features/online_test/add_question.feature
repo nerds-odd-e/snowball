@@ -1,18 +1,18 @@
 Feature:
   Admin can add questions
-  
+
   @developing
   Scenario Outline: Validation
     Given Add Questionを開いている
     And Descriptionに"<description>" を入力する
-    And option1に"<op1>"が入力されている
-    And option2に"<op2>"が入力されている
-    And option3に"<op3>"が入力されている
-    And option4に"<op4>"が入力されている
-    And option5に"<op5>"が入力されている
-    And option6に"<op6>"が入力されている
-    And "<selected>"のoptionが選択されている
-    And adviceに "<advice>" が入力されている
+    And option1に"<op1>"を入力する
+    And option2に"<op2>"を入力する
+    And option3に"<op3>"を入力する
+    And option4に"<op4>"を入力する
+    And option5に"<op5>"を入力する
+    And option6に"<op6>"を入力する
+    And "<selected>"番目のoptionを選択する
+    And adviceに "<advice>" を入力する
     When Addボタンを押す
     Then "<messages>"というメッセージが表示される
 
