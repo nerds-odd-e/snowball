@@ -49,4 +49,8 @@ public class OnlineTest {
     public void moveToNextQuestion() {
         numberOfAnsweredQuestions++;
     }
+
+    public int getCorrectPercentage(int correctNumber) {
+        return correctNumber/getNumberOfQuestions() * 100;
+    }
 }

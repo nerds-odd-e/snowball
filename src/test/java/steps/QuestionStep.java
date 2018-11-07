@@ -275,4 +275,10 @@ public class QuestionStep {
         UiElement element = driver.findElementById("correct-count");
         assertEquals(String.valueOf(correctCount), element.getText());
     }
+
+    @Then("^正答率に(\\d+)が表示される$")
+    public void 正答率にが表示される(int correctPercentage) throws Throwable {
+        UiElement element = driver.findElementById("correct-percentage");
+        assertEquals(String.valueOf(correctPercentage), element.getText());
+    }
 }
