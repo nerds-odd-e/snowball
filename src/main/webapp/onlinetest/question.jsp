@@ -33,7 +33,7 @@
                     <input type="submit" id="answer" value="Answer">
                 </div>
                 <div id="progress">
-                    <span id="numberOfAnsweredQuestions">${quiz.getNumberOfAnsweredQuestions()+1}</span>/${quiz.getNumberOfQuestions()}
+                    <span id="numberOfAnsweredQuestions">${quiz.getNumberOfAnsweredQuestions()}</span>/${quiz.getNumberOfQuestions()}
                 </div>
             </div>
             </form>
