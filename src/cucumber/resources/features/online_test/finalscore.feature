@@ -36,15 +36,19 @@ Feature:
       | 1                 |
       | 2                 |
 
-    @now
   Scenario: テストの正答率が50％の時、最終ページの回答率欄に50が表示される
     Given User is taking a onlineTest with 2 questions
     And  User answered correctly the 1 th question page
     And  User answered wrong the 1 th question page
     Then 正答率に50が表示される
 
-  Scenario: テストの正答率が0％の時、最終ページの回答率欄に50が表示される
-    Given User is taking a onlineTest with 2 questions
-    And  User answered wrong the 2 th question page
-    Then 正答率に0が表示される
+  Scenario Outline: テストの正答率がn％の時、最終ページの回答率欄にnが表示される
+    Given User is taking a onlineTest with <number_of_question> questions
+    And  User answered correctly the <number_of_correct> th question page
+    And  User answered wrong the <number_of_wrong> th question page
+    Then 正答率に<correct_percentage>が表示される
+    Examples:
+      | number_of_question | number_of_wrong | number_of_correct | correct_percentage |
+      | 2                  | 2               | 0                 | 0                  |
+      | 2                  | 1               | 1                 | 50                 |
 
