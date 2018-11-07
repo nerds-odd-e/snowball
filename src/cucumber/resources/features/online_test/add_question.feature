@@ -1,6 +1,13 @@
 Feature:
   Admin can add questions
 
+  @now
+  @developing
+  Scenario: Display Add Question page
+    Given Add Questionを開いている
+    Then "Invalid inputs found!" というメッセージが表示されていない
+    And "Right answer is not selected!" というメッセージが表示されていない
+
   @developing
   Scenario Outline: Validation
     Given Add Questionを開いている

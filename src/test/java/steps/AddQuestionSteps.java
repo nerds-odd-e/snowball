@@ -9,6 +9,8 @@ import org.openqa.selenium.By;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
+import static org.junit.Assert.assertFalse;
+
 public class AddQuestionSteps {
     private final MassiveMailerSite site = new MassiveMailerSite();
     private final WebDriverWrapper driver = site.getDriver();
@@ -17,6 +19,11 @@ public class AddQuestionSteps {
     public void AddQuestion() {
         site.visit("onlinetest/add_question.jsp");
         driver.pageShouldContain("Add Question");
+    }
+
+    @Then("^\"([^\"]*)\" というメッセージが表示されていない$")
+    public void というメッセージが表示されていない(String errorMessage) throws Throwable {
+        assertFalse(driver.getBodyText().contains(errorMessage));
     }
 
     @Given("^Descriptionに\"([^\"]*)\" を入力する$")
