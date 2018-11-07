@@ -23,10 +23,10 @@ public class QuestionStep {
     private final MassiveMailerSite site = new MassiveMailerSite();
     private final WebDriverWrapper driver = site.getDriver();
 
-    @Given("^There is a question \"([^\"]*)\"$")
-    public void thereIsAQuestion(String questionDescription) {
+    @Given("^Add a question \"([^\"]*)\"$")
+    public void add_a_question(String description) throws Throwable {
         new QuestionBuilder()
-                .aQuestion(questionDescription, "Scrum is a framework for agile development.")
+                .aQuestion(description, "Scrum is a framework for agile development.")
                 .withWrongOption("Scrum is Rugby")
                 .withWrongOption("Scrum is Baseball")
                 .withWrongOption("Scrum is Soccer")

@@ -1,10 +1,11 @@
+@now
 Feature:
   User can see his progress on the Question and Advice page :)
 
   Background:
-    Given There is a question "What is scrum?"
-    And There is a question "What is Scrum Master?"
-    And There is a question "What is Product Owner?"
+    Given Add a question "What is scrum?"
+    And Add a question "What is Scrum Master?"
+    And Add a question "What is Product Owner?"
 
   Scenario: Displaying the question progress ( 1 of 3 )
     And User is on the first question

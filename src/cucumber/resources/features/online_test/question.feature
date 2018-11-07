@@ -2,7 +2,7 @@ Feature:
   User can take an online test :)
 
   Scenario: Displaying the question
-    Given There is a question "What is scrum?"
+    Given Add a question "What is scrum?"
     And User is on the first question
     And User should see a question and options
       | description | What is scrum?    |
@@ -24,7 +24,7 @@ Feature:
       | correctOption   | Question     |
 
   Scenario Outline: advice page should include clear feedback
-    Given There is a question "What is scrum?"
+    Given Add a question "What is scrum?"
     And User is on the first question
     When User chooses the "<incorrect option>" answer
     And User clicks the answer button
@@ -78,7 +78,6 @@ Feature:
       | 1                   |
       | 2                   |
 
-  @now
   Scenario Outline: テストの正答数が2問のとき最終ページの分子に2が表示される
     Given User is taking a onlineTest with <number_of_correct> questions
     And  User answered correctly the <number_of_correct> th question page
