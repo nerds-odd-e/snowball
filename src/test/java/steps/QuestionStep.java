@@ -248,8 +248,8 @@ public class QuestionStep {
     }
 
     @Then("^質問(\\d+)の画面に遷移する$")
-    public void 質問の画面に遷移する(int arg0) throws Throwable {
-        this.driver.expectElementWithIdToContainValue("numberOfAnsweredQuestions", "2");
+    public void 質問の画面に遷移する(int qustionNumber) throws Throwable {
+        this.driver.expectElementWithIdToContainValue("numberOfAnsweredQuestions", String.valueOf(qustionNumber));
     }
 
     @Then("^アドバイスページにいる$")
