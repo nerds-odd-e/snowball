@@ -2,13 +2,13 @@
 	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<%@ page import="com.odde.massivemailer.model.onlinetest.Quiz" %>
+<%@ page import="com.odde.massivemailer.model.onlinetest.OnlineTest" %>
 <%@ page import="com.odde.massivemailer.model.onlinetest.Question" %>
 
 <%
-    Quiz quiz = (Quiz) request.getSession().getAttribute("quiz");
-    Question question = quiz.getCurrentQuestion();
-	Long correctOption = Long.parseLong((String)quiz.getCurrentQuestion().getCorrectOption());
+    OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
+    Question question = onlineTest.getCurrentQuestion();
+	Long correctOption = Long.parseLong((String)onlineTest.getCurrentQuestion().getCorrectOption());
 	Long selectedOption = Long.parseLong((String)request.getAttribute("selectedOption"));
 	final String correctClass = "correct";
 	final String incorrectClass = "selected incorrect";

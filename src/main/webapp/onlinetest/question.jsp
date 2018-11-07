@@ -2,13 +2,13 @@
 	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<%@ page import="com.odde.massivemailer.model.onlinetest.Quiz" %>
+<%@ page import="com.odde.massivemailer.model.onlinetest.OnlineTest" %>
 <%@ page import="com.odde.massivemailer.model.onlinetest.Question" %>
 
 <%
-    Quiz quiz = (Quiz) request.getSession().getAttribute("quiz");
+    OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
     Question question = null;
-    question = quiz.getNextQuestion();
+    question = onlineTest.getNextQuestion();
     pageContext.setAttribute("question", question);
 %>
 
@@ -33,7 +33,7 @@
                     <input type="submit" id="answer" value="Answer">
                 </div>
                 <div id="progress">
-                    <span id="numberOfAnsweredQuestions">${quiz.getNumberOfAnsweredQuestions()}</span>/${quiz.getNumberOfQuestions()}
+                    <span id="numberOfAnsweredQuestions">${onlineTest.getNumberOfAnsweredQuestions()}</span>/${onlineTest.getNumberOfQuestions()}
                 </div>
             </div>
             </form>

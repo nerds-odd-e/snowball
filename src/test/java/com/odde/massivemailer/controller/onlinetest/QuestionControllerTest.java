@@ -3,7 +3,7 @@ package com.odde.massivemailer.controller.onlinetest;
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.onlinetest.AnswerOption;
 import com.odde.massivemailer.model.onlinetest.Question;
-import com.odde.massivemailer.model.onlinetest.Quiz;
+import com.odde.massivemailer.model.onlinetest.OnlineTest;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +29,7 @@ public class QuestionControllerTest {
     private MockHttpServletResponse response;
     private Question question;
     private LaunchQuestionController launchQuestionController;
-    private Quiz quiz;
+    private OnlineTest onlineTest;
 
     @Before
     public void setUpMockService() {
@@ -39,9 +39,9 @@ public class QuestionControllerTest {
         response = new MockHttpServletResponse();
         request.getSession().setAttribute("correctlyAnsweredCount", 3);
         question = createQuestionWithOptions();
-        quiz = mock(Quiz.class);
-        when(quiz.getCurrentQuestion()).thenReturn(question);
-        request.getSession().setAttribute("quiz", quiz);
+        onlineTest = mock(OnlineTest.class);
+        when(onlineTest.getCurrentQuestion()).thenReturn(question);
+        request.getSession().setAttribute("onlineTest", onlineTest);
     }
 
 
@@ -65,7 +65,7 @@ public class QuestionControllerTest {
 
     @Test
     public void doPostAnswerAdditionalQuestionAnswerCountIncreases() throws Exception {
-        when(quiz.hasNextQuestion()).thenReturn(true);
+        when(onlineTest.hasNextQuestion()).thenReturn(true);
 
         Collection<AnswerOption> options = question.getOptions();
         Optional<AnswerOption> correctId = options.stream().filter(AnswerOption::isCorrect).findFirst();
@@ -110,7 +110,7 @@ public class QuestionControllerTest {
 
     @Test
     public void doPostWithCorrectAnsweredOption() throws ServletException, IOException {
-        when(quiz.hasNextQuestion()).thenReturn(true);
+        when(onlineTest.hasNextQuestion()).thenReturn(true);
 
         Collection<AnswerOption> options = question.getOptions();
         Optional<AnswerOption> correctId = options.stream().filter(AnswerOption::isCorrect).findFirst();

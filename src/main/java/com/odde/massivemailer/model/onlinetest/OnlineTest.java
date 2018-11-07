@@ -4,12 +4,12 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
-public class Quiz {
+public class OnlineTest {
 
     private final List<Long> questionIds;
     private int numberOfAnsweredQuestions;
 
-    public Quiz(int questionCount) {
+    public OnlineTest(int questionCount) {
         questionIds = Question.getNRandomIds(questionCount).collect(Collectors.toList());
         numberOfAnsweredQuestions = 0;
     }
@@ -20,7 +20,7 @@ public class Quiz {
 
     public Question getNextQuestion() {
         if (!hasNextQuestion()) {
-            throw new NoSuchElementException("Quiz not started");
+            throw new NoSuchElementException("OnlineTest not started");
         }
         Question question = Question.getById(questionIds.get(numberOfAnsweredQuestions));
         numberOfAnsweredQuestions++;

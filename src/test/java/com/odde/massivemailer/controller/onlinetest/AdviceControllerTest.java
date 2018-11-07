@@ -1,7 +1,7 @@
 package com.odde.massivemailer.controller.onlinetest;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.model.onlinetest.Quiz;
+import com.odde.massivemailer.model.onlinetest.OnlineTest;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,14 +29,14 @@ public class AdviceControllerTest {
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
 
-        request.getSession().setAttribute("quiz", new Quiz(5));
+        request.getSession().setAttribute("onlineTest", new OnlineTest(5));
         request.getSession().setAttribute("correctlyAnsweredCount", CORRECTLY_ANSWERED_QUESTIONS);
     }
 
     @Test
-    public void shouldNotRemoveQuizFromSessionAttributes() throws IOException {
+    public void shouldNotRemoveOnlineTestFromSessionAttributes() throws IOException {
         controller.doPost(request, response);
-        assertNotNull(request.getSession().getAttribute("quiz"));
+        assertNotNull(request.getSession().getAttribute("onlineTest"));
     }
 
     @Test
@@ -48,9 +48,9 @@ public class AdviceControllerTest {
 
     @Test
     public void checkFromAdvicePageToQuestionPage() throws Exception {
-        Quiz quiz = mock(Quiz.class);
-        when(quiz.hasNextQuestion()).thenReturn(true);
-        request.getSession().setAttribute("quiz", quiz);
+        OnlineTest onlineTest = mock(OnlineTest.class);
+        when(onlineTest.hasNextQuestion()).thenReturn(true);
+        request.getSession().setAttribute("onlineTest", onlineTest);
 
         controller.doPost(request, response);
         assertEquals("/onlinetest/question.jsp", response.getRedirectedUrl());
@@ -58,9 +58,9 @@ public class AdviceControllerTest {
 
     @Test
     public void checkFromAdvicePageToEndOfTestPageWhenNoMoreQuestions() throws Exception {
-        Quiz quiz = mock(Quiz.class);
-        when(quiz.hasNextQuestion()).thenReturn(false);
-        request.getSession().setAttribute("quiz", quiz);
+        OnlineTest onlineTest = mock(OnlineTest.class);
+        when(onlineTest.hasNextQuestion()).thenReturn(false);
+        request.getSession().setAttribute("onlineTest", onlineTest);
 
         controller.doPost(request, response);
         assertEquals("/onlinetest/end_of_test.jsp", response.getRedirectedUrl());

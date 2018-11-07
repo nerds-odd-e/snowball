@@ -1,8 +1,8 @@
 package com.odde.massivemailer.controller.onlinetest;
 
 import com.odde.TestWithDB;
+import com.odde.massivemailer.model.onlinetest.OnlineTest;
 import com.odde.massivemailer.model.onlinetest.Question;
-import com.odde.massivemailer.model.onlinetest.Quiz;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,11 +43,11 @@ public class LaunchQuestionControllerTest {
     public void mustGetQuestionId() throws Exception {
         mockQuestion();
         controller.doGet(request, response);
-        Quiz quiz = (Quiz) request.getSession().getAttribute("quiz");
+        OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
         Integer correctlyAnsweredQuestions = (Integer) request.getSession().getAttribute("correctlyAnsweredCount");
         String testId = (String) request.getSession().getAttribute("testId");
 
-        assertNotNull(quiz);
+        assertNotNull(onlineTest);
         assertNotNull(correctlyAnsweredQuestions);
         assertNotNull(testId);
         assertTrue(StringUtils.isNotEmpty(testId));
@@ -55,7 +55,7 @@ public class LaunchQuestionControllerTest {
     }
 
     @Test
-    public void redirectToAddQuestionPageIfNoQuestionsInQuiz() throws Exception {
+    public void redirectToAddQuestionPageIfNoQuestionsInOnlineTest() throws Exception {
         controller.doGet(request,response);
         assertEquals("add_question.jsp", response.getRedirectedUrl());
     }

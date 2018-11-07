@@ -27,7 +27,7 @@ Feature:
     Then User sees the question progress as "2/3"
 
   Scenario Outline: User navigates to advice or next question page
-    Given User is taking a quiz with 2 questions
+    Given User is taking a onlineTest with 2 questions
     And User is on the first question
     When User chooses the "<selected_option>" answer
     And User clicks the answer button
@@ -54,7 +54,7 @@ Feature:
       | Scrum is Sumo     |
 
   Scenario Outline: User goes to end of test if he has answered all questions
-    Given User is taking a quiz with 3 questions
+    Given User is taking a onlineTest with 3 questions
     And User answered correctly the <number_of_questions> th question page
     Then "<page_content>" should be shown
 
@@ -64,7 +64,7 @@ Feature:
       | 3                   | End Of Test  |
 
   Scenario: User goes to end of test if he has answered last questions wrong
-    Given User is taking a quiz with 3 questions
+    Given User is taking a onlineTest with 3 questions
     And User answered correctly the 2 th question page
     When User chooses the "wrongOption" answer
     And User clicks the answer button
@@ -84,7 +84,7 @@ Feature:
       | 20                  | 16                | 16/20問 あなたの正解率は80%です。基本を学び直しましょう    |
 
   Scenario Outline: テストが全n問のとき最終ページの分母にnが表示される
-    Given User is taking a quiz with <number_of_questions> questions
+    Given User is taking a onlineTest with <number_of_questions> questions
     And  User answered correctly the <number_of_questions> th question page
     Then 分母に<number_of_questions>が表示される
     Examples:
@@ -94,7 +94,7 @@ Feature:
 
   @developing
   Scenario Outline:
-    Given User is taking a quiz with 2 questions
+    Given User is taking a onlineTest with 2 questions
     And User is on the first question
     When User chooses the "<incorrect option>" answer
     And User clicks the answer button

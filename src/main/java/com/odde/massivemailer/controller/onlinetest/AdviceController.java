@@ -1,7 +1,7 @@
 package com.odde.massivemailer.controller.onlinetest;
 
 import com.odde.massivemailer.controller.AppController;
-import com.odde.massivemailer.model.onlinetest.Quiz;
+import com.odde.massivemailer.model.onlinetest.OnlineTest;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,9 +14,9 @@ public class AdviceController extends AppController {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
-        Quiz quiz = (Quiz)session.getAttribute("quiz");
+        OnlineTest onlineTest = (OnlineTest)session.getAttribute("onlineTest");
         String url = "/onlinetest/end_of_test.jsp";
-        if(quiz.hasNextQuestion()){
+        if(onlineTest.hasNextQuestion()){
             url = "/onlinetest/question.jsp";
         }
         response.sendRedirect(url);

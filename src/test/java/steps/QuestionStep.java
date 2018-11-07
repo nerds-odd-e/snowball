@@ -35,8 +35,8 @@ public class QuestionStep {
                 .please();
     }
 
-    @Given("^User is taking a quiz with (\\d+) questions$")
-    public void user_is_taking_a_quiz_with_n_questions(int n) {
+    @Given("^User is taking a onlineTest with (\\d+) questions$")
+    public void user_is_taking_a_onlineTest_with_n_questions(int n) {
         for (int i = 0; i < n; i++)
             new QuestionBuilder()
                     .aQuestion()

@@ -12,34 +12,34 @@ import java.util.stream.IntStream;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(TestWithDB.class)
-public class QuizTest {
+public class OnlineTestTest {
 
     @Test
-    public void shouldNotGetANewQuizWithNQuestionIdsIfEnoughQuestionsInDatabase() {
-        Quiz newQuiz = new Quiz(5);
-        assertEquals(0, newQuiz.getNumberOfQuestions());
+    public void shouldNotGetANewOnlineTestWithNQuestionIdsIfEnoughQuestionsInDatabase() {
+        OnlineTest newOnlineTest = new OnlineTest(5);
+        assertEquals(0, newOnlineTest.getNumberOfQuestions());
     }
 
     @Test
     public void shouldGetNextQuestionWhenHaveMoreQuestionsAvailable() {
         mockQuestion(5);
-        Quiz newQuiz = new Quiz(5);
-        assertEquals(5, newQuiz.getNumberOfQuestions());
+        OnlineTest newOnlineTest = new OnlineTest(5);
+        assertEquals(5, newOnlineTest.getNumberOfQuestions());
     }
 
     @Test(expected = NoSuchElementException.class)
     public void shouldNotGetNextQuestionWhenNoMoreQuestionsLeft() {
-        Quiz newQuiz = new Quiz(5);
-        newQuiz.getNextQuestion();
+        OnlineTest newOnlineTest = new OnlineTest(5);
+        newOnlineTest.getNextQuestion();
     }
 
     @Test
     public void shouldNotRepeatQuestions() {
         mockQuestion(6);
-        Quiz newQuiz = new Quiz(5);
+        OnlineTest newOnlineTest = new OnlineTest(5);
         Set<Question> questions = new HashSet<>();
-        while(newQuiz.hasNextQuestion()) {
-            questions.add(newQuiz.getNextQuestion());
+        while(newOnlineTest.hasNextQuestion()) {
+            questions.add(newOnlineTest.getNextQuestion());
         }
         assertEquals(5, questions.size());
     }

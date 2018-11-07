@@ -2,7 +2,7 @@ package com.odde.massivemailer.controller.onlinetest;
 
 import com.odde.massivemailer.controller.AppController;
 import com.odde.massivemailer.model.onlinetest.Question;
-import com.odde.massivemailer.model.onlinetest.Quiz;
+import com.odde.massivemailer.model.onlinetest.OnlineTest;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,16 +22,16 @@ public class QuestionController extends AppController {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(true);
         int correctlyAnsweredCount = (int) session.getAttribute("correctlyAnsweredCount");
-        Quiz quiz = (Quiz) session.getAttribute("quiz");
+        OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
         String answeredOptionId = req.getParameter("optionId");
 
-        Question currentQuestion = quiz.getCurrentQuestion();
+        Question currentQuestion = onlineTest.getCurrentQuestion();
         boolean correctAnswer = currentQuestion.verifyAnswer(answeredOptionId);
 
         if(correctAnswer){
             correctlyAnsweredCount++;
             session.setAttribute("correctlyAnsweredCount", correctlyAnsweredCount);
-            resp.sendRedirect(getRedirectPageName(quiz.hasNextQuestion()));
+            resp.sendRedirect(getRedirectPageName(onlineTest.hasNextQuestion()));
             req.setAttribute("totalScore", correctlyAnsweredCount);
             return;
         }
