@@ -26,6 +26,13 @@ Feature:
     And User is on the second question
     Then User sees the question progress as "2/3"
 
+  Scenario: Displaying the question progress of advice page ( 2 of 3 )
+    Given There is a question "What is scrum?"
+    And There is a question "What is Scrum Master?"
+    And There is a question "What is Product Owner?"
+    And User picked the wrong answer on the second question
+    Then User sees the question progress as "2/3"
+
   Scenario Outline: User navigates to advice or next question page
     Given User is taking a onlineTest with 2 questions
     And User is on the first question
@@ -92,6 +99,16 @@ Feature:
       | 1                   |
       | 2                   |
 
+  @now
+  Scenario Outline: テストの正答数が2問のとき最終ページの分子に2が表示される
+    Given User is taking a onlineTest with <number_of_correct> questions
+    And  User answered correctly the <number_of_correct> th question page
+    Then 分子に<number_of_correct>が表示される
+    Examples:
+      | number_of_correct |
+      | 1                 |
+      | 2                 |
+
   @developing
   Scenario Outline:
     Given User is taking a onlineTest with 2 questions
@@ -100,6 +117,9 @@ Feature:
     And User clicks the answer button
     Then アドバイスページにいる
     When ユーザーがブラウザの戻るを実行する
+    Then 質問1の画面に遷移する
+    When User chooses the "<incorrect option>" answer
+    And User clicks the answer button
     Then 質問2の画面に遷移する
 
     Examples:

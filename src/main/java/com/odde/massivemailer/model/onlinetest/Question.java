@@ -76,4 +76,9 @@ public class Question extends ApplicationModel {
     public void createCorrectOption(String optionText) {
         AnswerOption.createIt("description", optionText, "question_id", getLongId(), "is_correct", 1);
     }
+
+    public Long getFirstOptionId() {
+        Collection<AnswerOption> options = getOptions();
+        return Long.valueOf(options.stream().findFirst().get().getId().toString());
+    }
 }

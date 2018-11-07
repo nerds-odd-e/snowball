@@ -59,6 +59,17 @@ public class QuestionStep {
         driver.pageShouldContain("Question");
     }
 
+    @Given("^User picked the wrong answer on the second question$")
+    public void user_picked_the_wrong_answer_on_the_second_question() throws Throwable {
+        site.visit("onlinetest/launchQuestion");
+        driver.clickRadioButton("None of the above");
+        driver.clickButton("answer");
+        driver.pageShouldContain("Question");
+        driver.clickRadioButton("Scrum is Rugby");
+        driver.clickButton("answer");
+        driver.pageShouldContain("Advice");
+    }
+
     @Given("^User arrives at advice page$")
     public void user_arrives_at_advice_page() {
         site.visit("question");
@@ -257,5 +268,11 @@ public class QuestionStep {
     @Then("^アドバイスページにいる$")
     public void アドバイスページにいる() throws Throwable {
         assertEquals("Advice", driver.getCurrentTitle());
+    }
+
+    @Then("^分子に(\\d+)が表示される$")
+    public void 分子にが表示される(int correctCount) throws Throwable {
+        UiElement element = driver.findElementById("correct-count");
+        assertEquals(String.valueOf(correctCount), element.getText());
     }
 }

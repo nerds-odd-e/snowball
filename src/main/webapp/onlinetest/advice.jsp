@@ -52,6 +52,9 @@
                 <form action="/onlinetest/advice" method="post">
                     <input type="submit" id="next" value="Next" class="btn-primary btn"/>
                 </form>
+                <div id="progress">
+                    <span id="numberOfAnsweredQuestions">${onlineTest.getNumberOfAnsweredQuestions()}</span>/${onlineTest.getNumberOfQuestions()}
+                </div>
             </div>
         </div>
     </jsp:body>

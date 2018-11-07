@@ -6,6 +6,7 @@
 
         <div class="container-fluid">
             <h1 id="title">End Of Test</h1>
+            <p id="correct-count">${correctlyAnsweredCount}</p>
             <p id="total-count">${onlineTest.getNumberOfQuestions()}</p>
             <p>
                 Thank you for your hard work.

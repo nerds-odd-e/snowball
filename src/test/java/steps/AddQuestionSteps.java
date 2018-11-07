@@ -32,7 +32,7 @@ public class AddQuestionSteps {
     @Given("^\"([^\"]*)\"のoptionが選択されている$")
     public void のoptionが選択されている(String selectedNumber) throws Throwable {
         if (!"".equals(selectedNumber)) {
-            throw new PendingException();
+            driver.clickById("option" + selectedNumber);
         }
     }
 
