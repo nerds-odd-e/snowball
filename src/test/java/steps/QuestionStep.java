@@ -210,25 +210,21 @@ public class QuestionStep {
 
     @Then("^問題を表示する$")
     public void 問題を表示する() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
         driver.expectElementWithIdToContainValue("answer", "question");
     }
 
     @Then("^選択された問題を表示する$")
     public void 選択された問題を表示する() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
         driver.expectElementWithIdToContainText("description", "question");
     }
 
     @Then("^選択肢のチェックボックスを表示する$")
     public void 選択肢のチェックボックスを表示する() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
         driver.expectCheckBoxWithText("PO");
     }
 
     @Then("^Answerボタンを表示する$")
     public void answerボタンを表示する() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
         driver.expectElementWithIdToContainText("answer", "answer");
     }
 
