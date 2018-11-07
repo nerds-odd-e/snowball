@@ -2,6 +2,7 @@ package com.odde.massivemailer.controller.onlinetest;
 
 import com.odde.massivemailer.controller.AppController;
 import com.odde.massivemailer.model.onlinetest.OnlineTest;
+import com.odde.massivemailer.model.onlinetest.Question;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -24,7 +25,7 @@ public class QuestionController extends AppController {
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
         String answeredOptionId = req.getParameter("optionId");
 
-        if(onlineTest.isCorrectAnswer(answeredOptionId)){
+        if(isCorrectAnswer(onlineTest, answeredOptionId)){
             correctlyAnsweredCount++;
             session.setAttribute("correctlyAnsweredCount", correctlyAnsweredCount);
             resp.sendRedirect(getRedirectPageName(onlineTest.hasNextQuestion()));
@@ -35,6 +36,11 @@ public class QuestionController extends AppController {
         req.setAttribute("selectedOption",answeredOptionId);
         RequestDispatcher dispatch = req.getRequestDispatcher("/onlinetest/advice.jsp");
         dispatch.forward(req, resp);
+    }
+
+    private boolean isCorrectAnswer(OnlineTest onlineTest, String answeredOptionId) {
+        Question currentQuestion = onlineTest.getCurrentQuestion();
+        return currentQuestion.verifyAnswer(answeredOptionId);
     }
 
     private String getRedirectPageName(boolean moreQuestionsExist) {
