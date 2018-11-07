@@ -1,6 +1,6 @@
 Feature:
   Admin can add questions
-
+  
   @developing
   Scenario Outline: Validation
     Given Add Questionを開いている
