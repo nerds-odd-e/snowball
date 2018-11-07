@@ -5,7 +5,7 @@
     <jsp:body>
 
 			<form name="addQuestion" id="addQuestion" method="post"
-				action="addQuestion">
+				action="javascript: void(0);">
 
 					<div class="row">
 						<div class="col-lg-12">
@@ -15,11 +15,11 @@
 									<h3 class="panel-title">Question Information</h3>
 								</div>
 								<div class="panel-body">
-                                    <div class="alert alert-danger" role="alert" id="message">
-                                        Advice is over length
+                                    <div id="message" class="alert alert-danger" role="alert">
+                                        Invalid inputs found!
                                     </div>
-                                    <div class="alert alert-danger" role="alert" id="message">
-                                        入力が不適切です
+                                    <div id="message" class="alert alert-danger" role="alert">
+                                        Right answer is not selected!
                                     </div>
 									<div class="row">
 										<div class="col-lg-1">Description:</div>

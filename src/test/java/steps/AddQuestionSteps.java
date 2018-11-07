@@ -1,11 +1,11 @@
 package steps;
 
 import cucumber.api.PendingException;
-import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import steps.driver.UiElement;
+import org.junit.Assert;
+import org.openqa.selenium.By;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
@@ -31,9 +31,7 @@ public class AddQuestionSteps {
 
     @Given("^\"([^\"]*)\"のoptionが選択されている$")
     public void のoptionが選択されている(String selectedNumber) throws Throwable {
-        if ("".equals(selectedNumber)) {
-//            driver.clickRadioButton();
-        } else {
+        if (!"".equals(selectedNumber)) {
             throw new PendingException();
         }
     }
@@ -48,14 +46,23 @@ public class AddQuestionSteps {
         driver.clickButton("add_button");
     }
 
+    class Result {
+        boolean found;
+    }
+
     @Then("^\"([^\"]*)\"というメッセージが表示される$")
     public void というメッセージが表示される(String errorMessage) throws Throwable {
-        driver.expectElementWithIdToContainText("message", errorMessage);
+        Result r = new Result();
+        driver.findElements(By.className("alert")).forEach(el -> {
+            if (el.getText().contains(errorMessage)) {
+                r.found = true;
+            }
+        });
+        Assert.assertTrue(r.found);
     }
 
     @Given("^(\\d+)のoptionが選択されている$")
     public void のoptionが選択されている(int arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }
 }
