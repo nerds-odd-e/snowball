@@ -7,8 +7,8 @@
 
 <%
     OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
-    Question question = onlineTest.getCurrentQuestion();
-	Long correctOption = Long.parseLong((String)onlineTest.getCurrentQuestion().getCorrectOption());
+    Question question = onlineTest.getPreviousQuestion();
+	Long correctOption = Long.parseLong((String)question.getCorrectOption());
 	Long selectedOption = Long.parseLong((String)request.getAttribute("selectedOption"));
 	final String correctClass = "correct";
 	final String incorrectClass = "selected incorrect";

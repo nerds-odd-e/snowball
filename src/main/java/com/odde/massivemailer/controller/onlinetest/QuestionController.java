@@ -25,7 +25,14 @@ public class QuestionController extends AppController {
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
         String answeredOptionId = req.getParameter("optionId");
 
+        String numberOfAnsweredQuestionsHiddenId = req.getParameter("numberOfAnsweredQuestionsHidden");
+        if(!numberOfAnsweredQuestionsHiddenId.equals(String.valueOf(onlineTest.getNumberOfAnsweredQuestions()))){
+            resp.sendRedirect(getRedirectPageName(onlineTest.hasNextQuestion()));
+            return;
+        }
+
         if(isCorrectAnswer(onlineTest, answeredOptionId)){
+            onlineTest.getNextQuestion();
             correctlyAnsweredCount++;
             session.setAttribute("correctlyAnsweredCount", correctlyAnsweredCount);
             resp.sendRedirect(getRedirectPageName(onlineTest.hasNextQuestion()));
@@ -33,6 +40,7 @@ public class QuestionController extends AppController {
             return;
         }
 
+        onlineTest.getNextQuestion();
         req.setAttribute("selectedOption",answeredOptionId);
         RequestDispatcher dispatch = req.getRequestDispatcher("/onlinetest/advice.jsp");
         dispatch.forward(req, resp);

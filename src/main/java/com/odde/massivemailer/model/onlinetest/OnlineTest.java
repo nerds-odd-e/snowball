@@ -14,8 +14,12 @@ public class OnlineTest {
         numberOfAnsweredQuestions = 0;
     }
 
-    public Question getCurrentQuestion() {
+    public Question getPreviousQuestion() {
         return Question.getById(questionIds.get(numberOfAnsweredQuestions-1));
+    }
+
+    public Question getCurrentQuestion() {
+        return Question.getById(questionIds.get(numberOfAnsweredQuestions));
     }
 
     public Question getNextQuestion() {

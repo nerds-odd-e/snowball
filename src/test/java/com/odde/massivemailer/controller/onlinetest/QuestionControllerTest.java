@@ -72,6 +72,7 @@ public class QuestionControllerTest {
         String optionId = correctId.isPresent() ? correctId.get().getId().toString() : StringUtils.EMPTY;
 
         request.addParameter("optionId", optionId);
+        request.addParameter("numberOfAnsweredQuestionsHidden", "0");
 
         controller.doPost(request,response);
         assertEquals("/onlinetest/question.jsp", response.getRedirectedUrl());
@@ -85,6 +86,7 @@ public class QuestionControllerTest {
         String optionId = correctId.isPresent() ? correctId.get().getId().toString() : StringUtils.EMPTY;
 
         request.addParameter("optionId", optionId);
+        request.addParameter("numberOfAnsweredQuestionsHidden", "0");
 
         controller.doPost(request,response);
         assertEquals("/onlinetest/end_of_test.jsp", response.getRedirectedUrl());
@@ -94,6 +96,7 @@ public class QuestionControllerTest {
     public void postIncorrect() throws ServletException, IOException {
         String optionId = question.getFirstOptionId().toString();
         request.addParameter("optionId", optionId);
+        request.addParameter("numberOfAnsweredQuestionsHidden", "0");
         controller.doPost(request, response);
         String selectedOption = (String) request.getAttribute("selectedOption");
         assertEquals(optionId, selectedOption);
@@ -115,6 +118,7 @@ public class QuestionControllerTest {
         String optionId = correctId.isPresent() ? correctId.get().getId().toString() : StringUtils.EMPTY;
 
         request.addParameter("optionId", optionId);
+        request.addParameter("numberOfAnsweredQuestionsHidden", "0");
         request.getSession().setAttribute("correctlyAnsweredCount", 3);
 
         controller.doPost(request, response);
@@ -129,6 +133,7 @@ public class QuestionControllerTest {
         Optional<AnswerOption> correctId = options.stream().filter(AnswerOption::isCorrect).findFirst();
         String optionId = correctId.isPresent() ? correctId.get().getId().toString() : StringUtils.EMPTY;
         request.addParameter("optionId", optionId);
+        request.addParameter("numberOfAnsweredQuestionsHidden", "0");
         request.getSession().setAttribute("correctlyAnsweredCount", 3);
 
         controller.doPost(request, response);
@@ -141,6 +146,7 @@ public class QuestionControllerTest {
     public void doPostWithIncorrectAnsweredOption() throws ServletException, IOException {
         Long optionId = question.getFirstOptionId();
         request.addParameter("optionId", optionId.toString());
+        request.addParameter("numberOfAnsweredQuestionsHidden", "0");
         request.getSession().setAttribute("correctlyAnsweredCount", 3);
 
         controller.doPost(request, response);
@@ -153,7 +159,7 @@ public class QuestionControllerTest {
     public void doPostAtLastQuestionWithIncorrectAnsweredOption() throws ServletException, IOException {
         Long optionId = question.getFirstOptionId();
         request.addParameter("optionId", optionId.toString());
-
+        request.addParameter("numberOfAnsweredQuestionsHidden", "0");
         request.getSession().setAttribute("correctlyAnsweredCount", 3);
 
         controller.doPost(request, response);
@@ -166,7 +172,7 @@ public class QuestionControllerTest {
     public void doPostWithNoOptionsInDatabase() throws ServletException, IOException {
         Long optionId = question.getFirstOptionId();
         request.addParameter("optionId", optionId.toString());
-
+        request.addParameter("numberOfAnsweredQuestionsHidden", "0");
         request.getSession().setAttribute("correctlyAnsweredCount", 3);
 
         controller.doPost(request, response);
@@ -181,6 +187,7 @@ public class QuestionControllerTest {
         Optional<AnswerOption> correctId = options.stream().filter(AnswerOption::isCorrect).findFirst();
         String optionId = correctId.isPresent() ? correctId.get().getId().toString() : StringUtils.EMPTY;
         request.addParameter("optionId", optionId);
+        request.addParameter("numberOfAnsweredQuestionsHidden", "0");
         request.getSession().setAttribute("correctlyAnsweredCount", 3);
         // when
         controller.doPost(request, response);

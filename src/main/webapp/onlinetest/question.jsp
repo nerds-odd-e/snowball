@@ -8,7 +8,7 @@
 <%
     OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
     Question question = null;
-    question = onlineTest.getNextQuestion();
+    question = onlineTest.getCurrentQuestion();
     pageContext.setAttribute("question", question);
 %>
 
@@ -17,6 +17,7 @@
         <div id="page-wrapper">
             <form name="question" id="questionForm" method="post"
                 action="question">
+                    <input type="hidden" id="numberOfAnsweredQuestionsHidden" name="numberOfAnsweredQuestionsHidden" value="${onlineTest.getNumberOfAnsweredQuestions()}">
             <div class="container-fluid">
                 <h1>Question</h1>
                  <c:if test="${not empty question }" >
@@ -33,7 +34,7 @@
                     <input type="submit" id="answer" value="Answer">
                 </div>
                 <div style="float:right;" id="progress">
-                    <span id="numberOfAnsweredQuestions">${onlineTest.getNumberOfAnsweredQuestions()}</span>/${onlineTest.getNumberOfQuestions()}
+                    <span id="numberOfAnsweredQuestions">${onlineTest.getNumberOfAnsweredQuestions()+1}</span>/${onlineTest.getNumberOfQuestions()}
                 </div>
             </div>
             </form>
