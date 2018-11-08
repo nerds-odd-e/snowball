@@ -2,6 +2,7 @@ package com.odde.massivemailer.controller.onlinetest;
 
 import com.odde.TestWithDB;
 import com.odde.massivemailer.controller.onlinetest.AddQuestionController;
+import com.odde.massivemailer.model.onlinetest.Question;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +26,25 @@ public class AddQuestionControllerTest {
 
     @Test
     public void doPostAddQuestion() throws Exception {
+        request.setParameter("description", "aaaaaaaaaaaaaaaa");
+
         controller.doPost(request, response);
+        String description = request.getParameter("description");
         assertEquals("/onlinetest/question_list.jsp", response.getRedirectedUrl());
+
+        Question question = Question.findFirst("");
+        assertEquals(description, question.getDescription());
+    }
+
+    @Test
+    public void doPostAddQuestionAnotherParameter() throws Exception {
+        request.setParameter("description", "bbbbbbbbbbbbbbb");
+
+        controller.doPost(request, response);
+        String description = request.getParameter("description");
+        assertEquals("/onlinetest/question_list.jsp", response.getRedirectedUrl());
+
+        Question question = Question.findFirst("");
+        assertEquals(description, question.getDescription());
     }
 }

@@ -1,5 +1,6 @@
 package steps;
 
+import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -11,6 +12,7 @@ import steps.site.MassiveMailerSite;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class AddQuestionSteps {
     private final MassiveMailerSite site = new MassiveMailerSite();
@@ -33,10 +35,10 @@ public class AddQuestionSteps {
     }
 
     @Given("^option(\\d+)に\"([^\"]*)\"を入力する$")
+
     public void option_に_を入力する(int optionNumber, String optionName) throws Throwable {
         driver.setTextField("option" + optionNumber, optionName);
     }
-
 
 
     @Given("^\"([^\"]*)\"番目のoptionを選択する$")
@@ -85,8 +87,8 @@ public class AddQuestionSteps {
 
 
     @Given("^\"([^\"]*)\"を回答として選択済み$")
-    public void を回答として選択済み(String answer) throws Throwable {
-        driver.clickButtonByName(answer);
+    public void を回答として選択済み(String answerText) throws Throwable {
+        driver.clickButtonByName(answerText);
     }
 
     @Given("^adviceが に\"([^\"]*)\"文字を入力する$")
@@ -98,5 +100,20 @@ public class AddQuestionSteps {
     @Then("^質問の一覧に遷移する$")
     public void 質問の一覧に遷移する() throws Throwable {
         assertEquals(driver.getCurrentTitle(), "Question List");
+    }
+
+    @Given("^advice に\"([^\"]*)\" を入力する$")
+    public void advice_に_を入力する(String advice) throws Throwable {
+        driver.setTextField("advice", advice);
+    }
+
+    @When("^OnlineTestを開始する$")
+    public void onlinetestを開始する() throws Throwable {
+        site.visit("onlinetest/launchQuestion");
+    }
+
+    @Then("^\"([^\"]*)\"という問題が出題される$")
+    public void という問題が出題される(String description) throws Throwable {
+        assertEquals(driver.findElementById("description").getText(),description);
     }
 }
