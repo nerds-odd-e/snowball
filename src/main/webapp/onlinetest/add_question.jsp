@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<%
+    Boolean hasError = false;
+    pageContext.setAttribute("hasError", hasError);
+%>
 
 <t:with_side_menu_and_status title="Add Question">
     <jsp:body>
@@ -15,12 +21,14 @@
 									<h3 class="panel-title">Question Information</h3>
 								</div>
 								<div class="panel-body">
+								<c:if test="${hasError}">
                                     <div id="message" class="alert alert-danger" role="alert">
                                         Invalid inputs found!
                                     </div>
                                     <div id="message" class="alert alert-danger" role="alert">
                                         Right answer is not selected!
                                     </div>
+                                    </c:if>
 									<div class="row">
 										<div class="col-lg-1">Description:</div>
 										<div class="col-lg-11">
