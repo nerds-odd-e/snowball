@@ -35,9 +35,12 @@ public class QuestionController extends AppController {
 
         String numberOfAnsweredQuestions = req.getParameter("lastDoneQuestionId");
         if(!numberOfAnsweredQuestions.equals(String.valueOf(onlineTest.getNumberOfAnsweredQuestions()))){
+            session.setAttribute("alertMsg", "You answered previous question twice");
             resp.sendRedirect(getRedirectPageName(onlineTest.hasNextQuestion()));
             return;
         }
+
+        session.setAttribute("alertMsg", "");
 
         if(isCorrectAnswer(onlineTest, answeredOptionId)){
             onlineTest.moveToNextQuestion();

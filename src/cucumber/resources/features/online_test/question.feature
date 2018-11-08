@@ -89,3 +89,21 @@ Feature:
     Examples:
       | incorrect option |
       | wrongOption      |
+
+  Scenario Outline: 一度アドバイスページから質問ページに戻ってもう一度Answerを押した時に "You answered previous question twice" と表示する
+    Given User is taking a onlineTest with 2 questions
+    And User is on the first question
+    When User chooses the "<incorrect option>" answer
+    And User clicks the answer button
+    Then アドバイスページにいる
+    When ユーザーがブラウザの戻るを実行する
+    Then 質問1の画面に遷移する
+    When User chooses the "<incorrect option>" answer
+    And User clicks the answer button
+    Then 質問2の画面に遷移する
+    And "You answered previous question twice" should be shown
+
+    Examples:
+      | incorrect option |
+      | wrongOption      |
+

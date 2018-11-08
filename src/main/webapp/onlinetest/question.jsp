@@ -7,8 +7,10 @@
 
 <%
     OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
+    String alertMsg = (String) request.getSession().getAttribute("alertMsg");
     Question question = null;
     question = onlineTest.getCurrentQuestion();
+    pageContext.setAttribute("alertMsg", alertMsg);
     pageContext.setAttribute("question", question);
 %>
 
@@ -19,6 +21,7 @@
                 action="question">
                     <input type="hidden" id="lastDoneQuestionId" name="lastDoneQuestionId" value="${onlineTest.getNumberOfAnsweredQuestions()}">
             <div class="container-fluid">
+                <p>${alertMsg}</p>
                 <h1>Question</h1>
                  <c:if test="${not empty question }" >
                     <h2 id="description">${question.getDescription()}</h2>
