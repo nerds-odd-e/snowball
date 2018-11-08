@@ -35,16 +35,12 @@ Feature:
       | 2                  | 2               | 0                 | 0                  |
       | 2                  | 1               | 1                 | 50                 |
 
-  Scenario: テストの正答率が85%未満の時「基本を学びなおしましょう」と表示される
-    Given User is taking a onlineTest with 5 questions
-    And  User answered correctly the 1 th question page
-    And  User answered wrong the 4 th question page
-    Then メッセージ欄に"基本を学びなおしましょう"が表示される
-
-  @now
-  Scenario: テストの正答率が85%以上かつ100%未満の時「あともう少し」と表示される
-    Given User is taking a onlineTest with 7 questions
-    And  User answered correctly the 6 th question page
-    And  User answered wrong the 1 th question page
-    Then メッセージ欄に"あともう少し"が表示される
-
+  Scenario Outline: テストの正答率に応じて、メッセージが表示される
+    Given User is taking a onlineTest with <number_of_question> questions
+    And  User answered correctly the <number_of_correct> th question page
+    And  User answered wrong the <number_of_wrong> th question page
+    Then メッセージ欄に"<message>"が表示される
+    Examples:
+      | number_of_question | number_of_correct | number_of_wrong | message      |
+      | 5                  | 1                 | 4               | 基本を学びなおしましょう |
+      | 7                  | 6                 | 1               | あともう少し       |
