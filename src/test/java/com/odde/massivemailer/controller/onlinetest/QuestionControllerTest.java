@@ -57,40 +57,6 @@ public class QuestionControllerTest {
         return question;
     }
 
-    @Test
-    public void showQuestionPage() throws Exception {
-        controller.doGet(request,response);
-        assertEquals("/onlinetest/question.jsp", response.getRedirectedUrl());
-    }
-
-    @Test
-    public void doPostAnswerAdditionalQuestionAnswerCountIncreases() throws Exception {
-        when(onlineTest.hasNextQuestion()).thenReturn(true);
-
-        Collection<AnswerOption> options = question.getOptions();
-        Optional<AnswerOption> correctId = options.stream().filter(AnswerOption::isCorrect).findFirst();
-        String optionId = correctId.isPresent() ? correctId.get().getId().toString() : StringUtils.EMPTY;
-
-        request.addParameter("optionId", optionId);
-        request.addParameter("lastDoneQuestionId", "0");
-
-        controller.doPost(request,response);
-        assertEquals("/onlinetest/question.jsp", response.getRedirectedUrl());
-    }
-
-    @Test
-    public void postCorrectOptionInTheLastQuestion() throws Exception {
-
-        Collection<AnswerOption> options = question.getOptions();
-        Optional<AnswerOption> correctId = options.stream().filter(AnswerOption::isCorrect).findFirst();
-        String optionId = correctId.isPresent() ? correctId.get().getId().toString() : StringUtils.EMPTY;
-
-        request.addParameter("optionId", optionId);
-        request.addParameter("lastDoneQuestionId", "0");
-
-        controller.doPost(request,response);
-        assertEquals("/onlinetest/end_of_test.jsp", response.getRedirectedUrl());
-    }
 
     @Test
     public void postIncorrect() throws ServletException, IOException {
@@ -100,73 +66,6 @@ public class QuestionControllerTest {
         controller.doPost(request, response);
         String selectedOption = (String) request.getAttribute("selectedOption");
         assertEquals(optionId, selectedOption);
-    }
-
-    @Test
-    public void firstDoPost() throws IOException {
-        launchQuestionController.doGet(request, response);
-        HttpSession session = request.getSession();
-        assertEquals(0, (int) session.getAttribute("correctlyAnsweredCount"));
-    }
-
-    @Test
-    public void doPostWithCorrectAnsweredOption() throws ServletException, IOException {
-        when(onlineTest.hasNextQuestion()).thenReturn(true);
-
-        Collection<AnswerOption> options = question.getOptions();
-        Optional<AnswerOption> correctId = options.stream().filter(AnswerOption::isCorrect).findFirst();
-        String optionId = correctId.isPresent() ? correctId.get().getId().toString() : StringUtils.EMPTY;
-
-        request.addParameter("optionId", optionId);
-        request.addParameter("numberOfAnsweredQuestionsHidden", "0");
-        request.getSession().setAttribute("correctlyAnsweredCount", 3);
-        request.addParameter("lastDoneQuestionId", "0");
-
-        controller.doPost(request, response);
-        assertEquals("/onlinetest/question.jsp", response.getRedirectedUrl());
-        HttpSession session = request.getSession();
-        assertEquals(4, (int) session.getAttribute("correctlyAnsweredCount"));
-    }
-
-    @Test
-    public void doPostAtLastQuestionWithCorrectAnsweredOption() throws ServletException, IOException {
-        Collection<AnswerOption> options = question.getOptions();
-        Optional<AnswerOption> correctId = options.stream().filter(AnswerOption::isCorrect).findFirst();
-        String optionId = correctId.isPresent() ? correctId.get().getId().toString() : StringUtils.EMPTY;
-        request.addParameter("optionId", optionId);
-        request.addParameter("lastDoneQuestionId", "0");
-        request.getSession().setAttribute("correctlyAnsweredCount", 3);
-
-        controller.doPost(request, response);
-        assertEquals("/onlinetest/end_of_test.jsp", response.getRedirectedUrl());
-        HttpSession session = request.getSession();
-        assertEquals(4, (int) session.getAttribute("correctlyAnsweredCount"));
-    }
-
-    @Test
-    public void doPostWithIncorrectAnsweredOption() throws ServletException, IOException {
-        Long optionId = question.getFirstOptionId();
-        request.addParameter("optionId", optionId.toString());
-        request.addParameter("lastDoneQuestionId", "0");
-        request.getSession().setAttribute("correctlyAnsweredCount", 3);
-
-        controller.doPost(request, response);
-        assertEquals("/onlinetest/advice.jsp", response.getForwardedUrl());
-        HttpSession session = request.getSession();
-        assertEquals(3, (int) session.getAttribute("correctlyAnsweredCount"));
-    }
-
-    @Test
-    public void doPostAtLastQuestionWithIncorrectAnsweredOption() throws ServletException, IOException {
-        Long optionId = question.getFirstOptionId();
-        request.addParameter("optionId", optionId.toString());
-        request.addParameter("lastDoneQuestionId", "0");
-        request.getSession().setAttribute("correctlyAnsweredCount", 3);
-
-        controller.doPost(request, response);
-        assertEquals("/onlinetest/advice.jsp", response.getForwardedUrl());
-        HttpSession session = request.getSession();
-        assertEquals(3, (int) session.getAttribute("correctlyAnsweredCount"));
     }
 
     @Test
@@ -180,22 +79,4 @@ public class QuestionControllerTest {
         HttpSession session = request.getSession();
         assertNull(session.getAttribute("options"));
     }
-
-    @Test
-    public void doPostAtLastQuestionWithTestIdInSession() throws ServletException, IOException {
-        // given
-        Collection<AnswerOption> options = question.getOptions();
-        Optional<AnswerOption> correctId = options.stream().filter(AnswerOption::isCorrect).findFirst();
-        String optionId = correctId.isPresent() ? correctId.get().getId().toString() : StringUtils.EMPTY;
-        request.addParameter("optionId", optionId);
-        request.addParameter("lastDoneQuestionId", "0");
-        request.getSession().setAttribute("correctlyAnsweredCount", 3);
-        // when
-        controller.doPost(request, response);
-        Integer totalScore = (Integer)request.getAttribute("totalScore");
-        // then
-        assertEquals(new Integer(4), totalScore);
-
-    }
-
 }

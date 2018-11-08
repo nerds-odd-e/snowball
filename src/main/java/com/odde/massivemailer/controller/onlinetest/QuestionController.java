@@ -46,7 +46,6 @@ public class QuestionController extends AppController {
             onlineTest.setCorrectAnswerCount(correctlyAnsweredCount);
 
             resp.sendRedirect(getRedirectPageName(onlineTest.hasNextQuestion()));
-            req.setAttribute("totalScore", correctlyAnsweredCount);
             return;
         }
 

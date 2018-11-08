@@ -19,7 +19,8 @@ Feature:
   Scenario Outline: テストの正答数が2問のとき最終ページの分子に2が表示される
     Given User is taking a onlineTest with <number_of_correct> questions
     And  User answered correctly the <number_of_correct> th question page
-    Then 分子に<number_of_correct>が表示される
+    Then "End Of Test" should be shown
+    And 分子に<number_of_correct>が表示される
     Examples:
       | number_of_correct |
       | 1                 |
