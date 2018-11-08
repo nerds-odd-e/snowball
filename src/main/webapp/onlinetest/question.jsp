@@ -17,7 +17,7 @@
         <div id="page-wrapper">
             <form name="question" id="questionForm" method="post"
                 action="question">
-                    <input type="hidden" id="numberOfAnsweredQuestions" name="numberOfAnsweredQuestions" value="${onlineTest.getNumberOfAnsweredQuestions()}">
+                    <input type="hidden" id="lastDoneQuestionId" name="lastDoneQuestionId" value="${onlineTest.getNumberOfAnsweredQuestions()}">
             <div class="container-fluid">
                 <h1>Question</h1>
                  <c:if test="${not empty question }" >

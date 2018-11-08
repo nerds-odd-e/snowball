@@ -1,7 +1,6 @@
 package com.odde.massivemailer.controller.onlinetest;
 
 import com.odde.massivemailer.controller.AppController;
-import com.odde.massivemailer.model.onlinetest.AnswerOption;
 import com.odde.massivemailer.model.onlinetest.OnlineTest;
 import com.odde.massivemailer.model.onlinetest.Question;
 
@@ -34,7 +33,7 @@ public class QuestionController extends AppController {
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
         String answeredOptionId = req.getParameter("optionId");
 
-        String numberOfAnsweredQuestions = req.getParameter("numberOfAnsweredQuestions");
+        String numberOfAnsweredQuestions = req.getParameter("lastDoneQuestionId");
         if(!numberOfAnsweredQuestions.equals(String.valueOf(onlineTest.getNumberOfAnsweredQuestions()))){
             resp.sendRedirect(getRedirectPageName(onlineTest.hasNextQuestion()));
             return;
