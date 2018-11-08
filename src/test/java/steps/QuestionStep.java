@@ -183,6 +183,17 @@ public class QuestionStep {
                 .please();
     }
 
+    @When("^(\\d+)つ回答を選択する$")
+    public void つ回答を選択する(int count) throws Throwable {
+        driver.findElements(By.cssSelector("input[type=checkbox]")).stream().limit(count+1).forEach(option -> option.click());
+    }
+
+    @Then("^(\\d+)つ回答が選択されている事$")
+    public void つ回答が選択されている事(int count) throws Throwable {
+        int elementCount = driver.findElements(By.cssSelector("input[type=checkbox]:checked")).size();
+        assertEquals(count, elementCount);
+    }
+
     @And("^ユーザーの最初の問題です$")
     public void ユーザーの最初の問題です() {
         site.visit("onlinetest/launchQuestion");
