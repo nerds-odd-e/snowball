@@ -41,3 +41,10 @@ Feature:
     And  User answered wrong the 4 th question page
     Then メッセージ欄に"基本を学びなおしましょう"が表示される
 
+  @now
+  Scenario: テストの正答率が85%以上かつ100%未満の時「あともう少し」と表示される
+    Given User is taking a onlineTest with 7 questions
+    And  User answered correctly the 6 th question page
+    And  User answered wrong the 1 th question page
+    Then メッセージ欄に"あともう少し"が表示される
+

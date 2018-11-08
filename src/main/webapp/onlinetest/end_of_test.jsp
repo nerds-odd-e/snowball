@@ -10,7 +10,7 @@
             <p id="correct-count">${correctlyAnsweredCount}</p>
             <p id="total-count">${onlineTest.getNumberOfQuestions()}</p>
             <p id="correct-percentage">${onlineTest.getCorrectPercentage(correctlyAnsweredCount)}</p>%
-            <p id="message">基本を学びなおしましょう</p>
+            <p id="message">${onlineTest.showFinalMessage(correctlyAnsweredCount)}</p>
             <p>
                 Thank you for your hard work.
                 It will be about two hours soon. Why do not you take a break?:)

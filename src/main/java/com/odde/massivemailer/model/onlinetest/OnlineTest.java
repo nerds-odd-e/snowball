@@ -53,4 +53,11 @@ public class OnlineTest {
     public int getCorrectPercentage(double correctNumber) {
         return (int) (correctNumber/getNumberOfQuestions() * 100);
     }
+
+    public String showFinalMessage(double correctNumber) {
+        if(getCorrectPercentage(correctNumber) < 85) {
+            return "基本を学びなおしましょう";
+        }
+        return "あともう少し";
+    }
 }
