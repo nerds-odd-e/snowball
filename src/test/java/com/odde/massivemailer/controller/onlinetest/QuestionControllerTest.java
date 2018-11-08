@@ -4,7 +4,6 @@ import com.odde.TestWithDB;
 import com.odde.massivemailer.model.onlinetest.AnswerOption;
 import com.odde.massivemailer.model.onlinetest.Question;
 import com.odde.massivemailer.model.onlinetest.OnlineTest;
-import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,13 +13,9 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @RunWith(TestWithDB.class)
 public class QuestionControllerTest {
@@ -28,19 +23,16 @@ public class QuestionControllerTest {
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
     private Question question;
-    private LaunchQuestionController launchQuestionController;
     private OnlineTest onlineTest;
 
     @Before
     public void setUpMockService() {
         controller = new QuestionController();
-        launchQuestionController = new LaunchQuestionController();
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
         request.getSession().setAttribute("correctlyAnsweredCount", 3);
         question = createQuestionWithOptions();
-        onlineTest = mock(OnlineTest.class);
-        when(onlineTest.getCurrentQuestion()).thenReturn(question);
+        onlineTest = new OnlineTest(1);
         request.getSession().setAttribute("onlineTest", onlineTest);
     }
 
