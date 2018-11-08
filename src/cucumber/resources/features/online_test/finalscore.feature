@@ -47,3 +47,15 @@ Feature:
       | 5                  | 1                 | 4               | 基本を学びなおしましょう  |
       | 7                  | 6                 | 1               | あともう少し        |
       | 1                  | 1                 | 0               | あなたはスクラムマスター！ |
+
+
+  Scenario: スクラムカテゴリーのみで全問正解
+    Given User is taking a onlineTest with 1 questions
+    And  User answered correctly the 1 th question page
+    Then 苦手カテゴリーのメッセージ欄に"よくできました"が表示される
+
+  @developing
+  Scenario: スクラムカテゴリーのみで全問不正解
+    Given User is taking a onlineTest with 1 questions
+    And  User answered wrong the 1 th question page
+    Then 苦手カテゴリーのメッセージ欄に"スクラムをもっと勉強して"が表示される

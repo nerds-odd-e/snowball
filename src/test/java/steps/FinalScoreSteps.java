@@ -5,9 +5,13 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import steps.driver.UiElement;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
+
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -66,5 +70,12 @@ public class FinalScoreSteps {
     public void 正答率にが表示される(int correctPercentage) throws Throwable {
         UiElement element = driver.findElementById("correct-percentage");
         assertEquals(String.valueOf(correctPercentage), element.getText());
+    }
+
+    @Then("^苦手カテゴリーのメッセージ欄に\"([^\"]*)\"が表示される$")
+    public void 苦手カテゴリーのメッセージ欄にが表示される(String exceptedMessage) throws Throwable {
+        UiElement categoryMessages = driver.findElementById("category-message");
+
+        assertEquals(exceptedMessage, categoryMessages.getText());
     }
 }
