@@ -46,3 +46,9 @@ Feature:
       | 2                  | 2               | 0                 | 0                  |
       | 2                  | 1               | 1                 | 50                 |
 
+  Scenario: テストの正答率が85%未満の時「基本を学びなおしましょう」と表示される
+    Given User is taking a onlineTest with 5 questions
+    And  User answered correctly the 1 th question page
+    And  User answered wrong the 4 th question page
+    Then メッセージ欄に"基本を学びなおしましょう"が表示される
+

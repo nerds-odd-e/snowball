@@ -5,8 +5,11 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import steps.driver.UiElement;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
+
+import static org.junit.Assert.assertEquals;
 
 public class FinalScoreSteps {
 
@@ -39,5 +42,11 @@ public class FinalScoreSteps {
             driver.clickButton("answer");
             driver.clickButton("next");
         }
+    }
+
+    @Then("^メッセージ欄に\"([^\"]*)\"が表示される$")
+    public void メッセージ欄にが表示される(String message) throws Throwable {
+        UiElement element = driver.findElementById("message");
+        assertEquals(message, element.getText());
     }
 }
