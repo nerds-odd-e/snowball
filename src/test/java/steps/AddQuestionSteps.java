@@ -1,14 +1,15 @@
 package steps;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 public class AddQuestionSteps {
@@ -18,7 +19,7 @@ public class AddQuestionSteps {
     @Given("^Add Questionを開いている$")
     public void AddQuestion() {
         site.visit("onlinetest/add_question.jsp");
-        driver.pageShouldContain("Add Question");
+        assertEquals(driver.getCurrentTitle(), "Add Question");
     }
 
     @Then("^\"([^\"]*)\" というメッセージが表示されていない$")
@@ -35,6 +36,8 @@ public class AddQuestionSteps {
     public void option_に_を入力する(int optionNumber, String optionName) throws Throwable {
         driver.setTextField("option" + optionNumber, optionName);
     }
+
+
 
     @Given("^\"([^\"]*)\"番目のoptionを選択する$")
     public void 番目のoptionを選択する(String selectedNumber) throws Throwable {
@@ -68,8 +71,32 @@ public class AddQuestionSteps {
         Assert.assertTrue(r.found);
     }
 
-    @Given("^(\\d+)のoptionが選択されている$")
-    public void のoptionが選択されている(int arg1) throws Throwable {
-        throw new PendingException();
+    @Given("^Option(\\d+) に\"([^\"]*)\"文字を入力する$")
+    public void option_に_文字を入力する(int optionNumber, int optionCount) throws Throwable {
+        String temporaryText = StringUtils.repeat("a", optionCount);
+        driver.setTextField("option" + optionNumber, temporaryText);
+    }
+
+    @Given("^Description に \"([^\"]*)\" 文字を入力する$")
+    public void description_に_文字を入力する(int descriptionLength) throws Throwable {
+        String temporaryText = StringUtils.repeat("a", descriptionLength);
+        driver.setTextField("description", temporaryText);
+    }
+
+
+    @Given("^\"([^\"]*)\"を回答として選択済み$")
+    public void を回答として選択済み(String answer) throws Throwable {
+        driver.clickButtonByName(answer);
+    }
+
+    @Given("^adviceが に\"([^\"]*)\"文字を入力する$")
+    public void adviceが_に_文字を入力する(int adviceTextCount) throws Throwable {
+        String temporaryText = StringUtils.repeat("a", adviceTextCount);
+        driver.setTextField("advice", temporaryText);
+    }
+
+    @Then("^質問の一覧に遷移する$")
+    public void 質問の一覧に遷移する() throws Throwable {
+        assertEquals(driver.getCurrentTitle(), "Question List");
     }
 }

@@ -11,7 +11,7 @@
     <jsp:body>
 
 			<form name="addQuestion" id="addQuestion" method="post"
-				action="javascript: void(0);">
+				action="addQeustion">
 
 					<div class="row">
 						<div class="col-lg-12">

@@ -171,30 +171,6 @@ public class QuestionStep {
         driver.pageShouldContain(currentPage);
     }
 
-    @Given("^問題が(\\d+)問ある時$")
-    public void 問題が問ある時(int totalQuestionCount) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
-
-    @And("^ユーザーが(\\d+)問正解したら$")
-    public void ユーザーが問正解したら(int arg0) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
-
-    @Then("^\"([^\"]*)\" が表示される$")
-    public void が表示される(String message) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
-
-    @Then("^分母に(\\d+)が表示される$")
-    public void 分母にが表示される(int totalCount) throws Throwable {
-        UiElement element = driver.findElementById("total-count");
-        assertEquals(String.valueOf(totalCount), element.getText());
-    }
-
     @Given("^既に「スクラムにある役割は何がありますか？」という複数選択回答の問題がある$")
     public void 既に_スクラムにある役割は何がありますか_という複数選択回答の問題がある() {
         new QuestionBuilder()
@@ -270,15 +246,4 @@ public class QuestionStep {
         assertEquals("Advice", driver.getCurrentTitle());
     }
 
-    @Then("^分子に(\\d+)が表示される$")
-    public void 分子にが表示される(int correctCount) throws Throwable {
-        UiElement element = driver.findElementById("correct-count");
-        assertEquals(String.valueOf(correctCount), element.getText());
-    }
-
-    @Then("^正答率に(\\d+)が表示される$")
-    public void 正答率にが表示される(int correctPercentage) throws Throwable {
-        UiElement element = driver.findElementById("correct-percentage");
-        assertEquals(String.valueOf(correctPercentage), element.getText());
-    }
 }
