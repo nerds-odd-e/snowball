@@ -35,13 +35,14 @@ Feature:
       | 2                  | 2               | 0                 | 0                  |
       | 2                  | 1               | 1                 | 50                 |
 
+
   Scenario Outline: テストの正答率に応じて、メッセージが表示される
     Given User is taking a onlineTest with <number_of_question> questions
     And  User answered correctly the <number_of_correct> th question page
     And  User answered wrong the <number_of_wrong> th question page
     Then メッセージ欄に"<message>"が表示される
     Examples:
-      | number_of_question | number_of_correct | number_of_wrong | message      |
-      | 5                  | 1                 | 4               | 基本を学びなおしましょう |
-      | 7                  | 6                 | 1               | あともう少し       |
-      | 1                  | 1                 | 0               | あなたはスクラムマスター！       |
+      | number_of_question | number_of_correct | number_of_wrong | message       |
+      | 5                  | 1                 | 4               | 基本を学びなおしましょう  |
+      | 7                  | 6                 | 1               | あともう少し        |
+      | 1                  | 1                 | 0               | あなたはスクラムマスター！ |

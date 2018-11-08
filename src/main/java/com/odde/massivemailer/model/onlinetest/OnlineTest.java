@@ -8,6 +8,7 @@ public class OnlineTest {
 
     private final List<Long> questionIds;
     private int numberOfAnsweredQuestions;
+    private int correctAnswerCount;
 
     public OnlineTest(int questionCount) {
         questionIds = Question.getNRandomIds(questionCount).collect(Collectors.toList());
@@ -54,12 +55,20 @@ public class OnlineTest {
         return (int) (correctNumber/getNumberOfQuestions() * 100);
     }
 
-    public String showFinalMessage(double correctNumber) {
-        if(getCorrectPercentage(correctNumber) < 85) {
+    public String showFinalMessage() {
+        if(getCorrectPercentage(this.correctAnswerCount) < 85) {
             return "基本を学びなおしましょう";
-        } else if (getCorrectPercentage(correctNumber) == 100) {
+        } else if (getCorrectPercentage(this.correctAnswerCount) == 100) {
             return "あなたはスクラムマスター！";
         }
         return "あともう少し";
+    }
+
+    public int getCorrectAnswerCount() {
+        return correctAnswerCount;
+    }
+
+    public void setCorrectAnswerCount(int correctlyAnsweredCount) {
+        this.correctAnswerCount = correctlyAnsweredCount;
     }
 }
