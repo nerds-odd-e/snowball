@@ -65,7 +65,7 @@ Feature:
       | 200                  | 5                | 5                | 5                | 0                | 0                | 0                | option1 | 10              |
       | 1                    | 100              | 5                | 5                | 0                | 0                | 0                | option1 | 10              |
       | 1                    | 5                | 5                | 5                | 0                | 0                | 0                | option1 | 500             |
-
+    
   @developing
   Scenario: 質問の追加が成功する
     Given Add Questionを開いている
@@ -81,6 +81,15 @@ Feature:
     When Addボタンを押す
     And OnlineTestを開始する
     Then "What is scrum?"という問題が出題される
+    And option1に"Scrum is Rugby"が表示される
+    And option2に"Scrum is Baseball"が表示される
+    And option3に"Scrum is Soccer"が表示される
+    And option4に"Scrum is Sumo"が表示される
+    And option5に"Scrum is BasketBall"が表示される
+    And option6に"Scrum is Swimming"が表示される
+    And "option1"を回答として選択する
+    And Answerボタンを押す
+    And EndOfTheTestが表示される
 
 
 

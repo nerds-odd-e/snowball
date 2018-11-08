@@ -116,4 +116,27 @@ public class AddQuestionSteps {
     public void という問題が出題される(String description) throws Throwable {
         assertEquals(driver.findElementById("description").getText(),description);
     }
+
+    @Then("^option(\\d+)に\"([^\"]*)\"が表示される$")
+    public void option_に_が表示される(int optionNumber, String optionName) throws Throwable {
+        assertTrue(driver.getBodyText().contains(optionName));
+    }
+
+    @Then("^\"([^\"]*)\"を回答として選択する$")
+    public void を回答として選択する(String arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Then("^Answerボタンを押す$")
+    public void answerボタンを押す() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Then("^EndOfTheTestが表示される$")
+    public void endofthetestが表示される() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
 }
