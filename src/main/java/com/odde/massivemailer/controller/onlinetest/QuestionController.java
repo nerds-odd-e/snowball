@@ -32,7 +32,6 @@ public class QuestionController extends AppController {
         HttpSession session = req.getSession(true);
         int correctlyAnsweredCount = (int) session.getAttribute("correctlyAnsweredCount");
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
-        //int correctlyAnsweredCount = onlineTest.getCorrectAnswerCount();
         String answeredOptionId = req.getParameter("optionId");
 
         String numberOfAnsweredQuestions = req.getParameter("numberOfAnsweredQuestions");
