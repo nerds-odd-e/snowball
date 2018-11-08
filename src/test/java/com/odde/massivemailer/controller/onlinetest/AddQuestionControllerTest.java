@@ -24,9 +24,8 @@ public class AddQuestionControllerTest {
     }
 
     @Test
-    public void validateDescription() throws Exception {
+    public void doPostAddQuestion() throws Exception {
         controller.doPost(request, response);
-
-        // assertThat(response.getContentAsString(), containsString("入力が不適切です"));
+        assertEquals("/onlinetest/question_list.jsp", response.getRedirectedUrl());
     }
 }

@@ -1,8 +1,7 @@
 Feature:
   Admin can add questions
 
-  @developing
-  Scenario: Display Add Question page
+  Background: Display Add Question page
     Given Add Questionを開いている
     Then "Invalid inputs found!" というメッセージが表示されていない
     And "Right answer is not selected!" というメッセージが表示されていない
@@ -46,16 +45,16 @@ Feature:
 
   @developing
   Scenario Outline: 質問の追加が成功する
-    Given 作成画面を開いている
-    And Description の文字数が "<descriptionTextCount>"
-    And Option1 の文字数が "<option1TextCount>"
-    And Option2 の文字数が  "<option2TextCount>"
-    And Option3 の文字数が  "<option3TextCount>"
-    And Option4 の文字数が  "<option4TextCount>"
-    And Option5 の文字数が  "<option5TextCount>"
-    And Option6 の文字数が  "<option6TextCount>"
+    Given Add Questionを開いている
+    And Description に "<descriptionTextCount>" 文字を入力する
+    And Option1 に"<option1TextCount>"文字を入力する
+    And Option2 に"<option2TextCount>"文字を入力する
+    And Option3 に"<option3TextCount>"文字を入力する
+    And Option4 に"<option4TextCount>"文字を入力する
+    And Option5 に"<option5TextCount>"文字を入力する
+    And Option6 に"<option6TextCount>"文字を入力する
     And "<answer>"を回答として選択済み
-    And adviceが の文字数が "<adviceTextCount>"
+    And adviceが に"<adviceTextCount>"文字を入力する
     When Addボタンを押す
     Then 質問の一覧に遷移する
     Examples:
