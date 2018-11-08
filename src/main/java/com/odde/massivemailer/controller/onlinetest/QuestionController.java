@@ -19,7 +19,7 @@ public class QuestionController extends AppController {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession(true);
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
-        boolean isMultiple = onlineTest.getCurrentQuestion().getOptions().stream().filter(AnswerOption::isCorrect).count() > 1;
+        boolean isMultiple = onlineTest.getCurrentQuestion().isMultipleAnswerOptions();
         if(isMultiple) {
             resp.sendRedirect("/onlinetest/question_multiple.jsp");
         } else {

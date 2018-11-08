@@ -13,14 +13,15 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertEquals;
+import static junit.framework.TestCase.assertTrue;
+import static junit.framework.TestCase.assertFalse;
 
 @RunWith(TestWithDB.class)
 public class QuestionTest {
 
     @Test
     public void shouldReturnAListOfIds() {
-        Question.createIt("description","desc1", "advice","adv1");
+        Question.createIt("description", "desc1", "advice", "adv1");
 
         List<Object> allIds = Question.getNRandomIds(1).collect(Collectors.toList());
 
@@ -36,7 +37,7 @@ public class QuestionTest {
 
     @Test
     public void shouldGetQuestionById() {
-        Question question1 = Question.createIt("description","desc1", "advice","adv1");
+        Question question1 = Question.createIt("description", "desc1", "advice", "adv1");
         Long id = question1.getLongId();
 
         Question actual = Question.getById(id);
@@ -45,56 +46,56 @@ public class QuestionTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowExxxceptionIfInvalidId() {
-        Question question1 = Question.createIt("description","desc1", "advice","adv1");
+        Question question1 = Question.createIt("description", "desc1", "advice", "adv1");
         Long id = question1.getLongId();
 
-        Question.getById(id+10);
+        Question.getById(id + 10);
     }
 
     @Test(expected = ValidationException.class)
     public void shouldNotAllowEmptyDescription() {
-        Question.createIt("description", null, "advice","adv1");
+        Question.createIt("description", null, "advice", "adv1");
 
     }
 
     @Test
     public void shouldAllowEmptyAdvice() {
-        Question question1 = Question.createIt("description","desc1", "advice", null);
+        Question question1 = Question.createIt("description", "desc1", "advice", null);
         assertThat(question1.getLongId(), is(not(nullValue())));
         assertThat(question1.getAdvice(), isEmptyString());
     }
 
     @Test
     public void shouldFetchOptionsForQuestion() {
-        Question question = Question.createIt("description","desc1", "advice", null);
-        AnswerOption.createIt("description","desc","question_id",question.getLongId(), "is_correct", 0);
+        Question question = Question.createIt("description", "desc1", "advice", null);
+        AnswerOption.createIt("description", "desc", "question_id", question.getLongId(), "is_correct", 0);
         assertThat(question.getOptions(), is(not(empty())));
     }
 
     @Test
     public void shouldFetchOptionsForQuestionWithSameQuestionId() {
-        Question question = Question.createIt("description","desc1", "advice", null);
+        Question question = Question.createIt("description", "desc1", "advice", null);
         Long expectedQuestionId = question.getLongId();
-        AnswerOption.createIt("description","desc","question_id",question.getLongId(), "is_correct", 0);
-        AnswerOption.createIt("description","desc","question_id",question.getLongId(), "is_correct", 0);
-        AnswerOption.createIt("description","desc","question_id",question.getLongId(), "is_correct", 0);
+        AnswerOption.createIt("description", "desc", "question_id", question.getLongId(), "is_correct", 0);
+        AnswerOption.createIt("description", "desc", "question_id", question.getLongId(), "is_correct", 0);
+        AnswerOption.createIt("description", "desc", "question_id", question.getLongId(), "is_correct", 0);
 
         question.getOptions().forEach(option -> assertThat(option.getQuestionId(), is(equalTo(expectedQuestionId))));
     }
 
     @Test
     public void shouldIsMultipleChoiceQuestion() {
-        Question question = Question.createIt("description","desc1", "advice","adv1");
-        AnswerOption.createIt("description","desc","question_id",question.getLongId(), "is_correct", 1);
-        AnswerOption.createIt("description","desc","question_id",question.getLongId(), "is_correct", 1);
-        assertEquals(question.getOptionType(),1);
+        Question question = Question.createIt("description", "desc1", "advice", "adv1");
+        AnswerOption.createIt("description", "desc", "question_id", question.getLongId(), "is_correct", 1);
+        AnswerOption.createIt("description", "desc", "question_id", question.getLongId(), "is_correct", 1);
+        assertTrue(question.isMultipleAnswerOptions());
     }
 
     @Test
     public void shouldIsSingleChoiceQuestion() {
-        Question question = Question.createIt("description","desc1", "advice","adv1");
-        AnswerOption.createIt("description","desc","question_id",question.getLongId(), "is_correct", 1);
-        AnswerOption.createIt("description","desc","question_id",question.getLongId(), "is_correct", 0);
-        assertEquals(question.getOptionType(),0);
+        Question question = Question.createIt("description", "desc1", "advice", "adv1");
+        AnswerOption.createIt("description", "desc", "question_id", question.getLongId(), "is_correct", 1);
+        AnswerOption.createIt("description", "desc", "question_id", question.getLongId(), "is_correct", 0);
+        assertFalse(question.isMultipleAnswerOptions());
     }
 }
