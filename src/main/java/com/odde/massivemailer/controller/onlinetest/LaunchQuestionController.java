@@ -24,7 +24,7 @@ public class LaunchQuestionController extends AppController {
         session.setAttribute("correctlyAnsweredCount", 0);
         session.setAttribute("onlineTest", onlineTest);
         session.setAttribute("testId", UUID.randomUUID().toString());
-        resp.sendRedirect("/onlinetest/question.jsp");
+        resp.sendRedirect("/onlinetest/question");
     }
 
     private int getQuestionCount(HttpServletRequest req) {

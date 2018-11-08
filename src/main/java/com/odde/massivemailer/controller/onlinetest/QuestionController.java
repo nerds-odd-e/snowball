@@ -1,6 +1,7 @@
 package com.odde.massivemailer.controller.onlinetest;
 
 import com.odde.massivemailer.controller.AppController;
+import com.odde.massivemailer.model.onlinetest.AnswerOption;
 import com.odde.massivemailer.model.onlinetest.OnlineTest;
 import com.odde.massivemailer.model.onlinetest.Question;
 
@@ -16,7 +17,15 @@ import java.io.IOException;
 public class QuestionController extends AppController {
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.sendRedirect("/onlinetest/question.jsp");
+        HttpSession session = req.getSession(true);
+        OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
+        boolean isMultiple = onlineTest.getCurrentQuestion().getOptions().stream().filter(AnswerOption::isCorrect).count() > 1;
+        if(isMultiple) {
+            resp.sendRedirect("/onlinetest/question_multiple.jsp");
+        } else {
+            resp.sendRedirect("/onlinetest/question.jsp");
+        }
+
     }
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
