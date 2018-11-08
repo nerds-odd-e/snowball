@@ -49,4 +49,22 @@ public class FinalScoreSteps {
         UiElement element = driver.findElementById("message");
         assertEquals(message, element.getText());
     }
+
+    @Then("^分母に(\\d+)が表示される$")
+    public void 分母にが表示される(int totalCount) throws Throwable {
+        UiElement element = driver.findElementById("total-count");
+        assertEquals(String.valueOf(totalCount), element.getText());
+    }
+
+    @Then("^分子に(\\d+)が表示される$")
+    public void 分子にが表示される(int correctCount) throws Throwable {
+        UiElement element = driver.findElementById("correct-count");
+        assertEquals(String.valueOf(correctCount), element.getText());
+    }
+
+    @Then("^正答率に(\\d+)が表示される$")
+    public void 正答率にが表示される(int correctPercentage) throws Throwable {
+        UiElement element = driver.findElementById("correct-percentage");
+        assertEquals(String.valueOf(correctPercentage), element.getText());
+    }
 }
