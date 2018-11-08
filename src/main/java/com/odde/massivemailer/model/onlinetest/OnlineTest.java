@@ -57,6 +57,8 @@ public class OnlineTest {
     public String showFinalMessage(double correctNumber) {
         if(getCorrectPercentage(correctNumber) < 85) {
             return "基本を学びなおしましょう";
+        } else if (getCorrectPercentage(correctNumber) == 100) {
+            return "あなたはスクラムマスター！";
         }
         return "あともう少し";
     }

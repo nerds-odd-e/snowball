@@ -44,3 +44,4 @@ Feature:
       | number_of_question | number_of_correct | number_of_wrong | message      |
       | 5                  | 1                 | 4               | 基本を学びなおしましょう |
       | 7                  | 6                 | 1               | あともう少し       |
+      | 1                  | 1                 | 0               | あなたはスクラムマスター！       |
