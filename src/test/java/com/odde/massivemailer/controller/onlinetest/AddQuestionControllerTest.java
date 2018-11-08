@@ -54,15 +54,4 @@ public class AddQuestionControllerTest {
         }
     }
 
-    @Test
-    public void doPostAddQuestionAnotherParameter() throws Exception {
-        request.setParameter("description", "bbbbbbbbbbbbbbb");
-
-        controller.doPost(request, response);
-        String description = request.getParameter("description");
-        assertEquals("/onlinetest/question_list.jsp", response.getRedirectedUrl());
-
-        Question question = Question.findFirst("");
-        assertEquals(description, question.getDescription());
-    }
 }
