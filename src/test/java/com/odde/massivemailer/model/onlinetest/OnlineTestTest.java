@@ -1,6 +1,7 @@
 package com.odde.massivemailer.model.onlinetest;
 
 import com.odde.TestWithDB;
+import org.javalite.activejdbc.Base;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -45,35 +46,43 @@ public class OnlineTestTest {
         assertEquals(5, questions.size());
     }
 
-    @Test
-    public void showよくできました(){
-        mockQuestion(1, "Scrum");
-        OnlineTest onlineTest = new OnlineTest(1);
-        onlineTest.setCorrectAnswerCount(1);
-        assertEquals("よくできました", onlineTest.getCategoryMessage());
+    private static class Pattern {
+        private String category;
+        private int correctlyAnsweredCount;
+        private String expected;
+
+        private Pattern(String category, int correctlyAnsweredCount, String expected) {
+            this.category = category;
+            this.correctlyAnsweredCount = correctlyAnsweredCount;
+            this.expected = expected;
+        }
     }
 
-    @Test
-    public void showScrumをもっと勉強して(){
-        mockQuestion(1, "Scrum");
-        OnlineTest onlineTest = new OnlineTest(1);
-        onlineTest.setCorrectAnswerCount(0);
-        assertEquals("Scrumをもっと勉強して", onlineTest.getCategoryMessage());
-    }
+    public static Pattern[] patterns = {
+            new Pattern("Scrum", 1, "よくできました"),
+            new Pattern("Scrum", 0, "Scrumをもっと勉強して"),
+            new Pattern("TDD", 0, "TDDをもっと勉強して"),
+    };
 
     @Test
-    public void showTDDをもっと勉強して(){
-        mockQuestion(1, "TDD");
-        OnlineTest onlineTest = new OnlineTest(1);
-        onlineTest.setCorrectAnswerCount(0);
-        assertEquals("TDDをもっと勉強して", onlineTest.getCategoryMessage());
+    public void showCategoryMessage() {
+        // we use for the loop, because...
+        // - in JUnit4, tests must be static and it cannot use DB at parameterized test
+        // - to use JUnit5, we have to migrate this file - @RunWith to @ExtendedWith
+        for (Pattern pattern: patterns) {
+            mockQuestion(1, pattern.category);
+            OnlineTest onlineTest = new OnlineTest(1);
+            onlineTest.setCorrectAnswerCount(pattern.correctlyAnsweredCount);
+            assertEquals(pattern.expected, onlineTest.getCategoryMessage());
+            Base.rollbackTransaction();
+        }
     }
 
-    private void mockQuestion(int numberOfQuestion, String category) {
+    private static void mockQuestion(int numberOfQuestion, String category) {
         IntStream.range(0, numberOfQuestion).forEach(index -> Question.createIt("description", "desc" + index, "advice", "adv" + index, "category", category));
     }
 
-    private void mockQuestion(int numberOfQuestion) {
+    private static void mockQuestion(int numberOfQuestion) {
         IntStream.range(0, numberOfQuestion).forEach(index -> Question.createIt("description", "desc" + index, "advice", "adv" + index));
     }
 }

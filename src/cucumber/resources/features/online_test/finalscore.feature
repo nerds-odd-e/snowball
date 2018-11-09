@@ -47,7 +47,6 @@ Feature:
       | 7                  | 6                 | 1               | あともう少し        |
       | 1                  | 1                 | 0               | あなたはスクラムマスター！ |
 
-  @developing
   Scenario Outline: 1カテゴリーのみが出題される
     Given "<category>" から <number_of_questions> 題出題される
     When  User answered wrong the <number_of_wrong> th question page
