@@ -26,7 +26,6 @@ Feature:
       | 1                 |
       | 2                 |
 
-  @now
   Scenario Outline: テストの正答率がn％の時、最終ページの回答率欄にnが表示される
     Given User is taking a onlineTest with <number_of_question> questions
     And  User answered correctly the <number_of_correct> th question page
@@ -37,7 +36,6 @@ Feature:
       | 2                  | 2               | 0                 | 0                  |
       | 2                  | 1               | 1                 | 50                 |
 
-  @now
   Scenario Outline: テストの正答率に応じて、メッセージが表示される
     Given User is taking a onlineTest with <number_of_question> questions
     And  User answered correctly the <number_of_correct> th question page
