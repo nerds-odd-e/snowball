@@ -15,13 +15,16 @@
 %>
 
 <t:basic title="Question">
+    <jsp:attribute name="extra_head">
+        <link href="/resources/question.css" rel="stylesheet">
+    </jsp:attribute>
     <jsp:body>
         <div id="page-wrapper">
             <form name="question" id="questionForm" method="post"
                 action="question">
                     <input type="hidden" id="lastDoneQuestionId" name="lastDoneQuestionId" value="${onlineTest.getNumberOfAnsweredQuestions()}">
             <div class="container-fluid">
-                <p>${alertMsg}</p>
+                <p class="alertMsg">${alertMsg}</p>
                 <h1>Question</h1>
                  <c:if test="${not empty question }" >
                     <h2 id="description">${question.getDescription()}</h2>

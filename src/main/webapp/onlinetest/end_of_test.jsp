@@ -8,10 +8,13 @@
 %>
 
 <t:with_side_menu title="End Of Test">
+    <jsp:attribute name="extra_head">
+        <link href="/resources/question.css" rel="stylesheet">
+    </jsp:attribute>
     <jsp:body>
 
         <div class="container-fluid">
-            <p>${alertMsg}</p>
+            <p class="alertMsg">${alertMsg}</p>
             <h1 id="title">End Of Test</h1>
             <div>
                 <span id="correct-count">${onlineTest.getCorrectAnswerCount()}</span>

@@ -73,7 +73,7 @@ Feature:
       | incorrect option |
       | wrongOption      |
 
-  Scenario Outline:　一度一つ前のアドバイスページに戻ってもう一度Nextを押した時に正しい質問ページに遷移する
+  Scenario Outline: 一度一つ前のアドバイスページに戻ってもう一度Nextを押した時に正しい質問ページに遷移する
     Given User is taking a onlineTest with 2 questions
     And User is on the first question
     When User chooses the "<incorrect option>" answer
@@ -101,6 +101,7 @@ Feature:
     And User clicks the answer button
     Then 質問2の画面に遷移する
     And "You answered previous question twice" should be shown
+    And text "You answered previous question twice" is color red
 
     Examples:
       | incorrect option |
@@ -118,6 +119,7 @@ Feature:
     And User clicks the answer button
     Then "End Of Test" should be shown
     And "You answered previous question twice" should be shown
+    And text "You answered previous question twice" is color red
 
     Examples:
       | incorrect option |

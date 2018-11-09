@@ -255,4 +255,12 @@ public class QuestionStep {
         assertEquals("Advice", driver.getCurrentTitle());
     }
 
+    @And("^text \"([^\"]*)\" is color red$")
+    public void textIsColorRed(String text) throws Throwable {
+        List<WebElement> elements = driver.findElements(By.cssSelector(".alertMsg"));
+        assertEquals(1, elements.size());
+        assertEquals(elements.get(0).getText(), text);
+        assertEquals(elements.get(0).getCssValue("color"), Color.fromString("#dc3545").asRgba());
+
+    }
 }
