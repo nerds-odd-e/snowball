@@ -109,7 +109,7 @@ public class QuestionControllerTest {
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
         assertEquals(1,onlineTest.getCorrectAnswerCount());
     }
-    
+
     @Test
     public void doPostWithNotIncrementCorrectCountOnIncorrectAnswer() throws ServletException, IOException {
         Long optionId = question.getFirstOptionId();

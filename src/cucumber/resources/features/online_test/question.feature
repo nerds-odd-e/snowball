@@ -57,7 +57,6 @@ Feature:
     And User clicks the next button
     Then "End Of Test" should be shown
 
-
   Scenario Outline: 一度アドバイスページから質問ページに戻ってもう一度Answerを押した時に正しい質問ページに遷移する
     Given User is taking a onlineTest with 2 questions
     And User is on the first question

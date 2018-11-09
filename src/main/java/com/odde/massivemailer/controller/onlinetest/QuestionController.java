@@ -40,16 +40,15 @@ public class QuestionController extends AppController {
         }
 
         session.setAttribute("alertMsg", "");
+        boolean isCorrect = isCorrectAnswer(onlineTest, answeredOptionId);
+        onlineTest.moveToNextQuestion();
 
-        if(isCorrectAnswer(onlineTest, answeredOptionId)){
-            onlineTest.moveToNextQuestion();
+        if(isCorrect){
             onlineTest.incrementCorrectAnswerCount();
-
             resp.sendRedirect(getRedirectPageName(onlineTest.hasNextQuestion()));
             return;
         }
 
-        onlineTest.moveToNextQuestion();
         req.setAttribute("selectedOption",answeredOptionId);
         RequestDispatcher dispatch = req.getRequestDispatcher("/onlinetest/advice.jsp");
         dispatch.forward(req, resp);
