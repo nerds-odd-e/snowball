@@ -15,9 +15,11 @@ public class AddQuestionController extends AppController {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String url = "/onlinetest/question_list.jsp";
-        resp.sendRedirect(url);
+        saveQuestion(req);
+        resp.sendRedirect("/onlinetest/question_list.jsp");
+    }
 
+    private void saveQuestion(HttpServletRequest req) {
         Question question = new Question();
         question.set("description", req.getParameter("description"));
         question.saveIt();
@@ -26,13 +28,8 @@ public class AddQuestionController extends AppController {
             AnswerOption answerOption = new AnswerOption();
             answerOption.set("description", req.getParameter("option" + (i + 1)));
             answerOption.set("question_id", question.get("id"));
-            if ( i == Integer.valueOf(req.getParameter("check")) - 1 ) {
-                answerOption.set("is_correct", 1);
-            }else{
-                answerOption.set("is_correct", 0);
-            }
-
-
+            int isCorrect = i == Integer.valueOf(req.getParameter("check")) - 1 ? 1 : 0;
+            answerOption.set("is_correct", isCorrect);
             answerOption.saveIt();
         }
     }
