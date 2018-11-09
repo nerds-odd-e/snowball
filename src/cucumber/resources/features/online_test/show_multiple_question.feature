@@ -7,14 +7,14 @@ Feature: Show Multiple Question
     When 2つ回答を選択する
     Then 2つ回答が選択されている事
 
-  Scenario: 不正解の答えを選んだらへアドバイス遷移
+  Scenario: 不正解の答えのみを選んだらへアドバイス遷移
     Given 既に「スクラムにある役割は何がありますか？」という複数選択回答の問題がある
     And ユーザーの最初の問題です
     When "BOSS"を選択した
     And "CTO"を選択した
     And User clicks the answer button
     Then アドバイスページにいる
-    
+
   Scenario: 正解の答えを選んだらへEndOfTest遷移
     Given 既に「スクラムにある役割は何がありますか？」という複数選択回答の問題がある
     And ユーザーの最初の問題です
@@ -23,3 +23,11 @@ Feature: Show Multiple Question
     And "Team"を選択した
     And User clicks the answer button
     Then EndOfTheTestが表示される事
+
+  Scenario: 正解を含む不正解を選んだらへアドバイス遷移
+    Given 既に「スクラムにある役割は何がありますか？」という複数選択回答の問題がある
+    And ユーザーの最初の問題です
+    When "PO"を選択した
+    And "BOSS"を選択した
+    And User clicks the answer button
+    Then アドバイスページにいる
