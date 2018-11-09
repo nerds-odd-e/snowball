@@ -56,5 +56,19 @@ Feature:
     Examples:
       | category | number_of_questions | number_of_wrong | number_of_correct | message       |
       | scrum    | 1                   | 0               | 1                 | よくできました       |
+      | scrum    | 2                   | 0               | 2                 | よくできました       |
       | scrum    | 1                   | 1               | 0                 | scrumをもっと勉強して |
+      | scrum    | 2                   | 2               | 0                 | scrumをもっと勉強して |
       | TDD      | 1                   | 1               | 0                 | TDDをもっと勉強して   |
+
+
+  @now
+  Scenario Outline: 2カテゴリーから出題される
+    Given "<category1>" から <number_of_questions1> 題、"<category2>" から <number_of_questions2> 題出題される
+    When  User answered wrong the <number_of_wrong> th question page
+    And  User answered correctly the <number_of_correct> th question page
+    Then 苦手カテゴリーのメッセージ欄に"<message>"が表示される
+    Examples:
+      | category1 | category2 | number_of_questions1 | number_of_questions2 | number_of_wrong | number_of_correct | message           |
+      | scrum     | TDD       | 1                    | 1                    | 0               | 2                 | よくできました           |
+      | scrum     | TDD       | 1                    | 1                    | 2               | 0                 | scrumとTDDをもっと勉強して |

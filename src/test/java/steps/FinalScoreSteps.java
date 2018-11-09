@@ -90,4 +90,24 @@ public class FinalScoreSteps {
                     .please();
         site.visit(String.format("onlinetest/launchQuestion?question_count=%d", numberOfQuestions));
     }
+
+    @Given("^\"([^\"]*)\" から (\\d+) 題、\"([^\"]*)\" から (\\d+) 題出題される$")
+    public void からNumber_of_questions題からNumber_of_questions題出題される(String category1, int numberOfQuestions1, String category2, int numberOfQuestions2) throws Throwable {
+
+        for (int i = 0; i < numberOfQuestions1; i++)
+            new QuestionBuilder()
+                    .aQuestion(category1)
+                    .withWrongOption("wrongOption")
+                    .withCorrectOption("correctOption")
+                    .please();
+
+        for (int i = 0; i < numberOfQuestions2; i++)
+            new QuestionBuilder()
+                    .aQuestion(category2)
+                    .withWrongOption("wrongOption")
+                    .withCorrectOption("correctOption")
+                    .please();
+
+        site.visit(String.format("onlinetest/launchQuestion?question_count=%d", numberOfQuestions1 + numberOfQuestions2));
+    }
 }

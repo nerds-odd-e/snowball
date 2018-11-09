@@ -91,7 +91,11 @@ public class OnlineTest {
 
     public String getCategoryMessage() {
         if (getCorrectAnswerCount() == 0) {
-            return questions.get(0).getCategory() + "をもっと勉強して";
+            String categories = questions.stream()
+                    .sorted((q1, q2) -> (int) (q1.getLongId() - q2.getLongId()))
+                    .map(Question::getCategory)
+                    .collect(Collectors.joining("と"));
+            return categories + "をもっと勉強して";
         }
         return "よくできました";
     }

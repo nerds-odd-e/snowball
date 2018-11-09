@@ -65,7 +65,7 @@ public class OnlineTestTest {
     };
 
     @Test
-    public void showCategoryMessage() {
+    public void showSingleCategoryMessage() {
         // we use for the loop, because...
         // - in JUnit4, tests must be static and it cannot use DB at parameterized test
         // - to use JUnit5, we have to migrate this file - @RunWith to @ExtendedWith
@@ -76,6 +76,29 @@ public class OnlineTestTest {
             assertEquals(pattern.expected, onlineTest.getCategoryMessage());
             Base.rollbackTransaction();
         }
+    }
+
+    @Test
+    public void showMultiCategoryMessage(){
+        mockQuestion(1, "TDD");
+        mockQuestion(1, "Scrum");
+        OnlineTest onlineTest = new OnlineTest(2);
+
+        onlineTest.setCorrectAnswerCount(2);
+        assertEquals("よくできました", onlineTest.getCategoryMessage());
+
+    }
+
+
+    @Test
+    public void showWrongMultiCategoryMessage(){
+        mockQuestion(1, "TDD");
+        mockQuestion(1, "Scrum");
+        OnlineTest onlineTest = new OnlineTest(2);
+
+        onlineTest.setCorrectAnswerCount(0);
+        assertEquals("TDDとScrumをもっと勉強して", onlineTest.getCategoryMessage());
+
     }
 
     private static void mockQuestion(int numberOfQuestion, String category) {
