@@ -75,4 +75,17 @@ public class OnlineTest {
     public void incrementCorrectAnswerCount() {
         correctAnswerCount++;
     }
+
+    public boolean isCorrectAnswer(String answeredOptionId) {
+        Question currentQuestion = getCurrentQuestion();
+        return currentQuestion.verifyAnswer(answeredOptionId);
+    }
+
+    public String getAlertMsg(String lastDoneQuestionId) {
+        String alertMsg = "";
+        if(!lastDoneQuestionId.equals(String.valueOf(getNumberOfAnsweredQuestions()))) {
+            alertMsg = "You answered previous question twice";
+        }
+        return alertMsg;
+    }
 }
