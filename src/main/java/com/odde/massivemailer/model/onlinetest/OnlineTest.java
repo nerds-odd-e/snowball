@@ -51,14 +51,14 @@ public class OnlineTest {
         numberOfAnsweredQuestions++;
     }
 
-    public int getCorrectPercentage(double correctNumber) {
-        return (int) (correctNumber/getNumberOfQuestions() * 100);
+    public int getCorrectPercentage() {
+        return (int) ((double)this.correctAnswerCount/getNumberOfQuestions() * 100);
     }
 
     public String showFinalMessage() {
-        if(getCorrectPercentage(this.correctAnswerCount) < 85) {
+        if(getCorrectPercentage() < 85) {
             return "基本を学びなおしましょう";
-        } else if (getCorrectPercentage(this.correctAnswerCount) == 100) {
+        } else if (getCorrectPercentage() == 100) {
             return "あなたはスクラムマスター！";
         }
         return "あともう少し";
@@ -70,5 +70,9 @@ public class OnlineTest {
 
     public void setCorrectAnswerCount(int correctlyAnsweredCount) {
         this.correctAnswerCount = correctlyAnsweredCount;
+    }
+
+    public void incrementCorrectAnswerCount() {
+        correctAnswerCount++;
     }
 }

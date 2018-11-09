@@ -44,14 +44,11 @@ public class LaunchQuestionControllerTest {
         mockQuestion();
         controller.doGet(request, response);
         OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
-        Integer correctlyAnsweredQuestions = (Integer) request.getSession().getAttribute("correctlyAnsweredCount");
         String testId = (String) request.getSession().getAttribute("testId");
 
         assertNotNull(onlineTest);
-        assertNotNull(correctlyAnsweredQuestions);
         assertNotNull(testId);
         assertTrue(StringUtils.isNotEmpty(testId));
-        assertEquals(0, (int) correctlyAnsweredQuestions);
     }
 
     @Test

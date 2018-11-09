@@ -21,7 +21,6 @@ public class LaunchQuestionController extends AppController {
             return;
         }
         session.setAttribute("answeredCount", 0);
-        session.setAttribute("correctlyAnsweredCount", 0);
         session.setAttribute("onlineTest", onlineTest);
         session.setAttribute("testId", UUID.randomUUID().toString());
         session.setAttribute("alertMsg", "");

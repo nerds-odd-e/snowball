@@ -29,7 +29,6 @@ public class QuestionController extends AppController {
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(true);
-        int correctlyAnsweredCount = (int) session.getAttribute("correctlyAnsweredCount");
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
         String answeredOptionId = req.getParameter("optionId");
 
@@ -44,9 +43,7 @@ public class QuestionController extends AppController {
 
         if(isCorrectAnswer(onlineTest, answeredOptionId)){
             onlineTest.moveToNextQuestion();
-            correctlyAnsweredCount++;
-            session.setAttribute("correctlyAnsweredCount", correctlyAnsweredCount);
-            onlineTest.setCorrectAnswerCount(correctlyAnsweredCount);
+            onlineTest.incrementCorrectAnswerCount();
 
             resp.sendRedirect(getRedirectPageName(onlineTest.hasNextQuestion()));
             return;

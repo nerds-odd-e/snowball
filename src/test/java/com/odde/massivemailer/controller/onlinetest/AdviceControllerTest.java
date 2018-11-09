@@ -30,20 +30,12 @@ public class AdviceControllerTest {
         response = new MockHttpServletResponse();
 
         request.getSession().setAttribute("onlineTest", new OnlineTest(5));
-        request.getSession().setAttribute("correctlyAnsweredCount", CORRECTLY_ANSWERED_QUESTIONS);
     }
 
     @Test
     public void shouldNotRemoveOnlineTestFromSessionAttributes() throws IOException {
         controller.doPost(request, response);
         assertNotNull(request.getSession().getAttribute("onlineTest"));
-    }
-
-    @Test
-    public void shouldNotChangeCorectlyAnsweredCountFromSessionAttributes() throws IOException {
-        controller.doPost(request,response);
-        int correctlyAnsweredCount = (Integer)request.getSession().getAttribute("correctlyAnsweredCount");
-        assertEquals(CORRECTLY_ANSWERED_QUESTIONS, correctlyAnsweredCount);
     }
 
     @Test

@@ -8,10 +8,10 @@
         <div class="container-fluid">
             <h1 id="title">End Of Test</h1>
             <div>
-                <span id="correct-count">${correctlyAnsweredCount}</span>
+                <span id="correct-count">${onlineTest.getCorrectAnswerCount()}</span>
                 /
                 <span id="total-count">${onlineTest.getNumberOfQuestions()}</span>問
-                <p>あなたの正解率は<span><span id="correct-percentage">${onlineTest.getCorrectPercentage(correctlyAnsweredCount)}</span>%</span></p>
+                <p>あなたの正解率は<span><span id="correct-percentage">${onlineTest.getCorrectPercentage()}</span>%</span></p>
                 <p id="message">${onlineTest.showFinalMessage()}</p>
             </div>
             <div>

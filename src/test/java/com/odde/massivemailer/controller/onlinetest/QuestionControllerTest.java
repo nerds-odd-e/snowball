@@ -30,7 +30,6 @@ public class QuestionControllerTest {
         controller = new QuestionController();
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
-        request.getSession().setAttribute("correctlyAnsweredCount", 3);
         question = createQuestionWithOptions();
         onlineTest = new OnlineTest(1);
         request.getSession().setAttribute("onlineTest", onlineTest);
@@ -65,7 +64,6 @@ public class QuestionControllerTest {
         Long optionId = question.getFirstOptionId();
         request.addParameter("optionId", optionId.toString());
         request.addParameter("lastDoneQuestionId", "0");
-        request.getSession().setAttribute("correctlyAnsweredCount", 3);
 
         controller.doPost(request, response);
         HttpSession session = request.getSession();
@@ -78,7 +76,6 @@ public class QuestionControllerTest {
         onlineTest = new OnlineTest(2);
         request.addParameter("optionId", optionId.toString());
         request.addParameter("lastDoneQuestionId", "1");
-        request.getSession().setAttribute("correctlyAnsweredCount", 3);
         request.getSession().setAttribute("onlineTest", onlineTest);
 
         controller.doPost(request, response);
@@ -92,7 +89,6 @@ public class QuestionControllerTest {
         onlineTest = new OnlineTest(2);
         request.addParameter("optionId", optionId.toString());
         request.addParameter("lastDoneQuestionId", "0");
-        request.getSession().setAttribute("correctlyAnsweredCount", 3);
         request.getSession().setAttribute("onlineTest", onlineTest);
 
         controller.doPost(request, response);
