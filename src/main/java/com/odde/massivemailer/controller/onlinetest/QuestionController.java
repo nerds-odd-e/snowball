@@ -29,7 +29,7 @@ public class QuestionController extends AppController {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(true);
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
-        String answeredOptionId = req.getParameter("optionId");
+        String[] answeredOptionIds = req.getParameterValues("optionId");
 
         String lastDoneQuestionId = req.getParameter("lastDoneQuestionId");
         String alertMsg = onlineTest.getAlertMsg(lastDoneQuestionId);
@@ -39,7 +39,7 @@ public class QuestionController extends AppController {
             resp.sendRedirect(getRedirectPageName(onlineTest.hasNextQuestion()));
             return;
         }
-        boolean isCorrect = onlineTest.isCorrectAnswer(answeredOptionId);
+        boolean isCorrect = onlineTest.isCorrectAnswer(answeredOptionIds[0]);
         onlineTest.moveToNextQuestion();
 
         if(isCorrect){
@@ -48,7 +48,7 @@ public class QuestionController extends AppController {
             return;
         }
 
-        req.setAttribute("selectedOption",answeredOptionId);
+        req.setAttribute("selectedOption", answeredOptionIds[0]);
         RequestDispatcher dispatch = req.getRequestDispatcher("/onlinetest/advice.jsp");
         dispatch.forward(req, resp);
     }

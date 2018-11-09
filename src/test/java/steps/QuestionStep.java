@@ -174,11 +174,11 @@ public class QuestionStep {
     public void 既に_スクラムにある役割は何がありますか_という複数選択回答の問題がある() {
         new QuestionBuilder()
                 .aQuestion("スクラムにある役割は何がありますか？", "スクラムにはPO,SM,チームがあります。")
-                .withWrongOption("BOSS")
-                .withWrongOption("CTO")
                 .withCorrectOption("PO")
                 .withCorrectOption("SM")
+                .withWrongOption("BOSS")
                 .withCorrectOption("Team")
+                .withWrongOption("CTO")
                 .please();
     }
 
