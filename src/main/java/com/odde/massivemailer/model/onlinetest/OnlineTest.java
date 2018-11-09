@@ -6,33 +6,33 @@ import java.util.stream.Collectors;
 
 public class OnlineTest {
 
-    private final List<Long> questionIds;
+    private final List<Question> questions;
     private int numberOfAnsweredQuestions;
     private int correctAnswerCount;
 
     public OnlineTest(int questionCount) {
-        questionIds = Question.getNRandomIds(questionCount).collect(Collectors.toList());
+        questions = Question.getNRandom(questionCount);
         numberOfAnsweredQuestions = 0;
     }
 
     public Question getPreviousQuestion() {
-        return Question.getById(questionIds.get(numberOfAnsweredQuestions-1));
+        return questions.get(numberOfAnsweredQuestions - 1);
     }
 
     public Question getCurrentQuestion() {
-        return Question.getById(questionIds.get(numberOfAnsweredQuestions));
+        return questions.get(numberOfAnsweredQuestions);
     }
 
     public Question getNextQuestion() {
         if (!hasNextQuestion()) {
             throw new NoSuchElementException("OnlineTest not started");
         }
-        Question question = Question.getById(questionIds.get(numberOfAnsweredQuestions + 1));
+        Question question = questions.get(numberOfAnsweredQuestions + 1);
         return question;
     }
 
     public boolean hasNextQuestion() {
-        return questionIds.size() > this.getNumberOfAnsweredQuestions();
+        return questions.size() > this.getNumberOfAnsweredQuestions();
     }
 
     public int getNumberOfAnsweredQuestions() {
@@ -44,7 +44,7 @@ public class OnlineTest {
     }
 
     public int getNumberOfQuestions() {
-        return (questionIds!=null) ? questionIds.size() : 0;
+        return (questions != null) ? questions.size() : 0;
     }
 
     public void moveToNextQuestion() {
@@ -52,11 +52,11 @@ public class OnlineTest {
     }
 
     public int getCorrectPercentage() {
-        return (int) ((double)this.correctAnswerCount/getNumberOfQuestions() * 100);
+        return (int) ((double) this.correctAnswerCount / getNumberOfQuestions() * 100);
     }
 
     public String showFinalMessage() {
-        if(getCorrectPercentage() < 85) {
+        if (getCorrectPercentage() < 85) {
             return "基本を学びなおしましょう";
         } else if (getCorrectPercentage() == 100) {
             return "あなたはスクラムマスター！";
@@ -83,9 +83,16 @@ public class OnlineTest {
 
     public String getAlertMsg(String lastDoneQuestionId) {
         String alertMsg = "";
-        if(!lastDoneQuestionId.equals(String.valueOf(getNumberOfAnsweredQuestions()))) {
+        if (!lastDoneQuestionId.equals(String.valueOf(getNumberOfAnsweredQuestions()))) {
             alertMsg = "You answered previous question twice";
         }
         return alertMsg;
+    }
+
+    public String getCategoryMessage() {
+        if (getCorrectAnswerCount() == 0) {
+            return questions.get(0).getCategory() + "をもっと勉強して";
+        }
+        return "よくできました";
     }
 }

@@ -32,6 +32,10 @@ public class Question extends ApplicationModel {
         return question.stream().findFirst().orElseThrow(() -> new IllegalArgumentException("No question found by given id."));
     }
 
+    public static List<Question> getNRandom(int count) {
+        return findBySQL("SELECT id, description, advice, category FROM questions ORDER BY RAND() LIMIT ?", count);
+    }
+
     public String getDescription() {
         return getString(DESCRIPTION);
     }

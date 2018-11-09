@@ -45,6 +45,34 @@ public class OnlineTestTest {
         assertEquals(5, questions.size());
     }
 
+    @Test
+    public void showよくできました(){
+        mockQuestion(1, "Scrum");
+        OnlineTest onlineTest = new OnlineTest(1);
+        onlineTest.setCorrectAnswerCount(1);
+        assertEquals("よくできました", onlineTest.getCategoryMessage());
+    }
+
+    @Test
+    public void showScrumをもっと勉強して(){
+        mockQuestion(1, "Scrum");
+        OnlineTest onlineTest = new OnlineTest(1);
+        onlineTest.setCorrectAnswerCount(0);
+        assertEquals("Scrumをもっと勉強して", onlineTest.getCategoryMessage());
+    }
+
+    @Test
+    public void showTDDをもっと勉強して(){
+        mockQuestion(1, "TDD");
+        OnlineTest onlineTest = new OnlineTest(1);
+        onlineTest.setCorrectAnswerCount(0);
+        assertEquals("TDDをもっと勉強して", onlineTest.getCategoryMessage());
+    }
+
+    private void mockQuestion(int numberOfQuestion, String category) {
+        IntStream.range(0, numberOfQuestion).forEach(index -> Question.createIt("description", "desc" + index, "advice", "adv" + index, "category", category));
+    }
+
     private void mockQuestion(int numberOfQuestion) {
         IntStream.range(0, numberOfQuestion).forEach(index -> Question.createIt("description", "desc" + index, "advice", "adv" + index));
     }

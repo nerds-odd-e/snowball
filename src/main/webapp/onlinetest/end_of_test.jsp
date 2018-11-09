@@ -21,7 +21,7 @@
                 <p id="message">${onlineTest.showFinalMessage()}</p>
             </div>
             <div>
-                <p id="category-message">よくできました</p>
+                <p id="category-message">${onlineTest.getCategoryMessage()}</p>
             </div>
             <p>
                 Thank you for your hard work.
