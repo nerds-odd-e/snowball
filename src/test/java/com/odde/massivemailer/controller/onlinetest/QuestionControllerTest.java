@@ -95,4 +95,32 @@ public class QuestionControllerTest {
         HttpSession session = request.getSession();
         assertEquals("",session.getAttribute("alertMsg"));
     }
+
+    @Test
+    public void doPostWithIncrementCorrectCountOnCorrectAnswer() throws ServletException, IOException {
+        Long optionId = question.getCorrectOptionId();
+        onlineTest = new OnlineTest(2);
+        request.addParameter("optionId", optionId.toString());
+        request.addParameter("lastDoneQuestionId", "0");
+        request.getSession().setAttribute("onlineTest", onlineTest);
+
+        controller.doPost(request, response);
+        HttpSession session = request.getSession();
+        OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
+        assertEquals(1,onlineTest.getCorrectAnswerCount());
+    }
+    
+    @Test
+    public void doPostWithNotIncrementCorrectCountOnIncorrectAnswer() throws ServletException, IOException {
+        Long optionId = question.getFirstOptionId();
+        onlineTest = new OnlineTest(2);
+        request.addParameter("optionId", optionId.toString());
+        request.addParameter("lastDoneQuestionId", "0");
+        request.getSession().setAttribute("onlineTest", onlineTest);
+
+        controller.doPost(request, response);
+        HttpSession session = request.getSession();
+        OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
+        assertEquals(0, onlineTest.getCorrectAnswerCount());
+    }
 }
