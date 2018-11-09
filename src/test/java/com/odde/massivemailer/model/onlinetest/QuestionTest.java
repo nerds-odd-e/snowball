@@ -37,9 +37,8 @@ public class QuestionTest {
 
     @Test
     public void shouldGetQuestionById() {
-        Question question1 = Question.createIt("description", "desc1", "advice", "adv1");
+        Question question1 = Question.createIt("description", "desc1", "advice", "adv1", "category", "scrum");
         Long id = question1.getLongId();
-
         Question actual = Question.getById(id);
         assertThat(actual, is(equalTo(question1)));
     }

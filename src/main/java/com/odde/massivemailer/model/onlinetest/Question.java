@@ -15,6 +15,7 @@ public class Question extends ApplicationModel {
 
     private static final String DESCRIPTION = "description";
     private static final String ADVICE = "advice";
+    private static final String CATEGORY = "category";
 
     static {
         validatePresenceOf("description");
@@ -37,6 +38,10 @@ public class Question extends ApplicationModel {
 
     public String getAdvice() {
         return getString(ADVICE);
+    }
+
+    public String getCategory() {
+        return getString(CATEGORY);
     }
 
     public Collection<AnswerOption> getOptions() {

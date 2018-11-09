@@ -49,14 +49,15 @@ Feature:
       | 7                  | 6                 | 1               | あともう少し        |
       | 1                  | 1                 | 0               | あなたはスクラムマスター！ |
 
-
-  Scenario: スクラムカテゴリーのみで全問正解
-    Given User is taking a onlineTest with 1 questions
-    And  User answered correctly the 1 th question page
-    Then 苦手カテゴリーのメッセージ欄に"よくできました"が表示される
-
   @developing
-  Scenario: スクラムカテゴリーのみで全問不正解
-    Given User is taking a onlineTest with 1 questions
-    And  User answered wrong the 1 th question page
-    Then 苦手カテゴリーのメッセージ欄に"スクラムをもっと勉強して"が表示される
+  Scenario Outline: 1カテゴリーのみが出題される
+    Given "<category>" から <number_of_questions> 題出題される
+    When  User answered wrong the <number_of_wrong> th question page
+    And  User answered correctly the <number_of_correct> th question page
+    Then 苦手カテゴリーのメッセージ欄に"<message>"が表示される
+
+    Examples:
+      | category | number_of_questions | number_of_wrong | number_of_correct | message       |
+      | scrum    | 1                   | 0               | 1                 | よくできました       |
+      | scrum    | 1                   | 1               | 0                 | scrumをもっと勉強して |
+      | TDD      | 1                   | 1               | 0                 | TDDをもっと勉強して   |

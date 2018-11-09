@@ -19,6 +19,10 @@ public class QuestionBuilder {
         return this;
     }
 
+    public QuestionBuilder aQuestion(String category) {
+        currentQuestion = Question.createIt("description", "myTest", "advice", null, "category", category);
+        return this;
+    }
     public QuestionBuilder withWrongOption(String optionText) {
         currentQuestion.createWrongOption(optionText);
         return this;

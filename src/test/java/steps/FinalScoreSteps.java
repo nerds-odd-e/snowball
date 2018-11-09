@@ -1,5 +1,6 @@
 package steps;
 
+import com.odde.massivemailer.factory.QuestionBuilder;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -77,5 +78,16 @@ public class FinalScoreSteps {
         UiElement categoryMessages = driver.findElementById("category-message");
 
         assertEquals(exceptedMessage, categoryMessages.getText());
+    }
+
+    @Given("^\"([^\"]*)\" から (\\d+) 題出題される$")
+    public void から題出題される(String category, int numberOfQuestions) throws Throwable {
+        for (int i = 0; i < numberOfQuestions; i++)
+            new QuestionBuilder()
+                    .aQuestion(category)
+                    .withWrongOption("wrongOption")
+                    .withCorrectOption("correctOption")
+                    .please();
+        site.visit(String.format("onlinetest/launchQuestion?question_count=%d", numberOfQuestions));
     }
 }
