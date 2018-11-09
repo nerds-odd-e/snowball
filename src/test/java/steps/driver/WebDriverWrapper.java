@@ -173,6 +173,10 @@ public class WebDriverWrapper {
         getRadioButtonBySelectorAndText("input", text).click();
     }
 
+    public void clickCheckBox(String text) {
+        getRadioButtonBySelectorAndText("input", text).click();
+    }
+
     private WebElement getRadioButtonBySelectorAndText(String selector, String text) {
         return getWebElementStreamOfParents(selector)
                 .filter(e-> e.getText().equals(text))

@@ -2,6 +2,7 @@ package steps;
 
 import com.odde.massivemailer.factory.QuestionBuilder;
 import cucumber.api.DataTable;
+import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -173,11 +174,11 @@ public class QuestionStep {
     public void 既に_スクラムにある役割は何がありますか_という複数選択回答の問題がある() {
         new QuestionBuilder()
                 .aQuestion("スクラムにある役割は何がありますか？", "スクラムにはPO,SM,チームがあります。")
-                .withWrongOption("社長")
+                .withWrongOption("BOSS")
                 .withWrongOption("CTO")
                 .withCorrectOption("PO")
                 .withCorrectOption("SM")
-                .withCorrectOption("チーム")
+                .withCorrectOption("Team")
                 .please();
     }
 
@@ -261,6 +262,10 @@ public class QuestionStep {
         assertEquals(1, elements.size());
         assertEquals(elements.get(0).getText(), text);
         assertEquals(elements.get(0).getCssValue("color"), Color.fromString("#dc3545").asRgba());
+    }
 
+    @When("^\"([^\"]*)\"を選択した$")
+    public void を選択した(String text) throws Throwable {
+        driver.clickCheckBox(text);
     }
 }
