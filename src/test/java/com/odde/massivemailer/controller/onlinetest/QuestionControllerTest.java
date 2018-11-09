@@ -71,4 +71,32 @@ public class QuestionControllerTest {
         HttpSession session = request.getSession();
         assertNull(session.getAttribute("options"));
     }
+
+    @Test
+    public void doPostWithMessageOnNotCurrentQuestionPage() throws ServletException, IOException {
+        Long optionId = question.getFirstOptionId();
+        onlineTest = new OnlineTest(2);
+        request.addParameter("optionId", optionId.toString());
+        request.addParameter("lastDoneQuestionId", "1");
+        request.getSession().setAttribute("correctlyAnsweredCount", 3);
+        request.getSession().setAttribute("onlineTest", onlineTest);
+
+        controller.doPost(request, response);
+        HttpSession session = request.getSession();
+        assertEquals("You answered previous question twice",session.getAttribute("alertMsg"));
+    }
+
+    @Test
+    public void doPostWithoutMessageOnCurrentQuestionPage() throws ServletException, IOException {
+        Long optionId = question.getFirstOptionId();
+        onlineTest = new OnlineTest(2);
+        request.addParameter("optionId", optionId.toString());
+        request.addParameter("lastDoneQuestionId", "0");
+        request.getSession().setAttribute("correctlyAnsweredCount", 3);
+        request.getSession().setAttribute("onlineTest", onlineTest);
+
+        controller.doPost(request, response);
+        HttpSession session = request.getSession();
+        assertEquals("",session.getAttribute("alertMsg"));
+    }
 }
