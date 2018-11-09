@@ -7,26 +7,32 @@
 
 <%
     OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
+    String alertMsg = (String) request.getSession().getAttribute("alertMsg");
     Question question = null;
     question = onlineTest.getCurrentQuestion();
+    pageContext.setAttribute("alertMsg", alertMsg);
     pageContext.setAttribute("question", question);
 %>
 
 <t:basic title="Question">
+    <jsp:attribute name="extra_head">
+        <link href="/resources/question.css" rel="stylesheet">
+    </jsp:attribute>
     <jsp:body>
         <div id="page-wrapper">
             <form name="question" id="questionForm" method="post"
                 action="question">
-                    <input type="hidden" id="numberOfAnsweredQuestions" name="numberOfAnsweredQuestions" value="${onlineTest.getNumberOfAnsweredQuestions()}">
+                    <input type="hidden" id="lastDoneQuestionId" name="lastDoneQuestionId" value="${onlineTest.getNumberOfAnsweredQuestions()}">
             <div class="container-fluid">
+                <p class="alertMsg">${alertMsg}</p>
                 <h1>Question</h1>
                  <c:if test="${not empty question }" >
                     <h2 id="description">${question.getDescription()}</h2>
                   </c:if>
                 <ul>
-                <c:forEach items="${question.getOptions()}" var="option">
+                <c:forEach items="${question.getOptions()}" var="option" varStatus="status">
                     <li>
-                        <input type="checkbox" name="optionId" value="${option.getLongId()}" checked/>${option.getDescription()}</label>
+                        <input type="checkbox" id="option${status.index + 1}" name="optionId" value="${option.getLongId()}" checked/>${option.getDescription()}</label>
                     </li>
                 </c:forEach>
                 </ul>

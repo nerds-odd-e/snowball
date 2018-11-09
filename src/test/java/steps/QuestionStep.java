@@ -268,4 +268,9 @@ public class QuestionStep {
     public void を選択した(String text) throws Throwable {
         driver.clickCheckBox(text);
     }
+
+    @Then("^EndOfTheTestが表示される事$")
+    public void endofthetestが表示される事() throws Throwable {
+        assertEquals("End Of Test", driver.getCurrentTitle());
+    }
 }
