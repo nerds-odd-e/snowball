@@ -90,13 +90,14 @@ public class OnlineTest {
     }
 
     public String getCategoryMessage() {
-        if (getCorrectAnswerCount() == 0) {
-            String categories = questions.stream()
-                    .sorted((q1, q2) -> (int) (q1.getLongId() - q2.getLongId()))
-                    .map(Question::getCategory)
-                    .collect(Collectors.joining("と"));
-            return categories + "をもっと勉強して";
+        if (getCorrectAnswerCount() == questions.size()) {
+            return "よくできました";
         }
-        return "よくできました";
+        String categories = questions.stream()
+                .sorted((q1, q2) -> (int) (q1.getLongId() - q2.getLongId()))
+                .map(Question::getCategory)
+                .distinct()
+                .collect(Collectors.joining("と"));
+        return categories + "をもっと勉強して";
     }
 }

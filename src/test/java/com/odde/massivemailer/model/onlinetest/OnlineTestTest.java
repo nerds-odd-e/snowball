@@ -89,6 +89,16 @@ public class OnlineTestTest {
 
     }
 
+    @Test
+    public void showWrongSingleCategoryMessage(){
+        mockQuestion(1, "TDD");
+        mockQuestion(1, "TDD");
+        OnlineTest onlineTest = new OnlineTest(2);
+
+        onlineTest.setCorrectAnswerCount(0);
+        assertEquals("TDDをもっと勉強して", onlineTest.getCategoryMessage());
+
+    }
 
     @Test
     public void showWrongMultiCategoryMessage(){
