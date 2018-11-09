@@ -27,10 +27,7 @@ public class AddQuestionControllerTest {
         controller = new AddQuestionController();
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
-    }
 
-    @Test
-    public void doPostAddQuestion() throws Exception {
         request.setParameter("description", "aaaaaaaaaaaaaaaa");
         request.setParameter("option1", "option1");
         request.setParameter("option2", "option2");
@@ -38,13 +35,15 @@ public class AddQuestionControllerTest {
         request.setParameter("option4", "option4");
         request.setParameter("option5", "option5");
         request.setParameter("option6", "option6");
+        request.setParameter("check", String.valueOf(1));
+    }
 
+    @Test
+    public void doPostAddQuestion() throws Exception {
         controller.doPost(request, response);
+        Question question = Question.findFirst("");
 
         String description = request.getParameter("description");
-        assertEquals("/onlinetest/question_list.jsp", response.getRedirectedUrl());
-
-        Question question = Question.findFirst("");
         assertEquals(description, question.getDescription());
 
         for (int i = 0; i < 6; i++) {
@@ -52,6 +51,19 @@ public class AddQuestionControllerTest {
             boolean hasOption = question.getOptions().stream().anyMatch(opt -> opt.getDescription().equals(option));
             assertTrue(hasOption);
         }
+
+        String rightOptionDescription = request.getParameter("option1");
+
+        Optional<AnswerOption> rightAnswer = question.getOptions().stream().filter(opt -> {
+            return opt.isCorrect();
+        }).findFirst();
+        assertEquals(rightAnswer.get().getDescription(), rightOptionDescription);
+
     }
 
+    @Test
+    public void redirectToQuestionListPage() throws Exception {
+        controller.doPost(request, response);
+        assertEquals("/onlinetest/question_list.jsp", response.getRedirectedUrl());
+    }
 }

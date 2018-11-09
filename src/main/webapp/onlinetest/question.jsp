@@ -27,9 +27,9 @@
                     <h2 id="description">${question.getDescription()}</h2>
                   </c:if>
                 <ul>
-                <c:forEach items="${question.getOptions()}" var="option">
+                <c:forEach items="${question.getOptions()}" var="option" varStatus="status">
                     <li>
-                        <input type="radio" name="optionId" value="${option.getLongId()}" checked/>${option.getDescription()}</label>
+                        <input type="radio" id="option${status.index + 1}" name="optionId" value="${option.getLongId()}" checked/>${option.getDescription()}</label>
                     </li>
                 </c:forEach>
                 </ul>

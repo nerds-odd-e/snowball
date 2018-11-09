@@ -22,12 +22,17 @@ public class AddQuestionController extends AppController {
         question.set("description", req.getParameter("description"));
         question.saveIt();
 
-
         for (int i = 0; i < 6; i++) {
             AnswerOption answerOption = new AnswerOption();
             answerOption.set("description", req.getParameter("option" + (i + 1)));
             answerOption.set("question_id", question.get("id"));
-            answerOption.set("is_correct", false);
+            if ( i == Integer.valueOf(req.getParameter("check")) - 1 ) {
+                answerOption.set("is_correct", 1);
+            }else{
+                answerOption.set("is_correct", 0);
+            }
+
+
             answerOption.saveIt();
         }
     }

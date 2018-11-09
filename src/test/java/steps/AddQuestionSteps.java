@@ -87,8 +87,8 @@ public class AddQuestionSteps {
 
 
     @Given("^\"([^\"]*)\"を回答として選択済み$")
-    public void を回答として選択済み(String answerText) throws Throwable {
-        driver.clickButtonByName(answerText);
+    public void を回答として選択済み(String optionId) throws Throwable {
+        driver.clickById(optionId);
     }
 
     @Given("^adviceが に\"([^\"]*)\"文字を入力する$")
@@ -123,20 +123,17 @@ public class AddQuestionSteps {
     }
 
     @Then("^\"([^\"]*)\"を回答として選択する$")
-    public void を回答として選択する(String arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void を回答として選択する(String optionName) throws Throwable {
+        driver.clickById(optionName);
     }
 
     @Then("^Answerボタンを押す$")
     public void answerボタンを押す() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        driver.clickById("answer");
     }
 
     @Then("^EndOfTheTestが表示される$")
     public void endofthetestが表示される() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        assertEquals(driver.getCurrentTitle(), "End Of Test");
     }
 }
