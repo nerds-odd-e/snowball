@@ -54,9 +54,7 @@ public class AddQuestionControllerTest {
 
         String rightOptionDescription = request.getParameter("option1");
 
-        Optional<AnswerOption> rightAnswer = question.getOptions().stream().filter(opt -> {
-            return opt.isCorrect();
-        }).findFirst();
+        Optional<AnswerOption> rightAnswer = question.getOptions().stream().filter(AnswerOption::isCorrect).findFirst();
         assertEquals(rightAnswer.get().getDescription(), rightOptionDescription);
 
     }

@@ -22,6 +22,14 @@ public class Question extends ApplicationModel {
         callbackWith(new QuestionCallbacks());
     }
 
+    public Question() {
+        //required by framework :(
+    }
+
+    public Question(String description) {
+        set(DESCRIPTION, description);
+    }
+
     static Stream<Long> getNRandomIds(int count) {
         LazyList<Model> ids = findBySQL("SELECT id FROM questions ORDER BY RAND() LIMIT ?", count);
         return ids.stream().map(Model::getLongId);

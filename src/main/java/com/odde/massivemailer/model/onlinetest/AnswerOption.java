@@ -26,6 +26,12 @@ public class AnswerOption extends ApplicationModel {
         setIsCorrect(isCorrect);
     }
 
+    public AnswerOption(long questionId, String description, boolean isCorrect) {
+        set(QUESTION_ID, questionId);
+        set(DESCRIPTION, description);
+        setIsCorrect(isCorrect);
+    }
+
     static Collection<AnswerOption> getForQuestion(Long questionId) {
         return where("question_id = ?", questionId);
     }

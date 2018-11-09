@@ -65,7 +65,7 @@ Feature:
       | 200                  | 5                | 5                | 5                | 0                | 0                | 0                | option1 | 10              |
       | 1                    | 100              | 5                | 5                | 0                | 0                | 0                | option1 | 10              |
       | 1                    | 5                | 5                | 5                | 0                | 0                | 0                | option1 | 500             |
-    
+
   @developing
   Scenario: 質問の追加が成功する
     Given Add Questionを開いている

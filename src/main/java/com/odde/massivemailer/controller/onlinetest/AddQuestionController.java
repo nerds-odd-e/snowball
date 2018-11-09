@@ -20,16 +20,14 @@ public class AddQuestionController extends AppController {
     }
 
     private void saveQuestion(HttpServletRequest req) {
-        Question question = new Question();
-        question.set("description", req.getParameter("description"));
+        Question question = new Question(req.getParameter("description"));
         question.saveIt();
 
         for (int i = 0; i < 6; i++) {
-            AnswerOption answerOption = new AnswerOption();
-            answerOption.set("description", req.getParameter("option" + (i + 1)));
-            answerOption.set("question_id", question.get("id"));
-            int isCorrect = i == Integer.valueOf(req.getParameter("check")) - 1 ? 1 : 0;
-            answerOption.set("is_correct", isCorrect);
+            String optionDescription = req.getParameter("option" + (i + 1));
+            long questionId = Long.valueOf(question.get("id").toString());
+            boolean isCorrect = i + 1 == Integer.valueOf(req.getParameter("check"));
+            AnswerOption answerOption = new AnswerOption(questionId, optionDescription, isCorrect);
             answerOption.saveIt();
         }
     }
