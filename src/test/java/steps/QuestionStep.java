@@ -184,7 +184,7 @@ public class QuestionStep {
 
     @When("^(\\d+)つ回答を選択する$")
     public void つ回答を選択する(int count) throws Throwable {
-        driver.findElements(By.cssSelector("input[type=checkbox]")).stream().limit(count+1).forEach(option -> option.click());
+        driver.findElements(By.cssSelector("input[type=checkbox]")).stream().limit(count).forEach(option -> option.click());
     }
 
     @Then("^(\\d+)つ回答が選択されている事$")

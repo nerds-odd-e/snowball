@@ -13,3 +13,5 @@ Feature: Show Multiple Question
     When "BOSS"を選択した
     And User clicks the answer button
     Then アドバイスページにいる
+
+
