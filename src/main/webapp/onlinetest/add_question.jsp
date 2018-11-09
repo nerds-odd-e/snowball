@@ -3,9 +3,11 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%
-    Boolean hasError = false;
-    pageContext.setAttribute("hasError", hasError);
+    String errorMessage = (String) request.getAttribute("errorMessage");
+    pageContext.setAttribute("errorMessage", errorMessage);
 %>
+
+
 
 <t:with_side_menu_and_status title="Add Question">
     <jsp:body>
@@ -21,19 +23,16 @@
 									<h3 class="panel-title">Question Information</h3>
 								</div>
 								<div class="panel-body">
-								<c:if test="${hasError}">
+								<c:if test="${not empty errorMessage}">
                                     <div id="message" class="alert alert-danger" role="alert">
-                                        Invalid inputs found!
+                                        ${errorMessage}
                                     </div>
-                                    <div id="message" class="alert alert-danger" role="alert">
-                                        Right answer is not selected!
-                                    </div>
-                                    </c:if>
+                                </c:if>
 									<div class="row">
 										<div class="col-lg-1">Description:</div>
 										<div class="col-lg-11">
 											<input type="text" class="form-control" name="description"
-												id="description">
+												id="description" maxlength="200">
 										</div>
 									</div>
 									<br> <br>
@@ -47,7 +46,7 @@
                                                 <span class="input-group-addon">
                                                 <input type="radio" id="option${i}" name="check" value="${i}" aria-label="Radio button for following text input">
                                                 </span>
-                                                <input type="text" class="form-control" name="option${i}" aria-label="Text input with radio button" width="100%">
+                                                <input type="text" class="form-control" name="option${i}" aria-label="Text input with radio button" width="100%" maxlength="100">
                                               </div>
                                           <br>
                                         </c:forEach>
@@ -59,7 +58,7 @@
 										<div class="col-lg-1">Advice:</div>
 										<div class="col-lg-11">
 											<input type="text" class="form-control" name="advice"
-												id="advice">
+												id="advice" maxlength="500">
 										</div>
 									</div>
 									<br> <br>

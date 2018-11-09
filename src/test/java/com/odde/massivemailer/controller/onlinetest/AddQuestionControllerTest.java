@@ -27,7 +27,9 @@ public class AddQuestionControllerTest {
         controller = new AddQuestionController();
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
+    }
 
+    private void setupValidRequest() {
         request.setParameter("description", "aaaaaaaaaaaaaaaa");
         request.setParameter("option1", "option1");
         request.setParameter("option2", "option2");
@@ -40,6 +42,7 @@ public class AddQuestionControllerTest {
 
     @Test
     public void doPostAddQuestion() throws Exception {
+        setupValidRequest();
         controller.doPost(request, response);
         Question question = Question.findFirst("");
 
@@ -56,12 +59,63 @@ public class AddQuestionControllerTest {
 
         Optional<AnswerOption> rightAnswer = question.getOptions().stream().filter(AnswerOption::isCorrect).findFirst();
         assertEquals(rightAnswer.get().getDescription(), rightOptionDescription);
-
     }
 
     @Test
     public void redirectToQuestionListPage() throws Exception {
+        setupValidRequest();
         controller.doPost(request, response);
         assertEquals("/onlinetest/question_list.jsp", response.getRedirectedUrl());
+    }
+
+    @Test
+    public void descriptionIsEmpty() throws Exception {
+        setupValidRequest();
+        request.setParameter("description", "");
+        controller.doPost(request, response);
+        String errorMessage = String.valueOf(request.getAttribute("errorMessage"));
+        assertEquals(errorMessage, "Invalid inputs found!");
+    }
+
+    @Test
+    public void option1stIsEmpty() throws Exception {
+        setupValidRequest();
+        request.setParameter("option1", "");
+        controller.doPost(request, response);
+
+        String errorMessage = String.valueOf(request.getAttribute("errorMessage"));
+        assertEquals(errorMessage, "Invalid inputs found!");
+    }
+
+    @Test
+    public void option2ndIsEmpty() throws Exception {
+        setupValidRequest();
+        request.setParameter("option2", "");
+        controller.doPost(request, response);
+
+        String errorMessage = String.valueOf(request.getAttribute("errorMessage"));
+        assertEquals(errorMessage, "Invalid inputs found!");
+    }
+
+    @Test
+    public void correctAnswerIsNotSelected() throws Exception {
+        setupValidRequest();
+        request.setParameter("check", (String)null);
+        controller.doPost(request, response);
+
+        String errorMessage = String.valueOf(request.getAttribute("errorMessage"));
+        assertEquals(errorMessage, "Right answer is not selected!");
+    }
+
+
+    @Test
+    public void doSelectedAnswerIsEmpty() throws Exception{
+        setupValidRequest();
+        request.setParameter("option3", "");
+        request.setParameter("check", String.valueOf(3));
+        controller.doPost(request, response);
+
+        String errorMessage = String.valueOf(request.getAttribute("errorMessage"));
+        assertEquals(errorMessage, "Invalid inputs found!");
     }
 }
