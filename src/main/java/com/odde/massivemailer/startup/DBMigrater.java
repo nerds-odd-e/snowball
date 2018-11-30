@@ -39,19 +39,6 @@ public class DBMigrater {
         }
     }
 
-    public String resetTable(String new_last_migration_name) {
-        List<Map> tables = Base.findAll("show tables");
-        for (Map table : tables) {
-            table.values().forEach(name ->{ Base.exec("drop table " + name); });
-        }
-        for (String migration : migrationFiles()) {
-                new_last_migration_name = migration;
-                Arrays.stream(loadMigration(migration).split(";")).filter(s -> !s.trim().isEmpty()).forEach(
-                        sql -> Base.exec(sql + ";"));
-        }
-        return new_last_migration_name;
-    }
-
     private List<String> migrationFiles() {
         return getResourceFiles("/db/migration");
     }
