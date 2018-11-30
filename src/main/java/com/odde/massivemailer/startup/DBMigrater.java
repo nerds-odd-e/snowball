@@ -23,7 +23,15 @@ public class DBMigrater {
             System.out.print("Migration for the first time...\n");
         }
 
-        new_last_migration_name = resetTable(new_last_migration_name);
+        for (String migration : migrationFiles()) {
+            if (migration.compareTo(last_migration_name)> 0) {
+                new_last_migration_name = migration;
+                Arrays.stream(loadMigration(migration).split(";")).filter(s -> !s.trim().isEmpty()).forEach(
+                        sql -> Base.exec(sql + ";"));
+            }
+        }
+
+        //new_last_migration_name = resetTable(new_last_migration_name);
 
         if (new_last_migration_name != null && !new_last_migration_name.equals(last_migration_name)) {
             Base.exec("insert into migration_info (last_migration_name) values (?);", new_last_migration_name);

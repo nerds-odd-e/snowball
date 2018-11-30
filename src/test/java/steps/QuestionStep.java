@@ -170,18 +170,6 @@ public class QuestionStep {
         driver.pageShouldContain(currentPage);
     }
 
-    @Given("^既に「スクラムにある役割は何がありますか？」という複数選択回答の問題がある$")
-    public void 既に_スクラムにある役割は何がありますか_という複数選択回答の問題がある() {
-        new QuestionBuilder()
-                .aQuestion("スクラムにある役割は何がありますか？", "スクラムにはPO,SM,チームがあります。")
-                .withCorrectOption("PO")
-                .withCorrectOption("SM")
-                .withWrongOption("BOSS")
-                .withCorrectOption("Team")
-                .withWrongOption("CTO")
-                .please();
-    }
-
     @When("^(\\d+)つ回答を選択する$")
     public void つ回答を選択する(int count) throws Throwable {
         driver.findElements(By.cssSelector("input[type=checkbox]")).stream().limit(count).forEach(option -> option.click());
@@ -191,54 +179,6 @@ public class QuestionStep {
     public void つ回答が選択されている事(int count) throws Throwable {
         int elementCount = driver.findElements(By.cssSelector("input[type=checkbox]:checked")).size();
         assertEquals(count, elementCount);
-    }
-
-    @And("^ユーザーの最初の問題です$")
-    public void ユーザーの最初の問題です() {
-        site.visit("onlinetest/launchQuestion");
-    }
-
-    @Then("^複数選択回答が表示されること$")
-    public void 複数選択回答が表示されること() throws Throwable {
-        int elementCount = driver.findElements(By.cssSelector("input[type=checkbox]")).size();
-        assertEquals(elementCount, 5);
-    }
-
-
-    @Then("^問題を表示する$")
-    public void 問題を表示する() throws Throwable {
-        driver.expectElementWithIdToContainValue("answer", "question");
-    }
-
-    @Then("^選択された問題を表示する$")
-    public void 選択された問題を表示する() throws Throwable {
-        driver.expectElementWithIdToContainText("description", "question");
-    }
-
-    @Then("^選択肢のチェックボックスを表示する$")
-    public void 選択肢のチェックボックスを表示する() throws Throwable {
-        driver.expectCheckBoxWithText("PO");
-    }
-
-    @Then("^Answerボタンを表示する$")
-    public void answerボタンを表示する() throws Throwable {
-        driver.expectElementWithIdToContainText("answer", "answer");
-    }
-
-    @Given("^アドミンが質問を２個用意する$")
-    public void アドミンが質問を２個用意する() throws Throwable {
-        new QuestionBuilder()
-                .aQuestion("元気ですか？", "残念です")
-                .withWrongOption("はい")
-                .withWrongOption("いいえ")
-                .withCorrectOption("はい")
-                .please();
-        new QuestionBuilder()
-                .aQuestion("楽しいですか？", "残念です")
-                .withWrongOption("はい")
-                .withWrongOption("いいえ")
-                .withCorrectOption("はい")
-                .please();
     }
 
     @When("^ユーザーがブラウザの戻るを実行する$")
@@ -262,15 +202,5 @@ public class QuestionStep {
         assertEquals(1, elements.size());
         assertEquals(elements.get(0).getText(), text);
         assertEquals(elements.get(0).getCssValue("color"), Color.fromString("#dc3545").asRgba());
-    }
-
-    @When("^\"([^\"]*)\"を選択した$")
-    public void を選択した(String text) throws Throwable {
-        driver.clickCheckBox(text);
-    }
-
-    @Then("^EndOfTheTestが表示される事$")
-    public void endofthetestが表示される事() throws Throwable {
-        assertEquals("End Of Test", driver.getCurrentTitle());
     }
 }
