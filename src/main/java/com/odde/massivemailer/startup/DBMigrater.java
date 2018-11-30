@@ -31,11 +31,10 @@ public class DBMigrater {
         }
     }
 
-    private String resetTable(String new_last_migration_name) {
+    public String resetTable(String new_last_migration_name) {
         List<Map> tables = Base.findAll("show tables");
         for (Map table : tables) {
-            Object tableName = table.get("Tables_in_massive_mailer_unittest");
-            Base.exec("drop table " + tableName);
+            table.values().forEach(name ->{ Base.exec("drop table " + name); });
         }
         for (String migration : migrationFiles()) {
                 new_last_migration_name = migration;
