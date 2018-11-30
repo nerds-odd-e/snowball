@@ -28,17 +28,6 @@ Feature:
       | xxx         |      | bbb  |      |      |      |      | 2        |        | Invalid inputs found!         |
       | xxx         |      |      | ccc  |      |      |      | 3        |        | Invalid inputs found!         |
 
-  @developing
-  Scenario: Duplicate question
-    Given Add Questionを開いている
-    And Descriptionに あああ が入力されている
-    And すでに あああ というQuestionが存在している
-    And option1に １１１ が入力されている
-    And option2に ２２２ が入力されている
-    And option1 が正解として選択されている
-    When Addボタンを押す
-    Then すでに存在している質問です というメッセージが表示される
-
   Scenario: 質問の追加が成功する
     Given Add Questionを開いている
     And Descriptionに"What is scrum?" を入力する

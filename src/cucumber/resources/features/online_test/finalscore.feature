@@ -1,12 +1,6 @@
 Feature:
   結果画面でカテゴリ毎にファイナルスコアの出力をテストする事
 
-  @developing
-  Scenario:
-    Given アドミンがスクラムのカテゴリの問題が10問つくられている
-    When ユーザが7問正答する
-    Then "スクラムをもっと勉強してください"が表示されてる事
-
   Scenario Outline: テストが全n問のとき最終ページの分母にnが表示される
     Given User is taking a onlineTest with <number_of_questions> questions
     And  User answered correctly the <number_of_questions> th question page
@@ -62,7 +56,6 @@ Feature:
       | TDD      | 1                   | 1               | 0                 | TDDをもっと勉強して   |
 
 
-  @now
   Scenario Outline: 2カテゴリーから出題される
     Given "<category1>" から <number_of_questions1> 題、"<category2>" から <number_of_questions2> 題出題される
     When  User answered wrong the <number_of_wrong> th question page
