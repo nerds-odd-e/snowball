@@ -89,3 +89,5 @@ secure-file-priv=""
 
 `mysql.server start`
 
+
+check new jenkins build
