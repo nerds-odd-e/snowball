@@ -16,7 +16,7 @@ public class DBConnectionFactory {
 
     private static void cleanDB() {
         List<Map> tables = Base.findAll("show tables");
-        tables.forEach(table->{table.values().forEach(name ->{ Base.exec("delete from " + name); });});
+        tables.forEach(table->{table.values().stream().filter(name-> name != "migration_info").forEach(name ->{ Base.exec("delete from " + name); });});
         Base.exec("INSERT INTO template (TemplateName,Subject,Content) VALUES ('Default Template 1', 'Greeting {FirstName}', 'Hi, {FirstName} {LastName} from {Company}')");
         Base.exec("INSERT INTO template (TemplateName,Subject,Content) VALUES ('RTA Default Template', 'Greeting {FirstName}', 'Hi, {FirstName} {LastName} from {Company}');");
         Base.exec("INSERT INTO template (TemplateName,Subject,Content) VALUES ('Pre-course Template', 'Greeting {FirstName}', 'Hi, {FirstName} {LastName} from {Company}');");
