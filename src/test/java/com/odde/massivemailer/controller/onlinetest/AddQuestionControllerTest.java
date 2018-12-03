@@ -116,6 +116,6 @@ public class AddQuestionControllerTest {
         controller.doPost(request, response);
 
         String errorMessage = String.valueOf(request.getAttribute("errorMessage"));
-        assertEquals(errorMessage, "Invalid inputs found!");
+        assertEquals(errorMessage, "Invalid inputs found!!");
     }
 }
