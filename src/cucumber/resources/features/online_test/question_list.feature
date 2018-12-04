@@ -8,7 +8,7 @@ Feature: A description
     When 質問リストのページをクリックする
     Then 質問リストに質問がある
 
-  @developing
+  @now
   Scenario: 質問を追加すると質問リストに表示される
     Given 質問を追加した
     When 質問リストのページをクリックする
