@@ -34,6 +34,12 @@ public class AddQuestionSteps {
         driver.setTextField("description", description);
     }
 
+    @Given("^Typeを\"([^\"]*)\" を選択する$")
+    public void typeを_を選択する(String arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
     @Given("^option(\\d+)に\"([^\"]*)\"を入力する$")
 
     public void option_に_を入力する(int optionNumber, String optionName) throws Throwable {
