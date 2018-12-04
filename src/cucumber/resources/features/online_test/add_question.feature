@@ -6,6 +6,34 @@ Feature:
     Then "Invalid inputs found!" というメッセージが表示されていない
     And "Right answer is not selected!" というメッセージが表示されていない
 
+  @developing
+  Scenario Outline: 何もしない
+    Given Add Questionを開いている
+    Then カテゴリーは何も選択されていない
+
+  @developing
+  Scenario Outline: カテゴリを選択する
+    Given Add Questionを開いてい
+    And Descriptionに"<description>" を入力する
+    And option1に"<opt1>"を入力する
+    And option2に"<opt2>"を入力する
+    And option3に"<opt3>"を入力する
+    And option4に"<opt4>"を入力する
+    And option5に"<opt5>"を入力する
+    And option6に"<opt6>"を入力する
+    And "<selected>"番目のoptionを選択する
+    And adviceに "<advice>" を入力する
+    And カテゴリーとして"<category>"が選択する
+    When Addボタンを押す
+    And 質問一覧ページに移動する
+    Then 質問一覧ページのカテゴリーに "<category>" が表示される
+    Examples:
+      | category  |
+      |           |
+      | Scrum     |
+      | Team      |
+      | Technical |
+
   Scenario Outline: Validation
     Given Add Questionを開いている
     And Descriptionに"<description>" を入力する
