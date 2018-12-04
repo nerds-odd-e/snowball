@@ -28,7 +28,6 @@ Feature:
       | xxx         |      | bbb  |      |      |      |      | 2        |        | Invalid inputs found!         |
       | xxx         |      |      | ccc  |      |      |      | 3        |        | Invalid inputs found!         |
 
-
   Scenario: 質問の追加が成功する
     Given Add Questionを開いている
     And Descriptionに"What is scrum?" を入力する
@@ -53,6 +52,26 @@ Feature:
     And Answerボタンを押す
     And EndOfTheTestが表示される
 
+  @developing
+  Scenario: 質問の追加が成功する
+    Given Add Questionを開いている
+    And Descriptionに"What is scrum?" を入力する
+    And option1に"Scrum is Rugby"を入力する
+    And option2に"Scrum is Baseball"を入力する
+    And option3に"Scrum is Soccer"を入力する
+    And option4に"Scrum is Sumo"を入力する
+    And "option1"を回答として選択済み
+    And advice に"Rugby is Scrum!!" を入力する
+    When Addボタンを押す
+    And OnlineTestを開始する
+    Then "What is scrum?"という問題が出題される
+    And option1に"Scrum is Rugby"が表示される
+    And option2に"Scrum is Baseball"が表示される
+    And option3に"Scrum is Soccer"が表示される
+    And option4に"Scrum is Sumo"が表示される
+    And "option1"を回答として選択する
+    And Answerボタンを押す
+    And EndOfTheTestが表示される
 
   @developing
   Scenario: 複数選択の問題を追加できる
