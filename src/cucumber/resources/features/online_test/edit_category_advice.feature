@@ -1,11 +1,6 @@
 Feature:
   Admin can add category advice
 
-  Background: Display Add Question page
-    Given Add Questionを開いている
-    Then "Invalid inputs found!" というメッセージが表示されていない
-    And "Right answer is not selected!" というメッセージが表示されていない
-
   @developing
   Scenario Outline: Validation
     Given Update Adviceを開いている
@@ -33,7 +28,7 @@ Feature:
       | team     | team_advice  |
 
   @developing
-  Scenario: Adviceの更新が成功する
+  Scenario Outline: Adviceの更新が成功する
     Given Update Adviceを開いている
     And adviceに"updated advice"を入力する
     And Categoryを"<category>"として選択済み
