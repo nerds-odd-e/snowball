@@ -66,6 +66,23 @@
 									<br> <br>
 
 									<div class="row">
+										<div class="col-lg-1">Options:</div>
+										<div class="col-lg-11">
+
+										<c:forEach var="i" begin="1" end="6" step="1">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                <input type="checkbox" id="checkbox${i}" name="check" value="${i}" aria-label="Checkbox for following text input">
+                                                </span>
+                                                <input type="text" class="form-control" name="checkbox${i}" aria-label="Text input with checkbox" width="100%" maxlength="100">
+                                              </div>
+                                          <br>
+                                        </c:forEach>
+                                        </div>
+									</div>
+									<br> <br>
+
+									<div class="row">
 										<div class="col-lg-1">Advice:</div>
 										<div class="col-lg-11">
 											<input type="text" class="form-control" name="advice"

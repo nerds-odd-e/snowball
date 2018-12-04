@@ -38,6 +38,18 @@ public class AddQuestionControllerTest {
         request.setParameter("check", String.valueOf(1));
     }
 
+    private void setupValidRequestForMultipleChoice() {
+        request.setParameter("description", "aaaaaaaaaaaaaaaa");
+        request.setParameter("checkbox1", "checkbox1");
+        request.setParameter("checkbox2", "checkbox2");
+        request.setParameter("checkbox3", "checkbox3");
+        request.setParameter("checkbox4", "checkbox4");
+        request.setParameter("checkbox5", "checkbox5");
+        request.setParameter("checkbox6", "checkbox6");
+        request.setParameter("check", String.valueOf(1));
+        request.setParameter("check", String.valueOf(2));
+    }
+
     @Test
     public void doPostAddQuestion() throws Exception {
         setupValidRequest();
@@ -58,6 +70,27 @@ public class AddQuestionControllerTest {
         Optional<AnswerOption> rightAnswer = question.getOptions().stream().filter(AnswerOption::isCorrect).findFirst();
         assertEquals(rightAnswer.get().getDescription(), rightOptionDescription);
     }
+
+    public void doPostAddQuestion_MultipleChoice() throws Exception {
+        setupValidRequestForMultipleChoice();
+        controller.doPost(request, response);
+        Question question = Question.findFirst("");
+
+        String description = request.getParameter("description");
+        assertEquals(description, question.getDescription());
+
+        for (int i = 0; i < 6; i++) {
+            String option = request.getParameter("checkbox" + (i + 1));
+            boolean hasOption = question.getOptions().stream().anyMatch(opt -> opt.getDescription().equals(option));
+            assertTrue(hasOption);
+        }
+
+        String rightOptionDescription = request.getParameter("checkbox1");
+
+        Optional<AnswerOption> rightAnswer = question.getOptions().stream().filter(AnswerOption::isCorrect).findFirst();
+        assertEquals(rightAnswer.get().getDescription(), rightOptionDescription);
+    }
+
 
     @Test
     public void redirectToQuestionListPage() throws Exception {
