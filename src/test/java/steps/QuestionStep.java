@@ -2,7 +2,6 @@ package steps;
 
 import com.odde.massivemailer.factory.QuestionBuilder;
 import cucumber.api.DataTable;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -22,15 +21,15 @@ public class QuestionStep {
     private final MassiveMailerSite site = new MassiveMailerSite();
     private final WebDriverWrapper driver = site.getDriver();
 
-    @Given("^Add a question \"([^\"]*)\"$")
-    public void add_a_question(String description) throws Throwable {
+    @Given("^Add a question \"([^\"]*)\" \"([^\"]*)\"$")
+    public void add_a_question(String description, String advice) throws Throwable {
         new QuestionBuilder()
-                .aQuestion(description, "Scrum is a framework for agile development.")
-                .withWrongOption("Scrum is Rugby")
-                .withWrongOption("Scrum is Baseball")
-                .withWrongOption("Scrum is Soccer")
-                .withWrongOption("Scrum is Sumo")
-                .withCorrectOption("None of the above")
+                .aQuestion(description, advice)
+                .withWrongOption("食べ物")
+                .withWrongOption("飲み物")
+                .withWrongOption("国")
+                .withWrongOption("動物")
+                .withCorrectOption("以上の何でもない")
                 .please();
     }
 

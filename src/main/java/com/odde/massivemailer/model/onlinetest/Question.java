@@ -26,8 +26,9 @@ public class Question extends ApplicationModel {
         //required by framework :(
     }
 
-    public Question(String description) {
+    public Question(String description, String advice) {
         set(DESCRIPTION, description);
+        set(ADVICE, advice);
     }
 
     static Stream<Long> getNRandomIds(int count) {

@@ -24,20 +24,20 @@ Feature:
       | correctOption   | Question     |
 
   Scenario Outline: advice page should include clear feedback
-    Given Add a question "What is scrum?"
+    Given Add a question "スクラムとは何ですか？"
     And User is on the first question
     When User chooses the "<incorrect option>" answer
     And User clicks the answer button
-    Then User should see "correct" option "#28a745" and text "None of the above"
+    Then User should see "correct" option "#28a745" and text "以上の何でもない"
     And User should see "selected incorrect" option "#dc3545" and text "<incorrect option>"
-    And User should see "Scrum is a framework for agile development."
+    And User should see "スクラムガイドを読みましょう。"
 
     Examples:
       | incorrect option  |
-      | Scrum is Rugby    |
-      | Scrum is Baseball |
-      | Scrum is Soccer   |
-      | Scrum is Sumo     |
+      | 食べ物 |
+      | 飲み物 |
+      | 国 |
+      | 動物 |
 
   Scenario Outline: User goes to end of test if he has answered all questions
     Given User is taking a onlineTest with 3 questions
