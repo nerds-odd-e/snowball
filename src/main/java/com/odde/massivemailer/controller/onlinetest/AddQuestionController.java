@@ -54,10 +54,10 @@ public class AddQuestionController extends AppController {
             String optionDescription = req.getParameter("option" + (i + 1));
             long questionId = Long.valueOf(question.get("id").toString());
             boolean isCorrect = i + 1 == Integer.valueOf(req.getParameter("check"));
-            if (!(i > 1 && optionDescription.isEmpty())) {
+         //   if (!(i > 1 && optionDescription.isEmpty())) {
                 AnswerOption answerOption = new AnswerOption(questionId, optionDescription, isCorrect);
                 answerOption.saveIt();
-            }
+          //  }
         }
     }
 }
