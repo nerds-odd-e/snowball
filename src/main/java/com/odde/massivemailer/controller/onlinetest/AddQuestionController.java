@@ -52,10 +52,12 @@ public class AddQuestionController extends AppController {
 
         for (int i = 0; i < 6; i++) {
             String optionDescription = req.getParameter("option" + (i + 1));
-            long questionId = Long.valueOf(question.get("id").toString());
-            boolean isCorrect = i + 1 == Integer.valueOf(req.getParameter("check"));
-            AnswerOption answerOption = new AnswerOption(questionId, optionDescription, isCorrect);
-            answerOption.saveIt();
+            if (!(i > 1 && optionDescription.isEmpty())) {
+                long questionId = Long.valueOf(question.get("id").toString());
+                boolean isCorrect = i + 1 == Integer.valueOf(req.getParameter("check"));
+                AnswerOption answerOption = new AnswerOption(questionId, optionDescription, isCorrect);
+                answerOption.saveIt();
+            }
         }
     }
 }

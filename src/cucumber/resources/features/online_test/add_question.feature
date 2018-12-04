@@ -81,7 +81,6 @@ Feature:
     And Answerボタンを押す
     And EndOfTheTestが表示される
 
-  @developing
   Scenario: 回答項目が6個未満の質問の追加が成功する
     Given Add Questionを開いている
     And Descriptionに"Terryさんはどこに住んでいますか？" を入力する
