@@ -35,9 +35,8 @@ public class AddQuestionSteps {
     }
 
     @Given("^Typeを\"([^\"]*)\" を選択する$")
-    public void typeを_を選択する(String arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void typeを_を選択する(String type) throws Throwable {
+        driver.setDropdownByText("type", type);
     }
 
     @Given("^option(\\d+)に\"([^\"]*)\"を入力する$")
