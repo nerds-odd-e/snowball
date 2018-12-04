@@ -28,6 +28,17 @@
                                         ${errorMessage}
                                     </div>
                                 </c:if>
+                                    <div class="row">
+                                        <div class="col-lg-1">Type:</div>
+                                        <div class="col-lg-11">
+                                        	<select name="type" id="typeList">
+                                        	    <option value="60" id="template_60">Single Choice</option>
+                                        	    <option value="61" id="template_61">Multiple Choice</option>
+                                        	</select>
+                                        </div>
+                                    </div>
+                                    <br> <br>
+
 									<div class="row">
 										<div class="col-lg-1">Description:</div>
 										<div class="col-lg-11">
