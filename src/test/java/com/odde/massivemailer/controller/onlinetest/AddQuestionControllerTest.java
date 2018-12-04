@@ -10,6 +10,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -29,6 +30,7 @@ public class AddQuestionControllerTest {
 
     private void setupValidRequest() {
         request.setParameter("description", "aaaaaaaaaaaaaaaa");
+        request.setParameter("type", "single");
         request.setParameter("option1", "option1");
         request.setParameter("option2", "option2");
         request.setParameter("option3", "option3");
@@ -40,6 +42,7 @@ public class AddQuestionControllerTest {
 
     private void setupValidRequestForMultipleChoice() {
         request.setParameter("description", "aaaaaaaaaaaaaaaa");
+        request.setParameter("type", "multiple");
         request.setParameter("checkbox1", "checkbox1");
         request.setParameter("checkbox2", "checkbox2");
         request.setParameter("checkbox3", "checkbox3");
@@ -71,6 +74,7 @@ public class AddQuestionControllerTest {
         assertEquals(rightAnswer.get().getDescription(), rightOptionDescription);
     }
 
+//    @Test
     public void doPostAddQuestion_MultipleChoice() throws Exception {
         setupValidRequestForMultipleChoice();
         controller.doPost(request, response);
@@ -85,10 +89,14 @@ public class AddQuestionControllerTest {
             assertTrue(hasOption);
         }
 
-        String rightOptionDescription = request.getParameter("checkbox1");
+        String rightOptionDescription1 = request.getParameter("checkbox1");
+        String rightOptionDescription2 = request.getParameter("checkbox2");
 
-        Optional<AnswerOption> rightAnswer = question.getOptions().stream().filter(AnswerOption::isCorrect).findFirst();
-        assertEquals(rightAnswer.get().getDescription(), rightOptionDescription);
+        final Stream<AnswerOption> rightAnswer = question.getOptions().stream().filter(AnswerOption::isCorrect);
+        final Object[] actual = rightAnswer.toArray();
+
+        assertEquals(rightOptionDescription2, ((AnswerOption)actual[0]).getDescription());
+        assertEquals(rightOptionDescription1, ((AnswerOption)actual[1]).getDescription());
     }
 
 
@@ -131,7 +139,7 @@ public class AddQuestionControllerTest {
     @Test
     public void correctAnswerIsNotSelected() throws Exception {
         setupValidRequest();
-        request.setParameter("check", (String)null);
+        request.setParameter("check", (String) null);
         controller.doPost(request, response);
 
         String errorMessage = String.valueOf(request.getAttribute("errorMessage"));
@@ -140,7 +148,7 @@ public class AddQuestionControllerTest {
 
 
     @Test
-    public void doSelectedAnswerIsEmpty() throws Exception{
+    public void doSelectedAnswerIsEmpty() throws Exception {
         setupValidRequest();
         request.setParameter("option3", "");
         request.setParameter("check", String.valueOf(3));

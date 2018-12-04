@@ -27,12 +27,28 @@ public class AddQuestionController extends AppController {
 
     private boolean validate(HttpServletRequest req) {
         String description = req.getParameter("description");
-        String option1 = req.getParameter("option1");
-        String option2 = req.getParameter("option2");
-        if ("".equals(description) || "".equals(option1) || "".equals(option2)) {
+        if ("".equals(description)) {
             req.setAttribute("errorMessage", "Invalid inputs found!");
             return false;
         }
+
+        String type = req.getParameter("type");
+        if ("single".equals(type)) {
+            String option1 = req.getParameter("option1");
+            String option2 = req.getParameter("option2");
+            if ("".equals(option1) || "".equals(option2)) {
+                req.setAttribute("errorMessage", "Invalid inputs found!");
+                return false;
+            }
+        } else {
+            String checkbox1 = req.getParameter("checkbox1");
+            String checkbox2 = req.getParameter("checkbox2");
+            if ("".equals(checkbox1) || "".equals(checkbox2)) {
+                req.setAttribute("errorMessage", "Invalid inputs found!");
+                return false;
+            }
+        }
+
         if (req.getParameter("check") == null) {
             req.setAttribute("errorMessage", "Right answer is not selected!");
             return false;
@@ -50,8 +66,14 @@ public class AddQuestionController extends AppController {
         Question question = new Question(req.getParameter("description"),req.getParameter("advice"));
         question.saveIt();
 
+        String type = req.getParameter("type");
         for (int i = 0; i < 6; i++) {
-            String optionDescription = req.getParameter("option" + (i + 1));
+            String optionDescription;
+            if ("single".equals(type)) {
+                optionDescription = req.getParameter("option" + (i + 1));
+            } else {
+                optionDescription = req.getParameter("checkbox" + (i + 1));
+            }
             if (!(i > 1 && optionDescription.isEmpty())) {
                 long questionId = Long.valueOf(question.get("id").toString());
                 boolean isCorrect = i + 1 == Integer.valueOf(req.getParameter("check"));

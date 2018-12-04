@@ -32,8 +32,8 @@
                                         <div class="col-lg-1">Type:</div>
                                         <div class="col-lg-11">
                                         	<select name="type" id="typeList">
-                                        	    <option value="60" id="template_60">Single Choice</option>
-                                        	    <option value="61" id="template_61">Multiple Choice</option>
+                                        	    <option value="single" id="single">Single Choice</option>
+                                        	    <option value="multiple" id="multiple">Multiple Choice</option>
                                         	</select>
                                         </div>
                                     </div>
