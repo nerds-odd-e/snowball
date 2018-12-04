@@ -202,4 +202,15 @@ public class QuestionStep {
         assertEquals(elements.get(0).getText(), text);
         assertEquals(elements.get(0).getCssValue("color"), Color.fromString("#dc3545").asRgba());
     }
+    @Then("^カテゴリーscrumの母数は(\\d+)が表示される$")
+    public void カテゴリーscrumの母数は_が表示される(int arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Then("^カテゴリーscrumの母数は>=(\\d+)が表示される$")
+    public void カテゴリーscrumの母数は_が表示される1(int arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
 }

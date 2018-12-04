@@ -23,6 +23,7 @@ public class QuestionControllerTest {
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
     private Question question;
+    private Question multipleAnswerQuestion;
     private OnlineTest onlineTest;
 
     @Before
@@ -31,14 +32,15 @@ public class QuestionControllerTest {
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
         question = createQuestionWithOptions();
+        multipleAnswerQuestion = createQuestionWithMultipleOptions();
         onlineTest = new OnlineTest(1);
         request.getSession().setAttribute("onlineTest", onlineTest);
     }
 
 
-    private Question createQuestionWithOptions(){
+    private Question createQuestionWithOptions() {
         Question question = Question.createIt("description", "What is Scrum?", "advice", "Scrum is a coding practice.");
-        Long id = (Long)question.getId();
+        Long id = (Long) question.getId();
         AnswerOption.createIt("description", "desc1", "question_id", id, "is_correct", 0);
         AnswerOption.createIt("description", "desc2", "question_id", id, "is_correct", 0);
         AnswerOption.createIt("description", "desc3", "question_id", id, "is_correct", 0);
@@ -48,6 +50,17 @@ public class QuestionControllerTest {
         return question;
     }
 
+    private Question createQuestionWithMultipleOptions() {
+        Question question = Question.createIt("description", "What is Scrum?", "advice", "Scrum is a coding practice.");
+        Long id = (Long) question.getId();
+        AnswerOption.createIt("description", "desc1", "question_id", id, "is_correct", 0);
+        AnswerOption.createIt("description", "desc2", "question_id", id, "is_correct", 1);
+        AnswerOption.createIt("description", "desc3", "question_id", id, "is_correct", 0);
+        AnswerOption.createIt("description", "desc4", "question_id", id, "is_correct", 0);
+        AnswerOption.createIt("description", "desc5", "question_id", id, "is_correct", 1);
+
+        return question;
+    }
 
     @Test
     public void postIncorrect() throws ServletException, IOException {
@@ -80,7 +93,7 @@ public class QuestionControllerTest {
 
         controller.doPost(request, response);
         HttpSession session = request.getSession();
-        assertEquals("You answered previous question twice",session.getAttribute("alertMsg"));
+        assertEquals("You answered previous question twice", session.getAttribute("alertMsg"));
     }
 
     @Test
@@ -93,7 +106,7 @@ public class QuestionControllerTest {
 
         controller.doPost(request, response);
         HttpSession session = request.getSession();
-        assertEquals("",session.getAttribute("alertMsg"));
+        assertEquals("", session.getAttribute("alertMsg"));
     }
 
     @Test
@@ -107,7 +120,7 @@ public class QuestionControllerTest {
         controller.doPost(request, response);
         HttpSession session = request.getSession();
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
-        assertEquals(1,onlineTest.getCorrectAnswerCount());
+        assertEquals(1, onlineTest.getCorrectAnswerCount());
     }
 
     @Test
@@ -122,5 +135,14 @@ public class QuestionControllerTest {
         HttpSession session = request.getSession();
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
         assertEquals(0, onlineTest.getCorrectAnswerCount());
+    }
+
+    @Test
+    public void doPostMultipleQuestionCorrectAnswer() throws ServletException, IOException {
+        String[] optionIds;
+        multipleAnswerQuestion.getOptions().stream().filter(o -> o.isCorrect()).forEach(o ->
+                request.addParameter("optionId", o.getId().toString())
+        );
+
     }
 }

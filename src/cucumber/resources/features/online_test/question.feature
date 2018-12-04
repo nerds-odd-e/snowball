@@ -124,3 +124,32 @@ Feature:
     Examples:
       | incorrect option |
       | wrongOption      |
+
+ @now
+  Scenario Outline: カテゴリ別の出題データをそれぞれ準備した際に、同じ割合で出題されていること
+    Given カテゴリ別の出題データを準備する
+    And カテゴリーscrum"<opt1>"を何個準備する
+    And カテゴリーteam"<opt2>"を何個準備する
+    And カテゴリーtechnical"<opt3>"を何個準備する
+    When 回答を終えた場合、
+    Then カテゴリーscrumの母数は<opt4>が表示される
+    And カテゴリーteamの母数は"<opt5>"が表示される
+    And カテゴリーtechnicalの母数は"<opt6>"が表示される
+
+
+    Examples:
+       | opt1 | opt2 | opt3 | opt4 | opt5 | opt6 |
+       | 10   | 5    | 0    |  5   | 5    | 0    |
+       | 10   | 10   | 10   |  >=3 | >=3  | >=3  |
+       | 10   | 1    | 1    |  8   | 1    | 1    |
+       | 3    | 3     | 3   |  3   | 3    | 3    |
+       | 3    | 1     | 3   |  3   | 1    | 3    |
+
+
+  Scenario Outline: 出題数の上限が固定されている
+    Given 問題開始画面に移動する
+    And カテゴリーscrum"<opt1>"を何個準備する
+    And カテゴリーteam"<opt2>"を何個準備する
+    And カテゴリーtechnical"<opt3>"を何個準備する
+    When 10回回答する
+    Then 結果画面に移動する
