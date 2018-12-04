@@ -125,31 +125,50 @@ Feature:
       | incorrect option |
       | wrongOption      |
 
- @now
+ @developing
   Scenario Outline: カテゴリ別の出題データをそれぞれ準備した際に、同じ割合で出題されていること
     Given カテゴリ別の出題データを準備する
-    And カテゴリーscrum"<opt1>"を何個準備する
-    And カテゴリーteam"<opt2>"を何個準備する
-    And カテゴリーtechnical"<opt3>"を何個準備する
-    When 回答を終えた場合、
-    Then カテゴリーscrumの母数は<opt4>が表示される
-    And カテゴリーteamの母数は"<opt5>"が表示される
-    And カテゴリーtechnicalの母数は"<opt6>"が表示される
+    And カテゴリー"scrum"を<opt1>個準備する
+    And カテゴリー"team"を<opt2>個準備する
+    And カテゴリー"technical"を<opt3>個準備する
+    When <opt7>回回答する
+    Then カテゴリー"scrum"の母数は<opt4>以上が表示される
+    And カテゴリー"team"の母数は<opt5>以上が表示される
+    And カテゴリー"technical"の母数は<opt6>以上が表示される
 
 
     Examples:
-       | opt1 | opt2 | opt3 | opt4 | opt5 | opt6 |
-       | 10   | 5    | 0    |  5   | 5    | 0    |
-       | 10   | 10   | 10   |  >=3 | >=3  | >=3  |
-       | 10   | 1    | 1    |  8   | 1    | 1    |
-       | 3    | 3     | 3   |  3   | 3    | 3    |
-       | 3    | 1     | 3   |  3   | 1    | 3    |
+       | opt1 | opt2 | opt3 | opt4 | opt5 | opt6 | opt7 |
+       | 10   | 5    | 0    |  5   | 5    | 0    | 10   |
+       | 10   | 10   | 10   |  3   | 3    | 3    | 10   |
+       | 10   | 1    | 1    |  8   | 1    | 1    | 10   |
+       | 3    | 3    | 3    |  3   | 3    | 3    | 9    |
+       | 3    | 1    | 3    |  3   | 1    | 3    | 7    |
 
 
+  @developing
   Scenario Outline: 出題数の上限が固定されている
     Given 問題開始画面に移動する
-    And カテゴリーscrum"<opt1>"を何個準備する
-    And カテゴリーteam"<opt2>"を何個準備する
-    And カテゴリーtechnical"<opt3>"を何個準備する
+    And カテゴリー"scrum"を3個準備する
+    And カテゴリー"team"を3個準備する
+    And カテゴリー"technical"を4個準備する
     When 10回回答する
     Then 結果画面に移動する
+    Examples:
+      |  |
+
+  @developing
+  Scenario Outline: 出題数の上限が固定されている
+    Given "topページ"に移動する
+    When "StartTest"をクリックする
+    Then 何も選択されていない
+    Examples:
+      |  |
+
+  @developing
+  Scenario Outline: 何も選択しないでanswerをクリックした場合、次の出題に移動しない
+    Given "StartTest"をクリックする
+    When "Answer"をクッリクする
+    Then 同じページが表示される
+    Examples:
+      |  |

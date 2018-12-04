@@ -202,15 +202,39 @@ public class QuestionStep {
         assertEquals(elements.get(0).getText(), text);
         assertEquals(elements.get(0).getCssValue("color"), Color.fromString("#dc3545").asRgba());
     }
-    @Then("^カテゴリーscrumの母数は(\\d+)が表示される$")
-    public void カテゴリーscrumの母数は_が表示される(int arg1) throws Throwable {
+//    @Then("^カテゴリーscrumの母数は(\\d+)が表示される$")
+//    public void カテゴリーscrumの母数は_が表示される(int arg1) throws Throwable {
+//        // Write code here that turns the phrase above into concrete actions
+//        throw new PendingException();
+//    }
+//
+//    @Then("^カテゴリーscrumの母数は>=(\\d+)が表示される$")
+//    public void カテゴリーscrumの母数は_が表示される1(int arg1) throws Throwable {
+//        // Write code here that turns the phrase above into concrete actions
+//        throw new PendingException();
+//    }
+@Given("^カテゴリ別の出題データを準備する$")
+public void カテゴリ別の出題データを準備する() throws Throwable {
+    // Write code here that turns the phrase above into concrete actions
+    throw new PendingException();
+}
+
+    @Given("^カテゴリー\"([^\"]*)\"を(\\d+)個準備する$")
+    public void カテゴリー_を_個準備する(String arg1, int arg2) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }
 
-    @Then("^カテゴリーscrumの母数は>=(\\d+)が表示される$")
-    public void カテゴリーscrumの母数は_が表示される1(int arg1) throws Throwable {
+    @When("^(\\d+)回回答する$")
+    public void 回回答する(int arg1) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }
+
+    @Then("^カテゴリー\"([^\"]*)\"の母数は(\\d+)以上が表示される$")
+    public void カテゴリー_の母数は_以上が表示される(String arg1, int arg2) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
 }
