@@ -45,6 +45,10 @@ public class AddQuestionSteps {
         driver.setTextField("option" + optionNumber, optionName);
     }
 
+    @Given("^checkbox(\\d+)に\"([^\"]*)\"を入力する$")
+    public void checkbox_に_を入力する(int checkboxNumber, String checkboxName) throws Throwable {
+        driver.setTextField("checkbox" + checkboxNumber, checkboxName);
+    }
 
     @Given("^\"([^\"]*)\"番目のoptionを選択する$")
     public void 番目のoptionを選択する(String selectedNumber) throws Throwable {
@@ -125,6 +129,11 @@ public class AddQuestionSteps {
     @Then("^option(\\d+)に\"([^\"]*)\"が表示される$")
     public void option_に_が表示される(int optionNumber, String optionName) throws Throwable {
         assertTrue(driver.getBodyText().contains(optionName));
+    }
+
+    @Then("^checkbox(\\d+)に\"([^\"]*)\"が表示される$")
+    public void checkbox_に_が表示される(int checkboxNumber, String checkboxName) throws Throwable {
+        assertTrue(driver.getBodyText().contains(checkboxName));
     }
 
     @Then("^\"([^\"]*)\"を回答として選択する$")
