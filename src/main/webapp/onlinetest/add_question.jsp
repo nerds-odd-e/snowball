@@ -39,6 +39,16 @@
                                     </div>
                                     <br> <br>
 
+                                    <div class="row">
+                                        <div class="col-lg-1">Category:</div>
+                                        <div class="col-lg-11">
+                                        	<select name="category" id="categoryList">
+                                        	    <option value="62"></option>
+                                        	</select>
+                                        </div>
+                                    </div>
+                                    <br> <br>
+
 									<div class="row">
 										<div class="col-lg-1">Description:</div>
 										<div class="col-lg-11">

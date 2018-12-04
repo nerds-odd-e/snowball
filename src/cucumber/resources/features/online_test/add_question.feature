@@ -7,14 +7,13 @@ Feature:
     Then "Invalid inputs found!" というメッセージが表示されていない
     And "Right answer is not selected!" というメッセージが表示されていない
 
-  @developing
-  Scenario Outline: 何もしない
+  Scenario: カテゴリーの初期値は空
     Given Add Questionを開いている
     Then カテゴリーは何も選択されていない
 
   @developing
   Scenario Outline: カテゴリを選択する
-    Given Add Questionを開いてい
+    Given Add Questionを開いている
     And Descriptionに"<description>" を入力する
     And option1に"<opt1>"を入力する
     And option2に"<opt2>"を入力する

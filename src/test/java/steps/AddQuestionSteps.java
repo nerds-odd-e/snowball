@@ -9,6 +9,7 @@ import cucumber.api.java.en.When;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.Select;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
@@ -26,6 +27,12 @@ public class AddQuestionSteps {
     public void AddQuestion() {
         site.visit("onlinetest/add_question.jsp");
         assertEquals(driver.getCurrentTitle(), "Add Question");
+    }
+
+    @Then("^カテゴリーは何も選択されていない$")
+    public void カテゴリーは何も選択されていない() throws Throwable {
+        Select select = new Select(driver.findElements(By.id("categoryList")).get(0));
+        assertEquals(select.getFirstSelectedOption().getText(),"");
     }
 
     @Then("^\"([^\"]*)\" というメッセージが表示されていない$")
