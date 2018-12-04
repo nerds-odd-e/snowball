@@ -27,8 +27,7 @@ import static org.mockito.Mockito.*;
 @RunWith(TestWithDB.class)
 public class GmailServiceTest {
 
-    private static final String[] RECIPIENTS = new String[]{"myodde@gmail.com",
-            "kit.sumate@gmail.com"};
+    private static final String[] RECIPIENTS = new String[]{"myodde@gmail.com", "kit.sumate@gmail.com"};
 
     private Session session;
     private GreenMail greenMail;
