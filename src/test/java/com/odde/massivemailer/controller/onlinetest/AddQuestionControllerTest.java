@@ -1,7 +1,6 @@
 package com.odde.massivemailer.controller.onlinetest;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.controller.onlinetest.AddQuestionController;
 import com.odde.massivemailer.model.onlinetest.AnswerOption;
 import com.odde.massivemailer.model.onlinetest.Question;
 import org.junit.Before;
@@ -10,11 +9,10 @@ import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import java.util.Collection;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.containsString;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(TestWithDB.class)
 public class AddQuestionControllerTest {
