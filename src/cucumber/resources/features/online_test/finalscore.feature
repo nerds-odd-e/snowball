@@ -119,3 +119,13 @@ Feature:
       | 79                    | 80                    | 80                    | true   |
       | 0                     | 0                     | 0                     | true   |
       | null                  | null                  | null                  | false  |
+
+  @developing
+  Scenario Outline: markdownが表示される
+    Given markdownの文字列 <markdown>
+    Then  <html> が表示される
+    Examples:
+      | markdown                          | html                                            |
+      | # abc                             | <h1>abc</h1>                                    |
+      | [abc](https://www.yahoo.co.jp)    | <a herf="https://www.yahoo.co.jp">abc</a>       |
+

@@ -39,6 +39,17 @@ Feature:
       | 国 |
       | 動物 |
 
+  @developing
+  Scenario Outline: Adviceのmarkdownが表示される
+    Given markdownの文字列 <markdown>
+    When User chooses the "<incorrect option>" answer
+    Then Adviceに <html> が表示される
+    Examples:
+      | incorrect option | markdown                           | html                                            |
+      | 食べ物            | # abc                              | <h1>abc</h1>                                    |
+      | 食べ物            | [abc](https://www.yahoo.co.jp)    | <a herf="https://www.yahoo.co.jp">abc</a>       |
+
+
   Scenario Outline: User goes to end of test if he has answered all questions
     Given User is taking a onlineTest with 3 questions
     And User answered correctly the <number_of_questions> th question page
