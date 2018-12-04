@@ -1,1 +1,1 @@
-ALTER TABLE `questions` ADD COLUMN `is_multi_question`;
+ALTER TABLE `questions` ADD COLUMN `is_multi_question` TINYINT;
