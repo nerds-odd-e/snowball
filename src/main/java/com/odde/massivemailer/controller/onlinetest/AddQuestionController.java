@@ -11,8 +11,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/onlinetest/add_question")
@@ -20,7 +18,9 @@ public class AddQuestionController extends AppController {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (!validate(req)) {
+        String errorMsg = checkParameter(req);
+        if (!errorMsg.isEmpty()) {
+            req.setAttribute("errorMessage", errorMsg);
             RequestDispatcher dispatch = req.getRequestDispatcher("/onlinetest/add_question.jsp");
             dispatch.forward(req, resp);
             return;
@@ -29,41 +29,36 @@ public class AddQuestionController extends AppController {
         resp.sendRedirect("/onlinetest/question_list.jsp");
     }
 
-    private boolean validate(HttpServletRequest req) {
-        String description = req.getParameter("description");
-        if ("".equals(description)) {
-            req.setAttribute("errorMessage", "Invalid inputs found!");
-            return false;
+    private String checkParameter(HttpServletRequest req) {
+        if ("".equals(req.getParameter("description"))) {
+            return "Invalid inputs found!";
         }
-
-        String type = req.getParameter("type");
-        if ("single".equals(type)) {
-            String option1 = req.getParameter("option1");
-            String option2 = req.getParameter("option2");
-            if ("".equals(option1) || "".equals(option2)) {
-                req.setAttribute("errorMessage", "Invalid inputs found!");
-                return false;
-            }
-        } else {
-            String checkbox1 = req.getParameter("checkbox1");
-            String checkbox2 = req.getParameter("checkbox2");
-            if ("".equals(checkbox1) || "".equals(checkbox2)) {
-                req.setAttribute("errorMessage", "Invalid inputs found!");
-                return false;
-            }
+        String paramName = getOptionParamName(req);
+        if ("".equals(req.getParameter(paramName + "1"))) {
+            return "Invalid inputs found!";
         }
-
-        if (req.getParameter("check") == null) {
-            req.setAttribute("errorMessage", "Right answer is not selected!");
-            return false;
+        if ("".equals(req.getParameter(paramName + "2"))) {
+            return "Invalid inputs found!";
         }
         String check = req.getParameter("check");
-        String rightAnswer = req.getParameter("option" + check);
-        if ("".equals(rightAnswer)) {
-            req.setAttribute("errorMessage", "Invalid inputs found!");
-            return false;
+        if (check == null) {
+            return "Right answer is not selected!";
         }
-        return true;
+        if ("".equals(req.getParameter("option" + check))) {
+            return "Invalid inputs found!";
+        }
+        return "";
+    }
+
+    private String getOptionParamName(HttpServletRequest req) {
+        String type = req.getParameter("type");
+        String paramName;
+        if ("single".equals(type)) {
+            paramName = "option";
+        } else {
+            paramName = "checkbox";
+        }
+        return paramName;
     }
 
     private void saveQuestion(HttpServletRequest req) {
