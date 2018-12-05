@@ -31,6 +31,7 @@ public class AddQuestionControllerTest {
     private void setupValidRequest() {
         request.setParameter("description", "aaaaaaaaaaaaaaaa");
         request.setParameter("type", "single");
+        request.setParameter("category", "1");
         request.setParameter("option1", "option1");
         request.setParameter("option2", "option2");
         request.setParameter("option3", "option3");
@@ -43,6 +44,7 @@ public class AddQuestionControllerTest {
     private void setupValidRequestForMultipleChoice() {
         request.setParameter("description", "aaaaaaaaaaaaaaaa");
         request.setParameter("type", "multiple");
+        request.setParameter("category", "2");
         request.setParameter("checkbox1", "checkbox1");
         request.setParameter("checkbox2", "checkbox2");
         request.setParameter("checkbox3", "checkbox3");
@@ -61,6 +63,9 @@ public class AddQuestionControllerTest {
 
         String description = request.getParameter("description");
         assertEquals(description, question.getDescription());
+
+        String category = request.getParameter("category");
+        assertEquals(category, question.getCategory());
 
         for (int i = 0; i < 6; i++) {
             String option = request.getParameter("option" + (i + 1));

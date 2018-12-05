@@ -27,9 +27,10 @@ public class Question extends ApplicationModel {
         //required by framework :(
     }
 
-    public Question(String description, String advice) {
+    public Question(String description, String advice, String category) {
         set(DESCRIPTION, description);
         set(ADVICE, advice);
+        set(CATEGORY, category);
     }
 
     public Question(String description, String advice, int isMultiQuestion) {

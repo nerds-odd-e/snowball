@@ -179,4 +179,14 @@ public class AddQuestionSteps {
     public void endofthetestが表示される() throws Throwable {
         assertEquals(driver.getCurrentTitle(), "End Of Test");
     }
+
+    @Then("^質問一覧ページのカテゴリーに \"([^\"]*)\" が表示される$")
+    public void 質問一覧ページのカテゴリーに_が表示される(String description) throws Throwable {
+        assertEquals(driver.findElementById("category").getText(),description);
+    }
+
+    @Given("^カテゴリーとして\"([^\"]*)\"が選択する$")
+    public void カテゴリーとして_が選択する(String category) throws Throwable {
+        driver.setDropdownByText("category", category);
+    }
 }

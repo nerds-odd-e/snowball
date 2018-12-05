@@ -63,7 +63,9 @@ public class AddQuestionController extends AppController {
     }
 
     private void saveQuestion(HttpServletRequest req) {
-        Question question = new Question(req.getParameter("description"),req.getParameter("advice"));
+        Question question = new Question(req.getParameter("description"),
+                                         req.getParameter("advice"),
+                                         req.getParameter("category"));
         question.saveIt();
 
         String type = req.getParameter("type");

@@ -48,7 +48,10 @@
                                         <div class="col-lg-1">Category:</div>
                                         <div class="col-lg-11">
                                         	<select name="category" id="categoryList">
-                                        	    <option value="62"></option>
+                                        	    <option value="0"></option>
+                                        	    <option value="1">Scrum</option>
+                                        	    <option value="2">Tech</option>
+                                        	    <option value="3">Team</option>
                                         	</select>
                                         </div>
                                     </div>

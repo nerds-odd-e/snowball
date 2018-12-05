@@ -27,6 +27,10 @@
                                         <td id="description">what is 1+1?</td>
                                     </tr>
                                     <tr>
+                                        <th>Category</th>
+                                        <td id="category">Scrum</td>
+                                    </tr>
+                                    <tr>
                                         <th>Option1</th>
                                         <td id="option1">must be 3!</td>
                                     </tr>
