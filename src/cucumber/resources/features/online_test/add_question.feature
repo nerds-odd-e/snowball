@@ -85,9 +85,7 @@ Feature:
     Given Add Questionを開いている
     And Descriptionに"Terryさんはどこに住んでいますか？" を入力する
     And option1に"シンガポール"を入力する
-    And option2に"カナダ"を入力するi
-    And option3に"アメリカ"を入力する
-    And option4に"日本"を入力する
+    And option2に"カナダ"を入力する
     And "option1"を回答として選択済み
     And advice に"Rugby is Scrum!!" を入力する
     When Addボタンを押す
@@ -95,8 +93,6 @@ Feature:
     Then "Terryさんはどこに住んでいますか？"という問題が出題される
     And option1に"シンガポール"が表示される
     And option2に"カナダ"が表示される
-    And option3に"アメリカ"が表示される
-    And option4に"日本"が表示される
     And "option1"を回答として選択する
     And Answerボタンを押す
     And EndOfTheTestが表示される
@@ -154,3 +150,15 @@ Feature:
     And "checkbox2"を回答として選択する
     And Answerボタンを押す
     And EndOfTheTestが表示される
+
+  @developing
+  Scenario: Added question would be shown in question list page
+    Given Question added
+    | Description | What is scrum?  |
+    | Option1     | Rugby           |
+    | Option2     | Football        |
+    When Click question list button
+    Then User should see questions and options
+      | Description | What is scrum?  |
+      | Option1     | Rugby           |
+      | Option2     | Football        |
