@@ -36,7 +36,7 @@
                                     <div class="row">
                                         <div class="col-lg-1">Type:</div>
                                         <div class="col-lg-11">
-                                        	<select name="type" id="typeList">
+                                        	<select name="type" id="typeList" onchange="switchOptionView(this.value)">
                                         	    <option value="single" id="single">Single Choice</option>
                                         	    <option value="multiple" id="multiple">Multiple Choice</option>
                                         	</select>
@@ -77,8 +77,9 @@
                                           <br>
                                         </c:forEach>
                                         </div>
+									    <br> <br>
 									</div>
-									<br> <br>
+
 
 									<div class="row" id="checkboxes">
 										<div class="col-lg-1">Options:</div>
@@ -94,8 +95,9 @@
                                           <br>
                                         </c:forEach>
                                         </div>
+									    <br> <br>
 									</div>
-									<br> <br>
+
 
 									<div class="row">
 										<div class="col-lg-1">Advice:</div>

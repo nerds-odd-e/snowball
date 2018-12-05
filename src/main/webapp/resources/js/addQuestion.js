@@ -1,3 +1,7 @@
+$(document).ready(function() {
+	switchOptionView("single");
+});
+
 function switchOptionView(choiceType)
 {
     if (choiceType === "single") {
