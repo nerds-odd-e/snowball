@@ -31,7 +31,6 @@ public class QuestionController extends AppController {
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
         String[] answeredOptionIds = req.getParameterValues("optionId");
 
-        // not selected
         if (req.getParameterValues("optionId") == null) {
             resp.sendRedirect(getRedirectPageName(true));
             return;
