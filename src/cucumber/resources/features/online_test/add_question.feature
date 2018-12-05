@@ -157,8 +157,7 @@ Feature:
     | Description | What is scrum?  |
     | Option1     | Rugby           |
     | Option2     | Football        |
-    When Click question list button
-    Then User should see questions and options
+    Then User should see questions and options in question list page
       | Description | What is scrum?  |
       | Option1     | Rugby           |
       | Option2     | Football        |

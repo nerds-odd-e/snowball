@@ -1,5 +1,7 @@
 package steps;
 
+import com.odde.massivemailer.factory.QuestionBuilder;
+import cucumber.api.DataTable;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -9,6 +11,8 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
+
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -65,6 +69,24 @@ public class AddQuestionSteps {
     @When("^Addボタンを押す$")
     public void addボタンを押す() throws Throwable {
         driver.clickButton("add_button");
+    }
+
+    @Given("^Question added$")
+    public void questionAdded(DataTable question) throws Throwable {
+        Map<String, String> questionMap = question.asMap(String.class, String.class);
+        new QuestionBuilder()
+                .aQuestion(questionMap.get("description"))
+                .withCorrectOption(questionMap.get("option1"))
+                .withWrongOption(questionMap.get("option2"))
+                .please();
+    }
+
+    @Then("^User should see questions and options in question list page$")
+    public void userShouldSeeQuestionsAndOptionsInQuestionListPage(DataTable question) throws Throwable {
+        Map<String, String> questionMap = question.asMap(String.class, String.class);
+        assertTrue(driver.getBodyText().contains(questionMap.get("description")));
+        assertTrue(driver.getBodyText().contains(questionMap.get("option1")));
+        assertTrue(driver.getBodyText().contains(questionMap.get("option2")));
     }
 
     class Result {
