@@ -96,7 +96,7 @@ public class QuestionControllerTest {
         assertEquals("", session.getAttribute("alertMsg"));
     }
 
-    //@Test because getCorrectOptionId method is no use
+    @Test
     public void doPostWithIncrementCorrectCountOnCorrectAnswer() throws ServletException, IOException {
         Long optionId = question.getCorrectOptionId();
         onlineTest = new OnlineTest(2);
