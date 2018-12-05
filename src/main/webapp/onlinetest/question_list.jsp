@@ -2,6 +2,15 @@
 	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+
+<%@ page import="com.odde.massivemailer.model.onlinetest.OnlineTest" %>
+<%@ page import="com.odde.massivemailer.model.onlinetest.Question" %>
+<%
+    OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
+    Question question = null;
+    question = onlineTest.getCurrentQuestion();
+    pageContext.setAttribute("question", question);
+%>
 <t:with_side_menu title="Question List">
     <jsp:body>
 			<div class="container-fluid">
@@ -24,32 +33,22 @@
                                 <tbody id="questionTable">
                                     <tr>
                                         <th>Description</th>
-                                        <td id="description">what is 1+1?</td>
+                                        <td id="description">${question.getDescription()}</td>
                                     </tr>
-                                    <tr>
-                                        <th>Category</th>
-                                        <td id="category">Scrum</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Option1</th>
-                                        <td id="option1">must be 3!</td>
-                                    </tr>
+                            <c:forEach items="${question.getOptions()}" var="option" varStatus="status">
+                                <c:if test="${status.index}= '1'">
                                     <tr id="option2row" class="bg-success">
                                         <th>Option2</th>
-                                        <td id="option2">of course 2.</td>
+                                        <td id="option2">${option.getLongId()}</td>
                                     </tr>
+                                 </c:if>
+                                <c:if test="${status.index}= '0'">
                                     <tr>
-                                        <th>Option3</th>
-                                        <td id="option3">must be 3!</td>
+                                        <th>Option1</th>
+                                        <td id="option1">${option.getLongId()}</td>
                                     </tr>
-                                    <tr>
-                                        <th>Option4</th>
-                                        <td id="option4">of course 4.</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Option5</th>
-                                        <td id="option5">of course 5.</td>
-                                    </tr>
+                                 </c:if>
+                            </c:forEach>
                                     <tr>
                                         <th>Advice</th>
                                         <td id="advice">you should read a math book</td>
