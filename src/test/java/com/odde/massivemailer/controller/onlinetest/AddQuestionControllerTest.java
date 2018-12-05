@@ -144,6 +144,26 @@ public class AddQuestionControllerTest {
     }
 
     @Test
+    public void checkbox1stIsEmpty() throws Exception {
+        setupValidRequestForMultipleChoice();
+        request.setParameter("checkbox1", "");
+        controller.doPost(request, response);
+
+        String errorMessage = String.valueOf(request.getAttribute("errorMessage"));
+        assertEquals(errorMessage, "Invalid inputs found!");
+    }
+
+    @Test
+    public void checkbox2ndIsEmpty() throws Exception {
+        setupValidRequestForMultipleChoice();
+        request.setParameter("checkbox2", "");
+        controller.doPost(request, response);
+
+        String errorMessage = String.valueOf(request.getAttribute("errorMessage"));
+        assertEquals(errorMessage, "Invalid inputs found!");
+    }
+
+    @Test
     public void correctAnswerIsNotSelected() throws Exception {
         setupValidRequest();
         request.setParameter("check", (String) null);
@@ -153,12 +173,24 @@ public class AddQuestionControllerTest {
         assertEquals(errorMessage, "Right answer is not selected!");
     }
 
-
     @Test
     public void doSelectedAnswerIsEmpty() throws Exception {
         setupValidRequest();
         request.setParameter("option3", "");
         request.setParameter("check", String.valueOf(3));
+        controller.doPost(request, response);
+
+        String errorMessage = String.valueOf(request.getAttribute("errorMessage"));
+        assertEquals(errorMessage, "Invalid inputs found!");
+    }
+
+    @Test
+    public void doSelectedAnswerIsEmpty_MultipleChoice() throws Exception {
+        setupValidRequestForMultipleChoice();
+        request.setParameter("checkbox3", "");
+        final String[] checks = new String[1];
+        checks[0] = "3";
+        request.setParameter("check", checks);
         controller.doPost(request, response);
 
         String errorMessage = String.valueOf(request.getAttribute("errorMessage"));

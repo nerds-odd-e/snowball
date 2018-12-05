@@ -40,7 +40,7 @@ public class AddQuestionController extends AppController {
                 new EmptyValidator(req.getParameter("description")),
                 new EmptyValidator(req.getParameter(paramName + "1")),
                 new EmptyValidator(req.getParameter(paramName + "2")),
-                new EmptyValidator(req.getParameter("option" + check))
+                new EmptyValidator(req.getParameter(paramName + check))
         );
         for (EmptyValidator validator : validators) {
             if (validator.inValid()) {
