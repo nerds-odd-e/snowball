@@ -1,6 +1,13 @@
 Feature:
   Admin can add category advice
 
+  @now
+  Scenario: give advice on failed category
+    Given the advice for "Scrum" is "Go read the Scrum Guide"
+    When I answer 4 questions wrong out of 5
+    Then I should see "Go read the Scrum Guide" in the final result page
+
+
   @developing
   Scenario Outline: Validation
     Given Update Adviceを開いている
@@ -10,10 +17,8 @@ Feature:
     Then "<messages>"というメッセージが表示される
     Examples:
       | category | advice | messages                        |
-      |          | foo    | カテゴリーを選んでください          |
-      | scrum    |        | Scrumのアドバイスを入力してください |
-      |          |        | カテゴリーを選んでください          |
-      | scrum    | foo    |                                 |
+      | Scrum    |        | Scrumのアドバイスを入力してください |
+      | Scrum    | foo    |                                 |
 
   @developing
   Scenario Outline: Adviceの呼び出し
@@ -22,10 +27,9 @@ Feature:
     Then "<advice>"がAdviceのフォームに表示される
     Examples:
       | category | advice       |
-      |          |              |
-      | scrum    | scrum_advice |
-      | tech     | tech_advice  |
-      | team     | team_advice  |
+      | Scrum    | scrum_advice |
+      | Tech     | tech_advice  |
+      | Team     | team_advice  |
 
   @developing
   Scenario Outline: Adviceの更新が成功する
@@ -37,6 +41,6 @@ Feature:
     And Categoryで"<category>"が選択済み
     Examples:
       | category |
-      | scrum    |
-      | tech     |
-      | team     |
+      | Scrum    |
+      | Tech     |
+      | Team     |
