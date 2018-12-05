@@ -2,6 +2,7 @@ package steps;
 
 import com.odde.massivemailer.factory.QuestionBuilder;
 import cucumber.api.DataTable;
+import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -201,6 +202,54 @@ public class QuestionStep {
         assertEquals(1, elements.size());
         assertEquals(elements.get(0).getText(), text);
         assertEquals(elements.get(0).getCssValue("color"), Color.fromString("#dc3545").asRgba());
+    }
+
+    @Given("^ユーザが(\\d+)個を選択する$")
+    public void ユーザが_個を選択する(int arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @When("^\"([^\"]*)\"をクリックする$")
+    public void をクリックする(String arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @When("^(\\d+)個の選択のうち、(\\d+)個が正しい$")
+    public void 個の選択のうち_個が正しい(int arg1, int arg2) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @When("^問題が存在する yes$")
+    public void 問題が存在する_yes() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Then("^Question ページに遷移する$")
+    public void question_ページに遷移する() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @When("^問題が存在する No$")
+    public void 問題が存在する_No() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Then("^End Of Test ページに遷移する$")
+    public void end_Of_Test_ページに遷移する() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Then("^Advice ページに遷移する$")
+    public void advice_ページに遷移する() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
     }
 
 }

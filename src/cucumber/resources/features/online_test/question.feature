@@ -33,11 +33,11 @@ Feature:
     And User should see "スクラムガイドを読みましょう。"
 
     Examples:
-      | incorrect option  |
-      | 食べ物 |
-      | 飲み物 |
-      | 国 |
-      | 動物 |
+      | incorrect option |
+      | 食べ物              |
+      | 飲み物              |
+      | 国                |
+      | 動物               |
 
   @developing
   Scenario Outline: Adviceのmarkdownが表示される
@@ -45,9 +45,9 @@ Feature:
     When User chooses the "<incorrect option>" answer
     Then Adviceに <html> が表示される
     Examples:
-      | incorrect option | markdown                           | html                                            |
-      | 食べ物            | # abc                              | <h1>abc</h1>                                    |
-      | 食べ物            | [abc](https://www.yahoo.co.jp)    | <a herf="https://www.yahoo.co.jp">abc</a>       |
+      | incorrect option | markdown                       | html                                      |
+      | 食べ物              | # abc                          | <h1>abc</h1>                              |
+      | 食べ物              | [abc](https://www.yahoo.co.jp) | <a herf="https://www.yahoo.co.jp">abc</a> |
 
 
   Scenario Outline: User goes to end of test if he has answered all questions
@@ -136,7 +136,7 @@ Feature:
       | incorrect option |
       | wrongOption      |
 
- @developing
+  @developing
   Scenario Outline: カテゴリ別の出題データをそれぞれ準備した際に、同じ割合で出題されていること
     Given カテゴリ別の出題データを準備する
     And カテゴリー"scrum"を<opt1>個準備する
@@ -149,12 +149,12 @@ Feature:
 
 
     Examples:
-       | opt1 | opt2 | opt3 | opt4 | opt5 | opt6 | opt7 |
-       | 10   | 5    | 0    |  5   | 5    | 0    | 10   |
-       | 10   | 10   | 10   |  3   | 3    | 3    | 10   |
-       | 10   | 1    | 1    |  8   | 1    | 1    | 10   |
-       | 3    | 3    | 3    |  3   | 3    | 3    | 9    |
-       | 3    | 1    | 3    |  3   | 1    | 3    | 7    |
+      | opt1 | opt2 | opt3 | opt4 | opt5 | opt6 | opt7 |
+      | 10   | 5    | 0    | 5    | 5    | 0    | 10   |
+      | 10   | 10   | 10   | 3    | 3    | 3    | 10   |
+      | 10   | 1    | 1    | 8    | 1    | 1    | 10   |
+      | 3    | 3    | 3    | 3    | 3    | 3    | 9    |
+      | 3    | 1    | 3    | 3    | 1    | 3    | 7    |
 
 
   @developing
@@ -179,7 +179,27 @@ Feature:
   @developing
   Scenario Outline: 何も選択しないでanswerをクリックした場合、次の出題に移動しない
     Given "StartTest"をクリックする
-    When "Answer"をクッリクする
+    When "Answer"をクリックする
     Then 同じページが表示される
     Examples:
       |  |
+
+  @developing
+  Scenario Outline: 複数回答の問題に回答できる
+    Given ユーザが<n>個を選択する
+    When "Answer"をクリックする
+    And <n>個の選択のうち、<m>個が正しい
+    When 問題が存在する <exists_question>
+    Then <page> ページに遷移する
+    Examples:
+      | n | m | exists_question | page        |
+      | 1 | 1 | yes             | Question    |
+      | 2 | 2 | yes             | Question    |
+      | 1 | 1 | No              | End Of Test |
+      | 2 | 2 | No              | End Of Test |
+      | 2 | 1 | yes             | Advice      |
+      | 2 | 1 | No              | Advice      |
+      | 2 | 0 | yes             | Advice      |
+      | 2 | 0 | No              | Advice      |
+      | 1 | 0 | yes             | Advice      |
+      | 1 | 0 | No              | Advice      |
