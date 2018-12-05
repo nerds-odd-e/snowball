@@ -1,4 +1,4 @@
-describe('Show Add Question Page', function() {
+describe('Add Question Page', function() {
 
 	var rootId = "testContainer";
 	var markup = "<div class='row' id='options'>test</div> <div class='row' id='checkboxes'>test</div>";
@@ -17,7 +17,7 @@ describe('Show Add Question Page', function() {
 
 
 	it('should hide checkboxes when select single question',function() {
-        switchOptionView(1);
+        switchOptionView("single");
 
         expect(document.getElementById("options").style.display).toBe("block");
         expect(document.getElementById("checkboxes").style.display).toBe("none");
@@ -25,7 +25,7 @@ describe('Show Add Question Page', function() {
 
 
 	it('should hide options when select multiple question',function() {
-        switchOptionView(2);
+        switchOptionView("multiple");
 
         expect(document.getElementById("options").style.display).toBe("none");
         expect(document.getElementById("checkboxes").style.display).toBe("block");

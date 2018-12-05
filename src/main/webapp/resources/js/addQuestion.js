@@ -1,10 +1,10 @@
 function switchOptionView(choiceType)
 {
-    if (choiceType == 1) {
-        $("#checkboxes").css("display", "none");
+    if (choiceType === "single") {
         $("#options").css("display", "block");
+        $("#checkboxes").css("display", "none");
     } else {
-        $("#checkboxes").css("display", "block");
         $("#options").css("display", "none");
+        $("#checkboxes").css("display", "block");
     }
 }
