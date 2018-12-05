@@ -49,7 +49,7 @@ public class Question extends ApplicationModel {
     }
 
     public static List<Question> getNRandom(int count) {
-        return findBySQL("SELECT id, description, advice, category FROM questions ORDER BY RAND() LIMIT ?", count);
+        return findBySQL("SELECT id, description, advice, category, is_multi_question FROM questions ORDER BY RAND() LIMIT ?", count);
     }
 
     public String getDescription() {
@@ -62,6 +62,10 @@ public class Question extends ApplicationModel {
 
     public String getCategory() {
         return getString(CATEGORY);
+    }
+
+    public int getIsMultiQuestion() {
+        return getInteger(IS_MULTI_QUESTION);
     }
 
     public Collection<AnswerOption> getOptions() {

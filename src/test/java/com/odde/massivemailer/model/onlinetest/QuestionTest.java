@@ -21,7 +21,7 @@ public class QuestionTest {
 
     @Test
     public void shouldReturnAListOfIds() {
-        Question.createIt("description", "desc1", "advice", "adv1");
+        Question.createIt("description", "desc1", "advice", "adv1", "is_multi_question", 0);
 
         List<Object> allIds = Question.getNRandomIds(1).collect(Collectors.toList());
 
@@ -96,5 +96,15 @@ public class QuestionTest {
         AnswerOption.createIt("description", "desc", "question_id", question.getLongId(), "is_correct", 1);
         AnswerOption.createIt("description", "desc", "question_id", question.getLongId(), "is_correct", 0);
         assertFalse(question.isMultipleAnswerOptions());
+    }
+
+    @Test
+    public void Questionテーブルのカラムが全て返ってくる(){
+        Question.createIt("description", "desc1", "advice", "adv1", "category", "scrum", "is_multi_question", 0);
+        List<Question> actual = Question.getNRandom(1);
+        assertThat(actual.get(0).getDescription(), is(equalTo("desc1")));
+        assertThat(actual.get(0).getAdvice(), is(equalTo("adv1")));
+        assertThat(actual.get(0).getCategory(), is(equalTo("scrum")));
+        assertThat(actual.get(0).getIsMultiQuestion(), is(equalTo(0)));
     }
 }
