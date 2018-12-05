@@ -1,5 +1,6 @@
 package com.odde.massivemailer.model.onlinetest;
 
+import gherkin.lexer.Ca;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -28,5 +29,17 @@ public class CategoryTest {
         assertEquals(Category.TEAM.getId(), 3);
         // name = "Team"
         assertEquals(Category.TEAM.getName(), "Team");
+    }
+
+    @Test
+    public void カテゴリの文字列からenumを取って来るテスト() {
+        assertEquals(Category.SCRUM, Category.findByName("Scrum"));
+        assertEquals(Category.TECH, Category.findByName("Tech"));
+        assertEquals(Category.TEAM, Category.findByName("Team"));
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void カテゴリにない文字列が入力された場合は例外が投げられる() {
+        Category.findByName("foo");
     }
 }

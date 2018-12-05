@@ -19,4 +19,8 @@ public enum Category {
     public String getName() {
         return this.name;
     }
+
+    public static Category findByName(String name) {
+        return Category.valueOf(name.toUpperCase());
+    }
 }
