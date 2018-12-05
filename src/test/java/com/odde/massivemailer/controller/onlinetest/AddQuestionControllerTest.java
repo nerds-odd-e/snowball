@@ -9,10 +9,13 @@ import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
+import java.lang.reflect.Array;
+import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(TestWithDB.class)
@@ -51,8 +54,10 @@ public class AddQuestionControllerTest {
         request.setParameter("checkbox4", "checkbox4");
         request.setParameter("checkbox5", "checkbox5");
         request.setParameter("checkbox6", "checkbox6");
-        request.setParameter("check", String.valueOf(1));
-        request.setParameter("check", String.valueOf(2));
+        final String[] checks = new String[2];
+        checks[0] = "1";
+        checks[1] = "2";
+        request.setParameter("check", checks);
     }
 
     @Test
@@ -79,7 +84,7 @@ public class AddQuestionControllerTest {
         assertEquals(rightAnswer.get().getDescription(), rightOptionDescription);
     }
 
-//    @Test
+    @Test
     public void doPostAddQuestion_MultipleChoice() throws Exception {
         setupValidRequestForMultipleChoice();
         controller.doPost(request, response);
@@ -94,14 +99,13 @@ public class AddQuestionControllerTest {
             assertTrue(hasOption);
         }
 
-        String rightOptionDescription1 = request.getParameter("checkbox1");
-        String rightOptionDescription2 = request.getParameter("checkbox2");
-
-        final Stream<AnswerOption> rightAnswer = question.getOptions().stream().filter(AnswerOption::isCorrect);
-        final Object[] actual = rightAnswer.toArray();
-
-        assertEquals(rightOptionDescription2, ((AnswerOption)actual[0]).getDescription());
-        assertEquals(rightOptionDescription1, ((AnswerOption)actual[1]).getDescription());
+        Collection<AnswerOption> options = question.getOptions();
+        assertTrue(((AnswerOption) options.toArray()[0]).isCorrect());
+        assertTrue(((AnswerOption) options.toArray()[1]).isCorrect());
+        assertFalse(((AnswerOption) options.toArray()[2]).isCorrect());
+        assertFalse(((AnswerOption) options.toArray()[3]).isCorrect());
+        assertFalse(((AnswerOption) options.toArray()[4]).isCorrect());
+        assertFalse(((AnswerOption) options.toArray()[5]).isCorrect());
     }
 
 

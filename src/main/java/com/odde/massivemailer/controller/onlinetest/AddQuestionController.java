@@ -3,6 +3,7 @@ package com.odde.massivemailer.controller.onlinetest;
 import com.odde.massivemailer.controller.AppController;
 import com.odde.massivemailer.model.onlinetest.AnswerOption;
 import com.odde.massivemailer.model.onlinetest.Question;
+import edu.emory.mathcs.backport.java.util.Arrays;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +11,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet("/onlinetest/add_question")
 public class AddQuestionController extends AppController {
@@ -64,9 +68,12 @@ public class AddQuestionController extends AppController {
 
     private void saveQuestion(HttpServletRequest req) {
         Question question = new Question(req.getParameter("description"),
-                                         req.getParameter("advice"),
-                                         req.getParameter("category"));
+                req.getParameter("advice"),
+                req.getParameter("category"));
         question.saveIt();
+
+        final String[] checks = req.getParameterValues("check");
+        List<String> checksList = Arrays.asList(checks);
 
         String type = req.getParameter("type");
         for (int i = 0; i < 6; i++) {
@@ -78,7 +85,7 @@ public class AddQuestionController extends AppController {
             }
             if (!(i > 1 && optionDescription.isEmpty())) {
                 long questionId = Long.valueOf(question.get("id").toString());
-                boolean isCorrect = i + 1 == Integer.valueOf(req.getParameter("check"));
+                boolean isCorrect = checksList.contains(String.valueOf(i + 1));
                 AnswerOption answerOption = new AnswerOption(questionId, optionDescription, isCorrect);
                 answerOption.saveIt();
             }
