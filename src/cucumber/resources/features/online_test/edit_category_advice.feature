@@ -1,7 +1,7 @@
 Feature:
   Admin can add category advice
 
-  @now
+  @developing
   Scenario Outline: カテゴリのアドバイスが登録できる
     Given Update Adviceを開いている
     When カテゴリで"<category>"を選択している
