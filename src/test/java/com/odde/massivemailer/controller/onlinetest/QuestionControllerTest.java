@@ -113,6 +113,7 @@ public class QuestionControllerTest {
     @Test
     public void doPostWithNotIncrementCorrectCountOnIncorrectAnswer() throws ServletException, IOException {
         Long optionId = question.getFirstOptionId();
+        assertEquals("", optionId.toString());
         onlineTest = new OnlineTest(2);
         request.addParameter("optionId", optionId.toString());
         request.addParameter("lastDoneQuestionId", "0");
@@ -122,5 +123,17 @@ public class QuestionControllerTest {
         HttpSession session = request.getSession();
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
         assertEquals(0, onlineTest.getCorrectAnswerCount());
+    }
+
+    @Test
+    public void doPostWithNoSelectedOptions() throws ServletException, IOException {
+        onlineTest = new OnlineTest(2);
+        request.addParameter("lastDoneQuestionId", "0");
+        request.getSession().setAttribute("onlineTest", onlineTest);
+
+        controller.doPost(request, response);
+        HttpSession session = request.getSession();
+        OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
+        assertEquals(0, onlineTest.getNumberOfAnsweredQuestions());
     }
 }

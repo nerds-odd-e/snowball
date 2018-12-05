@@ -169,7 +169,7 @@ Feature:
       |  |
 
   @developing
-  Scenario Outline: 出題数の上限が固定されている
+  Scenario Outline:
     Given "topページ"に移動する
     When "StartTest"をクリックする
     Then 何も選択されていない
