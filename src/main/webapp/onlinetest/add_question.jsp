@@ -10,6 +10,11 @@
 
 
 <t:with_side_menu_and_status title="Add Question">
+
+    <jsp:attribute name="extra_foot">
+        <script type="text/javascript" src="/resources/js/addQuestion.js"></script>
+    </jsp:attribute>
+
     <jsp:body>
 
 			<form name="addQuestion" id="addQuestion" method="post"
@@ -58,7 +63,7 @@
 									</div>
 									<br> <br>
 
-									<div class="row">
+									<div class="row" id="options">
 										<div class="col-lg-1">Options:</div>
 										<div class="col-lg-11">
 
@@ -75,7 +80,7 @@
 									</div>
 									<br> <br>
 
-									<div class="row">
+									<div class="row" id="checkboxes">
 										<div class="col-lg-1">Options:</div>
 										<div class="col-lg-11">
 
