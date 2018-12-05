@@ -3,7 +3,6 @@ package com.odde.massivemailer.controller.onlinetest;
 import com.odde.massivemailer.controller.AppController;
 import com.odde.massivemailer.model.onlinetest.AnswerOption;
 import com.odde.massivemailer.model.onlinetest.Question;
-import edu.emory.mathcs.backport.java.util.Arrays;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @WebServlet("/onlinetest/add_question")
@@ -30,23 +30,24 @@ public class AddQuestionController extends AppController {
     }
 
     private String checkParameter(HttpServletRequest req) {
-        if ("".equals(req.getParameter("description"))) {
-            return "Invalid inputs found!";
-        }
-        String paramName = getOptionParamName(req);
-        if ("".equals(req.getParameter(paramName + "1"))) {
-            return "Invalid inputs found!";
-        }
-        if ("".equals(req.getParameter(paramName + "2"))) {
-            return "Invalid inputs found!";
-        }
         String check = req.getParameter("check");
         if (check == null) {
             return "Right answer is not selected!";
         }
-        if ("".equals(req.getParameter("option" + check))) {
-            return "Invalid inputs found!";
+
+        String paramName = getOptionParamName(req);
+        List<EmptyValidator> validators = Arrays.asList(
+                new EmptyValidator(req.getParameter("description")),
+                new EmptyValidator(req.getParameter(paramName + "1")),
+                new EmptyValidator(req.getParameter(paramName + "2")),
+                new EmptyValidator(req.getParameter("option" + check))
+        );
+        for (EmptyValidator validator : validators) {
+            if (validator.inValid()) {
+                return "Invalid inputs found!";
+            }
         }
+
         return "";
     }
 
@@ -84,6 +85,18 @@ public class AddQuestionController extends AppController {
                 AnswerOption answerOption = new AnswerOption(questionId, optionDescription, isCorrect);
                 answerOption.saveIt();
             }
+        }
+    }
+
+    private class EmptyValidator {
+        private String value;
+
+        public EmptyValidator(String value) {
+            this.value = value;
+        }
+
+        public boolean inValid() {
+            return "".equals(this.value);
         }
     }
 }
