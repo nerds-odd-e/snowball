@@ -23,7 +23,6 @@ public class QuestionControllerTest {
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
     private Question question;
-    private Question multipleAnswerQuestion;
     private OnlineTest onlineTest;
 
     @Before
@@ -32,7 +31,6 @@ public class QuestionControllerTest {
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
         question = createQuestionWithOptions();
-        multipleAnswerQuestion = createQuestionWithMultipleOptions();
         onlineTest = new OnlineTest(1);
         request.getSession().setAttribute("onlineTest", onlineTest);
     }
@@ -43,18 +41,6 @@ public class QuestionControllerTest {
         Long id = (Long) question.getId();
         AnswerOption.createIt("description", "desc1", "question_id", id, "is_correct", 0);
         AnswerOption.createIt("description", "desc2", "question_id", id, "is_correct", 0);
-        AnswerOption.createIt("description", "desc3", "question_id", id, "is_correct", 0);
-        AnswerOption.createIt("description", "desc4", "question_id", id, "is_correct", 0);
-        AnswerOption.createIt("description", "desc5", "question_id", id, "is_correct", 1);
-
-        return question;
-    }
-
-    private Question createQuestionWithMultipleOptions() {
-        Question question = Question.createIt("description", "What is Scrum?", "advice", "Scrum is a coding practice.");
-        Long id = (Long) question.getId();
-        AnswerOption.createIt("description", "desc1", "question_id", id, "is_correct", 0);
-        AnswerOption.createIt("description", "desc2", "question_id", id, "is_correct", 1);
         AnswerOption.createIt("description", "desc3", "question_id", id, "is_correct", 0);
         AnswerOption.createIt("description", "desc4", "question_id", id, "is_correct", 0);
         AnswerOption.createIt("description", "desc5", "question_id", id, "is_correct", 1);
@@ -110,8 +96,7 @@ public class QuestionControllerTest {
         assertEquals("", session.getAttribute("alertMsg"));
     }
 
-//    @Test
-// TODO ランダムで取得するためテスト実行毎に失敗することがある（調査中）
+    @Test
     public void doPostWithIncrementCorrectCountOnCorrectAnswer() throws ServletException, IOException {
         Long optionId = question.getCorrectOptionId();
         onlineTest = new OnlineTest(2);
@@ -137,14 +122,5 @@ public class QuestionControllerTest {
         HttpSession session = request.getSession();
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
         assertEquals(0, onlineTest.getCorrectAnswerCount());
-    }
-
-    @Test
-    public void doPostMultipleQuestionCorrectAnswer() throws ServletException, IOException {
-        String[] optionIds;
-        multipleAnswerQuestion.getOptions().stream().filter(o -> o.isCorrect()).forEach(o ->
-                request.addParameter("optionId", o.getId().toString())
-        );
-
     }
 }
