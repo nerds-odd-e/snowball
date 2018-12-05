@@ -16,6 +16,7 @@ public class Question extends ApplicationModel {
     private static final String DESCRIPTION = "description";
     private static final String ADVICE = "advice";
     private static final String CATEGORY = "category";
+    private static final String IS_MULTI_QUESTION = "is_multi_question";
 
     static {
         validatePresenceOf("description");
@@ -29,6 +30,12 @@ public class Question extends ApplicationModel {
     public Question(String description, String advice) {
         set(DESCRIPTION, description);
         set(ADVICE, advice);
+    }
+
+    public Question(String description, String advice, int isMultiQuestion) {
+        set(DESCRIPTION, description);
+        set(ADVICE, advice);
+        set(IS_MULTI_QUESTION, isMultiQuestion);
     }
 
     static Stream<Long> getNRandomIds(int count) {
