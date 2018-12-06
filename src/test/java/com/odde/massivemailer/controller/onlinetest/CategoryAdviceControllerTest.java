@@ -12,7 +12,6 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import javax.servlet.ServletException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -59,20 +58,18 @@ public class CategoryAdviceControllerTest {
     }
 
     @Test
-    public void AdviceUpdateのポストのテストScrum() throws IOException, SecurityException, ServletException {
-        request.setParameter("category", "Scrum");
-        request.setParameter("advice", "You should study scrum very hard");
-        controller.doPost(request, response);
-        assertEquals("You should study scrum very hard", CategoryAdvice.findFirst("category_id = 1").get("advice"));
+    public void AdviceUpdateのポストのテスト() throws IOException, SecurityException, ServletException {
+        List<String[]> datas = new ArrayList<>();
+        datas.add(new String[]{Category.SCRUM.getName(), "You should study scrum very hard", "1"});
+        datas.add(new String[]{Category.TEAM.getName(), "You should study team very hard", "3"});
 
-    }
-
-    @Test
-    public void AdviceUpdateのポストのテストTeam() throws IOException, SecurityException, ServletException {
-        request.setParameter("category", "Team");
-        request.setParameter("advice", "You should study team very hard");
-        controller.doPost(request, response);
-        assertEquals("You should study team very hard", CategoryAdvice.findFirst("category_id = 3").get("advice"));
+        for (String[] data : datas) {
+            request.setParameter("category", data[0]);
+            request.setParameter("advice", data[1]);
+            String categoryIdQuery = "category_id = " + data[2];
+            controller.doPost(request, response);
+            assertEquals(data[1], CategoryAdvice.findFirst(categoryIdQuery).get("advice"));
+        }
 
     }
 }
