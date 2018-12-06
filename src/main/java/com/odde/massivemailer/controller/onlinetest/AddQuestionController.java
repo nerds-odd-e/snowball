@@ -31,9 +31,6 @@ public class AddQuestionController extends AppController {
 
     private String checkParameter(HttpServletRequest req) {
         String check = req.getParameter("check");
-        if (check == null) {
-            return "Right answer is not selected!";
-        }
 
         String paramName = getOptionParamName(req);
         List<EmptyValidator> validators = Arrays.asList(
@@ -46,6 +43,10 @@ public class AddQuestionController extends AppController {
             if (validator.inValid()) {
                 return "Invalid inputs found!";
             }
+        }
+
+        if (check == null) {
+            return "Right answer is not selected!";
         }
 
         return "";
