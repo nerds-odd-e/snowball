@@ -106,7 +106,7 @@ public class QuestionTest {
         assertThat(actual.get(0).getDescription(), is(equalTo("desc1")));
         assertThat(actual.get(0).getAdvice(), is(equalTo("adv1")));
         assertThat(actual.get(0).getCategory(), is(equalTo("scrum")));
-        assertThat(actual.get(0).getIsMultiQuestion(), is(equalTo(0)));
+        assertFalse(actual.get(0).getIsMultiQuestion());
     }
 
     @Test
@@ -121,14 +121,14 @@ public class QuestionTest {
     @Test
     public void TypeがsingleのときにgetIsMultiQuestionが0を返す() {
         final Question question = new Question("description", "advice","category","single");
-        final int actual = question.getIsMultiQuestion();
-        assertEquals(actual,0);
+        final boolean actual = question.getIsMultiQuestion();
+        assertEquals(actual,false);
     }
 
     @Test
     public void TypeがMultiのときにgetIsMultiQuestionが1を返す() {
         final Question question = new Question("description", "advice","category","multiple");
-        final int actual = question.getIsMultiQuestion();
-        assertEquals(actual,1);
+        final boolean actual = question.getIsMultiQuestion();
+        assertEquals(actual,true);
     }
 }

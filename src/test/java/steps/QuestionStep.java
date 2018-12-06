@@ -242,41 +242,44 @@ public class QuestionStep {
 
     @Given("^(\\d+)個の正解がある問題が出題される$")
     public void 個の正解がある問題が出題される(int correctAnswers) throws Throwable {
-        Question question = new Question();
 
-        int wrongAnswers = 6 - correctAnswers;
+        new QuestionBuilder()
+                .aQuestion()
+                .withWrongOption("食べ物")
+                .withWrongOption("飲み物")
+                .withWrongOption("国")
+                .withWrongOption("動物")
+                .withWrongOption("乗り物")
+                .withCorrectOption("以上の何でもない")
+                .please();
 
         site.visit("onlinetest/launchQuestion");
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
     }
 
     @Given("^ユーザが(\\d+)個を選択する$")
     public void ユーザが_個を選択する(int n) throws Throwable {
-        throw new PendingException();
+        this.driver.clickCheckBox("以上の何でもない");
     }
 
     @When("^\"([^\"]*)\"をクリックする$")
-    public void をクリックする(String arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void をクリックする(String click) throws Throwable {
+        driver.clickButton(click);
     }
 
     @When("^(\\d+)個の選択のうち、(\\d+)個が正しい$")
     public void 個の選択のうち_個が正しい(int arg1, int arg2) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        driver.clickById("option6");
     }
 
     @When("^問題が存在する yes$")
     public void 問題が存在する_yes() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
+
         throw new PendingException();
     }
 
     @Then("^Question ページに遷移する$")
     public void question_ページに遷移する() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
+
         throw new PendingException();
     }
 
@@ -288,8 +291,7 @@ public class QuestionStep {
 
     @Then("^End Of Test ページに遷移する$")
     public void end_Of_Test_ページに遷移する() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        driver.pageShouldContain("End Of Test");
     }
 
     @Then("^Advice ページに遷移する$")

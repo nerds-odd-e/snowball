@@ -75,8 +75,12 @@ public class Question extends ApplicationModel {
         return Category.getNameById(getCategory());
     }
 
-    public int getIsMultiQuestion() {
-        return getInteger(IS_MULTI_QUESTION);
+    public boolean getIsMultiQuestion() {
+        Integer type = getInteger(IS_MULTI_QUESTION);
+        if (type == null) {
+            return false;
+        }
+        return getInteger(IS_MULTI_QUESTION) == 1;
     }
 
     public Collection<AnswerOption> getOptions() {

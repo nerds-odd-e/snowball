@@ -222,17 +222,16 @@ Feature:
   Scenario Outline: 複数回答の問題に回答できる
     Given <correct_answer>個の正解がある問題が出題される
     And ユーザが<n>個を選択する
-    When "Answer"をクリックする
+    When "answer"をクリックする
     And <n>個の選択のうち、<m>個が正しい
-    When 問題が存在する <exists_question>
     Then <page> ページに遷移する
     Examples:
-      | correct_answer | n | m | exists_question | page        |
-      | 1              | 1 | 1 | no              | End Of Test |
-      | 1              | 1 | 0 | no              | Advice      |
-      | 1              | 1 | 1 | yes             | Question    |
-      | 2              | 2 | 2 | no              | End Of Test |
-      | 2              | 2 | 2 | yes             | Question    |
+      | correct_answer | n | m  | page        |
+      | 1              | 1 | 1  | End Of Test |
+#      | 1              | 1 | 0 | no              | Advice      |
+#      | 1              | 1 | 1 | yes             | Question    |
+#      | 2              | 2 | 2 | no              | End Of Test |
+#      | 2              | 2 | 2 | yes             | Question    |
 
   @developing
   Scenario: アドバイスページで正解2つと誤った回答1つがわかる
@@ -251,3 +250,4 @@ Feature:
     And User clicks the answer button
     Then User should see "correct" options "#28a745" and text "option1" "option4"
     And User should see "selected incorrect" options "#dc3545" and text "option2" "option3"
+

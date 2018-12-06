@@ -30,9 +30,15 @@
                     <h2 id="description">${question.getDescription()}</h2>
                   </c:if>
                 <ul>
+
                 <c:forEach items="${question.getOptions()}" var="option" varStatus="status">
                     <li>
-                        <input type="radio" id="option${status.index + 1}" name="optionId" value="${option.getLongId()}" />${option.getDescription()}</label>
+                        <c:if test="${question.getIsMultiQuestion()}">
+                         <input type="checkbox" id="option${status.index + 1}" name="optionId" value="${option.getLongId()}" />${option.getDescription()}</label>
+                        </c:if>
+                        <c:if test="${!question.getIsMultiQuestion()}">
+                         <input type="radio" id="option${status.index + 1}" name="optionId" value="${option.getLongId()}" />${option.getDescription()}</label>
+                        </c:if>
                     </li>
                 </c:forEach>
                 </ul>
