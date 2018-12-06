@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.odde.massivemailer.model.onlinetest.Category" %>
 
 <%
     String errorMessage = (String) request.getAttribute("errorMessage");
     pageContext.setAttribute("errorMessage", errorMessage);
+	pageContext.setAttribute("categories", Category.values());
 %>
 
 
@@ -48,10 +50,9 @@
                                         <div class="col-lg-1">Category:</div>
                                         <div class="col-lg-11">
                                         	<select name="category" id="categoryList">
-                                        	    <option value="0"></option>
-                                        	    <option value="1">Scrum</option>
-                                        	    <option value="2">Tech</option>
-                                        	    <option value="3">Team</option>
+                                        	    <c:forEach items="${categories}" var="category" varStatus="Status">
+                                        	        <option value="${category.getId()}">${category.getName()}</option>
+                                        	    </c:forEach>
                                         	</select>
                                         </div>
                                     </div>
