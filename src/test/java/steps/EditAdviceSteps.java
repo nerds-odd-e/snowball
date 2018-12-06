@@ -38,6 +38,7 @@ public class EditAdviceSteps {
     @When("^Updateボタンを押す$")
     public void updateボタンを押す() throws Throwable {
         driver.clickButtonByName("update");
+        assertEquals("Update Advice",driver.getCurrentTitle());
     }
 
     @Then("^Update Advice画面に戻ってきてカテゴリが\"([^\"]*)\"でアドバイスが\"([^\"]*)\"になってる$")

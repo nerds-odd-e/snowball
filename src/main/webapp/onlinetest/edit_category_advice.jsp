@@ -7,10 +7,10 @@
 %>
 
 
-<t:with_side_menu_and_status title="Add Question">
+<t:with_side_menu_and_status title="Update Advice">
     <jsp:body>
 			<form name="addQuestion" id="addQuestion" method="post"
-				action="add_question">
+				action="category/advice">
 				<select name="category" id="category">
 				    <option value="1">Scrum</option>
 				    <option value="2">Tech</option>

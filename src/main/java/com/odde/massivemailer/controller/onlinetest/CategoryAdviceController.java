@@ -1,6 +1,7 @@
 package com.odde.massivemailer.controller.onlinetest;
 
 import com.odde.massivemailer.controller.AppController;
+import com.odde.massivemailer.model.onlinetest.CategoryAdvice;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -29,6 +30,14 @@ public class CategoryAdviceController extends AppController {
         }
         req.setAttribute("advice", advice);
         // categoryに対応するadviceを取ってセットする
+        RequestDispatcher dispatch = req.getRequestDispatcher("/onlinetest/edit_category_advice.jsp");
+        dispatch.forward(req, resp);
+    }
+
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        CategoryAdvice categoryAdvice = CategoryAdvice.findFirst("category_id = 1");
+        categoryAdvice.set("advice","You should study scrum very hard");
+        categoryAdvice.save();
         RequestDispatcher dispatch = req.getRequestDispatcher("/onlinetest/edit_category_advice.jsp");
         dispatch.forward(req, resp);
     }
