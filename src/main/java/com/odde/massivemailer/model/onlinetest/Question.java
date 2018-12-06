@@ -32,7 +32,7 @@ public class Question extends ApplicationModel {
         set(ADVICE, advice);
         set(CATEGORY, category);
 
-        if ("multi".equals(type)){
+        if ("multiple".equals(type)){
             set(IS_MULTI_QUESTION, 1);
             return;
         }

@@ -118,7 +118,7 @@ public class QuestionTest {
 
     @Test
     public void TypeがMultiのときにgetIsMultiQuestionが1を返す() {
-        final Question question = new Question("description", "advice","category","multi");
+        final Question question = new Question("description", "advice","category","multiple");
         final int actual = question.getIsMultiQuestion();
         assertEquals(actual,1);
     }
