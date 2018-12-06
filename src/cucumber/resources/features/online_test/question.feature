@@ -168,11 +168,10 @@ Feature:
     Examples:
       |  |
 
-  @developing
   Scenario: クエッションページに移動した時に、ラジオボタンが何も選択されていない
     Given User is taking a onlineTest with 1 questions
     When 質問1の画面に遷移する
-    Then ラジオボタンが何も選択されていない
+    Then 0つラジオボタンの回答が選択されている事
 
   @developing
   Scenario: クエッションページに移動した時に、チェックボックスが何も選択されていない

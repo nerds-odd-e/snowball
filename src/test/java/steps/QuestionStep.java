@@ -181,6 +181,12 @@ public class QuestionStep {
         assertEquals(count, elementCount);
     }
 
+    @Then("^(\\d+)つラジオボタンの回答が選択されている事$")
+    public void つラジオボタンの回答が選択されている事(int count) throws Throwable {
+        int elementCount = driver.findElements(By.cssSelector("input[type=radio]:checked")).size();
+        assertEquals(count, elementCount);
+    }
+
     @When("^ユーザーがブラウザの戻るを実行する$")
     public void ユーザーがブラウザの戻るを実行する() throws Throwable {
         this.driver.getNavigate().back();
