@@ -83,7 +83,7 @@ public class AddQuestionController extends AppController {
             } else {
                 optionDescription = req.getParameter("checkbox" + (i + 1));
             }
-            if (i <= 1 || !optionDescription.isEmpty()) {
+            if (!optionDescription.isEmpty()) {
                 long questionId = Long.valueOf(question.get("id").toString());
                 boolean isCorrect = checksList.contains(String.valueOf(i + 1));
                 AnswerOption answerOption = new AnswerOption(questionId, optionDescription, isCorrect);
