@@ -37,16 +37,17 @@
                                     </tr>
                                     <c:forEach items="${question.getOptions()}" var="option" varStatus="status">
                                     <c:set var="optionId">${option.getLongId()}</c:set>
+                                    <c:set var="optionNumber">${status.index+1}</c:set>
                                         <c:if test="${question.getCorrectOption() == optionId}">
-                                            <tr id="option${status.index+1}row" class="bg-success">
-                                                <th>Option${status.index+1}</th>
-                                                <td id="option${status.index+1}">${option.getDescription()}</td>
+                                            <tr id="option${optionNumber}row" class="bg-success">
+                                                <th>Option${optionNumber}</th>
+                                                <td id="option${optionNumber}">${option.getDescription()}</td>
                                             </tr>
                                          </c:if>
                                         <c:if test="${question.getCorrectOption() != optionId}">
                                             <tr>
-                                                <th>Option${status.index+1}</th>
-                                                <td id="option${status.index+1}">${option.getDescription()}</td>
+                                                <th>Option${optionNumber}</th>
+                                                <td id="option${optionNumber}">${option.getDescription()}</td>
                                             </tr>
                                          </c:if>
                                     </c:forEach>

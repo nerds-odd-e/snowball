@@ -88,7 +88,6 @@ public class AddQuestionSteps {
                 .withWrongOption(questionMap.get("option2"))
                 .please();
         site.visit("onlinetest/question_list.jsp");
-
     }
 
     @Then("^User should see questions and options in question list page with correct one highlighted$")

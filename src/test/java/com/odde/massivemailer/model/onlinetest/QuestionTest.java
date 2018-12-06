@@ -110,6 +110,15 @@ public class QuestionTest {
     }
 
     @Test
+    public void getAllTest(){
+        Question.createIt("description", "desc1");
+        Question.createIt("description", "desc2");
+        List<Question> actual = Question.getAll();
+        assertThat(actual.get(0).getDescription(), is(equalTo("desc1")));
+        assertThat(actual.get(1).getDescription(), is(equalTo("desc2")));
+    }
+
+    @Test
     public void TypeがsingleのときにgetIsMultiQuestionが0を返す() {
         final Question question = new Question("description", "advice","category","single");
         final int actual = question.getIsMultiQuestion();

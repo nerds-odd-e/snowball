@@ -151,9 +151,9 @@ Feature:
 
   Scenario: Added question would be shown in question list page
     Given Question added
-    | description | What is scrum?  |
-    | option1     | Rugby           |
-    | option2     | Football        |
+      | description | What is scrum?  |
+      | option1     | Rugby           |
+      | option2     | Football        |
     Then User should see questions and options in question list page with correct one highlighted
       | description | What is scrum?  |
       | option1     | Rugby           |
