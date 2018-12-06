@@ -1,16 +1,13 @@
 package steps;
 
 import com.odde.massivemailer.factory.QuestionBuilder;
-import com.odde.massivemailer.model.onlinetest.Question;
 import cucumber.api.DataTable;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.Select;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
@@ -30,10 +27,9 @@ public class AddQuestionSteps {
         assertEquals(driver.getCurrentTitle(), "Add Question");
     }
 
-    @Then("^カテゴリーは何も選択されていない$")
-    public void カテゴリーは何も選択されていない() throws Throwable {
-        Select select = new Select(driver.findElements(By.id("categoryList")).get(0));
-        assertEquals(select.getFirstSelectedOption().getText(),"");
+    @Then("^プルダウン\"([^\"]*)\"に\"([^\"]*)\"が表示される$")
+    public void プルダウン_に_が表示される(String name, String value) throws Throwable {
+        assertEquals(driver.getDropdownTextByName(name), value);
     }
 
     @Then("^\"([^\"]*)\" というメッセージが表示されていない$")
@@ -184,13 +180,13 @@ public class AddQuestionSteps {
         assertEquals(driver.getCurrentTitle(), "End Of Test");
     }
 
-    @Then("^質問一覧ページのカテゴリーに \"([^\"]*)\" が表示される$")
-    public void 質問一覧ページのカテゴリーに_が表示される(String description) throws Throwable {
+    @Then("^カテゴリーに \"([^\"]*)\" が表示される$")
+    public void カテゴリーに_が表示される(String description) throws Throwable {
         assertEquals(driver.findElementById("category").getText(),description);
     }
 
-    @Given("^カテゴリーとして\"([^\"]*)\"が選択する$")
-    public void カテゴリーとして_が選択する(String category) throws Throwable {
+    @Given("^カテゴリーとして\"([^\"]*)\"を選択する$")
+    public void カテゴリーとして_を選択する(String category) throws Throwable {
         driver.setDropdownByText("category", category);
     }
 }

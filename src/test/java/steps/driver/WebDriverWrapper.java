@@ -145,6 +145,10 @@ public class WebDriverWrapper {
         dropdown.selectByVisibleText(text);
     }
 
+    public String getDropdownTextByName(String dropdownName) {
+        Select select = new Select(driver.findElements(By.name(dropdownName)).get(0));
+        return select.getFirstSelectedOption().getText();
+    }
 
     public void setDropdownValue(String dropdownName, String text) {
         Select dropdown = new Select(getWait().until(ExpectedConditions.visibilityOfElementLocated(By.name(dropdownName))));

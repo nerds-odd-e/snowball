@@ -8,33 +8,25 @@ public class CategoryTest {
 
     @Test
     public void 未選択カテゴリーのテスト() {
-        // id = 0
         assertEquals(Category.UNKNOWN.getId(), 0);
-        // name = ""
         assertEquals(Category.UNKNOWN.getName(), "");
     }
 
     @Test
     public void スクラムカテゴリーのテスト() {
-        // id = 1
         assertEquals(Category.SCRUM.getId(), 1);
-        // name = "Scrum"
         assertEquals(Category.SCRUM.getName(), "Scrum");
     }
 
     @Test
     public void テックカテゴリーのテスト() {
-        // id = 2
         assertEquals(Category.TECH.getId(), 2);
-        // name = "Tech"
         assertEquals(Category.TECH.getName(), "Tech");
     }
 
     @Test
     public void チームカテゴリーのテスト() {
-        // id = 3
         assertEquals(Category.TEAM.getId(), 3);
-        // name = "Team"
         assertEquals(Category.TEAM.getName(), "Team");
     }
 

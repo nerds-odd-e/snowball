@@ -7,24 +7,21 @@ Feature:
     Then "Invalid inputs found!" というメッセージが表示されていない
     And "Right answer is not selected!" というメッセージが表示されていない
 
+
   Scenario: カテゴリーの初期値は空
-    Then カテゴリーは何も選択されていない
+    Then プルダウン"category"に""が表示される
 
   Scenario Outline: カテゴリを選択する
     Given Add Questionを開いている
-    And Descriptionに"<description>" を入力する
-    And option1に"<opt1>"を入力する
-    And option2に"<opt2>"を入力する
-    And option3に"<opt3>"を入力する
-    And option4に"<opt4>"を入力する
-    And option5に"<opt5>"を入力する
-    And option6に"<opt6>"を入力する
+    And Descriptionに"description" を入力する
+    And option1に"option1"を入力する
+    And option2に"option2"を入力する
     And "1"番目のoptionを選択する
-    And adviceに "<advice>" を入力する
-    And カテゴリーとして"<category>"が選択する
+    And カテゴリーとして"<category>"を選択する
     When Addボタンを押す
     And 質問の一覧に遷移する
-    Then 質問一覧ページのカテゴリーに "<category>" が表示される
+    Then カテゴリーに "<category>" が表示される
+
     Examples:
       | category  |
       |           |
