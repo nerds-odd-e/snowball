@@ -200,3 +200,21 @@ Feature:
       | 1              | 1 | 1 | yes             | Question    |
       | 2              | 2 | 2 | no              | End Of Test |
       | 2              | 2 | 2 | yes             | Question    |
+
+  @developing
+  Scenario: アドバイスページで正解2つと誤った回答1つがわかる
+    Given Add a question "スクラムに含まれる要素は何ですか？（option1とoption4が正解）" of multiple answers
+    And User is on the first question
+    When User chooses "option1" and "option2" answers
+    And User clicks the answer button
+    Then User should see "correct" options "#28a745" and text "option1" "option4"
+    And User should see "selected incorrect" option "#dc3545" and text "option2"
+
+  @developing
+  Scenario: アドバイスページで正解2つと誤った回答2つがわかる
+    Given Add a question "スクラムに含まれる要素は何ですか？（option1とoption4が正解）" of multiple answers
+    And User is on the first question
+    When User chooses "option2" and "option3" answers
+    And User clicks the answer button
+    Then User should see "correct" options "#28a745" and text "option1" "option4"
+    And User should see "selected incorrect" options "#dc3545" and text "option2" "option3"

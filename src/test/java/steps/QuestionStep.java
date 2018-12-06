@@ -36,6 +36,17 @@ public class QuestionStep {
                 .please();
     }
 
+    @Given("^Add a question \"([^\"]*)\" of multiple answers$")
+    public void add_a_question_of_multiple_answers(String description) throws Throwable {
+        new QuestionBuilder()
+                .aQuestion(description, "advice")
+                .withCorrectOption("option1")
+                .withWrongOption("option2")
+                .withWrongOption("option3")
+                .withCorrectOption("option4")
+                .please();
+    }
+
     @Given("^User is taking a onlineTest with (\\d+) questions$")
     public void user_is_taking_a_onlineTest_with_n_questions(int n) {
         for (int i = 0; i < n; i++)
@@ -102,6 +113,12 @@ public class QuestionStep {
         driver.clickRadioButton(answer);
     }
 
+    @When("^User chooses \"([^\"]*)\" and \"([^\"]*)\" answers$")
+    public void user_chooses_and_answers(String checkedOption1, String checkedOption2) throws Throwable {
+        driver.clickCheckBox(checkedOption1);
+        driver.clickCheckBox(checkedOption2);
+    }
+
     @When("^User clicks the answer button$")
     public void user_clicks_the_answer_button() {
         driver.clickButton("answer");
@@ -155,6 +172,17 @@ public class QuestionStep {
         assertEquals(1, elements.size());
         assertEquals(elements.get(0).getText(), text);
         assertEquals(elements.get(0).getCssValue("color"), Color.fromString(color).asRgba());
+    }
+
+    @Then("^User should see \"([^\"]*)\" options \"([^\"]*)\" and text \"([^\"]*)\" \"([^\"]*)\"$")
+    public void user_should_see_options_and_text(String clazz, String color, String text1, String text2) throws Throwable {
+        String cssSelector = "." + clazz.replace(" ", ".");
+        List<WebElement> elements = driver.findElements(By.cssSelector(cssSelector));
+        assertEquals(2, elements.size());
+        assertEquals(elements.get(0).getText(), text1);
+        assertEquals(elements.get(0).getCssValue("color"), Color.fromString(color).asRgba());
+        assertEquals(elements.get(1).getText(), text2);
+        assertEquals(elements.get(1).getCssValue("color"), Color.fromString(color).asRgba());
     }
 
     @Then("^User should see \"([^\"]*)\"$")
