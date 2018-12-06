@@ -169,24 +169,20 @@ Feature:
       |  |
 
   @developing
-  Scenario: クエッションページに移動した時に何も選択されていない
+  Scenario: クエッションページに移動した時に、ラジオボタンが何も選択されていない
     Given User is taking a onlineTest with 1 questions
     When 質問1の画面に遷移する
-    Then 何も選択されていない
+    Then ラジオボタンが何も選択されていない
 
   @developing
-  Scenario Outline: 何も選択しないでanswerをクリックした場合、次の出題に移動しない
-    Given "StartTest"をクリックする
-    When "Answer"をクリックする
-    Then 同じページが表示される
-    Examples:
-      |  |
+  Scenario: クエッションページに移動した時に、チェックボックスが何も選択されていない
+    Given User is taking a onlineTest with 1 questions
+    When 質問1の画面に遷移する
+    Then チェックボックスが何も選択されていない
 
-  @developing
   Scenario: 何も選択しないでanswerをクリックした場合、次の出題に移動しない
     Given User is taking a onlineTest with 1 questions
     And 質問1の画面に遷移する
-    And 何も選択されていない
     When User clicks the answer button
     Then 質問1の画面に遷移する
 
