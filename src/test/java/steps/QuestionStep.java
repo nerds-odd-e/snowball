@@ -205,8 +205,8 @@ public class QuestionStep {
         driver.findElements(By.cssSelector("input[type=checkbox]")).stream().limit(count).forEach(option -> option.click());
     }
 
-    @Then("^(\\d+)つ回答が選択されている事$")
-    public void つ回答が選択されている事(int count) throws Throwable {
+    @Then("^(\\d+)つチェックボックスの回答が選択されている事$")
+    public void つチェックボックスの回答が選択されている事(int count) throws Throwable {
         int elementCount = driver.findElements(By.cssSelector("input[type=checkbox]:checked")).size();
         assertEquals(count, elementCount);
     }

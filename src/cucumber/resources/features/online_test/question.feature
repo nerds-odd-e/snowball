@@ -173,11 +173,27 @@ Feature:
     When 質問1の画面に遷移する
     Then 0つラジオボタンの回答が選択されている事
 
-  @developing
   Scenario: クエッションページに移動した時に、チェックボックスが何も選択されていない
-    Given User is taking a onlineTest with 1 questions
-    When 質問1の画面に遷移する
-    Then チェックボックスが何も選択されていない
+    Given Add Questionを開いている
+    And Descriptionに"What is scrum?" を入力する
+    And Typeを"Multiple Choice" を選択する
+    And checkbox1に"Scrum is Rugby"を入力する
+    And checkbox2に"Scrum is Baseball"を入力する
+    And checkbox3に"Scrum is Soccer"を入力する
+    And checkbox4に"Scrum is Sumo"を入力する
+    And checkbox5に"Scrum is BasketBall"を入力する
+    And checkbox6に"Scrum is Swimming"を入力する
+    And "checkbox1"を回答として選択済み
+    When Addボタンを押す
+    And OnlineTestを開始する
+    Then "What is scrum?"という問題が出題される
+    And checkbox1に"Scrum is Rugby"が表示される
+    And checkbox2に"Scrum is Baseball"が表示される
+    And checkbox3に"Scrum is Soccer"が表示される
+    And checkbox4に"Scrum is Sumo"が表示される
+    And checkbox5に"Scrum is BasketBall"が表示される
+    And checkbox6に"Scrum is Swimming"が表示される
+    Then 0つチェックボックスの回答が選択されている事
 
   Scenario: 何も選択しないでanswerをクリックした場合、次の出題に移動しない
     Given User is taking a onlineTest with 1 questions
