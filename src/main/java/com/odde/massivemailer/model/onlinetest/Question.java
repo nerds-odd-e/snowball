@@ -10,6 +10,8 @@ import org.javalite.activejdbc.annotations.Table;
 import java.util.*;
 import java.util.stream.Stream;
 
+import static org.junit.Assert.assertTrue;
+
 @Table("questions")
 public class Question extends ApplicationModel {
 
@@ -32,7 +34,7 @@ public class Question extends ApplicationModel {
         set(ADVICE, advice);
         set(CATEGORY, category);
 
-        if ("multiple".equals(type)){
+        if ("multiple".equals(type)) {
             set(IS_MULTI_QUESTION, 1);
             return;
         }
@@ -84,6 +86,8 @@ public class Question extends ApplicationModel {
     }
 
     public boolean verifyAnswer(String answeredOptionId) {
+//        final List<String> correctOptionList = getCorrectOption();
+//        return correctOptionList.contains(answeredOptionId);
         String correctOption = getCorrectOption();
         return correctOption.equals(answeredOptionId);
     }
@@ -93,6 +97,18 @@ public class Question extends ApplicationModel {
         Optional<AnswerOption> correctId = optionsByQuestionId.stream().filter(AnswerOption::isCorrect).findFirst();
         return correctId.map(answerOption -> answerOption.getLongId().toString()).orElse(StringUtils.EMPTY);
     }
+
+//    public List<String> getCorrectOption() {
+//        Collection<AnswerOption> optionsByQuestionId = getOptions();
+//
+//        final ArrayList<String> correctOptions = new ArrayList<>();
+//        for (AnswerOption option : optionsByQuestionId) {
+//            if (option.isCorrect()) {
+//                correctOptions.add(option.getLongId().toString());
+//            }
+//        }
+//        return correctOptions;
+//    }
 
     @Override
     public boolean equals(Object o) {

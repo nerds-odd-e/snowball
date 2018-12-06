@@ -5,6 +5,7 @@ import org.javalite.activejdbc.validation.ValidationException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,6 +43,21 @@ public class QuestionTest {
         Long id = question1.getLongId();
         Question actual = Question.getById(id);
         assertThat(actual, is(equalTo(question1)));
+    }
+
+    @Test
+    public void getCorrectOption_正解のIDの一覧を返す() {
+        Question question = Question.createIt("description", "desc1", "advice", "adv1");
+        AnswerOption correct1 = AnswerOption.createIt("description", "desc", "question_id", question.getLongId(), "is_correct", 1);
+        AnswerOption correct2 = AnswerOption.createIt("description", "desc", "question_id", question.getLongId(), "is_correct", 1);
+        AnswerOption.createIt("description", "desc", "question_id", question.getLongId(), "is_correct", 0);
+
+        final List<String> expected = new ArrayList<>();
+        expected.add(correct1.getLongId().toString());
+        expected.add(correct2.getLongId().toString());
+
+        final List<String> actual = question.getCorrectOption();
+        assertEquals(actual, expected);
     }
 
     @Test(expected = IllegalArgumentException.class)
