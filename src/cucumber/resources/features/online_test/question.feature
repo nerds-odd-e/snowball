@@ -169,12 +169,10 @@ Feature:
       |  |
 
   @developing
-  Scenario Outline:
-    Given "topページ"に移動する
-    When "StartTest"をクリックする
+  Scenario: クエッションページに移動した時に何も選択されていない
+    Given User is taking a onlineTest with 1 questions
+    When 質問1の画面に遷移する
     Then 何も選択されていない
-    Examples:
-      |  |
 
   @developing
   Scenario Outline: 何も選択しないでanswerをクリックした場合、次の出題に移動しない
@@ -183,6 +181,14 @@ Feature:
     Then 同じページが表示される
     Examples:
       |  |
+
+  @developing
+  Scenario: 何も選択しないでanswerをクリックした場合、次の出題に移動しない
+    Given User is taking a onlineTest with 1 questions
+    And 質問1の画面に遷移する
+    And 何も選択されていない
+    When User clicks the answer button
+    Then 質問1の画面に遷移する
 
   @developing
   Scenario Outline: 複数回答の問題に回答できる

@@ -252,4 +252,10 @@ public class QuestionStep {
         throw new PendingException();
     }
 
+    @Then("^何も選択されていない$")
+    public void 何も選択されていない() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
 }
