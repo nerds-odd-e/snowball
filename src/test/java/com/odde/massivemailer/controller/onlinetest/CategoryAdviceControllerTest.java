@@ -53,16 +53,26 @@ public class CategoryAdviceControllerTest {
 
     @Test
     public void Updateボタンを押すとUpdateAdvice画面にリダイレクトされる() throws IOException, ServletException {
+        request.setParameter("category", "Scrum");
         controller.doPost(request, response);
         assertEquals("/onlinetest/edit_category_advice.jsp", response.getForwardedUrl());
     }
 
     @Test
-    public void AdviceUpdateのポストのテスト() throws IOException, SecurityException, ServletException {
-        request.setParameter("category","Scrum");
-        request.setParameter("advice","You should study scrum very hard");
-        controller.doPost(request,response);
+    public void AdviceUpdateのポストのテストScrum() throws IOException, SecurityException, ServletException {
+        request.setParameter("category", "Scrum");
+        request.setParameter("advice", "You should study scrum very hard");
+        controller.doPost(request, response);
         assertEquals("You should study scrum very hard", CategoryAdvice.findFirst("category_id = 1").get("advice"));
+
+    }
+
+    @Test
+    public void AdviceUpdateのポストのテストTeam() throws IOException, SecurityException, ServletException {
+        request.setParameter("category", "Team");
+        request.setParameter("advice", "You should study team very hard");
+        controller.doPost(request, response);
+        assertEquals("You should study team very hard", CategoryAdvice.findFirst("category_id = 3").get("advice"));
 
     }
 }
