@@ -187,20 +187,16 @@ Feature:
 
   @developing
   Scenario Outline: 複数回答の問題に回答できる
-    Given ユーザが<n>個を選択する
+    Given <correct_answer>個の正解がある問題が出題される
+    And ユーザが<n>個を選択する
     When "Answer"をクリックする
     And <n>個の選択のうち、<m>個が正しい
     When 問題が存在する <exists_question>
     Then <page> ページに遷移する
     Examples:
-      | n | m | exists_question | page        |
-      | 1 | 1 | yes             | Question    |
-      | 2 | 2 | yes             | Question    |
-      | 1 | 1 | No              | End Of Test |
-      | 2 | 2 | No              | End Of Test |
-      | 2 | 1 | yes             | Advice      |
-      | 2 | 1 | No              | Advice      |
-      | 2 | 0 | yes             | Advice      |
-      | 2 | 0 | No              | Advice      |
-      | 1 | 0 | yes             | Advice      |
-      | 1 | 0 | No              | Advice      |
+      | correct_answer | n | m | exists_question | page        |
+      | 1              | 1 | 1 | no              | End Of Test |
+      | 1              | 1 | 0 | no              | Advice      |
+      | 1              | 1 | 1 | yes             | Question    |
+      | 2              | 2 | 2 | no              | End Of Test |
+      | 2              | 2 | 2 | yes             | Question    |

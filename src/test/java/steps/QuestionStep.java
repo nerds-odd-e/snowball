@@ -1,6 +1,7 @@
 package steps;
 
 import com.odde.massivemailer.factory.QuestionBuilder;
+import com.odde.massivemailer.model.onlinetest.Question;
 import cucumber.api.DataTable;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
@@ -21,6 +22,7 @@ import static org.junit.Assert.assertEquals;
 public class QuestionStep {
     private final MassiveMailerSite site = new MassiveMailerSite();
     private final WebDriverWrapper driver = site.getDriver();
+
 
     @Given("^Add a question \"([^\"]*)\" \"([^\"]*)\"$")
     public void add_a_question(String description, String advice) throws Throwable {
@@ -210,9 +212,19 @@ public class QuestionStep {
         assertEquals(elements.get(0).getCssValue("color"), Color.fromString("#dc3545").asRgba());
     }
 
-    @Given("^ユーザが(\\d+)個を選択する$")
-    public void ユーザが_個を選択する(int arg1) throws Throwable {
+    @Given("^(\\d+)個の正解がある問題が出題される$")
+    public void 個の正解がある問題が出題される(int correctAnswers) throws Throwable {
+        Question question = new Question();
+
+        int wrongAnswers = 6 - correctAnswers;
+
+        site.visit("onlinetest/launchQuestion");
         // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Given("^ユーザが(\\d+)個を選択する$")
+    public void ユーザが_個を選択する(int n) throws Throwable {
         throw new PendingException();
     }
 
