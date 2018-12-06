@@ -64,15 +64,18 @@ public class AddQuestionController extends AppController {
     }
 
     private void saveQuestion(HttpServletRequest req) {
+        String type = req.getParameter("type");
+
         Question question = new Question(req.getParameter("description"),
                 req.getParameter("advice"),
-                req.getParameter("category"));
+                req.getParameter("category"),
+                type);
         question.saveIt();
 
         final String[] checks = req.getParameterValues("check");
         List<String> checksList = Arrays.asList(checks);
 
-        String type = req.getParameter("type");
+
         for (int i = 0; i < 6; i++) {
             String optionDescription;
             if ("single".equals(type)) {
@@ -80,12 +83,10 @@ public class AddQuestionController extends AppController {
             } else {
                 optionDescription = req.getParameter("checkbox" + (i + 1));
             }
-            if (!(i > 1 && optionDescription.isEmpty())) {
-                long questionId = Long.valueOf(question.get("id").toString());
-                boolean isCorrect = checksList.contains(String.valueOf(i + 1));
-                AnswerOption answerOption = new AnswerOption(questionId, optionDescription, isCorrect);
-                answerOption.saveIt();
-            }
+            long questionId = Long.valueOf(question.get("id").toString());
+            boolean isCorrect = checksList.contains(String.valueOf(i + 1));
+            AnswerOption answerOption = new AnswerOption(questionId, optionDescription, isCorrect);
+            answerOption.saveIt();
         }
     }
 

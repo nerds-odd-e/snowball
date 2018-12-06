@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static junit.framework.TestCase.assertEquals;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -106,5 +107,19 @@ public class QuestionTest {
         assertThat(actual.get(0).getAdvice(), is(equalTo("adv1")));
         assertThat(actual.get(0).getCategory(), is(equalTo("scrum")));
         assertThat(actual.get(0).getIsMultiQuestion(), is(equalTo(0)));
+    }
+
+    @Test
+    public void TypeがsingleのときにgetIsMultiQuestionが0を返す() {
+        final Question question = new Question("description", "advice","category","single");
+        final int actual = question.getIsMultiQuestion();
+        assertEquals(actual,0);
+    }
+
+    @Test
+    public void TypeがMultiのときにgetIsMultiQuestionが1を返す() {
+        final Question question = new Question("description", "advice","category","multi");
+        final int actual = question.getIsMultiQuestion();
+        assertEquals(actual,1);
     }
 }

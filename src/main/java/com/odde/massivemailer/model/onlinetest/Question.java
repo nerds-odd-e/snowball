@@ -27,16 +27,17 @@ public class Question extends ApplicationModel {
         //required by framework :(
     }
 
-    public Question(String description, String advice, String category) {
+    public Question(String description, String advice, String category, String type) {
         set(DESCRIPTION, description);
         set(ADVICE, advice);
         set(CATEGORY, category);
-    }
 
-    public Question(String description, String advice, int isMultiQuestion) {
-        set(DESCRIPTION, description);
-        set(ADVICE, advice);
-        set(IS_MULTI_QUESTION, isMultiQuestion);
+        if ("multi".equals(type)){
+            set(IS_MULTI_QUESTION, 1);
+            return;
+        }
+        set(IS_MULTI_QUESTION, 0);
+
     }
 
     static Stream<Long> getNRandomIds(int count) {
