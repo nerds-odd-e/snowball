@@ -1,6 +1,7 @@
 package steps;
 
 import com.odde.massivemailer.factory.QuestionBuilder;
+import com.odde.massivemailer.model.onlinetest.Question;
 import cucumber.api.DataTable;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
@@ -82,18 +83,22 @@ public class AddQuestionSteps {
     public void questionAdded(DataTable question) throws Throwable {
         Map<String, String> questionMap = question.asMap(String.class, String.class);
         new QuestionBuilder()
-                .aQuestion(questionMap.get("description"))
+                .aQuestion(questionMap.get("description"),null)
                 .withCorrectOption(questionMap.get("option1"))
                 .withWrongOption(questionMap.get("option2"))
                 .please();
+        site.visit("onlinetest/question_list.jsp");
+
     }
 
-    @Then("^User should see questions and options in question list page$")
+    @Then("^User should see questions and options in question list page with correct one highlighted$")
     public void userShouldSeeQuestionsAndOptionsInQuestionListPage(DataTable question) throws Throwable {
         Map<String, String> questionMap = question.asMap(String.class, String.class);
+        assertEquals("Question List", driver.getCurrentTitle());
         assertTrue(driver.getBodyText().contains(questionMap.get("description")));
         assertTrue(driver.getBodyText().contains(questionMap.get("option1")));
         assertTrue(driver.getBodyText().contains(questionMap.get("option2")));
+        assertTrue(driver.getBodyHTML().contains("option1row"));
     }
 
     class Result {

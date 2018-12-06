@@ -149,13 +149,12 @@ Feature:
     And Answerボタンを押す
     And EndOfTheTestが表示される
 
-  @developing
   Scenario: Added question would be shown in question list page
     Given Question added
-    | Description | What is scrum?  |
-    | Option1     | Rugby           |
-    | Option2     | Football        |
-    Then User should see questions and options in question list page
-      | Description | What is scrum?  |
-      | Option1     | Rugby           |
-      | Option2     | Football        |
+    | description | What is scrum?  |
+    | option1     | Rugby           |
+    | option2     | Football        |
+    Then User should see questions and options in question list page with correct one highlighted
+      | description | What is scrum?  |
+      | option1     | Rugby           |
+      | option2     | Football        |
