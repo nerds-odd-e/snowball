@@ -1,6 +1,7 @@
 package com.odde.massivemailer.model.onlinetest;
 
 public enum Category {
+    UNKNOWN(0, ""),
     SCRUM(1, "Scrum"),
     TECH(2, "Tech"),
     TEAM(3, "Team");
@@ -21,6 +22,17 @@ public enum Category {
     }
 
     public static Category findByName(String name) {
-        return Category.valueOf(name.toUpperCase());
+        for (Category value : Category.values()) {
+            if(name.equals(value.name)) return value;
+        }
+        return UNKNOWN;
+    }
+
+    public static String getNameById(String id) {
+        try {
+            return Category.values()[Integer.parseInt(id)].name;
+        } catch (NumberFormatException e) {
+            return UNKNOWN.name;
+        }
     }
 }

@@ -1,11 +1,18 @@
 package com.odde.massivemailer.model.onlinetest;
 
-import gherkin.lexer.Ca;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 public class CategoryTest {
+
+    @Test
+    public void 未選択カテゴリーのテスト() {
+        // id = 0
+        assertEquals(Category.UNKNOWN.getId(), 0);
+        // name = ""
+        assertEquals(Category.UNKNOWN.getName(), "");
+    }
 
     @Test
     public void スクラムカテゴリーのテスト() {
@@ -33,13 +40,22 @@ public class CategoryTest {
 
     @Test
     public void カテゴリの文字列からenumを取って来るテスト() {
+        assertEquals(Category.UNKNOWN, Category.findByName(""));
         assertEquals(Category.SCRUM, Category.findByName("Scrum"));
         assertEquals(Category.TECH, Category.findByName("Tech"));
         assertEquals(Category.TEAM, Category.findByName("Team"));
     }
 
-    @Test(expected = RuntimeException.class)
-    public void カテゴリにない文字列が入力された場合は例外が投げられる() {
-        Category.findByName("foo");
+    @Test
+    public void カテゴリにない文字列が入力された場合はUNKNOWNが返る() {
+        assertEquals(Category.UNKNOWN, Category.findByName("foo"));
+    }
+
+    @Test
+    public void カテゴリidからカテゴリネームを取って来るテスト() {
+        assertEquals(Category.UNKNOWN.getName(), Category.getNameById("0"));
+        assertEquals(Category.SCRUM.getName(), Category.getNameById("1"));
+        assertEquals(Category.TECH.getName(), Category.getNameById("2"));
+        assertEquals(Category.TEAM.getName(), Category.getNameById("3"));
     }
 }
