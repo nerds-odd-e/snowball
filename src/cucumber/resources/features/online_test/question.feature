@@ -168,7 +168,7 @@ Feature:
     Examples:
       |  |
 
-  Scenario: クエッションページに移動した時に、ラジオボタンが何も選択されていない
+  Scenario: 単一選択の質問ページに移動した時に、ラジオボタンが何も選択されていない
     Given Add Questionを開いている
     And Descriptionに"What is scrum?" を入力する
     And Typeを"Single Choice" を選択する
@@ -190,7 +190,7 @@ Feature:
     And option6に"Scrum is Swimming"が表示される
     Then 0つラジオボタンの回答が選択されている事
 
-  Scenario: クエッションページに移動した時に、チェックボックスが何も選択されていない
+  Scenario: 複数選択の質問ページに移動した時に、チェックボックスが何も選択されていない
     Given Add Questionを開いている
     And Descriptionに"What is scrum?" を入力する
     And Typeを"Multiple Choice" を選択する
