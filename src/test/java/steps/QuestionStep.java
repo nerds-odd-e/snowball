@@ -240,35 +240,39 @@ public class QuestionStep {
         assertEquals(elements.get(0).getCssValue("color"), Color.fromString("#dc3545").asRgba());
     }
 
-    @Given("^(\\d+)個の正解がある問題が出題される$")
-    public void 個の正解がある問題が出題される(int correctAnswers) throws Throwable {
+    @Given("^(\\d+)個の正解がある問題が(\\d+)個登録されている$")
+    public void 個の正解がある問題が_個登録されている(int correct_answer, int question_count) throws Throwable {
+        for (int i =0; i < question_count; i++) {
+            new QuestionBuilder()
+                    .aQuestion(1)
+                    .withWrongOption("食べ物")
+                    .withWrongOption("飲み物")
+                    .withWrongOption("国")
+                    .withWrongOption("動物")
+                    .withWrongOption("vehicle")
+                    .withCorrectOption("something else")
+                    .please();
+        }
+    }
 
-        new QuestionBuilder()
-                .aQuestion()
-                .withWrongOption("食べ物")
-                .withWrongOption("飲み物")
-                .withWrongOption("国")
-                .withWrongOption("動物")
-                .withWrongOption("乗り物")
-                .withCorrectOption("以上の何でもない")
-                .please();
-
+    @Given("^問題が出題される$")
+    public void 問題が出題される() throws Throwable {
         site.visit("onlinetest/launchQuestion");
     }
 
-    @Given("^ユーザが(\\d+)個を選択する$")
-    public void ユーザが_個を選択する(int n) throws Throwable {
-        this.driver.clickCheckBox("以上の何でもない");
+    @When("^ユーザの(\\d+)個の選択のうち、(\\d+)個が正しい$")
+    public void 個の選択のうち_個が正しい(int n, int m) throws Throwable {
+        if(n == 1 && m == 1) {
+            this.driver.clickCheckBox("something else");
+        }
+        if(n == 1 && m == 0) {
+            this.driver.clickCheckBox("vehicle");
+        }
     }
 
     @When("^\"([^\"]*)\"をクリックする$")
     public void をクリックする(String click) throws Throwable {
         driver.clickButton(click);
-    }
-
-    @When("^(\\d+)個の選択のうち、(\\d+)個が正しい$")
-    public void 個の選択のうち_個が正しい(int arg1, int arg2) throws Throwable {
-        driver.clickById("option6");
     }
 
     @When("^問題が存在する yes$")
@@ -279,8 +283,7 @@ public class QuestionStep {
 
     @Then("^Question ページに遷移する$")
     public void question_ページに遷移する() throws Throwable {
-
-        throw new PendingException();
+        assertEquals("Question", driver.getCurrentTitle());
     }
 
     @When("^問題が存在する No$")
@@ -296,8 +299,7 @@ public class QuestionStep {
 
     @Then("^Advice ページに遷移する$")
     public void advice_ページに遷移する() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        assertEquals("Advice", driver.getCurrentTitle());
     }
 
     @Then("^何も選択されていない$")

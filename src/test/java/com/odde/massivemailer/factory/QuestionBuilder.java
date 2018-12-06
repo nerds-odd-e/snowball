@@ -23,6 +23,12 @@ public class QuestionBuilder {
         currentQuestion = Question.createIt("description", "myTest", "advice", null, "category", category);
         return this;
     }
+
+    public QuestionBuilder aQuestion(int type) {
+        currentQuestion = Question.createIt("description", "myTest", "advice", null, "category", null, "is_multi_question", type);
+        return this;
+    }
+
     public QuestionBuilder withWrongOption(String optionText) {
         currentQuestion.createWrongOption(optionText);
         return this;

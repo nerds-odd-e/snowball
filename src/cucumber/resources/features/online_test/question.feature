@@ -220,16 +220,16 @@ Feature:
 
   @developing
   Scenario Outline: 複数回答の問題に回答できる
-    Given <correct_answer>個の正解がある問題が出題される
-    And ユーザが<n>個を選択する
+    Given <correct_answer>個の正解がある問題が<question_count>個登録されている
+    And 問題が出題される
+    And ユーザの<n>個の選択のうち、<m>個が正しい
     When "answer"をクリックする
-    And <n>個の選択のうち、<m>個が正しい
     Then <page> ページに遷移する
     Examples:
-      | correct_answer | n | m  | page        |
-      | 1              | 1 | 1  | End Of Test |
-#      | 1              | 1 | 0 | no              | Advice      |
-#      | 1              | 1 | 1 | yes             | Question    |
+      | correct_answer | question_count | n | m  | page        |
+      | 1              | 1              | 1 | 1  | End Of Test |
+      | 1              | 1              | 1 | 0  | Advice      |
+      | 1              | 2              | 1 | 1  | Question    |
 #      | 2              | 2 | 2 | no              | End Of Test |
 #      | 2              | 2 | 2 | yes             | Question    |
 
