@@ -20,7 +20,7 @@ public class EditAdviceSteps {
 
     @Given("^Update Adviceを開いている$")
     public void update_Adviceを開いている() throws Throwable {
-        site.visit("onlinetest/edit_category_advice.jsp");
+        site.visit("onlinetest/category/advice");
     }
 
     @When("^カテゴリで\"([^\"]*)\"を選択している$")
@@ -40,10 +40,10 @@ public class EditAdviceSteps {
         driver.clickButtonByName("update");
     }
 
-    @Then("^画面に入力した内容が画面に表示されている$")
-    public void 画面に入力した内容が画面に表示されている() throws Throwable {
-        site.visit("onlinetest/edit_category_advice.jsp");
-        driver.setDropdownByText("category", this.categoryName);
-        assertEquals(this.advice, driver.findElementByName("advice").getText());
+    @Then("^Update Advice画面に戻ってきてカテゴリが\"([^\"]*)\"でアドバイスが\"([^\"]*)\"になってる$")
+    public void update_Advice画面に戻ってきてカテゴリが_でアドバイスが_になってる(String category, String advice) throws Throwable {
+        site.visit("onlinetest/category/advice?category=" + category);
+        driver.setDropdownByText("category", category);
+        assertEquals(advice, driver.findElementByName("advice").getText());
     }
 }

@@ -3,7 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%
-    String advice = "You should study scrum";
+    String advice = (String) request.getAttribute("advice");
 %>
 
 
@@ -16,7 +16,7 @@
 				    <option value="2">Tech</option>
 				    <option value="3">Team</option>
 				 </select>
-				 <textarea class="form-control" name="advice" id="advice" maxlength="500">You should study scrum</textarea>
+				 <textarea class="form-control" name="advice" id="advice" maxlength="500">${advice}</textarea>
 				 <button type="submit" class="btn btn-default" name="update" id="update" value="add" >Add</button>
 			</form>
     </jsp:body>
