@@ -12,58 +12,58 @@
 %>
 <t:with_side_menu title="Question List">
     <jsp:body>
-			<div class="container-fluid">
+        <div class="container-fluid">
 
-				<!-- Page Heading -->
-				<div class="row">
-					<div class="col-lg-12">
-						<h1 class="page-header">Question List</h1>
-					</div>
-				</div>
-				<!-- /.row -->
+            <!-- Page Heading -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Question List</h1>
+                </div>
+            </div>
+            <!-- /.row -->
 
-				<input type="hidden" id="msg_sent_cnt" value="${param.repcnt}" />
-					<div class="col-lg-12" id="questionTables">
-						<c:forEach items="${questions}" var="question" varStatus="questionStatus">
-						<div class="panel panel-default">
-                            <table class="table table-responsive table-bordered">
-                                <thead>
-                                    <th>Question ${questionStatus.index + 1}</th>
-                                </thead>
-                                <tbody id="questionTable">
-                                    <tr>
-                                        <th>Description</th>
-                                        <td id="description">${question.getDescription()}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Category</th>
-                                        <td id="category">${question.getCategoryName()}</td>
-                                    </tr>
-                                    <c:forEach items="${question.getOptions()}" var="option" varStatus="status">
-                                    <c:set var="optionId">${option.getLongId()}</c:set>
-                                    <c:set var="optionNumber">${status.index+1}</c:set>
-                                        <c:if test="${question.getCorrectOption() == optionId}">
-                                            <tr id="option${optionNumber}row" class="bg-success">
-                                                <th>Option${optionNumber}</th>
-                                                <td id="option${optionNumber}">${option.getDescription()}</td>
-                                            </tr>
-                                         </c:if>
-                                        <c:if test="${question.getCorrectOption() != optionId}">
-                                            <tr>
-                                                <th>Option${optionNumber}</th>
-                                                <td id="option${optionNumber}">${option.getDescription()}</td>
-                                            </tr>
-                                         </c:if>
-                                    </c:forEach>
-                                    <tr>
-                                        <th>Advice</th>
-                                        <td id="advice" style="border:1px solid #ddd">${question.getAdvice()}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-						</div>
-                        </c:forEach>
-					</div>
+            <input type="hidden" id="msg_sent_cnt" value="${param.repcnt}" />
+            <div class="col-lg-12" id="questionTables">
+                <c:forEach items="${questions}" var="question" varStatus="questionStatus">
+                    <div class="panel panel-default">
+                        <table class="table table-responsive table-bordered">
+                            <thead>
+                                <th>Question ${questionStatus.index + 1}</th>
+                            </thead>
+                            <tbody id="questionTable">
+                                <tr>
+                                    <th>Description</th>
+                                    <td id="description">${question.getDescription()}</td>
+                                </tr>
+                                <tr>
+                                    <th>Category</th>
+                                    <td id="category">${question.getCategoryName()}</td>
+                                </tr>
+                                <c:forEach items="${question.getOptions()}" var="option" varStatus="status">
+                                <c:set var="optionId">${option.getLongId()}</c:set>
+                                <c:set var="optionNumber">${status.index+1}</c:set>
+                                    <c:if test="${question.getCorrectOption() == optionId}">
+                                        <tr id="option${optionNumber}row" class="bg-success">
+                                            <th>Option${optionNumber}</th>
+                                            <td id="option${optionNumber}">${option.getDescription()}</td>
+                                        </tr>
+                                     </c:if>
+                                    <c:if test="${question.getCorrectOption() != optionId}">
+                                        <tr>
+                                            <th>Option${optionNumber}</th>
+                                            <td id="option${optionNumber}">${option.getDescription()}</td>
+                                        </tr>
+                                     </c:if>
+                                </c:forEach>
+                                <tr>
+                                    <th>Advice</th>
+                                    <td id="advice" style="border:1px solid #ddd">${question.getAdvice()}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </c:forEach>
+            </div>
 
 			<div class="modal fade" id="editContactModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 				<div class="modal-dialog" role="document">
