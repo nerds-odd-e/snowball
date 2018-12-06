@@ -24,16 +24,20 @@
 
 				<input type="hidden" id="msg_sent_cnt" value="${param.repcnt}" />
 					<div class="col-lg-12" id="questionTables">
+						<c:forEach items="${questions}" var="question" varStatus="questionStatus">
 						<div class="panel panel-default">
                             <table class="table table-responsive table-bordered">
-						    <c:forEach items="${questions}" var="question" varStatus="count">
                                 <thead>
-                                    <th>Question ${count.index+1}</th>
+                                    <th>Question ${questionStatus.index + 1}</th>
                                 </thead>
                                 <tbody id="questionTable">
                                     <tr>
                                         <th>Description</th>
                                         <td id="description">${question.getDescription()}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Category</th>
+                                        <td id="category">${question.getCategoryName()}</td>
                                     </tr>
                                     <c:forEach items="${question.getOptions()}" var="option" varStatus="status">
                                     <c:set var="optionId">${option.getLongId()}</c:set>
@@ -56,9 +60,9 @@
                                         <td id="advice" style="border:1px solid #ddd">${question.getAdvice()}</td>
                                     </tr>
                                 </tbody>
-                            </c:forEach>
                             </table>
 						</div>
+                        </c:forEach>
 					</div>
 
 			<div class="modal fade" id="editContactModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

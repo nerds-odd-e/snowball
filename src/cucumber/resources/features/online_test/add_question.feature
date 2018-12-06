@@ -10,7 +10,6 @@ Feature:
   Scenario: カテゴリーの初期値は空
     Then カテゴリーは何も選択されていない
 
-  @developing
   Scenario Outline: カテゴリを選択する
     Given Add Questionを開いている
     And Descriptionに"<description>" を入力する

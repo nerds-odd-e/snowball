@@ -71,6 +71,10 @@ public class Question extends ApplicationModel {
         return getString(CATEGORY);
     }
 
+    public String getCategoryName() {
+        return Category.getNameById(getCategory());
+    }
+
     public int getIsMultiQuestion() {
         return getInteger(IS_MULTI_QUESTION);
     }
