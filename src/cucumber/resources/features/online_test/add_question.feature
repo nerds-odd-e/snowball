@@ -12,8 +12,7 @@ Feature:
     Then プルダウン"category"に""が表示される
 
   Scenario Outline: カテゴリを選択する
-    Given Add Questionを開いている
-    And Descriptionに"description" を入力する
+    Given Descriptionに"description" を入力する
     And option1に"option1"を入力する
     And option2に"option2"を入力する
     And "1"番目のoptionを選択する
@@ -30,8 +29,7 @@ Feature:
       | Tech      |
 
   Scenario Outline: Validation
-    Given Add Questionを開いている
-    And Descriptionに"<description>" を入力する
+    Given Descriptionに"<description>" を入力する
     And option1に"<opt1>"を入力する
     And option2に"<opt2>"を入力する
     And option3に"<opt3>"を入力する
@@ -52,8 +50,7 @@ Feature:
       | xxx         |      |      | ccc  |      |      |      | 3        |        | Invalid inputs found!         |
 
   Scenario: 質問の追加が成功する
-    Given Add Questionを開いている
-    And Descriptionに"What is scrum?" を入力する
+    Given Descriptionに"What is scrum?" を入力する
     And option1に"Scrum is Rugby"を入力する
     And option2に"Scrum is Baseball"を入力する
     And option3に"Scrum is Soccer"を入力する
@@ -76,8 +73,7 @@ Feature:
     And EndOfTheTestが表示される
 
   Scenario: 回答項目が6個未満の質問の追加が成功する
-    Given Add Questionを開いている
-    And Descriptionに"Terryさんはどこに住んでいますか？" を入力する
+    Given Descriptionに"Terryさんはどこに住んでいますか？" を入力する
     And option1に"シンガポール"を入力する
     And option2に"カナダ"を入力する
     And "option1"を回答として選択済み
@@ -93,8 +89,7 @@ Feature:
 
   @developing
   Scenario: 複数選択の問題を追加できる(回答一つ)
-    Given Add Questionを開いている
-    And Descriptionに"What is scrum?" を入力する
+    Given Descriptionに"What is scrum?" を入力する
     And Typeを"Multiple Choice" を選択する
     And checkbox1に"Scrum is Rugby"を入力する
     And checkbox2に"Scrum is Baseball"を入力する
@@ -119,8 +114,7 @@ Feature:
 
   @developing
   Scenario: 複数選択の問題を追加できる(回答二つ)
-    Given Add Questionを開いている
-    And Descriptionに"What is scrum?" を入力する
+    Given Descriptionに"What is scrum?" を入力する
     And Typeを"Multiple Choice" を選択する
     And checkbox1に"Scrum is Rugby"を入力する
     And checkbox2に"Scrum is Baseball"を入力する
