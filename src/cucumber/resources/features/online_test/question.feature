@@ -218,7 +218,12 @@ Feature:
     When User clicks the answer button
     Then 質問1の画面に遷移する
 
-  @developing
+  Scenario: 複数選択可能な問題で何も選択しないでanswerをクリックした場合、次の出題に移動しない
+    Given User is taking a onlineTest with 1 multiple choice questions
+    And 質問1の画面に遷移する
+    When User clicks the answer button
+    Then 質問1の画面に遷移する
+
   Scenario Outline: 複数回答の問題に回答できる
     Given <correct_answer>個の正解がある問題が<question_count>個登録されている
     And 問題が出題される
@@ -226,12 +231,12 @@ Feature:
     When "answer"をクリックする
     Then <page> ページに遷移する
     Examples:
-      | correct_answer | question_count | n | m  | page        |
-      | 1              | 1              | 1 | 1  | End Of Test |
-      | 1              | 1              | 1 | 0  | Advice      |
-      | 1              | 2              | 1 | 1  | Question    |
-      | 2              | 1              | 2 | 2  | End Of Test |
-#      | 2              | 2 | 2 | yes             | Question    |
+      | correct_answer | question_count | n | m | page        |
+      | 1              | 1              | 1 | 1 | End Of Test |
+      | 1              | 1              | 1 | 0 | Advice      |
+      | 1              | 2              | 1 | 1 | Question    |
+      | 2              | 1              | 2 | 2 | End Of Test |
+      | 2              | 2              | 2 | 2 | Question    |
 
   @developing
   Scenario: アドバイスページで正解2つと誤った回答1つがわかる

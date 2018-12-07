@@ -58,6 +58,17 @@ public class QuestionStep {
         site.visit(String.format("onlinetest/launchQuestion?question_count=%d", n));
     }
 
+    @Given("^User is taking a onlineTest with (\\d+) multiple choice questions$")
+    public void user_is_taking_a_onlineTest_with_multiple_choice_questions(int n) throws Throwable {
+        for (int i = 0; i < n; i++)
+            new QuestionBuilder()
+                    .aQuestion(1)
+                    .withWrongOption("wrongOption")
+                    .withCorrectOption("correctOption")
+                    .please();
+        site.visit(String.format("onlinetest/launchQuestion?question_count=%d", n));
+    }
+
     @Given("^User is on the first question$")
     public void user_is_in_the_test_page() {
         site.visit("onlinetest/launchQuestion");
@@ -290,21 +301,9 @@ public class QuestionStep {
         driver.clickButton(click);
     }
 
-    @When("^問題が存在する yes$")
-    public void 問題が存在する_yes() throws Throwable {
-
-        throw new PendingException();
-    }
-
     @Then("^Question ページに遷移する$")
     public void question_ページに遷移する() throws Throwable {
         assertEquals("Question", driver.getCurrentTitle());
-    }
-
-    @When("^問題が存在する No$")
-    public void 問題が存在する_No() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
     }
 
     @Then("^End Of Test ページに遷移する$")
