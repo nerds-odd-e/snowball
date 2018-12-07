@@ -200,6 +200,7 @@ Feature:
       | 1              | 2              | 1 | 1 | Question    |
       | 2              | 1              | 2 | 2 | End Of Test |
       | 2              | 2              | 2 | 2 | Question    |
+      | 1              | 1              | 2 | 1 | Advice      |
 
   @developing
   Scenario: アドバイスページで正解2つと誤った回答1つがわかる

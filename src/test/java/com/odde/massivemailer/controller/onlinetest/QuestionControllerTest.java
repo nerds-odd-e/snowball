@@ -16,6 +16,7 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.mockito.Mockito.*;
 
 @RunWith(TestWithDB.class)
 public class QuestionControllerTest {
@@ -34,7 +35,6 @@ public class QuestionControllerTest {
         onlineTest = new OnlineTest(1);
         request.getSession().setAttribute("onlineTest", onlineTest);
     }
-
 
     private Question createQuestionWithOptions() {
         Question question = Question.createIt("description", "What is Scrum?", "advice", "Scrum is a coding practice.");
@@ -135,4 +135,27 @@ public class QuestionControllerTest {
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
         assertEquals(0, onlineTest.getNumberOfAnsweredQuestions());
     }
+
+    @Test
+    public void doPostWithOneCorrectOptionAndOneIncorrectOption() throws ServletException, IOException {
+        onlineTest = spy(new OnlineTest(1));
+
+        request.addParameter("lastDoneQuestionId", "0");
+        request.getSession().setAttribute("onlineTest", onlineTest);
+
+        Long wrongOptionId = question.getFirstOptionId();
+        Long correctOptionId = question.getCorrectOptionId();
+
+        final String[] answredOption = new String[2];
+        answredOption[0] = correctOptionId.toString();
+        answredOption[1] = wrongOptionId.toString();
+
+        request.addParameter("optionId", answredOption);
+        controller.doPost(request, response);
+        HttpSession session = request.getSession();
+        OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
+
+        verify(onlineTest, times(0)).incrementCorrectAnswerCount();
+    }
+
 }
