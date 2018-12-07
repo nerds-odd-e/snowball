@@ -56,6 +56,7 @@ Feature:
       | 2        | 1                   | 1               | 0                 | Techをもっと勉強して   |
       | 3        | 1                   | 1               | 0                 | Teamをもっと勉強して   |
 
+  @developing
   Scenario Outline: 2カテゴリーから出題される
     Given "<category1>" から <number_of_questions1> 題、"<category2>" から <number_of_questions2> 題出題される
     When  User answered wrong the <number_of_wrong> th question page
