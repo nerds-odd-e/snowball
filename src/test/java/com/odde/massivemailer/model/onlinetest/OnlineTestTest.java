@@ -47,37 +47,6 @@ public class OnlineTestTest {
         assertEquals(5, questions.size());
     }
 
-    private static class Pattern {
-        private String category;
-        private int correctlyAnsweredCount;
-        private String expected;
-
-        private Pattern(String category, int correctlyAnsweredCount, String expected) {
-            this.category = category;
-            this.correctlyAnsweredCount = correctlyAnsweredCount;
-            this.expected = expected;
-        }
-    }
-
-    public static Pattern[] patterns = {
-            new Pattern("1", 1, ""),
-            new Pattern("1", 0, "Scrumをもっと勉強して"),
-    };
-
-    @Test
-    public void showSingleCategoryMessage() {
-        // we use for the loop, because...
-        // - in JUnit4, tests must be static and it cannot use DB at parameterized test
-        // - to use JUnit5, we have to migrate this file - @RunWith to @ExtendedWith
-        for (Pattern pattern: patterns) {
-            mockQuestion(1, pattern.category);
-            OnlineTest onlineTest = new OnlineTest(1);
-            onlineTest.setCorrectAnswerCount(pattern.correctlyAnsweredCount);
-            assertEquals(pattern.expected, onlineTest.getCategoryMessage());
-            Base.rollbackTransaction();
-        }
-    }
-
     @Test
     public void showMultiCategoryMessage(){
         mockQuestion(2, "1");
@@ -111,12 +80,15 @@ public class OnlineTestTest {
     }
 
     @Test
-    public void showNoAdvice() {
+    public void showChangeAdvice() {
         mockQuestion(5, "1");
         OnlineTest onlineTest = new OnlineTest(5);
 
         onlineTest.setCorrectAnswerCount(4);
         assertEquals("", onlineTest.getCategoryMessage());
+
+        onlineTest.setCorrectAnswerCount(1);
+        assertEquals("Scrumをもっと勉強して", onlineTest.getCategoryMessage());
 
     }
 

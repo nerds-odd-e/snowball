@@ -90,7 +90,7 @@ public class OnlineTest {
     }
 
     public String getCategoryMessage() {
-        if (getCorrectAnswerCount() != 0 && (getCorrectAnswerCount()*1.0/questions.size()*1.0)*100 >= 80 ) {
+        if ( getShowAdvice() ) {
             return "";
         }
         String categories = questions.stream()
@@ -100,5 +100,9 @@ public class OnlineTest {
                 .collect(Collectors.joining("と"));
 
         return categories + "をもっと勉強して";
+    }
+
+    private boolean getShowAdvice(){
+        return getCorrectAnswerCount() != 0 && (getCorrectAnswerCount()*1.0/questions.size()*1.0)*100 >= 80;
     }
 }
