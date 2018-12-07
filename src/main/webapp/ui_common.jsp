@@ -47,6 +47,9 @@
                 <ul><li><a href="/onlinetest/add_question.jsp"><span
                                         class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add
                                         Question</a></li></ul>
+                <li><a href="/onlinetest/category/advice" id="update_advice"><span
+                        class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                        Update Advice</a></li>
                 <li><a id="start_test" href="/onlinetest/launchQuestion"><span
                         class="glyphicon glyphicon-file" aria-hidden="true"></span>
                         Start Test</a></li>
