@@ -40,7 +40,7 @@ Feature:
       | 5                  | 1                 | 4               | 基本を学びなおしましょう  |
       | 7                  | 6                 | 1               | あともう少し        |
       | 1                  | 1                 | 0               | あなたはスクラムマスター！ |
-@now
+
   Scenario Outline: 1カテゴリーのみが出題される
     Given "<category>" から <number_of_questions> 題出題される
     When  User answered wrong the <number_of_wrong> th question page
