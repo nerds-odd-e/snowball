@@ -1,6 +1,7 @@
 Feature:
   User can take an online test :)
 
+  @developing
   Scenario: Displaying the question
     Given Add a question "What is scrum?"
     And User is on the first question
@@ -23,6 +24,7 @@ Feature:
       | wrongOption     | Advice       |
       | correctOption   | Question     |
 
+  @developing
   Scenario Outline: advice page should include clear feedback
     Given Add a question "スクラムとは何ですか？"
     And User is on the first question
