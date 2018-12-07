@@ -146,11 +146,11 @@ public class QuestionControllerTest {
         Long wrongOptionId = question.getFirstOptionId();
         Long correctOptionId = question.getCorrectOptionId();
 
-        final String[] answredOption = new String[2];
-        answredOption[0] = correctOptionId.toString();
-        answredOption[1] = wrongOptionId.toString();
+        final String[] answeredOption = new String[2];
+        answeredOption[0] = correctOptionId.toString();
+        answeredOption[1] = wrongOptionId.toString();
 
-        request.addParameter("optionId", answredOption);
+        request.addParameter("optionId", answeredOption);
         controller.doPost(request, response);
         HttpSession session = request.getSession();
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
