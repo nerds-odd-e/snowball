@@ -244,19 +244,18 @@ public class QuestionStep {
     public void 個の正解がある問題が_個登録されている(int correct_answer, int question_count) throws Throwable {
 
         for (int i = 0; i < question_count; i++) {
-            final QuestionBuilder questionBuilder = new QuestionBuilder().aQuestion(1);
-            questionBuilder
-                    .withWrongOption("食べ物")
-                    .withWrongOption("飲み物")
-                    .withWrongOption("国")
-                    .withWrongOption("動物");
+            final QuestionBuilder questionBuilder = new QuestionBuilder()
+                    .aQuestion(1)
+                    .withWrongOption("food")
+                    .withWrongOption("drink")
+                    .withWrongOption("country")
+                    .withWrongOption("animal")
+                    .withCorrectOption("vehicle");
             if (correct_answer == 1) {
                 questionBuilder
-                        .withWrongOption("vehicle")
-                        .withCorrectOption("something else");
+                        .withWrongOption("something else");
             } else {
                 questionBuilder
-                        .withCorrectOption("vehicle")
                         .withCorrectOption("something else");
             }
             questionBuilder.please();
@@ -271,11 +270,15 @@ public class QuestionStep {
     @When("^ユーザの(\\d+)個の選択のうち、(\\d+)個が正しい$")
     public void 個の選択のうち_個が正しい(int n, int m) throws Throwable {
         if (n == 1 && m == 1) {
-            this.driver.clickCheckBox("something else");
-        }
-        if (n == 1 && m == 0) {
             this.driver.clickCheckBox("vehicle");
+            return;
         }
+
+        if (n == 1 && m == 0) {
+            this.driver.clickCheckBox("something else");
+            return;
+        }
+
         if (n == 2 && m == 2) {
             this.driver.clickCheckBox("vehicle");
             this.driver.clickCheckBox("something else");

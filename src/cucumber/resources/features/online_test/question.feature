@@ -230,7 +230,7 @@ Feature:
       | 1              | 1              | 1 | 1  | End Of Test |
       | 1              | 1              | 1 | 0  | Advice      |
       | 1              | 2              | 1 | 1  | Question    |
-      | 2              |1               | 2 | 2  | End Of Test |
+      | 2              | 1              | 2 | 2  | End Of Test |
 #      | 2              | 2 | 2 | yes             | Question    |
 
   @developing
