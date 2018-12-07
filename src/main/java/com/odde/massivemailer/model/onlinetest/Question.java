@@ -7,6 +7,7 @@ import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
 
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -86,29 +87,29 @@ public class Question extends ApplicationModel {
     }
 
     public boolean verifyAnswer(String answeredOptionId) {
-//        final List<String> correctOptionList = getCorrectOption();
-//        return correctOptionList.contains(answeredOptionId);
-        String correctOption = getCorrectOption();
+        Collection<AnswerOption> optionsByQuestionId = getOptions();
+        Optional<AnswerOption> correctId = optionsByQuestionId.stream().filter(AnswerOption::isCorrect).findFirst();
+        String correctOption = correctId.map(answerOption -> answerOption.getLongId().toString()).orElse(StringUtils.EMPTY);
         return correctOption.equals(answeredOptionId);
     }
 
-    public String getCorrectOption() {
-        Collection<AnswerOption> optionsByQuestionId = getOptions();
-        Optional<AnswerOption> correctId = optionsByQuestionId.stream().filter(AnswerOption::isCorrect).findFirst();
-        return correctId.map(answerOption -> answerOption.getLongId().toString()).orElse(StringUtils.EMPTY);
-    }
-
-//    public List<String> getCorrectOption() {
+//    public String getCorrectOption() {
 //        Collection<AnswerOption> optionsByQuestionId = getOptions();
-//
-//        final ArrayList<String> correctOptions = new ArrayList<>();
-//        for (AnswerOption option : optionsByQuestionId) {
-//            if (option.isCorrect()) {
-//                correctOptions.add(option.getLongId().toString());
-//            }
-//        }
-//        return correctOptions;
+//        Optional<AnswerOption> correctId = optionsByQuestionId.stream().filter(AnswerOption::isCorrect).findFirst();
+//        return correctId.map(answerOption -> answerOption.getLongId().toString()).orElse(StringUtils.EMPTY);
 //    }
+
+    public ArrayList<Long> getCorrectOption() {
+        Collection<AnswerOption> optionsByQuestionId = getOptions();
+        final ArrayList<Long> correctOptions = new ArrayList<>();
+        for (AnswerOption option : optionsByQuestionId) {
+            if (option.isCorrect()) {
+                System.out.println(option.getLongId());
+                correctOptions.add(option.getLongId());
+            }
+        }
+        return correctOptions;
+    }
 
     @Override
     public boolean equals(Object o) {

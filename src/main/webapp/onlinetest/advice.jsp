@@ -4,11 +4,12 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ page import="com.odde.massivemailer.model.onlinetest.OnlineTest" %>
 <%@ page import="com.odde.massivemailer.model.onlinetest.Question" %>
+<%@ page import="java.util.ArrayList" %>
 
 <%
     OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
     Question question = onlineTest.getPreviousQuestion();
-	Long correctOption = Long.parseLong((String)question.getCorrectOption());
+	ArrayList<Long> correctOption = question.getCorrectOption();
 	Long selectedOption = Long.parseLong((String)request.getAttribute("selectedOption"));
 	final String correctClass = "correct";
 	final String incorrectClass = "selected incorrect";
@@ -32,18 +33,19 @@
                <c:forEach items="${question.getOptions()}" var="option">
                     <li>
                          <c:set var="optionId">${option.getLongId()}</c:set>
-                         <c:choose>
-                            <c:when test="${selectedOption == optionId}">
-                               <input type="radio" name="optionId" value="${option.getLongId()}" checked disabled/><label class="selected incorrect"/>${option.getDescription()}</label>
-                            </c:when>
-                            <c:when test="${correctOption == optionId}">
-                                <input type="radio" name="optionId" value="${option.getLongId()}" disabled/><label class="correct"/>${option.getDescription()}</label>
-                            </c:when>
 
-                            <c:otherwise >
+                            <c:if test="${selectedOption == optionId}">
+                               <input type="radio" name="optionId" value="${option.getLongId()}" checked disabled/><label class="selected incorrect"/>${option.getDescription()}</label>
+                            </c:if>
+                            <c:forEach items="${correctOption}" var="correctoption">
+                                <c:if test="${correctoption == optionId}">
+                                    <input type="radio" name="optionId" value="${option.getLongId()}" disabled/><label class="correct"/>${option.getDescription()}</label>
+                                </c:if>
+                            </c:forEach>
+                             <c:if test="${selectedOption != optionId}">
                                 <input type="radio" name="optionId" value="${option.getLongId()}" disabled/><label> ${option.getDescription()}</label>
-                            </c:otherwise>
-                         </c:choose>
+                             </c:if>
+
                     </li>
                </c:forEach>
 
