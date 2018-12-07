@@ -35,19 +35,10 @@ public class CategoryAdviceController extends AppController {
     }
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        if (req.getParameter("category").equals("Scrum")) {
-            saveAdvice("1", "You should study scrum very hard");
-        } else {
-            saveAdvice("3", "You should study team very hard");
-        }
+        String categoryId = req.getParameter("category");
+        String advice = req.getParameter("advice");
+        CategoryAdvice.saveAdvice( categoryId, advice);
         RequestDispatcher dispatch = req.getRequestDispatcher("/onlinetest/edit_category_advice.jsp");
         dispatch.forward(req, resp);
-    }
-
-    private void saveAdvice(String categoryId, String advice) {
-        String query = "category_id = " + categoryId;
-        CategoryAdvice categoryAdvice = CategoryAdvice.findFirst(query);
-        categoryAdvice.set("advice", advice);
-        categoryAdvice.save();
     }
 }

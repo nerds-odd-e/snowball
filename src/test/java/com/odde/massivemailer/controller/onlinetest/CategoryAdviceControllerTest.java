@@ -53,6 +53,7 @@ public class CategoryAdviceControllerTest {
     @Test
     public void Updateボタンを押すとUpdateAdvice画面にリダイレクトされる() throws IOException, ServletException {
         request.setParameter("category", "Scrum");
+        request.setParameter("advice", "You should study scrum");
         controller.doPost(request, response);
         assertEquals("/onlinetest/edit_category_advice.jsp", response.getForwardedUrl());
     }
@@ -60,8 +61,9 @@ public class CategoryAdviceControllerTest {
     @Test
     public void AdviceUpdateのポストのテスト() throws IOException, SecurityException, ServletException {
         List<String[]> datas = new ArrayList<>();
-        datas.add(new String[]{Category.SCRUM.getName(), "You should study scrum very hard", "1"});
-        datas.add(new String[]{Category.TEAM.getName(), "You should study team very hard", "3"});
+        datas.add(new String[]{String.valueOf(Category.SCRUM.getId()), "You should study scrum very hard", "1"});
+        datas.add(new String[]{String.valueOf(Category.TECH.getId()), "You should study tech very hard", "2"});
+        datas.add(new String[]{String.valueOf(Category.TEAM.getId()), "You should study team very hard", "3"});
 
         for (String[] data : datas) {
             request.setParameter("category", data[0]);
