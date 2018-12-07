@@ -3,7 +3,7 @@ Feature:
 
   @developing
   Scenario: Displaying the question
-    Given Add a question "What is scrum?"
+    Given Add a question "What is scrum?" ""
     And User is on the first question
     And User should see a question and options
       | description | What is scrum?    |
@@ -26,7 +26,7 @@ Feature:
 
   @developing
   Scenario Outline: advice page should include clear feedback
-    Given Add a question "スクラムとは何ですか？"
+    Given Add a question "スクラムとは何ですか？" ""
     And User is on the first question
     When User chooses the "<incorrect option>" answer
     And User clicks the answer button
