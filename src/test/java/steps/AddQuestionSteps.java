@@ -1,6 +1,7 @@
 package steps;
 
 import com.odde.massivemailer.factory.QuestionBuilder;
+import com.odde.massivemailer.model.onlinetest.Question;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -48,7 +49,6 @@ public class AddQuestionSteps {
     }
 
     @Given("^option(\\d+)に\"([^\"]*)\"を入力する$")
-
     public void option_に_を入力する(int optionNumber, String optionName) throws Throwable {
         driver.setTextField("option" + optionNumber, optionName);
     }
@@ -56,6 +56,11 @@ public class AddQuestionSteps {
     @Given("^checkbox(\\d+)に\"([^\"]*)\"を入力する$")
     public void checkbox_に_を入力する(int checkboxNumber, String checkboxName) throws Throwable {
         driver.setTextField("checkbox" + checkboxNumber, checkboxName);
+    }
+
+    @Given("^\"([^\"]*)\"に\"([^\"]*)\"を入力する$")
+    public void _に_を入力する(String elementName, String value) throws Throwable {
+        driver.setTextField(elementName, value);
     }
 
     @Given("^\"([^\"]*)\"番目のoptionを選択する$")

@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class QuestionStep {
     private final MassiveMailerSite site = new MassiveMailerSite();
@@ -216,15 +217,10 @@ public class QuestionStep {
         driver.findElements(By.cssSelector("input[type=checkbox]")).stream().limit(count).forEach(option -> option.click());
     }
 
-    @Then("^(\\d+)つチェックボックスの回答が選択されている事$")
-    public void つチェックボックスの回答が選択されている事(int count) throws Throwable {
-        int elementCount = driver.findElements(By.cssSelector("input[type=checkbox]:checked")).size();
-        assertEquals(count, elementCount);
-    }
-
-    @Then("^(\\d+)つラジオボタンの回答が選択されている事$")
-    public void つラジオボタンの回答が選択されている事(int count) throws Throwable {
-        int elementCount = driver.findElements(By.cssSelector("input[type=radio]:checked")).size();
+    @Then("^(\\d+)つ\"([^\"]*)\"の回答が選択されている事$")
+    public void _つ_の回答が選択されている事(int count, String elementType) throws Throwable {
+        assertTrue(driver.findElements(By.cssSelector("input[type="+elementType+"]")).size() > 0);
+        int elementCount = driver.findElements(By.cssSelector("input[type="+elementType+"]:checked")).size();
         assertEquals(count, elementCount);
     }
 
