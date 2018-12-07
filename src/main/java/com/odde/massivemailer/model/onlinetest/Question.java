@@ -54,11 +54,6 @@ public class Question extends ApplicationModel {
         return findBySQL("SELECT id, description, advice, category, is_multi_question FROM questions ORDER BY RAND() LIMIT ?", count);
     }
 
-    @SuppressWarnings("unused")
-    public static List<Question> getAll() {
-        return findBySQL("SELECT id, description, advice, category FROM questions ORDER BY id");
-    }
-
     public String getDescription() {
         return getString(DESCRIPTION);
     }

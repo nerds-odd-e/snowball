@@ -7,7 +7,7 @@
 <%@ page import="java.util.*" %>
 
 <%
-    List<Question> questions = Question.getAll();
+    List<Question> questions = Question.findAll();
 	pageContext.setAttribute("questions", questions);
 %>
 <t:with_side_menu title="Question List">
@@ -32,11 +32,11 @@
                             </thead>
                             <tbody id="questionTable">
                                 <tr>
-                                    <th>Description</th>
+                                    <th style="width:20%">Description</th>
                                     <td id="description">${question.getDescription()}</td>
                                 </tr>
                                 <tr>
-                                    <th>Category</th>
+                                    <th style="width:20%">Category</th>
                                     <td id="category">${question.getCategoryName()}</td>
                                 </tr>
                                 <c:forEach items="${question.getOptions()}" var="option" varStatus="status">
@@ -44,19 +44,19 @@
                                 <c:set var="optionNumber">${status.index+1}</c:set>
                                     <c:if test="${question.getCorrectOption() == optionId}">
                                         <tr id="option${optionNumber}row" class="bg-success">
-                                            <th>Option${optionNumber}</th>
+                                            <th style="width:20%">Option${optionNumber}</th>
                                             <td id="option${optionNumber}">${option.getDescription()}</td>
                                         </tr>
                                      </c:if>
                                     <c:if test="${question.getCorrectOption() != optionId}">
                                         <tr>
-                                            <th>Option${optionNumber}</th>
+                                            <th style="width:20%">Option${optionNumber}</th>
                                             <td id="option${optionNumber}">${option.getDescription()}</td>
                                         </tr>
                                      </c:if>
                                 </c:forEach>
                                 <tr>
-                                    <th>Advice</th>
+                                    <th style="width:20%">Advice</th>
                                     <td id="advice" style="border:1px solid #ddd">${question.getAdvice()}</td>
                                 </tr>
                             </tbody>
