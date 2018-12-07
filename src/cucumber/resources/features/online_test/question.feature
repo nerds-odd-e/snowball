@@ -156,18 +156,6 @@ Feature:
       | 3    | 3    | 3    | 3    | 3    | 3    | 9    |
       | 3    | 1    | 3    | 3    | 1    | 3    | 7    |
 
-
-  @developing
-  Scenario Outline: 出題数の上限が固定されている
-    Given 問題開始画面に移動する
-    And カテゴリー"scrum"を3個準備する
-    And カテゴリー"team"を3個準備する
-    And カテゴリー"technical"を4個準備する
-    When 10回回答する
-    Then 結果画面に移動する
-    Examples:
-      |  |
-
   Scenario Outline: 質問ページに移動した時に、回答選択肢が何も選択されていない
     Given Add Questionを開いている
     And Descriptionに"What is scrum?" を入力する
