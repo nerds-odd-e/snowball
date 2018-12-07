@@ -62,6 +62,7 @@ cucumber {
     ]
 
     tags = ['~@system', '~@slow', '~@developing']
+    strict = true
 }
 
 tasks.cucumber {
