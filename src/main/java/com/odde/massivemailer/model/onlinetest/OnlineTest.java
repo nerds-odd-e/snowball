@@ -90,8 +90,8 @@ public class OnlineTest {
     }
 
     public String getCategoryMessage() {
-        if (getCorrectAnswerCount() == questions.size()) {
-            return "よくできました";
+        if (getCorrectAnswerCount() != 0 && (getCorrectAnswerCount()*1.0/questions.size()*1.0)*100 >= 80 ) {
+            return "";
         }
         String categories = questions.stream()
                 .sorted((q1, q2) -> (int) (q1.getLongId() - q2.getLongId()))

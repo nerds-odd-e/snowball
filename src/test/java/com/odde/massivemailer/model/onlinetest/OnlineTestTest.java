@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.stream.IntStream;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(TestWithDB.class)
 public class OnlineTestTest {
@@ -59,7 +60,7 @@ public class OnlineTestTest {
     }
 
     public static Pattern[] patterns = {
-            new Pattern("1", 1, "よくできました"),
+            new Pattern("1", 1, ""),
             new Pattern("1", 0, "Scrumをもっと勉強して"),
     };
 
@@ -79,12 +80,11 @@ public class OnlineTestTest {
 
     @Test
     public void showMultiCategoryMessage(){
-        mockQuestion(1, "1");
-        mockQuestion(1, "1");
+        mockQuestion(2, "1");
         OnlineTest onlineTest = new OnlineTest(2);
 
         onlineTest.setCorrectAnswerCount(2);
-        assertEquals("よくできました", onlineTest.getCategoryMessage());
+        assertEquals("", onlineTest.getCategoryMessage());
 
     }
 
@@ -116,7 +116,7 @@ public class OnlineTestTest {
         OnlineTest onlineTest = new OnlineTest(5);
 
         onlineTest.setCorrectAnswerCount(4);
-        assertEquals("よくできました", onlineTest.getCategoryMessage());
+        assertEquals("", onlineTest.getCategoryMessage());
 
     }
 

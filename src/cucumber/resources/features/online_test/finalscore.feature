@@ -41,7 +41,6 @@ Feature:
       | 7                  | 6                 | 1               | あともう少し        |
       | 1                  | 1                 | 0               | あなたはスクラムマスター！ |
 
-    @now
   Scenario Outline: 1カテゴリーのみが出題される
     Given "<category>" から <number_of_questions> 題出題される
     When  User answered wrong the <number_of_wrong> th question page
@@ -50,14 +49,14 @@ Feature:
 
     Examples:
       | category | number_of_questions | number_of_wrong | number_of_correct | message       |
-      | 1        | 1                   | 0               | 1                 | よくできました       |
-      | 1        | 2                   | 0               | 2                 | よくできました       |
+      | 1        | 1                   | 0               | 1                 |        |
+      | 1        | 2                   | 0               | 2                 |        |
       | 1        | 1                   | 1               | 0                 | Scrumをもっと勉強して |
       | 1        | 2                   | 2               | 0                 | Scrumをもっと勉強して |
       | 2        | 1                   | 1               | 0                 | Techをもっと勉強して   |
       | 3        | 1                   | 1               | 0                 | Teamをもっと勉強して   |
       | 3        | 5                   | 3               | 2                 | Teamをもっと勉強して   |
-      | 3        | 5                   | 1               | 4                 | よくできました   |
+      | 3        | 5                   | 1               | 4                 |    |
 
   @developing
   Scenario Outline: 2カテゴリーから出題される
