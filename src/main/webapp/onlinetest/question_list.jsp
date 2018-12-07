@@ -42,13 +42,13 @@
                                 <c:forEach items="${question.getOptions()}" var="option" varStatus="status">
                                 <c:set var="optionId">${option.getLongId()}</c:set>
                                 <c:set var="optionNumber">${status.index+1}</c:set>
-                                    <c:if test="${question.getCorrectOption() == optionId}">
+                                    <c:if test="${option.isCorrect()}">
                                         <tr id="option${optionNumber}row" class="bg-success">
                                             <th style="width:20%">Option${optionNumber}</th>
                                             <td id="option${optionNumber}">${option.getDescription()}</td>
                                         </tr>
                                      </c:if>
-                                    <c:if test="${question.getCorrectOption() != optionId}">
+                                    <c:if test="${!option.isCorrect()}">
                                         <tr>
                                             <th style="width:20%">Option${optionNumber}</th>
                                             <td id="option${optionNumber}">${option.getDescription()}</td>
