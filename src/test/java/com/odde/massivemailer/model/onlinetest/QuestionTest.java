@@ -56,7 +56,7 @@ public class QuestionTest {
         expected.add(correct1.getLongId().toString());
         expected.add(correct2.getLongId().toString());
 
-        final List<String> actual = question.getCorrectOption();
+        final ArrayList<Long> actual = question.getCorrectOption();
         assertEquals(actual, expected);
     }
 

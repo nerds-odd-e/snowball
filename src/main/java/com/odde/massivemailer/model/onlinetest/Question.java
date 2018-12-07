@@ -7,11 +7,8 @@ import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
 
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.Stream;
-
-import static org.junit.Assert.assertTrue;
 
 @Table("questions")
 public class Question extends ApplicationModel {
@@ -93,22 +90,26 @@ public class Question extends ApplicationModel {
         return correctOption.equals(answeredOptionId);
     }
 
-//    public String getCorrectOption() {
-//        Collection<AnswerOption> optionsByQuestionId = getOptions();
-//        Optional<AnswerOption> correctId = optionsByQuestionId.stream().filter(AnswerOption::isCorrect).findFirst();
-//        return correctId.map(answerOption -> answerOption.getLongId().toString()).orElse(StringUtils.EMPTY);
-//    }
-
     public ArrayList<Long> getCorrectOption() {
         Collection<AnswerOption> optionsByQuestionId = getOptions();
         final ArrayList<Long> correctOptions = new ArrayList<>();
         for (AnswerOption option : optionsByQuestionId) {
             if (option.isCorrect()) {
-                System.out.println(option.getLongId());
                 correctOptions.add(option.getLongId());
             }
         }
         return correctOptions;
+    }
+
+    public boolean isCorrect(Long optionId) {
+        Collection<AnswerOption> optionsByQuestionId = getOptions();
+        final ArrayList<Long> correctOptions = new ArrayList<>();
+        for (AnswerOption option : optionsByQuestionId) {
+            if (option.isCorrect()) {
+                correctOptions.add(option.getLongId());
+            }
+        }
+        return correctOptions.contains(optionId);
     }
 
     @Override
