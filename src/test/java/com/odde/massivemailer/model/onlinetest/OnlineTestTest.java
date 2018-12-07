@@ -110,6 +110,17 @@ public class OnlineTestTest {
 
     }
 
+    @Test
+    public void showNoAdvice() {
+        mockQuestion(5, "1");
+        OnlineTest onlineTest = new OnlineTest(5);
+
+        onlineTest.setCorrectAnswerCount(4);
+        assertEquals("よくできました", onlineTest.getCategoryMessage());
+
+    }
+
+
     private static void mockQuestion(int numberOfQuestion, String category) {
         IntStream.range(0, numberOfQuestion).forEach(index -> Question.createIt("description", "desc" + index, "advice", "adv" + index, "category", category));
     }

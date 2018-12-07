@@ -41,6 +41,7 @@ Feature:
       | 7                  | 6                 | 1               | あともう少し        |
       | 1                  | 1                 | 0               | あなたはスクラムマスター！ |
 
+    @now
   Scenario Outline: 1カテゴリーのみが出題される
     Given "<category>" から <number_of_questions> 題出題される
     When  User answered wrong the <number_of_wrong> th question page
@@ -55,6 +56,8 @@ Feature:
       | 1        | 2                   | 2               | 0                 | Scrumをもっと勉強して |
       | 2        | 1                   | 1               | 0                 | Techをもっと勉強して   |
       | 3        | 1                   | 1               | 0                 | Teamをもっと勉強して   |
+      | 3        | 5                   | 3               | 2                 | Teamをもっと勉強して   |
+      | 3        | 5                   | 1               | 4                 | よくできました   |
 
   @developing
   Scenario Outline: 2カテゴリーから出題される
@@ -67,39 +70,6 @@ Feature:
       | scrum     | TDD       | 1                    | 1                    | 0               | 2                 | よくできました           |
       | scrum     | TDD       | 1                    | 1                    | 2               | 0                 | scrumとTDDをもっと勉強して |
 
-
-  @developing
-  Scenario Outline: Scrumの正解率によって、Scrumの正答率とAdviceの出力が変わる
-    Given 最終ページが開かれている
-    Then Scrumの正答率が <scrum_correct_percent> Adviceの表示内容が <advice> になる
-    Examples:
-      | scrum_correct_percent | advice              |
-      | 80                    | null                |
-      | 79                    | scrumをもっと勉強して |
-      | 0                     | scrumをもっと勉強して |
-      | null                  | null                |
-
-  @developing
-  Scenario Outline: Techの正解率によって、Techの正答率とAdviceの出力が変わる
-    Given Techの正答率が <tech_correct_percent>
-    Then Techの正答率が <tech_correct_percent> Adviceの表示内容が <advice> になる
-    Examples:
-      | tech_correct_percent  | advice              |
-      | 80                    | null                |
-      | 79                    | もっと頑張りましょう   |
-      | 0                     | もっと頑張りましょう   |
-      | null                  | null                |
-
-  @developing
-  Scenario Outline: Teamの正解率によって、Teamの正答率とAdviceの出力が変わる
-    Given Teamの正答率が <team_correct_percent>
-    Then Teamの正答率が <team_correct_percent> Adviceの表示内容が <advice> になる
-    Examples:
-      | team_correct_percent  | advice              |
-      | 80                    | null                |
-      | 79                    | もっと頑張りましょう   |
-      | 0                     | もっと頑張りましょう   |
-      | null                  | null                |
 
   @developing
   Scenario Outline: 全てのカテゴリの正答率が80%を超える場合はAdviceが表示されない
