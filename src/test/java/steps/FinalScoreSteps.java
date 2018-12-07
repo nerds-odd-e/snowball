@@ -95,6 +95,12 @@ public class FinalScoreSteps {
         site.visit(String.format("onlinetest/launchQuestion?question_count=%d", numberOfQuestions1 + numberOfQuestions2));
     }
 
+    @Then("^終了ページにアドバイスエリアが表示されていない$")
+    public void 終了ページにアドバイスエリアが表示されていない() throws Throwable {
+        site.visit("onlinetest/end_of_test.jsp");
+        assertFalse(driver.getBodyHTML().contains("advice_div"));
+    }
+
     @Given("^最終ページが開かれている$")
     public void 最終ページが開かれている() throws Throwable {
         site.visit("onlinetest/end_of_test.jsp");

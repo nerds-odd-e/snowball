@@ -102,7 +102,7 @@ public class OnlineTest {
         return categories + "をもっと勉強して";
     }
 
-    private boolean getShowAdvice(){
+    public boolean getShowAdvice(){
         return getCorrectAnswerCount() != 0 && (getCorrectAnswerCount()*1.0/questions.size()*1.0)*100 >= 80;
     }
 }

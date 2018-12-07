@@ -23,9 +23,11 @@
                 <p>あなたの正解率は<span><span id="correct-percentage">${onlineTest.getCorrectPercentage()}</span>%</span></p>
                 <p id="message">${onlineTest.showFinalMessage()}</p>
             </div>
+            <c:if test="!${onlineTest.getShowAdvice()}" >
             <div class="advice_div">
                 Advice
             </div>
+            </c:if>
             <div>
                 <p id="category-message">${onlineTest.getCategoryMessage()}</p>
             </div>

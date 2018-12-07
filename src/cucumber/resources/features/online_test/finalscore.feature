@@ -58,6 +58,17 @@ Feature:
       | 3        | 5                   | 3               | 2                 | Teamをもっと勉強して   |
       | 3        | 5                   | 1               | 4                 |    |
 
+  Scenario Outline: 1カテゴリーからの出題で正答率が80%以上
+    Given "<category>" から <number_of_questions> 題出題される
+    When  User answered wrong the <number_of_wrong> th question page
+    And  User answered correctly the <number_of_correct> th question page
+    Then 終了ページにアドバイスエリアが表示されていない
+
+    Examples:
+      | category | number_of_questions | number_of_wrong | number_of_correct |
+      | 3        | 5                   | 1               | 4                 |
+
+
   @developing
   Scenario Outline: 2カテゴリーから出題される
     Given "<category1>" から <number_of_questions1> 題、"<category2>" から <number_of_questions2> 題出題される
