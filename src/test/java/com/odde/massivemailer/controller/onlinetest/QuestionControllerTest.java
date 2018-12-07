@@ -99,7 +99,7 @@ public class QuestionControllerTest {
 
     @Test
     public void doPostWithIncrementCorrectCountOnCorrectAnswer() throws ServletException, IOException {
-        List<Long> optionId = question.getCorrectOptions();
+        List<Long> optionId = question.getCorrectOption();
         onlineTest = new OnlineTest(2);
 
         request.addParameter("optionId", optionId.get(0).toString());
@@ -146,7 +146,7 @@ public class QuestionControllerTest {
         request.getSession().setAttribute("onlineTest", onlineTest);
 
         Long wrongOptionId = question.getFirstOptionId();
-        List<Long> correctOptionId = question.getCorrectOptions();
+        List<Long> correctOptionId = question.getCorrectOption();
 
         final String[] answeredOption = new String[2];
         answeredOption[0] = correctOptionId.get(0).toString();
