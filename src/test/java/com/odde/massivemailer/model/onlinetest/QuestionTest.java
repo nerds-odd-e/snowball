@@ -52,9 +52,9 @@ public class QuestionTest {
         AnswerOption correct2 = AnswerOption.createIt("description", "desc", "question_id", question.getLongId(), "is_correct", 1);
         AnswerOption.createIt("description", "desc", "question_id", question.getLongId(), "is_correct", 0);
 
-        final List<String> expected = new ArrayList<>();
-        expected.add(correct1.getLongId().toString());
-        expected.add(correct2.getLongId().toString());
+        final List<Long> expected = new ArrayList<>();
+        expected.add(correct1.getLongId());
+        expected.add(correct2.getLongId());
 
         final ArrayList<Long> actual = question.getCorrectOption();
         assertEquals(actual, expected);
