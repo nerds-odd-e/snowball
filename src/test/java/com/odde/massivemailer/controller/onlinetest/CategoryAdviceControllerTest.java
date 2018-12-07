@@ -52,7 +52,7 @@ public class CategoryAdviceControllerTest {
 
     @Test
     public void Updateボタンを押すとUpdateAdvice画面にリダイレクトされる() throws IOException, ServletException {
-        request.setParameter("category", "Scrum");
+        request.setParameter("category", "1");
         request.setParameter("advice", "You should study scrum");
         controller.doPost(request, response);
         assertEquals("/onlinetest/edit_category_advice.jsp", response.getForwardedUrl());
