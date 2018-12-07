@@ -40,7 +40,7 @@ Feature:
       | 5                  | 1                 | 4               | 基本を学びなおしましょう  |
       | 7                  | 6                 | 1               | あともう少し        |
       | 1                  | 1                 | 0               | あなたはスクラムマスター！ |
-
+@now
   Scenario Outline: 1カテゴリーのみが出題される
     Given "<category>" から <number_of_questions> 題出題される
     When  User answered wrong the <number_of_wrong> th question page
@@ -49,12 +49,12 @@ Feature:
 
     Examples:
       | category | number_of_questions | number_of_wrong | number_of_correct | message       |
-      | scrum    | 1                   | 0               | 1                 | よくできました       |
-      | scrum    | 2                   | 0               | 2                 | よくできました       |
-      | scrum    | 1                   | 1               | 0                 | scrumをもっと勉強して |
-      | scrum    | 2                   | 2               | 0                 | scrumをもっと勉強して |
-      | TDD      | 1                   | 1               | 0                 | TDDをもっと勉強して   |
-
+      | 1        | 1                   | 0               | 1                 | よくできました       |
+      | 1        | 2                   | 0               | 2                 | よくできました       |
+      | 1        | 1                   | 1               | 0                 | Scrumをもっと勉強して |
+      | 1        | 2                   | 2               | 0                 | Scrumをもっと勉強して |
+      | 2        | 1                   | 1               | 0                 | Techをもっと勉強して   |
+      | 3        | 1                   | 1               | 0                 | Teamをもっと勉強して   |
 
   Scenario Outline: 2カテゴリーから出題される
     Given "<category1>" から <number_of_questions1> 題、"<category2>" から <number_of_questions2> 題出題される
@@ -66,15 +66,16 @@ Feature:
       | scrum     | TDD       | 1                    | 1                    | 0               | 2                 | よくできました           |
       | scrum     | TDD       | 1                    | 1                    | 2               | 0                 | scrumとTDDをもっと勉強して |
 
+
   @developing
   Scenario Outline: Scrumの正解率によって、Scrumの正答率とAdviceの出力が変わる
-    Given Scrumの正答率が <scrum_correct_percent>
+    Given 最終ページが開かれている
     Then Scrumの正答率が <scrum_correct_percent> Adviceの表示内容が <advice> になる
     Examples:
       | scrum_correct_percent | advice              |
       | 80                    | null                |
-      | 79                    | もっと頑張りましょう   |
-      | 0                     | もっと頑張りましょう   |
+      | 79                    | scrumをもっと勉強して |
+      | 0                     | scrumをもっと勉強して |
       | null                  | null                |
 
   @developing

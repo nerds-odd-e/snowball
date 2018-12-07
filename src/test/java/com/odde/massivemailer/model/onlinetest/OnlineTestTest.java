@@ -59,9 +59,8 @@ public class OnlineTestTest {
     }
 
     public static Pattern[] patterns = {
-            new Pattern("Scrum", 1, "よくできました"),
-            new Pattern("Scrum", 0, "Scrumをもっと勉強して"),
-            new Pattern("TDD", 0, "TDDをもっと勉強して"),
+            new Pattern("1", 1, "よくできました"),
+            new Pattern("1", 0, "Scrumをもっと勉強して"),
     };
 
     @Test
@@ -80,8 +79,8 @@ public class OnlineTestTest {
 
     @Test
     public void showMultiCategoryMessage(){
-        mockQuestion(1, "TDD");
-        mockQuestion(1, "Scrum");
+        mockQuestion(1, "1");
+        mockQuestion(1, "1");
         OnlineTest onlineTest = new OnlineTest(2);
 
         onlineTest.setCorrectAnswerCount(2);
@@ -91,23 +90,23 @@ public class OnlineTestTest {
 
     @Test
     public void showWrongSingleCategoryMessage(){
-        mockQuestion(1, "TDD");
-        mockQuestion(1, "TDD");
+        mockQuestion(1, "2");
+        mockQuestion(1, "2");
         OnlineTest onlineTest = new OnlineTest(2);
 
         onlineTest.setCorrectAnswerCount(0);
-        assertEquals("TDDをもっと勉強して", onlineTest.getCategoryMessage());
+        assertEquals("Techをもっと勉強して", onlineTest.getCategoryMessage());
 
     }
 
     @Test
     public void showWrongMultiCategoryMessage(){
-        mockQuestion(1, "TDD");
-        mockQuestion(1, "Scrum");
+        mockQuestion(1, "2");
+        mockQuestion(1, "1");
         OnlineTest onlineTest = new OnlineTest(2);
 
         onlineTest.setCorrectAnswerCount(0);
-        assertEquals("TDDとScrumをもっと勉強して", onlineTest.getCategoryMessage());
+        assertEquals("TechとScrumをもっと勉強して", onlineTest.getCategoryMessage());
 
     }
 

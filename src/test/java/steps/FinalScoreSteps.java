@@ -15,6 +15,8 @@ import steps.site.MassiveMailerSite;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class FinalScoreSteps {
 
@@ -92,4 +94,10 @@ public class FinalScoreSteps {
 
         site.visit(String.format("onlinetest/launchQuestion?question_count=%d", numberOfQuestions1 + numberOfQuestions2));
     }
+
+    @Given("^最終ページが開かれている$")
+    public void 最終ページが開かれている() throws Throwable {
+        site.visit("onlinetest/end_of_test.jsp");
+    }
+
 }

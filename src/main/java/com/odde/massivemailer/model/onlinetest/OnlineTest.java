@@ -95,9 +95,10 @@ public class OnlineTest {
         }
         String categories = questions.stream()
                 .sorted((q1, q2) -> (int) (q1.getLongId() - q2.getLongId()))
-                .map(Question::getCategory)
+                .map(question -> Category.getNameById(question.getCategory()))
                 .distinct()
                 .collect(Collectors.joining("と"));
+
         return categories + "をもっと勉強して";
     }
 }
