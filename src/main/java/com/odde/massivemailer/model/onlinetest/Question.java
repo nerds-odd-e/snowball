@@ -139,11 +139,6 @@ public class Question extends ApplicationModel {
         return Long.valueOf(options.stream().findFirst().get().getId().toString());
     }
 
-    public Long getCorrectOptionId() {
-        Collection<AnswerOption> options = getOptions();
-        return Long.valueOf(options.stream().filter(option -> option.isCorrect()).findFirst().get().getId().toString());
-    }
-
     public boolean isMultipleAnswerOptions() {
         return getOptions().stream().filter(AnswerOption::isCorrect).count() > 1;
     }

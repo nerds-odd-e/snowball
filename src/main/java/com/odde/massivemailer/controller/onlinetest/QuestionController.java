@@ -18,7 +18,7 @@ public class QuestionController extends AppController {
         HttpSession session = req.getSession(true);
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
         boolean isMultiple = onlineTest.getCurrentQuestion().isMultipleAnswerOptions();
-        if(isMultiple) {
+        if (isMultiple) {
             resp.sendRedirect("/onlinetest/question_multiple.jsp");
         } else {
             resp.sendRedirect("/onlinetest/question.jsp");
@@ -40,14 +40,21 @@ public class QuestionController extends AppController {
         String alertMsg = onlineTest.getAlertMsg(lastDoneQuestionId);
         session.setAttribute("alertMsg", alertMsg);
 
-        if(!lastDoneQuestionId.equals(String.valueOf(onlineTest.getNumberOfAnsweredQuestions()))){
+        if (!lastDoneQuestionId.equals(String.valueOf(onlineTest.getNumberOfAnsweredQuestions()))) {
             resp.sendRedirect(getRedirectPageName(onlineTest.hasNextQuestion()));
             return;
         }
-        boolean isCorrect = onlineTest.isCorrectAnswer(answeredOptionIds[0]);
+
+        boolean isCorrect = true;
+        for (String answeredOptionId : answeredOptionIds) {
+            if (!onlineTest.isCorrectAnswer(answeredOptionId)) {
+                isCorrect = false;
+                break;
+            }
+        }
         onlineTest.moveToNextQuestion();
 
-        if(isCorrect){
+        if (isCorrect) {
             onlineTest.incrementCorrectAnswerCount();
             resp.sendRedirect(getRedirectPageName(onlineTest.hasNextQuestion()));
             return;

@@ -13,6 +13,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -98,9 +99,10 @@ public class QuestionControllerTest {
 
     @Test
     public void doPostWithIncrementCorrectCountOnCorrectAnswer() throws ServletException, IOException {
-        Long optionId = question.getCorrectOptionId();
+        List<Long> optionId = question.getCorrectOptions();
         onlineTest = new OnlineTest(2);
-        request.addParameter("optionId", optionId.toString());
+
+        request.addParameter("optionId", optionId.get(0).toString());
         request.addParameter("lastDoneQuestionId", "0");
         request.getSession().setAttribute("onlineTest", onlineTest);
 
@@ -144,10 +146,10 @@ public class QuestionControllerTest {
         request.getSession().setAttribute("onlineTest", onlineTest);
 
         Long wrongOptionId = question.getFirstOptionId();
-        Long correctOptionId = question.getCorrectOptionId();
+        List<Long> correctOptionId = question.getCorrectOptions();
 
         final String[] answeredOption = new String[2];
-        answeredOption[0] = correctOptionId.toString();
+        answeredOption[0] = correctOptionId.get(0).toString();
         answeredOption[1] = wrongOptionId.toString();
 
         request.addParameter("optionId", answeredOption);
