@@ -12,9 +12,14 @@ Feature:
       | Tech     | You should study tech  |
       | Team     | You should study team  |
 
-  Scenario: update advice
+  Scenario Outline: Putline: update advice
     Given Update Adviceを開いている
-    When カテゴリで"Scrum"を選択している
-    And アドバイスに"You should study scrum very hard"と入力する
+    When カテゴリで"<category>"を選択している
+    And アドバイスに"<updatedAdvice>"と入力する
     And Updateボタンを押す
-    Then Update Advice画面に戻ってきてカテゴリが"Scrum"でアドバイスが"You should study scrum very hard"になってる
+    Then Update Advice画面に戻ってきてカテゴリが"<category>"でアドバイスが"<updatedAdvice>"になってる
+  Examples:
+  | category | updatedAdvice                    |
+  | Scrum    | You should study scrum very hard |
+  | Tech     | You should study tech very hard  |
+  | Team     | You should study team very hard  |

@@ -37,8 +37,8 @@ public class EditAdviceSteps {
     }
 
     @Then("^Update Advice画面に戻ってきてカテゴリが\"([^\"]*)\"でアドバイスが\"([^\"]*)\"になってる$")
-    public void update_Advice画面に戻ってきてカテゴリが_でアドバイスが_になってる(String category, String advice) throws Throwable {
+    public void update_Advice画面に戻ってきてアドバイスが更新されている(String category, String updatedAdvice) throws Throwable {
         driver.setDropdownByText("category", category);
-        assertTrue(driver.getBodyText().contains(advice));
+        assertTrue(driver.getBodyText().contains(updatedAdvice));
     }
 }
