@@ -9,3 +9,10 @@
 .alertMsg {
     color: #dc3545;
 }
+
+.advice_div {
+    background-color: gray;
+    font-weight: bold;
+    font-size: 24px;
+    padding: 10px;
+}
