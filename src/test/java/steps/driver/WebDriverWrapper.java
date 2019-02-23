@@ -174,14 +174,14 @@ public class WebDriverWrapper {
     }
 
     public void clickRadioButton(String text) {
-        getRadioButtonBySelectorAndText("input", text).click();
+        getInputBySelectorAndText("input", text).click();
     }
 
     public void clickCheckBox(String text) {
-        getRadioButtonBySelectorAndText("input", text).click();
+        getInputBySelectorAndText("input", text).click();
     }
 
-    private WebElement getRadioButtonBySelectorAndText(String selector, String text) {
+    private WebElement getInputBySelectorAndText(String selector, String text) {
         return getWebElementStreamOfParents(selector)
                 .filter(e-> e.getText().equals(text))
                 .findFirst()
@@ -199,11 +199,11 @@ public class WebDriverWrapper {
     }
 
     public void expectRadioButtonWithText(String optionText) {
-        getRadioButtonBySelectorAndText("input[type='radio']", optionText);
+        getInputBySelectorAndText("input[type='radio']", optionText);
     }
 
     public void expectCheckBoxWithText(String optionText) {
-        getRadioButtonBySelectorAndText("input[type='checkbox']", optionText);
+        getInputBySelectorAndText("input[type='checkbox']", optionText);
     }
 
     public WebDriver.Navigation getNavigate() {

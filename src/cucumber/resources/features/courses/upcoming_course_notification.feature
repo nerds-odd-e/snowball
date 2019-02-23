@@ -1,3 +1,4 @@
+@slow
 Feature: Send all events to contacts with the same location as the event - Singapore
   As the admin I want to send all the registered events in a single email to the contacts in the same location
   so that I can gather as many people as possible in the event

@@ -1,16 +1,15 @@
 Feature:
   User can take an online test :)
 
-  @developing
   Scenario: Displaying the question
-    Given Add a question "What is scrum?" ""
+    Given Add a question "What is scrum?" with dummy options
     And User is on the first question
     And User should see a question and options
       | description | What is scrum?    |
-      | option1     | Scrum is Rugby    |
-      | option2     | Scrum is Baseball |
-      | option3     | Scrum is Soccer   |
-      | option4     | Scrum is Sumo     |
+      | option1     | Food              |
+      | option2     | Drink             |
+      | option3     | Country           |
+      | option4     | Animal            |
       | option5     | None of the above |
 
   Scenario Outline: User navigates to advice or next question page
@@ -24,33 +23,21 @@ Feature:
       | wrongOption     | Advice       |
       | correctOption   | Question     |
 
-  @developing
   Scenario Outline: advice page should include clear feedback
-    Given Add a question "スクラムとは何ですか？" ""
+    Given Add a question "スクラムとは何ですか？" with dummy options and advice "Read the Scrum Guide again, please"
     And User is on the first question
     When User chooses the "<incorrect option>" answer
     And User clicks the answer button
-    Then User should see "correct" option "#28a745" and text "以上の何でもない"
+    Then User should see "correct" option "#28a745" and text "None of the above"
     And User should see "selected incorrect" option "#dc3545" and text "<incorrect option>"
-    And User should see "スクラムガイドを読みましょう。"
+    And User should see "Read the Scrum Guide again, please"
 
     Examples:
-      | incorrect option |
-      | 食べ物              |
-      | 飲み物              |
-      | 国                |
-      | 動物               |
-
-  @developing
-  Scenario Outline: Adviceのmarkdownが表示される
-    Given markdownの文字列 <markdown>
-    When User chooses the "<incorrect option>" answer
-    Then Adviceに <html> が表示される
-    Examples:
-      | incorrect option | markdown                       | html                                      |
-      | 食べ物              | # abc                          | <h1>abc</h1>                              |
-      | 食べ物              | [abc](https://www.yahoo.co.jp) | <a herf="https://www.yahoo.co.jp">abc</a> |
-
+      | incorrect option       |
+      | Food                   |
+      | Drink                  |
+      | Country                |
+      | Animal                 |
 
   Scenario Outline: User goes to end of test if he has answered all questions
     Given User is taking a onlineTest with 3 questions
@@ -138,26 +125,6 @@ Feature:
       | incorrect option |
       | wrongOption      |
 
-  @developing
-  Scenario Outline: カテゴリ別の出題データをそれぞれ準備した際に、同じ割合で出題されていること
-    Given カテゴリ別の出題データを準備する
-    And カテゴリー"scrum"を<opt1>個準備する
-    And カテゴリー"team"を<opt2>個準備する
-    And カテゴリー"technical"を<opt3>個準備する
-    When <opt7>回回答する
-    Then カテゴリー"scrum"の母数は<opt4>以上が表示される
-    And カテゴリー"team"の母数は<opt5>以上が表示される
-    And カテゴリー"technical"の母数は<opt6>以上が表示される
-
-
-    Examples:
-      | opt1 | opt2 | opt3 | opt4 | opt5 | opt6 | opt7 |
-      | 10   | 5    | 0    | 5    | 5    | 0    | 10   |
-      | 10   | 10   | 10   | 3    | 3    | 3    | 10   |
-      | 10   | 1    | 1    | 8    | 1    | 1    | 10   |
-      | 3    | 3    | 3    | 3    | 3    | 3    | 9    |
-      | 3    | 1    | 3    | 3    | 1    | 3    | 7    |
-
   Scenario Outline: 質問ページに移動した時に、回答選択肢が何も選択されていない
     Given Add Questionを開いている
     And Descriptionに"What is scrum?" を入力する
@@ -187,36 +154,19 @@ Feature:
     When User clicks the answer button
     Then 質問1の画面に遷移する
 
-  Scenario Outline: 複数回答の問題に回答できる
-    Given <correct_answer>個の正解がある問題が<question_count>個登録されている
-    And 問題が出題される
-    And ユーザの<n>個の選択のうち、<m>個が正しい
-    When "answer"をクリックする
-    Then <page> ページに遷移する
-    Examples:
-      | correct_answer | question_count | n | m | page        |
-      | 1              | 1              | 1 | 1 | End Of Test |
-      | 1              | 1              | 1 | 0 | Advice      |
-      | 1              | 2              | 1 | 1 | Question    |
-      | 2              | 1              | 2 | 2 | End Of Test |
-      | 2              | 2              | 2 | 2 | Question    |
-      | 1              | 1              | 2 | 1 | Advice      |
-
-  @developing
   Scenario: アドバイスページで正解2つと誤った回答1つがわかる
     Given Add a question "スクラムに含まれる要素は何ですか？（option1とoption4が正解）" of multiple answers
     And User is on the first question
     When User chooses "option1" and "option2" answers
     And User clicks the answer button
-    Then User should see "correct" options "#28a745" and text "option1" "option4"
-    And User should see "selected incorrect" option "#dc3545" and text "option2"
+    Then User should see "correct" option "#28a745" and text "option4"
+    And User should see "selected incorrect" option "#dc3545" and text "option1"
 
-  @developing
   Scenario: アドバイスページで正解2つと誤った回答2つがわかる
     Given Add a question "スクラムに含まれる要素は何ですか？（option1とoption4が正解）" of multiple answers
     And User is on the first question
     When User chooses "option2" and "option3" answers
     And User clicks the answer button
-    Then User should see "correct" options "#28a745" and text "option1" "option4"
-    And User should see "selected incorrect" options "#dc3545" and text "option2" "option3"
+    Then User should see "correct" option "#28a745" and text "option1, option4"
+    And User should see "selected incorrect" option "#dc3545" and text "option2"
 

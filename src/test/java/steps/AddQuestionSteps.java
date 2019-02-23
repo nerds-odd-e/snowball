@@ -29,59 +29,59 @@ public class AddQuestionSteps {
     }
 
     @Then("^プルダウン\"([^\"]*)\"に\"([^\"]*)\"が表示される$")
-    public void プルダウン_に_が表示される(String name, String value) throws Throwable {
+    public void プルダウン_に_が表示される(String name, String value) {
         assertEquals(driver.getDropdownTextByName(name), value);
     }
 
     @Then("^\"([^\"]*)\" というメッセージが表示されていない$")
-    public void というメッセージが表示されていない(String errorMessage) throws Throwable {
+    public void というメッセージが表示されていない(String errorMessage) {
         assertFalse(driver.getBodyText().contains(errorMessage));
     }
 
     @Given("^Descriptionに\"([^\"]*)\" を入力する$")
-    public void descriptionに_が入力されている(String description) throws Throwable {
+    public void descriptionに_が入力されている(String description) {
         driver.setTextField("description", description);
     }
 
     @Given("^Typeを\"([^\"]*)\" を選択する$")
-    public void typeを_を選択する(String type) throws Throwable {
+    public void typeを_を選択する(String type) {
         driver.setDropdownByText("type", type);
     }
 
     @Given("^option(\\d+)に\"([^\"]*)\"を入力する$")
-    public void option_に_を入力する(int optionNumber, String optionName) throws Throwable {
+    public void option_に_を入力する(int optionNumber, String optionName) {
         driver.setTextField("option" + optionNumber, optionName);
     }
 
     @Given("^checkbox(\\d+)に\"([^\"]*)\"を入力する$")
-    public void checkbox_に_を入力する(int checkboxNumber, String checkboxName) throws Throwable {
+    public void checkbox_に_を入力する(int checkboxNumber, String checkboxName) {
         driver.setTextField("checkbox" + checkboxNumber, checkboxName);
     }
 
     @Given("^\"([^\"]*)\"に\"([^\"]*)\"を入力する$")
-    public void _に_を入力する(String elementName, String value) throws Throwable {
+    public void _に_を入力する(String elementName, String value) {
         driver.setTextField(elementName, value);
     }
 
     @Given("^\"([^\"]*)\"番目のoptionを選択する$")
-    public void 番目のoptionを選択する(String selectedNumber) throws Throwable {
+    public void 番目のoptionを選択する(String selectedNumber) {
         if (!"".equals(selectedNumber)) {
             driver.clickById("option" + selectedNumber);
         }
     }
 
     @Given("^adviceに \"([^\"]*)\" を入力する$")
-    public void adviceに_を入力する(String advice) throws Throwable {
+    public void adviceに_を入力する(String advice) {
         driver.setTextField("advice", advice);
     }
 
     @When("^Addボタンを押す$")
-    public void addボタンを押す() throws Throwable {
+    public void addボタンを押す() {
         driver.clickButton("add_button");
     }
 
     @Given("^Question added$")
-    public void questionAdded(DataTable question) throws Throwable {
+    public void questionAdded(DataTable question) {
         Map<String, String> questionMap = question.asMap(String.class, String.class);
         new QuestionBuilder()
                 .aQuestion(questionMap.get("description"),null)
@@ -92,7 +92,7 @@ public class AddQuestionSteps {
     }
 
     @Then("^User should see questions and options in question list page with correct one highlighted$")
-    public void userShouldSeeQuestionsAndOptionsInQuestionListPage(DataTable question) throws Throwable {
+    public void userShouldSeeQuestionsAndOptionsInQuestionListPage(DataTable question) {
         Map<String, String> questionMap = question.asMap(String.class, String.class);
         assertEquals("Question List", driver.getCurrentTitle());
         assertTrue(driver.getBodyText().contains(questionMap.get("description")));
@@ -106,7 +106,7 @@ public class AddQuestionSteps {
     }
 
     @Then("^\"([^\"]*)\"というメッセージが表示される$")
-    public void というメッセージが表示される(String errorMessage) throws Throwable {
+    public void というメッセージが表示される(String errorMessage) {
         Result r = new Result();
         driver.findElements(By.className("alert")).forEach(el -> {
             if (el.getText().contains(errorMessage)) {
@@ -117,81 +117,76 @@ public class AddQuestionSteps {
     }
 
     @Given("^Option(\\d+) に\"([^\"]*)\"文字を入力する$")
-    public void option_に_文字を入力する(int optionNumber, int optionCount) throws Throwable {
+    public void option_に_文字を入力する(int optionNumber, int optionCount) {
         String temporaryText = StringUtils.repeat("a", optionCount);
         driver.setTextField("option" + optionNumber, temporaryText);
     }
 
     @Given("^Description に \"([^\"]*)\" 文字を入力する$")
-    public void description_に_文字を入力する(int descriptionLength) throws Throwable {
+    public void description_に_文字を入力する(int descriptionLength) {
         String temporaryText = StringUtils.repeat("a", descriptionLength);
         driver.setTextField("description", temporaryText);
     }
 
 
     @Given("^\"([^\"]*)\"を回答として選択済み$")
-    public void を回答として選択済み(String optionId) throws Throwable {
+    public void を回答として選択済み(String optionId) {
         driver.clickById(optionId);
     }
 
     @Given("^adviceが に\"([^\"]*)\"文字を入力する$")
-    public void adviceが_に_文字を入力する(int adviceTextCount) throws Throwable {
+    public void adviceが_に_文字を入力する(int adviceTextCount) {
         String temporaryText = StringUtils.repeat("a", adviceTextCount);
         driver.setTextField("advice", temporaryText);
     }
 
     @Then("^質問の一覧に遷移する$")
-    public void 質問の一覧に遷移する() throws Throwable {
+    public void 質問の一覧に遷移する() {
         assertEquals(driver.getCurrentTitle(), "Question List");
     }
 
     @Given("^advice に\"([^\"]*)\" を入力する$")
-    public void advice_に_を入力する(String advice) throws Throwable {
+    public void advice_に_を入力する(String advice) {
         driver.setTextField("advice", advice);
     }
 
     @When("^OnlineTestを開始する$")
-    public void onlinetestを開始する() throws Throwable {
+    public void onlinetestを開始する() {
         site.visit("onlinetest/launchQuestion");
     }
 
     @Then("^\"([^\"]*)\"という問題が出題される$")
-    public void という問題が出題される(String description) throws Throwable {
+    public void という問題が出題される(String description) {
         assertEquals(driver.findElementById("description").getText(),description);
     }
 
     @Then("^option(\\d+)に\"([^\"]*)\"が表示される$")
-    public void option_に_が表示される(int optionNumber, String optionName) throws Throwable {
+    public void option_に_が表示される(int optionNumber, String optionName) {
         assertTrue(driver.getBodyText().contains(optionName));
     }
 
-    @Then("^checkbox(\\d+)に\"([^\"]*)\"が表示される$")
-    public void checkbox_に_が表示される(int checkboxNumber, String checkboxName) throws Throwable {
-        assertTrue(driver.getBodyText().contains(checkboxName));
-    }
-
     @Then("^\"([^\"]*)\"を回答として選択する$")
-    public void を回答として選択する(String optionName) throws Throwable {
+    public void を回答として選択する(String optionName) {
         driver.clickById(optionName);
     }
 
     @Then("^Answerボタンを押す$")
-    public void answerボタンを押す() throws Throwable {
+    public void answerボタンを押す() {
         driver.clickById("answer");
     }
 
     @Then("^EndOfTheTestが表示される$")
-    public void endofthetestが表示される() throws Throwable {
+    public void endofthetestが表示される() {
         assertEquals(driver.getCurrentTitle(), "End Of Test");
     }
 
     @Then("^カテゴリーに \"([^\"]*)\" が表示される$")
-    public void カテゴリーに_が表示される(String description) throws Throwable {
+    public void カテゴリーに_が表示される(String description) {
         assertEquals(driver.findElementById("category").getText(),description);
     }
 
     @Given("^カテゴリーとして\"([^\"]*)\"を選択する$")
-    public void カテゴリーとして_を選択する(String category) throws Throwable {
+    public void カテゴリーとして_を選択する(String category) {
         driver.setDropdownByText("category", category);
     }
 }

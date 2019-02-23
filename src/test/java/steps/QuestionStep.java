@@ -14,10 +14,14 @@ import org.openqa.selenium.support.Color;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 public class QuestionStep {
@@ -25,20 +29,25 @@ public class QuestionStep {
     private final WebDriverWrapper driver = site.getDriver();
 
 
-    @Given("^Add a question \"([^\"]*)\" \"([^\"]*)\"$")
-    public void add_a_question(String description, String advice) throws Throwable {
+    @Given("^Add a question \"([^\"]*)\" with dummy options$")
+    public void add_a_question(String description) {
+        add_a_question(description, "");
+    }
+
+    @Given("^Add a question \"([^\"]*)\" with dummy options and advice \"([^\"]*)\"$")
+    public void add_a_question(String description, String advice) {
         new QuestionBuilder()
                 .aQuestion(description, advice)
-                .withWrongOption("食べ物")
-                .withWrongOption("飲み物")
-                .withWrongOption("国")
-                .withWrongOption("動物")
-                .withCorrectOption("以上の何でもない")
+                .withWrongOption("Food")
+                .withWrongOption("Drink")
+                .withWrongOption("Country")
+                .withWrongOption("Animal")
+                .withCorrectOption("None of the above")
                 .please();
     }
 
     @Given("^Add a question \"([^\"]*)\" of multiple answers$")
-    public void add_a_question_of_multiple_answers(String description) throws Throwable {
+    public void add_a_question_of_multiple_answers(String description) {
         new QuestionBuilder()
                 .aQuestion(description, "advice")
                 .withCorrectOption("option1")
@@ -60,7 +69,7 @@ public class QuestionStep {
     }
 
     @Given("^User is taking a onlineTest with (\\d+) multiple choice questions$")
-    public void user_is_taking_a_onlineTest_with_multiple_choice_questions(int n) throws Throwable {
+    public void user_is_taking_a_onlineTest_with_multiple_choice_questions(int n) {
         for (int i = 0; i < n; i++)
             new QuestionBuilder()
                     .aQuestion(1)
@@ -76,7 +85,7 @@ public class QuestionStep {
     }
 
     @Given("^User is on the second question$")
-    public void user_is_on_the_second_question() throws Throwable {
+    public void user_is_on_the_second_question() {
         site.visit("onlinetest/launchQuestion");
         driver.clickRadioButton("None of the above");
         driver.clickButton("answer");
@@ -84,12 +93,12 @@ public class QuestionStep {
     }
 
     @Given("^User picked the wrong answer on the second question$")
-    public void user_picked_the_wrong_answer_on_the_second_question() throws Throwable {
+    public void user_picked_the_wrong_answer_on_the_second_question() {
         site.visit("onlinetest/launchQuestion");
         driver.clickRadioButton("None of the above");
         driver.clickButton("answer");
         driver.pageShouldContain("Question");
-        driver.clickRadioButton("Scrum is Rugby");
+        driver.clickRadioButton("Food");
         driver.clickButton("answer");
         driver.pageShouldContain("Advice");
     }
@@ -126,7 +135,7 @@ public class QuestionStep {
     }
 
     @When("^User chooses \"([^\"]*)\" and \"([^\"]*)\" answers$")
-    public void user_chooses_and_answers(String checkedOption1, String checkedOption2) throws Throwable {
+    public void user_chooses_and_answers(String checkedOption1, String checkedOption2) {
         driver.clickCheckBox(checkedOption1);
         driver.clickCheckBox(checkedOption2);
     }
@@ -163,7 +172,7 @@ public class QuestionStep {
     }
 
     @Then("^User sees the question progress as \"([^\"]*)\"$")
-    public void user_sees_the_question_progress_as(String progress) throws Throwable {
+    public void user_sees_the_question_progress_as(String progress) {
         driver.expectElementWithIdToContainText("progress", progress);
     }
 
@@ -178,23 +187,16 @@ public class QuestionStep {
     }
 
     @Then("^User should see \"([^\"]*)\" option \"([^\"]*)\" and text \"([^\"]*)\"$")
-    public void user_should_see_option_highlighted_and_text(String clazz, String color, String text) {
+    public void user_should_see_options_and_text(String clazz, String color, String optionText) {
+        String[] optionTexts = optionText.split(",\\s*");
         String cssSelector = "." + clazz.replace(" ", ".");
         List<WebElement> elements = driver.findElements(By.cssSelector(cssSelector));
-        assertEquals(1, elements.size());
-        assertEquals(elements.get(0).getText(), text);
-        assertEquals(elements.get(0).getCssValue("color"), Color.fromString(color).asRgba());
-    }
-
-    @Then("^User should see \"([^\"]*)\" options \"([^\"]*)\" and text \"([^\"]*)\" \"([^\"]*)\"$")
-    public void user_should_see_options_and_text(String clazz, String color, String text1, String text2) throws Throwable {
-        String cssSelector = "." + clazz.replace(" ", ".");
-        List<WebElement> elements = driver.findElements(By.cssSelector(cssSelector));
-        assertEquals(2, elements.size());
-        assertEquals(elements.get(0).getText(), text1);
-        assertEquals(elements.get(0).getCssValue("color"), Color.fromString(color).asRgba());
-        assertEquals(elements.get(1).getText(), text2);
-        assertEquals(elements.get(1).getCssValue("color"), Color.fromString(color).asRgba());
+        assertEquals(optionTexts.length, elements.size());
+        String[] actualTexts = elements.stream().map(WebElement::getText).toArray(String[]::new);
+        assertThat(actualTexts, is(optionTexts));
+        elements.forEach((e)->{
+            assertEquals(e.getCssValue("color"), Color.fromString(color).asRgba());
+        });
     }
 
     @Then("^User should see \"([^\"]*)\"$")
@@ -213,109 +215,43 @@ public class QuestionStep {
     }
 
     @When("^(\\d+)つ回答を選択する$")
-    public void つ回答を選択する(int count) throws Throwable {
+    public void つ回答を選択する(int count) {
         driver.findElements(By.cssSelector("input[type=checkbox]")).stream().limit(count).forEach(option -> option.click());
     }
 
     @Then("^(\\d+)つ\"([^\"]*)\"の回答が選択されている事$")
-    public void _つ_の回答が選択されている事(int count, String elementType) throws Throwable {
+    public void _つ_の回答が選択されている事(int count, String elementType) {
         assertTrue(driver.findElements(By.cssSelector("input[type="+elementType+"]")).size() > 0);
         int elementCount = driver.findElements(By.cssSelector("input[type="+elementType+"]:checked")).size();
         assertEquals(count, elementCount);
     }
 
     @When("^ユーザーがブラウザの戻るを実行する$")
-    public void ユーザーがブラウザの戻るを実行する() throws Throwable {
+    public void ユーザーがブラウザの戻るを実行する() {
         this.driver.getNavigate().back();
     }
 
     @Then("^質問(\\d+)の画面に遷移する$")
-    public void 質問の画面に遷移する(int qustionNumber) throws Throwable {
+    public void 質問の画面に遷移する(int qustionNumber) {
         this.driver.expectElementWithIdToContainValue("currentQuestionIndex", String.valueOf(qustionNumber));
     }
 
     @Then("^アドバイスページにいる$")
-    public void アドバイスページにいる() throws Throwable {
+    public void アドバイスページにいる() {
         assertEquals("Advice", driver.getCurrentTitle());
     }
 
     @And("^text \"([^\"]*)\" is color red$")
-    public void textIsColorRed(String text) throws Throwable {
+    public void textIsColorRed(String text) {
         List<WebElement> elements = driver.findElements(By.cssSelector(".alertMsg"));
         assertEquals(1, elements.size());
         assertEquals(elements.get(0).getText(), text);
         assertEquals(elements.get(0).getCssValue("color"), Color.fromString("#dc3545").asRgba());
     }
 
-    @Given("^(\\d+)個の正解がある問題が(\\d+)個登録されている$")
-    public void 個の正解がある問題が_個登録されている(int correct_answer, int question_count) throws Throwable {
-
-        for (int i = 0; i < question_count; i++) {
-            final QuestionBuilder questionBuilder = new QuestionBuilder()
-                    .aQuestion(1)
-                    .withWrongOption("food")
-                    .withWrongOption("drink")
-                    .withWrongOption("country")
-                    .withWrongOption("animal")
-                    .withCorrectOption("vehicle");
-            if (correct_answer == 1) {
-                questionBuilder
-                        .withWrongOption("something else");
-            } else {
-                questionBuilder
-                        .withCorrectOption("something else");
-            }
-            questionBuilder.please();
-        }
-    }
-
     @Given("^問題が出題される$")
-    public void 問題が出題される() throws Throwable {
+    public void 問題が出題される() {
         site.visit("onlinetest/launchQuestion");
-    }
-
-    @When("^ユーザの(\\d+)個の選択のうち、(\\d+)個が正しい$")
-    public void 個の選択のうち_個が正しい(int n, int m) throws Throwable {
-        if (n == 1 && m == 1) {
-            this.driver.clickCheckBox("vehicle");
-            return;
-        }
-
-        if (n == 1 && m == 0) {
-            this.driver.clickCheckBox("something else");
-            return;
-        }
-
-        if (n == 2 && m == 2) {
-            this.driver.clickCheckBox("vehicle");
-            this.driver.clickCheckBox("something else");
-        }
-    }
-
-    @When("^\"([^\"]*)\"をクリックする$")
-    public void をクリックする(String click) throws Throwable {
-        driver.clickButton(click);
-    }
-
-    @Then("^Question ページに遷移する$")
-    public void question_ページに遷移する() throws Throwable {
-        assertEquals("Question", driver.getCurrentTitle());
-    }
-
-    @Then("^End Of Test ページに遷移する$")
-    public void end_Of_Test_ページに遷移する() throws Throwable {
-        driver.pageShouldContain("End Of Test");
-    }
-
-    @Then("^Advice ページに遷移する$")
-    public void advice_ページに遷移する() throws Throwable {
-        assertEquals("Advice", driver.getCurrentTitle());
-    }
-
-    @Then("^何も選択されていない$")
-    public void 何も選択されていない() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
     }
 
 }
