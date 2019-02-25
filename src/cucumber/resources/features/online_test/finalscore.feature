@@ -67,3 +67,7 @@ Feature:
     Examples:
       | category | number_of_questions | number_of_wrong | number_of_correct |
       | 3        | 5                   | 1               | 4                 |
+
+#  @develop
+#  Scenario Outline: 出題で正答率が80%以下のカテゴリーの正答率が表示されている
+
