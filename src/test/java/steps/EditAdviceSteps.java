@@ -2,6 +2,7 @@ package steps;
 
 import com.odde.massivemailer.model.onlinetest.Category;
 import cucumber.api.PendingException;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -40,5 +41,16 @@ public class EditAdviceSteps {
     public void update_Advice画面に戻ってきてアドバイスが更新されている(String category, String updatedAdvice) throws Throwable {
         driver.setDropdownByText("category", category);
         assertTrue(driver.getBodyText().contains(updatedAdvice));
+    }
+
+    @And("^アドバイスリンクに\"([^\"]*)\"と入力する$")
+    public void アドバイスリンクにと入力する(String link) throws Throwable {
+        driver.setTextField("link", link);
+    }
+
+    @Then("^Update Advice画面に戻ってきてカテゴリが\"([^\"]*)\"でアドバイスリンクが\"([^\"]*)\"になってる$")
+    public void updateAdvice画面に戻ってきてカテゴリがでアドバイスリンクがになってる(String category, String link) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
     }
 }
