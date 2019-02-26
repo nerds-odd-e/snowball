@@ -170,3 +170,28 @@ Feature:
     Then User should see "correct" option "#28a745" and text "option1, option4"
     And User should see "selected incorrect" option "#dc3545" and text "option2"
 
+  @developing
+  Scenario Outline: 問題ページで正解2つを選択して、次の問題に移動
+    Given Add a question "スクラムに含まれる要素は何ですか？（option1とoption4が正解）" of multiple answers with <number_of_questions> questions
+    And User is on the first question
+    When User chooses "option1" and "option4" answers
+    And User clicks the answer button
+    Then It should move to "<page_content>" page
+
+    Examples:
+      | number_of_questions | page_content |
+      | 2                   | Question     |
+      | 1                   | End Of Test  |
+
+  @developing
+  Scenario: 問題ページで正解1つと不正解1つを選択して、アドバイスページで正解1つと不正解1つが選択される
+    Given Add a question "スクラムに含まれる要素は何ですか？（option1とoption4が正解）" of multiple answers
+    And User is on the first question
+    When User chooses "option1" and "option2" answers
+    And User clicks the answer button
+    Then "option1" and "option2" are selected in advice page
+
+
+
+
+

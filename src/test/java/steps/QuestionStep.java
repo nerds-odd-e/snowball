@@ -57,6 +57,20 @@ public class QuestionStep {
                 .please();
     }
 
+    @Given("^Add a question \"([^\"]*)\" of multiple answers with (\\d+) questions$")
+    public void add_n_question_of_multiple_answers(String description, int n) {
+        for (int i = 0; i < n; i++) {
+            new QuestionBuilder()
+                    .aQuestion(description, "advice")
+                    .withCorrectOption("option1")
+                    .withWrongOption("option2")
+                    .withWrongOption("option3")
+                    .withCorrectOption("option4")
+                    .please();
+        }
+        site.visit(String.format("onlinetest/launchQuestion?question_count=%d", n));
+    }
+
     @Given("^User is taking a onlineTest with (\\d+) questions$")
     public void user_is_taking_a_onlineTest_with_n_questions(int n) {
         for (int i = 0; i < n; i++)
