@@ -27,6 +27,10 @@ import static org.junit.Assert.assertTrue;
 public class QuestionStep {
     private final MassiveMailerSite site = new MassiveMailerSite();
     private final WebDriverWrapper driver = site.getDriver();
+    private int scrumCounter;
+    private int teamCounter;
+    private int techCounter;
+
 
 
     @Given("^Add a question \"([^\"]*)\" with dummy options$")
@@ -272,8 +276,7 @@ public class QuestionStep {
     public void scrumに_問問題が登録されている(int numOfQuestion) {
         for(int i = 0; i < numOfQuestion; i++) {
             new QuestionBuilder()
-                    .aQuestion("scrum")
-                    .withWrongOption("Food")
+                    .aQuestion("scrum", null, "scrum")
                     .withCorrectOption("Drink")
                     .please();
         }
@@ -284,8 +287,7 @@ public class QuestionStep {
     public void techに_問問題が登録されている(int numOfQuestion) {
         for(int i = 0; i < numOfQuestion; i++) {
             new QuestionBuilder()
-                    .aQuestion("tech")
-                    .withWrongOption("Food")
+                    .aQuestion("tech", null, "tech")
                     .withCorrectOption("Drink")
                     .please();
         }
@@ -295,35 +297,49 @@ public class QuestionStep {
     public void teamに_問問題が登録されている(int numOfQuestion) {
         for(int i = 0; i < numOfQuestion; i++) {
             new QuestionBuilder()
-                    .aQuestion("team")
-                    .withWrongOption("Food")
+                    .aQuestion("team", null, "team")
                     .withCorrectOption("Drink")
                     .please();
         }
     }
 
     @When("^startをクリックしてすべての問題を回答したとき$")
-    public void startをクリックしてすべての問題を回答したとき() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void startをクリックしてすべての問題を回答したとき() {
+        scrumCounter = 0;
+        teamCounter = 0;
+        techCounter = 0;
+        site.visit("onlinetest/launchQuestion");
+        for (int i = 0; i < 10; i++) {
+
+            switch (driver.findElementById("description").getText()){
+                case "scrum":
+                    scrumCounter++;
+                    break;
+                case "team":
+                    teamCounter++;
+                    break;
+                case "tech":
+                    techCounter++;
+                    break;
+            }
+            driver.clickRadioButton("Drink");
+            driver.clickButton("answer");
+        }
     }
 
     @Then("^scrumが(\\d+)問以上問題が表示されること$")
-    public void scrumが_問以上問題が表示されること(int arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void scrumが_問以上問題が表示されること(int count) {
+        assertTrue(scrumCounter >= count);
     }
 
     @Then("^techが(\\d+)問以上問題が表示されること$")
-    public void techが_問以上問題が表示されること(int arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void techが_問以上問題が表示されること(int count) {
+        assertTrue(techCounter >= count);
     }
 
     @Then("^teamが(\\d+)問以上問題が表示されること$")
-    public void teamが_問以上問題が表示されること(int arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void teamが_問以上問題が表示されること(int count) {
+        assertTrue(teamCounter >= count);
     }
 
 }

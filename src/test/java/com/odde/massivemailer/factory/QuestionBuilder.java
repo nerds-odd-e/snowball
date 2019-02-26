@@ -14,6 +14,11 @@ public class QuestionBuilder {
         return aQuestion("myTest", null);
     }
 
+    public QuestionBuilder aQuestion( String questionDescription, String advice, String category) {
+        currentQuestion = Question.createIt("description", questionDescription, "advice", advice, "category", category);
+        return this;
+    }
+
     public QuestionBuilder aQuestion(String questionDescription, String advice) {
         currentQuestion = Question.createIt("description", questionDescription, "advice", advice);
         return this;
