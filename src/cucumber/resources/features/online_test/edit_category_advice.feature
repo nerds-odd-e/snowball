@@ -24,14 +24,3 @@ Feature:
   | Tech     | You should study tech very hard  |
   | Team     | You should study team very hard  |
 
-  @developing
-  Scenario Outline: カテゴリのアドバイスリンクが登録できる
-    Given Update Adviceを開いている
-    When カテゴリで"<category>"を選択している
-    And アドバイスリンクに"<link>"と入力する
-    Then Update Advice画面に戻ってきてカテゴリが"<category>"でアドバイスリンクが"<link>"になってる
-    Examples:
-      | category | link                |
-      | Scrum    | http://google.co.jp |
-      | Tech     | http://facebook.com |
-      | Team     | http://yahoo.co.jp  |
