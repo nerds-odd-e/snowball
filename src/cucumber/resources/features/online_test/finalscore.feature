@@ -20,6 +20,7 @@ Feature:
       | 1                 |
       | 2                 |
 
+  @developing
   Scenario Outline: テストの正答率がn％の時、最終ページの回答率欄にnが表示される
     Given User is taking a onlineTest with <number_of_question> questions
     And  User answered correctly the <number_of_correct> th question page

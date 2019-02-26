@@ -45,23 +45,6 @@ public class QuestionController extends AppController {
             return;
         }
 
-//        boolean isCorrect = true;
-//        boolean isMultiple = onlineTest.getCurrentQuestion().isMultipleAnswerOptions();
-//        //TODO correct multi logic
-//        if (isMultiple) {
-//            if (!onlineTest.isCorrectMultiAnswer(answeredOptionIds)) {
-//                isCorrect = false;
-//            }
-//        } else {
-//            for (String answeredOptionId : answeredOptionIds) {
-//                if (!onlineTest.isCorrectAnswer(answeredOptionId)) {
-//                    isCorrect = false;
-//                    break;
-//                }
-//            }
-//        }
-
-
         boolean isCorrect = true;
         for (String answeredOptionId : answeredOptionIds) {
             if (!onlineTest.isCorrectAnswer(answeredOptionId)) {
@@ -77,8 +60,7 @@ public class QuestionController extends AppController {
             return;
         }
 
-        //TODO
-        req.setAttribute("selectedOption", answeredOptionIds);
+        req.setAttribute("selectedOption", answeredOptionIds[0]);
         RequestDispatcher dispatch = req.getRequestDispatcher("/onlinetest/advice.jsp");
         dispatch.forward(req, resp);
     }

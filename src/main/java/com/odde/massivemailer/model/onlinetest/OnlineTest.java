@@ -81,13 +81,6 @@ public class OnlineTest {
         return currentQuestion.verifyAnswer(answeredOptionId);
     }
 
-//TODO correct multi logic
-    public boolean isCorrectMultiAnswer(String[] answeredOptionIds) {
-        return true;
-//        Question currentQuestion = getCurrentQuestion();
-//        return currentQuestion.verifyMultiAnswer(answeredOptionIds);
-    }
-
     public String getAlertMsg(String lastDoneQuestionId) {
         String alertMsg = "";
         if (!lastDoneQuestionId.equals(String.valueOf(getNumberOfAnsweredQuestions()))) {
