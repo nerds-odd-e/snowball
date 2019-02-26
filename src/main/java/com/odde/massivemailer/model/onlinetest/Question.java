@@ -8,7 +8,6 @@ import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
 
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Table("questions")
@@ -91,15 +90,6 @@ public class Question extends ApplicationModel {
         return correctOption.equals(answeredOptionId);
     }
 
-//    //TODO correct multi logic
-    public boolean verifyMultiAnswer(String[] answeredOptionIds) {
-//        Collection<AnswerOption> optionsByQuestionId = getOptions();
-//        List<AnswerOption> collect = optionsByQuestionId.stream().filter(AnswerOption::isCorrect).collect(Collectors.toList());
-//        String correctOption = correctIds.map(answerOption -> answerOption.getLongIds().toString()).orElse(StringUtils.EMPTY);
-//        return correctOption.equals(answeredOptionIds);
-        return true;
-    }
-
     public ArrayList<Long> getCorrectOption() {
         Collection<AnswerOption> optionsByQuestionId = getOptions();
         final ArrayList<Long> correctOptions = new ArrayList<>();
@@ -120,17 +110,6 @@ public class Question extends ApplicationModel {
             }
         }
         return correctOptions.contains(optionId);
-    }
-
-    public boolean isCorrectMulti(Long optionIds) {
-        Collection<AnswerOption> optionsByQuestionId = getOptions();
-        final ArrayList<Long> correctOptions = new ArrayList<>();
-        for (AnswerOption option : optionsByQuestionId) {
-            if (option.isCorrect()) {
-                correctOptions.add(option.getLongId());
-            }
-        }
-        return correctOptions.contains(optionIds);
     }
 
     @Override
