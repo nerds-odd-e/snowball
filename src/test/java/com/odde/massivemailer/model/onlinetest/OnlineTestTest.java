@@ -1,7 +1,6 @@
 package com.odde.massivemailer.model.onlinetest;
 
 import com.odde.TestWithDB;
-import org.javalite.activejdbc.Base;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -11,7 +10,6 @@ import java.util.Set;
 import java.util.stream.IntStream;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(TestWithDB.class)
 public class OnlineTestTest {
@@ -91,37 +89,6 @@ public class OnlineTestTest {
         assertEquals("Scrumをもっと勉強して", onlineTest.getCategoryMessage());
 
     }
-
-    @Test
-    public void showEqualNumberCategories() {
-        mockQuestion(10, "scrum");
-        mockQuestion(10, "team");
-        mockQuestion(10, "tech");
-        int numScrum = 0;
-        int numTeam = 0;
-        int numTech = 0;
-
-        OnlineTest onlineTest = new OnlineTest(10);
-        while (onlineTest.hasNextQuestion()) {
-            Question q = onlineTest.getCurrentQuestion();
-            switch (q.getCategory()) {
-                case "scrum":
-                    numScrum++;
-                    break;
-                case "team":
-                    numTeam++;
-                    break;
-                case "tech":
-                    numTech++;
-                    break;
-            }
-            onlineTest.moveToNextQuestion();
-        }
-        assertTrue(numScrum >= 3);
-        assertTrue(numTech >= 3);
-        assertTrue(numTeam >= 3);
-    }
-
 
     private static void mockQuestion(int numberOfQuestion, String category) {
         IntStream.range(0, numberOfQuestion).forEach(index -> Question.createIt("description", "desc" + index, "advice", "adv" + index, "category", category));
