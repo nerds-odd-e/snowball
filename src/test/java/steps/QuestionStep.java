@@ -342,4 +342,10 @@ public class QuestionStep {
         assertTrue(teamCounter >= count);
     }
 
+    @Then("^出題数の総計は(\\d+)問である$")
+    public void 出題数の総計は_問である(int arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
 }

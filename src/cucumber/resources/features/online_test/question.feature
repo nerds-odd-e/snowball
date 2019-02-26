@@ -200,3 +200,11 @@ Feature:
     Then scrumが3問以上問題が表示されること
     And techが3問以上問題が表示されること
     And teamが3問以上問題が表示されること
+
+  @developing
+  Scenario: 問題の最大数は10問である
+    Given scrumに5問問題が登録されている
+    And techに5問問題が登録されている
+    And teamに5問問題が登録されている
+    When startをクリックしてすべての問題を回答したとき
+    Then 出題数の総計は10問である
