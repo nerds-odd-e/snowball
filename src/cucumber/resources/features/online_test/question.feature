@@ -33,11 +33,11 @@ Feature:
     And User should see "Read the Scrum Guide again, please"
 
     Examples:
-      | incorrect option       |
-      | Food                   |
-      | Drink                  |
-      | Country                |
-      | Animal                 |
+      | incorrect option |
+      | Food             |
+      | Drink            |
+      | Country          |
+      | Animal           |
 
   Scenario Outline: User goes to end of test if he has answered all questions
     Given User is taking a onlineTest with 3 questions
@@ -203,8 +203,30 @@ Feature:
 
   @developing
   Scenario: 問題の最大数は10問である
-    Given scrumに5問問題が登録されている
-    And techに5問問題が登録されている
+    Given scrumに5問問題が登録されている And techに5問問題が登録されている
     And teamに5問問題が登録されている
     When startをクリックしてすべての問題を回答したとき
     Then 出題数の総計は10問である
+
+  @developing
+  Scenario: 問題の最大数は10問である
+    Given scrumに100問問題が登録されている
+    And techに100問問題が登録されている
+    And teamに1問問題が登録されている
+    When startをクリックしてすべての問題を回答したとき
+    Then scrumが4問以上問題が表示されること
+    And techが4問以上問題が表示されること
+    And teamが1問以上問題が表示されること
+
+  @developing
+  Scenario Outline: カテゴリーの数が平均になるように出題数が決まる
+    Given カテゴリが<number_of_category>種類あり、10問ずつ用意されている
+    When startをクリックしたとき
+    Then 各カテゴリが<number_of_question>以上問題が表示されること
+
+    Examples:
+      | number_of_category | number_of_question |
+      | 1                  | 10                 |
+      | 2                  | 5                  |
+      | 3                  | 3                  |
+      | 4                  | 2                  |

@@ -15,6 +15,7 @@ import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -343,9 +344,48 @@ public class QuestionStep {
     }
 
     @Then("^出題数の総計は(\\d+)問である$")
-    public void 出題数の総計は_問である(int arg1) throws Throwable {
+    public void 出題数の総計は_問である(int total) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
     }
 
+    @When("^startをクリックしたとき")
+    public void startをクリックしたとき() throws Throwable {
+        site.visit("onlinetest/launchQuestion");
+    }
+
+    @Given("^カテゴリが(\\d+)種類あり、(\\d+)問ずつ用意されている$")
+    public void カテゴリが_種類あり_問ずつ用意されている(int numOfCategory, int numOfQuestions) throws Throwable {
+        for (int n = 0; n < numOfCategory; n++){
+            String categoryName = "category" + n;
+            for (int i = 0; i < numOfQuestions; i++) {
+                new QuestionBuilder()
+                        .aQuestion(categoryName, null, categoryName)
+                        .withCorrectOption("Drink")
+                        .please();
+            }
+            System.out.print("category created");
+        }
+    }
+    @Then("^各カテゴリが(\\d+)以上問題が表示されること$")
+    public void 各カテゴリが_以上問題が表示されること(int num) {
+        Map<String, Integer> m = new HashMap<>();
+        for (int i = 0; i < 10; i++) {
+            Integer counter;
+            String category = driver.findElementById("description").getText();
+            if (m.containsKey(category)) {
+                counter = m.get(category);
+            } else {
+                counter = 0;
+            }
+            m.put(category, ++counter);
+
+            driver.clickRadioButton("Drink");
+            driver.clickButton("answer");
+        }
+
+        for (String category : m.keySet()) {
+            Integer numberOfQuestion = m.get(category);
+            assertTrue(numberOfQuestion >= num);
+        }
+    }
 }

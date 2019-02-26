@@ -4,11 +4,11 @@ Feature:
     Given Update Adviceを開いている
     Then アドバイスリンクフォームが表示されている
 
-  @developing
   Scenario Outline: カテゴリのアドバイスリンクが登録できる
     Given Update Adviceを開いている
     When カテゴリで"<category>"を選択している
     And アドバイスリンクに"<link>"と入力する
+    And Updateボタンを押す
     Then Update Advice画面に戻ってきてカテゴリが"<category>"でアドバイスリンクが"<link>"になってる
     Examples:
       | category | link                |

@@ -43,6 +43,7 @@
                 <tr>
                     <th style="width:20%">${category[categoryAdvice.getString("category_id")].getName()}</th>
                     <td id="scrumDescription"+count>${categoryAdvice.getString("advice")}</td>
+                    <td id="scrumLink"+count>${categoryAdvice.getString("link")}</td>
                 </tr>
             </c:forEach>
             </tbody>
