@@ -47,7 +47,6 @@ public class QuestionControllerTest {
         AnswerOption.createIt("description", "desc3", "question_id", id, "is_correct", 0);
         AnswerOption.createIt("description", "desc4", "question_id", id, "is_correct", 0);
         AnswerOption.createIt("description", "desc5", "question_id", id, "is_correct", 1);
-        AnswerOption.createIt("description", "desc5", "question_id", id, "is_correct", 1);
 
         return question;
     }
