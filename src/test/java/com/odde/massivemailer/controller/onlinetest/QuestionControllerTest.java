@@ -13,10 +13,12 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 @RunWith(TestWithDB.class)
@@ -44,6 +46,7 @@ public class QuestionControllerTest {
         AnswerOption.createIt("description", "desc2", "question_id", id, "is_correct", 0);
         AnswerOption.createIt("description", "desc3", "question_id", id, "is_correct", 0);
         AnswerOption.createIt("description", "desc4", "question_id", id, "is_correct", 0);
+        AnswerOption.createIt("description", "desc5", "question_id", id, "is_correct", 1);
         AnswerOption.createIt("description", "desc5", "question_id", id, "is_correct", 1);
 
         return question;
@@ -160,4 +163,24 @@ public class QuestionControllerTest {
         verify(onlineTest, times(0)).incrementCorrectAnswerCount();
     }
 
+    @Test
+    public void doPostWithMultiCorrectOptions() throws ServletException, IOException {
+        onlineTest = spy(new OnlineTest(1));
+
+        request.addParameter("lastDoneQuestionId", "0");
+        request.getSession().setAttribute("onlineTest", onlineTest);
+
+        List<Long> correctOptionIds = question.getCorrectOption();
+
+        final String[] answeredOption = new String[2];
+        answeredOption[0] = correctOptionIds.get(0).toString();
+        answeredOption[1] = correctOptionIds.get(1).toString();
+
+        request.addParameter("optionId", answeredOption);
+        controller.doPost(request, response);
+        HttpSession session = request.getSession();
+        OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
+
+        assertTrue(onlineTest.isCorrectMultiAnswer(answeredOption));
+    }
 }
