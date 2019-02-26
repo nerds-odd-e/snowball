@@ -86,34 +86,6 @@ public class FinalScoreSteps {
         site.visit("onlinetest/end_of_test.jsp");
     }
 
-    @Given("^test with categories \"([^\"]*)\", (\\d+), \"([^\"]*)\", (\\d+) and \"([^\"]*)\", (\\d+)$")
-    public void test_with_categories_and(
-            String category1, int category1Count, String category2, int category2Count, String category3, int category3Count
-    ) throws Throwable {
-        for (int i = 0; i < category1Count; i++) {
-            new QuestionBuilder()
-                    .aQuestion(category1)
-                    .withWrongOption("wrongOption")
-                    .withCorrectOption("correctOption")
-                    .please();
-        }
-        for (int i = 0; i < category2Count; i++) {
-            new QuestionBuilder()
-                    .aQuestion(category2)
-                    .withWrongOption("wrongOption")
-                    .withCorrectOption("correctOption")
-                    .please();
-        }
-        for (int i = 0; i < category3Count; i++) {
-            new QuestionBuilder()
-                    .aQuestion(category3)
-                    .withWrongOption("wrongOption")
-                    .withCorrectOption("correctOption")
-                    .please();
-        }
-        site.visit(String.format("onlinetest/launchQuestion?question_count=%d", category1Count + category2Count + category3Count));
-    }
-
     @Then("^User should see the correct percentage as (\\d+) %$")
     public void userShouldSeeTheCorrectPercentageAs(int correctRate) throws Throwable {
         String actual = driver.findElements(By.className("category-correct-rate")).get(0).getText();
