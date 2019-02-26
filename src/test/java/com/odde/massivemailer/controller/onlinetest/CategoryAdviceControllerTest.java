@@ -61,16 +61,18 @@ public class CategoryAdviceControllerTest {
     @Test
     public void AdviceUpdateのポストのテスト() throws IOException, SecurityException, ServletException {
         List<String[]> datas = new ArrayList<>();
-        datas.add(new String[]{String.valueOf(Category.SCRUM.getId()), "You should study scrum very hard", "1"});
-        datas.add(new String[]{String.valueOf(Category.TECH.getId()), "You should study tech very hard", "2"});
-        datas.add(new String[]{String.valueOf(Category.TEAM.getId()), "You should study team very hard", "3"});
+        datas.add(new String[]{String.valueOf(Category.SCRUM.getId()), "You should study scrum very hard", "http://www.google.co.jp", "1"});
+        datas.add(new String[]{String.valueOf(Category.TECH.getId()), "You should study tech very hard", "http://facebook.com", "2"});
+        datas.add(new String[]{String.valueOf(Category.TEAM.getId()), "You should study team very hard", "http://www.yahoo.co.jp", "3"});
 
         for (String[] data : datas) {
             request.setParameter("category", data[0]);
             request.setParameter("advice", data[1]);
-            String categoryIdQuery = "category_id = " + data[2];
+            request.setParameter("link", data[2]);
+            String categoryIdQuery = "category_id = " + data[3];
             controller.doPost(request, response);
             assertEquals(data[1], CategoryAdvice.findFirst(categoryIdQuery).get("advice"));
+            assertEquals(data[2], CategoryAdvice.findFirst(categoryIdQuery).get("link"));
         }
 
     }
