@@ -268,4 +268,62 @@ public class QuestionStep {
         site.visit("onlinetest/launchQuestion");
     }
 
+    @Given("^scrumに(\\d+)問問題が登録されている$")
+    public void scrumに_問問題が登録されている(int numOfQuestion) {
+        for(int i = 0; i < numOfQuestion; i++) {
+            new QuestionBuilder()
+                    .aQuestion("scrum")
+                    .withWrongOption("Food")
+                    .withCorrectOption("Drink")
+                    .please();
+        }
+    }
+
+
+    @Given("^techに(\\d+)問問題が登録されている$")
+    public void techに_問問題が登録されている(int numOfQuestion) {
+        for(int i = 0; i < numOfQuestion; i++) {
+            new QuestionBuilder()
+                    .aQuestion("tech")
+                    .withWrongOption("Food")
+                    .withCorrectOption("Drink")
+                    .please();
+        }
+    }
+
+    @Given("^teamに(\\d+)問問題が登録されている$")
+    public void teamに_問問題が登録されている(int numOfQuestion) {
+        for(int i = 0; i < numOfQuestion; i++) {
+            new QuestionBuilder()
+                    .aQuestion("team")
+                    .withWrongOption("Food")
+                    .withCorrectOption("Drink")
+                    .please();
+        }
+    }
+
+    @When("^startをクリックしてすべての問題を回答したとき$")
+    public void startをクリックしてすべての問題を回答したとき() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Then("^scrumが(\\d+)問以上問題が表示されること$")
+    public void scrumが_問以上問題が表示されること(int arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Then("^techが(\\d+)問以上問題が表示されること$")
+    public void techが_問以上問題が表示されること(int arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Then("^teamが(\\d+)問以上問題が表示されること$")
+    public void teamが_問以上問題が表示されること(int arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
 }

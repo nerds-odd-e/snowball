@@ -191,7 +191,12 @@ Feature:
     And User clicks the answer button
     Then "option1" and "option2" are selected in advice page
 
-
-
-
-
+  @developing
+  Scenario: 3カテゴリから均等に10問問題を表示する
+    Given scrumに5問問題が登録されている
+    And techに5問問題が登録されている
+    And teamに5問問題が登録されている
+    When startをクリックしてすべての問題を回答したとき
+    Then scrumが3問以上問題が表示されること
+    And techが3問以上問題が表示されること
+    And teamが3問以上問題が表示されること
