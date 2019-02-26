@@ -37,7 +37,8 @@ public class CategoryAdviceController extends AppController {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         String categoryId = req.getParameter("category");
         String advice = req.getParameter("advice");
-        CategoryAdvice.saveAdvice( categoryId, advice);
+        String link = req.getParameter("link");
+        CategoryAdvice.saveAdvice(categoryId, advice, link);
         RequestDispatcher dispatch = req.getRequestDispatcher("/onlinetest/edit_category_advice.jsp");
         dispatch.forward(req, resp);
     }

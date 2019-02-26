@@ -27,6 +27,10 @@ import static org.junit.Assert.assertTrue;
 public class QuestionStep {
     private final MassiveMailerSite site = new MassiveMailerSite();
     private final WebDriverWrapper driver = site.getDriver();
+    private int scrumCounter;
+    private int teamCounter;
+    private int techCounter;
+
 
 
     @Given("^Add a question \"([^\"]*)\" with dummy options$")
@@ -266,6 +270,82 @@ public class QuestionStep {
     @Given("^問題が出題される$")
     public void 問題が出題される() {
         site.visit("onlinetest/launchQuestion");
+    }
+
+    @Given("^scrumに(\\d+)問問題が登録されている$")
+    public void scrumに_問問題が登録されている(int numOfQuestion) {
+        for(int i = 0; i < numOfQuestion; i++) {
+            new QuestionBuilder()
+                    .aQuestion("scrum", null, "scrum")
+                    .withCorrectOption("Drink")
+                    .please();
+        }
+    }
+
+
+    @Given("^techに(\\d+)問問題が登録されている$")
+    public void techに_問問題が登録されている(int numOfQuestion) {
+        for(int i = 0; i < numOfQuestion; i++) {
+            new QuestionBuilder()
+                    .aQuestion("tech", null, "tech")
+                    .withCorrectOption("Drink")
+                    .please();
+        }
+    }
+
+    @Given("^teamに(\\d+)問問題が登録されている$")
+    public void teamに_問問題が登録されている(int numOfQuestion) {
+        for(int i = 0; i < numOfQuestion; i++) {
+            new QuestionBuilder()
+                    .aQuestion("team", null, "team")
+                    .withCorrectOption("Drink")
+                    .please();
+        }
+    }
+
+    @When("^startをクリックしてすべての問題を回答したとき$")
+    public void startをクリックしてすべての問題を回答したとき() {
+        scrumCounter = 0;
+        teamCounter = 0;
+        techCounter = 0;
+        site.visit("onlinetest/launchQuestion");
+        for (int i = 0; i < 10; i++) {
+
+            switch (driver.findElementById("description").getText()){
+                case "scrum":
+                    scrumCounter++;
+                    break;
+                case "team":
+                    teamCounter++;
+                    break;
+                case "tech":
+                    techCounter++;
+                    break;
+            }
+            driver.clickRadioButton("Drink");
+            driver.clickButton("answer");
+        }
+    }
+
+    @Then("^scrumが(\\d+)問以上問題が表示されること$")
+    public void scrumが_問以上問題が表示されること(int count) {
+        assertTrue(scrumCounter >= count);
+    }
+
+    @Then("^techが(\\d+)問以上問題が表示されること$")
+    public void techが_問以上問題が表示されること(int count) {
+        assertTrue(techCounter >= count);
+    }
+
+    @Then("^teamが(\\d+)問以上問題が表示されること$")
+    public void teamが_問以上問題が表示されること(int count) {
+        assertTrue(teamCounter >= count);
+    }
+
+    @Then("^出題数の総計は(\\d+)問である$")
+    public void 出題数の総計は_問である(int arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
     }
 
 }

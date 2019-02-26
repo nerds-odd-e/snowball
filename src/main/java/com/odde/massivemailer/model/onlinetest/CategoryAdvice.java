@@ -5,10 +5,11 @@ import org.javalite.activejdbc.annotations.Table;
 
 @Table("category_advices")
 public class CategoryAdvice extends ApplicationModel {
-    public static void saveAdvice(String categoryId, String advice) {
+    public static void saveAdvice(String categoryId, String advice, String link) {
         String query = "category_id = " + categoryId;
         CategoryAdvice categoryAdvice = CategoryAdvice.findFirst(query);
         categoryAdvice.set("advice", advice);
+        categoryAdvice.set("link", link);
         categoryAdvice.save();
     }
 }

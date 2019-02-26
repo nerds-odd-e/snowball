@@ -68,6 +68,10 @@ Feature:
       | category | number_of_questions | number_of_wrong | number_of_correct |
       | 3        | 5                   | 1               | 4                 |
 
-#  @develop
-#  Scenario Outline: 出題で正答率が80%以下のカテゴリーの正答率が表示されている
-
+  @developing
+  Scenario: 出題で正答率が80%以下のカテゴリーの正答率が表示されている
+    Given "Scrum" から 10 題出題される
+    When  User answered wrong the 5 th question page
+    And  User answered correctly the 5 th question page
+    Then User should see the correct percentage as 50 %
+    And User should see advice as "Scrumをもっと勉強して"
