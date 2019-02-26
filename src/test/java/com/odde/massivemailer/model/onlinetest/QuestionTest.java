@@ -138,4 +138,16 @@ public class QuestionTest {
         final boolean actual = question.getIsMultiQuestion();
         assertEquals(actual,true);
     }
+
+    @Test
+    public void Questionテーブルから指定したカテゴリのquestionが返す(){
+        Question.createIt("description", "desc1", "advice", "adv1", "category", "team", "is_multi_question", 0);
+        Question.createIt("description", "desc2", "advice", "adv2", "category", "scrum", "is_multi_question", 0);
+
+        List<Question> actual = Question.getNRandomWhereCategory(1, "scrum");
+        assertThat(actual.get(0).getDescription(), is(equalTo("desc2")));
+        assertThat(actual.get(0).getAdvice(), is(equalTo("adv2")));
+        assertThat(actual.get(0).getCategory(), is(equalTo("scrum")));
+        assertFalse(actual.get(0).getIsMultiQuestion());
+    }
 }

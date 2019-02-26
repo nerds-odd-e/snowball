@@ -54,6 +54,10 @@ public class Question extends ApplicationModel {
         return findBySQL("SELECT id, description, advice, category, is_multi_question FROM questions ORDER BY RAND() LIMIT ?", count);
     }
 
+    public static List<Question> getNRandomWhereCategory(int count, String category) {
+        return findBySQL("SELECT id, description, advice, category, is_multi_question FROM questions WHERE category = ? ORDER BY RAND() LIMIT ?", category, count);
+    }
+
     public String getDescription() {
         return getString(DESCRIPTION);
     }
