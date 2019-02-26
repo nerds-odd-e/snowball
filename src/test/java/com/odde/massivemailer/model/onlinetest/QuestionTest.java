@@ -6,7 +6,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static junit.framework.TestCase.assertEquals;
@@ -149,5 +151,37 @@ public class QuestionTest {
         assertThat(actual.get(0).getAdvice(), is(equalTo("adv2")));
         assertThat(actual.get(0).getCategory(), is(equalTo("scrum")));
         assertFalse(actual.get(0).getIsMultiQuestion());
+    }
+
+    @Test
+    public void カテゴリごとに任意の数のquestionを返す(){
+        Question.createIt("description", "desc", "advice", "adv", "category", "team", "is_multi_question", 0);
+        Question.createIt("description", "desc", "advice", "adv", "category", "team", "is_multi_question", 0);
+        Question.createIt("description", "desc", "advice", "adv", "category", "team", "is_multi_question", 0);
+        Question.createIt("description", "desc", "advice", "adv", "category", "scrum", "is_multi_question", 0);
+        Question.createIt("description", "desc", "advice", "adv", "category", "scrum", "is_multi_question", 0);
+        Question.createIt("description", "desc", "advice", "adv", "category", "tech", "is_multi_question", 0);
+
+        Map categoryMap = new HashMap <String,Integer>();
+        categoryMap.put("team", 2);
+        categoryMap.put("scrum", 1);
+
+        List<Question> questions = Question.getNRandomByCategories(categoryMap);
+
+        int numScrum = 0;
+        int numTeam = 0;
+        for (int i = 0; i < questions.size(); i++) {
+            switch (questions.get(i).getCategory()) {
+                case "scrum":
+                    numScrum++;
+                    break;
+                case "team":
+                    numTeam++;
+                    break;
+            }
+        }
+        assertEquals(categoryMap.get("scrum"), numScrum);
+        assertEquals(categoryMap.get("team"), numTeam);
+        assertEquals(questions.size(), 3);
     }
 }
