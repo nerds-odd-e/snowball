@@ -86,4 +86,28 @@ public class FinalScoreSteps {
         site.visit("onlinetest/end_of_test.jsp");
     }
 
+    @Given("^test with categories \"([^\"]*)\", \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void test_with_categories_and(String arg1, String arg2, String arg3) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @When("^I do \"([^\"]*)\" (\\d+)% correct$")
+    public void i_do_correct(String arg1, int arg2) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Then("^I should see \"([^\"]*)\"'s advice as \"([^\"]*)\"$")
+    public void i_should_see_s_advice_as(String arg1, String arg2) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Then("^I should see \"([^\"]*)\"'s rate as (\\d+)$")
+    public void i_should_see_s_rate_as(String arg1, int arg2) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
 }

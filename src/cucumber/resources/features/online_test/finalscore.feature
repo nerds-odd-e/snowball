@@ -68,6 +68,24 @@ Feature:
       | category | number_of_questions | number_of_wrong | number_of_correct |
       | 3        | 5                   | 1               | 4                 |
 
-#  @develop
-#  Scenario Outline: 出題で正答率が80%以下のカテゴリーの正答率が表示されている
+  @developing
+  Scenario Outline: 出題で正答率が80%以下のカテゴリーの正答率が表示されている
+    Given test with categories "Scrum", "Team" and "Tech"
+    When I do "Scrum" <scrum_rate>% correct
+    And I do "Team" <team_rate>% correct
+    And I do "Tech" <tech_rate>% correct
+    Then I should see "Scrum"'s advice as "<scrum_advice>"
+    And I should see "Scrum"'s rate as <scrum_rate>
+    And I should see "Team"'s advice as "<team_advice>"
+    And I should see "Team"'s rate as <team_rate>
+    And I should see "Tech"'s advice as "<tech_advice>"
+    And I should see "Tech"'s rate as <tech_rate>
+
+    Examples:
+      | scrum_rate | team_rate | tech_rate | scrum_advice | team_advice | tech_advice |
+      | 100        | 0         | 0         |              | Teamをもっと勉強して | Techをもっと勉強して |
+      | 100        | 100       | 0         |              |              | Techをもっと勉強して |
+      | 100        | 100       | 100       |              |              |                   |
+      | 0          | 0         | 0         | Scrumをもっと勉強して | Teamをもっと勉強して | Techをもっと勉強して |
+      | 79         | 80        | 81        | Scrumをもっと勉強して | Teamをもっと勉強して |             |
 
