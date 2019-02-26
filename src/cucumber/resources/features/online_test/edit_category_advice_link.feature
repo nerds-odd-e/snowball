@@ -1,6 +1,5 @@
 Feature:
   Admin can edit category advice link
-  @developing
   Scenario: カテゴリのアドバイスリンクフォームが表示されている
     Given Update Adviceを開いている
     Then アドバイスリンクフォームが表示されている

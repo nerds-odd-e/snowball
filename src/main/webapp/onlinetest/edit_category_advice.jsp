@@ -22,6 +22,7 @@
 				    <option value="3">Team</option>
 				 </select>
 				 <textarea class="form-control" name="advice" id="advice" maxlength="500">${advice}</textarea>
+				 <textarea class="form-control" name="link" id="link" maxlength="500">${advice}</textarea>
 				 <button type="submit" class="btn btn-default" name="update" id="update" value="add" >Add</button>
 			</form>
 			<h1> Current Setting </h1>

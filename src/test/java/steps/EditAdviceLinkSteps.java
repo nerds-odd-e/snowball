@@ -1,8 +1,9 @@
-package steps.site;
+package steps;
 
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import steps.driver.WebDriverWrapper;
+import steps.site.MassiveMailerSite;
 
 import static org.junit.Assert.*;
 
@@ -22,6 +23,6 @@ public class EditAdviceLinkSteps {
 
     @Then("^アドバイスリンクフォームが表示されている$")
     public void アドバイスリンクフォームが表示されている() throws Throwable {
-        assertNotNull(driver.findElementById("link-input"));
+        assertNotNull(driver.findElementById("link"));
     }
 }
