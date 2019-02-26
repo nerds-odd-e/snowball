@@ -2,6 +2,7 @@ package com.odde.massivemailer.model.onlinetest;
 
 import com.odde.TestWithDB;
 import org.javalite.activejdbc.validation.ValidationException;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -136,6 +137,15 @@ public class QuestionTest {
     public void TypeがMultiのときにgetIsMultiQuestionが1を返す() {
         final Question question = new Question("description", "advice","category","multiple");
         final boolean actual = question.getIsMultiQuestion();
+        assertEquals(actual,true);
+    }
+
+    @Ignore
+    @Test
+    public void shouldReturnRightAnswer() {
+        Question question = new Question("description", "advice", "category", "multiple");
+        String[] optionIds = new String[2];
+        boolean actual = question.verifyMultiAnswer(optionIds);
         assertEquals(actual,true);
     }
 }
