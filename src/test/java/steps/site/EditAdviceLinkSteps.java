@@ -4,7 +4,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import steps.driver.WebDriverWrapper;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class EditAdviceLinkSteps {
     private final MassiveMailerSite site = new MassiveMailerSite();
@@ -18,5 +18,10 @@ public class EditAdviceLinkSteps {
     @Then("^Update Advice画面に戻ってきてカテゴリが\"([^\"]*)\"でアドバイスリンクが\"([^\"]*)\"になってる$")
     public void updateAdvice画面に戻ってきてカテゴリがでアドバイスリンクがになってる(String category, String link) throws Throwable {
         assertTrue(driver.getBodyText().contains(link));
+    }
+
+    @Then("^アドバイスリンクフォームが表示されている$")
+    public void アドバイスリンクフォームが表示されている() throws Throwable {
+        assertNotNull(driver.findElementById("link-input"));
     }
 }

@@ -1,6 +1,11 @@
 Feature:
   Admin can edit category advice link
   @developing
+  Scenario: カテゴリのアドバイスリンクフォームが表示されている
+    Given Update Adviceを開いている
+    Then アドバイスリンクフォームが表示されている
+
+  @developing
   Scenario Outline: カテゴリのアドバイスリンクが登録できる
     Given Update Adviceを開いている
     When カテゴリで"<category>"を選択している
