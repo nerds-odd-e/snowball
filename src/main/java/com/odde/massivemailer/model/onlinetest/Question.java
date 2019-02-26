@@ -54,6 +54,20 @@ public class Question extends ApplicationModel {
         return findBySQL("SELECT id, description, advice, category, is_multi_question FROM questions ORDER BY RAND() LIMIT ?", count);
     }
 
+    public static List<Question> getNRandomByCategories(Map<String, Integer> categoryMap) {
+        List<Question> questions = new ArrayList<>();
+        for (String key : categoryMap.keySet()) {
+            questions.addAll(Question.getNRandomWhereCategory(categoryMap.get(key), key));
+        }
+
+        Collections.shuffle(questions);
+        return questions;
+    }
+
+    public static List<Question> getNRandomWhereCategory(int count, String category) {
+        return findBySQL("SELECT id, description, advice, category, is_multi_question FROM questions WHERE category = ? ORDER BY RAND() LIMIT ?", category, count);
+    }
+
     public String getDescription() {
         return getString(DESCRIPTION);
     }

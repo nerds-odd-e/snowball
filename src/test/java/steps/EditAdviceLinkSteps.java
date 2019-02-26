@@ -18,6 +18,7 @@ public class EditAdviceLinkSteps {
 
     @Then("^Update Advice画面に戻ってきてカテゴリが\"([^\"]*)\"でアドバイスリンクが\"([^\"]*)\"になってる$")
     public void updateAdvice画面に戻ってきてカテゴリがでアドバイスリンクがになってる(String category, String link) throws Throwable {
+        assertTrue(driver.getBodyText().contains(category));
         assertTrue(driver.getBodyText().contains(link));
     }
 

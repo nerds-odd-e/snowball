@@ -6,7 +6,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static junit.framework.TestCase.assertEquals;
@@ -116,7 +118,7 @@ public class QuestionTest {
     }
 
     @Test
-    public void Questionテーブルのカラムが全て返ってくる(){
+    public void Questionテーブルのカラムが全て返ってくる() {
         Question.createIt("description", "desc1", "advice", "adv1", "category", "scrum", "is_multi_question", 0);
         List<Question> actual = Question.getNRandom(1);
         assertThat(actual.get(0).getDescription(), is(equalTo("desc1")));
@@ -127,15 +129,50 @@ public class QuestionTest {
 
     @Test
     public void TypeがsingleのときにgetIsMultiQuestionが0を返す() {
-        final Question question = new Question("description", "advice","category","single");
+        final Question question = new Question("description", "advice", "category", "single");
         final boolean actual = question.getIsMultiQuestion();
-        assertEquals(actual,false);
+        assertEquals(actual, false);
     }
 
     @Test
     public void TypeがMultiのときにgetIsMultiQuestionが1を返す() {
-        final Question question = new Question("description", "advice","category","multiple");
+        final Question question = new Question("description", "advice", "category", "multiple");
         final boolean actual = question.getIsMultiQuestion();
-        assertEquals(actual,true);
+        assertEquals(actual, true);
+    }
+
+    @Test
+    public void Questionテーブルから指定したカテゴリのquestionが返す() {
+        Question.createIt("description", "desc1", "advice", "adv1", "category", "team", "is_multi_question", 0);
+        Question.createIt("description", "desc2", "advice", "adv2", "category", "scrum", "is_multi_question", 0);
+
+        List<Question> actual = Question.getNRandomWhereCategory(1, "scrum");
+        assertThat(actual.get(0).getDescription(), is(equalTo("desc2")));
+        assertThat(actual.get(0).getAdvice(), is(equalTo("adv2")));
+        assertThat(actual.get(0).getCategory(), is(equalTo("scrum")));
+        assertFalse(actual.get(0).getIsMultiQuestion());
+    }
+
+    @Test
+    public void カテゴリごとに任意の数のquestionを返す() {
+        Question.createIt("description", "desc", "advice", "adv", "category", "team", "is_multi_question", 0);
+        Question.createIt("description", "desc", "advice", "adv", "category", "team", "is_multi_question", 0);
+        Question.createIt("description", "desc", "advice", "adv", "category", "team", "is_multi_question", 0);
+        Question.createIt("description", "desc", "advice", "adv", "category", "scrum", "is_multi_question", 0);
+        Question.createIt("description", "desc", "advice", "adv", "category", "scrum", "is_multi_question", 0);
+        Question.createIt("description", "desc", "advice", "adv", "category", "tech", "is_multi_question", 0);
+
+        Map<String, Integer> categoryMap = new HashMap<>();
+        categoryMap.put("team", 2);
+        categoryMap.put("scrum", 1);
+
+        List<Question> questions = Question.getNRandomByCategories(categoryMap);
+
+        Map<String, List<Question>> result = questions.stream().collect(Collectors.groupingBy(Question::getCategory));
+        for (String category : categoryMap.keySet()) {
+            List<Question> questionList = result.get(category);
+            assertEquals(questionList.size(), (int) categoryMap.get(category));
+        }
+        assertEquals(questions.size(), 3);
     }
 }
