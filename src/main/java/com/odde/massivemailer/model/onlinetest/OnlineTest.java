@@ -119,7 +119,11 @@ public class OnlineTest {
     }
 
     public int getCategoryCorrectAnswerCount(int categoryId) {
-        return categoryCorrectAnswerCount.get(categoryId);
+        Integer count = categoryCorrectAnswerCount.get(categoryId);
+        if (count == null) {
+            return 0;
+        }
+        return count;
     }
 
     public void incrementCategoryCorrectAnswerCount(int categoryId) {

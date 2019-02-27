@@ -47,10 +47,11 @@ public class QuestionController extends AppController {
 
         boolean isCorrect = onlineTest.checkAnswer(answeredOptionIds);
 
+        Integer categoryId = Integer.parseInt(onlineTest.getCurrentQuestion().getCategory());
         onlineTest.addAnsweredQuestionNumber();
         if (isCorrect) {
             onlineTest.incrementCorrectAnswerCount();
-            onlineTest.incrementCategoryCorrectAnswerCount(1);
+            onlineTest.incrementCategoryCorrectAnswerCount(categoryId);
             resp.sendRedirect(getRedirectPageName(onlineTest.hasNextQuestion()));
             return;
         }
