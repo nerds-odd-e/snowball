@@ -7,16 +7,12 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import steps.driver.UiElement;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
-import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 public class FinalScoreSteps {
 
@@ -96,5 +92,39 @@ public class FinalScoreSteps {
     public void userShouldSeeAdviceAs(String advice) throws Throwable {
         String actual = driver.findElements(By.className("category-advice")).get(0).getText();
         assertEquals(actual, advice);
+    }
+
+    @Given("^User test result is \"([^\"]*)\" question (\\d+) correct (\\d+)$")
+    public void user_test_result_is_question_correct(String category, int numberOfQuestions, int numberOfCorrect) throws Throwable {
+        int correctCount = 0;
+        for (int i = 0; i < numberOfQuestions; i++) {
+            if (correctCount < numberOfCorrect) {
+                new QuestionBuilder()
+                        .aQuestion(category)
+                        .withWrongOption("notChoice")
+                        .withCorrectOption("Choice")
+                        .please();
+            } else {
+                new QuestionBuilder()
+                        .aQuestion(category)
+                        .withWrongOption("Choice")
+                        .withCorrectOption("notChoice")
+                        .please();
+            }
+        }
+        site.visit(String.format("onlinetest/launchQuestion?question_count=%d", numberOfQuestions));
+    }
+
+    @When("^User go to result page$")
+    public void user_go_to_result_page() throws Throwable {
+        int totalQuestionNum = 10;
+        for (int i = 0; i < totalQuestionNum; ++i) {
+            driver.clickRadioButton("Choice");
+            driver.clickButton("answer");
+
+            if (driver.getBodyText().contains("next")) {
+                driver.clickButton("next");
+            }
+        }
     }
 }

@@ -71,8 +71,6 @@ Feature:
 
   @developing
   Scenario: 出題で正答率が80%以下のカテゴリーの正答率が表示されている
-    Given "Scrum" から 10 題出題される
-    When  User answered wrong the 5 th question page
-    And  User answered correctly the 5 th question page
+    Given User test result is "scrum" question 10 correct 5
+    When User go to result page
     Then User should see the correct percentage as 50 %
-    And User should see advice as "Scrumをもっと勉強して"
