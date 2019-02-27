@@ -50,6 +50,7 @@ public class QuestionController extends AppController {
         onlineTest.addAnsweredQuestionNumber();
         if (isCorrect) {
             onlineTest.incrementCorrectAnswerCount();
+            onlineTest.incrementCategoryCorrectAnswerCount(1);
             resp.sendRedirect(getRedirectPageName(onlineTest.hasNextQuestion()));
             return;
         }

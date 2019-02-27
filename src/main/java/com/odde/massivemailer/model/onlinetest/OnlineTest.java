@@ -1,6 +1,8 @@
 package com.odde.massivemailer.model.onlinetest;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
@@ -9,10 +11,12 @@ public class OnlineTest {
     private final List<Question> questions;
     private int numberOfAnsweredQuestions;
     private int correctAnswerCount;
+    private Map<Integer, Integer> categoryCorrectAnswerCount;
 
     public OnlineTest(int questionCount) {
         questions = Question.getNRandom(questionCount);
         numberOfAnsweredQuestions = 0;
+        categoryCorrectAnswerCount = new HashMap<>();
     }
 
     public Question getPreviousQuestion() {
@@ -115,5 +119,17 @@ public class OnlineTest {
             }
         }
         return isCorrect;
+    }
+
+    public int getCategoryCorrectAnswerCount(int categoryId) {
+        return categoryCorrectAnswerCount.get(categoryId);
+    }
+
+    public void incrementCategoryCorrectAnswerCount(int categoryId) {
+        Integer count = categoryCorrectAnswerCount.get(categoryId);
+        if (count == null) {
+            count = 0;
+        }
+        categoryCorrectAnswerCount.put(categoryId, count + 1);
     }
 }

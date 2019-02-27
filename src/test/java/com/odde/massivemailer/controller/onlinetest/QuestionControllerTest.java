@@ -161,4 +161,20 @@ public class QuestionControllerTest {
         verify(onlineTest, times(0)).incrementCorrectAnswerCount();
     }
 
+    @Test
+    public void doPostWithIncrementCategoryCorrectCountOnCorrectAnswer() throws ServletException, IOException {
+        List<Long> optionId = question.getCorrectOption();
+        onlineTest = new OnlineTest(2);
+
+        request.addParameter("optionId", optionId.get(0).toString());
+        request.addParameter("lastDoneQuestionId", "0");
+        request.getSession().setAttribute("onlineTest", onlineTest);
+
+        controller.doPost(request, response);
+
+        HttpSession session = request.getSession();
+
+        OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
+        assertEquals(1, onlineTest.getCategoryCorrectAnswerCount(1));
+    }
 }
