@@ -110,7 +110,7 @@ public class Question extends ApplicationModel {
         List<String> answeredOptionIdList = Arrays.asList(answeredOptionIds);
         Collection<AnswerOption> optionsByQuestionId = getOptions();
         List<String> collectOptions = optionsByQuestionId.stream().filter(AnswerOption::isCorrect).map(answerOption -> answerOption.getLongId().toString()).collect(toList());
-        return collectOptions.contains(answeredOptionIdList);
+        return collectOptions.equals(answeredOptionIdList);
     }
 
     public ArrayList<Long> getCorrectOption() {

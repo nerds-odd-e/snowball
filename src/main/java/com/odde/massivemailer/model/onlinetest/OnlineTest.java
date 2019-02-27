@@ -47,7 +47,7 @@ public class OnlineTest {
         return (questions != null) ? questions.size() : 0;
     }
 
-    public void moveToNextQuestion() {
+    public void addAnsweredQuestionNumber() {
         numberOfAnsweredQuestions++;
     }
 
@@ -76,11 +76,6 @@ public class OnlineTest {
         correctAnswerCount++;
     }
 
-    public boolean isCorrectAnswer(String answeredOptionId) {
-        Question currentQuestion = getCurrentQuestion();
-        return currentQuestion.verifyAnswer(answeredOptionId);
-    }
-
     public String getAlertMsg(String lastDoneQuestionId) {
         String alertMsg = "";
         if (!lastDoneQuestionId.equals(String.valueOf(getNumberOfAnsweredQuestions()))) {
@@ -104,5 +99,21 @@ public class OnlineTest {
 
     public boolean getShowAdvice(){
         return getCorrectAnswerCount() != 0 && (getCorrectAnswerCount()*1.0/questions.size()*1.0)*100 >= 80;
+    }
+
+    public boolean checkAnswer(String[] answeredOptionIds) {
+        boolean isCorrect = true;
+        Question currentQuestion = getCurrentQuestion();
+        if (currentQuestion.isMultipleAnswerOptions()) {
+            isCorrect = currentQuestion.verifyMultiAnswer(answeredOptionIds);
+        } else {
+            for (String answeredOptionId : answeredOptionIds) {
+                if (!currentQuestion.verifyAnswer(answeredOptionId)) {
+                    isCorrect = false;
+                    break;
+                }
+            }
+        }
+        return isCorrect;
     }
 }

@@ -1,15 +1,19 @@
 package com.odde.massivemailer.model.onlinetest;
 
 import com.odde.TestWithDB;
+import org.javalite.activejdbc.Model;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.stream.IntStream;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(TestWithDB.class)
 public class OnlineTestTest {
@@ -40,7 +44,7 @@ public class OnlineTestTest {
         Set<Question> questions = new HashSet<>();
         while(newOnlineTest.hasNextQuestion()) {
             questions.add(newOnlineTest.getCurrentQuestion());
-            newOnlineTest.moveToNextQuestion();
+            newOnlineTest.addAnsweredQuestionNumber();
         }
         assertEquals(5, questions.size());
     }
@@ -87,6 +91,36 @@ public class OnlineTestTest {
 
         onlineTest.setCorrectAnswerCount(1);
         assertEquals("Scrumをもっと勉強して", onlineTest.getCategoryMessage());
+
+    }
+
+    @Test
+    public void shouldReturn2CorrectAnswer() {
+        Question question = Question.createIt("description", "desc1", "advice", "adv1", "is_multi_question", 0);
+        Long id = (Long) question.getId();
+
+        final String[] answeredOption = new String[2];
+        answeredOption[0] = AnswerOption.<AnswerOption>createIt("description", "desc1", "question_id", id, "is_correct", 1).getLongId().toString();
+        answeredOption[1] = AnswerOption.<AnswerOption>createIt("description", "desc2", "question_id", id, "is_correct", 1).getLongId().toString();
+
+        OnlineTest onlineTest = new OnlineTest(1);
+        boolean result = onlineTest.checkAnswer(answeredOption);
+        assertTrue(result);
+    }
+
+    @Test
+    public void shouldReturnOneIncorrectAndOneCorrectAnswer() {
+        Question question = Question.createIt("description", "desc1", "advice", "adv1", "is_multi_question", 0);
+        Long id = (Long) question.getId();
+
+        final String[] answeredOption = new String[2];
+        answeredOption[0] = AnswerOption.<AnswerOption>createIt("description", "desc1", "question_id", id, "is_correct", 0).getLongId().toString();
+        answeredOption[1] = AnswerOption.<AnswerOption>createIt("description", "desc2", "question_id", id, "is_correct", 1).getLongId().toString();
+        AnswerOption.<AnswerOption>createIt("description", "desc3", "question_id", id, "is_correct", 1).getLongId().toString();
+
+        OnlineTest onlineTest = new OnlineTest(1);
+        boolean result = onlineTest.checkAnswer(answeredOption);
+        assertFalse(result);
 
     }
 

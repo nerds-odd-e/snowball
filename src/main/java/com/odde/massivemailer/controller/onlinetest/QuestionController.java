@@ -45,15 +45,9 @@ public class QuestionController extends AppController {
             return;
         }
 
-        boolean isCorrect = true;
-        for (String answeredOptionId : answeredOptionIds) {
-            if (!onlineTest.isCorrectAnswer(answeredOptionId)) {
-                isCorrect = false;
-                break;
-            }
-        }
-        onlineTest.moveToNextQuestion();
+        boolean isCorrect = onlineTest.checkAnswer(answeredOptionIds);
 
+        onlineTest.addAnsweredQuestionNumber();
         if (isCorrect) {
             onlineTest.incrementCorrectAnswerCount();
             resp.sendRedirect(getRedirectPageName(onlineTest.hasNextQuestion()));
