@@ -22,10 +22,8 @@ import static org.junit.Assert.*;
 public class QuestionStep {
     private final MassiveMailerSite site = new MassiveMailerSite();
     private final WebDriverWrapper driver = site.getDriver();
+    private int totalCounter;
     private int scrumCounter;
-    private int teamCounter;
-    private int techCounter;
-
 
 
     @Given("^Add a question \"([^\"]*)\" with dummy options$")
@@ -267,34 +265,12 @@ public class QuestionStep {
         site.visit("onlinetest/launchQuestion");
     }
 
-
-
-    @Given("^scrumに(\\d+)問が登録されている$")
-    public void scrumに_問が登録されている(int numOfQuestions) {
+    @Given("\"([^\"]*)\"に(\\d+)問が登録されている$")
+    public void categoryNameに_問が登録されている(String categoryName, int numOfQuestions) {
         for (int i = 0; i < numOfQuestions; i++) {
             new QuestionBuilder()
-                    .aQuestion("scrum", null, "scrum")
-                    .withCorrectOption("Drink")
-                    .please();
-        }
-    }
-
-    @Given("^techに(\\d+)問が登録されている$")
-    public void techに_問が登録されている(int numOfQuestions) {
-        for (int i = 0; i < numOfQuestions; i++) {
-            new QuestionBuilder()
-                    .aQuestion("tech", null, "tech")
-                    .withCorrectOption("Drink")
-                    .please();
-        }
-    }
-
-    @Given("^teamに(\\d+)問が登録されている$")
-    public void teamに_問が登録されている(int numOfQuestions) {
-        for (int i = 0; i < numOfQuestions; i++) {
-            new QuestionBuilder()
-                    .aQuestion("team", null, "team")
-                    .withCorrectOption("Drink")
+                    .aQuestion(categoryName, null, categoryName)
+                    .withCorrectOption("CorrectOption")
                     .please();
         }
     }
@@ -306,7 +282,6 @@ public class QuestionStep {
 
     @Then("^合計で(\\d+)問が表示されること$")
     public void 合計で_問が表示されること(int count) {
-        int totalCounter = scrumCounter + teamCounter + techCounter;
         assertEquals(count, totalCounter);
     }
 
@@ -315,37 +290,19 @@ public class QuestionStep {
         assertEquals(count, scrumCounter);
     }
 
-
     @When("^startをクリックしてすべての問題を回答したとき$")
     public void startをクリックしてすべての問題を回答したとき() {
+        totalCounter = 0;
         scrumCounter = 0;
-        teamCounter = 0;
-        techCounter = 0;
         site.visit("onlinetest/launchQuestion");
         while (driver.getCurrentTitle().equals("Question")){
-            switch (driver.findElementById("description").getText()){
-                case "scrum":
-                    scrumCounter++;
-                    break;
-                case "team":
-                    teamCounter++;
-                    break;
-                case "tech":
-                    techCounter++;
-                    break;
+            totalCounter++;
+            String categoryName = driver.findElementById("description").getText();
+            if (categoryName.equals("scrum")) {
+                scrumCounter++;
             }
-            driver.clickRadioButton("Drink");
+            driver.clickRadioButton("CorrectOption");
             driver.clickButton("answer");
         }
-    }
-
-    @Then("^出題数の総計は(\\d+)問である$")
-    public void 出題数の総計は_問である(int total) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-    }
-
-    @When("^startをクリックしたとき")
-    public void startをクリックしたとき() {
-        site.visit("onlinetest/launchQuestion");
     }
 }
