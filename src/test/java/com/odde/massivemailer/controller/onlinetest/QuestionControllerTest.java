@@ -50,19 +50,13 @@ public class QuestionControllerTest {
         return question;
     }
 
-    @Ignore
     @Test
     public void postIncorrect() throws ServletException, IOException {
         String optionId = question.getFirstOptionId().toString();
         request.addParameter("optionId", optionId);
         request.addParameter("lastDoneQuestionId", "0");
         controller.doPost(request, response);
-        Object selectOption = request.getAttribute("selectedOption");
-        String selectedOption = "";
-
-        if (selectOption instanceof String) {
-            selectedOption = (String) selectOption;
-        }
+        String selectedOption = (String) request.getAttribute("selectedOption");
         assertEquals(optionId, selectedOption);
     }
 

@@ -176,13 +176,4 @@ public class QuestionTest {
         }
         assertEquals(questions.size(), 3);
     }
-
-    @Ignore
-    @Test
-    public void shouldReturnRightAnswer() {
-        Question question = new Question("description", "advice", "category", "multiple");
-        String[] optionIds = new String[2];
-        boolean actual = question.verifyMultiAnswer(optionIds);
-        assertEquals(actual,true);
-    }
 }
