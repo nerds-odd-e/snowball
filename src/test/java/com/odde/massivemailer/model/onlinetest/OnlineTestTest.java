@@ -121,7 +121,39 @@ public class OnlineTestTest {
         OnlineTest onlineTest = new OnlineTest(1);
         boolean result = onlineTest.checkAnswer(answeredOption);
         assertFalse(result);
+    }
 
+    @Test
+    public void shouldQuestionsNumberByEachCategory(){
+        mockQuestion(1,"1");
+        OnlineTest onlineTest = new OnlineTest(1);
+        assertEquals(onlineTest.getNumberOfQuestions(),1);
+        assertEquals(onlineTest.getNumberOfCategories(), 1);
+    }
+
+    @Test
+    public void showNumberOfCategoriesInOneQuestion() {
+        mockQuestion(1,"1");
+        OnlineTest onlineTest = new OnlineTest(1);
+        assertEquals(onlineTest.getNumberOfCategories(), 1);
+    }
+
+    @Test
+    public void showNumberOfCategoriesInMultipleQuestions() {
+        mockQuestion(3,"1");
+        mockQuestion(3,"2");
+        mockQuestion(4,"3");
+
+        OnlineTest onlineTest = new OnlineTest(10);
+
+        assertEquals(onlineTest.getNumberOfCategories(), 3);
+    }
+
+    @Test
+    public void showNumberOfCategoriesInNoQuestion() {
+        OnlineTest onlineTest = new OnlineTest(10);
+
+        assertEquals(onlineTest.getNumberOfCategories(), 0);
     }
 
     private static void mockQuestion(int numberOfQuestion, String category) {

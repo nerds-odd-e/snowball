@@ -132,4 +132,9 @@ public class OnlineTest {
         }
         categoryCorrectAnswerCount.put(categoryId, count + 1);
     }
+
+    public int getNumberOfCategories() {
+        Map<String, List<Question>> categoryNumberMap = questions.stream().collect(Collectors.groupingBy(Question::getCategory));
+        return categoryNumberMap.keySet().size();
+    }
 }
