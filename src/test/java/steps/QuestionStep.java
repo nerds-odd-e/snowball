@@ -1,9 +1,7 @@
 package steps;
 
 import com.odde.massivemailer.factory.QuestionBuilder;
-import com.odde.massivemailer.model.onlinetest.Question;
 import cucumber.api.DataTable;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -14,16 +12,12 @@ import org.openqa.selenium.support.Color;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class QuestionStep {
     private final MassiveMailerSite site = new MassiveMailerSite();
@@ -273,9 +267,11 @@ public class QuestionStep {
         site.visit("onlinetest/launchQuestion");
     }
 
-    @Given("^scrumに(\\d+)問問題が登録されている$")
-    public void scrumに_問問題が登録されている(int numOfQuestion) {
-        for(int i = 0; i < numOfQuestion; i++) {
+
+
+    @Given("^scrumに(\\d+)問が登録されている$")
+    public void scrumに_問が登録されている(int numOfQuestions) {
+        for (int i = 0; i < numOfQuestions; i++) {
             new QuestionBuilder()
                     .aQuestion("scrum", null, "scrum")
                     .withCorrectOption("Drink")
@@ -283,10 +279,9 @@ public class QuestionStep {
         }
     }
 
-
-    @Given("^techに(\\d+)問問題が登録されている$")
-    public void techに_問問題が登録されている(int numOfQuestion) {
-        for(int i = 0; i < numOfQuestion; i++) {
+    @Given("^techに(\\d+)問が登録されている$")
+    public void techに_問が登録されている(int numOfQuestions) {
+        for (int i = 0; i < numOfQuestions; i++) {
             new QuestionBuilder()
                     .aQuestion("tech", null, "tech")
                     .withCorrectOption("Drink")
@@ -294,9 +289,9 @@ public class QuestionStep {
         }
     }
 
-    @Given("^teamに(\\d+)問問題が登録されている$")
-    public void teamに_問問題が登録されている(int numOfQuestion) {
-        for(int i = 0; i < numOfQuestion; i++) {
+    @Given("^teamに(\\d+)問が登録されている$")
+    public void teamに_問が登録されている(int numOfQuestions) {
+        for (int i = 0; i < numOfQuestions; i++) {
             new QuestionBuilder()
                     .aQuestion("team", null, "team")
                     .withCorrectOption("Drink")
@@ -304,14 +299,30 @@ public class QuestionStep {
         }
     }
 
+    @Then("^scrumが>=(\\d+)問が表示されること$")
+    public void scrumが_問以上が表示されること(int count) {
+        assertThat(scrumCounter,greaterThan(count));
+    }
+
+    @Then("^合計で(\\d+)問が表示されること$")
+    public void 合計で_問が表示されること(int count) {
+        int totalCounter = scrumCounter + teamCounter + techCounter;
+        assertEquals(count, totalCounter);
+    }
+
+    @Then("^scrumが(\\d+)問が表示されること$")
+    public void scrumが_問が表示されること(int count) {
+        assertEquals(count, scrumCounter);
+    }
+
+
     @When("^startをクリックしてすべての問題を回答したとき$")
     public void startをクリックしてすべての問題を回答したとき() {
         scrumCounter = 0;
         teamCounter = 0;
         techCounter = 0;
         site.visit("onlinetest/launchQuestion");
-        for (int i = 0; i < 10; i++) {
-
+        while (driver.getCurrentTitle().equals("Question")){
             switch (driver.findElementById("description").getText()){
                 case "scrum":
                     scrumCounter++;
@@ -328,64 +339,13 @@ public class QuestionStep {
         }
     }
 
-    @Then("^scrumが(\\d+)問以上問題が表示されること$")
-    public void scrumが_問以上問題が表示されること(int count) {
-        assertTrue(scrumCounter >= count);
-    }
-
-    @Then("^techが(\\d+)問以上問題が表示されること$")
-    public void techが_問以上問題が表示されること(int count) {
-        assertTrue(techCounter >= count);
-    }
-
-    @Then("^teamが(\\d+)問以上問題が表示されること$")
-    public void teamが_問以上問題が表示されること(int count) {
-        assertTrue(teamCounter >= count);
-    }
-
     @Then("^出題数の総計は(\\d+)問である$")
     public void 出題数の総計は_問である(int total) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
     }
 
     @When("^startをクリックしたとき")
-    public void startをクリックしたとき() throws Throwable {
+    public void startをクリックしたとき() {
         site.visit("onlinetest/launchQuestion");
-    }
-
-    @Given("^カテゴリが(\\d+)種類あり、(\\d+)問ずつ用意されている$")
-    public void カテゴリが_種類あり_問ずつ用意されている(int numOfCategory, int numOfQuestions) throws Throwable {
-        for (int n = 0; n < numOfCategory; n++){
-            String categoryName = "category" + n;
-            for (int i = 0; i < numOfQuestions; i++) {
-                new QuestionBuilder()
-                        .aQuestion(categoryName, null, categoryName)
-                        .withCorrectOption("Drink")
-                        .please();
-            }
-            System.out.print("category created");
-        }
-    }
-    @Then("^各カテゴリが(\\d+)以上問題が表示されること$")
-    public void 各カテゴリが_以上問題が表示されること(int num) {
-        Map<String, Integer> m = new HashMap<>();
-        for (int i = 0; i < 10; i++) {
-            Integer counter;
-            String category = driver.findElementById("description").getText();
-            if (m.containsKey(category)) {
-                counter = m.get(category);
-            } else {
-                counter = 0;
-            }
-            m.put(category, ++counter);
-
-            driver.clickRadioButton("Drink");
-            driver.clickButton("answer");
-        }
-
-        for (String category : m.keySet()) {
-            Integer numberOfQuestion = m.get(category);
-            assertTrue(numberOfQuestion >= num);
-        }
     }
 }

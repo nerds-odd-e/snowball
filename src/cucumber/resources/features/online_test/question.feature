@@ -195,41 +195,20 @@ Feature:
     Then "option1" and "option2" are selected in advice page
 
   @developing
-  Scenario: 3カテゴリから均等に10問問題を表示する
-    Given scrumに5問問題が登録されている
-    And techに5問問題が登録されている
-    And teamに5問問題が登録されている
+  Scenario Outline: 3カテゴリから均等に10問問題を表示する
+    Given scrumに<scrum_stored>問が登録されている
+    And techに<tech_stored>問が登録されている
+    And teamに<team_stored>問が登録されている
     When startをクリックしてすべての問題を回答したとき
-    Then scrumが3問以上問題が表示されること
-    And techが3問以上問題が表示されること
-    And teamが3問以上問題が表示されること
-
-  @developing
-  Scenario: 問題の最大数は10問である
-    Given scrumに5問問題が登録されている And techに5問問題が登録されている
-    And teamに5問問題が登録されている
-    When startをクリックしてすべての問題を回答したとき
-    Then 出題数の総計は10問である
-
-  @developing
-  Scenario: 問題の最大数は10問である
-    Given scrumに100問問題が登録されている
-    And techに100問問題が登録されている
-    And teamに1問問題が登録されている
-    When startをクリックしてすべての問題を回答したとき
-    Then scrumが4問以上問題が表示されること
-    And techが4問以上問題が表示されること
-    And teamが1問以上問題が表示されること
-
-  @developing
-  Scenario Outline: カテゴリーの数が平均になるように出題数が決まる
-    Given カテゴリが<number_of_category>種類あり、10問ずつ用意されている
-    When startをクリックしたとき
-    Then 各カテゴリが<number_of_question>以上問題が表示されること
+    Then scrumが<scrum_shown>問が表示されること
+    And 合計で<total_shown>問が表示されること
 
     Examples:
-      | number_of_category | number_of_question |
-      | 1                  | 10                 |
-      | 2                  | 5                  |
-      | 3                  | 3                  |
-      | 4                  | 2                  |
+      | scrum_stored | tech_stored | team_stored | total_shown | scrum_shown |
+      | 5            | 5           | 5           | 10          | >=3         |
+      | 5            | 5           | 0           | 10          | 5           |
+      | 5            | 0           | 0           | 5           | 5           |
+      | 0            | 5           | 5           | 10          | 0           |
+      | 0            | 0           | 5           | 5           | 0           |
+      | 1            | 5           | 5           | 10          | 1           |
+      | 5            | 1           | 5           | 10          | >=4         |
