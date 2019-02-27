@@ -176,4 +176,28 @@ public class QuestionTest {
         }
         assertEquals(questions.size(), 3);
     }
+
+    @Test
+    public void 指定されたカテゴリのquestion総数を返す() {
+        Question.createIt("description", "desc", "advice", "adv", "category", "team", "is_multi_question", 0);
+        Question.createIt("description", "desc", "advice", "adv", "category", "team", "is_multi_question", 0);
+        Question.createIt("description", "desc", "advice", "adv", "category", "team", "is_multi_question", 0);
+        Question.createIt("description", "desc", "advice", "adv", "category", "scrum", "is_multi_question", 0);
+        Question.createIt("description", "desc", "advice", "adv", "category", "scrum", "is_multi_question", 0);
+        Question.createIt("description", "desc", "advice", "adv", "category", "tech", "is_multi_question", 0);
+
+        assertEquals(Question.getNumOfQuestionIn("team"), 3);
+        assertEquals(Question.getNumOfQuestionIn("scrum"), 2);
+        assertEquals(Question.getNumOfQuestionIn("tech"), 1);
+        assertEquals(Question.getNumOfQuestionIn("other"), 0);
+    }
+
+    @Ignore
+    @Test
+    public void shouldReturnRightAnswer() {
+        Question question = new Question("description", "advice", "category", "multiple");
+        String[] optionIds = new String[2];
+        boolean actual = question.verifyMultiAnswer(optionIds);
+        assertEquals(actual,true);
+    }
 }

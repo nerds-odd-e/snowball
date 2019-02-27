@@ -7,13 +7,17 @@ import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.stream.IntStream;
 
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertThat;
 
 @RunWith(TestWithDB.class)
 public class OnlineTestTest {
@@ -124,13 +128,35 @@ public class OnlineTestTest {
     }
 
     @Test
-    public void shouldQuestionsNumberByEachCategory(){
-        mockQuestion(1,"1");
-        OnlineTest onlineTest = new OnlineTest(1);
-        assertEquals(onlineTest.getNumberOfQuestions(),1);
-        assertEquals(onlineTest.getNumberOfCategories(), 1);
+    public void shouldQuestionsNumberByEachCategory() {
+        mockQuestion(5, Category.SCRUM.getName());
+        mockQuestion(5, Category.TECH.getName());
+        mockQuestion(5, Category.TEAM.getName());
+
+        OnlineTest onlineTest = new OnlineTest(10);
+        Map<Category, Integer> categoryMap = onlineTest.getMapQuestionAndCategory(Category.values(), 10);
+
+        assertThat(categoryMap.get(Category.SCRUM), greaterThanOrEqualTo(3));
+        assertThat(categoryMap.get(Category.TEAM), greaterThanOrEqualTo(3));
+        assertThat(categoryMap.get(Category.TECH), greaterThanOrEqualTo(3));
     }
 
+
+    @Test
+    public void shouldQuestionsNumberByEachCategory2() {
+        mockQuestion(10, Category.SCRUM.getName());
+        mockQuestion(10, Category.TECH.getName());
+        mockQuestion(2, Category.TEAM.getName());
+
+        OnlineTest onlineTest = new OnlineTest(10);
+        Map<Category, Integer> categoryMap = onlineTest.getMapQuestionAndCategory(Category.values(), 10);
+
+        assertThat(categoryMap.get(Category.SCRUM), greaterThanOrEqualTo(4));
+        assertThat(categoryMap.get(Category.TECH), greaterThanOrEqualTo(4));
+        assertThat(categoryMap.get(Category.TEAM), greaterThanOrEqualTo(2));
+
+    }
+    
     @Test
     public void showNumberOfCategoriesInOneQuestion() {
         mockQuestion(1,"1");
