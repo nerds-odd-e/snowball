@@ -127,4 +127,10 @@ public class FinalScoreSteps {
             }
         }
     }
+
+    @Then("^User should see the advice as \"([^\"]*)\"$")
+    public void user_should_see_the_advice_as(String arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
 }
