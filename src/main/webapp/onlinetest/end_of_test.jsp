@@ -38,11 +38,6 @@
                     <th >Correct Rate</th>
                     <th >Advice</th>
                 </tr>
-                <tr>
-                    <td>a</td>
-                    <td>asdf</td>
-                    <td>yoyoyoyo</td>
-                </tr>
             </tbody>
             </table>
             <p>
