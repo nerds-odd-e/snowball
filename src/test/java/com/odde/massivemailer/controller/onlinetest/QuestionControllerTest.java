@@ -2,10 +2,10 @@ package com.odde.massivemailer.controller.onlinetest;
 
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.onlinetest.AnswerOption;
+import com.odde.massivemailer.model.onlinetest.CategoryTestResult;
 import com.odde.massivemailer.model.onlinetest.Question;
 import com.odde.massivemailer.model.onlinetest.OnlineTest;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -192,6 +192,26 @@ public class QuestionControllerTest {
 
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
         assertEquals(1, onlineTest.getCategoryCorrectAnswerCount(1));
+    }
+
+    @Test
+    public void doPostWithIncrementScrumCategoryCorrectCountOnCorrectAnswer2() throws ServletException, IOException {
+        question = createQuestionWithOptions("1");
+        List<Long> optionId = question.getCorrectOption();
+        onlineTest = new OnlineTest(2);
+
+        request.addParameter("optionId", optionId.get(0).toString());
+        request.addParameter("lastDoneQuestionId", "0");
+        request.getSession().setAttribute("onlineTest", onlineTest);
+
+        controller.doPost(request, response);
+
+        HttpSession session = request.getSession();
+
+        OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
+
+        List<CategoryTestResult> categoryQuestionList = onlineTest.categoryTestResults;
+        assertEquals(1, categoryQuestionList.get(0).questionCount);
     }
 
     @Test

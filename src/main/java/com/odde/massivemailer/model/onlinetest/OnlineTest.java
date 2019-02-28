@@ -9,13 +9,13 @@ public class OnlineTest {
     private int numberOfAnsweredQuestions;
     private int correctAnswerCount;
     private Map<Integer, Integer> categoryCorrectAnswerCount;
-    private List<CategoryTestResult> categoryTestResult;
+    public List<CategoryTestResult> categoryTestResults;
 
     public OnlineTest(int questionCount) {
         questions = Question.getNRandom(questionCount);
         numberOfAnsweredQuestions = 0;
         categoryCorrectAnswerCount = new HashMap<>();
-        categoryTestResult = new ArrayList<>();
+        categoryTestResults = new ArrayList<>();
     }
 
     public Question getPreviousQuestion() {
@@ -79,6 +79,23 @@ public class OnlineTest {
         correctAnswerCount++;
     }
 
+    private void incrementCategoryQuestionCount(int categoryId) {
+        List<CategoryTestResult> collect = categoryTestResults
+                .stream()
+                .filter(categoryTestResult -> categoryTestResult.categoryId == categoryId)
+                .collect(Collectors.toList());
+        if (collect.size() < 1) {
+            CategoryTestResult categoryTestResult = new CategoryTestResult(categoryId);
+            categoryTestResults.add(categoryTestResult);
+            collect = categoryTestResults
+                    .stream()
+                    .filter(result -> result.categoryId == categoryId)
+                    .collect(Collectors.toList());
+        }
+        CategoryTestResult categoryTestResult = collect.get(0);
+        categoryTestResult.questionCount++;
+    }
+
     public String getAlertMsg(String lastDoneQuestionId) {
         String alertMsg = "";
         if (!lastDoneQuestionId.equals(String.valueOf(getNumberOfAnsweredQuestions()))) {
@@ -88,7 +105,7 @@ public class OnlineTest {
     }
 
     public String getCategoryMessage() {
-        if ( getShowAdvice() ) {
+        if (getShowAdvice()) {
             return "";
         }
         String categories = questions.stream()
@@ -100,8 +117,8 @@ public class OnlineTest {
         return categories + "をもっと勉強して";
     }
 
-    public boolean getShowAdvice(){
-        return getCorrectAnswerCount() != 0 && (getCorrectAnswerCount()*1.0/questions.size()*1.0)*100 >= 80;
+    public boolean getShowAdvice() {
+        return getCorrectAnswerCount() != 0 && (getCorrectAnswerCount() * 1.0 / questions.size() * 1.0) * 100 >= 80;
     }
 
     public boolean checkAnswer(String[] answeredOptionIds) {
@@ -144,7 +161,7 @@ public class OnlineTest {
             Category category = categoryList.get(i % allQuestionInCategory.size());
 
             if (questionAndCategory.containsKey(category)) {
-                Integer counter =  questionAndCategory.get(category);
+                Integer counter = questionAndCategory.get(category);
                 questionAndCategory.put(category, ++counter);
             } else {
                 questionAndCategory.put(category, 1);
@@ -173,6 +190,7 @@ public class OnlineTest {
         addAnsweredQuestionNumber();
         if (isCorrect) {
             incrementCorrectAnswerCount();
+            incrementCategoryQuestionCount(categoryId);
             incrementCategoryCorrectAnswerCount(categoryId);
             return true;
         }
@@ -180,6 +198,6 @@ public class OnlineTest {
     }
 
     public List<CategoryTestResult> getFailedCategoryTestResults() {
-        return categoryTestResult;
+        return categoryTestResults;
     }
 }
