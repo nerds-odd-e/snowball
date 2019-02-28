@@ -162,4 +162,8 @@ public class Question extends ApplicationModel {
     public boolean isMultipleAnswerOptions() {
         return getOptions().stream().filter(AnswerOption::isCorrect).count() > 1;
     }
+
+    boolean belongsTo(Category cat) {
+        return getCategory().equals(cat.getName());
+    }
 }
