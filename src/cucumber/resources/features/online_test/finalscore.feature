@@ -76,7 +76,6 @@ Feature:
     Then User should see the correct percentage as 50 %
 
   @developing
-  @now
   Scenario: 出題で正答率が80%以下のカテゴリーのアドバイスが表示されている
     Given User test result is "scrum" question 10 correct 5
     When User go to result page
