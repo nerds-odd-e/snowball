@@ -204,8 +204,7 @@ public class OnlineTest {
     }
 
     public void answerCurrentQuestion(List<Integer> integers) {
-        Question currentQuestion = getCurrentQuestion();
-        Answer answer = new Answer(currentQuestion.getLongId(), integers);
+        Answer answer = new Answer(getCurrentQuestion().getLongId(), integers);
         answers.add(answer);
     }
 }
