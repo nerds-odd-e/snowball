@@ -14,6 +14,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -57,8 +58,8 @@ public class QuestionControllerTest {
         request.addParameter("optionId", optionId);
         request.addParameter("lastDoneQuestionId", "0");
         controller.doPost(request, response);
-        String selectedOption = (String) request.getAttribute("selectedOption");
-        assertEquals(optionId, selectedOption);
+        ArrayList<String> selectedOption =  (ArrayList<String>) request.getAttribute("selectedOption");
+        assertEquals(optionId, selectedOption.get(0));
     }
 
     @Test
