@@ -186,6 +186,14 @@ public class OnlineTestTest {
         assertEquals(0, failedCategoryTestResults.size());
     }
 
+    @Test
+    public void answerCurrentQuestion() {
+        mockQuestion(3,"1");
+        OnlineTest onlineTest = new OnlineTest(1);
+        onlineTest.answerCurrentQuestion(Arrays.asList(0));
+        assertEquals(1, onlineTest.answers.size());
+    }
+
     private static void mockQuestion(int numberOfQuestion, String category) {
         IntStream.range(0, numberOfQuestion).forEach(index -> Question.createIt("description", "desc" + index, "advice", "adv" + index, "category", category));
     }

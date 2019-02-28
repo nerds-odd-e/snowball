@@ -10,12 +10,14 @@ public class OnlineTest {
     private int correctAnswerCount;
     private Map<Integer, Integer> categoryCorrectAnswerCount;
     public List<CategoryTestResult> categoryTestResults;
+    public List<Answer> answers;
 
     public OnlineTest(int questionCount) {
         questions = Question.getNRandom(questionCount);
         numberOfAnsweredQuestions = 0;
         categoryCorrectAnswerCount = new HashMap<>();
         categoryTestResults = new ArrayList<>();
+        answers = new ArrayList<>();
     }
 
     public Question getPreviousQuestion() {
@@ -199,5 +201,11 @@ public class OnlineTest {
 
     public List<CategoryTestResult> getFailedCategoryTestResults() {
         return categoryTestResults;
+    }
+
+    public void answerCurrentQuestion(List<Integer> integers) {
+        Question currentQuestion = getCurrentQuestion();
+        Answer answer = new Answer(currentQuestion.getLongId(), integers);
+        answers.add(answer);
     }
 }
