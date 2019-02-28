@@ -128,9 +128,11 @@ public class FinalScoreSteps {
         }
     }
 
-    @Then("^User should see the advice as \"([^\"]*)\"$")
-    public void user_should_see_the_advice_as(String arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    @Then("^User should see the \"([^\"]*)\"'s advice as \"([^\"]*)\"$")
+    public void user_should_see_the_s_advice_as(String category, String categoryAdvice) throws Throwable {
+        String actualCategory = driver.findElements(By.className("category")).get(0).getText();
+        String actualCategoryAdvice = driver.findElements(By.className("category-advice")).get(0).getText();
+        assertEquals(actualCategory, category);
+        assertEquals(actualCategoryAdvice, categoryAdvice);
     }
 }
