@@ -1,7 +1,6 @@
 package com.odde.massivemailer.model.onlinetest;
 
 import com.odde.TestWithDB;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -19,28 +18,28 @@ public class QuestionCollectionTest {
 
     @Test
     public void shouldReturnAnEmptyListIfThereIsNoQuestion() {
-        QuestionCollect questionCollect = createQuestionCollect(0, 0);
+        QuestionCollect questionCollect = createQuestionCollect(0, 0, 0);
         List<Question> questions = questionCollect.generateQuestionList(categories, 10);
         assertEquals(0, questions.size());
     }
 
     @Test
     public void shouldReturnAllTheQuestionsIfThereAreNoEnoughQuestions() {
-        QuestionCollect questionCollect = createQuestionCollect(1, 0);
+        QuestionCollect questionCollect = createQuestionCollect(1, 0, 0);
         List<Question> questions = questionCollect.generateQuestionList(categories, 10);
         assertEquals(1, questions.size());
     }
 
     @Test
     public void shouldReturnTheMaxNumberIfThereAreMoreQuestions() {
-        QuestionCollect questionCollect = createQuestionCollect(11, 0);
+        QuestionCollect questionCollect = createQuestionCollect(11, 0, 0);
         List<Question> questions = questionCollect.generateQuestionList(categories, 10);
         assertEquals(10, questions.size());
     }
 
     @Test
     public void shouldChooseTheQuestionsRandomly() {
-        QuestionCollect questionCollect = createQuestionCollect(2, 0);
+        QuestionCollect questionCollect = createQuestionCollect(2, 0, 0);
         questionCollect.setShouldShuffleQuestions(true);
         Set<String> selections = new HashSet<>();
         for(int i = 0; i < 10; i ++) {
@@ -52,7 +51,7 @@ public class QuestionCollectionTest {
 
     @Test
     public void shouldChooseEquallyFromTwoCategories() {
-        QuestionCollect questionCollect = createQuestionCollect(10, 10);
+        QuestionCollect questionCollect = createQuestionCollect(10, 10, 0);
         List<Question> questions = questionCollect.generateQuestionList(new Category[]{Category.SCRUM, Category.TECH}, 10);
         long scrumQuestionCount = questions.stream().filter(q -> q.getCategory().equals(Category.SCRUM.getName())).count();
         assertEquals(5, scrumQuestionCount);
@@ -61,7 +60,7 @@ public class QuestionCollectionTest {
 
     @Test
     public void shouldChooseAtLeastOneQuestion() {
-        QuestionCollect questionCollect = createQuestionCollect(10, 10);
+        QuestionCollect questionCollect = createQuestionCollect(10, 10, 0);
         List<Question> questions = questionCollect.generateQuestionList(new Category[]{Category.SCRUM, Category.TECH}, 1);
         long scrumQuestionCount = questions.stream().filter(q -> q.getCategory().equals(Category.SCRUM.getName())).count();
         assertEquals(1, scrumQuestionCount);
@@ -70,16 +69,24 @@ public class QuestionCollectionTest {
 
     @Test
     public void shouldChooseNotEquallyFromTwoCategories() {
-        QuestionCollect questionCollect = createQuestionCollect(10, 1);
+        QuestionCollect questionCollect = createQuestionCollect(10, 1, 0);
         List<Question> questions = questionCollect.generateQuestionList(new Category[]{Category.SCRUM, Category.TECH}, 10);
         long scrumQuestionCount = questions.stream().filter(q -> q.getCategory().equals(Category.SCRUM.getName())).count();
         assertEquals(9, scrumQuestionCount);
         assertEquals(10, questions.size());
     }
 
-    private QuestionCollect createQuestionCollect(int numberOfScrumQuestion, int numberOfTechQuestion) {
+    @Test
+    public void shouldChooseNamingCategories() {
+        QuestionCollect questionCollect = createQuestionCollect(0, 0, 10);
+        List<Question> questions = questionCollect.generateQuestionList(new Category[]{Category.SCRUM}, 10);
+        assertEquals(0, questions.size());
+    }
+
+    private QuestionCollect createQuestionCollect(int numberOfScrumQuestion, int numberOfTechQuestion, int numberOfOtherQuestion) {
         List<Question> scrumQuestions = makeQuestions(numberOfScrumQuestion, Category.SCRUM.getName());
         scrumQuestions.addAll(makeQuestions(numberOfTechQuestion, Category.TECH.getName()));
+        scrumQuestions.addAll(makeQuestions(numberOfOtherQuestion, "other"));
         QuestionCollect questionCollect = new QuestionCollect(scrumQuestions);
         questionCollect.setShouldShuffleQuestions(false);
         return questionCollect;

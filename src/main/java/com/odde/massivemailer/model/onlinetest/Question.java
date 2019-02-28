@@ -2,7 +2,6 @@ package com.odde.massivemailer.model.onlinetest;
 
 import com.odde.massivemailer.model.ApplicationModel;
 import com.odde.massivemailer.model.callback.QuestionCallbacks;
-import org.apache.commons.lang3.StringUtils;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
@@ -72,6 +71,10 @@ public class Question extends ApplicationModel {
 
     public static int getNumOfQuestionIn(String category) {
         return findBySQL("SELECT id FROM questions WHERE category = ?", category).size();
+    }
+
+    public static List<Question> getAll() {
+        return findBySQL("SELECT id, description, advice, category, is_multi_question FROM questions ORDER BY id");
     }
 
     public String getDescription() {

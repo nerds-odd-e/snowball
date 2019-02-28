@@ -200,4 +200,19 @@ public class QuestionTest {
         boolean actual = question.verifyAnswer(optionIds);
         assertEquals(actual,true);
     }
+
+    @Test
+    public void shouldReturnEmptyListByGetAll() {
+        List<Question> questions = Question.getAll();
+
+        assertEquals(questions.size(), 0);
+    }
+
+    @Test
+    public void shouldReturnTwoElementByGetAll() {
+        Question.createIt("description", "desc", "advice", "adv", "category", "team", "is_multi_question", 0);
+        Question.createIt("description", "desc", "advice", "adv", "category", "team", "is_multi_question", 0);
+        List<Question> questions = Question.getAll();
+        assertEquals(questions.size(), 2);
+    }
 }

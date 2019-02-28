@@ -20,7 +20,7 @@ public class QuestionCollect {
     }
 
     public List<Question> generateQuestionList(Category[] categories, int numberOfQuestions) {
-        if (numberOfQuestions == 0 || allQuestions.size() == 0) {
+        if (numberOfQuestions <= 0 || allQuestions.isEmpty() || !hasQuestionBelongCategory(categories)) {
             return new ArrayList<>();
         }
         List<Question> questions = new ArrayList<>();
@@ -42,6 +42,15 @@ public class QuestionCollect {
         questions.addAll(remaining);
 
         return questions;
+    }
+
+    private boolean hasQuestionBelongCategory(Category[] categories) {
+        for (Category category : categories) {
+            if (allQuestions.stream().anyMatch(question -> question.belongsTo(category))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private List<Question> getShuffledQuestionsOfCategory(Category cat) {
