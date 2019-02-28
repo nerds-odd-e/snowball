@@ -5,11 +5,7 @@ import org.javalite.activejdbc.Model;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.IntStream;
 
 import static org.hamcrest.Matchers.greaterThan;
@@ -182,6 +178,14 @@ public class OnlineTestTest {
         assertEquals(onlineTest.getNumberOfCategories(), 0);
     }
 
+    @Test
+    public void getEmptyFailedCategoryTestResults() {
+        OnlineTest onlineTest = new OnlineTest(0);
+        List<CategoryTestResult> failedCategoryTestResults = onlineTest.getFailedCategoryTestResults();
+
+        assertEquals(0, failedCategoryTestResults.size());
+    }
+
     private static void mockQuestion(int numberOfQuestion, String category) {
         IntStream.range(0, numberOfQuestion).forEach(index -> Question.createIt("description", "desc" + index, "advice", "adv" + index, "category", category));
     }
@@ -189,4 +193,5 @@ public class OnlineTestTest {
     private static void mockQuestion(int numberOfQuestion) {
         IntStream.range(0, numberOfQuestion).forEach(index -> Question.createIt("description", "desc" + index, "advice", "adv" + index));
     }
+
 }

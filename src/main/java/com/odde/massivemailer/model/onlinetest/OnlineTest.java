@@ -9,11 +9,13 @@ public class OnlineTest {
     private int numberOfAnsweredQuestions;
     private int correctAnswerCount;
     private Map<Integer, Integer> categoryCorrectAnswerCount;
+    private List<CategoryTestResult> categoryTestResult;
 
     public OnlineTest(int questionCount) {
         questions = Question.getNRandom(questionCount);
         numberOfAnsweredQuestions = 0;
         categoryCorrectAnswerCount = new HashMap<>();
+        categoryTestResult = new ArrayList<>();
     }
 
     public Question getPreviousQuestion() {
@@ -164,7 +166,7 @@ public class OnlineTest {
         boolean isCorrect = checkAnswer(answeredOptionIds);
 
         int categoryId = 0;
-        String categoryIdStr =  getCurrentQuestion().getCategory();
+        String categoryIdStr = getCurrentQuestion().getCategory();
         if (!categoryIdStr.isEmpty()) {
             categoryId = Integer.parseInt(categoryIdStr);
         }
@@ -175,5 +177,9 @@ public class OnlineTest {
             return true;
         }
         return false;
+    }
+
+    public List<CategoryTestResult> getFailedCategoryTestResults() {
+        return categoryTestResult;
     }
 }
