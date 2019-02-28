@@ -31,6 +31,20 @@
             <div>
                 <p id="category-message">${onlineTest.getCategoryMessage()}</p>
             </div>
+            <table class="table table-responsive table-bordered">
+            <tbody id="resultTable">
+                <tr>
+                    <th >Category</th>
+                    <th >Correct Rate</th>
+                    <th >Advice</th>
+                </tr>
+                <tr>
+                    <td>a</td>
+                    <td>asdf</td>
+                    <td>yoyoyoyo</td>
+                </tr>
+            </tbody>
+            </table>
             <p>
                 Thank you for your hard work.
                 It will be about two hours soon. Why do not you take a break?:)
