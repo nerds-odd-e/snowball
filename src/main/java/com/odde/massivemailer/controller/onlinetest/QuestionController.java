@@ -47,7 +47,11 @@ public class QuestionController extends AppController {
 
         boolean isCorrect = onlineTest.checkAnswer(answeredOptionIds);
 
-        Integer categoryId = Integer.parseInt(onlineTest.getCurrentQuestion().getCategory());
+        int categoryId = 0;
+        String categoryIdStr =  onlineTest.getCurrentQuestion().getCategory();
+        if (!categoryIdStr.isEmpty()) {
+            categoryId = Integer.parseInt(categoryIdStr);
+        }
         onlineTest.addAnsweredQuestionNumber();
         if (isCorrect) {
             onlineTest.incrementCorrectAnswerCount();
