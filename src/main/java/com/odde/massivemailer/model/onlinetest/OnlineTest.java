@@ -103,19 +103,8 @@ public class OnlineTest {
     }
 
     public boolean checkAnswer(String[] answeredOptionIds) {
-        boolean isCorrect = true;
         Question currentQuestion = getCurrentQuestion();
-        if (currentQuestion.isMultipleAnswerOptions()) {
-            isCorrect = currentQuestion.verifyMultiAnswer(answeredOptionIds);
-        } else {
-            for (String answeredOptionId : answeredOptionIds) {
-                if (!currentQuestion.verifyAnswer(answeredOptionId)) {
-                    isCorrect = false;
-                    break;
-                }
-            }
-        }
-        return isCorrect;
+        return currentQuestion.verifyAnswer(answeredOptionIds);
     }
 
     public int getCategoryCorrectAnswerCount(int categoryId) {

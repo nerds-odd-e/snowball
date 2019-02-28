@@ -103,14 +103,7 @@ public class Question extends ApplicationModel {
         return AnswerOption.getForQuestion(this.getLongId());
     }
 
-    public boolean verifyAnswer(String answeredOptionId) {
-        Collection<AnswerOption> optionsByQuestionId = getOptions();
-        Optional<AnswerOption> correctId = optionsByQuestionId.stream().filter(AnswerOption::isCorrect).findFirst();
-        String correctOption = correctId.map(answerOption -> answerOption.getLongId().toString()).orElse(StringUtils.EMPTY);
-        return correctOption.equals(answeredOptionId);
-    }
-
-    public boolean verifyMultiAnswer(String[] answeredOptionIds) {
+    public boolean verifyAnswer(String[] answeredOptionIds) {
         List<String> answeredOptionIdList = Arrays.asList(answeredOptionIds);
         Collection<AnswerOption> optionsByQuestionId = getOptions();
         List<String> collectOptions = optionsByQuestionId.stream().filter(AnswerOption::isCorrect).map(answerOption -> answerOption.getLongId().toString()).collect(toList());

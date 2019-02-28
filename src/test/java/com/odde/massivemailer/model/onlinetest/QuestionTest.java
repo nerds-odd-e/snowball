@@ -197,7 +197,7 @@ public class QuestionTest {
     public void shouldReturnRightAnswer() {
         Question question = new Question("description", "advice", "category", "multiple");
         String[] optionIds = new String[2];
-        boolean actual = question.verifyMultiAnswer(optionIds);
+        boolean actual = question.verifyAnswer(optionIds);
         assertEquals(actual,true);
     }
 }
