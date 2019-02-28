@@ -19,8 +19,8 @@ Feature:
   @developing
   Scenario: Questionがないカテゴリーはチェックボックスに表示されない
     Given カテゴリー選択画面が表示される
-    And "Scrum"カテゴリーにQuestionが存在しない
-    Then チェックボックスに"Scrum"カテゴリーが表示されない
+    And "scrum"カテゴリーにQuestionが存在しない
+    Then チェックボックスに"scrum"カテゴリーが表示されない
 
   @developing
   Scenario: スタートボタンを押したら、問題画面に遷移する

@@ -1,9 +1,12 @@
 package steps;
 
+import com.odde.massivemailer.factory.QuestionBuilder;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.junit.Assert;
+import org.openqa.selenium.By;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
@@ -20,6 +23,18 @@ public class UiCommonSteps {
         site.visit("ui_common.jsp");
     }
 
+    @Given("^問題が存在している$")
+    public void 問題が存在している() throws Throwable {
+        new QuestionBuilder()
+                .aQuestion("testDescription", "testAdvice", "scrum")
+                .withWrongOption("Food")
+                .withWrongOption("Drink")
+                .withWrongOption("Country")
+                .withWrongOption("Animal")
+                .withCorrectOption("None of the above")
+                .please();
+    }
+
     @When("^Update Adviceのリンクをクリックする$")
     public void updateAdviceのリンクをクリックする() throws Throwable {
         driver.findElementById("update_advice").click();
@@ -27,20 +42,25 @@ public class UiCommonSteps {
 
     @When("^StartTestのリンクをクリックする$")
     public void starttestのリンクをクリックする() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        driver.findElementById("start_test").click();
     }
 
     @Then("^カテゴリ選択画面が表示される$")
     public void カテゴリ選択画面が表示される() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        site.visit("onlinetest/question_category.jsp");
+        assertEquals("QuestionCategory", driver.getCurrentTitle());
+    }
+
+    @Then("^カテゴリのチェックボックスが表示される$")
+    public void カテゴリのチェックボックスが表示される() throws Throwable {
+        assertTrue(driver.findElements(By.cssSelector("input[type=\"checkbox\"]")).size() > 0);
     }
 
     @Then("^カテゴリのチェックボックスは全て選択されている$")
     public void カテゴリのチェックボックスは全て選択されている() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        int totalElementCount = driver.findElements(By.cssSelector("input[type=checkbox]")).size();
+        int elementCount = driver.findElements(By.cssSelector("input[type=checkbox]:checked")).size();
+        assertEquals(totalElementCount, elementCount);
     }
 
     @Then("^Update Adviceが表示される$")

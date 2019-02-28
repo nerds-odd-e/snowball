@@ -9,6 +9,8 @@ Feature:
     @developing
   Scenario: Homeの左のサイドバーのStartTestを押すと、カテゴリ選択に遷移する
     Given topページが表示されている
+    And 問題が存在している
     When StartTestのリンクをクリックする
     Then カテゴリ選択画面が表示される
+    And カテゴリのチェックボックスが表示される
     And カテゴリのチェックボックスは全て選択されている
