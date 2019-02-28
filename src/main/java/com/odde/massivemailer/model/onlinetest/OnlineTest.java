@@ -1,5 +1,7 @@
 package com.odde.massivemailer.model.onlinetest;
 
+import java.time.Duration;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -206,5 +208,14 @@ public class OnlineTest {
     public void answerCurrentQuestion(List<Integer> integers) {
         Answer answer = new Answer(getCurrentQuestion().getLongId(), integers);
         answers.add(answer);
+    }
+    private LocalDate answeredTime;
+    public void recordAnswerWithTime(LocalDate answeredTime) {
+        this.answeredTime = answeredTime;
+
+    }
+
+    public long getPassedDaysSinceAnswered() {
+        return Duration.between(this.answeredTime.atStartOfDay(), LocalDate.now().atStartOfDay()).toDays();
     }
 }

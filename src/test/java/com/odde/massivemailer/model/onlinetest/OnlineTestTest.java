@@ -5,11 +5,16 @@ import org.javalite.activejdbc.Model;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+<<<<<<< 8610b407a632114d2075807bb282f3d7c593c6d3
+=======
+import java.time.LocalDate;
+>>>>>>> add tokkun feature
 import java.util.*;
 import java.util.stream.IntStream;
 
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -106,6 +111,16 @@ public class OnlineTestTest {
         OnlineTest onlineTest = new OnlineTest(1);
         boolean result = onlineTest.checkAnswer(answeredOption);
         assertTrue(result);
+    }
+
+    @Test
+    public void aQuestionThatWasAnsweredOneDayAgoKnowsItIsOneDayOld() {
+        LocalDate answeredTime = LocalDate.now().minusDays(1);
+        OnlineTest onlineTest = new OnlineTest(1);
+
+        onlineTest.recordAnswerWithTime(answeredTime);
+        long passedDays = onlineTest.getPassedDaysSinceAnswered();
+        assertEquals(1, passedDays);
     }
 
     @Test
