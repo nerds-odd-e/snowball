@@ -15,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -230,5 +231,26 @@ public class QuestionControllerTest {
 
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
         assertEquals(1, onlineTest.getCategoryCorrectAnswerCount(2));
+    }
+
+    @Test
+    public void answerCurrentQuestionInParameter() throws ServletException, IOException{
+        question = createQuestionWithOptions("1");
+        List<Long> optionIds = question.getCorrectOption();
+        onlineTest = new OnlineTest(2);
+
+        request.addParameter("optionId", optionIds.get(0).toString());
+        request.addParameter("lastDoneQuestionId", "0");
+        request.getSession().setAttribute("onlineTest", onlineTest);
+
+        Question currentQuestion = onlineTest.getCurrentQuestion();
+        controller.doPost(request, response);
+        HttpSession session = request.getSession();
+
+        OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
+
+        assertEquals(currentQuestion.getLongId(), onlineTest.answers.get(0).getQuestionId());
+
+        assertEquals(optionIds.get(0).toString(), onlineTest.answers.get(0).getSelectedOptionIds().get(0));
     }
 }

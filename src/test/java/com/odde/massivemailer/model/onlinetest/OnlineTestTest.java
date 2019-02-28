@@ -199,7 +199,7 @@ public class OnlineTestTest {
     public void answerCurrentQuestion() {
         mockQuestion(3,"1");
         OnlineTest onlineTest = new OnlineTest(1);
-        onlineTest.answerCurrentQuestion(Arrays.asList(0));
+        onlineTest.answerCurrentQuestion(Arrays.asList("0"));
         assertEquals(1, onlineTest.answers.size());
     }
 

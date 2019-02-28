@@ -2,14 +2,21 @@ package com.odde.massivemailer.model.onlinetest;
 
 import java.util.List;
 
-class Answer {
+public class Answer {
 
     private Long questionId;
-    private List<Integer> selectedOptionIds;
+    private List<String> selectedOptionIds;
 
-    Answer(Long quesitonId, List<Integer> selectedOptionIds){
+    Answer(Long quesitonId, List<String> selectedOptionIds) {
         this.questionId = quesitonId;
         this.selectedOptionIds = selectedOptionIds;
     }
 
+    public Long getQuestionId() {
+        return questionId;
+    }
+
+    public List<String> getSelectedOptionIds() {
+        return selectedOptionIds;
+    }
 }

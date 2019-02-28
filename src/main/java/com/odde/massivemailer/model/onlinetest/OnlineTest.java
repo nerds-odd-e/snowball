@@ -184,6 +184,7 @@ public class OnlineTest {
     }
 
     public boolean answer(String[] answeredOptionIds) {
+        answerCurrentQuestion(Arrays.asList(answeredOptionIds));
         boolean isCorrect = checkAnswer(answeredOptionIds);
 
         int categoryId = 0;
@@ -205,8 +206,8 @@ public class OnlineTest {
         return categoryTestResults;
     }
 
-    public void answerCurrentQuestion(List<Integer> integers) {
-        Answer answer = new Answer(getCurrentQuestion().getLongId(), integers);
+    public void answerCurrentQuestion(List<String> selectedOptionIds) {
+        Answer answer = new Answer(getCurrentQuestion().getLongId(), selectedOptionIds);
         answers.add(answer);
     }
     private LocalDate answeredTime;
