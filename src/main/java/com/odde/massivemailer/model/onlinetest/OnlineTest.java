@@ -170,4 +170,21 @@ public class OnlineTest {
 
         return questionAndCategory;
     }
+
+    public boolean answer(String[] answeredOptionIds) {
+        boolean isCorrect = checkAnswer(answeredOptionIds);
+
+        int categoryId = 0;
+        String categoryIdStr =  getCurrentQuestion().getCategory();
+        if (!categoryIdStr.isEmpty()) {
+            categoryId = Integer.parseInt(categoryIdStr);
+        }
+        addAnsweredQuestionNumber();
+        if (isCorrect) {
+            incrementCorrectAnswerCount();
+            incrementCategoryCorrectAnswerCount(categoryId);
+            return true;
+        }
+        return false;
+    }
 }

@@ -47,17 +47,8 @@ public class QuestionController extends AppController {
             return;
         }
 
-        boolean isCorrect = onlineTest.checkAnswer(answeredOptionIds);
 
-        int categoryId = 0;
-        String categoryIdStr =  onlineTest.getCurrentQuestion().getCategory();
-        if (!categoryIdStr.isEmpty()) {
-            categoryId = Integer.parseInt(categoryIdStr);
-        }
-        onlineTest.addAnsweredQuestionNumber();
-        if (isCorrect) {
-            onlineTest.incrementCorrectAnswerCount();
-            onlineTest.incrementCategoryCorrectAnswerCount(categoryId);
+        if (onlineTest.answer(answeredOptionIds)) {
             resp.sendRedirect(getRedirectPageName(onlineTest.hasNextQuestion()));
             return;
         }
