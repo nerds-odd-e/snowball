@@ -20,37 +20,41 @@ public class QuestionCollect {
     }
 
     public List<Question> generateQuestionList(Category[] categories, int numberOfQuestions) {
-        if (numberOfQuestions <= 0 || allQuestions.isEmpty() || !hasQuestionBelongCategory(categories)) {
+        if (numberOfQuestions <= 0 || allQuestions.isEmpty() || hasNoQuestionBelongCategory(categories)) {
             return new ArrayList<>();
         }
+
         List<Question> questions = new ArrayList<>();
-        for(Category cat: categories) {
-            int count = getQuestionsOfCategory(cat).size();
-            int average = numberOfQuestions / categories.length;
-            if (average == 0) {
-                average = 1;
-            }
-            int maxQuestionOfCategory = Math.min(average, count);
-            if (numberOfQuestions > questions.size()) {
-                questions.addAll(getShuffledQuestionsOfCategory(cat).subList(0, maxQuestionOfCategory));
+        for (Category cat : categories) {
+            int maxQuestionOfCategory = getMaxQuestionOfCategory(categories.length, numberOfQuestions, cat);
+            questions.addAll(getShuffledQuestionsOfCategory(cat).subList(0, maxQuestionOfCategory));
+            if (numberOfQuestions <= questions.size()) {
+                break;
             }
         }
-
-        List<Question> remainingQuestions = new ArrayList(allQuestions);
-        remainingQuestions.removeAll(questions);
-        List<Question> remaining = new QuestionCollect(remainingQuestions).generateQuestionList(categories, numberOfQuestions - questions.size());
-        questions.addAll(remaining);
+        questions.addAll(getRemainingQuestions(categories, numberOfQuestions - questions.size(), questions));
 
         return questions;
     }
 
-    private boolean hasQuestionBelongCategory(Category[] categories) {
+    private List<Question> getRemainingQuestions(Category[] categories, int numberOfRemainingQuestions, List<Question> questions) {
+        List<Question> remainingQuestions = new ArrayList<>(allQuestions);
+        remainingQuestions.removeAll(questions);
+        return new QuestionCollect(remainingQuestions).generateQuestionList(categories, numberOfRemainingQuestions);
+    }
+
+    private int getMaxQuestionOfCategory(int numberOfCategory, int numberOfQuestions, Category cat) {
+        int numberOfQuestion = getQuestionsOfCategory(cat).size();
+        return Math.min(Math.max(numberOfQuestions / numberOfCategory, 1), numberOfQuestion);
+    }
+
+    private boolean hasNoQuestionBelongCategory(Category[] categories) {
         for (Category category : categories) {
             if (allQuestions.stream().anyMatch(question -> question.belongsTo(category))) {
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     private List<Question> getShuffledQuestionsOfCategory(Category cat) {
