@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class QuestionCollect {
+public class QuestionCollection {
     private List<Question> allQuestions;
 
     public void setShouldShuffleQuestions(boolean shouldShuffleQuestions) {
@@ -15,7 +15,7 @@ public class QuestionCollect {
 
     private boolean shouldShuffleQuestions = true;
 
-    public QuestionCollect(List<Question> questions) {
+    public QuestionCollection(List<Question> questions) {
         this.allQuestions = questions;
     }
 
@@ -40,7 +40,7 @@ public class QuestionCollect {
     private List<Question> getRemainingQuestions(Category[] categories, int numberOfRemainingQuestions, List<Question> questions) {
         List<Question> remainingQuestions = new ArrayList<>(allQuestions);
         remainingQuestions.removeAll(questions);
-        return new QuestionCollect(remainingQuestions).generateQuestionList(categories, numberOfRemainingQuestions);
+        return new QuestionCollection(remainingQuestions).generateQuestionList(categories, numberOfRemainingQuestions);
     }
 
     private int getMaxQuestionOfCategory(int numberOfCategory, int numberOfQuestions, Category cat) {
