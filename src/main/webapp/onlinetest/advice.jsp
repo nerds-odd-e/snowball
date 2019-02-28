@@ -10,7 +10,7 @@
     OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
     Question question = onlineTest.getPreviousQuestion();
 	ArrayList<Long> correctOption = question.getCorrectOption();
-	Long selectedOption = Long.parseLong((String)request.getAttribute("selectedOption"));
+	ArrayList<String> selectedOption = (ArrayList<String>) request.getAttribute("selectedOption");
 	final String correctClass = "correct";
 	final String incorrectClass = "selected incorrect";
 	pageContext.setAttribute("question", question);
@@ -33,15 +33,20 @@
                <c:forEach items="${question.getOptions()}" var="option">
                     <li>
                          <c:set var="optionId">${option.getLongId()}</c:set>
-                            <c:if test="${selectedOption == optionId}">
-                               <input type="radio" name="optionId" value="${option.getLongId()}" checked disabled/><label class="selected incorrect"/>${option.getDescription()}</label>
-                            </c:if>
-                            <c:if test="${selectedOption != optionId}">
+                            <c:if test="${selectedOption.contains(optionId)}">
                                 <c:if test="${question.isCorrect(optionId)}">
-                                    <input type="radio" name="optionId" value="${option.getLongId()}" disabled/><label class="correct"/>${option.getDescription()}</label>
+                                    <input type="checkbox" name="optionId" value="${option.getLongId()}" checked disabled/><label class="selected_correct"/>${option.getDescription()}</label>
+                               </c:if>
+                               <c:if test="${!question.isCorrect(optionId)}">
+                                    <input type="checkbox" name="optionId" value="${option.getLongId()}" checked disabled/><label class="selected_incorrect"/>${option.getDescription()}</label>
+                               </c:if>
+                            </c:if>
+                            <c:if test="${!selectedOption.contains(optionId)}">
+                                <c:if test="${question.isCorrect(optionId)}">
+                                    <input type="checkbox" name="optionId" value="${option.getLongId()}" disabled/><label class="unselected_correct"/>${option.getDescription()}</label>
                                 </c:if>
                                 <c:if test="${!question.isCorrect(optionId)}">
-                                    <input type="radio" name="optionId" value="${option.getLongId()}" disabled/><label> ${option.getDescription()}</label>
+                                    <input type="checkbox" name="optionId" value="${option.getLongId()}" disabled/><label class="unselected_incorrect"/> ${option.getDescription()}</label>
                                 </c:if>
                             </c:if>
                     </li>

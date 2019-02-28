@@ -28,8 +28,8 @@ Feature:
     And User is on the first question
     When User chooses the "<incorrect option>" answer
     And User clicks the answer button
-    Then User should see "correct" option "#28a745" and text "None of the above"
-    And User should see "selected incorrect" option "#dc3545" and text "<incorrect option>"
+    Then User should see "unselected_correct" option "#28a745" and text "None of the above"
+    And User should see "selected_incorrect" option "#dc3545" and text "<incorrect option>"
     And User should see "Read the Scrum Guide again, please"
 
     Examples:
@@ -154,24 +154,15 @@ Feature:
     When User clicks the answer button
     Then 質問1の画面に遷移する
 
-  Scenario: アドバイスページで正解2つと誤った回答1つがわかる
-    Given Add a question "スクラムに含まれる要素は何ですか？（option1とoption4が正解）" of multiple answers
-    And User is on the first question
-    When User chooses "option1" and "option2" answers
-    And User clicks the answer button
-    Then User should see "correct" option "#28a745" and text "option4"
-    And User should see "selected incorrect" option "#dc3545" and text "option1"
-
-  @developing
   Scenario: アドバイスページで正解2つと誤った回答2つがわかる
     Given Add a question "スクラムに含まれる要素は何ですか？（option1とoption4が正解）" of multiple answers
     And User is on the first question
     When User chooses "option1" and "option2" answers
     And User clicks the answer button
-    Then User should see "selected correct" option "#28a745" and text "option1"
-    And User should see "selected incorrect" option "#dc3545" and text "option2"
-    And User should see "unselected correct" option "#333" and text "option3"
-    And User should see "unselected incorrect" option "#28a745" and text "option4"
+    Then User should see "selected_correct" option "#28a745" and text "option1"
+    And User should see "selected_incorrect" option "#dc3545" and text "option2"
+    And User should see "unselected_incorrect" option "#333" and text "option3"
+    And User should see "unselected_correct" option "#28a745" and text "option4"
 
   @developing
   Scenario Outline: 問題ページで正解2つを選択して、次の問題に移動

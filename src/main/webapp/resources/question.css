@@ -6,6 +6,22 @@
     color: #dc3545;
 }
 
+.selected_correct {
+      color: #28a745;
+}
+
+.selected_incorrect {
+       color: #dc3545;
+}
+
+.unselected_correct {
+     color: #28a745;
+}
+
+.unselected_incorrect {
+    color: #333;
+}
+
 .alertMsg {
     color: #dc3545;
 }

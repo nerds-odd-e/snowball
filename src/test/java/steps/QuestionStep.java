@@ -202,7 +202,6 @@ public class QuestionStep {
         String[] optionTexts = optionText.split(",\\s*");
         String cssSelector = "." + clazz.replace(" ", ".");
         List<WebElement> elements = driver.findElements(By.cssSelector(cssSelector));
-        assertEquals(optionTexts.length, elements.size());
         String[] actualTexts = elements.stream().map(WebElement::getText).toArray(String[]::new);
         assertThat(actualTexts, is(optionTexts));
         elements.forEach((e)->{
