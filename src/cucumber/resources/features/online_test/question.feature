@@ -28,7 +28,7 @@ Feature:
     And User is on the first question
     When User chooses the "<incorrect option>" answer
     And User clicks the answer button
-    Then User should see "unselected_correct" option "#28a745" and text "None of the above"
+    Then User should see "unselected_correct" option "#0000FF" and text "None of the above"
     And User should see "selected_incorrect" option "#dc3545" and text "<incorrect option>"
     And User should see "Read the Scrum Guide again, please"
 
@@ -162,7 +162,7 @@ Feature:
     Then User should see "selected_correct" option "#28a745" and text "option1"
     And User should see "selected_incorrect" option "#dc3545" and text "option2"
     And User should see "unselected_incorrect" option "#333" and text "option3"
-    And User should see "unselected_correct" option "#28a745" and text "option4"
+    And User should see "unselected_correct" option "#0000FF" and text "option4"
 
   @developing
   Scenario Outline: 問題ページで正解2つを選択して、次の問題に移動
