@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.junit.Assert.*;
@@ -158,7 +159,7 @@ public class OnlineTestTest {
 
         TestResult result = onlineTest.generateTestResult();
 
-        Float correctRate = result.calculateCorrectRate("1");
+        Float correctRate = result.calculateCorrectRate();
         assertEquals(Float.valueOf(1), correctRate);
     }
 
@@ -173,8 +174,45 @@ public class OnlineTestTest {
 
         TestResult result = onlineTest.generateTestResult();
 
-        Float correctRate = result.calculateCorrectRate("1");
+        Float correctRate = result.calculateCorrectRate();
         assertEquals(Float.valueOf(0), correctRate);
+    }
+
+    @Test
+    public void calculateCorrectRate70percent() {
+
+        Question q1 = Question.createIt("description", "d1", "advice", "a1", "is_multi_question", 0, "category", "1");
+        AnswerOption c1 = AnswerOption.<AnswerOption>createIt("description", "d1", "question_id", q1.getId(), "is_correct", 1);
+        AnswerOption.<AnswerOption>createIt("description", "d2", "question_id", q1.getId(), "is_correct", 0);
+
+        Question q2 = Question.createIt("description", "d1", "advice", "a1", "is_multi_question", 0, "category", "1");
+        AnswerOption c2 = AnswerOption.<AnswerOption>createIt("description", "d1", "question_id", q2.getId(), "is_correct", 0);
+        AnswerOption.<AnswerOption>createIt("description", "d2", "question_id", q2.getId(), "is_correct", 1);
+
+        Question q3 = Question.createIt("description", "d1", "advice", "a1", "is_multi_question", 0, "category", "1");
+        AnswerOption c3 = AnswerOption.<AnswerOption>createIt("description", "d1", "question_id", q3.getId(), "is_correct", 1);
+        AnswerOption.<AnswerOption>createIt("description", "d2", "question_id", q3.getId(), "is_correct", 0);
+
+        Question q4 = Question.createIt("description", "d1", "advice", "a1", "is_multi_question", 0, "category", "1");
+        AnswerOption c4 = AnswerOption.<AnswerOption>createIt("description", "d1", "question_id", q4.getId(), "is_correct", 1);
+        AnswerOption.<AnswerOption>createIt("description", "d2", "question_id", q4.getId(), "is_correct", 0);
+
+        Question q5 = Question.createIt("description", "d1", "advice", "a1", "is_multi_question", 0, "category", "1");
+        AnswerOption.<AnswerOption>createIt("description", "d1", "question_id", q5.getId(), "is_correct", 1);
+        AnswerOption c5 = AnswerOption.<AnswerOption>createIt("description", "d2", "question_id", q5.getId(), "is_correct", 0);
+
+        OnlineTest onlineTest = new OnlineTest(5);
+        onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().getCorrectOption().stream().map(o -> o.toString()).collect(Collectors.toList()) );
+        onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().getCorrectOption().stream().map(o -> o.toString()).collect(Collectors.toList()) );
+        onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().getCorrectOption().stream().map(o -> o.toString()).collect(Collectors.toList()) );
+        onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().getCorrectOption().stream().map(o -> o.toString()).collect(Collectors.toList()) );
+        onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().getCorrectOption().stream().map(o -> Long.valueOf(o + 10L).toString()).collect(Collectors.toList()) );
+
+        TestResult result = onlineTest.generateTestResult();
+
+        Float correctRate = result.calculateCorrectRate();
+
+        assertEquals(Float.valueOf(0.8f), correctRate);
     }
 
     private static void mockQuestion(int numberOfQuestion, String category) {

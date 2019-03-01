@@ -142,15 +142,14 @@ public class OnlineTest {
     }
 
     public boolean answer(String[] answeredOptionIds) {
-        Answer answer = answerCurrentQuestion(Arrays.asList(answeredOptionIds));
-        boolean isCorrect = answer.isCorrect();
 
         int categoryId = 0;
         String categoryIdStr = getCurrentQuestion().getCategory();
         if (!categoryIdStr.isEmpty()) {
             categoryId = Integer.parseInt(categoryIdStr);
         }
-        addAnsweredQuestionNumber();
+        Answer answer = answerCurrentQuestion(Arrays.asList(answeredOptionIds));
+        boolean isCorrect = answer.isCorrect();
         if (isCorrect) {
             incrementCorrectAnswerCount();
             incrementCategoryQuestionCount(categoryId);
@@ -167,6 +166,7 @@ public class OnlineTest {
     public Answer answerCurrentQuestion(List<String> selectedOptionIds) {
         Answer answer = new Answer(getCurrentQuestion(), selectedOptionIds);
         answers.add(answer);
+        addAnsweredQuestionNumber();
         return answer;
     }
     private LocalDate answeredTime;

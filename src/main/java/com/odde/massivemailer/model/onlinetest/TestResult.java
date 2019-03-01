@@ -19,10 +19,15 @@ public class TestResult {
         }
     }
 
-    public Float calculateCorrectRate(String category) {
-        if (answers.get(0).isCorrect()) {
-            return 1.0f;
+    public Float calculateCorrectRate() {
+        float correct = 0;
+        float q_num = 0;
+        for (Answer a: answers) {
+            q_num++;
+            if (a.isCorrect()) {
+                correct++;
+            }
         }
-        return 0.0f;
+        return correct / q_num;
     }
 }
