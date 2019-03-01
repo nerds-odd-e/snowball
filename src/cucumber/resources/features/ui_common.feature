@@ -6,7 +6,6 @@ Feature:
     When Update Adviceのリンクをクリックする
     Then Update Adviceが表示される
 
-    @developing
   Scenario: Homeの左のサイドバーのStartTestを押すと、カテゴリ選択に遷移する
     Given topページが表示されている
     And 問題が存在している

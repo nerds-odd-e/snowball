@@ -47,7 +47,6 @@ public class UiCommonSteps {
 
     @Then("^カテゴリ選択画面が表示される$")
     public void カテゴリ選択画面が表示される() throws Throwable {
-        site.visit("onlinetest/question_category.jsp");
         assertEquals("QuestionCategory", driver.getCurrentTitle());
     }
 

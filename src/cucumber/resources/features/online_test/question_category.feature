@@ -22,9 +22,9 @@ Feature:
     And "scrum"カテゴリーにQuestionが存在しない
     Then チェックボックスに"scrum"カテゴリーが表示されない
 
-  @developing
   Scenario: スタートボタンを押したら、問題画面に遷移する
     Given カテゴリー選択画面が表示される
+    And 問題が存在している
     And カテゴリーのチェックボックスにチェックが入っている
     When スタートボタンをクリック
     Then 問題画面へ遷移する

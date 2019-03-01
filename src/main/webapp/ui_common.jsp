@@ -50,9 +50,12 @@
                 <li><a href="/onlinetest/category/advice" id="update_advice"><span
                         class="glyphicon glyphicon-file" aria-hidden="true"></span>
                         Update Advice</a></li>
-                <li><a id="start_test" href="/onlinetest/launchQuestion"><span
+                　<!-- <li><a id="start_test" href="/onlinetest/launchQuestion"><span
                         class="glyphicon glyphicon-file" aria-hidden="true"></span>
-                        Start Test</a></li>
+                        Start Test</a></li> -->
+                <li><a id="start_test" href="/onlinetest/question_category.jsp"><span
+                    class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                    Start Test</a></li>
             </ul>
         </div>
     <!-- /.navbar-collapse -->
