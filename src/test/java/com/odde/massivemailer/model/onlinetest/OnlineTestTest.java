@@ -1,6 +1,7 @@
 package com.odde.massivemailer.model.onlinetest;
 
 import com.odde.TestWithDB;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -103,7 +104,9 @@ public class OnlineTestTest {
         answeredOption[1] = AnswerOption.<AnswerOption>createIt("description", "desc2", "question_id", id, "is_correct", 1).getLongId().toString();
 
         OnlineTest onlineTest = new OnlineTest(1);
-        boolean result = onlineTest.checkAnswer(answeredOption);
+
+        Answer answer = onlineTest.answerCurrentQuestion(Arrays.asList(answeredOption));
+        boolean result = answer.isCorrect();
         assertTrue(result);
     }
 
@@ -128,7 +131,8 @@ public class OnlineTestTest {
         AnswerOption.<AnswerOption>createIt("description", "desc3", "question_id", id, "is_correct", 1).getLongId().toString();
 
         OnlineTest onlineTest = new OnlineTest(1);
-        boolean result = onlineTest.checkAnswer(answeredOption);
+        Answer answer = onlineTest.answerCurrentQuestion(Arrays.asList(answeredOption));
+        boolean result = answer.isCorrect();
         assertFalse(result);
     }
 
@@ -201,6 +205,36 @@ public class OnlineTestTest {
         OnlineTest onlineTest = new OnlineTest(1);
         onlineTest.answerCurrentQuestion(Arrays.asList("0"));
         assertEquals(1, onlineTest.answers.size());
+    }
+
+    @Test
+    public void calculateCorrectRate() {
+        Question q1 = Question.createIt("description", "d1", "advice", "a1", "is_multi_question", 0, "category", "1");
+        AnswerOption it = AnswerOption.<AnswerOption>createIt("description", "d1", "question_id", q1.getId(), "is_correct", 1);
+        AnswerOption.<AnswerOption>createIt("description", "d2", "question_id", q1.getId(), "is_correct", 0);
+
+        OnlineTest onlineTest = new OnlineTest(1);
+        onlineTest.answerCurrentQuestion(Arrays.asList(it.getLongId().toString()));
+
+        TestResult result = onlineTest.generateTestResult();
+
+        Float correctRate = result.calculateCorrectRate("1");
+        assertEquals(Float.valueOf(1), correctRate);
+    }
+
+    @Test
+    public void calculateCorrectRate2() {
+        Question q1 = Question.createIt("description", "d1", "advice", "a1", "is_multi_question", 0, "category", "1");
+        AnswerOption.<AnswerOption>createIt("description", "d1", "question_id", q1.getId(), "is_correct", 1);
+        AnswerOption wrongOption = AnswerOption.<AnswerOption>createIt("description", "d2", "question_id", q1.getId(), "is_correct", 0);
+
+        OnlineTest onlineTest = new OnlineTest(1);
+        onlineTest.answerCurrentQuestion(Arrays.asList(wrongOption.getLongId().toString()));
+
+        TestResult result = onlineTest.generateTestResult();
+
+        Float correctRate = result.calculateCorrectRate("1");
+        assertEquals(Float.valueOf(0), correctRate);
     }
 
     private static void mockQuestion(int numberOfQuestion, String category) {

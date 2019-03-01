@@ -125,11 +125,6 @@ public class OnlineTest {
         return getCorrectAnswerCount() != 0 && (getCorrectAnswerCount() * 1.0 / questions.size() * 1.0) * 100 >= 80;
     }
 
-    public boolean checkAnswer(String[] answeredOptionIds) {
-        Question currentQuestion = getCurrentQuestion();
-        return currentQuestion.verifyAnswer(answeredOptionIds);
-    }
-
     public int getCategoryCorrectAnswerCount(int categoryId) {
         Integer count = categoryCorrectAnswerCount.get(categoryId);
         if (count == null) {
@@ -184,8 +179,8 @@ public class OnlineTest {
     }
 
     public boolean answer(String[] answeredOptionIds) {
-        answerCurrentQuestion(Arrays.asList(answeredOptionIds));
-        boolean isCorrect = checkAnswer(answeredOptionIds);
+        Answer answer = answerCurrentQuestion(Arrays.asList(answeredOptionIds));
+        boolean isCorrect = answer.isCorrect();
 
         int categoryId = 0;
         String categoryIdStr = getCurrentQuestion().getCategory();
@@ -206,9 +201,10 @@ public class OnlineTest {
         return categoryTestResults;
     }
 
-    public void answerCurrentQuestion(List<String> selectedOptionIds) {
-        Answer answer = new Answer(getCurrentQuestion().getLongId(), selectedOptionIds);
+    public Answer answerCurrentQuestion(List<String> selectedOptionIds) {
+        Answer answer = new Answer(getCurrentQuestion(), selectedOptionIds);
         answers.add(answer);
+        return answer;
     }
     private LocalDate answeredTime;
     public void recordAnswerWithTime(LocalDate answeredTime) {
@@ -219,4 +215,9 @@ public class OnlineTest {
     public long getPassedDaysSinceAnswered() {
         return Duration.between(this.answeredTime.atStartOfDay(), LocalDate.now().atStartOfDay()).toDays();
     }
+
+    public TestResult generateTestResult() {
+        return new TestResult(questions, answers);
+    }
+
 }

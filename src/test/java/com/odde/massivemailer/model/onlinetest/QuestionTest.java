@@ -6,10 +6,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static junit.framework.TestCase.assertEquals;
@@ -197,7 +194,7 @@ public class QuestionTest {
     public void shouldReturnRightAnswer() {
         Question question = new Question("description", "advice", "category", "multiple");
         String[] optionIds = new String[2];
-        boolean actual = question.verifyAnswer(optionIds);
+        boolean actual = question.verifyAnswer(Arrays.asList(optionIds));
         assertEquals(actual,true);
     }
 

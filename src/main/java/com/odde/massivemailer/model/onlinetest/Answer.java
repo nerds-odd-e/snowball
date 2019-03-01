@@ -4,19 +4,23 @@ import java.util.List;
 
 public class Answer {
 
-    private Long questionId;
+    private Question question;
     private List<String> selectedOptionIds;
 
-    Answer(Long quesitonId, List<String> selectedOptionIds) {
-        this.questionId = quesitonId;
+    Answer(Question question, List<String> selectedOptionIds) {
+        this.question = question;
         this.selectedOptionIds = selectedOptionIds;
     }
 
-    public Long getQuestionId() {
-        return questionId;
+    public Question getQuestion() {
+        return question;
     }
 
     public List<String> getSelectedOptionIds() {
         return selectedOptionIds;
+    }
+
+    public boolean isCorrect() {
+        return getQuestion().verifyAnswer(getSelectedOptionIds());
     }
 }

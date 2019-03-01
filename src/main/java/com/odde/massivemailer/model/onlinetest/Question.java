@@ -106,11 +106,10 @@ public class Question extends ApplicationModel {
         return AnswerOption.getForQuestion(this.getLongId());
     }
 
-    public boolean verifyAnswer(String[] answeredOptionIds) {
-        List<String> answeredOptionIdList = Arrays.asList(answeredOptionIds);
+    public boolean verifyAnswer(List<String> answeredOptionIds) {
         Collection<AnswerOption> optionsByQuestionId = getOptions();
         List<String> collectOptions = optionsByQuestionId.stream().filter(AnswerOption::isCorrect).map(answerOption -> answerOption.getLongId().toString()).collect(toList());
-        return collectOptions.equals(answeredOptionIdList);
+        return collectOptions.equals(answeredOptionIds);
     }
 
     public ArrayList<Long> getCorrectOption() {

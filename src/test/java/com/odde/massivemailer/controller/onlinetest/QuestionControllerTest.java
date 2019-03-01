@@ -15,7 +15,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -249,8 +248,9 @@ public class QuestionControllerTest {
 
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
 
-        assertEquals(currentQuestion.getLongId(), onlineTest.answers.get(0).getQuestionId());
 
         assertEquals(optionIds.get(0).toString(), onlineTest.answers.get(0).getSelectedOptionIds().get(0));
     }
+
+
 }
