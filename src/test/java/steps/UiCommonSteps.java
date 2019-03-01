@@ -1,6 +1,7 @@
 package steps;
 
 import com.odde.massivemailer.factory.QuestionBuilder;
+import com.odde.massivemailer.model.onlinetest.Category;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -26,7 +27,7 @@ public class UiCommonSteps {
     @Given("^問題が存在している$")
     public void 問題が存在している() throws Throwable {
         new QuestionBuilder()
-                .aQuestion("testDescription", "testAdvice", "scrum")
+                .aQuestion("testDescription", "testAdvice", String.valueOf(Category.SCRUM.getId()))
                 .withWrongOption("Food")
                 .withWrongOption("Drink")
                 .withWrongOption("Country")

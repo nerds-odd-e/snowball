@@ -15,7 +15,7 @@ public class OnlineTest {
     public List<Answer> answers;
 
     public OnlineTest(int questionCount) {
-        questions = Question.getNRandom(questionCount);
+        questions = new QuestionCollection(Question.getAll()).generateQuestionList(Category.values(), questionCount);
         numberOfAnsweredQuestions = 0;
         categoryCorrectAnswerCount = new HashMap<>();
         categoryTestResults = new ArrayList<>();
@@ -139,11 +139,6 @@ public class OnlineTest {
             count = 0;
         }
         categoryCorrectAnswerCount.put(categoryId, count + 1);
-    }
-
-    public int getNumberOfCategories() {
-        Map<String, List<Question>> categoryNumberMap = questions.stream().collect(Collectors.groupingBy(Question::getCategory));
-        return categoryNumberMap.keySet().size();
     }
 
     Map<Category, Integer> getMapQuestionAndCategory(Category[] categories, int total) {

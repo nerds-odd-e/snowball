@@ -1,6 +1,7 @@
 package com.odde.massivemailer.controller.onlinetest;
 
 import com.odde.TestWithDB;
+import com.odde.massivemailer.model.onlinetest.Category;
 import com.odde.massivemailer.model.onlinetest.OnlineTest;
 import com.odde.massivemailer.model.onlinetest.Question;
 import org.apache.commons.lang3.StringUtils;
@@ -47,7 +48,7 @@ public class LaunchTokkunControllerTest {
     }
 
     private void mockQuestion() {
-        Question.createIt("description", "desc", "advice", "adv");
+        Question.createIt("description", "desc", "advice", "adv", "category", String.valueOf(Category.SCRUM.getId()));
     }
 
 }

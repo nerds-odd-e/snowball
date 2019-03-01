@@ -1,6 +1,7 @@
 package steps;
 
 import com.odde.massivemailer.factory.QuestionBuilder;
+import com.odde.massivemailer.model.onlinetest.Category;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
@@ -34,7 +36,7 @@ public class QuestionStep {
     @Given("^Add a question \"([^\"]*)\" with dummy options and advice \"([^\"]*)\"$")
     public void add_a_question(String description, String advice) {
         new QuestionBuilder()
-                .aQuestion(description, advice)
+                .aQuestion(description, advice, String.valueOf(Category.SCRUM.getId()))
                 .withWrongOption("Food")
                 .withWrongOption("Drink")
                 .withWrongOption("Country")
@@ -46,7 +48,7 @@ public class QuestionStep {
     @Given("^Add a question \"([^\"]*)\" of multiple answers$")
     public void add_a_question_of_multiple_answers(String description) {
         new QuestionBuilder()
-                .aQuestion(description, "advice")
+                .aQuestion(description, "advice", String.valueOf(Category.SCRUM.getId()))
                 .withCorrectOption("option1")
                 .withWrongOption("option2")
                 .withWrongOption("option3")
@@ -72,7 +74,7 @@ public class QuestionStep {
     public void user_is_taking_a_onlineTest_with_n_questions(int n) {
         for (int i = 0; i < n; i++)
             new QuestionBuilder()
-                    .aQuestion()
+                    .aQuestion(Category.SCRUM)
                     .withWrongOption("wrongOption")
                     .withCorrectOption("correctOption")
                     .please();
@@ -266,9 +268,11 @@ public class QuestionStep {
 
     @Given("\"([^\"]*)\"に(\\d+)問が登録されている$")
     public void categoryNameに_問が登録されている(String categoryName, int numOfQuestions) {
+        int categoryId = Category.findByName(categoryName).getId();
+
         for (int i = 0; i < numOfQuestions; i++) {
             new QuestionBuilder()
-                    .aQuestion(categoryName, null, categoryName)
+                    .aQuestion(categoryName, null, String.valueOf(categoryId))
                     .withCorrectOption("CorrectOption")
                     .please();
         }
@@ -276,7 +280,7 @@ public class QuestionStep {
 
     @Then("^scrumが>=(\\d+)問が表示されること$")
     public void scrumが_問以上が表示されること(int count) {
-        assertThat(scrumCounter,greaterThan(count));
+        assertThat(scrumCounter,greaterThanOrEqualTo(count));
     }
 
     @Then("^合計で(\\d+)問が表示されること$")

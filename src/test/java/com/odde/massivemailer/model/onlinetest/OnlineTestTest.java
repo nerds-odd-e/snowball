@@ -96,7 +96,7 @@ public class OnlineTestTest {
 
     @Test
     public void shouldReturn2CorrectAnswer() {
-        Question question = Question.createIt("description", "desc1", "advice", "adv1", "is_multi_question", 0);
+        Question question = Question.createIt("description", "desc1", "advice", "adv1", "is_multi_question", 0, "category", String.valueOf(Category.SCRUM.getId()));
         Long id = (Long) question.getId();
 
         final String[] answeredOption = new String[2];
@@ -122,7 +122,7 @@ public class OnlineTestTest {
 
     @Test
     public void shouldReturnOneIncorrectAndOneCorrectAnswer() {
-        Question question = Question.createIt("description", "desc1", "advice", "adv1", "is_multi_question", 0);
+        Question question = Question.createIt("description", "desc1", "advice", "adv1", "is_multi_question", 0, "category", String.valueOf(Category.SCRUM.getId()));
         Long id = (Long) question.getId();
 
         final String[] answeredOption = new String[2];
@@ -164,31 +164,6 @@ public class OnlineTestTest {
         assertThat(categoryMap.get(Category.TECH), greaterThanOrEqualTo(4));
         assertThat(categoryMap.get(Category.TEAM), greaterThanOrEqualTo(2));
 
-    }
-    
-    @Test
-    public void showNumberOfCategoriesInOneQuestion() {
-        mockQuestion(1,"1");
-        OnlineTest onlineTest = new OnlineTest(1);
-        assertEquals(onlineTest.getNumberOfCategories(), 1);
-    }
-
-    @Test
-    public void showNumberOfCategoriesInMultipleQuestions() {
-        mockQuestion(3,"1");
-        mockQuestion(3,"2");
-        mockQuestion(4,"3");
-
-        OnlineTest onlineTest = new OnlineTest(10);
-
-        assertEquals(onlineTest.getNumberOfCategories(), 3);
-    }
-
-    @Test
-    public void showNumberOfCategoriesInNoQuestion() {
-        OnlineTest onlineTest = new OnlineTest(10);
-
-        assertEquals(onlineTest.getNumberOfCategories(), 0);
     }
 
     @Test
@@ -242,7 +217,7 @@ public class OnlineTestTest {
     }
 
     private static void mockQuestion(int numberOfQuestion) {
-        IntStream.range(0, numberOfQuestion).forEach(index -> Question.createIt("description", "desc" + index, "advice", "adv" + index));
+        IntStream.range(0, numberOfQuestion).forEach(index -> Question.createIt("description", "desc" + index, "advice", "adv" + index, "category", String.valueOf(Category.SCRUM.getId())));
     }
 
 }

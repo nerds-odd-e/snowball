@@ -185,7 +185,6 @@ Feature:
     And User clicks the answer button
     Then "option1" and "option2" are selected in advice page
 
-  @developing
   Scenario Outline: 3カテゴリから均等に最大10問問題を表示する
     Given "scrum"に<scrum_stored>問が登録されている
     And "tech"に<tech_stored>問が登録されている

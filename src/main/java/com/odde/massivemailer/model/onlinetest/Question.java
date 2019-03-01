@@ -166,6 +166,6 @@ public class Question extends ApplicationModel {
     }
 
     boolean belongsTo(Category cat) {
-        return getCategory().equals(cat.getName());
+        return getCategory().equals(String.valueOf(cat.getId()));
     }
 }
