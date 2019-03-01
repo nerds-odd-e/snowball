@@ -62,6 +62,11 @@ public class UiCommonSteps {
         assertEquals(totalElementCount, elementCount);
     }
 
+    @Then("^startボタンが表示される$")
+    public void startボタンが表示される() throws Throwable {
+        assertEquals("start", driver.findElements(By.cssSelector("input[type=submit]")).get(0).getAttribute("value"));
+    }
+
     @Then("^Update Adviceが表示される$")
     public void updateAdviceが表示される() throws Throwable {
         assertTrue(driver.getBodyHTML().contains("nav navbar-nav side-nav"));
