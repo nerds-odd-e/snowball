@@ -14,7 +14,7 @@ Feature:
     Given カテゴリー選択画面が表示される
     And カテゴリーのチェックボックスにチェックが入っていない
     When スタートボタンをクリック
-    Then Question画面に遷移しない
+    Then 質問画面に遷移しない
 
   @developing
   Scenario: Questionがないカテゴリーはチェックボックスに表示されない
@@ -22,15 +22,9 @@ Feature:
     And "scrum"カテゴリーにQuestionが存在しない
     Then チェックボックスに"scrum"カテゴリーが表示されない
 
-  @developing
-  Scenario: Questionがあるカテゴリーをチェックボックスに表示する
-    Given カテゴリー選択画面が表示される
-    And "scrum"カテゴリーのQuestionが存在している
-    Then チェックボックスに"scrum"カテゴリーが表示される
-
-  Scenario: スタートボタンを押したら、Question画面に遷移する
+  Scenario: スタートボタンを押したら、問題画面に遷移する
     Given カテゴリー選択画面が表示される
     And 問題が存在している
     And カテゴリーのチェックボックスにチェックが入っている
     When スタートボタンをクリック
-    Then Question画面へ遷移する
+    Then 問題画面へ遷移する
