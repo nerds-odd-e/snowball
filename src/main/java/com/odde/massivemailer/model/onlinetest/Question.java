@@ -69,10 +69,6 @@ public class Question extends ApplicationModel {
         return findBySQL("SELECT id, description, advice, category, is_multi_question FROM questions WHERE category = ? ORDER BY RAND() LIMIT ?", category, count);
     }
 
-    public static int getNumOfQuestionIn(String category) {
-        return findBySQL("SELECT id FROM questions WHERE category = ?", category).size();
-    }
-
     public static List<Question> getAll() {
         return findBySQL("SELECT id, description, advice, category, is_multi_question FROM questions ORDER BY id");
     }

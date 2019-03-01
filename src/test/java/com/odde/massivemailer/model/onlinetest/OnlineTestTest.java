@@ -1,7 +1,6 @@
 package com.odde.massivemailer.model.onlinetest;
 
 import com.odde.TestWithDB;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -9,11 +8,7 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.IntStream;
 
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 @RunWith(TestWithDB.class)
 public class OnlineTestTest {
@@ -134,36 +129,6 @@ public class OnlineTestTest {
         Answer answer = onlineTest.answerCurrentQuestion(Arrays.asList(answeredOption));
         boolean result = answer.isCorrect();
         assertFalse(result);
-    }
-
-    @Test
-    public void shouldQuestionsNumberByEachCategory() {
-        mockQuestion(5, Category.SCRUM.getName());
-        mockQuestion(5, Category.TECH.getName());
-        mockQuestion(5, Category.TEAM.getName());
-
-        OnlineTest onlineTest = new OnlineTest(10);
-        Map<Category, Integer> categoryMap = onlineTest.getMapQuestionAndCategory(Category.values(), 10);
-
-        assertThat(categoryMap.get(Category.SCRUM), greaterThanOrEqualTo(3));
-        assertThat(categoryMap.get(Category.TEAM), greaterThanOrEqualTo(3));
-        assertThat(categoryMap.get(Category.TECH), greaterThanOrEqualTo(3));
-    }
-
-
-    @Test
-    public void shouldQuestionsNumberByEachCategory2() {
-        mockQuestion(10, Category.SCRUM.getName());
-        mockQuestion(10, Category.TECH.getName());
-        mockQuestion(2, Category.TEAM.getName());
-
-        OnlineTest onlineTest = new OnlineTest(10);
-        Map<Category, Integer> categoryMap = onlineTest.getMapQuestionAndCategory(Category.values(), 10);
-
-        assertThat(categoryMap.get(Category.SCRUM), greaterThanOrEqualTo(4));
-        assertThat(categoryMap.get(Category.TECH), greaterThanOrEqualTo(4));
-        assertThat(categoryMap.get(Category.TEAM), greaterThanOrEqualTo(2));
-
     }
 
     @Test

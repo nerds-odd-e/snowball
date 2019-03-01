@@ -141,38 +141,6 @@ public class OnlineTest {
         categoryCorrectAnswerCount.put(categoryId, count + 1);
     }
 
-    Map<Category, Integer> getMapQuestionAndCategory(Category[] categories, int total) {
-        Map<Category, Integer> allQuestionInCategory = new HashMap<>(categories.length);
-        for (Category category1 : categories) {
-            if (Question.getNumOfQuestionIn(category1.getName()) != 0) {
-                allQuestionInCategory.put(category1, Question.getNumOfQuestionIn(category1.getName()));
-            }
-        }
-
-        Map<Category, Integer> questionAndCategory = new HashMap<>();
-        for (int i = 0; i < total; i++) {
-            List<Category> categoryList = new ArrayList<>(allQuestionInCategory.keySet());
-            Category category = categoryList.get(i % allQuestionInCategory.size());
-
-            if (questionAndCategory.containsKey(category)) {
-                Integer counter = questionAndCategory.get(category);
-                questionAndCategory.put(category, ++counter);
-            } else {
-                questionAndCategory.put(category, 1);
-            }
-
-            int num = allQuestionInCategory.get(category);
-            num--;
-            if (num == 0) {
-                allQuestionInCategory.remove(category);
-            } else {
-                allQuestionInCategory.put(category, num);
-            }
-        }
-
-        return questionAndCategory;
-    }
-
     public boolean answer(String[] answeredOptionIds) {
         Answer answer = answerCurrentQuestion(Arrays.asList(answeredOptionIds));
         boolean isCorrect = answer.isCorrect();
