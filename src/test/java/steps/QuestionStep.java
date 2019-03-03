@@ -26,6 +26,8 @@ public class QuestionStep {
     private final WebDriverWrapper driver = site.getDriver();
     private int totalCounter;
     private int scrumCounter;
+    private int numberOfCorrectAnsweredQuestion;
+    private int currentTestTotalQuestions;
 
 
     @Given("^Add a question \"([^\"]*)\" with dummy options$")
@@ -56,29 +58,23 @@ public class QuestionStep {
                 .please();
     }
 
-    @Given("^Add a question \"([^\"]*)\" of multiple answers with (\\d+) questions$")
-    public void add_n_question_of_multiple_answers(String description, int n) {
+    @Given("^Add (\\d+) mulitple opiton questions \"([^\"]*)\"$")
+    public void add_n_question_of_multiple_answers(int n, String description) {
         for (int i = 0; i < n; i++) {
-            new QuestionBuilder()
-                    .aQuestion(description, "advice")
-                    .withCorrectOption("option1")
-                    .withWrongOption("option2")
-                    .withWrongOption("option3")
-                    .withCorrectOption("option4")
-                    .please();
+            add_a_question_of_multiple_answers(description);
         }
-        site.visit(String.format("onlinetest/launchQuestion?question_count=%d", n));
     }
 
     @Given("^User is taking a onlineTest with (\\d+) questions$")
-    public void user_is_taking_a_onlineTest_with_n_questions(int n) {
-        for (int i = 0; i < n; i++)
+    public void user_is_taking_a_onlineTest_with_n_questions(int totalQuestions) {
+        this.currentTestTotalQuestions = totalQuestions;
+        for (int i = 0; i < totalQuestions; i++)
             new QuestionBuilder()
                     .aQuestion(Category.SCRUM)
                     .withWrongOption("wrongOption")
                     .withCorrectOption("correctOption")
                     .please();
-        site.visit(String.format("onlinetest/launchQuestion?question_count=%d", n));
+        site.visit(String.format("onlinetest/launchQuestion?question_count=%d", totalQuestions));
     }
 
     @Given("^User is taking a onlineTest with (\\d+) multiple choice questions$")
@@ -129,11 +125,21 @@ public class QuestionStep {
         driver.pageShouldContain("Question");
     }
 
-    @Given("^User answered correctly the (\\d+) th question page$")
+    @Given("^User answered (\\d+) questions correctly$")
     public void user_answered_correctly_the(int answeredCount) {
+        this.numberOfCorrectAnsweredQuestion = answeredCount;
         for (int i = 0; i < answeredCount; ++i) {
             driver.clickRadioButton("correctOption");
             driver.clickButton("answer");
+        }
+    }
+
+    @And("^User answered all other questions wrong$")
+    public void userAnsweredAllOtherQuestionsWrong() {
+        for (int i = 0; i < currentTestTotalQuestions - numberOfCorrectAnsweredQuestion; ++i) {
+            driver.clickRadioButton("wrongOption");
+            driver.clickButton("answer");
+            driver.clickButton("next");
         }
     }
 

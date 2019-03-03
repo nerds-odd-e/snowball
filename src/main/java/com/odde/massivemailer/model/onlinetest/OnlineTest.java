@@ -58,14 +58,11 @@ public class OnlineTest {
         numberOfAnsweredQuestions++;
     }
 
-    public int getCorrectPercentage() {
-        return (int) ((double) this.correctAnswerCount / getNumberOfQuestions() * 100);
-    }
-
     public String showFinalMessage() {
-        if (getCorrectPercentage() < 85) {
+        int correctPercentage = generateTestResult().correctPercentage();
+        if (correctPercentage < 85) {
             return "基本を学びなおしましょう";
-        } else if (getCorrectPercentage() == 100) {
+        } else if (correctPercentage == 100) {
             return "あなたはスクラムマスター！";
         }
         return "あともう少し";

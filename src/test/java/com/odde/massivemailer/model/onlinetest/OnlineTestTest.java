@@ -159,8 +159,8 @@ public class OnlineTestTest {
 
         TestResult result = onlineTest.generateTestResult();
 
-        Float correctRate = result.calculateCorrectRate();
-        assertEquals(Float.valueOf(1), correctRate);
+        int correctRate = result.correctPercentage();
+        assertEquals(100, correctRate);
     }
 
     @Test
@@ -174,8 +174,8 @@ public class OnlineTestTest {
 
         TestResult result = onlineTest.generateTestResult();
 
-        Float correctRate = result.calculateCorrectRate();
-        assertEquals(Float.valueOf(0), correctRate);
+        int correctRate = result.correctPercentage();
+        assertEquals(0, correctRate);
     }
 
     @Test
@@ -210,9 +210,9 @@ public class OnlineTestTest {
 
         TestResult result = onlineTest.generateTestResult();
 
-        Float correctRate = result.calculateCorrectRate();
+        int correctRate = result.correctPercentage();
 
-        assertEquals(Float.valueOf(0.8f), correctRate);
+        assertEquals(80, correctRate);
     }
 
     private static void mockQuestion(int numberOfQuestion, String category) {

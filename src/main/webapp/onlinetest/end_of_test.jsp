@@ -20,7 +20,7 @@
                 <span id="correct-count">${onlineTest.getCorrectAnswerCount()}</span>
                 /
                 <span id="total-count">${onlineTest.getNumberOfQuestions()}</span>問
-                <p>あなたの正解率は<span><span id="correct-percentage">${onlineTest.generateTestResult().calculateCorrectRate()}</span>%</span></p>
+                <p>あなたの正解率は<span><span id="correct-percentage">${onlineTest.generateTestResult().correctPercentage()}</span>%</span></p>
                 <p id="message">${onlineTest.showFinalMessage()}</p>
             </div>
             <c:if test="!${onlineTest.getShowAdvice()}" >

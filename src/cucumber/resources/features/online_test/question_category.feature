@@ -28,3 +28,20 @@ Feature:
     And カテゴリーのチェックボックスにチェックが入っている
     When スタートボタンをクリック
     Then 問題画面へ遷移する
+
+  Scenario Outline: 3カテゴリから均等に最大10問問題を表示する
+    Given "scrum"に<scrum_stored>問が登録されている
+    And "tech"に<tech_stored>問が登録されている
+    And "team"に<team_stored>問が登録されている
+    When startをクリックしてすべての問題を回答したとき
+    Then scrumが<scrum_shown>問が表示されること
+    And 合計で<total_shown>問が表示されること
+    Examples:
+      | scrum_stored | tech_stored | team_stored | total_shown | scrum_shown |
+      | 5            | 5           | 5           | 10          | >=3         |
+      | 5            | 5           | 0           | 10          | 5           |
+      | 5            | 0           | 0           | 5           | 5           |
+      | 0            | 5           | 5           | 10          | 0           |
+      | 0            | 0           | 5           | 5           | 0           |
+      | 1            | 5           | 5           | 10          | 1           |
+      | 5            | 1           | 5           | 10          | >=4         |

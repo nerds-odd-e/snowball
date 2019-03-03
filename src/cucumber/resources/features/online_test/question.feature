@@ -41,7 +41,7 @@ Feature:
 
   Scenario Outline: User goes to end of test if he has answered all questions
     Given User is taking a onlineTest with 3 questions
-    And User answered correctly the <number_of_questions> th question page
+    And User answered <number_of_questions> questions correctly
     Then "<page_content>" should be shown
 
     Examples:
@@ -49,9 +49,19 @@ Feature:
       | 2                   | Question     |
       | 3                   | End Of Test  |
 
+  Scenario Outline: 問題ページで正解2つを選択して、次の問題に移動
+    Given Add <number_of_questions> mulitple opiton questions "（option1とoption4が正解）?"
+    And User is on the first question
+    When User chooses "option1" and "option4" answers
+    And User clicks the answer button
+    Then It should move to "<page_content>" page
+    Examples:
+      | number_of_questions | page_content |
+      | 2                   | Question     |
+      | 1                   | End Of Test  |
   Scenario: User goes to end of test if he has answered last questions wrong
     Given User is taking a onlineTest with 3 questions
-    And User answered correctly the 2 th question page
+    And User answered 2 questions correctly
     When User chooses the "wrongOption" answer
     And User clicks the answer button
     And User clicks the next button
@@ -164,41 +174,4 @@ Feature:
     And User should see "unselected_incorrect" option "#333" and text "option3"
     And User should see "unselected_correct" option "#0000FF" and text "option4"
 
-  @developing
-  Scenario Outline: 問題ページで正解2つを選択して、次の問題に移動
-    Given Add a question "スクラムに含まれる要素は何ですか？（option1とoption4が正解）" of multiple answers with <number_of_questions> questions
-    And User is on the first question
-    When User chooses "option1" and "option4" answers
-    And User clicks the answer button
-    Then It should move to "<page_content>" page
 
-    Examples:
-      | number_of_questions | page_content |
-      | 2                   | Question     |
-      | 1                   | End Of Test  |
-
-  @developing
-  Scenario: 問題ページで正解1つと不正解1つを選択して、アドバイスページで正解1つと不正解1つが選択される
-    Given Add a question "スクラムに含まれる要素は何ですか？（option1とoption4が正解）" of multiple answers
-    And User is on the first question
-    When User chooses "option1" and "option2" answers
-    And User clicks the answer button
-    Then "option1" and "option2" are selected in advice page
-
-  Scenario Outline: 3カテゴリから均等に最大10問問題を表示する
-    Given "scrum"に<scrum_stored>問が登録されている
-    And "tech"に<tech_stored>問が登録されている
-    And "team"に<team_stored>問が登録されている
-    When startをクリックしてすべての問題を回答したとき
-    Then scrumが<scrum_shown>問が表示されること
-    And 合計で<total_shown>問が表示されること
-
-    Examples:
-      | scrum_stored | tech_stored | team_stored | total_shown | scrum_shown |
-      | 5            | 5           | 5           | 10          | >=3         |
-      | 5            | 5           | 0           | 10          | 5           |
-      | 5            | 0           | 0           | 5           | 5           |
-      | 0            | 5           | 5           | 10          | 0           |
-      | 0            | 0           | 5           | 5           | 0           |
-      | 1            | 5           | 5           | 10          | 1           |
-      | 5            | 1           | 5           | 10          | >=4         |

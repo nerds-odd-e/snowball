@@ -21,9 +21,4 @@ public class EditAdviceLinkSteps {
         assertTrue(driver.getBodyText().contains(category));
         assertTrue(driver.getBodyText().contains(link));
     }
-
-    @Then("^アドバイスリンクフォームが表示されている$")
-    public void アドバイスリンクフォームが表示されている() throws Throwable {
-        assertNotNull(driver.findElementById("link"));
-    }
 }

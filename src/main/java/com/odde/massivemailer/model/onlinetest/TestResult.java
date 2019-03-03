@@ -19,7 +19,7 @@ public class TestResult {
         }
     }
 
-    public Float calculateCorrectRate() {
+    public int correctPercentage() {
         float correct = 0;
         float q_num = 0;
         for (Answer a: answers) {
@@ -28,6 +28,6 @@ public class TestResult {
                 correct++;
             }
         }
-        return correct / q_num;
+        return (int) (correct * 100 / q_num);
     }
 }
