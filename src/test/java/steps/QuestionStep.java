@@ -16,7 +16,6 @@ import steps.site.MassiveMailerSite;
 import java.util.List;
 import java.util.Map;
 
-import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
@@ -51,22 +50,15 @@ public class QuestionStep {
     public void add_a_question_of_multiple_answers(String description) {
         new QuestionBuilder()
                 .aQuestion(description, "advice", String.valueOf(Category.SCRUM.getId()))
-                .withCorrectOption("option1")
-                .withWrongOption("option2")
-                .withWrongOption("option3")
-                .withCorrectOption("option4")
+                .withCorrectOption("correctOption1")
+                .withWrongOption("wrongOption1")
+                .withWrongOption("wrongOption2")
+                .withCorrectOption("correctOption2")
                 .please();
     }
 
-    @Given("^Add (\\d+) mulitple opiton questions \"([^\"]*)\"$")
-    public void add_n_question_of_multiple_answers(int n, String description) {
-        for (int i = 0; i < n; i++) {
-            add_a_question_of_multiple_answers(description);
-        }
-    }
-
     @Given("^User is taking a onlineTest with (\\d+) questions$")
-    public void user_is_taking_a_onlineTest_with_n_questions(int totalQuestions) {
+    public void user_is_taking_a_onlineTest_with_n_single_questions(int totalQuestions) {
         this.currentTestTotalQuestions = totalQuestions;
         for (int i = 0; i < totalQuestions; i++)
             new QuestionBuilder()
@@ -77,14 +69,16 @@ public class QuestionStep {
         site.visit(String.format("onlinetest/launchQuestion?question_count=%d", totalQuestions));
     }
 
+    @Given("^User is taking a onlineTest with (\\d+) single choice questions$")
+    public void user_is_taking_a_onlineTest_with_n_questions(int totalQuestions) {
+        user_is_taking_a_onlineTest_with_n_single_questions(totalQuestions);
+    }
+
     @Given("^User is taking a onlineTest with (\\d+) multiple choice questions$")
     public void user_is_taking_a_onlineTest_with_multiple_choice_questions(int n) {
-        for (int i = 0; i < n; i++)
-            new QuestionBuilder()
-                    .aQuestion(1)
-                    .withWrongOption("wrongOption")
-                    .withCorrectOption("correctOption")
-                    .please();
+        for (int i = 0; i < n; i++) {
+            add_a_question_of_multiple_answers("multiple choice question");
+        }
         site.visit(String.format("onlinetest/launchQuestion?question_count=%d", n));
     }
 

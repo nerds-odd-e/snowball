@@ -1,3 +1,4 @@
+@now
 Feature:
   User can take an online test :)
 
@@ -39,6 +40,17 @@ Feature:
       | Country          |
       | Animal           |
 
+  @now
+  Scenario Outline: 何も選択しないでanswerをクリックした場合、次の出題に移動しない
+    Given User is taking a onlineTest with 2 <回答type> questions
+    When User clicks the answer button
+    Then 質問1の画面に遷移する
+
+    Examples:
+      | 回答type          |
+      | single choice    |
+      | multiple choice  |
+
   Scenario Outline: User goes to end of test if he has answered all questions
     Given User is taking a onlineTest with 3 questions
     And User answered <number_of_questions> questions correctly
@@ -49,17 +61,19 @@ Feature:
       | 2                   | Question     |
       | 3                   | End Of Test  |
 
+    @now
   Scenario Outline: 問題ページで正解2つを選択して、次の問題に移動
-    Given Add <number_of_questions> mulitple opiton questions "（option1とoption4が正解）?"
-    And User is on the first question
-    When User chooses "option1" and "option4" answers
+    Given User is taking a onlineTest with <number_of_questions> multiple choice questions
+    When User chooses "correctOption1" and "correctOption2" answers
     And User clicks the answer button
     Then It should move to "<page_content>" page
+
     Examples:
       | number_of_questions | page_content |
       | 2                   | Question     |
       | 1                   | End Of Test  |
-  Scenario: User goes to end of test if he has answered last questions wrong
+
+  Scenario: User goes to end of test after seeing the last advice
     Given User is taking a onlineTest with 3 questions
     And User answered 2 questions correctly
     When User chooses the "wrongOption" answer
@@ -152,26 +166,14 @@ Feature:
       | Single Choice   | option1   | option2   | radio    |
       | Multiple Choice | checkbox1 | checkbox2 | checkbox |
 
-  Scenario: 何も選択しないでanswerをクリックした場合、次の出題に移動しない
-    Given User is taking a onlineTest with 1 questions
-    And 質問1の画面に遷移する
-    When User clicks the answer button
-    Then 質問1の画面に遷移する
-
-  Scenario: 複数選択可能な問題で何も選択しないでanswerをクリックした場合、次の出題に移動しない
-    Given User is taking a onlineTest with 1 multiple choice questions
-    And 質問1の画面に遷移する
-    When User clicks the answer button
-    Then 質問1の画面に遷移する
-
+    @now
   Scenario: アドバイスページで正解2つと誤った回答2つがわかる
     Given Add a question "スクラムに含まれる要素は何ですか？（option1とoption4が正解）" of multiple answers
     And User is on the first question
-    When User chooses "option1" and "option2" answers
+    When User chooses "correctOption1" and "wrongOption1" answers
     And User clicks the answer button
-    Then User should see "selected_correct" option "#28a745" and text "option1"
-    And User should see "selected_incorrect" option "#dc3545" and text "option2"
-    And User should see "unselected_incorrect" option "#333" and text "option3"
-    And User should see "unselected_correct" option "#0000FF" and text "option4"
-
+    Then User should see "selected_correct" option "#28a745" and text "correctOption1"
+    And User should see "selected_incorrect" option "#dc3545" and text "wrongOption1"
+    And User should see "unselected_incorrect" option "#333" and text "wrongOption2"
+    And User should see "unselected_correct" option "#0000FF" and text "correctOption2"
 

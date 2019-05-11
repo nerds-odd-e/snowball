@@ -56,8 +56,8 @@ public class LocationProviderServiceTest {
         locationProviderService.addLat_LongToMemory("Japan", "Kobe");
         Location storedLocation = locationProviderService.getLocationForName("Japan/Kobe");
         assertNotNull(storedLocation);
-        assertEquals(34.690083, storedLocation.getLat(), 0.0);
-        assertEquals(135.1955112, storedLocation.getLng(), 0.0);
+        assertEquals(34.690083, storedLocation.getLat(), 0.1);
+        assertEquals(135.1955112, storedLocation.getLng(), 0.1);
     }
 
     @Test
