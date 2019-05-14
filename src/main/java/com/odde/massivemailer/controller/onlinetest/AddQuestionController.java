@@ -18,6 +18,11 @@ import java.util.List;
 public class AddQuestionController extends AppController {
 
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.sendRedirect("/onlinetest/add_question.jsp");
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String errorMsg = checkParameter(req);
         if (!errorMsg.isEmpty()) {

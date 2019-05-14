@@ -13,6 +13,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import java.util.Collection;
 import java.util.Optional;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.*;
 
 @RunWith(TestWithDB.class)
@@ -38,6 +39,7 @@ public class AddQuestionControllerTest {
         request.setParameter("option4", "option4");
         request.setParameter("option5", "option5");
         request.setParameter("option6", "option6");
+        request.setParameter("is-public", "");
         request.setParameter("check", String.valueOf(1));
     }
 
@@ -55,6 +57,12 @@ public class AddQuestionControllerTest {
         checks[0] = "1";
         checks[1] = "2";
         request.setParameter("check", checks);
+    }
+
+    @Test
+    public void doGet() throws Exception {
+        controller.doGet(request, response);
+        assertThat(response.getRedirectedUrl(), containsString("/onlinetest/add_question.jsp"));
     }
 
     @Test

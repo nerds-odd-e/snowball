@@ -6,6 +6,7 @@ import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class AddTokkunPrivateQuestionSteps {
     private final MassiveMailerSite site = new MassiveMailerSite();
@@ -17,4 +18,5 @@ public class AddTokkunPrivateQuestionSteps {
         assertEquals("Add Question", driver.getCurrentTitle());
         assertEquals("1", driver.findElements(By.cssSelector("#is-public")).get(0).getAttribute("value"));
     }
+
 }
