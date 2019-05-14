@@ -112,6 +112,14 @@
 									</div>
 									<br> <br>
 									<div class="row">
+										<div class="col-lg-1">Public:</div>
+										<div class="col-lg-11">
+											<input type="checkbox" name="is-public"
+												id="is-public" value="1">
+										</div>
+									</div>
+									<br> <br>
+									<div class="row">
 										<div class="col-lg-12">
 											<button type="submit" class="btn btn-default" name="add_button"
 												id="add_button" value="add" >Add</button>
