@@ -2,6 +2,7 @@ package com.odde.massivemailer.controller.onlinetest;
 
 import com.odde.massivemailer.controller.AppController;
 import com.odde.massivemailer.model.onlinetest.AnswerOption;
+import com.odde.massivemailer.model.onlinetest.PublicQuestion;
 import com.odde.massivemailer.model.onlinetest.Question;
 
 import javax.servlet.RequestDispatcher;
@@ -71,6 +72,9 @@ public class AddQuestionController extends AppController {
                 req.getParameter("category"),
                 type);
         question.saveIt();
+
+        PublicQuestion publicQuestion = new PublicQuestion(question.getLongId());
+        publicQuestion.saveIt();
 
         final String[] checks = req.getParameterValues("check");
         List<String> checksList = Arrays.asList(checks);

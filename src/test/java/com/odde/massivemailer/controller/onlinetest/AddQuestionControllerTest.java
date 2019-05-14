@@ -2,6 +2,7 @@ package com.odde.massivemailer.controller.onlinetest;
 
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.onlinetest.AnswerOption;
+import com.odde.massivemailer.model.onlinetest.PublicQuestion;
 import com.odde.massivemailer.model.onlinetest.Question;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,9 +13,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import java.util.Collection;
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(TestWithDB.class)
 public class AddQuestionControllerTest {
@@ -195,5 +194,32 @@ public class AddQuestionControllerTest {
 
         String errorMessage = String.valueOf(request.getAttribute("errorMessage"));
         assertEquals(errorMessage, "Invalid inputs found!");
+    }
+
+    @Test
+    public void doPostAddPublicQuestion() throws Exception {
+        setupValidRequest();
+        controller.doPost(request, response);
+        Question question = Question.findFirst("");
+
+        String description = request.getParameter("description");
+        assertEquals(description, question.getDescription());
+
+        String category = request.getParameter("category");
+        assertEquals(category, question.getCategory());
+
+        for (int i = 0; i < 6; i++) {
+            String option = request.getParameter("option" + (i + 1));
+            boolean hasOption = question.getOptions().stream().anyMatch(opt -> opt.getDescription().equals(option));
+            assertTrue(hasOption);
+        }
+
+        String rightOptionDescription = request.getParameter("option1");
+
+        Optional<AnswerOption> rightAnswer = question.getOptions().stream().filter(AnswerOption::isCorrect).findFirst();
+        assertEquals(rightAnswer.get().getDescription(), rightOptionDescription);
+
+        PublicQuestion publicQuestion = PublicQuestion.findFirst("question_id = ?", question.getLongId());
+        assertNotNull(publicQuestion);
     }
 }
