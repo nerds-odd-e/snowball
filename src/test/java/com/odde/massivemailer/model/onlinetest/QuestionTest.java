@@ -197,4 +197,11 @@ public class QuestionTest {
         List<Question> questions = Question.getAll();
         assertEquals(questions.size(), 2);
     }
+
+    @Test
+    public void isPublicがtrueを返す() {
+        final Question question = new Question("description", "advice", "category", "multiple");
+        final boolean actual = question.isPublic();
+        assertEquals(actual, true);
+    }
 }

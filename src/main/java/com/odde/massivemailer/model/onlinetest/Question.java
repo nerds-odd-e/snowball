@@ -164,4 +164,8 @@ public class Question extends ApplicationModel {
     boolean belongsTo(Category cat) {
         return getCategory().equals(String.valueOf(cat.getId()));
     }
+
+    boolean isPublic() {
+        return true;
+    }
 }
