@@ -69,23 +69,13 @@ public class TokkunSteps {
     @And("^\"([^\"]*)\"が(\\d+)日以上前に回答した質問が(\\d+)つある$")
     public void が日以上前に回答した質問がつある(String arg0, int arg1, int n) throws Throwable {
 
-        new QuestionBuilder()
-                .aQuestion(Category.SCRUM)
-                .withWrongOption("wrongOption")
-                .withCorrectOption("correctOption")
-                .please();
-
         // TODO:ユーザの回答履歴テーブルができれば追加する。
 
-        // Write code here that turns the phrase above into concrete actions
-        //throw new PendingException();
     }
 
     @And("^\"([^\"]*)\"が(\\d+)日以上前に回答した質問が表示されている$")
     public void が日以上前に回答した質問が表示されている(String arg0, int arg1) throws Throwable {
         assertEquals(driver.findElementById("question"),"myTest");
 
-        // Write code here that turns the phrase above into concrete actions
-//        throw new PendingException();
     }
 }
