@@ -1,0 +1,4 @@
+[0m[[0m[0mdebug[0m] [0m[0mCopy resource mappings: [0m
+[0m[[0m[0mdebug[0m] [0m[0m	(/Users/csd/workspace/massive_mailer/src/play-main/conf/application.conf,/Users/csd/workspace/massive_mailer/src/play-main/target/scala-2.12/classes/application.conf)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(/Users/csd/workspace/massive_mailer/src/play-main/conf/logback.xml,/Users/csd/workspace/massive_mailer/src/play-main/target/scala-2.12/classes/logback.xml)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(/Users/csd/workspace/massive_mailer/src/play-main/conf/routes,/Users/csd/workspace/massive_mailer/src/play-main/target/scala-2.12/classes/routes)[0m
