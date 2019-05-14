@@ -48,7 +48,7 @@ public class TokkunSteps {
 
     @Then("^特訓回答画面に遷移する$")
     public void 特訓回答画面に遷移する() throws Throwable {
-        assertEquals(driver.getCurrentUrl(), "");
+        assertEquals("Tokkun Question", driver.getCurrentTitle());
         // Write code here that turns the phrase above into concrete actions
 //        throw new PendingException();
     }

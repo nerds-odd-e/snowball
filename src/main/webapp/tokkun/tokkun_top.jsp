@@ -19,9 +19,8 @@
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-12" id="">
-                    <form name="tokkun" id="tokkunForm" method="get" action="">
-                        <!-- TODO 遷移先が出来上がったら、actionを書き換える -->
-                        <button type="button" class="btn btn-default" id="start_button" value="Save">Tokkun</button>
+                    <form name="tokkun" id="tokkunForm" method="get" action="/tokkun/tokkun.jsp">
+                        <button type="button" class="btn btn-default" id="start_button" value="Save" onclick="location.href='/tokkun/tokkun_question.jsp'">Tokkun</button>
                     </form>
                     <button type="button" class="btn btn-default" id="question_add_button" value="Save">Add</button>
                 </div>

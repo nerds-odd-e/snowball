@@ -1,7 +1,7 @@
 Feature:
   特訓を開始すると、回答して５日経過した問題が表示される
 
-  @developing
+  @now
   Scenario: 特訓を開始する
     Given 特訓画面が表示されている
     And 質問が1つある
