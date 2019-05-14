@@ -1,6 +1,7 @@
 package controllers;
 
 import play.mvc.*;
+import models.*;
 
 /**
  * This controller contains an action to handle HTTP requests
@@ -15,6 +16,8 @@ public class HomeController extends Controller {
      * <code>GET</code> request with a path of <code>/</code>.
      */
     public Result index() {
+        java.util.List<Users> users = Users.find.all();
+        System.out.println(users);
         return ok(views.html.index.render());
     }
 
