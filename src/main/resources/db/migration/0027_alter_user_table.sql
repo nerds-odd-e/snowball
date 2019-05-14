@@ -1,0 +1,1 @@
+alter table users modify name VARCHAR(100) NULL;
