@@ -1,4 +1,3 @@
-@now
 Feature:
   User can take an online test :)
 
@@ -40,7 +39,6 @@ Feature:
       | Country          |
       | Animal           |
 
-  @now
   Scenario Outline: 何も選択しないでanswerをクリックした場合、次の出題に移動しない
     Given User is taking a onlineTest with 2 <回答type> questions
     When User clicks the answer button
@@ -61,7 +59,6 @@ Feature:
       | 2                   | Question     |
       | 3                   | End Of Test  |
 
-    @now
   Scenario Outline: 問題ページで正解2つを選択して、次の問題に移動
     Given User is taking a onlineTest with <number_of_questions> multiple choice questions
     When User chooses "correctOption1" and "correctOption2" answers
@@ -166,7 +163,6 @@ Feature:
       | Single Choice   | option1   | option2   | radio    |
       | Multiple Choice | checkbox1 | checkbox2 | checkbox |
 
-    @now
   Scenario: アドバイスページで正解2つと誤った回答2つがわかる
     Given Add a question "スクラムに含まれる要素は何ですか？（option1とoption4が正解）" of multiple answers
     And User is on the first question
