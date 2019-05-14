@@ -50,7 +50,6 @@ public class LoginControllerTest {
     private void createUser() {
         User user = new User("mary@example.com");
         user.setPassword("abcd1234");
-        user.setUserName("user");
         user.saveIt();
     }
 

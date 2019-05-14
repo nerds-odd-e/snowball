@@ -15,7 +15,6 @@ import java.security.MessageDigest;
 public class User extends ApplicationModel {
     private static final String HASHED_PASSWORD = "hashed_password";
     private static final String EMAIL = "email";
-    private static final String USERNAME = "username";
 
     public User(){
     }
@@ -23,7 +22,6 @@ public class User extends ApplicationModel {
     public User(String email) {
         set(EMAIL, email);
         set("token", createToken());
-        set(USERNAME, email);
     }
 
     private static String createToken() {
@@ -42,10 +40,6 @@ public class User extends ApplicationModel {
 
     public void setPassword(String password) {
         set(HASHED_PASSWORD, toHashString(password));
-    }
-
-    public void setUserName(String userName) {
-        set(USERNAME, userName);
     }
 
     public static User getUserByEmail(String email) {
