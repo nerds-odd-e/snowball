@@ -1,0 +1,1 @@
+alter table users ADD is_admin boolean not null default false;
