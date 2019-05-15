@@ -22,7 +22,7 @@ public class SignupSteps {
     private final MassiveMailerSite site = new MassiveMailerSite();
     private final WebDriverWrapper driver = site.getDriver();
     private final String signup_url = site.baseUrl() + "signup.jsp";
-    private final String tokkun_url = site.baseUrl() + "tokkun/tokkun.jsp";
+    private final String tokkun_url = site.baseUrl() + "tokkun.jsp";
 
     @Given("^ユーザーがサインアップページを開いている$")
     public void ユーザーがサインアップページを開いている() throws Throwable {

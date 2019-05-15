@@ -9,8 +9,8 @@
 <t:with_side_menu title="Sign Up">
     <jsp:body>
 <div id="page-wrapper">
-			<form name="login" id="loginForm" method="post"
-				action="login">
+			<form name="signup" id="signupForm" method="post"
+				action="signup">
 
 				<div class="container-fluid">
 
