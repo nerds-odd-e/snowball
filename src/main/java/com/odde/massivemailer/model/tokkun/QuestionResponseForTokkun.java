@@ -1,7 +1,13 @@
 package com.odde.massivemailer.model.tokkun;
 
 import com.odde.massivemailer.model.ApplicationModel;
+import com.odde.massivemailer.model.User;
+import org.javalite.activejdbc.LazyList;
+import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
+
+import java.util.Collections;
+import java.util.List;
 
 
 @Table("question_responses_for_tokkun")
@@ -18,4 +24,8 @@ public class QuestionResponseForTokkun extends ApplicationModel {
     public QuestionResponseForTokkun() {}
 
 
+    public static List<QuestionResponseForTokkun> selectUserResponsedTokens(User user){
+        List<QuestionResponseForTokkun> questionResponseForTokkuns = QuestionResponseForTokkun.find("user_id = ?", user.getLongId());
+        return questionResponseForTokkuns;
+    }
 }
