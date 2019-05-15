@@ -140,9 +140,9 @@ public class AddQuestionSteps {
         driver.setTextField("advice", temporaryText);
     }
 
-    @Then("^質問の一覧に遷移する$")
-    public void 質問の一覧に遷移する() {
-        assertEquals(driver.getCurrentTitle(), "Question List");
+    @Then("^特訓のトップページに遷移する$")
+    public void 特訓のトップページに遷移する() {
+        assertEquals(driver.getCurrentTitle(), "Tokkun List");
     }
 
     @Given("^advice に\"([^\"]*)\" を入力する$")

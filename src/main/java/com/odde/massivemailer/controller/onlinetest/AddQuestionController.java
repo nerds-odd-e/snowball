@@ -32,7 +32,7 @@ public class AddQuestionController extends AppController {
             return;
         }
         saveQuestion(req);
-        resp.sendRedirect("/onlinetest/question_list.jsp");
+        resp.sendRedirect("/tokkun/tokkun_top.jsp");
     }
 
     private String checkParameter(HttpServletRequest req) {

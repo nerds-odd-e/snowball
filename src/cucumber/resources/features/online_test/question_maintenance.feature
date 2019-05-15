@@ -18,7 +18,7 @@ Feature:
     And "1"番目のoptionを選択する
     And カテゴリーとして"<category>"を選択する
     When Addボタンを押す
-    And 質問の一覧に遷移する
+    And 特訓のトップページに遷移する
     Then カテゴリーに "<category>" が表示される
 
     Examples:
