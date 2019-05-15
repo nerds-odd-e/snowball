@@ -27,7 +27,7 @@ public class QuestionStep {
     private int scrumCounter;
     private int numberOfCorrectAnsweredQuestion;
     private int currentTestTotalQuestions;
-
+    private final String add_question_url = site.baseUrl() + "onlinetest/add_question.jsp";
 
     @Given("^Add a question \"([^\"]*)\" with dummy options$")
     public void add_a_question(String description) {
@@ -206,7 +206,7 @@ public class QuestionStep {
         List<WebElement> elements = driver.findElements(By.cssSelector(cssSelector));
         String[] actualTexts = elements.stream().map(WebElement::getText).toArray(String[]::new);
         assertThat(actualTexts, is(optionTexts));
-        elements.forEach((e)->{
+        elements.forEach((e) -> {
             assertEquals(e.getCssValue("color"), Color.fromString(color).asRgba());
         });
     }
@@ -233,8 +233,8 @@ public class QuestionStep {
 
     @Then("^(\\d+)つ\"([^\"]*)\"の回答が選択されている事$")
     public void _つ_の回答が選択されている事(int count, String elementType) {
-        assertTrue(driver.findElements(By.cssSelector("input[type="+elementType+"]")).size() > 0);
-        int elementCount = driver.findElements(By.cssSelector("input[type="+elementType+"]:checked")).size();
+        assertTrue(driver.findElements(By.cssSelector("input[type=" + elementType + "]")).size() > 0);
+        int elementCount = driver.findElements(By.cssSelector("input[type=" + elementType + "]:checked")).size();
         assertEquals(count, elementCount);
     }
 
@@ -280,7 +280,7 @@ public class QuestionStep {
 
     @Then("^scrumが>=(\\d+)問が表示されること$")
     public void scrumが_問以上が表示されること(int count) {
-        assertThat(scrumCounter,greaterThanOrEqualTo(count));
+        assertThat(scrumCounter, greaterThanOrEqualTo(count));
     }
 
     @Then("^合計で(\\d+)問が表示されること$")
@@ -298,7 +298,7 @@ public class QuestionStep {
         totalCounter = 0;
         scrumCounter = 0;
         site.visit("onlinetest/launchQuestion");
-        while (driver.getCurrentTitle().equals("Question")){
+        while (driver.getCurrentTitle().equals("Question")) {
             totalCounter++;
             String categoryName = driver.findElementById("description").getText();
             if (categoryName.equals("scrum")) {
@@ -307,5 +307,22 @@ public class QuestionStep {
             driver.clickRadioButton("CorrectOption");
             driver.clickButton("answer");
         }
+    }
+
+    @When("^質問の内容を入力してAddボタンを押す")
+    public void 質問の内容を入力してAddボタンを押す() {
+        driver.visit(add_question_url);
+        driver.setDropdownValue("type", "single");
+        driver.setDropdownValue("category", "1");
+        driver.setTextField("description", "PrivateDescription");
+        driver.setTextField("option1", "option1");
+        driver.setTextField("option2", "option2");
+        driver.clickById("option2");
+        driver.clickButton("add_button");
+    }
+
+    @Then("^Privateな質問が追加される$")
+    public void privateな質問が追加される() {
+        driver.pageShouldContain("PrivateDescription");
     }
 }
