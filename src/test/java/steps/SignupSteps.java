@@ -21,7 +21,7 @@ import static org.junit.Assert.*;
 public class SignupSteps {
     private final MassiveMailerSite site = new MassiveMailerSite();
     private final WebDriverWrapper driver = site.getDriver();
-    private final String signup_url = site.baseUrl() + "signup1.jsp";
+    private final String signup_url = site.baseUrl() + "signup.jsp";
     private final String tokkun_url = site.baseUrl() + "tokkun/tokkun.jsp";
 
     @Given("^ユーザーがサインアップページを開いている$")
@@ -51,7 +51,7 @@ public class SignupSteps {
 
     @When("^ユーザーはSubmitボタンをクリックする$")
     public void ユーザーはsubmitボタンをクリックする() throws Throwable {
-        driver.clickButton("submit");
+        driver.clickButton("signup");
     }
     @Then("^特訓のトップページに遷移する$")
     public void 特訓のトップページに遷移する() throws Throwable {
