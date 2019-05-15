@@ -1,5 +1,7 @@
 package steps;
 
+import com.odde.massivemailer.factory.QuestionBuilder;
+import com.odde.massivemailer.model.onlinetest.Category;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -11,7 +13,15 @@ public class WrongQuestionSteps {
     private final WebDriverWrapper driver = site.getDriver();
 
     @Given("^Given Add a question \"([^\"]*)\" with dummy options and advice \"([^\"]*)\"$")
-    public void given_Add_a_question_with_dummy_options_and_advice(String arg1, String arg2) {
+    public void given_Add_a_question_with_dummy_options_and_advice(String arg1, String arg2)  {
+        new QuestionBuilder()
+            .aQuestion(arg1, arg2, String.valueOf(Category.SCRUM.getId()))
+            .withWrongOption("Food")
+            .withWrongOption("Drink")
+            .withWrongOption("Country")
+            .withWrongOption("Animal")
+            .withCorrectOption("None of the above")
+            .please();
     }
 
     @When("^問題に正解する$")
