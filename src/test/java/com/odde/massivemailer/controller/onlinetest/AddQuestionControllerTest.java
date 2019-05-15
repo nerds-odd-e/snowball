@@ -115,10 +115,10 @@ public class AddQuestionControllerTest {
 
 
     @Test
-    public void redirectToQuestionListPage() throws Exception {
+    public void redirectToTokkunTopPage() throws Exception {
         setupValidRequest();
         controller.doPost(request, response);
-        assertEquals("/onlinetest/question_list.jsp", response.getRedirectedUrl());
+        assertEquals("/tokkun/tokkun_top.jsp", response.getRedirectedUrl());
     }
 
     @Test
