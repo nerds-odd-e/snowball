@@ -1,4 +1,5 @@
 **/**/selenium-screenshot-*
+*.png
 *.iml
 *.ipr
 *.iws
