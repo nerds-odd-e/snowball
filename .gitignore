@@ -41,3 +41,4 @@ src/main/resources/.DS_Store
 src/main/resources/db/.DS_Store
 src/test/.DS_Store
 memo.txt
+*.png
