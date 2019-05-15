@@ -6,7 +6,7 @@
 <%@ page import="com.odde.massivemailer.model.onlinetest.Question" %>
 <%@ page import="java.util.*" %>
 
-<t:with_side_menu title="Tokkun List">
+<t:basic title="Tokkun List">
     <jsp:body>
         <div class="container-fluid">
 
@@ -22,7 +22,6 @@
                     <form name="tokkun" id="tokkunForm" method="get" action="/tokkun/tokkun.jsp">
                         <button type="button" class="btn btn-default" id="start_button" value="Save" onclick="location.href='/tokkun/tokkun_question.jsp'">Tokkun</button>
                     </form>
-                    <button type="button" class="btn btn-default" id="question_add_button" value="Save">Add</button>
                 </div>
             </div>
             <div class="row">
@@ -74,4 +73,4 @@
 			</div>
 		</div>
     </jsp:body>
-</t:with_side_menu>
+</t:basic>
