@@ -9,6 +9,7 @@ import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.springframework.mock.web.MockHttpServletRequest;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
@@ -21,6 +22,7 @@ public class TokkunSteps {
     private Question questionB;
     private Question questionC;
     private User sato;
+    private MockHttpServletRequest satoRequest = new MockHttpServletRequest();
 
     @Given("^問題Aが追加された$")
     public void 問題aが追加された() {
@@ -78,23 +80,21 @@ public class TokkunSteps {
 
     @Given("^特訓画面が表示されている$")
     public void 特訓画面が表示されている() {
-        site.visit("tokkun_top.jsp");
+        site.visit("tokkun/tokkun_top.jsp");
     }
 
     @Given("^佐藤がログインしている$")
-    public void 佐藤がログインしている() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void 佐藤がログインしている() {
+        satoRequest.getSession().setAttribute("user_id", sato.getLongId());
     }
 
     @When("^特訓ボタンを押す$")
-    public void 特訓ボタンを押す() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void 特訓ボタンを押す() {
+        driver.clickButton("start_button");
     }
 
     @Then("^特訓回答画面に遷移する$")
-    public void 特訓回答画面に遷移する() throws Throwable {
+    public void 特訓回答画面に遷移する() {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }
