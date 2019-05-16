@@ -29,6 +29,14 @@ public class QuestionStep {
     private int currentTestTotalQuestions;
     private final String add_question_url = site.baseUrl() + "onlinetest/add_question.jsp";
 
+    private final String login_url = site.baseUrl() + "login.jsp";
+
+    private void visitLoginPage() {
+        driver.visit(login_url);
+        driver.pageShouldContain("Login Massive Mailer");
+    }
+
+
     @Given("^Add a question \"([^\"]*)\" with dummy options$")
     public void add_a_question(String description) {
         add_a_question(description, "");
@@ -309,6 +317,14 @@ public class QuestionStep {
         }
     }
 
+    @Given("^\"([^\"]*)\"がログインしている$")
+    public void がログインしている(String arg1) throws Throwable {
+        visitLoginPage();
+        driver.setTextField("email", "terry@hogehoge.com");
+        driver.setTextField("password", "11111111");
+        driver.clickButton("login");
+    }
+
     @When("^質問の内容を入力してAddボタンを押す")
     public void 質問の内容を入力してAddボタンを押す() {
         driver.visit(add_question_url);
@@ -321,8 +337,9 @@ public class QuestionStep {
         driver.clickButton("add_button");
     }
 
-    @Then("^Privateな質問が追加される$")
-    public void privateな質問が追加される() {
+    @Then("^\"([^\"]*)\"の特訓トップページに追加した質問が表示される$")
+    public void の特訓トップページに追加した質問が表示される(String arg1) throws Throwable {
         driver.pageShouldContain("PrivateDescription");
     }
+
 }
