@@ -2,11 +2,24 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.odde.massivemailer.model.onlinetest.Category" %>
-
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.odde.massivemailer.model.onlinetest.QuestionCategory" %>
 <%
     String errorMessage = (String) request.getAttribute("errorMessage");
     pageContext.setAttribute("errorMessage", errorMessage);
-	pageContext.setAttribute("categories", Category.values());
+    pageContext.setAttribute("categories", Category.values());
+    // TODO: QuestionCategoryの実装が完了し次第、着手する。
+    // QuestionCategory category = createQuestionCategory();
+    // pageContext.setAttribute("categories", category);
+    //List<QuestionCategory> questionCategories = new ArrayList<QuestionCategory>()
+    //{
+    //    {
+    //        add(QuestionCategory.createQuestionCategory());
+    //    }
+    // };
+    //pageContext.setAttribute("categories", questionCategories);
+
 %>
 
 
