@@ -34,6 +34,9 @@ public class TestWithDB extends BlockJUnit4ClassRunner {
 
     private void dbMigrateIfNeeded() {
         if (!dbMigrated) {
+            Base.exec("drop database massive_mailer_unittest;");
+            Base.exec("create database massive_mailer_unittest;");
+            Base.exec("use massive_mailer_unittest;");
             new DBMigrater().migrate();
             dbMigrated = true;
         }

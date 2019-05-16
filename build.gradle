@@ -1,3 +1,10 @@
+def doMysql(String target) {
+    exec {
+        executable "sh"
+        args "-c", "mysql -u root -e " + target
+    }
+}
+
 buildscript {
     repositories {
         jcenter()
@@ -45,6 +52,8 @@ configurations {
 gretty {
     httpPort = 8070
     if(project.gradle.startParameter.taskNames.any{e -> e.startsWith('cucumber')}) {
+        doMysql("\"drop database massive_mailer_test;\"")
+        doMysql("\"create database massive_mailer_test;\"")
         jvmArgs = ["-Dactive_env=test"]
         httpPort = 8060
     }
