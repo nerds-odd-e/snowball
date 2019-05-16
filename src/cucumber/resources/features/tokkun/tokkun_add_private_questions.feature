@@ -5,7 +5,7 @@ Feature:
     Given Add Questionを開いている
     Then "Invalid inputs found!" というメッセージが表示されていない
     And "Right answer is not selected!" というメッセージが表示されていない
-    
+
   Scenario: TerryがPrivateな質問を追加できる
     Given "Terry"がログインしている
     When 質問の内容を入力してAddボタンを押す

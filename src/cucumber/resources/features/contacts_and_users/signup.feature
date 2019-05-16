@@ -1,7 +1,6 @@
 Feature: Signup
   ユーザーがサインアップできる
 
-  @developing_tokoroten
   Scenario: ユーザーがアカウントを新規登録できる
     Given ユーザーがサインアップページを開いている
     When ユーザーはUserNameに"ktanaka"を入力する
