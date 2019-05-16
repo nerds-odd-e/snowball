@@ -61,7 +61,8 @@ public class SignupSteps {
 
     @Then("^自分のユーザー名\"([^\"]*)\"が表示されている$")
     public void 自分のユーザー名_が表示されている(String username) throws Throwable {
-        assertTrue(driver.getBodyText().contains(username));
+        String actualUserName = driver.findElementById("user_name").getText();
+        assertEquals(username, actualUserName);
     }
 
 }
