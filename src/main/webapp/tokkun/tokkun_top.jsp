@@ -29,7 +29,7 @@
 
                 <input type="hidden" id="msg_sent_cnt" value="" />
                 <div class="col-lg-12" id="questionTables">
-                    <c:forEach items="Collections.emptyList()" var="question" varStatus="questionStatus">
+                    <c:forEach items="${questions}" var="question" varStatus="questionStatus">
                         <div class="panel panel-default">
                             <table class="table table-responsive table-bordered">
                                 <thead>
@@ -38,13 +38,11 @@
                                 <tbody id="tokkunTable">
                                     <tr>
                                         <th style="width:20%">Description</th>
-                                        <td id="description">
-                                            <!-- TODO -->
-                                        </td>
+                                        <td id="description">${question.getDescription()}</td>
                                     </tr>
                                     <tr>
                                         <th style="width:20%">Category</th>
-                                        <td id="category"><!-- TODO --></td>
+                                        <td id="category">${question.getCategoryName()}</td>
                                     </tr>
                                     <tr>
                                         <th style="width:20%">Advice</th>

@@ -18,7 +18,7 @@ import java.util.List;
 public class AddQuestionController extends AppController {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.sendRedirect("/onlinetest/add_question.jsp");
     }
 
@@ -32,7 +32,7 @@ public class AddQuestionController extends AppController {
             return;
         }
         saveQuestion(req);
-        resp.sendRedirect("/tokkun/tokkun_top.jsp");
+        resp.sendRedirect("/tokkun/top");
     }
 
     private String checkParameter(HttpServletRequest req) {
