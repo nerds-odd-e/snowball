@@ -2,15 +2,12 @@
 	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<%@ page import="com.odde.massivemailer.model.onlinetest.OnlineTest" %>
-<%@ page import="com.odde.massivemailer.model.onlinetest.Question" %>
 <%@ page import="java.util.*" %>
 
 <t:with_side_menu title="Sign Up">
     <jsp:body>
 <div id="page-wrapper">
-			<form name="signup" id="signupForm" method="post"
-				action="signup">
+			<form name="signup" id="signupForm" method="post" action="signup">
 
 				<div class="container-fluid">
 
@@ -27,8 +24,8 @@
 									<div class="row">
 										<div class="col-lg-1">ID:</div>
 										<div class="col-lg-11">
-											<input type="text" class="form-control" name="id"
-												id="id">
+											<input type="text" class="form-control" name="userName"
+												id="userName">
 										</div>
 									</div>
 								    <div class="row">

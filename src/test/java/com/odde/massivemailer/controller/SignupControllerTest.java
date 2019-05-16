@@ -1,6 +1,7 @@
 package com.odde.massivemailer.controller;
 
 import com.odde.TestWithDB;
+import com.odde.massivemailer.model.User;
 import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,17 +23,35 @@ public class SignupControllerTest {
         controller = new SignupController();
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
+        createUser();
     }
+
 
     @Test
     public void redirectTokkunPageFromSignup() throws Exception {
-        request.setParameter("id", "");
+        request.setParameter("userName", "");
         request.setParameter("email", "");
         request.setParameter("password", "");
         request.setParameter("password_confirm", "");
 
-        controller.doPost(response);
-        assertThat(response.getRedirectedUrl(), CoreMatchers.containsString("tokkun.jsp"));
+        controller.doPost(request, response);
+        assertThat(response.getRedirectedUrl(), CoreMatchers.containsString("tokkun/tokkun_top.jsp"));
+    }
+
+
+    // 新規会員登録ができる
+    // 登録が成功したら、ログイン状態にすること
+    // 登録に失敗したら、失敗しましたとエラーメッセージをだす
+
+    @Test
+    public void saveUserInfoToCookie() {
+
+    }
+
+    private void createUser() {
+        User user = new User("mary@example.com");
+        user.setPassword("abcd1234");
+        user.saveIt();
     }
 
 }

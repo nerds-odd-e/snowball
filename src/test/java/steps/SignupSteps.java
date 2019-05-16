@@ -22,16 +22,16 @@ public class SignupSteps {
     private final MassiveMailerSite site = new MassiveMailerSite();
     private final WebDriverWrapper driver = site.getDriver();
     private final String signup_url = site.baseUrl() + "signup.jsp";
-    private final String tokkun_url = site.baseUrl() + "tokkun.jsp";
+    private final String tokkun_url = site.baseUrl() + "tokkun/tokkun_top.jsp";
 
     @Given("^ユーザーがサインアップページを開いている$")
     public void ユーザーがサインアップページを開いている() throws Throwable {
         driver.visit(signup_url);
     }
 
-    @When("^ユーザーはIDに\"([^\"]*)\"を入力する$")
-    public void ユーザーはidに_を入力する(String id) throws Throwable {
-        driver.setTextField("id", id);
+    @When("^ユーザーはUserNameに\"([^\"]*)\"を入力する$")
+    public void ユーザーはUserNameに_を入力する(String userName) throws Throwable {
+        driver.setTextField("userName", userName);
     }
 
     @When("^ユーザーはEmailに\"([^\"]*)\"を入力する$")

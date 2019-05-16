@@ -10,8 +10,10 @@ import java.io.IOException;
 
 @WebServlet("/signup")
 public class SignupController extends AppController {
-    public void doPost(HttpServletResponse response) throws IOException {
-        String redirectUrl = "tokkun.jsp";
-        response.sendRedirect(redirectUrl);
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String redirectUrl = "tokkun/tokkun_top.jsp";
+        resp.sendRedirect(redirectUrl);
     }
 }
