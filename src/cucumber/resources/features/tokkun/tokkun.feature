@@ -10,7 +10,6 @@ Feature:
     And 佐藤は問題Cを回答していない
     And 特訓画面が表示されている
 
-  @now
   Scenario Outline: 特訓を開始して５日経過した問題と未回答の問題が表示される
     Given 佐藤がログインしている
     When 特訓ボタンを押す

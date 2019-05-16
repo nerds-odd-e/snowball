@@ -36,16 +36,10 @@ public class WrongQuestionSteps {
         QuestionResponseForTokkun.createIt("answered_at", date.toString(),"counter",0 , "question_id", Question.findAll().get(0).getId(), "user_id", User.findAll().get(0).getId());
     }
 
-    @When("^問題に正解する$")
-    public void 問題に正解する() {
-    }
-
-    @When("^問題に不正解する$")
-    public void 問題に不正解する() {
-    }
-
-    @Then("^問題が非表示される$")
-    public void 問題が非表示される() {
+    @Given("^スクラムとは何ですか？の問題が(\\d+)時間前に不正解になっている$")
+    public void スクラムとは何ですか_の問題が_時間前に不正解になっている(int elapsed_time){
+        LocalDateTime date = LocalDateTime.now().minusHours(elapsed_time);
+        QuestionResponseForTokkun.createIt("answered_at", date.toString(),"counter",0 , "question_id", Question.findAll().get(0).getId(), "user_id", User.findAll().get(0).getId());
     }
 
     @Then("^問題が表示される$")
@@ -53,11 +47,11 @@ public class WrongQuestionSteps {
         site.visit("tokkun/question");
         Assert.assertEquals(driver.findElementById("title").getText(), "Question");
         Assert.assertEquals(driver.findElementById("question").getText(), Question.findAll().get(0).getString("description"));
-
-        // Tokkun tokkun = new Tokkun();
     }
 
-    @When("^(\\d+)時間が経過する$")
-    public void 時間が経過する(int arg1) {
+    @Then("^問題が非表示される$")
+    public void 問題が非表示される() {
+        site.visit("tokkun/tokkun_top.jsp");
+        Assert.assertEquals(driver.getCurrentTitle(), "Tokkun List");
     }
 }
