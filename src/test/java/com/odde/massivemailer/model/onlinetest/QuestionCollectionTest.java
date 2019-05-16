@@ -86,9 +86,9 @@ public class QuestionCollectionTest {
 
     @Test
     public void getScrumCategoryMoreThan3Whenxxxx() {
-        createByCategory("Scrum");
-        createByCategory("Tech");
-        createByCategory("Team");
+        createByCategory("Scrum", 5);
+        createByCategory("Tech", 5);
+        createByCategory("Team", 5);
         List<Question> questions = new QuestionCollection(Question.getAll()).generateQuestionList(Category.values(), 10);
         for(int i = 0; i < 1000; i++){
             long count = questions.stream().filter(q -> q.getCategory().equals("1")).count();
@@ -98,9 +98,9 @@ public class QuestionCollectionTest {
 
     @Test
     public void getScrumCategoryMoreThan3Whenxxxx2() {
-        createByCategory("Scrum");
-        createByCategory("Scrum");
-        createByCategory("Tech");
+        createByCategory("Scrum", 5);
+        createByCategory("Scrum", 5);
+        createByCategory("Tech", 5);
         List<Question> questions = new QuestionCollection(Question.getAll()).generateQuestionList(Category.values(), 10);
         for(int i = 0; i < 1000; i++){
             long count = questions.stream().filter(q -> q.getCategory().equals("1")).count();
@@ -110,9 +110,9 @@ public class QuestionCollectionTest {
 
     @Test
     public void getScrumCategoryMoreThan3Whenxxxx3() {
-        createByCategory("Scrum");
-        createByCategory("Scrum");
-        createByCategory("Scrum");
+        createByCategory("Scrum", 5);
+        createByCategory("Scrum", 5);
+        createByCategory("Scrum", 5);
         List<Question> questions = new QuestionCollection(Question.getAll()).generateQuestionList(Category.values(), 10);
         for(int i = 0; i < 1000; i++){
             long count = questions.stream().filter(q -> q.getCategory().equals("1")).count();
@@ -120,11 +120,20 @@ public class QuestionCollectionTest {
         }
     }
 
+    @Test
+    public void getScrumCategoryMoreThan1Whenxxxx() {
+        createByCategory("Tech", 2);
+        createByCategory("Scrum", 1);
+        for(long i = 0; i < 1000; i++){
+            List<Question> questions = new QuestionCollection(Question.getAll()).generateQuestionList(Category.values(), 2);
+            long count = questions.stream().filter(q -> q.getCategory().equals("1")).count();
+            assertEquals("count:" + count, count, 1);
+        }
+    }
 
-
-    private void createByCategory(String category) {
+    private void createByCategory(String category, int createQuestionCount) {
         int categoryId = Category.findByName(category).getId();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < createQuestionCount; i++) {
             new QuestionBuilder()
                     .aQuestion(category, null, String.valueOf(categoryId))
                     .withCorrectOption("CorrectOption")
