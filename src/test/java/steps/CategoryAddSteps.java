@@ -10,6 +10,7 @@ import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class CategoryAddSteps {
     private final MassiveMailerSite site = new MassiveMailerSite();
@@ -25,35 +26,35 @@ public class CategoryAddSteps {
     }
 
     @When("^カテゴリ追加ボタンを押す")
-    public void カテゴリ追加ボタンを押す() throws Throwable {
+    public void カテゴリ追加ボタンを押す() {
         driver.clickButton("add_category_button");
     }
 
     @Then("^カテゴリ追加画面に遷移する$")
-    public void カテゴリ追加画面に遷移する() throws Throwable {
+    public void カテゴリ追加画面に遷移する() {
         assertEquals("Add Category", driver.getCurrentTitle());
     }
 
     @When("^新しいカテゴリを入力する$")
-    public void 新しいカテゴリを入力する() throws Throwable {
+    public void 新しいカテゴリを入力する() {
         driver.setTextField("category_name","新カテゴリ");
     }
 
     @When("^決定ボタンをクリックする$")
-    public void 決定ボタンをクリックする() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-//        throw new PendingException();
+    public void 決定ボタンをクリックする() {
+        driver.clickButton("add_category");
     }
 
     @Then("^問題作成画面に遷移する$")
-    public void 問題作成画面に遷移する() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void 問題作成画面に遷移する() {
+        assertEquals("Add Question", driver.getCurrentTitle());
     }
 
     @Then("^新しいカテゴリが選択できる$")
-    public void 新しいカテゴリが選択できる() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void 新しいカテゴリが選択できる() {
+        // TODO: DBから取得するようにしたら、"新カテゴリ"で検索かけるようにする。
+        assertTrue(driver.findElementById("categoryList").getText().contains("Scrum"));
+//        assertTrue(driver.findElementById("categoryList").getText().contains("新カテゴリ"));
+
     }
 }

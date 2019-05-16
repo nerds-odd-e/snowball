@@ -17,7 +17,7 @@
             </div>
         </div>
 
-         <form name="addContact" id="addContact" method="post" action="contacts">
+         <form name="addCategory" id="addCategory" method="post" action="addCategory">
         					<div class="row">
         						<div class="col-lg-12">
 
@@ -38,8 +38,8 @@
         									</div>
         									<div class="row">
                                                 <div class="col-lg-12">
-                                                <button type="button" class="btn btn-default"
-                                                    id="add_button" value="Add">Add</button>
+                                                <button type="submit" class="btn btn-default"
+                                                    id="add_category" value="Add">Add</button>
                                                 </div>
                                             </div>
         								</div>
