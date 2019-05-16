@@ -1,7 +1,7 @@
 Feature:
   問題のカテゴリを追加できる
 
-  @now
+  @developing
   Scenario: Adminが新しいカテゴリを追加できる
     Given Adminがログインする
     When カテゴリ追加ボタンを押す
