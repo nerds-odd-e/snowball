@@ -29,6 +29,11 @@
                         <table class="table table-responsive table-bordered">
                             <thead>
                                 <th>Question ${questionStatus.index + 1}</th>
+                                <td>
+                                  <button type="button" data-dismiss="modal" id="approve-${question.getId()}">                        								aria-label="Approve">
+                                    <span aria-hidden="true">Approve</span>
+                                  </button>
+                                </td>
                             </thead>
                             <tbody id="questionTable">
                                 <tr>
