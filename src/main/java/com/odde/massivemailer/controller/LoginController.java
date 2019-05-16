@@ -20,7 +20,7 @@ public class LoginController extends AppController {
             Cookie sessionCookie = new Cookie("session_id", email);
             sessionCookie.setHttpOnly(true);
             resp.addCookie(sessionCookie);
-            redirectUrl = "course_list.jsp";
+            redirectUrl = "tokkun/tokkun_top.jsp";
         } else {
             redirectUrl = "login.jsp?status=fail";
         }

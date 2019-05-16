@@ -59,9 +59,9 @@ public class LoginTests{
         driver.clickButton("login");
     }
 
-    @Then("^Show course list of current user$")
+    @Then("^Show tokkun top$")
     public void show_course_list_of_current_user() {
-        assertThat(driver.getCurrentUrl(), containsString("course_list"));
+        assertThat(driver.getCurrentUrl(), containsString("tokkun/tokkun_top"));
     }
 
     @Then("^I should move to page with url \"([^\"]*)\"$")

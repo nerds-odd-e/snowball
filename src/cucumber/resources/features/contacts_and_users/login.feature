@@ -19,7 +19,7 @@ Feature: Login
 
     Examples:
       | email               | password | url                   | message |
-      | mary@example.com    | abcd1234 | course_list.jsp       | hidden  |
+      | mary@example.com    | abcd1234 | tokkun/tokkun_top.jsp | hidden  |
       | mary@example.com    | hogehoge | login.jsp?status=fail | shown   |
       | unknown@example.com | abcd1234 | login.jsp?status=fail | shown   |
 
@@ -28,22 +28,6 @@ Feature: Login
     When I login with "mary@example.com" and "abcd1234"
     Then I should move to page with url "login.jsp?status=fail"
     And Login failed message is shown
-
-  Scenario Outline: Courses List after Login
-    Given There are users as bellow
-      | JohnSmith@mail.com | abcd1234 |
-      | JaneDoe@mail.com   | abcd1001 |
-      | john@example.com   | abcd1002 |
-      | Bobb@example.com   | abcd1003 |
-    When I login with "<email>" and "<password>"
-    Then Show courses list "<courses>"
-
-    Examples:
-      | email              | password | courses     |
-      | JohnSmith@mail.com | abcd1234 | CSD-1       |
-      | JaneDoe@mail.com   | abcd1001 | CSD-1,CSD-2 |
-      | john@example.com   | abcd1002 | CSD-2       |
-      | Bobb@example.com   | abcd1003 |             |
 
   Scenario: Preserve login info after navigation
     Given There are users as bellow
