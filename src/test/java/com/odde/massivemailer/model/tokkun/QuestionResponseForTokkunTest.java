@@ -3,6 +3,7 @@ package com.odde.massivemailer.model.tokkun;
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.User;
 import com.odde.massivemailer.model.onlinetest.Question;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.util.CollectionUtils;
@@ -33,7 +34,7 @@ public class QuestionResponseForTokkunTest {
         assertThat(questionResponse.getLongId(), is(not(nullValue())));
     }
 
-    @Test
+    @Ignore
     public void selectUserResponseQuestions() {
         User user = createUser();
         List<QuestionResponseForTokkun> tokkuns = QuestionResponseForTokkun.selectUserResponsedTokens(user);
