@@ -30,9 +30,11 @@
                             <thead>
                                 <th>Question ${questionStatus.index + 1}</th>
                                 <td>
-                                  <button type="button" data-dismiss="modal" id="approve-${question.getId()}">                        								aria-label="Approve">
+                                 <form method="post" action="">
+                                  <button type="submit" data-dismiss="modal" id="approve-${question.getId()}">
                                     <span aria-hidden="true">Approve</span>
                                   </button>
+                                 </form>
                                 </td>
                             </thead>
                             <tbody id="questionTable">
