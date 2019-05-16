@@ -29,10 +29,11 @@ Feature:
     When スタートボタンをクリック
     Then 問題画面へ遷移する
 
+    @now
   Scenario Outline: 3カテゴリから均等に最大10問問題を表示する
-    Given "scrum"に<scrum_stored>問が登録されている
-    And "tech"に<tech_stored>問が登録されている
-    And "team"に<team_stored>問が登録されている
+    Given "Scrum"に<scrum_stored>問が登録されている
+    And "Tech"に<tech_stored>問が登録されている
+    And "Team"に<team_stored>問が登録されている
     When startをクリックしてすべての問題を回答したとき
     Then scrumが<scrum_shown>問が表示されること
     And 合計で<total_shown>問が表示されること

@@ -309,7 +309,7 @@ public class QuestionStep {
         while (driver.getCurrentTitle().equals("Question")) {
             totalCounter++;
             String categoryName = driver.findElementById("description").getText();
-            if (categoryName.equals("scrum")) {
+            if (categoryName.equals("Scrum")) {
                 scrumCounter++;
             }
             driver.clickRadioButton("CorrectOption");

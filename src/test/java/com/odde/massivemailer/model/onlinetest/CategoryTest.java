@@ -1,6 +1,8 @@
 package com.odde.massivemailer.model.onlinetest;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.assertEquals;
 
@@ -38,9 +40,13 @@ public class CategoryTest {
         assertEquals(Category.TEAM, Category.findByName("Team"));
     }
 
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
     @Test
     public void カテゴリにない文字列が入力された場合はUNKNOWNが返る() {
-        assertEquals(Category.UNKNOWN, Category.findByName("foo"));
+        thrown.expect(RuntimeException.class);
+        Category.findByName("foo");
     }
 
     @Test

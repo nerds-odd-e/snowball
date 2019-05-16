@@ -1,5 +1,7 @@
 package com.odde.massivemailer.model.onlinetest;
 
+import java.util.Optional;
+
 public enum Category {
     UNKNOWN(0, ""),
     SCRUM(1, "Scrum"),
@@ -22,10 +24,14 @@ public enum Category {
     }
 
     public static Category findByName(String name) {
+        return getCategory(name).orElseThrow(()->new RuntimeException(String.format("Category `%s` not found", name)));
+    }
+
+    public static Optional<Category> getCategory(String name) {
         for (Category value : Category.values()) {
-            if(name.equals(value.name)) return value;
+            if(name.equals(value.name)) return Optional.of(value);
         }
-        return UNKNOWN;
+        return Optional.empty();
     }
 
     public static String getNameById(String id) {
