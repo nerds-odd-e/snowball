@@ -15,6 +15,8 @@ import steps.site.MassiveMailerSite;
 
 import java.time.LocalDateTime;
 
+import static org.junit.Assert.assertEquals;
+
 public class TokkunSteps {
     private final MassiveMailerSite site = new MassiveMailerSite();
     private final WebDriverWrapper driver = site.getDriver();
@@ -27,7 +29,7 @@ public class TokkunSteps {
     @Given("^問題Aが追加された$")
     public void 問題aが追加された() {
         questionA = new QuestionBuilder()
-                .aQuestion("test", "advice", String.valueOf(Category.SCRUM.getId()))
+                .aQuestion("test_A", "advice", String.valueOf(Category.SCRUM.getId()))
                 .withCorrectOption("correctOption1")
                 .withWrongOption("wrongOption1")
                 .withWrongOption("wrongOption2")
@@ -47,7 +49,7 @@ public class TokkunSteps {
     @Given("^問題Bが追加された$")
     public void 問題bが追加された() {
         questionB = new QuestionBuilder()
-                .aQuestion("test", "advice", String.valueOf(Category.SCRUM.getId()))
+                .aQuestion("test_B", "advice", String.valueOf(Category.SCRUM.getId()))
                 .withCorrectOption("correctOption1")
                 .withWrongOption("wrongOption1")
                 .withWrongOption("wrongOption2")
@@ -65,7 +67,7 @@ public class TokkunSteps {
     @Given("^問題Cが追加された$")
     public void 問題cが追加された() {
         questionC = new QuestionBuilder()
-                .aQuestion("test", "advice", String.valueOf(Category.SCRUM.getId()))
+                .aQuestion("test_C", "advice", String.valueOf(Category.SCRUM.getId()))
                 .withCorrectOption("correctOption1")
                 .withWrongOption("wrongOption1")
                 .withWrongOption("wrongOption2")
@@ -94,15 +96,12 @@ public class TokkunSteps {
     }
 
     @Then("^特訓回答画面に遷移する$")
-    public void 特訓回答画面に遷移する() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void 特訓回答画面に遷移する() throws Throwable {
+        assertEquals("Tokkun Question", driver.getCurrentTitle());
     }
 
     @Then("^佐藤が\"([^\"]*)\"に回答した質問が佐藤に\"([^\"]*)\"$")
-    public void 佐藤が_に回答した質問が佐藤に(String arg1, String arg2) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void 佐藤が_に回答した質問が佐藤に(String arg1, String arg2) {
+//        driver.findElementById("");
     }
-
 }
