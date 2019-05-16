@@ -27,7 +27,7 @@ public class TokkunController extends AppController {
         HttpSession session = req.getSession(true);
         QuestionResponseForTokkun questionResponseForTokkun = new QuestionResponseForTokkun();
         LocalDateTime now = LocalDateTime.now();
-        if (questionResponseForTokkun.findBySQL("select * from question_responses_for_tokkun where answered_at < ?", now.minusHours(22).toString()).size() > 0) {
+        if (questionResponseForTokkun.find("answered_at < ?", now.minusHours(22).toString()).size() > 0) {
             session.setAttribute("question", onlineTest.getCurrentQuestion());
             resp.sendRedirect ("/tokkun/tokkun_question.jsp");
         } else {
