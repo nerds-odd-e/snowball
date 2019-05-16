@@ -12,15 +12,14 @@ public class QuestionCategoryTest {
 
     @Test
     public void createQuestionCategoryTest() {
-        QuestionCategory questionCategory = QuestionCategory.createQuestionCategory();
+        QuestionCategory questionCategory = QuestionCategory.createQuestionCategory("Scrum");
         assertNotNull(questionCategory);
-        assertEquals(1, questionCategory.getId());
         assertEquals("Scrum", questionCategory.getName());
     }
 
-    @Ignore
+    @Test
     public void createQuestionCategoryTest2() {
-        QuestionCategory questionCategory = QuestionCategory.createQuestionCategory();
+        QuestionCategory questionCategory = QuestionCategory.createQuestionCategory("Tech");
         assertNotNull(questionCategory);
         assertEquals("Tech", questionCategory.getName());
     }
