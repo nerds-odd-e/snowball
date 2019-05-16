@@ -35,7 +35,7 @@ public class SignupControllerTest {
         request.setParameter("password_confirm", "");
 
         controller.doPost(request, response);
-        assertThat(response.getRedirectedUrl(), CoreMatchers.containsString("tokkun/tokkun_top.jsp"));
+        assertThat(response.getRedirectedUrl(), CoreMatchers.containsString("tokkun/top"));
     }
 
 

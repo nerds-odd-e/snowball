@@ -13,7 +13,7 @@ public class SignupController extends AppController {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String redirectUrl = "tokkun/tokkun_top.jsp";
+        String redirectUrl = "tokkun/top";
         resp.sendRedirect(redirectUrl);
     }
 }
