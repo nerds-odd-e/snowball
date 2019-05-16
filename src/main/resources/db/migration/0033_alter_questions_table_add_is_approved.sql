@@ -1,0 +1,1 @@
+alter table questions ADD is_approved boolean not null default false;
