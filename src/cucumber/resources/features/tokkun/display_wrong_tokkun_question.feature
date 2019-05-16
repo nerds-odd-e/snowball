@@ -10,6 +10,5 @@ Feature:
     Then 問題が<is_display>される
     Examples:
     | elapsed_hour | is_display |
-    | 22           | 非表示        |
-    | 22           | 表示         |
-    | 21           | 非表示        |
+    | 22           | 表示        |
+    | 21           | 非表示      |

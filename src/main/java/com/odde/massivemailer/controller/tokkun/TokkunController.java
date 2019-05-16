@@ -20,9 +20,9 @@ public class TokkunController extends AppController {
     }
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String question = "スクラムとは何ですか？";
+        OnlineTest onlineTest = new OnlineTest(1);
         HttpSession session = req.getSession(true);
-        session.setAttribute("question", question);
+        session.setAttribute("question", onlineTest.getCurrentQuestion().getDescription());
         resp.sendRedirect("/tokkun/tokkun_question.jsp");
     }
 }
