@@ -30,11 +30,17 @@
                             <thead>
                                 <th>Question ${questionStatus.index + 1}</th>
                                 <td>
-                                 <form method="post" action="">
-                                  <button type="submit" data-dismiss="modal" id="approve-${question.getId()}">
-                                    <span aria-hidden="true">Approve</span>
-                                  </button>
-                                 </form>
+                                 <c:if test="${question.getIsApproved() == false}">
+                                     <form method="post" action="/onlinetest/approve_question">
+                                     <input name="questionId" type="hidden" value="${question.getId()}">
+                                      <button type="submit" data-dismiss="modal" id="approve-${question.getId()}">
+                                        <span aria-hidden="true">Approve</span>
+                                      </button>
+                                     </form>
+                                  </c:if>
+                                 <c:if test="${question.getIsApproved() == true}">
+                                   Approved
+                                 </c:if>
                                 </td>
                             </thead>
                             <tbody id="questionTable">

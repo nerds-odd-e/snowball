@@ -18,6 +18,7 @@ public class Question extends ApplicationModel {
     private static final String ADVICE = "advice";
     private static final String CATEGORY = "category";
     private static final String IS_MULTI_QUESTION = "is_multi_question";
+    private static final String IS_APPROVED = "is_approved";
 
     static {
         validatePresenceOf("description");
@@ -76,6 +77,10 @@ public class Question extends ApplicationModel {
 
     public String getDescription() {
         return getString(DESCRIPTION);
+    }
+
+    public String getIsApproved() {
+        return getString(IS_APPROVED);
     }
 
     public String getAdvice() {

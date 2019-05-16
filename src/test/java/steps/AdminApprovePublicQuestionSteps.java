@@ -6,6 +6,8 @@ import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.junit.Assert;
+import org.openqa.selenium.By;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
@@ -17,24 +19,24 @@ public class AdminApprovePublicQuestionSteps {
     String questionId;
 
     @Given("^未承認の問題がある$")
-    public void 未承認の問題がある(DataTable question) throws Throwable {
+    public void 未承認の問題がある(DataTable question){
         Map<String, String> questionMap = question.asMap(String.class, String.class);
         Question q = new QuestionBuilder()
                 .aQuestion(questionMap.get("description"),null)
                 .withCorrectOption(questionMap.get("option1"))
                 .withWrongOption(questionMap.get("option2"))
                 .please();
-        System.out.println(q.getId());
         questionId = q.getId().toString();
     }
 
     @When("^Adminが承認する$")
-    public void adminが承認する() throws Throwable {
+    public void adminが承認する(){
         site.visit("onlinetest/question_list.jsp");
         driver.clickButton("approve-" + questionId);
     }
 
     @Then("^問題が承認済みになる$")
-    public void 問題が承認済みになる() throws Throwable {
+    public void 問題が承認済みになる(){
+        Assert.assertEquals(0, driver.findElements(By.id("approve-" + questionId)).size());
     }
 }
