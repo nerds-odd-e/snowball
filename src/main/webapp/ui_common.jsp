@@ -44,6 +44,12 @@
                 <li><a href="/onlinetest/question_list.jsp"><span
                         class="glyphicon glyphicon-file" aria-hidden="true"></span>
                         Question List</a></li>
+
+                <ul><li><a href="/category/question_add_category.jsp" id="add_category_button"><span
+                                       class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Category</a></li>
+                      </ul>
+
+
                 <li><a href="/onlinetest/category/advice" id="update_advice"><span
                         class="glyphicon glyphicon-file" aria-hidden="true"></span>
                         Update Advice</a></li>
