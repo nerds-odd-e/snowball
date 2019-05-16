@@ -5,7 +5,7 @@
 <%@ page import="com.odde.massivemailer.model.onlinetest.Question" %>
 
 <%
-    String question = (String) request.getSession().getAttribute("question");
+    Question question = (Question) request.getSession().getAttribute("question");
     pageContext.setAttribute("question", question);
 
 
@@ -23,7 +23,7 @@
         <div id="page-wrapper">
             <h1>Tokkun</h1>
             <span id="title">Question</span>
-            <span id="question">${question}</span>
+            <span id="question">${question.getDescription()}</span>
         </div>
         <h2 id="description">test_A</h2>
     </jsp:body>

@@ -22,7 +22,7 @@ public class TokkunController extends AppController {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         OnlineTest onlineTest = new OnlineTest(1);
         HttpSession session = req.getSession(true);
-        session.setAttribute("question", onlineTest.getCurrentQuestion().getDescription());
+        session.setAttribute("question", onlineTest.getCurrentQuestion());
         resp.sendRedirect("/tokkun/tokkun_question.jsp");
     }
 }
