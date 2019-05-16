@@ -1,6 +1,7 @@
 package com.odde.massivemailer.model.onlinetest;
 
 import com.odde.TestWithDB;
+import com.odde.massivemailer.factory.QuestionBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -81,6 +82,54 @@ public class QuestionCollectionTest {
         QuestionCollection questionCollection = createQuestionCollection(0, 0);
         List<Question> questions = questionCollection.generateQuestionList(new Category[]{Category.SCRUM}, 10);
         assertEquals(0, questions.size());
+    }
+
+    @Test
+    public void getScrumCategoryMoreThan3Whenxxxx() {
+        createByCategory("Scrum");
+        createByCategory("Tech");
+        createByCategory("Team");
+        List<Question> questions = new QuestionCollection(Question.getAll()).generateQuestionList(Category.values(), 10);
+        for(int i = 0; i < 1000; i++){
+            long count = questions.stream().filter(q -> q.getCategory().equals("1")).count();
+            assertEquals("count:" + count, count >= 3, true);
+        }
+    }
+
+    @Test
+    public void getScrumCategoryMoreThan3Whenxxxx2() {
+        createByCategory("Scrum");
+        createByCategory("Scrum");
+        createByCategory("Tech");
+        List<Question> questions = new QuestionCollection(Question.getAll()).generateQuestionList(Category.values(), 10);
+        for(int i = 0; i < 1000; i++){
+            long count = questions.stream().filter(q -> q.getCategory().equals("1")).count();
+            assertEquals("count:" + count, count >= 5, true);
+        }
+    }
+
+    @Test
+    public void getScrumCategoryMoreThan3Whenxxxx3() {
+        createByCategory("Scrum");
+        createByCategory("Scrum");
+        createByCategory("Scrum");
+        List<Question> questions = new QuestionCollection(Question.getAll()).generateQuestionList(Category.values(), 10);
+        for(int i = 0; i < 1000; i++){
+            long count = questions.stream().filter(q -> q.getCategory().equals("1")).count();
+            assertEquals("count:" + count, count >= 10, true);
+        }
+    }
+
+
+
+    private void createByCategory(String category) {
+        int categoryId = Category.findByName(category).getId();
+        for (int i = 0; i < 5; i++) {
+            new QuestionBuilder()
+                    .aQuestion(category, null, String.valueOf(categoryId))
+                    .withCorrectOption("CorrectOption")
+                    .please();
+        }
     }
 
     private QuestionCollection createQuestionCollection(int numberOfScrumQuestion, int numberOfTechQuestion) {
