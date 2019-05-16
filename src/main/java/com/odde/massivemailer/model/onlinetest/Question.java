@@ -26,6 +26,7 @@ public class Question extends ApplicationModel {
 
     public Question() {
         //required by framework :(
+
     }
 
     public Question(String description, String advice, String category, String type) {

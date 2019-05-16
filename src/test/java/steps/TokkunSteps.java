@@ -102,6 +102,6 @@ public class TokkunSteps {
 
     @Then("^佐藤が\"([^\"]*)\"に回答した質問が佐藤に\"([^\"]*)\"$")
     public void 佐藤が_に回答した質問が佐藤に(String arg1, String arg2) {
-//        driver.findElementById("");
+        assertEquals(questionA.getDescription(), driver.findElementById("description").getText());
     }
 }
