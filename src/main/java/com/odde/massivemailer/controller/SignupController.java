@@ -44,6 +44,7 @@ public class SignupController extends AppController {
         String userName = req.getParameter("userName");
         HttpSession session = req.getSession(true);
         session.setAttribute("userName", userName);
+        session.setAttribute("loggedIn", true);
         resp.sendRedirect(redirectUrl);
     }
 }
