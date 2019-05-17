@@ -2,6 +2,7 @@ Feature:
   特訓を開始すると、回答して５日経過した問題もしくは未回答の問題のみ表示される
 
   Background:
+    Given ユーザが登録されている
     Given 問題Aが追加された
     And 佐藤が6日前に問題Aを回答した
     And 問題Bが追加された
@@ -20,8 +21,8 @@ Feature:
     Examples:
       | last answered days before | is display |
       | 6                         | 表示         |
-#      | 1                         | 非表示        |
-#      | none                      | 表示         |
+      | 1                         | 非表示        |
+      | none                      | 表示         |
 
   @developing
   Scenario Outline: 初めてログインする山田はすべての問題が表示される

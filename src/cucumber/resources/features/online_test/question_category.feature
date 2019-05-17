@@ -29,7 +29,6 @@ Feature:
     When スタートボタンをクリック
     Then 問題画面へ遷移する
 
-    @now
   Scenario Outline: 3カテゴリから均等に最大10問問題を表示する
     Given "Scrum"に<scrum_stored>問が登録されている
     And "Tech"に<tech_stored>問が登録されている
