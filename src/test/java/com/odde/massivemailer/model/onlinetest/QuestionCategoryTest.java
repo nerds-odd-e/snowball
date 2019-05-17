@@ -12,12 +12,12 @@ public class QuestionCategoryTest {
 
     @Test
     public void createQuestionCategoryWithNameTest() {
-        QuestionCategory scrumCategory = QuestionCategory.createQuestionCategory("Scrum");
-        assertNotNull(scrumCategory);
-        assertEquals("Scrum", scrumCategory.getName());
-        QuestionCategory techCategory = QuestionCategory.createQuestionCategory("Tech");
-        assertNotNull(techCategory);
-        assertEquals("Tech", techCategory.getName());
+        QuestionCategory categoryFirst = QuestionCategory.createQuestionCategory("Healthy food");
+        assertNotNull(categoryFirst);
+        assertEquals("Healthy food", categoryFirst.getName());
+        QuestionCategory categorySecond = QuestionCategory.createQuestionCategory("Long vacation");
+        assertNotNull(categorySecond);
+        assertEquals("Long vacation", categorySecond.getName());
     }
 
 
