@@ -3,15 +3,19 @@ package com.odde.massivemailer.controller;
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.User;
 import org.hamcrest.CoreMatchers;
+import org.javalite.activejdbc.Model;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 import javax.servlet.http.Cookie;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 @RunWith(TestWithDB.class)
@@ -26,31 +30,29 @@ public class SignupControllerTest {
         controller = new SignupController();
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
-        createUser();
     }
 
+    @BeforeEach
+    public void setupUserDB() {
+//        User.deleteAll();
+//        createUser();
+    }
 
     @Test
     public void redirectTokkunPageFromSignup() throws Exception {
-//        request.setParameter("userName", "");
-//        request.setParameter("email", "");
-//        request.setParameter("password", "");
-//        request.setParameter("password_confirm", "");
-
+        request.setParameter("userName", "yamada");
+        request.setParameter("password", "passhoge");
+        request.setParameter("password_confirm", "passhoge");
         controller.doPost(request, response);
         assertThat(response.getRedirectedUrl(), CoreMatchers.containsString("tokkun/top"));
     }
 
-
-
-
-    // 新規会員登録ができる
-    // 登録が成功したら、ログイン状態にすること
-    // 登録に失敗したら、失敗しましたとエラーメッセージをだす
-
     @Test
     public void saveUserYamadaInfoToCookie() throws Exception {
         request.setParameter("userName", "yamada");
+        request.setParameter("password", "passhoge");
+        request.setParameter("password_confirm", "passhoge");
+
         controller.doPost(request, response);
         String actual = (String) request.getSession().getAttribute("userName");
 
@@ -60,10 +62,41 @@ public class SignupControllerTest {
     @Test
     public void saveUserTanakaInfoToCookie() throws Exception {
         request.setParameter("userName", "tanaka");
+        request.setParameter("password", "passhoge");
+        request.setParameter("password_confirm", "passhoge");
+
         controller.doPost(request, response);
         String actual = (String) request.getSession().getAttribute("userName");
 
         assertEquals("tanaka", actual);
+    }
+
+    @Test
+    public void saveSessionIdTanakaInfoToCookie() throws Exception {
+        request.setParameter("userName", "yamada");
+        request.setParameter("email", "yamada@hoge.com");
+        request.setParameter("password", "passhoge");
+        request.setParameter("password_confirm", "passhoge");
+
+        controller.doPost(request, response);
+
+        String actual = response.getCookie("session_token").getValue();
+        assertNotNull(actual);
+        assertEquals(32, actual.length());
+    }
+
+    @Test
+    public void registerTanakaDataIntoDatabase() throws Exception {
+        request.setParameter("userName", "yamada");
+        request.setParameter("email", "yamada@hoge.com");
+        request.setParameter("password", "passhoge");
+        request.setParameter("password_confirm", "passhoge");
+
+        controller.doPost(request, response);
+
+        User actual = User.findFirst("email = ?", "yamada@hoge.com");
+
+        assertThat(actual.getEmail(), is("yamada@hoge.com"));
     }
 
     private void createUser() {

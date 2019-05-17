@@ -93,4 +93,8 @@ public class User extends ApplicationModel {
     public String getEmail() {
         return getString(EMAIL);
     }
+
+    public void setUserName(String userName) {
+        set("name", userName);
+    }
 }

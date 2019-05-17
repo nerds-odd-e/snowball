@@ -65,4 +65,20 @@ public class SignupSteps {
         assertEquals(username, actualUserName);
     }
 
+    @Then("^サインアップページにエラーメッセージが表示される$")
+    public void サインアップページにエラーメッセージが表示される() throws Throwable {
+        assertTrue(driver.getBodyText().contains("Signup failed"));
+    }
+
+
+    @Given("^ユーザー\"([^\"]*)\"がユーザー登録済みである$")
+    public void ユーザー_がユーザー登録済みである(String username) throws Throwable {
+        // register some user
+        User.deleteAll();
+        User user = new User(username + "@example.com");
+        user.setUserName(username);
+        user.setPassword("testpassword");
+        user.saveIt();
+    }
+
 }
