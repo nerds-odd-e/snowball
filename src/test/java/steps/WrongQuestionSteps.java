@@ -38,4 +38,10 @@ public class WrongQuestionSteps {
         site.visit("tokkun/question");
         Assert.assertEquals("Tokkun List", driver.getCurrentTitle());
     }
+
+    @Given("^スクラムとは何ですか？の問題が(\\d+)時間前に正解になっている$")
+    public void スクラムとは何ですか_の問題が_時間前に正解になっている(int elapsed_time) {
+        LocalDateTime date = LocalDateTime.now().minusHours(elapsed_time);
+        QuestionResponseForTokkun.createIt("answered_at", date.toString(),"counter",1 , "question_id", Question.findAll().get(0).getId(), "user_id", User.findAll().get(0).getId());
+    }
 }

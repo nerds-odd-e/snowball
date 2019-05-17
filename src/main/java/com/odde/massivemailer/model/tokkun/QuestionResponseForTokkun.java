@@ -6,6 +6,7 @@ import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,4 +29,5 @@ public class QuestionResponseForTokkun extends ApplicationModel {
         List<QuestionResponseForTokkun> questionResponseForTokkuns = QuestionResponseForTokkun.find("user_id = ?", user.getLongId());
         return questionResponseForTokkuns;
     }
+
 }
