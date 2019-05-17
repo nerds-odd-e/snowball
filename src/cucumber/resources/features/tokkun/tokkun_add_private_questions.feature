@@ -14,22 +14,15 @@ Feature:
   Scenario: カテゴリーの初期値は空
     Then プルダウン"category"に""が表示される
 
-  Scenario Outline: カテゴリを選択する
+  Scenario: カテゴリを選択する
     Given Descriptionに"description" を入力する
     And option1に"option1"を入力する
     And option2に"option2"を入力する
     And "1"番目のoptionを選択する
-    And カテゴリーとして"<category>"を選択する
+    And カテゴリーとして"Scrum"を選択する
     When Addボタンを押す
     And 特訓のトップページに遷移する
-    Then カテゴリーに "<category>" が表示される
-
-    Examples:
-      | category  |
-      |           |
-      | Scrum     |
-      | Team      |
-      | Tech      |
+    Then カテゴリーに "Scrum" が表示される
 
   Scenario Outline: Validation
     Given Descriptionに"<description>" を入力する

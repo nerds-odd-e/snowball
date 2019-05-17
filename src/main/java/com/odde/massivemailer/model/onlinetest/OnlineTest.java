@@ -161,7 +161,7 @@ public class OnlineTest {
     }
 
     public Answer answerCurrentQuestion(List<String> selectedOptionIds) {
-        Answer answer = new Answer(getCurrentQuestion(), selectedOptionIds);
+    Answer answer = new Answer(getCurrentQuestion(), selectedOptionIds);
         answers.add(answer);
         addAnsweredQuestionNumber();
         return answer;

@@ -94,6 +94,9 @@ public class Question extends ApplicationModel {
     public String getCategoryName() {
         return Category.getNameById(getCategory());
     }
+    public String getCategoryNameByDb() {
+        return Category.getNameByDbId(getCategory());
+    }
 
     public boolean getIsMultiQuestion() {
         Integer type = getInteger(IS_MULTI_QUESTION);

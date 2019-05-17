@@ -30,7 +30,7 @@ public class AddQuestionSteps {
 
     @Then("^プルダウン\"([^\"]*)\"に\"([^\"]*)\"が表示される$")
     public void プルダウン_に_が表示される(String name, String value) {
-        assertEquals(driver.getDropdownTextByName(name), value);
+        assertEquals(value, driver.getDropdownTextByName(name));
     }
 
     @Then("^\"([^\"]*)\" というメッセージが表示されていない$")
@@ -177,7 +177,7 @@ public class AddQuestionSteps {
 
     @Then("^カテゴリーに \"([^\"]*)\" が表示される$")
     public void カテゴリーに_が表示される(String description) {
-        assertEquals(driver.findElementById("category").getText(),description);
+        assertEquals(description, driver.findElementById("category").getText());
     }
 
     @Given("^カテゴリーとして\"([^\"]*)\"を選択する$")

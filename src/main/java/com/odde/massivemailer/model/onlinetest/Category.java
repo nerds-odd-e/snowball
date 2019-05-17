@@ -41,4 +41,8 @@ public enum Category {
             return UNKNOWN.name;
         }
     }
+
+    public static String getNameByDbId(String id) {
+        return QuestionCategory.findById(id).getString("name");
+    }
 }
