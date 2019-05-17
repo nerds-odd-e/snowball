@@ -14,10 +14,24 @@ import java.time.LocalDateTime;
 public class WrongQuestionSteps {
     private final MassiveMailerSite site = new MassiveMailerSite();
     private final WebDriverWrapper driver = site.getDriver();
+    private final String email = "mary@example.com";
+    private final String password = "abcd1234";
+
 
     @Given("^ユーザが登録されている$")
     public void ユーザが登録されている() throws Throwable {
-        User.createIt("id",1, "email","mizukami@gmail.com", "hashed_password", "0", "token", "0", "name", "mizukami", "is_admin", 0);
+        User.deleteAll();
+        User user = new User(email);
+        user.setPassword(password);
+        user.saveIt();
+    }
+
+    @Given("^ユーザがログインされている")
+    public void ユーザがログインされている() throws Throwable {
+        driver.visit(site.baseUrl() + "login.jsp");
+        driver.setTextField("email", email);
+        driver.setTextField("password", password);
+        driver.clickButton("login");
     }
 
     @Given("^スクラムとは何ですか？の問題が(\\d+)時間前に不正解になっている$")
