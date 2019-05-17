@@ -1,7 +1,6 @@
 package steps;
 
 import com.odde.massivemailer.model.User;
-import com.odde.massivemailer.model.onlinetest.QuestionCategory;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -10,10 +9,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
-import java.util.Collections;
-
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class CategoryAddSteps {
@@ -22,17 +18,26 @@ public class CategoryAddSteps {
     private User user;
     private MockHttpServletRequest request = new MockHttpServletRequest();
 
-    @Given("^カテゴリ追加を開始する画面に遷移する$")
-    public void カテゴリ追加を開始する画面に遷移する() {
+    @Given("^メニューを選択できる画面に遷移する$")
+    public void メニューを選択できる画面に遷移する() {
         site.visit("");
     }
 
-    @Given("^Adminがログインする$")
-    public void adminがログインする() {
-        site.visit("");
-        User user = User.createIt("id", 1, "email", "mizukami@gmail.com", "hashed_password", "0", "token", "0", "name", "mizukami", "is_admin", 1);
+    @Given("^ユーザーはAdminである$")
+    public void ユーザーはadminである() {
+        user = User.createIt("id", 1, "email", "mizukami@gmail.com", "hashed_password", "0", "token", "0", "name", "mizukami", "is_admin", 1);
+    }
+
+    @When("^ユーザーがログインする$")
+    public void ユーザーがログインする() {
         request.getSession().setAttribute("user_id", user.getLongId());
     }
+
+    @Then("^カテゴリ追加ボタンが見える$")
+    public void カテゴリ追加ボタンが見える() {
+        assertTrue(driver.findElementById("add_category_button").getText().contains("Add Category"));
+    }
+
 
     @When("^カテゴリ追加ボタンを押す")
     public void カテゴリ追加ボタンを押す() {

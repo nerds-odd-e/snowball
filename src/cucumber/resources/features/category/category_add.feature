@@ -2,7 +2,7 @@ Feature:
   問題のカテゴリを追加できる
 
   Scenario: 新しいカテゴリを追加できる
-    Given カテゴリ追加を開始する画面に遷移する
+    Given メニューを選択できる画面に遷移する
     And カテゴリ追加ボタンを押す
     Then カテゴリ追加画面に遷移する
     When 新しいカテゴリを入力する
@@ -10,9 +10,10 @@ Feature:
     Then 問題作成画面に遷移する
     And 新しいカテゴリが選択できる
 
-  @developing
   Scenario: Adminが新しいカテゴリを追加できる
-    Given Adminがログインする
+    Given ユーザーはAdminである
+    And メニューを選択できる画面に遷移する
+    Then カテゴリ追加ボタンが見える
     When カテゴリ追加ボタンを押す
     Then カテゴリ追加画面に遷移する
     When 新しいカテゴリを入力する
