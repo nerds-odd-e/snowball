@@ -1,6 +1,7 @@
 package steps;
 
 import com.odde.massivemailer.model.User;
+import com.odde.massivemailer.model.onlinetest.QuestionCategory;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -9,7 +10,10 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
+import java.util.Collections;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class CategoryAddSteps {
@@ -17,6 +21,11 @@ public class CategoryAddSteps {
     private final WebDriverWrapper driver = site.getDriver();
     private User user;
     private MockHttpServletRequest request = new MockHttpServletRequest();
+
+    @Given("^カテゴリ追加を開始する画面に遷移する$")
+    public void カテゴリ追加を開始する画面に遷移する() {
+        site.visit("");
+    }
 
     @Given("^Adminがログインする$")
     public void adminがログインする() {
@@ -52,9 +61,8 @@ public class CategoryAddSteps {
 
     @Then("^新しいカテゴリが選択できる$")
     public void 新しいカテゴリが選択できる() {
-        // TODO: DBから取得するようにしたら、"新カテゴリ"で検索かけるようにする。
-        assertTrue(driver.findElementById("categoryList").getText().contains("Scrum"));
-//        assertTrue(driver.findElementById("categoryList").getText().contains("新カテゴリ"));
-
+        assertTrue(driver.findElementById("categoryList").getText().contains("新カテゴリ"));
     }
+
+
 }

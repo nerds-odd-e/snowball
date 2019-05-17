@@ -2,6 +2,7 @@ package com.odde.massivemailer.controller.category;
 
 import com.odde.massivemailer.controller.AppController;
 import com.odde.massivemailer.model.onlinetest.OnlineTest;
+import com.odde.massivemailer.model.onlinetest.QuestionCategory;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +16,7 @@ import java.util.Arrays;
 public class AddQuestionCategoryController extends AppController {
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        // TODO db登録
+        QuestionCategory.createQuestionCategory(req.getParameter("category_name"));
         resp.sendRedirect("/onlinetest/add_question.jsp");
     }
 }

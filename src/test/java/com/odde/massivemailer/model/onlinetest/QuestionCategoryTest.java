@@ -1,27 +1,23 @@
 package com.odde.massivemailer.model.onlinetest;
 
 import com.odde.TestWithDB;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(TestWithDB.class)
 public class QuestionCategoryTest {
 
     @Test
-    public void createQuestionCategoryTest() {
-        QuestionCategory questionCategory = QuestionCategory.createQuestionCategory("Scrum");
-        assertNotNull(questionCategory);
-        assertEquals("Scrum", questionCategory.getName());
-    }
-
-    @Test
-    public void createQuestionCategoryTest2() {
-        QuestionCategory questionCategory = QuestionCategory.createQuestionCategory("Tech");
-        assertNotNull(questionCategory);
-        assertEquals("Tech", questionCategory.getName());
+    public void createQuestionCategoryWithNameTest() {
+        QuestionCategory scrumCategory = QuestionCategory.createQuestionCategory("Scrum");
+        assertNotNull(scrumCategory);
+        assertEquals("Scrum", scrumCategory.getName());
+        QuestionCategory techCategory = QuestionCategory.createQuestionCategory("Tech");
+        assertNotNull(techCategory);
+        assertEquals("Tech", techCategory.getName());
     }
 
 
