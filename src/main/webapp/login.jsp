@@ -57,6 +57,11 @@
 											<input type="submit" id="login" value="Login">
 										</div>
 									</div>
+									<div class="row">
+									    <div class="col-lg-12">
+									        <a href="signup.jsp" id="signup">Sign Up</a>
+									    </div>
+									</div>
 								</div>
 							</div>
 						</div>

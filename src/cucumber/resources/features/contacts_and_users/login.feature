@@ -40,3 +40,8 @@ Feature: Login
     Scenario: Courses List no login
       When I move to course list page
       Then Show all courses list "CSD-1,CSD-2,CSD-3"
+
+      @now
+  Scenario: ログインページからサインアップページに遷移できること
+    When ログインページのサインアップページのリンクを押下する
+    Then サインアップページに遷移すること
