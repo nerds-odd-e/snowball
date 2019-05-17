@@ -30,7 +30,15 @@ public class QuestionResponseForTokkun extends ApplicationModel {
         return questionResponseForTokkuns;
     }
 
-    public LazyList<Model> wrongQuestions() {
-        return find("answered_at < ? AND counter = 0", LocalDateTime.now().minusHours(22).toString());
+    private static boolean wrongQuestions() {
+        return find("answered_at < ? AND counter = 0", LocalDateTime.now().minusHours(22).toString()).size() > 0;
+    }
+
+    private static boolean correctQuestions() {
+        return find("answered_at < ? AND counter > 0", LocalDateTime.now().minusHours(118).toString()).size() > 0;
+    }
+
+    public boolean showAnswerQuestionIfNeeded() {
+        return wrongQuestions() || correctQuestions();
     }
 }

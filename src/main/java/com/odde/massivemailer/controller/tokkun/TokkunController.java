@@ -24,7 +24,7 @@ public class TokkunController extends AppController {
         HttpSession session = req.getSession(true);
         QuestionResponseForTokkun questionResponseForTokkun = new QuestionResponseForTokkun();
 
-        if (questionResponseForTokkun.wrongQuestions().size() > 0) {
+        if (questionResponseForTokkun.showAnswerQuestionIfNeeded()) {
             session.setAttribute("question", onlineTest.getCurrentQuestion());
             resp.sendRedirect ("/tokkun/tokkun_question.jsp");
         } else {
