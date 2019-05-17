@@ -54,7 +54,7 @@ public class TokkunControllerTest {
     public void getPost() throws ServletException, IOException {
         Question question = createQuestionWithOptions("0");
 //        QuestionResponseForTokkun questionResponseForTokkun = createQuestionForTokkun("0");
-        Tokkun tokkun = new Tokkun(1);
+        Tokkun tokkun = new Tokkun();
         request.getSession().setAttribute("tokkun", tokkun);
 
 //        request.getSession().getAttribute("login_user");

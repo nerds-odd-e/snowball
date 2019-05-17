@@ -39,6 +39,6 @@ public class QuestionResponseForTokkun extends ApplicationModel {
     }
 
     public boolean showAnswerQuestionIfNeeded() {
-        return wrongQuestions() || correctQuestions();
+        return wrongQuestions() || correctQuestions() || findAll().size() == 0;
     }
 }

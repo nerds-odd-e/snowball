@@ -20,11 +20,32 @@
     <jsp:attribute name="extra_head">
     </jsp:attribute>
     <jsp:body>
-        <div id="page-wrapper">
-            <h1>Tokkun</h1>
-            <span id="title">Question</span>
-            <span id="question">${question.getDescription()}</span>
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div id="page-wrapper">
+                <h1>Tokkun</h1>
+                <span id="title">Question</span>
+                <span id="question">${question.getDescription()}</span>
+            </div>
+            <h2 id="description">test_A</h2>
+            <form name="tokkun" id="tokkunForm" method="post"
+                action="/tokkun/question">
+                <c:forEach items="${question.getOptions()}" var="option" varStatus="status">
+                    <li>
+                        <c:if test="${question.getIsMultiQuestion()}">
+                         <input type="checkbox" id="option${status.index + 1}" name="optionId" value="${option.getLongId()}" />${option.getDescription()}</label>
+                        </c:if>
+                        <c:if test="${!question.getIsMultiQuestion()}">
+                         <input type="radio" id="option${status.index + 1}" name="optionId" value="${option.getLongId()}" />${option.getDescription()}</label>
+                        </c:if>
+                    </li>
+                </c:forEach>
+
+                <div class="col-lg-12">
+                    <input type="submit" id="answer" value="Answer">
+                </div>
+            </form>
         </div>
-        <h2 id="description">test_A</h2>
+    </div>
     </jsp:body>
 </t:basic>

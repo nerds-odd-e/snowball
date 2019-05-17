@@ -15,8 +15,9 @@ import java.util.Arrays;
 @WebServlet("/tokkun/question")
 public class TokkunController extends AppController {
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response) {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException  {
         request.setAttribute("selectedOption", new ArrayList(Arrays.asList("a")));
+        response.sendRedirect ("/tokkun/end_of_test.jsp");
     }
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {

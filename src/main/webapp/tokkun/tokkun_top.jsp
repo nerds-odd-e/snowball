@@ -18,9 +18,9 @@
             </div>
             <!-- /.row -->
             <div class="row">
-                <div class="col-lg-12" id="">
-                    <form name="tokkun" id="tokkunForm" method="get" action="/tokkun/tokkun.jsp">
-                        <button type="button" class="btn btn-default" id="start_button" value="Save" onclick="location.href='/tokkun/tokkun_question.jsp'">Tokkun</button>
+                    <div class="col-lg-12" id="">
+                    <form name="tokkun" id="tokkunForm" method="get" action="/tokkun/launchQuestion">
+                        <button type="submit" class="btn btn-default" id="start_button">Tokkun</button>
                     </form>
                 </div>
             </div>
