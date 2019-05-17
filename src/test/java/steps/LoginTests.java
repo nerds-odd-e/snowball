@@ -121,4 +121,15 @@ public class LoginTests{
     public void show_all_courses_list(String courses) {
         show_courses_list(courses);
     }
+
+    @When("^ログインページのサインアップページのリンクを押下する$")
+    public void ログインページのサインアップページのリンクを押下する() throws Throwable {
+        visitLoginPage();
+        driver.clickById("signup");
+    }
+
+    @Then("^サインアップページに遷移すること$")
+    public void サインアップページに遷移すること() throws Throwable {
+        assertEquals(driver.getCurrentTitle(), "Sign Up");
+    }
 }
