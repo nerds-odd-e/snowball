@@ -1,6 +1,7 @@
 package steps;
 
 import com.odde.massivemailer.factory.QuestionBuilder;
+import com.odde.massivemailer.model.User;
 import com.odde.massivemailer.model.onlinetest.Category;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.And;
@@ -315,6 +316,14 @@ public class QuestionStep {
             driver.clickRadioButton("CorrectOption");
             driver.clickButton("answer");
         }
+    }
+
+    @Given("^\"([^\"]*)\"ユーザが登録されている$")
+    public void ユーザが登録されている(String arg1) throws Throwable {
+        User.deleteAll();
+        User user = new User("terry@hogehoge.com");
+        user.setPassword("11111111");
+        user.saveIt();
     }
 
     @Given("^\"([^\"]*)\"がログインしている$")

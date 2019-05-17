@@ -7,6 +7,7 @@ Feature:
     And "Right answer is not selected!" というメッセージが表示されていない
 
   Scenario: TerryがPrivateな質問を追加できる
+    Given "Terry"ユーザが登録されている
     Given "Terry"がログインしている
     When 質問の内容を入力してAddボタンを押す
     Then "Terry"の特訓トップページに追加した質問が表示される
@@ -15,6 +16,9 @@ Feature:
     Then プルダウン"category"に""が表示される
 
   Scenario: カテゴリを選択する
+    Given "Terry"ユーザが登録されている
+    Given "Terry"がログインしている
+    Given Add Questionを開いている
     Given Descriptionに"description" を入力する
     And option1に"option1"を入力する
     And option2に"option2"を入力する
