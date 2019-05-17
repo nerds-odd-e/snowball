@@ -6,6 +6,12 @@
 <%@ page import="com.odde.massivemailer.model.onlinetest.Question" %>
 <%@ page import="java.util.*" %>
 
+<%
+    if (request.getSession().getAttribute("loggedIn") == null) {
+        response.sendRedirect("/login.jsp");
+    }
+%>
+
 <t:basic title="Tokkun List">
     <jsp:body>
         <div class="container-fluid">

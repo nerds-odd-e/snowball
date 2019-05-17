@@ -24,4 +24,9 @@ public class TokkunTopSteps {
     public void ログインページに遷移する() {
         assertEquals("Login", driver.getCurrentTitle());
     }
+
+    @Then("^特訓トップページを表示する$")
+    public void 特訓トップページを表示する() {
+        assertEquals("Tokkun List", driver.getCurrentTitle());
+    }
 }
