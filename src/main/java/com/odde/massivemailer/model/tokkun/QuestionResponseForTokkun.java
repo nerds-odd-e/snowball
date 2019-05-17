@@ -30,4 +30,7 @@ public class QuestionResponseForTokkun extends ApplicationModel {
         return questionResponseForTokkuns;
     }
 
+    public LazyList<Model> wrongQuestions() {
+        return find("answered_at < ? AND counter = 0", LocalDateTime.now().minusHours(22).toString());
+    }
 }
