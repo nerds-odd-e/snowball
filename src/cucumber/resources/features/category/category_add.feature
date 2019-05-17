@@ -10,6 +10,7 @@ Feature:
     Then 問題作成画面に遷移する
     And 新しいカテゴリが選択できる
 
+  @developing
   Scenario: Adminが新しいカテゴリを追加できる
     Given ユーザーはAdminである
     And メニューを選択できる画面に遷移する
