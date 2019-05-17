@@ -36,7 +36,7 @@
 								    <div class="row">
                                         <div class="col-lg-1">Email:</div>
                                         <div class="col-lg-11">
-                                    		<input type="text" class="form-control" name="email" id="email">
+                                    		<input type="email" class="form-control" name="email" id="email">
                                     	</div>
                                     </div>
                                     <div class="row">
