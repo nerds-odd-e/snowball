@@ -15,7 +15,7 @@ public class OnlineTest {
     public List<Answer> answers;
 
     public OnlineTest(int questionCount) {
-        questions = new QuestionCollection(Question.getAll()).generateQuestionList(Category.values(), questionCount);
+        questions = new QuestionCollection(Question.getAll()).generateQuestionList(Category.findAll(), questionCount);
         numberOfAnsweredQuestions = 0;
         categoryCorrectAnswerCount = new HashMap<>();
         categoryTestResults = new ArrayList<>();
@@ -111,7 +111,7 @@ public class OnlineTest {
         }
         String categories = questions.stream()
                 .sorted((q1, q2) -> (int) (q1.getLongId() - q2.getLongId()))
-                .map(question -> Category.getNameById(question.getCategory()))
+                .map(question -> question.getCategory().getName())
                 .distinct()
                 .collect(Collectors.joining("と"));
 
@@ -140,17 +140,13 @@ public class OnlineTest {
 
     public boolean answer(String[] answeredOptionIds) {
 
-        int categoryId = 0;
-        String categoryIdStr = getCurrentQuestion().getCategory();
-        if (!categoryIdStr.isEmpty()) {
-            categoryId = Integer.parseInt(categoryIdStr);
-        }
+        Long categoryId = getCurrentQuestion().getCategory().getLongId();
         Answer answer = answerCurrentQuestion(Arrays.asList(answeredOptionIds));
         boolean isCorrect = answer.isCorrect();
         if (isCorrect) {
             incrementCorrectAnswerCount();
-            incrementCategoryQuestionCount(categoryId);
-            incrementCategoryCorrectAnswerCount(categoryId);
+            incrementCategoryQuestionCount(categoryId.intValue());
+            incrementCategoryCorrectAnswerCount(categoryId.intValue());
             return true;
         }
         return false;

@@ -2,6 +2,7 @@ package com.odde.massivemailer.controller.tokkun;
 
 import com.odde.massivemailer.controller.AppController;
 import com.odde.massivemailer.model.onlinetest.OnlineTest;
+import com.odde.massivemailer.model.onlinetest.Question;
 import com.odde.massivemailer.model.tokkun.QuestionResponseForTokkun;
 
 import javax.servlet.annotation.WebServlet;

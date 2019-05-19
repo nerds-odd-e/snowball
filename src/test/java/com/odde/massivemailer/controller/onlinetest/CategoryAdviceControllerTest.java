@@ -2,7 +2,6 @@ package com.odde.massivemailer.controller.onlinetest;
 
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.onlinetest.Category;
-import com.odde.massivemailer.model.onlinetest.CategoryAdvice;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,9 +38,9 @@ public class CategoryAdviceControllerTest {
     @Test
     public void Scrumのadviceが設定されている() throws IOException, ServletException {
         List<String[]> datas = new ArrayList<>();
-        datas.add(new String[]{Category.SCRUM.getName(), "You should study scrum"});
-        datas.add(new String[]{Category.TECH.getName(), "You should study tech"});
-        datas.add(new String[]{Category.TEAM.getName(), "You should study team"});
+        datas.add(new String[]{"Scrum", "You should study scrum"});
+        datas.add(new String[]{"Tech", "You should study tech"});
+        datas.add(new String[]{"Team", "You should study team"});
 
         for (String[] data : datas) {
             request.setParameter("category", data[0]);
@@ -52,28 +51,10 @@ public class CategoryAdviceControllerTest {
 
     @Test
     public void Updateボタンを押すとUpdateAdvice画面にリダイレクトされる() throws IOException, ServletException {
-        request.setParameter("category", "1");
+        Category cat = Category.createIt("name", "Scrum");
+        request.setParameter("category", cat.getLongId().toString());
         request.setParameter("advice", "You should study scrum");
         controller.doPost(request, response);
         assertEquals("/onlinetest/edit_category_advice.jsp", response.getForwardedUrl());
-    }
-
-    @Test
-    public void AdviceUpdateのポストのテスト() throws IOException, SecurityException, ServletException {
-        List<String[]> datas = new ArrayList<>();
-        datas.add(new String[]{String.valueOf(Category.SCRUM.getId()), "You should study scrum very hard", "http://www.google.co.jp", "1"});
-        datas.add(new String[]{String.valueOf(Category.TECH.getId()), "You should study tech very hard", "http://facebook.com", "2"});
-        datas.add(new String[]{String.valueOf(Category.TEAM.getId()), "You should study team very hard", "http://www.yahoo.co.jp", "3"});
-
-        for (String[] data : datas) {
-            request.setParameter("category", data[0]);
-            request.setParameter("advice", data[1]);
-            request.setParameter("link", data[2]);
-            String categoryIdQuery = "category_id = " + data[3];
-            controller.doPost(request, response);
-            assertEquals(data[1], CategoryAdvice.findFirst(categoryIdQuery).get("advice"));
-            assertEquals(data[2], CategoryAdvice.findFirst(categoryIdQuery).get("link"));
-        }
-
     }
 }

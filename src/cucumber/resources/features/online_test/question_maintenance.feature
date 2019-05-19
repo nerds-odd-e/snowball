@@ -2,18 +2,13 @@ Feature:
   User can add private questions
 
   Background: Display Add Question page
-    Given Add Questionを開いている
-    Then "Invalid inputs found!" というメッセージが表示されていない
-    And "Right answer is not selected!" というメッセージが表示されていない
+    Given there is a question category "Scrum"
 
   Scenario: TerryがPrivateな質問を追加できる
     Given "Terry"ユーザが登録されている
-    Given "Terry"がログインしている
+    And "Terry"がログインしている
     When 質問の内容を入力してAddボタンを押す
     Then "Terry"の特訓トップページに追加した質問が表示される
-
-  Scenario: カテゴリーの初期値は空
-    Then プルダウン"category"に""が表示される
 
   Scenario: カテゴリを選択する
     Given "Terry"ユーザが登録されている
@@ -29,7 +24,8 @@ Feature:
     Then カテゴリーに "Scrum" が表示される
 
   Scenario Outline: Validation
-    Given Descriptionに"<description>" を入力する
+    Given Add Questionを開いている
+    And Descriptionに"<description>" を入力する
     And option1に"<opt1>"を入力する
     And option2に"<opt2>"を入力する
     And option3に"<opt3>"を入力する
@@ -50,7 +46,8 @@ Feature:
       | xxx         |      |      | ccc  |      |      |      | 3        |        | Invalid inputs found!         |
 
   Scenario: 質問の追加が成功する
-    Given Descriptionに"What is scrum?" を入力する
+    Given Add Questionを開いている
+    And Descriptionに"What is scrum?" を入力する
     And option1に"Scrum is Rugby"を入力する
     And option2に"Scrum is Baseball"を入力する
     And option3に"Scrum is Soccer"を入力する
@@ -73,7 +70,8 @@ Feature:
     And EndOfTheTestが表示される
 
   Scenario: 回答項目が6個未満の質問の追加が成功する
-    Given Descriptionに"Terryさんはどこに住んでいますか？" を入力する
+    Given Add Questionを開いている
+    And Descriptionに"Terryさんはどこに住んでいますか？" を入力する
     And option1に"シンガポール"を入力する
     And option2に"カナダ"を入力する
     And "option1"を回答として選択済み
@@ -96,3 +94,11 @@ Feature:
       | description | What is scrum?  |
       | option1     | Rugby           |
       | option2     | Football        |
+
+  Scenario: 公開問題をAdminが承認すると承認済みになる
+    Given 未承認の問題がある
+      | description | What is scrum?  |
+      | option1     | Rugby           |
+      | option2     | Football        |
+    When Adminが承認する
+    Then 問題が承認済みになる

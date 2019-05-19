@@ -19,14 +19,14 @@ public class QuestionCollection {
         this.allQuestions = questions;
     }
 
-    public List<Question> generateQuestionList(Category[] categories, int numberOfQuestions) {
+    public List<Question> generateQuestionList(List<Category> categories, int numberOfQuestions) {
         if (numberOfQuestions <= 0 || allQuestions.isEmpty() || hasNoQuestionBelongCategory(categories)) {
             return new ArrayList<>();
         }
 
         List<Question> questions = new ArrayList<>();
         for (Category cat : categories) {
-            int maxQuestionOfCategory = getMaxQuestionOfCategory(categories.length, numberOfQuestions, cat);
+            int maxQuestionOfCategory = getMaxQuestionOfCategory(categories.size(), numberOfQuestions, cat);
             questions.addAll(getShuffledQuestionsOfCategory(cat).subList(0, maxQuestionOfCategory));
             if (numberOfQuestions <= questions.size()) {
                 break;
@@ -37,7 +37,7 @@ public class QuestionCollection {
         return questions;
     }
 
-    private List<Question> getRemainingQuestions(Category[] categories, int numberOfRemainingQuestions, List<Question> questions) {
+    private List<Question> getRemainingQuestions(List<Category> categories, int numberOfRemainingQuestions, List<Question> questions) {
         List<Question> remainingQuestions = new ArrayList<>(allQuestions);
         remainingQuestions.removeAll(questions);
         return new QuestionCollection(remainingQuestions).generateQuestionList(categories, numberOfRemainingQuestions);
@@ -48,7 +48,7 @@ public class QuestionCollection {
         return Math.min(Math.max(numberOfQuestions / numberOfCategory, 1), numberOfQuestion);
     }
 
-    private boolean hasNoQuestionBelongCategory(Category[] categories) {
+    private boolean hasNoQuestionBelongCategory(List<Category> categories) {
         for (Category category : categories) {
             if (allQuestions.stream().anyMatch(question -> question.belongsTo(category))) {
                 return false;

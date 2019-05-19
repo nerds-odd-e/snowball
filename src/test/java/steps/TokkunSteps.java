@@ -2,14 +2,11 @@ package steps;
 
 import com.odde.massivemailer.factory.QuestionBuilder;
 import com.odde.massivemailer.model.User;
-import com.odde.massivemailer.model.onlinetest.Category;
 import com.odde.massivemailer.model.onlinetest.Question;
 import com.odde.massivemailer.model.tokkun.QuestionResponseForTokkun;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.springframework.mock.web.MockHttpServletRequest;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
@@ -20,16 +17,16 @@ import static org.junit.Assert.assertEquals;
 public class TokkunSteps {
     private final MassiveMailerSite site = new MassiveMailerSite();
     private final WebDriverWrapper driver = site.getDriver();
+    private final CategoryBuilder categoryBuilder = new CategoryBuilder();
     private Question questionA;
     private Question questionB;
     private Question questionC;
     private User sato;
-    private MockHttpServletRequest satoRequest = new MockHttpServletRequest();
 
     @Given("^問題Aが追加された$")
     public void 問題aが追加された() {
         questionA = new QuestionBuilder()
-                .aQuestion("test_A", "advice", String.valueOf(Category.SCRUM.getId()))
+                .aQuestion("test_A", "advice", categoryBuilder.categoryByName("Scrum"))
                 .withCorrectOption("correctOption1")
                 .withWrongOption("wrongOption1")
                 .withWrongOption("wrongOption2")
@@ -49,7 +46,7 @@ public class TokkunSteps {
     @Given("^問題Bが追加された$")
     public void 問題bが追加された() {
         questionB = new QuestionBuilder()
-                .aQuestion("test_B", "advice", String.valueOf(Category.SCRUM.getId()))
+                .aQuestion("test_B", "advice", categoryBuilder.categoryByName("Scrum"))
                 .withCorrectOption("correctOption1")
                 .withWrongOption("wrongOption1")
                 .withWrongOption("wrongOption2")
@@ -67,7 +64,7 @@ public class TokkunSteps {
     @Given("^問題Cが追加された$")
     public void 問題cが追加された() {
         questionC = new QuestionBuilder()
-                .aQuestion("test_C", "advice", String.valueOf(Category.SCRUM.getId()))
+                .aQuestion("test_C", "advice", categoryBuilder.categoryByName("Scrum"))
                 .withCorrectOption("correctOption1")
                 .withWrongOption("wrongOption1")
                 .withWrongOption("wrongOption2")
@@ -83,11 +80,6 @@ public class TokkunSteps {
     @Given("^特訓画面が表示されている$")
     public void 特訓画面が表示されている() {
         site.visit("tokkun/tokkun_top.jsp");
-    }
-
-    @Given("^佐藤がログインしている$")
-    public void 佐藤がログインしている() {
-        satoRequest.getSession().setAttribute("user_id", sato.getLongId());
     }
 
     @When("^特訓ボタンを押す$")

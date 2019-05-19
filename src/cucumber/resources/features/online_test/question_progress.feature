@@ -1,9 +1,9 @@
-
 Feature:
   User can see his progress on the Question and Advice page :)
 
   Background:
-    Given Add a question "What is scrum?" with dummy options
+    Given there is a question category "Scrum"
+    And Add a question "What is scrum?" with dummy options
     And Add a question "What is Scrum Master?" with dummy options
     And Add a question "What is Product Owner?" with dummy options
 

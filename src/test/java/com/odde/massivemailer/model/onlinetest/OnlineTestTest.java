@@ -13,6 +13,8 @@ import static org.junit.Assert.*;
 
 @RunWith(TestWithDB.class)
 public class OnlineTestTest {
+    private Category scrum = Category.createIt("name", "Scrum");
+    private Category tech = Category.createIt("name", "Tech");
 
     @Test
     public void shouldNotGetANewOnlineTestWithNQuestionIdsIfEnoughQuestionsInDatabase() {
@@ -57,29 +59,28 @@ public class OnlineTestTest {
 
     @Test
     public void showWrongSingleCategoryMessage(){
-        mockQuestion(1, "2");
-        mockQuestion(1, "2");
+        mockQuestion(2, scrum.getLongId().toString());
         OnlineTest onlineTest = new OnlineTest(2);
 
         onlineTest.setCorrectAnswerCount(0);
-        assertEquals("Techをもっと勉強して", onlineTest.getCategoryMessage());
+        assertEquals("Scrumをもっと勉強して", onlineTest.getCategoryMessage());
 
     }
 
     @Test
     public void showWrongMultiCategoryMessage(){
-        mockQuestion(1, "2");
-        mockQuestion(1, "1");
+        mockQuestion(1, scrum.getLongId().toString());
+        mockQuestion(1, tech.getLongId().toString());
         OnlineTest onlineTest = new OnlineTest(2);
 
         onlineTest.setCorrectAnswerCount(0);
-        assertEquals("TechとScrumをもっと勉強して", onlineTest.getCategoryMessage());
+        assertEquals("ScrumとTechをもっと勉強して", onlineTest.getCategoryMessage());
 
     }
 
     @Test
     public void showChangeAdvice() {
-        mockQuestion(5, "1");
+        mockQuestion(5, scrum.getLongId().toString());
         OnlineTest onlineTest = new OnlineTest(5);
 
         onlineTest.setCorrectAnswerCount(4);
@@ -92,7 +93,7 @@ public class OnlineTestTest {
 
     @Test
     public void shouldReturn2CorrectAnswer() {
-        Question question = Question.createIt("description", "desc1", "advice", "adv1", "is_multi_question", 0, "category", String.valueOf(Category.SCRUM.getId()));
+        Question question = Question.createIt("description", "desc1", "advice", "adv1", "is_multi_question", 0, "category", String.valueOf(scrum.getId()));
         Long id = (Long) question.getId();
 
         final String[] answeredOption = new String[2];
@@ -118,7 +119,7 @@ public class OnlineTestTest {
 
     @Test
     public void shouldReturnOneIncorrectAndOneCorrectAnswer() {
-        Question question = Question.createIt("description", "desc1", "advice", "adv1", "is_multi_question", 0, "category", String.valueOf(Category.SCRUM.getId()));
+        Question question = Question.createIt("description", "desc1", "advice", "adv1", "is_multi_question", 0, "category", String.valueOf(scrum.getId()));
         Long id = (Long) question.getId();
 
         final String[] answeredOption = new String[2];
@@ -142,7 +143,7 @@ public class OnlineTestTest {
 
     @Test
     public void answerCurrentQuestion() {
-        mockQuestion(3,"1");
+        mockQuestion(3,scrum.getLongId().toString());
         OnlineTest onlineTest = new OnlineTest(1);
         onlineTest.answerCurrentQuestion(Arrays.asList("0"));
         assertEquals(1, onlineTest.answers.size());
@@ -150,7 +151,7 @@ public class OnlineTestTest {
 
     @Test
     public void calculateCorrectRate() {
-        Question q1 = Question.createIt("description", "d1", "advice", "a1", "is_multi_question", 0, "category", "1");
+        Question q1 = Question.createIt("description", "d1", "advice", "a1", "is_multi_question", 0, "category", scrum.getId());
         AnswerOption it = AnswerOption.<AnswerOption>createIt("description", "d1", "question_id", q1.getId(), "is_correct", 1);
         AnswerOption.<AnswerOption>createIt("description", "d2", "question_id", q1.getId(), "is_correct", 0);
 
@@ -165,7 +166,7 @@ public class OnlineTestTest {
 
     @Test
     public void calculateCorrectRate2() {
-        Question q1 = Question.createIt("description", "d1", "advice", "a1", "is_multi_question", 0, "category", "1");
+        Question q1 = Question.createIt("description", "d1", "advice", "a1", "is_multi_question", 0, "category", scrum.getId());
         AnswerOption.<AnswerOption>createIt("description", "d1", "question_id", q1.getId(), "is_correct", 1);
         AnswerOption wrongOption = AnswerOption.<AnswerOption>createIt("description", "d2", "question_id", q1.getId(), "is_correct", 0);
 
@@ -181,23 +182,23 @@ public class OnlineTestTest {
     @Test
     public void calculateCorrectRate70percent() {
 
-        Question q1 = Question.createIt("description", "d1", "advice", "a1", "is_multi_question", 0, "category", "1");
+        Question q1 = Question.createIt("description", "d1", "advice", "a1", "is_multi_question", 0, "category", scrum.getId());
         AnswerOption c1 = AnswerOption.<AnswerOption>createIt("description", "d1", "question_id", q1.getId(), "is_correct", 1);
         AnswerOption.<AnswerOption>createIt("description", "d2", "question_id", q1.getId(), "is_correct", 0);
 
-        Question q2 = Question.createIt("description", "d1", "advice", "a1", "is_multi_question", 0, "category", "1");
+        Question q2 = Question.createIt("description", "d1", "advice", "a1", "is_multi_question", 0, "category", scrum.getId());
         AnswerOption c2 = AnswerOption.<AnswerOption>createIt("description", "d1", "question_id", q2.getId(), "is_correct", 0);
         AnswerOption.<AnswerOption>createIt("description", "d2", "question_id", q2.getId(), "is_correct", 1);
 
-        Question q3 = Question.createIt("description", "d1", "advice", "a1", "is_multi_question", 0, "category", "1");
+        Question q3 = Question.createIt("description", "d1", "advice", "a1", "is_multi_question", 0, "category", scrum.getId());
         AnswerOption c3 = AnswerOption.<AnswerOption>createIt("description", "d1", "question_id", q3.getId(), "is_correct", 1);
         AnswerOption.<AnswerOption>createIt("description", "d2", "question_id", q3.getId(), "is_correct", 0);
 
-        Question q4 = Question.createIt("description", "d1", "advice", "a1", "is_multi_question", 0, "category", "1");
+        Question q4 = Question.createIt("description", "d1", "advice", "a1", "is_multi_question", 0, "category", scrum.getId());
         AnswerOption c4 = AnswerOption.<AnswerOption>createIt("description", "d1", "question_id", q4.getId(), "is_correct", 1);
         AnswerOption.<AnswerOption>createIt("description", "d2", "question_id", q4.getId(), "is_correct", 0);
 
-        Question q5 = Question.createIt("description", "d1", "advice", "a1", "is_multi_question", 0, "category", "1");
+        Question q5 = Question.createIt("description", "d1", "advice", "a1", "is_multi_question", 0, "category", scrum.getId());
         AnswerOption.<AnswerOption>createIt("description", "d1", "question_id", q5.getId(), "is_correct", 1);
         AnswerOption c5 = AnswerOption.<AnswerOption>createIt("description", "d2", "question_id", q5.getId(), "is_correct", 0);
 
@@ -215,12 +216,12 @@ public class OnlineTestTest {
         assertEquals(80, correctRate);
     }
 
-    private static void mockQuestion(int numberOfQuestion, String category) {
+    private void mockQuestion(int numberOfQuestion, String category) {
         IntStream.range(0, numberOfQuestion).forEach(index -> Question.createIt("description", "desc" + index, "advice", "adv" + index, "category", category));
     }
 
-    private static void mockQuestion(int numberOfQuestion) {
-        IntStream.range(0, numberOfQuestion).forEach(index -> Question.createIt("description", "desc" + index, "advice", "adv" + index, "category", String.valueOf(Category.SCRUM.getId())));
+    private void mockQuestion(int numberOfQuestion) {
+        IntStream.range(0, numberOfQuestion).forEach(index -> Question.createIt("description", "desc" + index, "advice", "adv" + index, "category", String.valueOf(scrum.getId())));
     }
 
 }

@@ -1,8 +1,6 @@
 package steps;
 
 import com.odde.massivemailer.model.User;
-import cucumber.api.PendingException;
-import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.springframework.mock.web.MockHttpServletRequest;

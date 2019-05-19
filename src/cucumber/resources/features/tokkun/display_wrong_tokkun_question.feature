@@ -1,6 +1,9 @@
 Feature:
   display wrong tokkun question one day later
 
+  Background:
+    Given there is a question category "Scrum"
+
   Scenario Outline: 間違った問題は22時間後に表示される
     Given ユーザが登録されている
     Given ユーザがログインされている

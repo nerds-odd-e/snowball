@@ -2,6 +2,7 @@ package com.odde.massivemailer.controller.onlinetest;
 
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.onlinetest.AnswerOption;
+import com.odde.massivemailer.model.onlinetest.Category;
 import com.odde.massivemailer.model.onlinetest.PublicQuestion;
 import com.odde.massivemailer.model.onlinetest.Question;
 import org.junit.Before;
@@ -21,6 +22,8 @@ public class AddQuestionControllerTest {
     private AddQuestionController controller;
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
+    private Category cat1 = Category.createIt("name", "Cat1");
+    private Category cat2 = Category.createIt("name", "Cat2");
 
     @Before
     public void setUpMockService() {
@@ -32,7 +35,7 @@ public class AddQuestionControllerTest {
     private void setupValidRequest() {
         request.setParameter("description", "aaaaaaaaaaaaaaaa");
         request.setParameter("type", "single");
-        request.setParameter("category", "1");
+        request.setParameter("category", cat1.getLongId().toString());
         request.setParameter("option1", "option1");
         request.setParameter("option2", "option2");
         request.setParameter("option3", "option3");
@@ -46,7 +49,7 @@ public class AddQuestionControllerTest {
     private void setupValidRequestForMultipleChoice() {
         request.setParameter("description", "aaaaaaaaaaaaaaaa");
         request.setParameter("type", "multiple");
-        request.setParameter("category", "2");
+        request.setParameter("category", cat2.getLongId().toString());
         request.setParameter("checkbox1", "checkbox1");
         request.setParameter("checkbox2", "checkbox2");
         request.setParameter("checkbox3", "checkbox3");
@@ -74,8 +77,7 @@ public class AddQuestionControllerTest {
         String description = request.getParameter("description");
         assertEquals(description, question.getDescription());
 
-        String category = request.getParameter("category");
-        assertEquals(category, question.getCategory());
+        assertEquals("Cat1", question.getCategoryName());
 
         for (int i = 0; i < 6; i++) {
             String option = request.getParameter("option" + (i + 1));
@@ -213,8 +215,7 @@ public class AddQuestionControllerTest {
         String description = request.getParameter("description");
         assertEquals(description, question.getDescription());
 
-        String category = request.getParameter("category");
-        assertEquals(category, question.getCategory());
+        assertEquals("Cat1", question.getCategoryName());
 
         for (int i = 0; i < 6; i++) {
             String option = request.getParameter("option" + (i + 1));

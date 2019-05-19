@@ -2,6 +2,7 @@ Feature: Question Category
   A question belongs to a category. Categories are maintained by admin.
 
   Scenario Outline: Changing the advice for a category
+    Given there is a question category "<category>"
     Given I'm on the Update Advice page
     When I select category "<category>"
     And I set the advice as "<advice>"
@@ -13,7 +14,6 @@ Feature: Question Category
       | category | advice                 | link                |
       | Scrum    | You should study scrum | http://google.co.jp |
       | Tech     | You should study tech  | http://facebook.com |
-      | Team     | You should study team  | http://yahoo.co.jp  |
 
   Scenario: Add new category
     Given I'm on the admin dashboard

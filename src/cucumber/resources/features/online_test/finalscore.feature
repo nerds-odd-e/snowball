@@ -1,6 +1,11 @@
 Feature:
   結果画面でカテゴリ毎にファイナルスコアの出力をテストする事
 
+  Background:
+    Given there is a question category "Scrum"
+    And there is a question category "Tech"
+    And there is a question category "Team"
+
   Scenario Outline: テストの正答率がn％の時、最終ページの回答率欄にnが表示される
     Given User is taking a onlineTest with <number_of_question> questions
     And  User answered <number_of_correct> questions correctly
@@ -24,11 +29,11 @@ Feature:
 
     Examples:
       | category | number_of_questions | number_of_wrong | number_of_correct | message       |
-      | 1        | 1                   | 0               | 1                 |        |
-      | 1        | 2                   | 0               | 2                 |        |
-      | 1        | 1                   | 1               | 0                 | Scrumをもっと勉強して |
-      | 1        | 2                   | 2               | 0                 | Scrumをもっと勉強して |
-      | 2        | 1                   | 1               | 0                 | Techをもっと勉強して   |
-      | 3        | 1                   | 1               | 0                 | Teamをもっと勉強して   |
-      | 3        | 5                   | 3               | 2                 | Teamをもっと勉強して   |
-      | 3        | 5                   | 1               | 4                 |    |
+      | Scrum    | 1                   | 0               | 1                 |        |
+      | Scrum    | 2                   | 0               | 2                 |        |
+      | Scrum    | 1                   | 1               | 0                 | Scrumをもっと勉強して |
+      | Scrum    | 2                   | 2               | 0                 | Scrumをもっと勉強して |
+      | Tech     | 1                   | 1               | 0                 | Techをもっと勉強して   |
+      | Team     | 1                   | 1               | 0                 | Teamをもっと勉強して   |
+      | Team     | 5                   | 3               | 2                 | Teamをもっと勉強して   |
+      | Team     | 5                   | 1               | 4                 |    |

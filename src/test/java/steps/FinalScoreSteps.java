@@ -1,6 +1,7 @@
 package steps;
 
 import com.odde.massivemailer.factory.QuestionBuilder;
+import com.odde.massivemailer.model.onlinetest.Category;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -59,7 +60,7 @@ public class FinalScoreSteps {
     public void から題出題される(String category, int numberOfQuestions) {
         for (int i = 0; i < numberOfQuestions; i++)
             new QuestionBuilder()
-                    .aQuestion(category)
+                    .aQuestion(Category.findByName(category))
                     .withWrongOption("wrongOption")
                     .withCorrectOption("correctOption")
                     .please();

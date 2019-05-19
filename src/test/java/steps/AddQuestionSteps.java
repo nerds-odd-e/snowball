@@ -1,7 +1,7 @@
 package steps;
 
 import com.odde.massivemailer.factory.QuestionBuilder;
-import com.odde.massivemailer.model.onlinetest.Question;
+import com.odde.massivemailer.model.onlinetest.Category;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -15,27 +15,21 @@ import steps.site.MassiveMailerSite;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class AddQuestionSteps {
     private final MassiveMailerSite site = new MassiveMailerSite();
     private final WebDriverWrapper driver = site.getDriver();
 
+    @Given("^there is a question category \"([^\"]*)\"$")
+    public void thereIsAQuestionCategory(String name) {
+        Category.createIt("name", name);
+    }
+
     @Given("^Add Questionを開いている$")
     public void AddQuestion() {
         site.visit("onlinetest/add_question.jsp");
         assertEquals(driver.getCurrentTitle(), "Add Question");
-    }
-
-    @Then("^プルダウン\"([^\"]*)\"に\"([^\"]*)\"が表示される$")
-    public void プルダウン_に_が表示される(String name, String value) {
-        assertEquals(value, driver.getDropdownTextByName(name));
-    }
-
-    @Then("^\"([^\"]*)\" というメッセージが表示されていない$")
-    public void というメッセージが表示されていない(String errorMessage) {
-        assertFalse(driver.getBodyText().contains(errorMessage));
     }
 
     @Given("^Descriptionに\"([^\"]*)\" を入力する$")

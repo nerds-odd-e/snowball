@@ -87,15 +87,16 @@ public class Question extends ApplicationModel {
         return getString(ADVICE);
     }
 
-    public String getCategory() {
-        return getString(CATEGORY);
+    public Category getCategory() {
+        return Category.findById(get(CATEGORY));
     }
 
     public String getCategoryName() {
-        return Category.getNameById(getCategory());
-    }
-    public String getCategoryNameByDb() {
-        return Category.getNameByDbId(getCategory());
+        Category category = getCategory();
+        if (category == null) {
+            return "";
+        }
+        return category.getName();
     }
 
     public boolean getIsMultiQuestion() {
@@ -171,7 +172,7 @@ public class Question extends ApplicationModel {
     }
 
     boolean belongsTo(Category cat) {
-        return getCategory().equals(String.valueOf(cat.getId()));
+        return cat.getLongId().toString().equals(get(CATEGORY));
     }
 
     boolean isPublic() {

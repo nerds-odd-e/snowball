@@ -59,7 +59,8 @@ public class LaunchQuestionControllerTest {
     }
 
     private void mockQuestion() {
-        IntStream.range(0, 5).forEach(index -> Question.createIt("description", "desc" + index, "advice", "adv" + index, "category", String.valueOf(Category.SCRUM.getId())));
+        Category cat = Category.createIt("name", "Scrum");
+        IntStream.range(0, 5).forEach(index -> Question.createIt("description", "desc" + index, "advice", "adv" + index, "category", cat.getId()));
     }
 
 }

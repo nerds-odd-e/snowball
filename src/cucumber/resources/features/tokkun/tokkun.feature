@@ -1,6 +1,9 @@
 Feature:
   特訓を開始すると、回答して５日経過した問題もしくは未回答の問題のみ表示される
 
+  Background:
+    Given there is a question category "Scrum"
+
   Scenario Outline: 正解した問題は118時間後に表示される
     Given ユーザが登録されている
     Given ユーザがログインされている

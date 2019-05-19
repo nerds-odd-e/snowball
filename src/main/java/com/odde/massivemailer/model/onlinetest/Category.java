@@ -1,48 +1,35 @@
 package com.odde.massivemailer.model.onlinetest;
 
-import java.util.Optional;
+import com.odde.massivemailer.model.ApplicationModel;
+import org.javalite.activejdbc.annotations.Table;
 
-public enum Category {
-    UNKNOWN(0, ""),
-    SCRUM(1, "Scrum"),
-    TECH(2, "Tech"),
-    TEAM(3, "Team");
+@Table("category")
+public class Category extends ApplicationModel {
+    private static final String NAME = "name";
 
-    private final int id;
-    private final String name;
-
-    Category(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-    public int getId() {
-        return this.id;
-    }
-
-    public String getName() {
-        return this.name;
+    public Category() {
     }
 
     public static Category findByName(String name) {
-        return getCategory(name).orElseThrow(()->new RuntimeException(String.format("Category `%s` not found", name)));
-    }
-
-    public static Optional<Category> getCategory(String name) {
-        for (Category value : Category.values()) {
-            if(name.equals(value.name)) return Optional.of(value);
-        }
-        return Optional.empty();
+        return Category.findFirst("name=?", name);
     }
 
     public static String getNameById(String id) {
-        try {
-            return Category.values()[Integer.parseInt(id)].name;
-        } catch (NumberFormatException e) {
-            return UNKNOWN.name;
-        }
+        return Category.findById(id).getString("name");
     }
 
-    public static String getNameByDbId(String id) {
-        return QuestionCategory.findById(id).getString("name");
+    public static Long getIdByName(String name) {
+        return Category.findByName(name).getLongId();
+    }
+
+    public static void saveAdvice(String categoryId, String advice, String link) {
+        Category cat = Category.findById(categoryId);
+        cat.set("advice", advice);
+        cat.set("link", link);
+        cat.saveIt();
+    }
+
+    public String getName() {
+        return this.getString("name");
     }
 }

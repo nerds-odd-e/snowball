@@ -2,6 +2,8 @@ package com.odde.massivemailer.model.onlinetest;
 
 import com.odde.TestWithDB;
 import com.odde.massivemailer.factory.QuestionBuilder;
+import org.javalite.common.Collections;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -15,7 +17,9 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(TestWithDB.class)
 public class QuestionCollectionTest {
-    private Category[] categories = {Category.SCRUM};
+    private Category scrum = Category.createIt("name", "Scrum");
+    private Category tech = Category.createIt("name", "Tech");
+    private List<Category> categories = Collections.li(scrum);
 
     @Test
     public void shouldReturnAnEmptyListIfThereIsNoQuestion() {
@@ -53,8 +57,8 @@ public class QuestionCollectionTest {
     @Test
     public void shouldChooseEquallyFromTwoCategories() {
         QuestionCollection questionCollection = createQuestionCollection(10, 10);
-        List<Question> questions = questionCollection.generateQuestionList(new Category[]{Category.SCRUM, Category.TECH}, 10);
-        long scrumQuestionCount = questions.stream().filter(q -> q.getCategory().equals(String.valueOf(Category.SCRUM.getId()))).count();
+        List<Question> questions = questionCollection.generateQuestionList(Collections.li(scrum, tech), 10);
+        long scrumQuestionCount = questions.stream().filter(q -> q.getCategory().equals(scrum)).count();
         assertEquals(5, scrumQuestionCount);
         assertEquals(10, questions.size());
     }
@@ -62,8 +66,8 @@ public class QuestionCollectionTest {
     @Test
     public void shouldChooseAtLeastOneQuestion() {
         QuestionCollection questionCollection = createQuestionCollection(10, 10);
-        List<Question> questions = questionCollection.generateQuestionList(new Category[]{Category.SCRUM, Category.TECH}, 1);
-        long scrumQuestionCount = questions.stream().filter(q -> q.getCategory().equals(String.valueOf(Category.SCRUM.getId()))).count();
+        List<Question> questions = questionCollection.generateQuestionList(Collections.li(scrum, tech), 1);
+        long scrumQuestionCount = questions.stream().filter(q -> q.getCategory().equals(scrum)).count();
         assertEquals(1, scrumQuestionCount);
         assertEquals(1, questions.size());
     }
@@ -71,8 +75,8 @@ public class QuestionCollectionTest {
     @Test
     public void shouldChooseNotEquallyFromTwoCategories() {
         QuestionCollection questionCollection = createQuestionCollection(10, 1);
-        List<Question> questions = questionCollection.generateQuestionList(new Category[]{Category.SCRUM, Category.TECH}, 10);
-        long scrumQuestionCount = questions.stream().filter(q -> q.getCategory().equals(String.valueOf(Category.SCRUM.getId()))).count();
+        List<Question> questions = questionCollection.generateQuestionList(Collections.li(scrum, tech), 10);
+        long scrumQuestionCount = questions.stream().filter(q -> q.getCategory().equals(scrum)).count();
         assertEquals(9, scrumQuestionCount);
         assertEquals(10, questions.size());
     }
@@ -80,76 +84,19 @@ public class QuestionCollectionTest {
     @Test
     public void shouldChooseNamingCategories() {
         QuestionCollection questionCollection = createQuestionCollection(0, 0);
-        List<Question> questions = questionCollection.generateQuestionList(new Category[]{Category.SCRUM}, 10);
+        List<Question> questions = questionCollection.generateQuestionList(Collections.li(scrum), 10);
         assertEquals(0, questions.size());
     }
 
-    @Test
-    public void getScrumCategoryMoreThan3Whenxxxx() {
-        createByCategory("Scrum", 5);
-        createByCategory("Tech", 5);
-        createByCategory("Team", 5);
-        List<Question> questions = new QuestionCollection(Question.getAll()).generateQuestionList(Category.values(), 10);
-        for(int i = 0; i < 1000; i++){
-            long count = questions.stream().filter(q -> q.getCategory().equals("1")).count();
-            assertEquals("count:" + count, count >= 3, true);
-        }
-    }
-
-    @Test
-    public void getScrumCategoryMoreThan3Whenxxxx2() {
-        createByCategory("Scrum", 5);
-        createByCategory("Scrum", 5);
-        createByCategory("Tech", 5);
-        List<Question> questions = new QuestionCollection(Question.getAll()).generateQuestionList(Category.values(), 10);
-        for(int i = 0; i < 1000; i++){
-            long count = questions.stream().filter(q -> q.getCategory().equals("1")).count();
-            assertEquals("count:" + count, count >= 5, true);
-        }
-    }
-
-    @Test
-    public void getScrumCategoryMoreThan3Whenxxxx3() {
-        createByCategory("Scrum", 5);
-        createByCategory("Scrum", 5);
-        createByCategory("Scrum", 5);
-        List<Question> questions = new QuestionCollection(Question.getAll()).generateQuestionList(Category.values(), 10);
-        for(int i = 0; i < 1000; i++){
-            long count = questions.stream().filter(q -> q.getCategory().equals("1")).count();
-            assertEquals("count:" + count, count >= 10, true);
-        }
-    }
-
-    @Test
-    public void getScrumCategoryMoreThan1Whenxxxx() {
-        createByCategory("Tech", 2);
-        createByCategory("Scrum", 1);
-        for(long i = 0; i < 1000; i++){
-            List<Question> questions = new QuestionCollection(Question.getAll()).generateQuestionList(Category.values(), 2);
-            long count = questions.stream().filter(q -> q.getCategory().equals("1")).count();
-            assertEquals("count:" + count, count, 1);
-        }
-    }
-
-    private void createByCategory(String category, int createQuestionCount) {
-        int categoryId = Category.findByName(category).getId();
-        for (int i = 0; i < createQuestionCount; i++) {
-            new QuestionBuilder()
-                    .aQuestion(category, null, String.valueOf(categoryId))
-                    .withCorrectOption("CorrectOption")
-                    .please();
-        }
-    }
-
     private QuestionCollection createQuestionCollection(int numberOfScrumQuestion, int numberOfTechQuestion) {
-        List<Question> scrumQuestions = makeQuestions(numberOfScrumQuestion, Category.SCRUM.getId());
-        scrumQuestions.addAll(makeQuestions(numberOfTechQuestion, Category.TECH.getId()));
+        List<Question> scrumQuestions = makeQuestions(numberOfScrumQuestion, scrum.getLongId());
+        scrumQuestions.addAll(makeQuestions(numberOfTechQuestion, tech.getLongId()));
         QuestionCollection questionCollection = new QuestionCollection(scrumQuestions);
         questionCollection.setShouldShuffleQuestions(false);
         return questionCollection;
     }
 
-    private static List<Question> makeQuestions(int numberOfQuestion, int categoryId) {
+    private static List<Question> makeQuestions(int numberOfQuestion, Long categoryId) {
         List<Question> questions = new ArrayList<>();
         String category = String.valueOf(categoryId);
         IntStream.range(0, numberOfQuestion)

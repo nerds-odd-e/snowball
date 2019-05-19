@@ -3,7 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
-<t:basic title="QuestionCategory">
+<t:basic title="Question Category">
     <jsp:body>
     <div id="page-wrapper">
         <form name="question" id="questionForm" method="get" action="/onlinetest/launchQuestion">

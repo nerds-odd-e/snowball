@@ -1,7 +1,7 @@
 package com.odde.massivemailer.controller.onlinetest;
 
 import com.odde.massivemailer.controller.AppController;
-import com.odde.massivemailer.model.onlinetest.CategoryAdvice;
+import com.odde.massivemailer.model.onlinetest.Category;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -38,7 +38,7 @@ public class CategoryAdviceController extends AppController {
         String categoryId = req.getParameter("category");
         String advice = req.getParameter("advice");
         String link = req.getParameter("link");
-        CategoryAdvice.saveAdvice(categoryId, advice, link);
+        Category.saveAdvice(categoryId, advice, link);
         RequestDispatcher dispatch = req.getRequestDispatcher("/onlinetest/edit_category_advice.jsp");
         dispatch.forward(req, resp);
     }

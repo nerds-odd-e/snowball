@@ -18,6 +18,7 @@ public class DBConnectionFactory {
         Base.exec("DELETE FROM user_questions");
         Base.exec("DELETE FROM question_responses_for_tokkun");
         Base.exec("DELETE FROM public_questions");
+        Base.exec("DELETE FROM category");
         Base.exec("DELETE FROM questions");
         Base.exec("DELETE FROM question_responses");
         Base.exec("DELETE FROM options");

@@ -1,10 +1,7 @@
 package com.odde.massivemailer.controller.onlinetest;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.model.onlinetest.AnswerOption;
-import com.odde.massivemailer.model.onlinetest.CategoryTestResult;
-import com.odde.massivemailer.model.onlinetest.Question;
-import com.odde.massivemailer.model.onlinetest.OnlineTest;
+import com.odde.massivemailer.model.onlinetest.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,12 +25,19 @@ public class QuestionControllerTest {
     private MockHttpServletResponse response;
     private Question question;
     private OnlineTest onlineTest;
+    private Category scrum = Category.createIt("name", "Scrum");
+    private Category tech = Category.createIt("name", "Tech");
+    private Category team = Category.createIt("name", "Team");
 
     @Before
     public void setUpMockService() {
         controller = new QuestionController();
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
+    }
+
+    private Question createQuestionWithOptions(Category category) {
+        return createQuestionWithOptions(category.getLongId().toString());
     }
 
     private Question createQuestionWithOptions(String categoryId) {
@@ -50,7 +54,7 @@ public class QuestionControllerTest {
 
     @Test
     public void postIncorrect() throws ServletException, IOException {
-        question = createQuestionWithOptions("0");
+        question = createQuestionWithOptions(scrum);
         onlineTest = new OnlineTest(1);
         request.getSession().setAttribute("onlineTest", onlineTest);
 
@@ -64,7 +68,7 @@ public class QuestionControllerTest {
 
     @Test
     public void doPostWithNoOptionsInDatabase() throws ServletException, IOException {
-        question = createQuestionWithOptions("0");
+        question = createQuestionWithOptions(scrum);
         onlineTest = new OnlineTest(1);
         request.getSession().setAttribute("onlineTest", onlineTest);
 
@@ -79,7 +83,7 @@ public class QuestionControllerTest {
 
     @Test
     public void doPostWithMessageOnNotCurrentQuestionPage() throws ServletException, IOException {
-        question = createQuestionWithOptions("0");
+        question = createQuestionWithOptions(scrum);
 
         Long optionId = question.getFirstOptionId();
         onlineTest = new OnlineTest(2);
@@ -94,7 +98,7 @@ public class QuestionControllerTest {
 
     @Test
     public void doPostWithoutMessageOnCurrentQuestionPage() throws ServletException, IOException {
-        question = createQuestionWithOptions("0");
+        question = createQuestionWithOptions(scrum);
 
         Long optionId = question.getFirstOptionId();
         onlineTest = new OnlineTest(2);
@@ -110,7 +114,7 @@ public class QuestionControllerTest {
 
     @Test
     public void doPostWithIncrementCorrectCountOnCorrectAnswer() throws ServletException, IOException {
-        question = createQuestionWithOptions("0");
+        question = createQuestionWithOptions(scrum);
 
         List<Long> optionId = question.getCorrectOption();
         onlineTest = new OnlineTest(2);
@@ -127,7 +131,7 @@ public class QuestionControllerTest {
 
     @Test
     public void doPostWithNotIncrementCorrectCountOnIncorrectAnswer() throws ServletException, IOException {
-        question = createQuestionWithOptions("0");
+        question = createQuestionWithOptions(scrum);
         Long optionId = question.getFirstOptionId();
         onlineTest = new OnlineTest(2);
         request.addParameter("optionId", optionId.toString());
@@ -142,7 +146,7 @@ public class QuestionControllerTest {
 
     @Test
     public void doPostWithNoSelectedOptions() throws ServletException, IOException {
-        question = createQuestionWithOptions("0");
+        question = createQuestionWithOptions(scrum);
         onlineTest = new OnlineTest(2);
         request.addParameter("lastDoneQuestionId", "0");
         request.getSession().setAttribute("onlineTest", onlineTest);
@@ -155,7 +159,7 @@ public class QuestionControllerTest {
 
     @Test
     public void doPostWithOneCorrectOptionAndOneIncorrectOption() throws ServletException, IOException {
-        question = createQuestionWithOptions("0");
+        question = createQuestionWithOptions(scrum);
         onlineTest = spy(new OnlineTest(1));
 
         request.addParameter("lastDoneQuestionId", "0");
@@ -178,7 +182,7 @@ public class QuestionControllerTest {
 
     @Test
     public void doPostWithIncrementScrumCategoryCorrectCountOnCorrectAnswer() throws ServletException, IOException {
-        question = createQuestionWithOptions("1");
+        question = createQuestionWithOptions(tech);
         List<Long> optionId = question.getCorrectOption();
         onlineTest = new OnlineTest(2);
 
@@ -191,12 +195,12 @@ public class QuestionControllerTest {
         HttpSession session = request.getSession();
 
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
-        assertEquals(1, onlineTest.getCategoryCorrectAnswerCount(1));
+        assertEquals(1, onlineTest.getCategoryCorrectAnswerCount(tech.getLongId().intValue()));
     }
 
     @Test
     public void doPostWithIncrementScrumCategoryCorrectCountOnCorrectAnswer2() throws ServletException, IOException {
-        question = createQuestionWithOptions("1");
+        question = createQuestionWithOptions(tech);
         List<Long> optionId = question.getCorrectOption();
         onlineTest = new OnlineTest(2);
 
@@ -216,7 +220,7 @@ public class QuestionControllerTest {
 
     @Test
     public void doPostWithIncrementTechCategoryCorrectCountOnCorrectAnswer() throws ServletException, IOException {
-        question = createQuestionWithOptions("2");
+        question = createQuestionWithOptions(team);
         List<Long> optionIds = question.getCorrectOption();
         onlineTest = new OnlineTest(2);
 
@@ -229,12 +233,12 @@ public class QuestionControllerTest {
         HttpSession session = request.getSession();
 
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
-        assertEquals(1, onlineTest.getCategoryCorrectAnswerCount(2));
+        assertEquals(1, onlineTest.getCategoryCorrectAnswerCount(team.getLongId().intValue()));
     }
 
     @Test
     public void answerCurrentQuestionInParameter() throws ServletException, IOException{
-        question = createQuestionWithOptions("1");
+        question = createQuestionWithOptions(tech);
         List<Long> optionIds = question.getCorrectOption();
         onlineTest = new OnlineTest(2);
 

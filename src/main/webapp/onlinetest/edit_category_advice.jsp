@@ -1,15 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.odde.massivemailer.model.onlinetest.CategoryAdvice" %>
 <%@ page import="com.odde.massivemailer.model.onlinetest.Category" %>
 <%@ page import="java.util.*" %>
 
 <%
     String advice = (String) request.getAttribute("advice");
-    List<CategoryAdvice> categoryAdviceList = CategoryAdvice.findAll();
-    pageContext.setAttribute("categoryAdviceList", categoryAdviceList);
-    pageContext.setAttribute("category", Category.values());
+    List<Category> categoryList = Category.findAll();
+    pageContext.setAttribute("categoryList", categoryList);
 %>
 
 <t:with_side_menu_and_status title="Update Advice">
@@ -19,9 +17,9 @@
              <div class="form-group form-inline">
              <label for="category">Category</label>
                  <select name="category" id="category">
-                     <option value="1">Scrum</option>
-                     <option value="2">Tech</option>
-                     <option value="3">Team</option>
+                    <c:forEach items="${categoryList}" var="category" varStatus="Status">
+                        <option value="${category.getId()}">${category.getName()}</option>
+                    </c:forEach>
                  </select>
              </div>
              <div class="form-group">
@@ -39,11 +37,11 @@
         <h1> Current Setting </h1>
         <table class="table table-responsive table-bordered">
             <tbody id="categoryTable">
-            <c:forEach items="${categoryAdviceList}" var="categoryAdvice" varStatus="count">
+            <c:forEach items="${categoryList}" var="category" varStatus="count">
                 <tr>
-                    <th style="width:20%">${category[categoryAdvice.getString("category_id")].getName()}</th>
-                    <td id="scrumDescription"+count>${categoryAdvice.getString("advice")}</td>
-                    <td id="scrumLink"+count>${categoryAdvice.getString("link")}</td>
+                    <th style="width:20%">${category.getName()}</th>
+                    <td>${category.getString("advice")}</td>
+                    <td>${category.getString("link")}</td>
                 </tr>
             </c:forEach>
             </tbody>

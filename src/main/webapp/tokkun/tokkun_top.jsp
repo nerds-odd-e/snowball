@@ -47,7 +47,7 @@
                                     </tr>
                                     <tr>
                                         <th style="width:20%">Category</th>
-                                        <td id="category">${question.getCategoryNameByDb()}</td>
+                                        <td id="category">${question.getCategoryName()}</td>
                                     </tr>
                                     <tr>
                                         <th style="width:20%">Advice</th>

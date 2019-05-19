@@ -1,22 +1,14 @@
 package steps;
 
 import com.odde.massivemailer.model.User;
-import cucumber.api.DataTable;
-import cucumber.api.PendingException;
-import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.apache.commons.lang3.StringUtils;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
-import java.util.*;
-
-import static org.hamcrest.Matchers.containsString;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class SignupSteps {
     private final MassiveMailerSite site = new MassiveMailerSite();

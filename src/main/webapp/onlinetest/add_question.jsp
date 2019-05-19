@@ -4,21 +4,11 @@
 <%@ page import="com.odde.massivemailer.model.onlinetest.Category" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.odde.massivemailer.model.onlinetest.QuestionCategory" %>
+<%@ page import="com.odde.massivemailer.model.onlinetest.Category" %>
 <%
     String errorMessage = (String) request.getAttribute("errorMessage");
-    //pageContext.setAttribute("errorMessage", errorMessage);
-    // pageContext.setAttribute("categories", Category.values());
-    // TODO: QuestionCategoryの実装が完了し次第、着手する。
-    //QuestionCategory category = createQuestionCategory();
-    //pageContext.setAttribute("categories", category);
-    //List<QuestionCategory> questionCategories = new ArrayList<QuestionCategory>()
-    //{
-    //    {
-    //        add(QuestionCategory.createQuestionCategory());
-    //    }
-    // };
-    pageContext.setAttribute("categories", QuestionCategory.findAll());
+    pageContext.setAttribute("errorMessage", errorMessage);
+    pageContext.setAttribute("categories", Category.findAll());
 %>
 
 

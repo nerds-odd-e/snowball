@@ -1,6 +1,9 @@
 Feature:
   User can take an online test :)
 
+  Background:
+    Given there is a question category "Scrum"
+
   Scenario: Displaying the question
     Given Add a question "What is scrum?" with dummy options
     And User is on the first question

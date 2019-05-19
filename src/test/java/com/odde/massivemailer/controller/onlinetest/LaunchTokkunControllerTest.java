@@ -5,6 +5,7 @@ import com.odde.massivemailer.model.onlinetest.Category;
 import com.odde.massivemailer.model.onlinetest.OnlineTest;
 import com.odde.massivemailer.model.onlinetest.Question;
 import org.apache.commons.lang3.StringUtils;
+import org.javalite.activejdbc.Model;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -48,7 +49,8 @@ public class LaunchTokkunControllerTest {
     }
 
     private void mockQuestion() {
-        Question.createIt("description", "desc", "advice", "adv", "category", String.valueOf(Category.SCRUM.getId()));
+        Category cat = Category.createIt("name", "Scrum");
+        Question.createIt("description", "desc", "advice", "adv", "category", cat.getId());
     }
 
 }

@@ -29,6 +29,7 @@ public class QuestionStep {
     private int numberOfCorrectAnsweredQuestion;
     private int currentTestTotalQuestions;
     private final String add_question_url = site.baseUrl() + "onlinetest/add_question.jsp";
+    private final CategoryBuilder categoryBuilder = new CategoryBuilder();
 
     private final String login_url = site.baseUrl() + "login.jsp";
 
@@ -46,7 +47,7 @@ public class QuestionStep {
     @Given("^Add a question \"([^\"]*)\" with dummy options and advice \"([^\"]*)\"$")
     public void add_a_question(String description, String advice) {
         new QuestionBuilder()
-                .aQuestion(description, advice, String.valueOf(Category.SCRUM.getId()))
+                .aQuestion(description, advice, categoryBuilder.categoryByName("Scrum"))
                 .withWrongOption("Food")
                 .withWrongOption("Drink")
                 .withWrongOption("Country")
@@ -58,7 +59,7 @@ public class QuestionStep {
     @Given("^Add a question \"([^\"]*)\" of multiple answers$")
     public void add_a_question_of_multiple_answers(String description) {
         new QuestionBuilder()
-                .aQuestion(description, "advice", String.valueOf(Category.SCRUM.getId()))
+                .aQuestion(description, "advice", categoryBuilder.categoryByName("Scrum"))
                 .withCorrectOption("correctOption1")
                 .withWrongOption("wrongOption1")
                 .withWrongOption("wrongOption2")
@@ -71,7 +72,7 @@ public class QuestionStep {
         this.currentTestTotalQuestions = totalQuestions;
         for (int i = 0; i < totalQuestions; i++)
             new QuestionBuilder()
-                    .aQuestion(Category.SCRUM)
+                    .aQuestion(Category.findByName("Scrum"))
                     .withWrongOption("wrongOption")
                     .withCorrectOption("correctOption")
                     .please();
@@ -275,9 +276,9 @@ public class QuestionStep {
         site.visit("onlinetest/launchQuestion");
     }
 
-    @Given("\"([^\"]*)\"に(\\d+)問が登録されている$")
+    @Given("In \"([^\"]*)\" there are (\\d+) questions$")
     public void categoryNameに_問が登録されている(String categoryName, int numOfQuestions) {
-        int categoryId = Category.findByName(categoryName).getId();
+        String categoryId = categoryBuilder.categoryByName(categoryName);
 
         for (int i = 0; i < numOfQuestions; i++) {
             new QuestionBuilder()
@@ -287,26 +288,26 @@ public class QuestionStep {
         }
     }
 
-    @Then("^scrumが>=(\\d+)問が表示されること$")
+    @Then("^there should be >=(\\d+) Scrum questions$")
     public void scrumが_問以上が表示されること(int count) {
         assertThat(scrumCounter, greaterThanOrEqualTo(count));
     }
 
-    @Then("^合計で(\\d+)問が表示されること$")
-    public void 合計で_問が表示されること(int count) {
-        assertEquals(count, totalCounter);
-    }
-
-    @Then("^scrumが(\\d+)問が表示されること$")
+    @Then("^there should be (\\d+) Scrum questions$")
     public void scrumが_問が表示されること(int count) {
         assertEquals(count, scrumCounter);
     }
 
-    @When("^startをクリックしてすべての問題を回答したとき$")
-    public void startをクリックしてすべての問題を回答したとき() {
+    @Then("^in total (\\d+) questions$")
+    public void 合計で_問が表示されること(int count) {
+        assertEquals(count, totalCounter);
+    }
+
+    @When("^do a test with (\\d+) questions$")
+    public void startをクリックしてすべての問題を回答したとき(int count) {
         totalCounter = 0;
         scrumCounter = 0;
-        site.visit("onlinetest/launchQuestion");
+        site.visit("onlinetest/launchQuestion?question_count="+count);
         while (driver.getCurrentTitle().equals("Question")) {
             totalCounter++;
             String categoryName = driver.findElementById("description").getText();
@@ -319,7 +320,7 @@ public class QuestionStep {
     }
 
     @Given("^\"([^\"]*)\"ユーザが登録されている$")
-    public void ユーザが登録されている(String arg1) throws Throwable {
+    public void ユーザが登録されている(String arg1) {
         User.deleteAll();
         User user = new User("terry@hogehoge.com");
         user.setPassword("11111111");
@@ -327,7 +328,7 @@ public class QuestionStep {
     }
 
     @Given("^\"([^\"]*)\"がログインしている$")
-    public void がログインしている(String arg1) throws Throwable {
+    public void がログインしている(String arg1) {
         visitLoginPage();
         driver.setTextField("email", "terry@hogehoge.com");
         driver.setTextField("password", "11111111");
@@ -338,7 +339,6 @@ public class QuestionStep {
     public void 質問の内容を入力してAddボタンを押す() {
         driver.visit(add_question_url);
         driver.setDropdownValue("type", "single");
-        driver.setDropdownValue("category", "1");
         driver.setTextField("description", "PrivateDescription");
         driver.setTextField("option1", "option1");
         driver.setTextField("option2", "option2");
@@ -347,7 +347,7 @@ public class QuestionStep {
     }
 
     @Then("^\"([^\"]*)\"の特訓トップページに追加した質問が表示される$")
-    public void の特訓トップページに追加した質問が表示される(String arg1) throws Throwable {
+    public void の特訓トップページに追加した質問が表示される(String arg1) {
         driver.pageShouldContain("PrivateDescription");
     }
 

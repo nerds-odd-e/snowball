@@ -1,6 +1,5 @@
 package steps;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -107,12 +106,6 @@ public class ContactSteps {
     public void iOpenEditContactPageForContact(String email) {
         site.visit("contactlist.jsp");
         driver.clickButton("edit_button");
-    }
-
-    @When("^Edit A Contact \"([^\"]*)\" and \"([^\"]*)\" for \"([^\"]*)\", \"([^\"]*)\" from \"([^\"]*)\" and \"([^\"]*)\"$")
-    public void editAContactAndForFromAnd(String arg0, String arg1, String arg2, String arg3, String arg4, String arg5) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
     }
 
     @Given("^Contact for \"([^\"]*)\" which is not existing in the system$")

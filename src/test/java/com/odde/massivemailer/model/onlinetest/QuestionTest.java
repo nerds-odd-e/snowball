@@ -117,11 +117,12 @@ public class QuestionTest {
 
     @Test
     public void Questionテーブルのカラムが全て返ってくる() {
-        Question.createIt("description", "desc1", "advice", "adv1", "category", "scrum", "is_multi_question", 0);
+        Category cat = Category.createIt("name", "xxx");
+        Question.createIt("description", "desc1", "advice", "adv1", "category", cat.getLongId(), "is_multi_question", 0);
         List<Question> actual = Question.getNRandom(1);
         assertThat(actual.get(0).getDescription(), is(equalTo("desc1")));
         assertThat(actual.get(0).getAdvice(), is(equalTo("adv1")));
-        assertThat(actual.get(0).getCategory(), is(equalTo("scrum")));
+        assertThat(actual.get(0).getCategoryName(), is(equalTo("xxx")));
         assertFalse(actual.get(0).getIsMultiQuestion());
     }
 
@@ -141,37 +142,39 @@ public class QuestionTest {
 
     @Test
     public void Questionテーブルから指定したカテゴリのquestionが返す() {
-        Question.createIt("description", "desc1", "advice", "adv1", "category", "team", "is_multi_question", 0);
-        Question.createIt("description", "desc2", "advice", "adv2", "category", "scrum", "is_multi_question", 0);
+        Category cat = Category.createIt("name", "cat");
+        Category dog = Category.createIt("name", "dog");
+        Question.createIt("description", "desc1", "advice", "adv1", "category", cat.getLongId(), "is_multi_question", 0);
+        Question.createIt("description", "desc2", "advice", "adv2", "category", dog.getLongId(), "is_multi_question", 0);
 
-        List<Question> actual = Question.getNRandomWhereCategory(1, "scrum");
+        List<Question> actual = Question.getNRandomWhereCategory(1, dog.getLongId().toString());
         assertThat(actual.get(0).getDescription(), is(equalTo("desc2")));
         assertThat(actual.get(0).getAdvice(), is(equalTo("adv2")));
-        assertThat(actual.get(0).getCategory(), is(equalTo("scrum")));
+        assertThat(actual.get(0).getCategoryName(), is(equalTo("dog")));
         assertFalse(actual.get(0).getIsMultiQuestion());
     }
 
     @Test
     public void カテゴリごとに任意の数のquestionを返す() {
-        Question.createIt("description", "desc", "advice", "adv", "category", "team", "is_multi_question", 0);
-        Question.createIt("description", "desc", "advice", "adv", "category", "team", "is_multi_question", 0);
-        Question.createIt("description", "desc", "advice", "adv", "category", "team", "is_multi_question", 0);
-        Question.createIt("description", "desc", "advice", "adv", "category", "scrum", "is_multi_question", 0);
-        Question.createIt("description", "desc", "advice", "adv", "category", "scrum", "is_multi_question", 0);
-        Question.createIt("description", "desc", "advice", "adv", "category", "tech", "is_multi_question", 0);
+        Category cat = Category.createIt("name", "cat");
+        Category dog = Category.createIt("name", "dog");
+        Category bird = Category.createIt("name", "bird");
+        Question.createIt("description", "desc", "advice", "adv", "category", cat.getLongId(), "is_multi_question", 0);
+        Question.createIt("description", "desc", "advice", "adv", "category", cat.getLongId(), "is_multi_question", 0);
+        Question.createIt("description", "desc", "advice", "adv", "category", cat.getLongId(), "is_multi_question", 0);
+        Question.createIt("description", "desc", "advice", "adv", "category", dog.getLongId(), "is_multi_question", 0);
+        Question.createIt("description", "desc", "advice", "adv", "category", dog.getLongId(), "is_multi_question", 0);
+        Question.createIt("description", "desc", "advice", "adv", "category", bird.getLongId(), "is_multi_question", 0);
 
         Map<String, Integer> categoryMap = new HashMap<>();
-        categoryMap.put("team", 2);
-        categoryMap.put("scrum", 1);
+        categoryMap.put(cat.getLongId().toString(), 2);
+        categoryMap.put(dog.getLongId().toString(), 1);
 
         List<Question> questions = Question.getNRandomByCategories(categoryMap);
 
-        Map<String, List<Question>> result = questions.stream().collect(Collectors.groupingBy(Question::getCategory));
-        for (String category : categoryMap.keySet()) {
-            List<Question> questionList = result.get(category);
-            assertEquals(questionList.size(), (int) categoryMap.get(category));
-        }
-        assertEquals(questions.size(), 3);
+        Map<String, List<Question>> result = questions.stream().collect(Collectors.groupingBy(Question::getCategoryName));
+        assertEquals(3, questions.size());
+        assertEquals(2, result.get("cat").size());
     }
 
     @Ignore
