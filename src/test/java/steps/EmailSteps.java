@@ -17,13 +17,14 @@ public class EmailSteps {
 
     @Given("^Visit Send Mail Page$")
     public void visitSendMailPage() {
-        site.visit("");
+        site.visit("admin/sendemail.jsp");
     }
 
     @When("^I Click Send Email$")
     public void clickSendEmail() {
         driver.clickButton("send_button");
     }
+
     @Then("^I should get an element with message \"([^\"]*)\"$")
     public void iShouldGetAnElementWithMessage(String msg) {
         driver.expectElementWithIdToContainText("email_result", msg);

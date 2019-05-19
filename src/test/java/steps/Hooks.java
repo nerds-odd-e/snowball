@@ -18,7 +18,7 @@ public class Hooks {
     public void afterScenario(Scenario scenario) {
         if (scenario.isFailed()) {
             WebDriverWrapper defaultDriver = WebDriverFactory.getDefaultDriver();
-            defaultDriver.takeScreenshot(scenario.getName());
+            defaultDriver.takeScreenshot("tmp/"+scenario.getName());
         }
         DBConnectionFactory.close();
         WebDriverFactory.resetAll();

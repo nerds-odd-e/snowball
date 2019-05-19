@@ -19,6 +19,11 @@ public class UiCommonSteps {
     private final MassiveMailerSite site = new MassiveMailerSite();
     private final WebDriverWrapper driver = site.getDriver();
 
+    @Given("^I'm on the admin dashboard$")
+    public void メニューを選択できる画面に遷移する() {
+        site.visit("admin/dashboard.jsp");
+    }
+
     @Given("^topページが表示されている$")
     public void topページが表示されている() throws Throwable {
         site.visit("ui_common.jsp");

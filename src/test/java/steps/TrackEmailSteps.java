@@ -20,7 +20,7 @@ public class TrackEmailSteps {
     }
 
     public void sendEmail(String recipient, String subject) {
-        site.visit("");
+        site.visit("admin/sendemail.jsp");
         driver.setTextField("recipient", recipient);
         driver.setTextField("subject", subject);
         driver.setTextField("content", "Hello!");

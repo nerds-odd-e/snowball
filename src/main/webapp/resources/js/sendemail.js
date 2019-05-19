@@ -25,7 +25,7 @@ $(document).ready(function() {
 });
 
 function submitForm() {
-	$("#sendmail").attr("action","sendMail").submit();
+	$("#sendmail").attr("action","/sendMail").submit();
 }
 
 function checkSendEmailInputElement() {

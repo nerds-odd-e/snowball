@@ -18,16 +18,6 @@ public class CategoryAddSteps {
     private User user;
     private MockHttpServletRequest request = new MockHttpServletRequest();
 
-    @Given("^メニューを選択できる画面に遷移する$")
-    public void メニューを選択できる画面に遷移する() {
-        site.visit("");
-    }
-
-    @Given("^ユーザーはAdminである$")
-    public void ユーザーはadminである() {
-        user = User.createIt("id", 1, "email", "mizukami@gmail.com", "hashed_password", "0", "token", "0", "name", "mizukami", "is_admin", 1);
-    }
-
     @When("^ユーザーがログインする$")
     public void ユーザーがログインする() {
         request.getSession().setAttribute("user_id", user.getLongId());
@@ -39,32 +29,24 @@ public class CategoryAddSteps {
     }
 
 
-    @When("^カテゴリ追加ボタンを押す")
+    @When("^click the add category button")
     public void カテゴリ追加ボタンを押す() {
         driver.clickButton("add_category_button");
-    }
-
-    @Then("^カテゴリ追加画面に遷移する$")
-    public void カテゴリ追加画面に遷移する() {
         assertEquals("Add Category", driver.getCurrentTitle());
     }
 
-    @When("^新しいカテゴリを入力する$")
+    @When("^add a new category$")
     public void 新しいカテゴリを入力する() {
         driver.setTextField("category_name","新カテゴリ");
-    }
-
-    @When("^決定ボタンをクリックする$")
-    public void 決定ボタンをクリックする() {
         driver.clickButton("add_category");
     }
 
-    @Then("^問題作成画面に遷移する$")
+    @Then("^it should be redirected to the add question page$")
     public void 問題作成画面に遷移する() {
         assertEquals("Add Question", driver.getCurrentTitle());
     }
 
-    @Then("^新しいカテゴリが選択できる$")
+    @Then("^I can  select the new category$")
     public void 新しいカテゴリが選択できる() {
         assertTrue(driver.findElementById("categoryList").getText().contains("新カテゴリ"));
     }

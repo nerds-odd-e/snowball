@@ -38,7 +38,7 @@
         </script>
     </jsp:attribute>
     <jsp:body>
-            <form name="sendmail" id="sendmail" method="post" action="sendMail">
+            <form name="sendmail" id="sendmail" method="post" action="/sendMail">
 				<div class="container-fluid">
 
 					<!-- Page Heading -->

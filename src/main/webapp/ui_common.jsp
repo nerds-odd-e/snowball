@@ -15,7 +15,7 @@
         <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav side-nav">
-                <li><a href="/sendemail.jsp"><span
+                <li><a href="/admin/sendemail.jsp"><span
                         class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         Edit Template</a></li>
                 <li><a href="/contactlist.jsp"><span

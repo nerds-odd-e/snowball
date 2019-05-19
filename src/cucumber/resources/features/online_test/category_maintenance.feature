@@ -1,16 +1,24 @@
-Feature:
-  Admin can add category advice
+Feature: Question Category
+  A question belongs to a category. Categories are maintained by admin.
 
-  Scenario Outline: カテゴリのアドバイスが登録できる
-    Given Update Adviceを開いている
-    When カテゴリで"<category>"を選択している
-    And アドバイスに"<advice>"と入力する
-    And アドバイスリンクに"<link>"と入力する
-    And Updateボタンを押す
-    Then Update Advice画面に戻ってきてカテゴリが"<category>"でアドバイスが"<advice>"になってる
-    And Update Advice画面に戻ってきてカテゴリが"<category>"でアドバイスリンクが"<link>"になってる
+  Scenario Outline: Changing the advice for a category
+    Given I'm on the Update Advice page
+    When I select category "<category>"
+    And I set the advice as "<advice>"
+    And I set the advice link as "<link>"
+    And I click the update button
+    Then I should see the advice for "<category>" has become "<advice>"
+    And the advice link for "<category>" has become "<link>"
     Examples:
       | category | advice                 | link                |
       | Scrum    | You should study scrum | http://google.co.jp |
       | Tech     | You should study tech  | http://facebook.com |
       | Team     | You should study team  | http://yahoo.co.jp  |
+
+  Scenario: Add new category
+    Given I'm on the admin dashboard
+    And click the add category button
+    When add a new category
+    Then it should be redirected to the add question page
+    And I can  select the new category
+

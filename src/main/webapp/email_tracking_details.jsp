@@ -24,7 +24,7 @@
         </script>
     </jsp:attribute>
     <jsp:body>
-	<form name="sendmail" id="sendmail" method="post" action="sendMail">
+	<form name="sendmail" id="sendmail" method="post" action="/sendMail">
 		<div id="wrapper">
 
 			<!-- Navigation -->
@@ -59,7 +59,7 @@
 				<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
 					<ul class="nav navbar-nav side-nav">
-						<li><a href="/sendemail.jsp"><span
+						<li><a href="/admin/sendemail.jsp"><span
 								class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
 								Send Mail</a></li>
 						<li><a href="/add_contact.jsp"><span
