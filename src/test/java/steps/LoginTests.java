@@ -122,13 +122,13 @@ public class LoginTests{
         show_courses_list(courses);
     }
 
-    @When("^ログインページのサインアップページのリンクを押下する$")
+    @When("^click the sign up link from the login page$")
     public void ログインページのサインアップページのリンクを押下する() throws Throwable {
         visitLoginPage();
         driver.clickById("signup");
     }
 
-    @Then("^サインアップページに遷移すること$")
+    @Then("^User should see the sign up page$")
     public void サインアップページに遷移すること() throws Throwable {
         assertEquals(driver.getCurrentTitle(), "Sign Up");
     }

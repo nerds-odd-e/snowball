@@ -41,6 +41,6 @@ Feature: Login
       When I move to course list page
       Then Show all courses list "CSD-1,CSD-2,CSD-3"
 
-  Scenario: ログインページからサインアップページに遷移できること
-    When ログインページのサインアップページのリンクを押下する
-    Then サインアップページに遷移すること
+  Scenario: Go to sign up from login page
+    When click the sign up link from the login page
+    Then user should see the sign up page
