@@ -12,7 +12,7 @@ package steps;
 public class UpdateTemplateTests {
     private final MassiveMailerSite site = new MassiveMailerSite();
     private final WebDriverWrapper driver = site.getDriver();
-    private final String sendemail_url = site.baseUrl()+ "sendemail.jsp";
+    private final String sendemail_url = site.baseUrl()+ "admin/sendemail.jsp";
 
     @Given("^Visit Edit Template Page$")
     public void visitEditTemplatePage() {

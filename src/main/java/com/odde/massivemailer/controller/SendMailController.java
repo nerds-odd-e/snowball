@@ -30,13 +30,13 @@ public class SendMailController extends AppController {
 
             email.sendMailToRecipients(recipientList, getMailService());
 
-            resp.sendRedirect("sendemail.jsp?status=success&msg=Email successfully sent&repcnt=" + email.getReceipts().size());
+            resp.sendRedirect("/admin/sendemail.jsp?status=success&msg=Email successfully sent&repcnt=" + email.getReceipts().size());
 
         } catch (EmailException e) {
-            resp.sendRedirect("sendemail.jsp?status=failed&msg=Unable to send");
+            resp.sendRedirect("/admin/sendemail.jsp?status=failed&msg=Unable to send");
 
         } catch (SQLException e) {
-            resp.sendRedirect("sendemail.jsp?status=failed&msg=Fail");
+            resp.sendRedirect("/admin/sendemail.jsp?status=failed&msg=Fail");
             e.printStackTrace();
         }
     }

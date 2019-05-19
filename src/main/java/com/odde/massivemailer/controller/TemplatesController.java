@@ -22,7 +22,7 @@ public class TemplatesController extends AppController {
             updateTemplate.saveTemplate(subject, content);
             resultMsg = "status=success&msg=Update template successfully";
         }
-        resp.sendRedirect("sendemail.jsp?" + resultMsg);
+        resp.sendRedirect("/admin/sendemail.jsp?" + resultMsg);
     }
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {

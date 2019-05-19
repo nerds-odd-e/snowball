@@ -69,7 +69,7 @@ public class SendMailControllerTest {
 
         doThrow(new EmailException("")).when(gmailService).send(any(Mail.class));
         controller.doPost(request, response);
-        assertEquals("sendemail.jsp?status=failed&msg=Unable to send", response.getRedirectedUrl());
+        assertEquals("/admin/sendemail.jsp?status=failed&msg=Unable to send", response.getRedirectedUrl());
     }
 
 

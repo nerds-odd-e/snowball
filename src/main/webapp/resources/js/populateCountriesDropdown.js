@@ -11,7 +11,7 @@ function retrieveCountryListFromServer()
 
 	$.ajax({
 	    type: 'GET',
-	    url: 'countries',
+	    url: '/countries',
 	    dataType: 'json',
 	    success: function(data) { countryList = data },
 	    async: false

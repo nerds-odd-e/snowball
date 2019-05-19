@@ -16,7 +16,7 @@ $(document).ready(function() {
 
     $("#update_button").click(function() {
         $("#subject").val($("#subject").val().trim());
-        $("#sendmail").attr("action","templates").submit();
+        $("#sendmail").attr("action","/templates").submit();
     });
 
 });
@@ -25,7 +25,7 @@ function retrieveTemplateListFromServer(callback)
 {
 	$.ajax({
 	    type: 'GET',
-	    url: 'templates',
+	    url: '/templates',
 	    dataType: 'json',
 	    success: function(data) { callback(data) }
 	});

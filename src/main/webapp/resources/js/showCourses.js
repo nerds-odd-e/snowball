@@ -9,7 +9,7 @@ function retrieveCourseListFromServer()
 	
 	$.ajax({
 	    type: 'GET',
-	    url: 'courses',
+	    url: '/courses',
 	    dataType: 'json',
 	    success: function(data) {courseList = data },
 	    async: false

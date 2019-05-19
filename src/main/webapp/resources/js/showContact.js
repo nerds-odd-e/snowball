@@ -19,7 +19,7 @@ function retrieveContactListFromServer()
 	
 	$.ajax({
 	    type: 'GET',
-	    url: 'contacts',
+	    url: '/contacts',
 	    dataType: 'json',
 	    success: function(data) {contactList = data },
 	    async: false
