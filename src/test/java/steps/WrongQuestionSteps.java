@@ -18,7 +18,7 @@ public class WrongQuestionSteps {
     private final String password = "abcd1234";
 
 
-    @Given("^ユーザが登録されている$")
+    @Given("^a user has logged in$")
     public void ユーザが登録されている() throws Throwable {
         User.deleteAll();
         User user = new User(email);

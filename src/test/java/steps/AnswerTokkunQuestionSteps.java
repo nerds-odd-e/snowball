@@ -16,36 +16,12 @@ public class AnswerTokkunQuestionSteps {
     private final WebDriverWrapper driver = site.getDriver();
     private Question questionA;
 
-    @Given("^問題 \"([^\"]*)\" が追加されている$")
-    public void 問題_が追加されている(String question) {
-        questionA = new QuestionBuilder()
-                .aQuestion(question, "", Category.findByName("Scrum").getLongId().toString())
-                .withCorrectOption("visible")
-                .withCorrectOption("valuable")
-                .withCorrectOption("vertical")
-                .withWrongOption("virtual")
-                .please();
-
-    }
-
-    @When("^特訓回答ページに遷移する$")
+    @When("^the user started to do tokkun$")
     public void 特訓回答ページに遷移する() {
         site.visit("tokkun/question");
     }
 
-    @When("^ユーザが \"([^\"]*)\" と \"([^\"]*)\" と \"([^\"]*)\" と回答する$")
-    public void ユーザが_と_と_と回答する(String arg1, String arg2, String arg3) {
-        driver.clickCheckBox(arg1);
-        driver.clickCheckBox(arg2);
-        driver.clickCheckBox(arg3);
-    }
-
-    @When("^ユーザーがanswerボタンを押す$")
-    public void ユーザーがanswerボタンを押す() {
-        driver.clickButton("answer");
-    }
-
-    @Then("^特訓のEndOfTheTestが表示される$")
+    @Then("^the user should see the end of tokkun page")
     public void 特訓のendofthetestが表示される() {
         assertEquals(driver.getCurrentTitle(), "End Of Test");
     }
