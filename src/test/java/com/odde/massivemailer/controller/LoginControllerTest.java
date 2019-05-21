@@ -44,7 +44,7 @@ public class LoginControllerTest {
         request.setParameter("password", "abcd1234");
         controller.doPost(request, response);
 
-        assertEquals("tokkun/tokkun_top.jsp", response.getRedirectedUrl());
+        assertEquals("/dashboard", response.getRedirectedUrl());
     }
 
     private void createUser() {

@@ -24,9 +24,9 @@ public class LoginController extends AppController {
 
             HttpSession session = req.getSession();
             session.setAttribute("loggedIn", true);
-            redirectUrl = "tokkun/tokkun_top.jsp";
+            redirectUrl = "/dashboard";
         } else {
-            redirectUrl = "login.jsp?status=fail";
+            redirectUrl = "/login.jsp?status=fail";
         }
         resp.sendRedirect(redirectUrl);
     }

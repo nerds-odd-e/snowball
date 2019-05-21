@@ -17,7 +17,7 @@ import java.util.*;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.*;
 
-public class LoginTests{
+public class LoginSteps {
     private final MassiveMailerSite site = new MassiveMailerSite();
     private final WebDriverWrapper driver = site.getDriver();
     private final String login_url = site.baseUrl() + "login.jsp";
@@ -59,9 +59,23 @@ public class LoginTests{
         driver.clickButton("login");
     }
 
-    @Then("^Show tokkun top$")
+    @Given("^user hasn't logged in$")
+    public void ユーザーは未ログイン() {
+    }
+
+    @When("^visiting dashboard$")
+    public void 特訓トップにアクセスする() {
+        site.visit("dashboard");
+    }
+
+    @Then("^user should be redirected to login page$")
+    public void ログインページに遷移する() {
+        assertEquals("Login", driver.getCurrentTitle());
+    }
+
+    @Then("^user should see the dashboard$")
     public void show_course_list_of_current_user() {
-        assertThat(driver.getCurrentUrl(), containsString("tokkun/tokkun_top"));
+        assertThat(driver.getCurrentUrl(), containsString("dashboard"));
     }
 
     @Then("^I should move to page with url \"([^\"]*)\"$")
@@ -128,7 +142,7 @@ public class LoginTests{
         driver.clickById("signup");
     }
 
-    @Then("^User should see the sign up page$")
+    @Then("^user should see the sign up page$")
     public void サインアップページに遷移すること() throws Throwable {
         assertEquals(driver.getCurrentTitle(), "Sign Up");
     }

@@ -10,7 +10,7 @@ Feature: User Confirmation
     And set password to "1234abcd", password confirmation to "1234abcd"
     Then Show valid information
     And I login with "user1@odd-e.com" and "1234abcd"
-    And Show tokkun top
+    And user should see the dashboard
 
   Scenario: Invalid token
     Given Admin add a new contact "Yang" with email: "yang@odd-e.com"

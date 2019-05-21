@@ -40,7 +40,7 @@ public class SignupController extends AppController {
         sessionCookie.setHttpOnly(true);
         resp.addCookie(sessionCookie);
 
-        String redirectUrl = "tokkun/top";
+        String redirectUrl = "dashboard";
         String userName = req.getParameter("userName");
         HttpSession session = req.getSession(true);
         session.setAttribute("userName", userName);

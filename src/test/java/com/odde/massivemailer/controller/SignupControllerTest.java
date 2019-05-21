@@ -39,12 +39,12 @@ public class SignupControllerTest {
     }
 
     @Test
-    public void redirectTokkunPageFromSignup() throws Exception {
+    public void redirectToDashboardPageFromSignup() throws Exception {
         request.setParameter("userName", "yamada");
         request.setParameter("password", "passhoge");
         request.setParameter("password_confirm", "passhoge");
         controller.doPost(request, response);
-        assertThat(response.getRedirectedUrl(), CoreMatchers.containsString("tokkun/top"));
+        assertThat(response.getRedirectedUrl(), CoreMatchers.containsString("dashboard"));
     }
 
     @Test

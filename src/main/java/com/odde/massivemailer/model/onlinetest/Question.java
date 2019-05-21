@@ -178,4 +178,5 @@ public class Question extends ApplicationModel {
     boolean isPublic() {
         return true;
     }
+
 }

@@ -32,7 +32,7 @@ public class AddQuestionController extends AppController {
             return;
         }
         saveQuestion(req);
-        resp.sendRedirect("/tokkun/top");
+        resp.sendRedirect("/dashboard");
     }
 
     private String checkParameter(HttpServletRequest req) {

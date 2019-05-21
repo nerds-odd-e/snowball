@@ -117,10 +117,10 @@ public class AddQuestionControllerTest {
 
 
     @Test
-    public void redirectToTokkunTopPage() throws Exception {
+    public void redirectToDashboard() throws Exception {
         setupValidRequest();
         controller.doPost(request, response);
-        assertEquals("/tokkun/top", response.getRedirectedUrl());
+        assertEquals("/dashboard", response.getRedirectedUrl());
     }
 
     @Test

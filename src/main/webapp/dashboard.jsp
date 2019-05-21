@@ -12,21 +12,21 @@
     }
 %>
 
-<t:basic title="Tokkun List">
+<t:basic title="Dashboard">
     <jsp:body>
         <div class="container-fluid">
             <!-- Page Heading -->
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Tokkun List</h1>
+                    <h1 class="page-header">Dashboard</h1>
                     <p id="user_name">${sessionScope.userName}</p>
                 </div>
             </div>
             <!-- /.row -->
             <div class="row">
                     <div class="col-lg-12" id="">
-                    <form name="tokkun" id="tokkunForm" method="get" action="/tokkun/launchQuestion">
-                        <button type="submit" class="btn btn-default" id="start_button">Tokkun</button>
+                    <form name="onlinetest" id="onlinetest" method="get" action="/onlinetest/launchQuestion">
+                        <button type="submit" class="btn btn-default" id="start_button">Start Test</button>
                     </form>
                 </div>
             </div>
@@ -38,9 +38,9 @@
                         <div class="panel panel-default">
                             <table class="table table-responsive table-bordered">
                                 <thead>
-                                    <th>Tokkun</th>
+                                    <th>Questions</th>
                                 </thead>
-                                <tbody id="tokkunTable">
+                                <tbody id="questionTable">
                                     <tr>
                                         <th style="width:20%">Description</th>
                                         <td id="description">${question.getDescription()}</td>

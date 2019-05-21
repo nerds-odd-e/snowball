@@ -1,7 +1,6 @@
 package steps;
 
 import com.odde.massivemailer.model.User;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -17,7 +16,7 @@ public class SignupSteps {
     private final MassiveMailerSite site = new MassiveMailerSite();
     private final WebDriverWrapper driver = site.getDriver();
     private final String signup_url = site.baseUrl() + "signup.jsp";
-    private final String tokkun_url = site.baseUrl() + "tokkun/top";
+    private final String dashboard_url = site.baseUrl() + "dashboard";
 
     @Given("^user is on the sign up page$")
     public void ユーザーがサインアップページを開いている() {
@@ -48,9 +47,10 @@ public class SignupSteps {
     public void ユーザーはsubmitボタンをクリックする() {
         driver.clickButton("signup");
     }
+
     @Then("^特訓のトップページに遷移する$")
     public void 特訓のトップページに遷移する() {
-        String expected = tokkun_url;
+        String expected = dashboard_url;
         assertEquals(expected, driver.getCurrentUrl());
     }
 

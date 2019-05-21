@@ -53,9 +53,9 @@
                 <li><a id="start_test" href="/onlinetest/question_category.jsp"><span
                     class="glyphicon glyphicon-file" aria-hidden="true"></span>
                     Start Test</a></li>
-                <li><a id="start_tokkun" href="/tokkun/tokkun_top.jsp"><span
+                <li><a id="dashboard" href="/dashboard"><span
                     class="glyphicon glyphicon-file" aria-hidden="true"></span>
-                    Start Tokkun</a></li>
+                    Dashboard</a></li>
             </ul>
         </div>
     <!-- /.navbar-collapse -->

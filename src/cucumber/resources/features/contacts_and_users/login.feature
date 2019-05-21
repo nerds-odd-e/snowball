@@ -1,3 +1,4 @@
+@now
 Feature: Login
   User should be able to login
 
@@ -10,6 +11,11 @@ Feature: Login
       | john@example.com	john	jon	CS	Singapore Singapore    |
       | JaneDoe@mail.com	John	Fisher	CS	Singapore Singapore |
 
+  Scenario: Redirect to login if not yet
+    Given user hasn't logged in
+    When visiting dashboard
+    Then user should be redirected to login page
+
   Scenario Outline: login
     Given There are users as bellow
       | mary@example.com | abcd1234 |
@@ -19,7 +25,7 @@ Feature: Login
 
     Examples:
       | email               | password | url                   | message |
-      | mary@example.com    | abcd1234 | tokkun/tokkun_top.jsp | hidden  |
+      | mary@example.com    | abcd1234 | dashboard             | hidden  |
       | mary@example.com    | hogehoge | login.jsp?status=fail | shown   |
       | unknown@example.com | abcd1234 | login.jsp?status=fail | shown   |
 
@@ -37,10 +43,11 @@ Feature: Login
     When I move to course list page
     Then Show courses list "CSD-2"
 
-    Scenario: Courses List no login
-      When I move to course list page
-      Then Show all courses list "CSD-1,CSD-2,CSD-3"
+  Scenario: Courses List no login
+    When I move to course list page
+    Then Show all courses list "CSD-1,CSD-2,CSD-3"
 
   Scenario: Go to sign up from login page
     When click the sign up link from the login page
     Then user should see the sign up page
+

@@ -1,4 +1,3 @@
-@now
 Feature: Signup
 
   Background:
