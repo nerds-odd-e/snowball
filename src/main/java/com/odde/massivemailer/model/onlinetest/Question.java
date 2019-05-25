@@ -1,6 +1,7 @@
 package com.odde.massivemailer.model.onlinetest;
 
 import com.odde.massivemailer.model.ApplicationModel;
+import com.odde.massivemailer.model.base.Repository;
 import com.odde.massivemailer.model.callback.QuestionCallbacks;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
@@ -91,7 +92,7 @@ public class Question extends ApplicationModel {
         if (getString(CATEGORY).isEmpty()) {
             return null;
         }
-        return Category.findById(getString(CATEGORY));
+        return Category.repository().findById(getString(CATEGORY));
     }
 
     public String getCategoryName() {

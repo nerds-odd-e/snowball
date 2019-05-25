@@ -1,6 +1,5 @@
 package com.odde.massivemailer.model.onlinetest;
 
-import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
@@ -13,7 +12,7 @@ public class DBConnector {
     static DBConnector dbConnector = null;
     MongoDatabase database;
 
-    static DBConnector instance() {
+    public static DBConnector instance() {
         if (dbConnector == null) {
             dbConnector = new DBConnector();
         }
@@ -25,21 +24,17 @@ public class DBConnector {
         database = mongoClient.getDatabase("kyouha_unit_test").withCodecRegistry(getCodecRegistry());
     }
 
-    public static MongoCollection<Category> getCategoryMongoCollection() {
-        return instance().getMongoCollection(Category.class, "categories");
-    }
-
-    private <T>MongoCollection<T> getMongoCollection(Class<T> klass, String name) {
+    public <T>MongoCollection<T> getMongoCollection(Class<T> klass, String name) {
         return database.getCollection(name, klass);
     }
 
     private static CodecRegistry getCodecRegistry() {
-        CodecRegistry codecRegistry = CodecRegistries.fromCodecs(new Category.IntegerCodec());
+        CodecRegistry codecRegistry = CodecRegistries.fromCodecs(new Category.CategoryCodec());
         CodecRegistry defaultCodecRegistry = MongoClientSettings.getDefaultCodecRegistry();
         return CodecRegistries.fromRegistries(codecRegistry, defaultCodecRegistry);
     }
 
     public static void resetAll() {
-        getCategoryMongoCollection().deleteMany(new BasicDBObject());
+        instance().database.drop();
     }
 }

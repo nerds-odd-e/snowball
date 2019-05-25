@@ -8,7 +8,7 @@
 <%
     String errorMessage = (String) request.getAttribute("errorMessage");
     pageContext.setAttribute("errorMessage", errorMessage);
-    pageContext.setAttribute("categories", Category.findAll());
+    pageContext.setAttribute("categories", Category.repository().findAll());
 %>
 
 
