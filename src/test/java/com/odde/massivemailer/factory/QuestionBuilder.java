@@ -11,10 +11,6 @@ public class QuestionBuilder {
         return currentQuestion;
     }
 
-    public QuestionBuilder aQuestion() {
-        return aQuestion("myTest", null);
-    }
-
     public QuestionBuilder aQuestion( String questionDescription, String advice, String category) {
         currentQuestion = Question.createIt("description", questionDescription, "advice", advice, "category", category);
         return this;
@@ -26,7 +22,7 @@ public class QuestionBuilder {
     }
 
     public QuestionBuilder aQuestion(Category category) {
-        currentQuestion = Question.createIt("description", "myTest", "advice", null, "category", String.valueOf(category.getId()));
+        currentQuestion = Question.createIt("description", "myTest", "advice", null, "category", category.getStringId());
         return this;
     }
 

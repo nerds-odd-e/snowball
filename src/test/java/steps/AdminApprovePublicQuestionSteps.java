@@ -26,7 +26,7 @@ public class AdminApprovePublicQuestionSteps {
                 .withCorrectOption(questionMap.get("option1"))
                 .withWrongOption(questionMap.get("option2"))
                 .please();
-        questionId = q.getId().toString();
+        questionId = q.getStringId();
     }
 
     @When("^Adminが承認する$")

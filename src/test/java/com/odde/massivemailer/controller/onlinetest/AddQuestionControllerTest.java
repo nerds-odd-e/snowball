@@ -35,7 +35,7 @@ public class AddQuestionControllerTest {
     private void setupValidRequest() {
         request.setParameter("description", "aaaaaaaaaaaaaaaa");
         request.setParameter("type", "single");
-        request.setParameter("category", cat1.getLongId().toString());
+        request.setParameter("category", cat1.getStringId());
         request.setParameter("option1", "option1");
         request.setParameter("option2", "option2");
         request.setParameter("option3", "option3");
@@ -49,7 +49,7 @@ public class AddQuestionControllerTest {
     private void setupValidRequestForMultipleChoice() {
         request.setParameter("description", "aaaaaaaaaaaaaaaa");
         request.setParameter("type", "multiple");
-        request.setParameter("category", cat2.getLongId().toString());
+        request.setParameter("category", cat2.getStringId());
         request.setParameter("checkbox1", "checkbox1");
         request.setParameter("checkbox2", "checkbox2");
         request.setParameter("checkbox3", "checkbox3");

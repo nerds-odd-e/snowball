@@ -2,6 +2,7 @@ package com.odde.massivemailer.model.onlinetest;
 
 import com.odde.TestWithDB;
 import com.odde.massivemailer.factory.QuestionBuilder;
+import org.bson.types.ObjectId;
 import org.javalite.common.Collections;
 import org.junit.Before;
 import org.junit.Test;
@@ -59,8 +60,8 @@ public class QuestionCollectionTest {
         QuestionCollection questionCollection = createQuestionCollection(10, 10);
         List<Question> questions = questionCollection.generateQuestionList(Collections.li(scrum, tech), 10);
         long scrumQuestionCount = questions.stream().filter(q -> q.getCategory().equals(scrum)).count();
-        assertEquals(5, scrumQuestionCount);
         assertEquals(10, questions.size());
+        assertEquals(5, scrumQuestionCount);
     }
 
     @Test
@@ -89,16 +90,16 @@ public class QuestionCollectionTest {
     }
 
     private QuestionCollection createQuestionCollection(int numberOfScrumQuestion, int numberOfTechQuestion) {
-        List<Question> scrumQuestions = makeQuestions(numberOfScrumQuestion, scrum.getLongId());
-        scrumQuestions.addAll(makeQuestions(numberOfTechQuestion, tech.getLongId()));
+        List<Question> scrumQuestions = makeQuestions(numberOfScrumQuestion, scrum.getId());
+        scrumQuestions.addAll(makeQuestions(numberOfTechQuestion, tech.getId()));
         QuestionCollection questionCollection = new QuestionCollection(scrumQuestions);
         questionCollection.setShouldShuffleQuestions(false);
         return questionCollection;
     }
 
-    private static List<Question> makeQuestions(int numberOfQuestion, Long categoryId) {
+    private static List<Question> makeQuestions(int numberOfQuestion, ObjectId categoryId) {
         List<Question> questions = new ArrayList<>();
-        String category = String.valueOf(categoryId);
+        String category = categoryId.toHexString();
         IntStream.range(0, numberOfQuestion)
                 .forEach(index ->
                         questions.add(Question.createIt("description", "desc" + index,

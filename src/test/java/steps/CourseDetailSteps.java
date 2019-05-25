@@ -24,7 +24,7 @@ public class CourseDetailSteps {
     public void iVisitDetailPage(String courseName) {
         site.visit("course_list.jsp");
         Course course = Course.getCourseByName(courseName);
-        driver.visit(courseDetailUrl + "?id=" + course.getId().toString());
+        driver.visit(courseDetailUrl + "?id=" + course.getStringId());
         driver.pageShouldContain("Course Detail");
         driver.pageShouldContain(courseName);
     }

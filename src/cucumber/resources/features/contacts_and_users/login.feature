@@ -1,4 +1,3 @@
-@now
 Feature: Login
   User should be able to login
 

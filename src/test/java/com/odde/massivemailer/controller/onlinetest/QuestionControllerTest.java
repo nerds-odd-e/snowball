@@ -37,7 +37,7 @@ public class QuestionControllerTest {
     }
 
     private Question createQuestionWithOptions(Category category) {
-        return createQuestionWithOptions(category.getLongId().toString());
+        return createQuestionWithOptions(category.getStringId());
     }
 
     private Question createQuestionWithOptions(String categoryId) {
@@ -195,7 +195,7 @@ public class QuestionControllerTest {
         HttpSession session = request.getSession();
 
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
-        assertEquals(1, onlineTest.getCategoryCorrectAnswerCount(tech.getLongId().intValue()));
+        assertEquals(1, onlineTest.getCategoryCorrectAnswerCount(tech.getStringId()));
     }
 
     @Test
@@ -233,7 +233,7 @@ public class QuestionControllerTest {
         HttpSession session = request.getSession();
 
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
-        assertEquals(1, onlineTest.getCategoryCorrectAnswerCount(team.getLongId().intValue()));
+        assertEquals(1, onlineTest.getCategoryCorrectAnswerCount(team.getStringId()));
     }
 
     @Test

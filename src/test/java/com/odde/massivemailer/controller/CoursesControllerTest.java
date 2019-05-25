@@ -105,7 +105,7 @@ public class CoursesControllerTest {
         Course bobsCourse = createCourse("Bob's course");
         createCourse("anotherCourse");
 
-        Participant participant = new Participant(Integer.parseInt(bob.getId().toString()), Integer.parseInt(bobsCourse.getId().toString()));
+        Participant participant = new Participant(Integer.parseInt(bob.getStringId()), Integer.parseInt(bobsCourse.getStringId()));
         participant.saveIt();
 
         Cookie otherCookie = new Cookie("any", "any");

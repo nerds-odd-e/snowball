@@ -102,10 +102,13 @@ test {
 }
 
 dependencies {
+    compileOnly 'org.projectlombok:lombok:1.18.8'
+    annotationProcessor 'org.projectlombok:lombok:1.18.8'
     compile group: 'com.sun.mail', name: 'javax.mail', version: '1.5.4'
     compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.6'
     compile group: 'com.google.code.gson', name: 'gson', version: '1.7.1'
     compile group: 'com.icegreen', name: 'greenmail', version: '1.4.1'
+    compile 'org.mongodb:mongodb-driver-sync:3.10.1'
 
     testCompile("org.junit.jupiter:junit-jupiter-api:$junit5Version")
     testRuntime("org.junit.jupiter:junit-jupiter-engine:$junit5Version")

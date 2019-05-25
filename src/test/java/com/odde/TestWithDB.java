@@ -1,5 +1,7 @@
 package com.odde;
 
+import com.mongodb.BasicDBObject;
+import com.odde.massivemailer.model.onlinetest.DBConnector;
 import com.odde.massivemailer.startup.DBMigrater;
 import org.javalite.activejdbc.Base;
 import org.junit.runner.notification.RunNotifier;
@@ -17,6 +19,7 @@ public class TestWithDB extends BlockJUnit4ClassRunner {
 
     @Override
     protected void runChild(FrameworkMethod method, RunNotifier notifier) {
+        DBConnector.resetAll();
         Base.openTransaction();
         super.runChild(method, notifier);
         Base.rollbackTransaction();

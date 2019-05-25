@@ -282,7 +282,7 @@ public class QuestionStep {
 
         for (int i = 0; i < numOfQuestions; i++) {
             new QuestionBuilder()
-                    .aQuestion(categoryName, null, String.valueOf(categoryId))
+                    .aQuestion(categoryName, null, categoryId)
                     .withCorrectOption("CorrectOption")
                     .please();
         }

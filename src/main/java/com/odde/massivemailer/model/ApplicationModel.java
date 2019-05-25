@@ -14,4 +14,8 @@ public abstract class ApplicationModel extends Model {
     public boolean anyDirtyAttributes(String ... fields) {
         return Arrays.stream(fields).anyMatch(this.dirtyAttributeNames()::contains);
     }
+
+    public String getStringId() {
+	    return getId().toString();
+    }
 }

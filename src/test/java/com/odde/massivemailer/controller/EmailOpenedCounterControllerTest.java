@@ -32,7 +32,7 @@ public class EmailOpenedCounterControllerTest {
         SentMail result = AppGson.getGson().fromJson(res.getContentAsString(), SentMail.class);
 
         assertEquals("Promotional test", result.getSubject());
-        assertEquals(mail.getId(), Long.parseLong(result.getId().toString()));
+        assertEquals(mail.getId(), Long.parseLong(result.getStringId()));
     }
 
     @Test

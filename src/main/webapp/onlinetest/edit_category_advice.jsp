@@ -18,7 +18,7 @@
              <label for="category">Category</label>
                  <select name="category" id="category">
                     <c:forEach items="${categoryList}" var="category" varStatus="Status">
-                        <option value="${category.getId()}">${category.getName()}</option>
+                        <option value="${category.getStringId()}">${category.getName()}</option>
                     </c:forEach>
                  </select>
              </div>
@@ -40,8 +40,8 @@
             <c:forEach items="${categoryList}" var="category" varStatus="count">
                 <tr>
                     <th style="width:20%">${category.getName()}</th>
-                    <td>${category.getString("advice")}</td>
-                    <td>${category.getString("link")}</td>
+                    <td>${category.getAdvice()}</td>
+                    <td>${category.getLink()}</td>
                 </tr>
             </c:forEach>
             </tbody>

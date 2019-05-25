@@ -2,10 +2,10 @@ package com.odde.massivemailer.model.onlinetest;
 
 public class CategoryTestResult {
 
-    public int categoryId;
+    public String categoryId;
     public int questionCount;
 
-    CategoryTestResult(int categoryId) {
+    CategoryTestResult(String categoryId) {
         this.categoryId = categoryId;
         this.questionCount = 0;
     }

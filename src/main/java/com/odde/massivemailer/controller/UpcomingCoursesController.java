@@ -33,7 +33,7 @@ public class UpcomingCoursesController extends AppController {
             }
 
             for (Course course : nearCourses) {
-                courseIDs = courseIDs + "," + course.getId().toString();
+                courseIDs = courseIDs + "," + course.getStringId();
             }
             courseIDs = courseIDs.replaceFirst(",","");
 

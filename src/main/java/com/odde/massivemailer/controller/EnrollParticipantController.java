@@ -49,7 +49,7 @@ public class EnrollParticipantController extends AppController {
                     "city", line[4],
                     "country", line[5]);
             contactPerson.save();
-            Integer contactPersonId = Integer.parseInt(ContactPerson.getContactByEmail(line[0]).getId().toString());
+            Integer contactPersonId = Integer.parseInt(ContactPerson.getContactByEmail(line[0]).getStringId());
             new Participant(contactPersonId, Integer.parseInt(this.courseId)).save();
         }
 

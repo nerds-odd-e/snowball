@@ -10,7 +10,7 @@ public class OnlineTest {
     private final List<Question> questions;
     private int numberOfAnsweredQuestions;
     private int correctAnswerCount;
-    private Map<Integer, Integer> categoryCorrectAnswerCount;
+    private Map<String, Integer> categoryCorrectAnswerCount;
     public List<CategoryTestResult> categoryTestResults;
     public List<Answer> answers;
 
@@ -80,7 +80,7 @@ public class OnlineTest {
         correctAnswerCount++;
     }
 
-    private void incrementCategoryQuestionCount(int categoryId) {
+    private void incrementCategoryQuestionCount(String categoryId) {
         List<CategoryTestResult> collect = categoryTestResults
                 .stream()
                 .filter(categoryTestResult -> categoryTestResult.categoryId == categoryId)
@@ -122,7 +122,7 @@ public class OnlineTest {
         return getCorrectAnswerCount() != 0 && (getCorrectAnswerCount() * 1.0 / questions.size() * 1.0) * 100 >= 80;
     }
 
-    public int getCategoryCorrectAnswerCount(int categoryId) {
+    public int getCategoryCorrectAnswerCount(String categoryId) {
         Integer count = categoryCorrectAnswerCount.get(categoryId);
         if (count == null) {
             return 0;
@@ -130,7 +130,7 @@ public class OnlineTest {
         return count;
     }
 
-    public void incrementCategoryCorrectAnswerCount(int categoryId) {
+    public void incrementCategoryCorrectAnswerCount(String categoryId) {
         Integer count = categoryCorrectAnswerCount.get(categoryId);
         if (count == null) {
             count = 0;
@@ -140,13 +140,13 @@ public class OnlineTest {
 
     public boolean answer(String[] answeredOptionIds) {
 
-        Long categoryId = getCurrentQuestion().getCategory().getLongId();
+        String categoryId = getCurrentQuestion().getCategory().getStringId();
         Answer answer = answerCurrentQuestion(Arrays.asList(answeredOptionIds));
         boolean isCorrect = answer.isCorrect();
         if (isCorrect) {
             incrementCorrectAnswerCount();
-            incrementCategoryQuestionCount(categoryId.intValue());
-            incrementCategoryCorrectAnswerCount(categoryId.intValue());
+            incrementCategoryQuestionCount(categoryId);
+            incrementCategoryCorrectAnswerCount(categoryId);
             return true;
         }
         return false;

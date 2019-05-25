@@ -7,6 +7,6 @@ public class CategoryBuilder {
     }
 
     String categoryByName(String name) {
-        return String.valueOf(Category.getIdByName(name));
+        return Category.getIdByName(name).toString();
     }
 }

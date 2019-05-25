@@ -88,7 +88,10 @@ public class Question extends ApplicationModel {
     }
 
     public Category getCategory() {
-        return Category.findById(get(CATEGORY));
+        if (getString(CATEGORY).isEmpty()) {
+            return null;
+        }
+        return Category.findById(getString(CATEGORY));
     }
 
     public String getCategoryName() {
@@ -164,7 +167,7 @@ public class Question extends ApplicationModel {
 
     public Long getFirstOptionId() {
         Collection<AnswerOption> options = getOptions();
-        return Long.valueOf(options.stream().findFirst().get().getId().toString());
+        return Long.valueOf(options.stream().findFirst().get().getStringId());
     }
 
     public boolean isMultipleAnswerOptions() {
@@ -172,7 +175,7 @@ public class Question extends ApplicationModel {
     }
 
     boolean belongsTo(Category cat) {
-        return cat.getLongId().toString().equals(get(CATEGORY));
+        return cat.getStringId().equals(get(CATEGORY));
     }
 
     boolean isPublic() {

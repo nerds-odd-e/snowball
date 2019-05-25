@@ -1,9 +1,11 @@
 package steps.driver;
 
+import com.odde.massivemailer.model.onlinetest.DBConnector;
 import org.javalite.activejdbc.Base;
 
 public class DBConnectionFactory {
     public static void prepare() {
+        DBConnector.resetAll();
         Base.open();
         cleanDB();
     }

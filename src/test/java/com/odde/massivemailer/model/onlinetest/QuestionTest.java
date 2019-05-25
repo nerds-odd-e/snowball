@@ -118,7 +118,7 @@ public class QuestionTest {
     @Test
     public void Questionテーブルのカラムが全て返ってくる() {
         Category cat = Category.createIt("name", "xxx");
-        Question.createIt("description", "desc1", "advice", "adv1", "category", cat.getLongId(), "is_multi_question", 0);
+        Question.createIt("description", "desc1", "advice", "adv1", "category", cat.getStringId(), "is_multi_question", 0);
         List<Question> actual = Question.getNRandom(1);
         assertThat(actual.get(0).getDescription(), is(equalTo("desc1")));
         assertThat(actual.get(0).getAdvice(), is(equalTo("adv1")));
@@ -144,10 +144,10 @@ public class QuestionTest {
     public void Questionテーブルから指定したカテゴリのquestionが返す() {
         Category cat = Category.createIt("name", "cat");
         Category dog = Category.createIt("name", "dog");
-        Question.createIt("description", "desc1", "advice", "adv1", "category", cat.getLongId(), "is_multi_question", 0);
-        Question.createIt("description", "desc2", "advice", "adv2", "category", dog.getLongId(), "is_multi_question", 0);
+        Question.createIt("description", "desc1", "advice", "adv1", "category", cat.getStringId(), "is_multi_question", 0);
+        Question.createIt("description", "desc2", "advice", "adv2", "category", dog.getStringId(), "is_multi_question", 0);
 
-        List<Question> actual = Question.getNRandomWhereCategory(1, dog.getLongId().toString());
+        List<Question> actual = Question.getNRandomWhereCategory(1, dog.getStringId());
         assertThat(actual.get(0).getDescription(), is(equalTo("desc2")));
         assertThat(actual.get(0).getAdvice(), is(equalTo("adv2")));
         assertThat(actual.get(0).getCategoryName(), is(equalTo("dog")));
@@ -159,16 +159,16 @@ public class QuestionTest {
         Category cat = Category.createIt("name", "cat");
         Category dog = Category.createIt("name", "dog");
         Category bird = Category.createIt("name", "bird");
-        Question.createIt("description", "desc", "advice", "adv", "category", cat.getLongId(), "is_multi_question", 0);
-        Question.createIt("description", "desc", "advice", "adv", "category", cat.getLongId(), "is_multi_question", 0);
-        Question.createIt("description", "desc", "advice", "adv", "category", cat.getLongId(), "is_multi_question", 0);
-        Question.createIt("description", "desc", "advice", "adv", "category", dog.getLongId(), "is_multi_question", 0);
-        Question.createIt("description", "desc", "advice", "adv", "category", dog.getLongId(), "is_multi_question", 0);
-        Question.createIt("description", "desc", "advice", "adv", "category", bird.getLongId(), "is_multi_question", 0);
+        Question.createIt("description", "desc", "advice", "adv", "category", cat.getStringId(), "is_multi_question", 0);
+        Question.createIt("description", "desc", "advice", "adv", "category", cat.getStringId(), "is_multi_question", 0);
+        Question.createIt("description", "desc", "advice", "adv", "category", cat.getStringId(), "is_multi_question", 0);
+        Question.createIt("description", "desc", "advice", "adv", "category", dog.getStringId(), "is_multi_question", 0);
+        Question.createIt("description", "desc", "advice", "adv", "category", dog.getStringId(), "is_multi_question", 0);
+        Question.createIt("description", "desc", "advice", "adv", "category", bird.getStringId(), "is_multi_question", 0);
 
         Map<String, Integer> categoryMap = new HashMap<>();
-        categoryMap.put(cat.getLongId().toString(), 2);
-        categoryMap.put(dog.getLongId().toString(), 1);
+        categoryMap.put(cat.getStringId(), 2);
+        categoryMap.put(dog.getStringId(), 1);
 
         List<Question> questions = Question.getNRandomByCategories(categoryMap);
 
