@@ -10,19 +10,33 @@ import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 
 public class DBConnector {
-    public static MongoCollection<Category> getCategoryMongoCollection() {
-        MongoCollection<Category> categories = getCollection("categories");
-        MongoClients.create();
-        CodecRegistry codecRegistry = CodecRegistries.fromCodecs(new Category.IntegerCodec());
-        CodecRegistry defaultCodecRegistry = MongoClientSettings.getDefaultCodecRegistry();
-        CodecRegistry codecRegistry1 = CodecRegistries.fromRegistries(codecRegistry, defaultCodecRegistry);
-        return categories.withCodecRegistry(codecRegistry1);
+    static DBConnector dbConnector = null;
+    MongoDatabase database;
+
+    static DBConnector instance() {
+        if (dbConnector == null) {
+            dbConnector = new DBConnector();
+        }
+        return dbConnector;
     }
 
-    private static MongoCollection<Category> getCollection(String name) {
+    public DBConnector() {
         MongoClient mongoClient = MongoClients.create();
-        MongoDatabase database = mongoClient.getDatabase("kyouha_unit_test");
-        return database.getCollection(name, Category.class);
+        database = mongoClient.getDatabase("kyouha_unit_test").withCodecRegistry(getCodecRegistry());
+    }
+
+    public static MongoCollection<Category> getCategoryMongoCollection() {
+        return instance().getMongoCollection(Category.class, "categories");
+    }
+
+    private <T>MongoCollection<T> getMongoCollection(Class<T> klass, String name) {
+        return database.getCollection(name, klass);
+    }
+
+    private static CodecRegistry getCodecRegistry() {
+        CodecRegistry codecRegistry = CodecRegistries.fromCodecs(new Category.IntegerCodec());
+        CodecRegistry defaultCodecRegistry = MongoClientSettings.getDefaultCodecRegistry();
+        return CodecRegistries.fromRegistries(codecRegistry, defaultCodecRegistry);
     }
 
     public static void resetAll() {
