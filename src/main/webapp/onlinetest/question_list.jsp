@@ -7,7 +7,7 @@
 <%@ page import="java.util.*" %>
 
 <%
-    List<Question> questions = Question.findAll();
+    List<Question> questions = Question.repository().findAll();
 	pageContext.setAttribute("questions", questions);
 %>
 <t:with_side_menu title="Question List">
@@ -30,7 +30,7 @@
                             <thead>
                                 <th>Question ${questionStatus.index + 1}</th>
                                 <td>
-                                 <c:if test="${question.getIsApproved() == false}">
+                                 <c:if test="${question.isApproved() == false}">
                                      <form method="post" action="/onlinetest/approve_question">
                                      <input name="questionId" type="hidden" value="${question.getId()}">
                                       <button type="submit" data-dismiss="modal" id="approve-${question.getId()}">
@@ -38,7 +38,7 @@
                                       </button>
                                      </form>
                                   </c:if>
-                                 <c:if test="${question.getIsApproved() == true}">
+                                 <c:if test="${question.isApproved() == true}">
                                    Approved
                                  </c:if>
                                 </td>

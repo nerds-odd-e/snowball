@@ -25,7 +25,7 @@ public class UiCommonSteps {
     @Given("^there is one question exist in the system$")
     public void 問題が存在している() throws Throwable {
         new QuestionBuilder()
-                .aQuestion("testDescription", "testAdvice", String.valueOf(Category.getIdByName("Scrum")))
+                .aQuestion("testDescription", "testAdvice", Category.getIdByName("Scrum"))
                 .withWrongOption("Food")
                 .withWrongOption("Drink")
                 .withWrongOption("Country")

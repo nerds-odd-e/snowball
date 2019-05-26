@@ -22,7 +22,7 @@ public class AdminApprovePublicQuestionSteps {
     public void 未承認の問題がある(DataTable question){
         Map<String, String> questionMap = question.asMap(String.class, String.class);
         Question q = new QuestionBuilder()
-                .aQuestion(questionMap.get("description"),null)
+                .aQuestion(questionMap.get("description"),null, new CategoryBuilder().categoryByName("Scrum"))
                 .withCorrectOption(questionMap.get("option1"))
                 .withWrongOption(questionMap.get("option2"))
                 .please();

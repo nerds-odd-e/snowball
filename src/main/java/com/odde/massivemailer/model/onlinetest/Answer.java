@@ -1,22 +1,25 @@
 package com.odde.massivemailer.model.onlinetest;
 
+import org.bson.types.ObjectId;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Answer {
 
     private Question question;
-    private List<String> selectedOptionIds;
+    private List<ObjectId> selectedOptionIds;
 
     Answer(Question question, List<String> selectedOptionIds) {
         this.question = question;
-        this.selectedOptionIds = selectedOptionIds;
+        this.selectedOptionIds = selectedOptionIds.stream().map(ObjectId::new).collect(Collectors.toList());
     }
 
     public Question getQuestion() {
         return question;
     }
 
-    public List<String> getSelectedOptionIds() {
+    public List<ObjectId> getSelectedOptionIds() {
         return selectedOptionIds;
     }
 

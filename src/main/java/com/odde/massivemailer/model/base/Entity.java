@@ -1,5 +1,8 @@
 package com.odde.massivemailer.model.base;
 
+import com.odde.massivemailer.model.base.Repository;
+import com.odde.massivemailer.model.onlinetest.Category;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.bson.types.ObjectId;
@@ -11,8 +14,14 @@ import java.util.Objects;
 public abstract class Entity<T> {
     protected ObjectId id = null;
 
+    public abstract void onBeforeSave();
+
     public ObjectId getId() {
         return id;
+    }
+
+    public String getStringId() {
+        return getId().toString();
     }
 
     @Override
@@ -27,10 +36,4 @@ public abstract class Entity<T> {
     public int hashCode() {
         return Objects.hash(id);
     }
-
-    public String getStringId() {
-        return getId().toString();
-    }
-
-    public abstract void onBeforeSave();
 }

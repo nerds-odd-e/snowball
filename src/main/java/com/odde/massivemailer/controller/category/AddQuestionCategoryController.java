@@ -12,7 +12,7 @@ import java.io.IOException;
 public class AddQuestionCategoryController extends AppController {
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        Category.createIt("name", req.getParameter("category_name"));
+        Category.createIt(req.getParameter("category_name"));
         resp.sendRedirect("/onlinetest/add_question.jsp");
     }
 }

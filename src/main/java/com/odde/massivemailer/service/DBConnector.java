@@ -1,10 +1,13 @@
-package com.odde.massivemailer.model.onlinetest;
+package com.odde.massivemailer.service;
 
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.odde.massivemailer.model.onlinetest.Category;
+import com.odde.massivemailer.model.onlinetest.Question;
+import com.odde.massivemailer.model.onlinetest.QuestionOption;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 
@@ -31,6 +34,7 @@ public class DBConnector {
     private static CodecRegistry getCodecRegistry() {
         CodecRegistry codecRegistry = CodecRegistries.fromCodecs(
                 new Category.CategoryCodec(),
+                new Question.QuestionCodec(),
                 new QuestionOption.QuestionOptionCodec());
         CodecRegistry defaultCodecRegistry = MongoClientSettings.getDefaultCodecRegistry();
         return CodecRegistries.fromRegistries(codecRegistry, defaultCodecRegistry);

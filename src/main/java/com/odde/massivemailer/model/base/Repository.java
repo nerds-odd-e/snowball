@@ -2,7 +2,7 @@ package com.odde.massivemailer.model.base;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
-import com.odde.massivemailer.model.onlinetest.DBConnector;
+import com.odde.massivemailer.service.DBConnector;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 

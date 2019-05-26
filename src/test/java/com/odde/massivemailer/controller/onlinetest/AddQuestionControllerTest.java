@@ -21,8 +21,8 @@ public class AddQuestionControllerTest {
     private AddQuestionController controller;
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
-    private Category cat1 = Category.createIt("name", "Cat1");
-    private Category cat2 = Category.createIt("name", "Cat2");
+    private Category cat1 = Category.createIt("Cat1");
+    private Category cat2 = Category.createIt("Cat2");
 
     @Before
     public void setUpMockService() {
@@ -71,7 +71,7 @@ public class AddQuestionControllerTest {
     public void doPostAddQuestion() throws Exception {
         setupValidRequest();
         controller.doPost(request, response);
-        Question question = Question.findFirst("");
+        Question question = Question.repository().findAll().get(0);
 
         String description = request.getParameter("description");
         assertEquals(description, question.getDescription());
@@ -94,7 +94,7 @@ public class AddQuestionControllerTest {
     public void doPostAddQuestion_MultipleChoice() throws Exception {
         setupValidRequestForMultipleChoice();
         controller.doPost(request, response);
-        Question question = Question.findFirst("");
+        Question question = Question.repository().findAll().get(0);
 
         String description = request.getParameter("description");
         assertEquals(description, question.getDescription());

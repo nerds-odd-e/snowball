@@ -1,5 +1,6 @@
 package com.odde.massivemailer.model.onlinetest;
 
+import com.odde.massivemailer.model.base.Entity;
 import com.odde.massivemailer.model.base.Repository;
 
 import java.time.Duration;
@@ -112,7 +113,7 @@ public class OnlineTest {
             return "";
         }
         String categories = questions.stream()
-                .sorted((q1, q2) -> (int) (q1.getLongId() - q2.getLongId()))
+                .sorted(Comparator.comparing(Entity::getId))
                 .map(question -> question.getCategory().getName())
                 .distinct()
                 .collect(Collectors.joining("と"));

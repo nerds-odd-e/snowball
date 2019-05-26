@@ -1,6 +1,6 @@
 package steps.driver;
 
-import com.odde.massivemailer.model.onlinetest.DBConnector;
+import com.odde.massivemailer.service.DBConnector;
 import org.javalite.activejdbc.Base;
 
 public class DBConnectionFactory {

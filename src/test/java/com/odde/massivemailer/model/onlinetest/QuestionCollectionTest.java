@@ -1,10 +1,8 @@
 package com.odde.massivemailer.model.onlinetest;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.factory.QuestionBuilder;
 import org.bson.types.ObjectId;
 import org.javalite.common.Collections;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -18,8 +16,8 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(TestWithDB.class)
 public class QuestionCollectionTest {
-    private Category scrum = Category.createIt("name", "Scrum");
-    private Category tech = Category.createIt("name", "Tech");
+    private Category scrum = Category.createIt("Scrum");
+    private Category tech = Category.createIt("Tech");
     private List<Category> categories = Collections.li(scrum);
 
     @Test
@@ -99,11 +97,8 @@ public class QuestionCollectionTest {
 
     private static List<Question> makeQuestions(int numberOfQuestion, ObjectId categoryId) {
         List<Question> questions = new ArrayList<>();
-        String category = categoryId.toHexString();
         IntStream.range(0, numberOfQuestion)
-                .forEach(index ->
-                        questions.add(Question.createIt("description", "desc" + index,
-                                "advice", "adv" + index, "category", category))
+                .forEach(index -> questions.add(new Question("desc" + index, "adv" + index, categoryId, false, false).saveIt())
                 );
         return questions;
     }

@@ -51,7 +51,7 @@ public class CategoryAdviceControllerTest {
 
     @Test
     public void Updateボタンを押すとUpdateAdvice画面にリダイレクトされる() throws IOException, ServletException {
-        Category cat = Category.createIt("name", "Scrum");
+        Category cat = Category.createIt("Scrum");
         request.setParameter("category", cat.getStringId());
         request.setParameter("advice", "You should study scrum");
         controller.doPost(request, response);

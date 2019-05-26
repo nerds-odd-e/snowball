@@ -2,7 +2,9 @@ package com.odde.massivemailer.model.onlinetest;
 
 import com.odde.massivemailer.model.base.Entity;
 import com.odde.massivemailer.model.base.Repository;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.bson.BsonReader;
 import org.bson.BsonWriter;
@@ -15,13 +17,12 @@ import static com.mongodb.client.model.Filters.eq;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Category extends Entity {
     private String name="";
     private String link="";
     private String advice="";
-
-    public Category() {
-    }
 
     public static Repository<Category> repository() {
         return new Repository(Category.class, "categories");
@@ -54,7 +55,7 @@ public class Category extends Entity {
 
     }
 
-    static class CategoryCodec implements Codec<Category> {
+    public static class CategoryCodec implements Codec<Category> {
         @Override
         public void encode(final BsonWriter writer, final Category value, final EncoderContext encoderContext) {
             writer.writeStartDocument();
@@ -89,14 +90,12 @@ public class Category extends Entity {
         }
     }
 
-    public static Category createIt(String name, String category_name) {
-        Category category = new Category();
-        category.name = category_name;
-        category.saveIt();
-        return category;
+    public static Category createIt(String category_name) {
+        return new Category(category_name, "", "").saveIt();
     }
 
-    protected void saveIt() {
+    protected Category saveIt() {
         repository().save(this);
+        return this;
     }
 }

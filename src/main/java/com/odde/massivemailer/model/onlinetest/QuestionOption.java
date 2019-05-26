@@ -9,6 +9,7 @@ import org.bson.BsonWriter;
 import org.bson.codecs.Codec;
 import org.bson.codecs.DecoderContext;
 import org.bson.codecs.EncoderContext;
+import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,14 +26,14 @@ public class QuestionOption extends Entity<QuestionOption> {
 
     private String description;
     private boolean isCorrect;
-    private String questionId;
+    private ObjectId questionId;
 
     @Override
     public void onBeforeSave() {
         if(isEmpty(description)) {
             throw new ValidationException("`description` cannot be empty");
         }
-        if(isEmpty(questionId)) {
+        if(questionId == null) {
             throw new ValidationException("`questionId` cannot be empty");
         }
     }
@@ -46,13 +47,13 @@ public class QuestionOption extends Entity<QuestionOption> {
         setCorrect(isCorrect);
     }
 
-    public QuestionOption(String questionId, String description, boolean isCorrect) {
+    public QuestionOption(ObjectId questionId, String description, boolean isCorrect) {
         setQuestionId(questionId);
         setDescription(description);
         setCorrect(isCorrect);
     }
 
-    static Collection<QuestionOption> getForQuestion(String questionId) {
+    static Collection<QuestionOption> getForQuestion(ObjectId questionId) {
         return repository().getCollection().find(eq("questionId", questionId)).into(new ArrayList<QuestionOption>());
     }
 
@@ -64,12 +65,12 @@ public class QuestionOption extends Entity<QuestionOption> {
         return new QuestionOption(description, isCorrect);
     }
 
-    public static QuestionOption createIt(String questionId, String description, boolean isCorrect) {
+    public static QuestionOption createIt(ObjectId questionId, String description, boolean isCorrect) {
         return new QuestionOption(questionId, description, isCorrect).saveIt();
     }
 
-    void addToQuestion(String questionStringId) {
-        setQuestionId(questionStringId);
+    void addToQuestion(ObjectId questionId) {
+        setQuestionId(questionId);
         saveIt();
     }
 
@@ -78,13 +79,13 @@ public class QuestionOption extends Entity<QuestionOption> {
         return this;
     }
 
-    static class QuestionOptionCodec implements Codec<QuestionOption> {
+    public static class QuestionOptionCodec implements Codec<QuestionOption> {
         @Override
         public void encode(final BsonWriter writer, final QuestionOption value, final EncoderContext encoderContext) {
             writer.writeStartDocument();
             writer.writeObjectId("_id", value.id);
             writer.writeName("questionId");
-            writer.writeString(value.getQuestionId());
+            writer.writeObjectId(value.getQuestionId());
             writer.writeName("description");
             writer.writeString(value.description);
             writer.writeName("isCorrect");
@@ -98,7 +99,7 @@ public class QuestionOption extends Entity<QuestionOption> {
             reader.readStartDocument();
             option.id = reader.readObjectId("_id");
             reader.readName();
-            option.questionId = reader.readString();
+            option.questionId = reader.readObjectId();
             reader.readName();
             option.description = reader.readString();
             reader.readName();

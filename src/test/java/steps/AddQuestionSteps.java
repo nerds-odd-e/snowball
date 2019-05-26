@@ -23,7 +23,7 @@ public class AddQuestionSteps {
 
     @Given("^there is a question category \"([^\"]*)\"$")
     public void thereIsAQuestionCategory(String name) {
-        Category.createIt("name", name);
+        Category.createIt(name);
     }
 
     @Given("^Add Questionを開いている$")
@@ -78,7 +78,7 @@ public class AddQuestionSteps {
     public void questionAdded(DataTable question) {
         Map<String, String> questionMap = question.asMap(String.class, String.class);
         new QuestionBuilder()
-                .aQuestion(questionMap.get("description"),null)
+                .aQuestion(questionMap.get("description"),null, new CategoryBuilder().categoryByName("Scrum"))
                 .withCorrectOption(questionMap.get("option1"))
                 .withWrongOption(questionMap.get("option2"))
                 .please();

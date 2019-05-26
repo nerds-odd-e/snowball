@@ -9,13 +9,11 @@
 <%
     OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
     Question question = onlineTest.getPreviousQuestion();
-	ArrayList<String> correctOption = question.getCorrectOption();
 	ArrayList<String> selectedOption = (ArrayList<String>) request.getAttribute("selectedOption");
 	final String correctClass = "correct";
 	final String incorrectClass = "selected incorrect";
 	pageContext.setAttribute("question", question);
 	pageContext.setAttribute("selectedOption", selectedOption);
-	pageContext.setAttribute("correctOption", correctOption);
 %>
 
 <t:basic title="Advice">

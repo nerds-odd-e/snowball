@@ -3,6 +3,7 @@ package com.odde.massivemailer.controller.onlinetest;
 import com.odde.massivemailer.controller.AppController;
 import com.odde.massivemailer.model.onlinetest.QuestionOption;
 import com.odde.massivemailer.model.onlinetest.Question;
+import org.bson.types.ObjectId;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -71,10 +72,7 @@ public class AddQuestionController extends AppController {
     private void saveQuestion(HttpServletRequest req) {
         String type = req.getParameter("type");
 
-        Question question = new Question(req.getParameter("description"),
-                req.getParameter("advice"),
-                req.getParameter("category"),
-                type);
+        Question question = new Question(req.getParameter("description"), req.getParameter("advice"), new ObjectId(req.getParameter("category")), type.equals("multiple"), false);
         question.saveIt();
 
         final String[] checks = req.getParameterValues("check");
@@ -89,9 +87,8 @@ public class AddQuestionController extends AppController {
                 optionDescription = req.getParameter("checkbox" + (i + 1));
             }
             if (!optionDescription.isEmpty()) {
-                String questionId = question.get("id").toString();
                 boolean isCorrect = checksList.contains(String.valueOf(i + 1));
-                QuestionOption questionOption = new QuestionOption(questionId, optionDescription, isCorrect);
+                QuestionOption questionOption = new QuestionOption(question.getId(), optionDescription, isCorrect);
                 questionOption.saveIt();
             }
         }

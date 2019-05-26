@@ -1,5 +1,7 @@
 package com.odde.massivemailer.model.onlinetest;
 
+import org.bson.types.ObjectId;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -7,7 +9,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class TestResult {
-    private Map<Long, Question> questionMap;
+    private Map<ObjectId, Question> questionMap;
     private List<Answer> answers;
 
     public TestResult(List<Question> questions, List<Answer> answers) {
@@ -15,7 +17,7 @@ public class TestResult {
 
         questionMap = new HashMap<>();
         for (Question q : questions) {
-            questionMap.put(q.getLongId(), q);
+            questionMap.put(q.getId(), q);
         }
     }
 

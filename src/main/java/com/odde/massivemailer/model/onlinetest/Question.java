@@ -1,69 +1,65 @@
 package com.odde.massivemailer.model.onlinetest;
 
-import com.odde.massivemailer.model.ApplicationModel;
-import com.odde.massivemailer.model.callback.QuestionCallbacks;
-import org.javalite.activejdbc.LazyList;
-import org.javalite.activejdbc.Model;
-import org.javalite.activejdbc.annotations.Table;
+import com.mongodb.client.model.Aggregates;
+import com.mongodb.client.model.Filters;
+import com.odde.massivemailer.model.base.Entity;
+import com.odde.massivemailer.model.base.Repository;
+import com.odde.massivemailer.model.base.ValidationException;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.bson.BsonReader;
+import org.bson.BsonWriter;
+import org.bson.codecs.Codec;
+import org.bson.codecs.DecoderContext;
+import org.bson.codecs.EncoderContext;
+import org.bson.types.ObjectId;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
+import static org.apache.commons.lang3.StringUtils.defaultIfEmpty;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 
-@Table("questions")
-public class Question extends ApplicationModel {
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Question extends Entity {
 
-    private static final String DESCRIPTION = "description";
-    private static final String ADVICE = "advice";
-    private static final String CATEGORY = "category";
-    private static final String IS_MULTI_QUESTION = "is_multi_question";
-    private static final String IS_APPROVED = "is_approved";
+    private String description;
+    private String advice;
+    private ObjectId categoryId;
+    private boolean isMultiQuestion;
+    private boolean isApproved;
 
-    static {
-        validatePresenceOf("description");
-        callbackWith(new QuestionCallbacks());
-    }
-
-    public Question() {
-        //required by framework :(
-
-    }
-
-    public String getStringId() {
-        return getId().toString();
-    }
-
-    public Question(String description, String advice, String category, String type) {
-        set(DESCRIPTION, description);
-        set(ADVICE, advice);
-        set(CATEGORY, category);
-
-        if ("multiple".equals(type)) {
-            set(IS_MULTI_QUESTION, 1);
-            return;
+    @Override
+    public void onBeforeSave() {
+        if(isEmpty(description)) {
+            throw new ValidationException("`description` cannot be empty");
         }
-        set(IS_MULTI_QUESTION, 0);
-
+        if(categoryId == null) {
+            throw new ValidationException("`categoryId` cannot be empty");
+        }
     }
 
-    static Stream<Long> getNRandomIds(int count) {
-        LazyList<Model> ids = findBySQL("SELECT id FROM questions ORDER BY RAND() LIMIT ?", count);
-        return ids.stream().map(Model::getLongId);
+
+    public static Repository<Question> repository() {
+        return new Repository<>(Question.class, "questions");
     }
 
-    static Question getById(Long questionId) {
-        LazyList<Question> question = where("id = ?", questionId);
-        return question.stream().findFirst().orElseThrow(() -> new IllegalArgumentException("No question found by given id."));
+    static Question getById(ObjectId questionId) {
+        Question question = repository().findById(questionId);
+        if(question == null) {
+           throw new IllegalArgumentException("No question found by given id.");
+        }
+        return question;
     }
 
-    public static List<Question> getNRandom(int count) {
-        return findBySQL("SELECT id, description, advice, category, is_multi_question FROM questions ORDER BY RAND() LIMIT ?", count);
-    }
-
-    public static List<Question> getNRandomByCategories(Map<String, Integer> categoryMap) {
+    public static List<Question> getNRandomByCategories(Map<ObjectId, Integer> categoryMap) {
         List<Question> questions = new ArrayList<>();
-        for (String key : categoryMap.keySet()) {
+        for (ObjectId key : categoryMap.keySet()) {
             questions.addAll(Question.getNRandomWhereCategory(categoryMap.get(key), key));
         }
 
@@ -71,31 +67,21 @@ public class Question extends ApplicationModel {
         return questions;
     }
 
-    public static List<Question> getNRandomWhereCategory(int count, String category) {
-        return findBySQL("SELECT id, description, advice, category, is_multi_question FROM questions WHERE category = ? ORDER BY RAND() LIMIT ?", category, count);
+    public static List<Question> getNRandomWhereCategory(int count, ObjectId category) {
+        return repository().getCollection().aggregate(
+                Arrays.asList(
+                        Aggregates.match(Filters.eq("categoryId", category)),
+                        Aggregates.sample(count)
+                )
+        ).<List<Question>>into(new ArrayList<>());
     }
 
     public static List<Question> getAll() {
-        return findBySQL("SELECT id, description, advice, category, is_multi_question FROM questions ORDER BY id");
-    }
-
-    public String getDescription() {
-        return getString(DESCRIPTION);
-    }
-
-    public String getIsApproved() {
-        return getString(IS_APPROVED);
-    }
-
-    public String getAdvice() {
-        return getString(ADVICE);
+        return repository().findAll();
     }
 
     public Category getCategory() {
-        if (getString(CATEGORY).isEmpty()) {
-            return null;
-        }
-        return Category.repository().findByStringId(getString(CATEGORY));
+        return Category.repository().findById(categoryId);
     }
 
     public String getCategoryName() {
@@ -106,31 +92,22 @@ public class Question extends ApplicationModel {
         return category.getName();
     }
 
-    public boolean getIsMultiQuestion() {
-        Integer type = getInteger(IS_MULTI_QUESTION);
-        if (type == null) {
-            return false;
-        }
-        return getInteger(IS_MULTI_QUESTION) == 1;
-    }
-
     public Collection<QuestionOption> getOptions() {
-
-        return QuestionOption.getForQuestion(this.getStringId());
+        return QuestionOption.getForQuestion(this.getId());
     }
 
-    public boolean verifyAnswer(List<String> answeredOptionIds) {
+    public boolean verifyAnswer(List<ObjectId> answeredOptionIds) {
         Collection<QuestionOption> optionsByQuestionId = getOptions();
-        List<String> collectOptions = optionsByQuestionId.stream().filter(QuestionOption::isCorrect).map(answerOption -> answerOption.getStringId().toString()).collect(toList());
+        List<ObjectId> collectOptions = optionsByQuestionId.stream().filter(QuestionOption::isCorrect).map(answerOption -> answerOption.getId()).collect(toList());
         return collectOptions.equals(answeredOptionIds);
     }
 
-    public ArrayList<String> getCorrectOption() {
+    public ArrayList<ObjectId> getCorrectOption() {
         Collection<QuestionOption> optionsByQuestionId = getOptions();
-        final ArrayList<String> correctOptions = new ArrayList<>();
+        final ArrayList<ObjectId> correctOptions = new ArrayList<>();
         for (QuestionOption option : optionsByQuestionId) {
             if (option.isCorrect()) {
-                correctOptions.add(option.getStringId());
+                correctOptions.add(option.getId());
             }
         }
         return correctOptions;
@@ -145,6 +122,11 @@ public class Question extends ApplicationModel {
             }
         }
         return correctOptions.contains(optionId);
+    }
+
+    public Question saveIt() {
+        repository().save(this);
+        return this;
     }
 
     @Override
@@ -162,11 +144,11 @@ public class Question extends ApplicationModel {
     }
 
     public void createWrongOption(String optionText) {
-        new QuestionOption(getStringId(), optionText, false).saveIt();
+        new QuestionOption(getId(), optionText, false).saveIt();
     }
 
     public void createCorrectOption(String optionText) {
-        new QuestionOption(getStringId(), optionText, true).saveIt();
+        new QuestionOption(getId(), optionText, true).saveIt();
     }
 
     public String getFirstOptionId() {
@@ -179,11 +161,54 @@ public class Question extends ApplicationModel {
     }
 
     boolean belongsTo(Category cat) {
-        return cat.getStringId().equals(get(CATEGORY));
+        return cat.getId().equals(categoryId);
     }
 
     boolean isPublic() {
         return true;
+    }
+
+    public static class QuestionCodec implements Codec<Question> {
+        @Override
+        public void encode(final BsonWriter writer, final Question value, final EncoderContext encoderContext) {
+            writer.writeStartDocument();
+            writer.writeObjectId("_id", value.id);
+            writer.writeName("description");
+            writer.writeString(value.description);
+            writer.writeName("advice");
+            writer.writeString(defaultIfEmpty(value.advice, ""));
+            writer.writeName("categoryId");
+            writer.writeObjectId(value.categoryId);
+            writer.writeName("isMultiQuestion");
+            writer.writeBoolean(value.isMultiQuestion);
+            writer.writeName("isApproved");
+            writer.writeBoolean(value.isApproved);
+            writer.writeEndDocument();
+        }
+
+        @Override
+        public Question decode(final BsonReader reader, final DecoderContext decoderContext) {
+            Question option = new Question();
+            reader.readStartDocument();
+            option.id = reader.readObjectId("_id");
+            reader.readName();
+            option.description = reader.readString();
+            reader.readName();
+            option.advice = reader.readString();
+            reader.readName();
+            option.categoryId = reader.readObjectId();
+            reader.readName();
+            option.isMultiQuestion = reader.readBoolean();
+            reader.readName();
+            option.isApproved = reader.readBoolean();
+            reader.readEndDocument();
+            return option;
+        }
+
+        @Override
+        public Class<Question> getEncoderClass() {
+            return Question.class;
+        }
     }
 
 }

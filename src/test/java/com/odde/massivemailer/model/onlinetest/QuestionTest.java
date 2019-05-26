@@ -1,7 +1,9 @@
 package com.odde.massivemailer.model.onlinetest;
 
 import com.odde.TestWithDB;
-import org.javalite.activejdbc.validation.ValidationException;
+import com.odde.massivemailer.model.base.ValidationException;
+import org.assertj.core.api.Assertions;
+import org.bson.types.ObjectId;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,170 +22,127 @@ import static junit.framework.TestCase.assertFalse;
 
 @RunWith(TestWithDB.class)
 public class QuestionTest {
-
-    @Test
-    public void shouldReturnAListOfIds() {
-        Question.createIt("description", "desc1", "advice", "adv1", "is_multi_question", 0);
-
-        List<Object> allIds = Question.getNRandomIds(1).collect(Collectors.toList());
-
-        assertThat(allIds, is(not(empty())));
-        assertThat(allIds.size(), is(1));
-    }
-
-    @Test
-    public void shouldReturnEmptyListIfNoQuestionsArePresent() {
-        List<Object> allIds = Question.getNRandomIds(5).collect(Collectors.toList());
-        assertThat(allIds, is(empty()));
-    }
+    private final ObjectId categoryId = new ObjectId();
 
     @Test
     public void shouldGetQuestionById() {
-        Question question1 = Question.createIt("description", "desc1", "advice", "adv1", "category", "scrum");
-        Long id = question1.getLongId();
+        Question question1 = new Question("desc1", "adv1", categoryId, false, false).saveIt();
+        ObjectId id = question1.getId();
         Question actual = Question.getById(id);
         assertThat(actual, is(equalTo(question1)));
     }
 
     @Test
     public void getCorrectOption_正解のIDの一覧を返す() {
-        Question question = Question.createIt("description", "desc1", "advice", "adv1");
-        QuestionOption correct1 = QuestionOption.createIt(question.getStringId(), "desc", true);
-        QuestionOption correct2 = QuestionOption.createIt(question.getStringId(), "desc", true);
-        QuestionOption.createIt(question.getStringId(), "desc", false);
+        Question question = new Question("desc1", "adv1", categoryId, false, false).saveIt();
+        QuestionOption correct1 = QuestionOption.createIt(question.getId(), "desc", true);
+        QuestionOption correct2 = QuestionOption.createIt(question.getId(), "desc", true);
+        QuestionOption.createIt(question.getId(), "desc", false);
 
-        final List<String> expected = new ArrayList<>();
-        expected.add(correct1.getStringId());
-        expected.add(correct2.getStringId());
-
-        final ArrayList<String> actual = question.getCorrectOption();
-        assertEquals(actual, expected);
+        final ArrayList<ObjectId> actual = question.getCorrectOption();
+        Assertions.assertThat(actual).hasSize(2).contains(correct1.getId()).contains(correct2.getId());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowExxxceptionIfInvalidId() {
-        Question question1 = Question.createIt("description", "desc1", "advice", "adv1");
-        Long id = question1.getLongId();
-
-        Question.getById(id + 10);
+        Question.getById(new ObjectId());
     }
 
     @Test(expected = ValidationException.class)
     public void shouldNotAllowEmptyDescription() {
-        Question.createIt("description", null, "advice", "adv1");
+        new Question(null, "adv1", categoryId, false, false).saveIt();
 
     }
 
     @Test
     public void shouldAllowEmptyAdvice() {
-        Question question1 = Question.createIt("description", "desc1", "advice", null);
-        assertThat(question1.getLongId(), is(not(nullValue())));
-        assertThat(question1.getAdvice(), isEmptyString());
+        Question question1 = new Question("desc1", null, categoryId, false, false).saveIt();
+        assertThat(question1.getId(), is(not(nullValue())));
     }
 
     @Test
     public void shouldFetchOptionsForQuestion() {
-        Question question = Question.createIt("description", "desc1", "advice", null);
-        QuestionOption.createIt(question.getStringId(), "desc", false);
+        Question question = new Question("desc1", null, categoryId, false, false).saveIt();
+        QuestionOption.createIt(question.getId(), "desc", false);
         assertThat(question.getOptions(), is(not(empty())));
     }
 
     @Test
     public void shouldFetchOptionsForQuestionWithSameQuestionId() {
-        Question question = Question.createIt("description", "desc1", "advice", null);
-        String expectedQuestionId = question.getStringId();
-        QuestionOption.createIt(question.getStringId(), "desc", false);
-        QuestionOption.createIt(question.getStringId(), "desc", false);
-        QuestionOption.createIt(question.getStringId(), "desc", false);
+        Question question = new Question("desc1", null, categoryId, false, false).saveIt();
+        ObjectId expectedQuestionId = question.getId();
+        QuestionOption.createIt(question.getId(), "desc", false);
+        QuestionOption.createIt(question.getId(), "desc", false);
+        QuestionOption.createIt(question.getId(), "desc", false);
 
         question.getOptions().forEach(option -> assertThat(option.getQuestionId(), is(equalTo(expectedQuestionId))));
     }
 
     @Test
     public void shouldIsMultipleChoiceQuestion() {
-        Question question = Question.createIt("description", "desc1", "advice", "adv1");
-        QuestionOption.createIt(question.getStringId(), "desc", true);
-        QuestionOption.createIt(question.getStringId(), "desc", true);
+        Question question = new Question("desc1", "adv1", categoryId, false, false).saveIt();
+        QuestionOption.createIt(question.getId(), "desc", true);
+        QuestionOption.createIt(question.getId(), "desc", true);
         assertTrue(question.isMultipleAnswerOptions());
     }
 
     @Test
     public void shouldIsSingleChoiceQuestion() {
-        Question question = Question.createIt("description", "desc1", "advice", "adv1");
-        QuestionOption.createIt(question.getStringId(), "desc", true);
-        QuestionOption.createIt(question.getStringId(), "desc", false);
+        Question question = new Question("desc1", "adv1", categoryId, false, false).saveIt();
+        QuestionOption.createIt(question.getId(), "desc", true);
+        QuestionOption.createIt(question.getId(), "desc", false);
         assertFalse(question.isMultipleAnswerOptions());
     }
 
     @Test
-    public void Questionテーブルのカラムが全て返ってくる() {
-        Category cat = Category.createIt("name", "xxx");
-        Question.createIt("description", "desc1", "advice", "adv1", "category", cat.getStringId(), "is_multi_question", 0);
-        List<Question> actual = Question.getNRandom(1);
-        assertThat(actual.get(0).getDescription(), is(equalTo("desc1")));
-        assertThat(actual.get(0).getAdvice(), is(equalTo("adv1")));
-        assertThat(actual.get(0).getCategoryName(), is(equalTo("xxx")));
-        assertFalse(actual.get(0).getIsMultiQuestion());
-    }
-
-    @Test
     public void TypeがsingleのときにgetIsMultiQuestionが0を返す() {
-        final Question question = new Question("description", "advice", "category", "single");
-        final boolean actual = question.getIsMultiQuestion();
+        final Question question = new Question("description", "advice", categoryId, false, false);
+        final boolean actual = question.isMultiQuestion();
         assertEquals(actual, false);
     }
 
     @Test
     public void TypeがMultiのときにgetIsMultiQuestionが1を返す() {
-        final Question question = new Question("description", "advice", "category", "multiple");
-        final boolean actual = question.getIsMultiQuestion();
+        final Question question = new Question("description", "advice", categoryId, true, false);
+        final boolean actual = question.isMultiQuestion();
         assertEquals(actual, true);
     }
 
     @Test
     public void Questionテーブルから指定したカテゴリのquestionが返す() {
-        Category cat = Category.createIt("name", "cat");
-        Category dog = Category.createIt("name", "dog");
-        Question.createIt("description", "desc1", "advice", "adv1", "category", cat.getStringId(), "is_multi_question", 0);
-        Question.createIt("description", "desc2", "advice", "adv2", "category", dog.getStringId(), "is_multi_question", 0);
+        Category cat = Category.createIt("cat");
+        Category dog = Category.createIt("dog");
+        new Question("desc1", "adv1", cat.getId(), false, false).saveIt();
+        new Question("desc2", "adv2", dog.getId(), false, false).saveIt();
 
-        List<Question> actual = Question.getNRandomWhereCategory(1, dog.getStringId());
+        List<Question> actual = Question.getNRandomWhereCategory(1, dog.getId());
         assertThat(actual.get(0).getDescription(), is(equalTo("desc2")));
         assertThat(actual.get(0).getAdvice(), is(equalTo("adv2")));
         assertThat(actual.get(0).getCategoryName(), is(equalTo("dog")));
-        assertFalse(actual.get(0).getIsMultiQuestion());
+        assertFalse(actual.get(0).isMultiQuestion());
     }
 
     @Test
     public void カテゴリごとに任意の数のquestionを返す() {
-        Category cat = Category.createIt("name", "cat");
-        Category dog = Category.createIt("name", "dog");
-        Category bird = Category.createIt("name", "bird");
-        Question.createIt("description", "desc", "advice", "adv", "category", cat.getStringId(), "is_multi_question", 0);
-        Question.createIt("description", "desc", "advice", "adv", "category", cat.getStringId(), "is_multi_question", 0);
-        Question.createIt("description", "desc", "advice", "adv", "category", cat.getStringId(), "is_multi_question", 0);
-        Question.createIt("description", "desc", "advice", "adv", "category", dog.getStringId(), "is_multi_question", 0);
-        Question.createIt("description", "desc", "advice", "adv", "category", dog.getStringId(), "is_multi_question", 0);
-        Question.createIt("description", "desc", "advice", "adv", "category", bird.getStringId(), "is_multi_question", 0);
+        Category cat = Category.createIt("cat");
+        Category dog = Category.createIt("dog");
+        Category bird = Category.createIt("bird");
+        new Question("desc", "adv", cat.getId(), false, false).saveIt();
+        new Question("desc", "adv", cat.getId(), false, false).saveIt();
+        new Question("desc", "adv", cat.getId(), false, false).saveIt();
+        new Question("desc", "adv", dog.getId(), false, false).saveIt();
+        new Question("desc", "adv", dog.getId(), false, false).saveIt();
+        new Question("desc", "adv", bird.getId(), false, false).saveIt();
 
-        Map<String, Integer> categoryMap = new HashMap<>();
-        categoryMap.put(cat.getStringId(), 2);
-        categoryMap.put(dog.getStringId(), 1);
+        Map<ObjectId, Integer> categoryMap = new HashMap<>();
+        categoryMap.put(cat.getId(), 2);
+        categoryMap.put(dog.getId(), 1);
 
         List<Question> questions = Question.getNRandomByCategories(categoryMap);
 
         Map<String, List<Question>> result = questions.stream().collect(Collectors.groupingBy(Question::getCategoryName));
         assertEquals(3, questions.size());
         assertEquals(2, result.get("cat").size());
-    }
-
-    @Ignore
-    @Test
-    public void shouldReturnRightAnswer() {
-        Question question = new Question("description", "advice", "category", "multiple");
-        String[] optionIds = new String[2];
-        boolean actual = question.verifyAnswer(Arrays.asList(optionIds));
-        assertEquals(actual,true);
     }
 
     @Test
@@ -195,15 +154,15 @@ public class QuestionTest {
 
     @Test
     public void shouldReturnTwoElementByGetAll() {
-        Question.createIt("description", "desc", "advice", "adv", "category", "team", "is_multi_question", 0);
-        Question.createIt("description", "desc", "advice", "adv", "category", "team", "is_multi_question", 0);
+        new Question("desc", "adv", categoryId, false, false).saveIt();
+        new Question("desc", "adv", categoryId, false, false).saveIt();
         List<Question> questions = Question.getAll();
         assertEquals(questions.size(), 2);
     }
 
     @Test
     public void isPublicがtrueを返す() {
-        final Question question = new Question("description", "advice", "category", "multiple");
+        final Question question = new Question("description", "advice", categoryId, true, false);
         final boolean actual = question.isPublic();
         assertEquals(actual, true);
     }

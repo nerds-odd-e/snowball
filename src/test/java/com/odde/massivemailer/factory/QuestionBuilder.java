@@ -2,6 +2,7 @@ package com.odde.massivemailer.factory;
 
 import com.odde.massivemailer.model.onlinetest.Category;
 import com.odde.massivemailer.model.onlinetest.Question;
+import org.bson.types.ObjectId;
 
 public class QuestionBuilder {
     private Question currentQuestion;
@@ -11,18 +12,13 @@ public class QuestionBuilder {
         return currentQuestion;
     }
 
-    public QuestionBuilder aQuestion( String questionDescription, String advice, String category) {
-        currentQuestion = Question.createIt("description", questionDescription, "advice", advice, "category", category);
-        return this;
-    }
-
-    public QuestionBuilder aQuestion(String questionDescription, String advice) {
-        currentQuestion = Question.createIt("description", questionDescription, "advice", advice);
+    public QuestionBuilder aQuestion( String questionDescription, String advice, ObjectId categoryId) {
+        currentQuestion = new Question(questionDescription, advice, categoryId, false, false).saveIt();
         return this;
     }
 
     public QuestionBuilder aQuestion(Category category) {
-        currentQuestion = Question.createIt("description", "myTest", "advice", null, "category", category.getStringId());
+        currentQuestion = new Question("myTest", null, category.getId(), false, false).saveIt();
         return this;
     }
 

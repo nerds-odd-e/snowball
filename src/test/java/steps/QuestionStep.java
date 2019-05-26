@@ -8,6 +8,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.bson.types.ObjectId;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.Color;
@@ -278,7 +279,7 @@ public class QuestionStep {
 
     @Given("In \"([^\"]*)\" there are (\\d+) questions$")
     public void categoryNameに_問が登録されている(String categoryName, int numOfQuestions) {
-        String categoryId = categoryBuilder.categoryByName(categoryName);
+        ObjectId categoryId = categoryBuilder.categoryByName(categoryName);
 
         for (int i = 0; i < numOfQuestions; i++) {
             new QuestionBuilder()

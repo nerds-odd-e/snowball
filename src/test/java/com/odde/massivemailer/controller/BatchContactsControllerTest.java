@@ -54,16 +54,4 @@ public class BatchContactsControllerTest {
         controller.doPost(request, response);
         assertThat(ContactPerson.count(), is(1L));
     }
-
-    @Test
-    @Ignore
-    public void willSaveMultipleContactPersonList() throws Exception {
-        request.setParameter("data",
-                "email,firstname,lastname,company,country,city;" +
-                        "aaa@aaa.com,myname,mylastname,mycompany,singapore,mycity;" +
-                        "bbb@bbb.com,yourname,yourlastname,yourcompany,singapore,yourcity");
-        controller.doPost(request, response);
-        assertThat(ContactPerson.count(), is(2L));
-    }
-
 }

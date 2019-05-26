@@ -1,7 +1,6 @@
 package com.odde;
 
-import com.mongodb.BasicDBObject;
-import com.odde.massivemailer.model.onlinetest.DBConnector;
+import com.odde.massivemailer.service.DBConnector;
 import com.odde.massivemailer.startup.DBMigrater;
 import org.javalite.activejdbc.Base;
 import org.junit.runner.notification.RunNotifier;

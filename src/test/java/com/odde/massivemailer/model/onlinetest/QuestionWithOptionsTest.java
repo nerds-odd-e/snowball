@@ -1,6 +1,7 @@
 package com.odde.massivemailer.model.onlinetest;
 
 import com.odde.TestWithDB;
+import org.bson.types.ObjectId;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -16,8 +17,8 @@ import static org.junit.Assert.assertTrue;
 public class QuestionWithOptionsTest {
 
     private Question createWithOptions(List<QuestionOption> questionOptions) {
-        Question question = Question.createIt("description", "des1", "advice", "adv1");
-        questionOptions.forEach(option -> option.addToQuestion(question.getStringId()));
+        Question question = new Question("des1", "adv1", new ObjectId(), false, false).saveIt();
+        questionOptions.forEach(option -> option.addToQuestion(question.getId()));
         return question;
     }
 
@@ -26,7 +27,7 @@ public class QuestionWithOptionsTest {
         List<QuestionOption> expectedQuestionOptions = IntStream.range(0, 4).mapToObj(index -> QuestionOption.create("option desc"+index, index%4==0)).collect(Collectors.toList());
         Question expected  = createWithOptions(expectedQuestionOptions);
 
-        Question actual = Question.getById(expected.getLongId());
+        Question actual = Question.getById(expected.getId());
         assertEquals(expected, actual);
 
         Collection<QuestionOption> actualQuestionOptions = actual.getOptions();
