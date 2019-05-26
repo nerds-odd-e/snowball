@@ -15,7 +15,7 @@ import java.util.List;
 public class DashboardController extends AppController {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Question> questions = Question.getAll();
+        List<Question> questions = Question.repository().findAll();
         req.setAttribute("questions", questions);
         RequestDispatcher dispatch = req.getRequestDispatcher("dashboard.jsp");
         dispatch.forward(req, resp);

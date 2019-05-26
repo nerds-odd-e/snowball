@@ -79,22 +79,6 @@ public class QuestionTest {
     }
 
     @Test
-    public void shouldIsMultipleChoiceQuestion() {
-        Question question = new Question("desc1", "adv1", categoryId, false, false).saveIt();
-        QuestionOption.createIt(question.getId(), "desc", true);
-        QuestionOption.createIt(question.getId(), "desc", true);
-        assertTrue(question.isMultipleAnswerOptions());
-    }
-
-    @Test
-    public void shouldIsSingleChoiceQuestion() {
-        Question question = new Question("desc1", "adv1", categoryId, false, false).saveIt();
-        QuestionOption.createIt(question.getId(), "desc", true);
-        QuestionOption.createIt(question.getId(), "desc", false);
-        assertFalse(question.isMultipleAnswerOptions());
-    }
-
-    @Test
     public void TypeがsingleのときにgetIsMultiQuestionが0を返す() {
         final Question question = new Question("description", "advice", categoryId, false, false);
         final boolean actual = question.isMultiQuestion();
@@ -109,45 +93,8 @@ public class QuestionTest {
     }
 
     @Test
-    public void Questionテーブルから指定したカテゴリのquestionが返す() {
-        Category cat = Category.createIt("cat");
-        Category dog = Category.createIt("dog");
-        new Question("desc1", "adv1", cat.getId(), false, false).saveIt();
-        new Question("desc2", "adv2", dog.getId(), false, false).saveIt();
-
-        List<Question> actual = Question.getNRandomWhereCategory(1, dog.getId());
-        assertThat(actual.get(0).getDescription(), is(equalTo("desc2")));
-        assertThat(actual.get(0).getAdvice(), is(equalTo("adv2")));
-        assertThat(actual.get(0).getCategoryName(), is(equalTo("dog")));
-        assertFalse(actual.get(0).isMultiQuestion());
-    }
-
-    @Test
-    public void カテゴリごとに任意の数のquestionを返す() {
-        Category cat = Category.createIt("cat");
-        Category dog = Category.createIt("dog");
-        Category bird = Category.createIt("bird");
-        new Question("desc", "adv", cat.getId(), false, false).saveIt();
-        new Question("desc", "adv", cat.getId(), false, false).saveIt();
-        new Question("desc", "adv", cat.getId(), false, false).saveIt();
-        new Question("desc", "adv", dog.getId(), false, false).saveIt();
-        new Question("desc", "adv", dog.getId(), false, false).saveIt();
-        new Question("desc", "adv", bird.getId(), false, false).saveIt();
-
-        Map<ObjectId, Integer> categoryMap = new HashMap<>();
-        categoryMap.put(cat.getId(), 2);
-        categoryMap.put(dog.getId(), 1);
-
-        List<Question> questions = Question.getNRandomByCategories(categoryMap);
-
-        Map<String, List<Question>> result = questions.stream().collect(Collectors.groupingBy(Question::getCategoryName));
-        assertEquals(3, questions.size());
-        assertEquals(2, result.get("cat").size());
-    }
-
-    @Test
     public void shouldReturnEmptyListByGetAll() {
-        List<Question> questions = Question.getAll();
+        List<Question> questions = Question.repository().findAll();
 
         assertEquals(questions.size(), 0);
     }
@@ -156,14 +103,7 @@ public class QuestionTest {
     public void shouldReturnTwoElementByGetAll() {
         new Question("desc", "adv", categoryId, false, false).saveIt();
         new Question("desc", "adv", categoryId, false, false).saveIt();
-        List<Question> questions = Question.getAll();
+        List<Question> questions = Question.repository().findAll();
         assertEquals(questions.size(), 2);
-    }
-
-    @Test
-    public void isPublicがtrueを返す() {
-        final Question question = new Question("description", "advice", categoryId, true, false);
-        final boolean actual = question.isPublic();
-        assertEquals(actual, true);
     }
 }

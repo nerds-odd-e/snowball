@@ -16,18 +16,6 @@ import java.util.Arrays;
 @WebServlet("/onlinetest/question")
 public class QuestionController extends AppController {
 
-    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        HttpSession session = req.getSession(true);
-        OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
-        boolean isMultiple = onlineTest.getCurrentQuestion().isMultipleAnswerOptions();
-        if (isMultiple) {
-            resp.sendRedirect("/onlinetest/question_multiple.jsp");
-        } else {
-            resp.sendRedirect("/onlinetest/question.jsp");
-        }
-
-    }
-
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(true);
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");

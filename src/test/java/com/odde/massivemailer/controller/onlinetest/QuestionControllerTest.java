@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -59,7 +60,7 @@ public class QuestionControllerTest {
         onlineTest = new OnlineTest(1);
         request.getSession().setAttribute("onlineTest", onlineTest);
 
-        String optionId = question.getFirstOptionId();
+        String optionId = getFirstOptionId(question);
         request.addParameter("optionId", optionId);
         request.addParameter("lastDoneQuestionId", "0");
         controller.doPost(request, response);
@@ -73,7 +74,7 @@ public class QuestionControllerTest {
         onlineTest = new OnlineTest(1);
         request.getSession().setAttribute("onlineTest", onlineTest);
 
-        String optionId = question.getFirstOptionId();
+        String optionId = getFirstOptionId(question);
         request.addParameter("optionId", optionId);
         request.addParameter("lastDoneQuestionId", "0");
 
@@ -86,7 +87,7 @@ public class QuestionControllerTest {
     public void doPostWithMessageOnNotCurrentQuestionPage() throws ServletException, IOException {
         question = createQuestionWithOptions(scrum);
 
-        String optionId = question.getFirstOptionId();
+        String optionId = getFirstOptionId(question);
         onlineTest = new OnlineTest(2);
         request.addParameter("optionId", optionId);
         request.addParameter("lastDoneQuestionId", "1");
@@ -101,7 +102,7 @@ public class QuestionControllerTest {
     public void doPostWithoutMessageOnCurrentQuestionPage() throws ServletException, IOException {
         question = createQuestionWithOptions(scrum);
 
-        String optionId = question.getFirstOptionId();
+        String optionId = getFirstOptionId(question);
         onlineTest = new OnlineTest(2);
         request.addParameter("optionId", optionId);
         request.addParameter("lastDoneQuestionId", "0");
@@ -133,7 +134,7 @@ public class QuestionControllerTest {
     @Test
     public void doPostWithNotIncrementCorrectCountOnIncorrectAnswer() throws ServletException, IOException {
         question = createQuestionWithOptions(scrum);
-        String optionId = question.getFirstOptionId();
+        String optionId = getFirstOptionId(question);
         onlineTest = new OnlineTest(2);
         request.addParameter("optionId", optionId);
         request.addParameter("lastDoneQuestionId", "0");
@@ -166,7 +167,7 @@ public class QuestionControllerTest {
         request.addParameter("lastDoneQuestionId", "0");
         request.getSession().setAttribute("onlineTest", onlineTest);
 
-        String wrongOptionId = question.getFirstOptionId();
+        String wrongOptionId = getFirstOptionId(question);
         List<ObjectId> correctOptionId = question.getCorrectOption();
 
         final String[] answeredOption = new String[2];
@@ -255,6 +256,11 @@ public class QuestionControllerTest {
 
 
         assertEquals(optionIds.get(0), onlineTest.answers.get(0).getSelectedOptionIds().get(0));
+    }
+
+    public static String getFirstOptionId(Question question) {
+        Collection<QuestionOption> options = question.getOptions();
+        return options.stream().findFirst().get().getStringId();
     }
 
 

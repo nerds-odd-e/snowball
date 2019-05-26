@@ -31,4 +31,10 @@ public class QuestionBuilder {
         currentQuestion.createCorrectOption(optionText);
         return this;
     }
+
+    public QuestionBuilder mutipleSelections() {
+        currentQuestion.setMultiQuestion(true);
+        currentQuestion.saveIt();
+        return this;
+    }
 }

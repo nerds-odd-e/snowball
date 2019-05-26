@@ -1,7 +1,5 @@
 package com.odde.massivemailer.model.onlinetest;
 
-import com.mongodb.client.model.Aggregates;
-import com.mongodb.client.model.Filters;
 import com.odde.massivemailer.model.base.Entity;
 import com.odde.massivemailer.model.base.Repository;
 import com.odde.massivemailer.model.base.ValidationException;
@@ -44,7 +42,6 @@ public class Question extends Entity {
         }
     }
 
-
     public static Repository<Question> repository() {
         return new Repository<>(Question.class, "questions");
     }
@@ -55,29 +52,6 @@ public class Question extends Entity {
            throw new IllegalArgumentException("No question found by given id.");
         }
         return question;
-    }
-
-    public static List<Question> getNRandomByCategories(Map<ObjectId, Integer> categoryMap) {
-        List<Question> questions = new ArrayList<>();
-        for (ObjectId key : categoryMap.keySet()) {
-            questions.addAll(Question.getNRandomWhereCategory(categoryMap.get(key), key));
-        }
-
-        Collections.shuffle(questions);
-        return questions;
-    }
-
-    public static List<Question> getNRandomWhereCategory(int count, ObjectId category) {
-        return repository().getCollection().aggregate(
-                Arrays.asList(
-                        Aggregates.match(Filters.eq("categoryId", category)),
-                        Aggregates.sample(count)
-                )
-        ).<List<Question>>into(new ArrayList<>());
-    }
-
-    public static List<Question> getAll() {
-        return repository().findAll();
     }
 
     public Category getCategory() {
@@ -129,20 +103,6 @@ public class Question extends Entity {
         return this;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Question)) return false;
-        if (!super.equals(o)) return false;
-        Question question = (Question) o;
-        return Objects.equals(getDescription(), question.getDescription()) && Objects.equals(getAdvice(), question.getAdvice());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getDescription(), getAdvice());
-    }
-
     public void createWrongOption(String optionText) {
         new QuestionOption(getId(), optionText, false).saveIt();
     }
@@ -151,21 +111,8 @@ public class Question extends Entity {
         new QuestionOption(getId(), optionText, true).saveIt();
     }
 
-    public String getFirstOptionId() {
-        Collection<QuestionOption> options = getOptions();
-        return options.stream().findFirst().get().getStringId();
-    }
-
-    public boolean isMultipleAnswerOptions() {
-        return getOptions().stream().filter(QuestionOption::isCorrect).count() > 1;
-    }
-
     boolean belongsTo(Category cat) {
         return cat.getId().equals(categoryId);
-    }
-
-    boolean isPublic() {
-        return true;
     }
 
     public static class QuestionCodec implements Codec<Question> {

@@ -61,6 +61,7 @@ public class QuestionStep {
     public void add_a_question_of_multiple_answers(String description) {
         new QuestionBuilder()
                 .aQuestion(description, "advice", categoryBuilder.categoryByName("Scrum"))
+                .mutipleSelections()
                 .withCorrectOption("correctOption1")
                 .withWrongOption("wrongOption1")
                 .withWrongOption("wrongOption2")

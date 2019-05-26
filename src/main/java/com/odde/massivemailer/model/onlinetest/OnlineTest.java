@@ -18,7 +18,7 @@ public class OnlineTest {
     public List<Answer> answers;
 
     public OnlineTest(int questionCount) {
-        questions = new QuestionCollection(Question.getAll()).generateQuestionList(Category.repository().findAll(), questionCount);
+        questions = new QuestionCollection(Question.repository().findAll()).generateQuestionList(Category.repository().findAll(), questionCount);
         numberOfAnsweredQuestions = 0;
         categoryCorrectAnswerCount = new HashMap<>();
         categoryTestResults = new ArrayList<>();
