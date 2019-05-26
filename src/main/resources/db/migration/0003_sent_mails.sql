@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS sent_mails (
     id              INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    template_id     INTEGER NOT NULL,
+    template_id       VARCHAR(255) NOT NULL DEFAULT '',
     receivers       VARCHAR(255) NOT NULL DEFAULT '',
     subject         VARCHAR(255) NOT NULL DEFAULT '',
     content            TEXT,
@@ -17,7 +17,5 @@ CREATE TABLE IF NOT EXISTS sent_mail_visits (
 
     FOREIGN KEY (sent_mail_id)   REFERENCES sent_mails(id)
 );
-
-ALTER TABLE sent_mails MODIFY template_id INTEGER null;
 
 #ALTER TABLE sent_mails ADD COLUMN receivers VARCHAR(255) NOT NULL DEFAULT '';

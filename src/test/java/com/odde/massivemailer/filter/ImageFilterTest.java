@@ -38,8 +38,8 @@ public class ImageFilterTest {
 
     @Test
     public void FilterMustUpdateSentMailvisitMatchingToken() throws IOException, ServletException {
-        Template template = Template.createIt("TemplateName", "Template");
-        SentMail mail = SentMail.createIt("template_id", template.getId());
+        Template template = new Template("Template", "", "").saveIt();
+        SentMail mail = SentMail.createIt("template_id", template.getStringId());
         SentMailVisit nd = SentMailVisit.createIt("sent_mail_id", mail.getId(), "email_address", "my@a.b.com", "read_count", 0);
         request.setParameter(ImageFilter.TOKEN, nd.getString("id"));
         filter.doFilter(request, response, chain);

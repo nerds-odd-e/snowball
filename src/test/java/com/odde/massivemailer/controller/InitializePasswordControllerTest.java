@@ -56,7 +56,7 @@ public class InitializePasswordControllerTest {
         request.setParameter("password_confirm", "sdfgsdfgsdg");
         newUser.saveIt();
         controller.doPost(request, response);
-        User user = User.repository().findBy("token", newUser.getToken());
+        User user = User.repository().findFirstBy("token", newUser.getToken());
         assertEquals("initialize_password_success.jsp", response.getRedirectedUrl());
         Assertions.assertThat(user.getHashdPassword()).isNotEmpty();
     }

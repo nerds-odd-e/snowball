@@ -3,15 +3,12 @@ package com.odde.massivemailer.controller;
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.User;
 import org.hamcrest.CoreMatchers;
-import org.javalite.activejdbc.Model;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
-
-import javax.servlet.http.Cookie;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
@@ -94,7 +91,7 @@ public class SignupControllerTest {
 
         controller.doPost(request, response);
 
-        User actual = User.repository().findBy("email", "yamada@hoge.com");
+        User actual = User.repository().findFirstBy("email", "yamada@hoge.com");
 
         assertThat(actual.getEmail(), is("yamada@hoge.com"));
     }

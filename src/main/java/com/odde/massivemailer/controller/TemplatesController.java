@@ -15,7 +15,7 @@ public class TemplatesController extends AppController {
         String templateId = req.getParameter("templateList");
         String resultMsg = "status=fail&msg=Update template failure";
 
-        Template updateTemplate = Template.findById(templateId);
+        Template updateTemplate = Template.repository().findByStringId(templateId);
         if (templateId != null &&  updateTemplate != null) {
             String subject = req.getParameter("subject");
             String content = req.getParameter("content");
@@ -26,7 +26,7 @@ public class TemplatesController extends AppController {
     }
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String convertedContactToJSON = AppGson.getGson().toJson(Template.findAll());
+        String convertedContactToJSON = AppGson.getGson().toJson(Template.repository().findAll());
         resp.getWriter().write(convertedContactToJSON);
     }
 }

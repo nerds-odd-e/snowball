@@ -1,41 +1,40 @@
 package com.odde.massivemailer.model;
 
 
-import org.javalite.activejdbc.annotations.Table;
+import com.odde.massivemailer.model.base.Entity;
+import com.odde.massivemailer.model.base.Repository;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.bson.BsonReader;
+import org.bson.BsonWriter;
+import org.bson.codecs.Codec;
+import org.bson.codecs.DecoderContext;
+import org.bson.codecs.EncoderContext;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Table("template")
-public class Template extends ApplicationModel {
+import static org.apache.commons.lang3.StringUtils.defaultIfEmpty;
 
-   public void setTemplateName(String templateName) {
-        set("templateName", templateName);
-    }
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Template extends Entity {
+    private String templateName;
+    private String subject;
+    private String content;
 
-    public void setSubject(String subject) {
-        set("subject", subject);
-    }
-
-    public void setContent(String content) {
-        set("content", content);
+    public static Repository<Template> repository() {
+        return new Repository<>(Template.class, "email_templates");
     }
 
     public static List<Template> findByTemplateName(String templateName) {
-        return where("templateName = ?", templateName);
+        return repository().findBy("templateName", templateName);
     }
-
-    public Template() {
-
-    }
-
-    public Template(String templateName, String subject, String content) {
-        setTemplateName(templateName);
-        setSubject(subject);
-        setContent(content);
-    }
-
 
     public List<Mail> getPopulatedEmailTemplate(Course course, List<ContactPerson> courseParticipants) {
         List<Mail> mails = new ArrayList<>();
@@ -59,25 +58,25 @@ public class Template extends ApplicationModel {
 
     private String getEmailContentFromTemplate(ContactPerson contactPerson, Course course) {
 
-        String content = null;
+        String populatedContent = null;
         if (contactPerson != null) {
-        content = (String) this.get("content");
+            populatedContent = this.content;
 
-        content = content.replace("{FirstName}", (contactPerson.getName() != null ? contactPerson.getName() : "{FirstName}") );
-        content = content.replace("{LastName}", (contactPerson.getLastname() != null ? contactPerson.getLastname() : "{LastName}" ) );
-        content = content.replace("{CourseName}", (course.getCoursename() != null ? course.getCoursename() : "{CourseName}")) ;
-        content = content.replace("{Instructor}", (course.getInstructor() != null ? course.getInstructor() : "{Instructor}" ));
-        content = content.replace("{Location}", (course.getLocation() != null ? course.getLocation() : "{Location}" ));
-    }
+            populatedContent = populatedContent.replace("{FirstName}", (contactPerson.getName() != null ? contactPerson.getName() : "{FirstName}"));
+            populatedContent = populatedContent.replace("{LastName}", (contactPerson.getLastname() != null ? contactPerson.getLastname() : "{LastName}"));
+            populatedContent = populatedContent.replace("{CourseName}", (course.getCoursename() != null ? course.getCoursename() : "{CourseName}"));
+            populatedContent = populatedContent.replace("{Instructor}", (course.getInstructor() != null ? course.getInstructor() : "{Instructor}"));
+            populatedContent = populatedContent.replace("{Location}", (course.getLocation() != null ? course.getLocation() : "{Location}"));
+        }
 
-        return content;
+        return populatedContent;
     }
 
     private String getEmailSubjectFromTemplate(ContactPerson contactPerson) {
-        String subject  = (String) this.get("subject");
-        subject = subject.replace("{FirstName}", (contactPerson.getName() != null ? contactPerson.getName() : "{FirstName}") );
+        String populatedSubject = this.subject;
+        populatedSubject = populatedSubject.replace("{FirstName}", (contactPerson.getName() != null ? contactPerson.getName() : "{FirstName}"));
 
-        return subject;
+        return populatedSubject;
     }
 
     public void saveTemplate(String subject, String content) {
@@ -85,4 +84,50 @@ public class Template extends ApplicationModel {
         setContent(content);
         saveIt();
     }
+
+    public Template saveIt() {
+        repository().save(this);
+        return this;
+    }
+
+    @Override
+    public void onBeforeSave() {
+
+    }
+
+    public static class TemplateCodec implements Codec<Template> {
+        @Override
+        public void encode(final BsonWriter writer, final Template value, final EncoderContext encoderContext) {
+            writer.writeStartDocument();
+            writer.writeObjectId("_id", value.id);
+            writer.writeName("templateName");
+            writer.writeString(defaultIfEmpty(value.templateName, ""));
+            writer.writeName("subject");
+            writer.writeString(defaultIfEmpty(value.subject, ""));
+            writer.writeName("content");
+            writer.writeString(defaultIfEmpty(value.content, ""));
+            writer.writeEndDocument();
+        }
+
+        @Override
+        public Template decode(final BsonReader reader, final DecoderContext decoderContext) {
+            Template template = new Template();
+            reader.readStartDocument();
+            template.id = reader.readObjectId("_id");
+            reader.readName();
+            template.templateName = reader.readString();
+            reader.readName();
+            template.subject = reader.readString();
+            reader.readName();
+            template.content = reader.readString();
+            reader.readEndDocument();
+            return template;
+        }
+
+        @Override
+        public Class<Template> getEncoderClass() {
+            return Template.class;
+        }
+    }
+
 }

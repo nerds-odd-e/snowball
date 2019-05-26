@@ -3,7 +3,6 @@ package com.odde.massivemailer.controller;
 import com.odde.massivemailer.model.User;
 import org.apache.commons.lang3.RandomStringUtils;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -18,7 +17,7 @@ public class SignupController extends AppController {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 
-        User existing_user = User.repository().findBy("name", req.getParameter("userName"));
+        User existing_user = User.repository().findFirstBy("name", req.getParameter("userName"));
         if (existing_user != null){
             resp.sendRedirect("/signup.jsp?status=fail");
             return;

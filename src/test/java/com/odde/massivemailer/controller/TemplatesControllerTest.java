@@ -2,6 +2,7 @@ package com.odde.massivemailer.controller;
 
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.Template;
+import org.bson.types.ObjectId;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,20 +34,20 @@ public class TemplatesControllerTest {
 	public void testProcessRequest() throws Exception {
 
 		templateCtrl.doGet(req, res);
-		assertThat(res.getContentAsString(), containsString("\"Subject\":\"Greeting {FirstName}"));
+		assertThat(res.getContentAsString(), containsString("\"subject\":\"Greeting {FirstName}"));
 
 	}
 
 	@Test
 	public void testUpdateTemplate() throws Exception {
-        Template template = Template.findFirst("templateName = ?", "Default");
-        Object savedTemplateId = template.getId();
-        req.setParameter("templateList", String.valueOf(savedTemplateId));
+        Template template = Template.repository().findFirstBy("templateName", "Default");
+        ObjectId savedTemplateId = template.getId();
+        req.setParameter("templateList", ((ObjectId) savedTemplateId).toString());
 		req.setParameter("subject", "Hello Terry");
 		req.setParameter("content", "Hello Terry, Cource details are below.");
 		templateCtrl.doPost(req,res);
-		Template savedTemplate = Template.findById(savedTemplateId);
-        Assert.assertEquals("Hello Terry", savedTemplate.get("subject"));
+		Template savedTemplate = Template.repository().findById(savedTemplateId);
+        Assert.assertEquals("Hello Terry", savedTemplate.getSubject());
 	}
 	
 }

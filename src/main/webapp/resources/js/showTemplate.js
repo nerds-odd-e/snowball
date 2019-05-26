@@ -36,7 +36,7 @@ function renderTemplateList(json, selector)
 	selector.append($('<option>').text('No Template').attr('value', 0).attr('id', 'template_0'));
 	
 	$.each(json, function(idx, item) {
-		selector.append($('<option>').text(item.attributes.TemplateName).attr('value', item.id).attr('id', 'template_'+ item.id));
+		selector.append($('<option>').text(item.templateName).attr('value', item.id).attr('id', 'template_'+ item.id));
 	})
 }
 
@@ -46,8 +46,8 @@ function ApplyTemplateToUI(templateID)
         if (templateList[i].id == templateID) {
             var selectedTemplate = templateList[i];
 
-            $("#content").val(templateList[i].attributes.Content);
-            $("#subject").val(templateList[i].attributes.Subject);
+            $("#content").val(templateList[i].content);
+            $("#subject").val(templateList[i].subject);
 
             return;
         }

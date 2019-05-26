@@ -59,7 +59,7 @@ public class AppController extends HttpServlet {
 
     protected User getCurrentUser(HttpServletRequest request) {
         final String email = getUserEmailFromCookie(request);
-        return User.repository().findBy("email", email);
+        return User.repository().findFirstBy("email", email);
     }
 
     private String getUserEmailFromCookie(HttpServletRequest request) {

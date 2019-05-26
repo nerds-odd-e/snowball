@@ -98,7 +98,7 @@ public class ContactsControllerTest {
 
         assertEquals("contactlist.jsp?status=success&msg=Add contact successfully", response.getRedirectedUrl());
 
-        User user = User.repository().findBy("email", request.getParameter("email"));
+        User user = User.repository().findFirstBy("email", request.getParameter("email"));
         assertNotNull(user);
     }
 

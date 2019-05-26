@@ -1,6 +1,8 @@
 package steps;
 
 import com.odde.massivemailer.model.SentMail;
+import com.odde.massivemailer.model.Template;
+import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -62,4 +64,10 @@ public class EmailSteps {
         assertThat(SentMail.count(), is((long)expected_email_count));
     }
 
+    @Given("^there are some existing templates$")
+    public void thereAreSomeExistingTemplates() throws Throwable {
+        new Template("Default Template 1", "Greeting {FirstName}", "Hi, {FirstName} {LastName} from {Company}").saveIt();
+        new Template("RTA Default Template", "Greeting {FirstName}", "Hi, {FirstName} {LastName} from {Company}").saveIt();
+        new Template("Pre-course Template", "Greeting {FirstName}", "Hi, {FirstName} {LastName} from {Company}").saveIt();
+    }
 }

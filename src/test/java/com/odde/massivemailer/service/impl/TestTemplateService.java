@@ -43,28 +43,28 @@ public class TestTemplateService {
 
     @Test
     public void templateMustContainFirstName() {
-        Assert.assertTrue(template.getString("Content").contains("{FirstName}"));
+        Assert.assertTrue(template.getContent().contains("{FirstName}"));
     }
 
     @Test
     public void templateMustContainLasttName() {
-        Assert.assertTrue(template.getString("Content").contains("{LastName}"));
+        Assert.assertTrue(template.getContent().contains("{LastName}"));
     }
 
     @Test
     public void templateMustContainCourse() {
-        Assert.assertTrue(template.getString("Content").contains("{CourseName}"));
+        Assert.assertTrue(template.getContent().contains("{CourseName}"));
 }
 
 
     @Test
     public void templateMustContainInstructor() {
-        Assert.assertTrue(template.getString("Content").contains("{Instructor}"));
+        Assert.assertTrue(template.getContent().contains("{Instructor}"));
     }
 
     @Test
     public void templateMustContainLocation() {
-        Assert.assertTrue(template.getString("Content").contains("{Location}"));
+        Assert.assertTrue(template.getContent().contains("{Location}"));
     }
 
 }

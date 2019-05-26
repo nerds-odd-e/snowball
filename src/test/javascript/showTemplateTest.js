@@ -1,4 +1,4 @@
-var mock_json = [{"id":1, "attributes":{"TemplateName":"Default Template 1","Subject":"Greeting {FirstName}","Content":"Hi, {FirstName} {LastName} from {Company}"}},{"id":2, "attributes":{"TemplateName":"Greeting Template","Subject":"Greeting {LastName}","Content":"Hello, {FirstName} {LastName} from {Company}"}}];
+var mock_json = [{"id":1, "attributes":{"templateName":"Default Template 1","subject":"Greeting {FirstName}","content":"Hi, {FirstName} {LastName} from {Company}"}},{"id":2, "attributes":{"templateName":"Greeting Template","subject":"Greeting {LastName}","content":"Hello, {FirstName} {LastName} from {Company}"}}];
 
 describe('test show template function', function() {
 

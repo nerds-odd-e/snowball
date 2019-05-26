@@ -44,15 +44,6 @@ public class TemplateTest {
 
     }
 
-    @After
-    public void tearDown() {
-        template = null;
-        course = null;
-        contactPerson = null;
-        template2.delete();
-        template2 = null;
-    }
-
     @Test
     public void mustReturnEmptyEmailWhenNOParticipantsInCourse() {
 
@@ -94,7 +85,7 @@ public class TemplateTest {
         Assert.assertNotNull(tempList);
         Assert.assertEquals(1, tempList.size());
         //
-        Assert.assertTrue(tempList.get(0).getString("Content").contains("{FirstName}"));
+        Assert.assertTrue(tempList.get(0).getContent().contains("{FirstName}"));
     }
 
 

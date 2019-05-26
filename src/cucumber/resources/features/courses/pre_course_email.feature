@@ -2,7 +2,8 @@ Feature: send pre-course mail
   As a user I want to send preview mail to admin
 
   Background:
-    Given "student@odd-e.com" which in "China" and "Chengdu" is a contact already
+    Given there are some existing templates
+    And "student@odd-e.com" which in "China" and "Chengdu" is a contact already
 
   Scenario Outline: previewing and sending precourse email
     Given there is a course starting from "2017-05-17"

@@ -51,7 +51,11 @@ public class Repository<T extends Entity> {
         ;
     }
 
-    public T findBy(String field, String value) {
+    public T findFirstBy(String field, String value) {
         return findFirst(eq(field, value));
+    }
+
+    public List<T> findBy(String fieldName, String value) {
+        return getCollection().find(eq(fieldName, value)).into(new ArrayList<>());
     }
 }
