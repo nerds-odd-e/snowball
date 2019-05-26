@@ -32,7 +32,7 @@
                 <ul>
                 <c:forEach items="${question.getOptions()}" var="option" varStatus="status">
                     <li>
-                        <input type="checkbox" id="option${status.index + 1}" name="optionId" value="${option.getLongId()}" />${option.getDescription()}</label>
+                        <input type="checkbox" id="option${status.index + 1}" name="optionId" value="${option.getStringId()}" />${option.getDescription()}</label>
                     </li>
                 </c:forEach>
                 </ul>

@@ -1,8 +1,7 @@
 package com.odde.massivemailer.controller.onlinetest;
 
 import com.odde.massivemailer.controller.AppController;
-import com.odde.massivemailer.model.onlinetest.AnswerOption;
-import com.odde.massivemailer.model.onlinetest.PublicQuestion;
+import com.odde.massivemailer.model.onlinetest.QuestionOption;
 import com.odde.massivemailer.model.onlinetest.Question;
 
 import javax.servlet.RequestDispatcher;
@@ -78,9 +77,6 @@ public class AddQuestionController extends AppController {
                 type);
         question.saveIt();
 
-        PublicQuestion publicQuestion = new PublicQuestion(question.getLongId());
-        publicQuestion.saveIt();
-
         final String[] checks = req.getParameterValues("check");
         List<String> checksList = Arrays.asList(checks);
 
@@ -93,10 +89,10 @@ public class AddQuestionController extends AppController {
                 optionDescription = req.getParameter("checkbox" + (i + 1));
             }
             if (!optionDescription.isEmpty()) {
-                long questionId = Long.valueOf(question.get("id").toString());
+                String questionId = question.get("id").toString();
                 boolean isCorrect = checksList.contains(String.valueOf(i + 1));
-                AnswerOption answerOption = new AnswerOption(questionId, optionDescription, isCorrect);
-                answerOption.saveIt();
+                QuestionOption questionOption = new QuestionOption(questionId, optionDescription, isCorrect);
+                questionOption.saveIt();
             }
         }
     }

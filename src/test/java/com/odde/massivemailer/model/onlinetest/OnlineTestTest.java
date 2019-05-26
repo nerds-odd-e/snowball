@@ -94,11 +94,11 @@ public class OnlineTestTest {
     @Test
     public void shouldReturn2CorrectAnswer() {
         Question question = Question.createIt("description", "desc1", "advice", "adv1", "is_multi_question", 0, "category", String.valueOf(scrum.getId()));
-        Long id = (Long) question.getId();
+        String id = question.getStringId();
 
         final String[] answeredOption = new String[2];
-        answeredOption[0] = AnswerOption.<AnswerOption>createIt("description", "desc1", "question_id", id, "is_correct", 1).getLongId().toString();
-        answeredOption[1] = AnswerOption.<AnswerOption>createIt("description", "desc2", "question_id", id, "is_correct", 1).getLongId().toString();
+        answeredOption[0] = QuestionOption.<QuestionOption>createIt(id, "desc1", true).getStringId();
+        answeredOption[1] = QuestionOption.<QuestionOption>createIt(id, "desc2", true).getStringId();
 
         OnlineTest onlineTest = new OnlineTest(1);
 
@@ -120,12 +120,12 @@ public class OnlineTestTest {
     @Test
     public void shouldReturnOneIncorrectAndOneCorrectAnswer() {
         Question question = Question.createIt("description", "desc1", "advice", "adv1", "is_multi_question", 0, "category", String.valueOf(scrum.getId()));
-        Long id = (Long) question.getId();
+        String id = question.getStringId();
 
         final String[] answeredOption = new String[2];
-        answeredOption[0] = AnswerOption.<AnswerOption>createIt("description", "desc1", "question_id", id, "is_correct", 0).getLongId().toString();
-        answeredOption[1] = AnswerOption.<AnswerOption>createIt("description", "desc2", "question_id", id, "is_correct", 1).getLongId().toString();
-        AnswerOption.<AnswerOption>createIt("description", "desc3", "question_id", id, "is_correct", 1).getLongId().toString();
+        answeredOption[0] = QuestionOption.<QuestionOption>createIt(id, "desc1", false).getStringId();
+        answeredOption[1] = QuestionOption.<QuestionOption>createIt(id, "desc2", true).getStringId();
+        QuestionOption.<QuestionOption>createIt(id, "desc3", true).getStringId();
 
         OnlineTest onlineTest = new OnlineTest(1);
         Answer answer = onlineTest.answerCurrentQuestion(Arrays.asList(answeredOption));
@@ -152,11 +152,11 @@ public class OnlineTestTest {
     @Test
     public void calculateCorrectRate() {
         Question q1 = Question.createIt("description", "d1", "advice", "a1", "is_multi_question", 0, "category", scrum.getStringId());
-        AnswerOption it = AnswerOption.<AnswerOption>createIt("description", "d1", "question_id", q1.getId(), "is_correct", 1);
-        AnswerOption.<AnswerOption>createIt("description", "d2", "question_id", q1.getId(), "is_correct", 0);
+        QuestionOption it = QuestionOption.<QuestionOption>createIt(q1.getStringId(), "d1", true);
+        QuestionOption.<QuestionOption>createIt(q1.getStringId(), "d2", false);
 
         OnlineTest onlineTest = new OnlineTest(1);
-        onlineTest.answerCurrentQuestion(Arrays.asList(it.getLongId().toString()));
+        onlineTest.answerCurrentQuestion(Arrays.asList(it.getStringId()));
 
         TestResult result = onlineTest.generateTestResult();
 
@@ -167,11 +167,11 @@ public class OnlineTestTest {
     @Test
     public void calculateCorrectRate2() {
         Question q1 = Question.createIt("description", "d1", "advice", "a1", "is_multi_question", 0, "category", scrum.getStringId());
-        AnswerOption.<AnswerOption>createIt("description", "d1", "question_id", q1.getStringId(), "is_correct", 1);
-        AnswerOption wrongOption = AnswerOption.<AnswerOption>createIt("description", "d2", "question_id", q1.getStringId(), "is_correct", 0);
+        QuestionOption.<QuestionOption>createIt(q1.getStringId(), "d1", true);
+        QuestionOption wrongOption = QuestionOption.<QuestionOption>createIt(q1.getStringId(), "d2", false);
 
         OnlineTest onlineTest = new OnlineTest(1);
-        onlineTest.answerCurrentQuestion(Arrays.asList(wrongOption.getLongId().toString()));
+        onlineTest.answerCurrentQuestion(Arrays.asList(wrongOption.getStringId()));
 
         TestResult result = onlineTest.generateTestResult();
 
@@ -183,31 +183,31 @@ public class OnlineTestTest {
     public void calculateCorrectRate70percent() {
 
         Question q1 = Question.createIt("description", "d1", "advice", "a1", "is_multi_question", 0, "category", scrum.getStringId());
-        AnswerOption c1 = AnswerOption.<AnswerOption>createIt("description", "d1", "question_id", q1.getStringId(), "is_correct", 1);
-        AnswerOption.<AnswerOption>createIt("description", "d2", "question_id", q1.getStringId(), "is_correct", 0);
+        QuestionOption c1 = QuestionOption.<QuestionOption>createIt(q1.getStringId(), "d1", true);
+        QuestionOption.<QuestionOption>createIt(q1.getStringId(), "d2", false);
 
         Question q2 = Question.createIt("description", "d1", "advice", "a1", "is_multi_question", 0, "category", scrum.getStringId());
-        AnswerOption c2 = AnswerOption.<AnswerOption>createIt("description", "d1", "question_id", q2.getStringId(), "is_correct", 0);
-        AnswerOption.<AnswerOption>createIt("description", "d2", "question_id", q2.getStringId(), "is_correct", 1);
+        QuestionOption c2 = QuestionOption.<QuestionOption>createIt(q2.getStringId(), "d1", false);
+        QuestionOption.<QuestionOption>createIt(q2.getStringId(), "d2", true);
 
         Question q3 = Question.createIt("description", "d1", "advice", "a1", "is_multi_question", 0, "category", scrum.getStringId());
-        AnswerOption c3 = AnswerOption.<AnswerOption>createIt("description", "d1", "question_id", q3.getId(), "is_correct", 1);
-        AnswerOption.<AnswerOption>createIt("description", "d2", "question_id", q3.getId(), "is_correct", 0);
+        QuestionOption c3 = QuestionOption.<QuestionOption>createIt(q3.getStringId(), "d1", true);
+        QuestionOption.<QuestionOption>createIt(q3.getStringId(), "d2", false);
 
         Question q4 = Question.createIt("description", "d1", "advice", "a1", "is_multi_question", 0, "category", scrum.getStringId());
-        AnswerOption c4 = AnswerOption.<AnswerOption>createIt("description", "d1", "question_id", q4.getId(), "is_correct", 1);
-        AnswerOption.<AnswerOption>createIt("description", "d2", "question_id", q4.getId(), "is_correct", 0);
+        QuestionOption c4 = QuestionOption.<QuestionOption>createIt(q4.getStringId(), "d1", true);
+        QuestionOption.<QuestionOption>createIt(q4.getStringId(), "d2", false);
 
         Question q5 = Question.createIt("description", "d1", "advice", "a1", "is_multi_question", 0, "category", scrum.getStringId());
-        AnswerOption.<AnswerOption>createIt("description", "d1", "question_id", q5.getId(), "is_correct", 1);
-        AnswerOption c5 = AnswerOption.<AnswerOption>createIt("description", "d2", "question_id", q5.getId(), "is_correct", 0);
+        QuestionOption.<QuestionOption>createIt(q5.getStringId(), "d1", true);
+        QuestionOption c5 = QuestionOption.<QuestionOption>createIt(q5.getStringId(), "d2", false);
 
         OnlineTest onlineTest = new OnlineTest(5);
         onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().getCorrectOption().stream().map(o -> o.toString()).collect(Collectors.toList()) );
         onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().getCorrectOption().stream().map(o -> o.toString()).collect(Collectors.toList()) );
         onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().getCorrectOption().stream().map(o -> o.toString()).collect(Collectors.toList()) );
         onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().getCorrectOption().stream().map(o -> o.toString()).collect(Collectors.toList()) );
-        onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().getCorrectOption().stream().map(o -> Long.valueOf(o + 10L).toString()).collect(Collectors.toList()) );
+        onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().getCorrectOption().stream().map(o -> "nonexist").collect(Collectors.toList()) );
 
         TestResult result = onlineTest.generateTestResult();
 

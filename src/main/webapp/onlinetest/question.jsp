@@ -33,10 +33,10 @@
                 <c:forEach items="${question.getOptions()}" var="option" varStatus="status">
                     <li>
                         <c:if test="${question.getIsMultiQuestion()}">
-                         <input type="checkbox" id="option${status.index + 1}" name="optionId" value="${option.getLongId()}" />${option.getDescription()}</label>
+                         <input type="checkbox" id="option${status.index + 1}" name="optionId" value="${option.getStringId()}" />${option.getDescription()}</label>
                         </c:if>
                         <c:if test="${!question.getIsMultiQuestion()}">
-                         <input type="radio" id="option${status.index + 1}" name="optionId" value="${option.getLongId()}" />${option.getDescription()}</label>
+                         <input type="radio" id="option${status.index + 1}" name="optionId" value="${option.getStringId()}" />${option.getDescription()}</label>
                         </c:if>
                     </li>
                 </c:forEach>

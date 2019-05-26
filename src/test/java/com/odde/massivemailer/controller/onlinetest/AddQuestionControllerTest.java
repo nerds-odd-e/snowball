@@ -1,9 +1,8 @@
 package com.odde.massivemailer.controller.onlinetest;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.model.onlinetest.AnswerOption;
+import com.odde.massivemailer.model.onlinetest.QuestionOption;
 import com.odde.massivemailer.model.onlinetest.Category;
-import com.odde.massivemailer.model.onlinetest.PublicQuestion;
 import com.odde.massivemailer.model.onlinetest.Question;
 import org.junit.Before;
 import org.junit.Test;
@@ -87,7 +86,7 @@ public class AddQuestionControllerTest {
 
         String rightOptionDescription = request.getParameter("option1");
 
-        Optional<AnswerOption> rightAnswer = question.getOptions().stream().filter(AnswerOption::isCorrect).findFirst();
+        Optional<QuestionOption> rightAnswer = question.getOptions().stream().filter(QuestionOption::isCorrect).findFirst();
         assertEquals(rightAnswer.get().getDescription(), rightOptionDescription);
     }
 
@@ -106,13 +105,13 @@ public class AddQuestionControllerTest {
             assertTrue(hasOption);
         }
 
-        Collection<AnswerOption> options = question.getOptions();
-        assertTrue(((AnswerOption) options.toArray()[0]).isCorrect());
-        assertTrue(((AnswerOption) options.toArray()[1]).isCorrect());
-        assertFalse(((AnswerOption) options.toArray()[2]).isCorrect());
-        assertFalse(((AnswerOption) options.toArray()[3]).isCorrect());
-        assertFalse(((AnswerOption) options.toArray()[4]).isCorrect());
-        assertFalse(((AnswerOption) options.toArray()[5]).isCorrect());
+        Collection<QuestionOption> options = question.getOptions();
+        assertTrue(((QuestionOption) options.toArray()[0]).isCorrect());
+        assertTrue(((QuestionOption) options.toArray()[1]).isCorrect());
+        assertFalse(((QuestionOption) options.toArray()[2]).isCorrect());
+        assertFalse(((QuestionOption) options.toArray()[3]).isCorrect());
+        assertFalse(((QuestionOption) options.toArray()[4]).isCorrect());
+        assertFalse(((QuestionOption) options.toArray()[5]).isCorrect());
     }
 
 
@@ -204,31 +203,5 @@ public class AddQuestionControllerTest {
 
         String errorMessage = String.valueOf(request.getAttribute("errorMessage"));
         assertEquals(errorMessage, "Invalid inputs found!");
-    }
-
-    @Test
-    public void doPostAddPublicQuestion() throws Exception {
-        setupValidRequest();
-        controller.doPost(request, response);
-        Question question = Question.findFirst("");
-
-        String description = request.getParameter("description");
-        assertEquals(description, question.getDescription());
-
-        assertEquals("Cat1", question.getCategoryName());
-
-        for (int i = 0; i < 6; i++) {
-            String option = request.getParameter("option" + (i + 1));
-            boolean hasOption = question.getOptions().stream().anyMatch(opt -> opt.getDescription().equals(option));
-            assertTrue(hasOption);
-        }
-
-        String rightOptionDescription = request.getParameter("option1");
-
-        Optional<AnswerOption> rightAnswer = question.getOptions().stream().filter(AnswerOption::isCorrect).findFirst();
-        assertEquals(rightAnswer.get().getDescription(), rightOptionDescription);
-
-        PublicQuestion publicQuestion = PublicQuestion.findFirst("question_id = ?", question.getLongId());
-        assertNotNull(publicQuestion);
     }
 }

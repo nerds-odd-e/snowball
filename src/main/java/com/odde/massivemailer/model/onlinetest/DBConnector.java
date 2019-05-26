@@ -29,7 +29,9 @@ public class DBConnector {
     }
 
     private static CodecRegistry getCodecRegistry() {
-        CodecRegistry codecRegistry = CodecRegistries.fromCodecs(new Category.CategoryCodec());
+        CodecRegistry codecRegistry = CodecRegistries.fromCodecs(
+                new Category.CategoryCodec(),
+                new QuestionOption.QuestionOptionCodec());
         CodecRegistry defaultCodecRegistry = MongoClientSettings.getDefaultCodecRegistry();
         return CodecRegistries.fromRegistries(codecRegistry, defaultCodecRegistry);
     }

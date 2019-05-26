@@ -48,15 +48,15 @@ public class QuestionTest {
     @Test
     public void getCorrectOption_正解のIDの一覧を返す() {
         Question question = Question.createIt("description", "desc1", "advice", "adv1");
-        AnswerOption correct1 = AnswerOption.createIt("description", "desc", "question_id", question.getLongId(), "is_correct", 1);
-        AnswerOption correct2 = AnswerOption.createIt("description", "desc", "question_id", question.getLongId(), "is_correct", 1);
-        AnswerOption.createIt("description", "desc", "question_id", question.getLongId(), "is_correct", 0);
+        QuestionOption correct1 = QuestionOption.createIt(question.getStringId(), "desc", true);
+        QuestionOption correct2 = QuestionOption.createIt(question.getStringId(), "desc", true);
+        QuestionOption.createIt(question.getStringId(), "desc", false);
 
-        final List<Long> expected = new ArrayList<>();
-        expected.add(correct1.getLongId());
-        expected.add(correct2.getLongId());
+        final List<String> expected = new ArrayList<>();
+        expected.add(correct1.getStringId());
+        expected.add(correct2.getStringId());
 
-        final ArrayList<Long> actual = question.getCorrectOption();
+        final ArrayList<String> actual = question.getCorrectOption();
         assertEquals(actual, expected);
     }
 
@@ -84,17 +84,17 @@ public class QuestionTest {
     @Test
     public void shouldFetchOptionsForQuestion() {
         Question question = Question.createIt("description", "desc1", "advice", null);
-        AnswerOption.createIt("description", "desc", "question_id", question.getLongId(), "is_correct", 0);
+        QuestionOption.createIt(question.getStringId(), "desc", false);
         assertThat(question.getOptions(), is(not(empty())));
     }
 
     @Test
     public void shouldFetchOptionsForQuestionWithSameQuestionId() {
         Question question = Question.createIt("description", "desc1", "advice", null);
-        Long expectedQuestionId = question.getLongId();
-        AnswerOption.createIt("description", "desc", "question_id", question.getLongId(), "is_correct", 0);
-        AnswerOption.createIt("description", "desc", "question_id", question.getLongId(), "is_correct", 0);
-        AnswerOption.createIt("description", "desc", "question_id", question.getLongId(), "is_correct", 0);
+        String expectedQuestionId = question.getStringId();
+        QuestionOption.createIt(question.getStringId(), "desc", false);
+        QuestionOption.createIt(question.getStringId(), "desc", false);
+        QuestionOption.createIt(question.getStringId(), "desc", false);
 
         question.getOptions().forEach(option -> assertThat(option.getQuestionId(), is(equalTo(expectedQuestionId))));
     }
@@ -102,16 +102,16 @@ public class QuestionTest {
     @Test
     public void shouldIsMultipleChoiceQuestion() {
         Question question = Question.createIt("description", "desc1", "advice", "adv1");
-        AnswerOption.createIt("description", "desc", "question_id", question.getLongId(), "is_correct", 1);
-        AnswerOption.createIt("description", "desc", "question_id", question.getLongId(), "is_correct", 1);
+        QuestionOption.createIt(question.getStringId(), "desc", true);
+        QuestionOption.createIt(question.getStringId(), "desc", true);
         assertTrue(question.isMultipleAnswerOptions());
     }
 
     @Test
     public void shouldIsSingleChoiceQuestion() {
         Question question = Question.createIt("description", "desc1", "advice", "adv1");
-        AnswerOption.createIt("description", "desc", "question_id", question.getLongId(), "is_correct", 1);
-        AnswerOption.createIt("description", "desc", "question_id", question.getLongId(), "is_correct", 0);
+        QuestionOption.createIt(question.getStringId(), "desc", true);
+        QuestionOption.createIt(question.getStringId(), "desc", false);
         assertFalse(question.isMultipleAnswerOptions());
     }
 

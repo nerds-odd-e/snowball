@@ -24,7 +24,7 @@ public class Category extends Entity {
     }
 
     public static Repository<Category> repository() {
-        return new Repository(Category.class);
+        return new Repository(Category.class, "categories");
     }
 
     public String getName() {
@@ -40,13 +40,18 @@ public class Category extends Entity {
     }
 
     public static void saveAdvice(String categoryId, String advice, String link) {
-        Category cat = repository().findById(categoryId);
+        Category cat = repository().findByStringId(categoryId);
         cat.advice = advice;
         cat.link = link;
         if(link == null) {
             cat.link = "";
         }
         cat.saveIt();
+    }
+
+    @Override
+    public void onBeforeSave() {
+
     }
 
     static class CategoryCodec implements Codec<Category> {

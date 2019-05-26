@@ -1,4 +1,3 @@
-@now
 Feature: Question Category
   A question belongs to a category. Categories are maintained by admin.
 

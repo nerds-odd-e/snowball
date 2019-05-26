@@ -1,7 +1,6 @@
 package com.odde.massivemailer.model.onlinetest;
 
 import com.odde.massivemailer.model.ApplicationModel;
-import com.odde.massivemailer.model.base.Repository;
 import com.odde.massivemailer.model.callback.QuestionCallbacks;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
@@ -29,6 +28,10 @@ public class Question extends ApplicationModel {
     public Question() {
         //required by framework :(
 
+    }
+
+    public String getStringId() {
+        return getId().toString();
     }
 
     public Question(String description, String advice, String category, String type) {
@@ -92,7 +95,7 @@ public class Question extends ApplicationModel {
         if (getString(CATEGORY).isEmpty()) {
             return null;
         }
-        return Category.repository().findById(getString(CATEGORY));
+        return Category.repository().findByStringId(getString(CATEGORY));
     }
 
     public String getCategoryName() {
@@ -111,34 +114,34 @@ public class Question extends ApplicationModel {
         return getInteger(IS_MULTI_QUESTION) == 1;
     }
 
-    public Collection<AnswerOption> getOptions() {
+    public Collection<QuestionOption> getOptions() {
 
-        return AnswerOption.getForQuestion(this.getLongId());
+        return QuestionOption.getForQuestion(this.getStringId());
     }
 
     public boolean verifyAnswer(List<String> answeredOptionIds) {
-        Collection<AnswerOption> optionsByQuestionId = getOptions();
-        List<String> collectOptions = optionsByQuestionId.stream().filter(AnswerOption::isCorrect).map(answerOption -> answerOption.getLongId().toString()).collect(toList());
+        Collection<QuestionOption> optionsByQuestionId = getOptions();
+        List<String> collectOptions = optionsByQuestionId.stream().filter(QuestionOption::isCorrect).map(answerOption -> answerOption.getStringId().toString()).collect(toList());
         return collectOptions.equals(answeredOptionIds);
     }
 
-    public ArrayList<Long> getCorrectOption() {
-        Collection<AnswerOption> optionsByQuestionId = getOptions();
-        final ArrayList<Long> correctOptions = new ArrayList<>();
-        for (AnswerOption option : optionsByQuestionId) {
+    public ArrayList<String> getCorrectOption() {
+        Collection<QuestionOption> optionsByQuestionId = getOptions();
+        final ArrayList<String> correctOptions = new ArrayList<>();
+        for (QuestionOption option : optionsByQuestionId) {
             if (option.isCorrect()) {
-                correctOptions.add(option.getLongId());
+                correctOptions.add(option.getStringId());
             }
         }
         return correctOptions;
     }
 
-    public boolean isCorrect(Long optionId) {
-        Collection<AnswerOption> optionsByQuestionId = getOptions();
-        final ArrayList<Long> correctOptions = new ArrayList<>();
-        for (AnswerOption option : optionsByQuestionId) {
+    public boolean isCorrect(String optionId) {
+        Collection<QuestionOption> optionsByQuestionId = getOptions();
+        final ArrayList<String> correctOptions = new ArrayList<>();
+        for (QuestionOption option : optionsByQuestionId) {
             if (option.isCorrect()) {
-                correctOptions.add(option.getLongId());
+                correctOptions.add(option.getStringId());
             }
         }
         return correctOptions.contains(optionId);
@@ -159,20 +162,20 @@ public class Question extends ApplicationModel {
     }
 
     public void createWrongOption(String optionText) {
-        AnswerOption.createIt("description", optionText, "question_id", getLongId(), "is_correct", 0);
+        new QuestionOption(getStringId(), optionText, false).saveIt();
     }
 
     public void createCorrectOption(String optionText) {
-        AnswerOption.createIt("description", optionText, "question_id", getLongId(), "is_correct", 1);
+        new QuestionOption(getStringId(), optionText, true).saveIt();
     }
 
-    public Long getFirstOptionId() {
-        Collection<AnswerOption> options = getOptions();
-        return Long.valueOf(options.stream().findFirst().get().getStringId());
+    public String getFirstOptionId() {
+        Collection<QuestionOption> options = getOptions();
+        return options.stream().findFirst().get().getStringId();
     }
 
     public boolean isMultipleAnswerOptions() {
-        return getOptions().stream().filter(AnswerOption::isCorrect).count() > 1;
+        return getOptions().stream().filter(QuestionOption::isCorrect).count() > 1;
     }
 
     boolean belongsTo(Category cat) {

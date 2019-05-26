@@ -42,12 +42,12 @@ public class QuestionControllerTest {
 
     private Question createQuestionWithOptions(String categoryId) {
         Question question = Question.createIt("description", "What is Scrum?", "advice", "Scrum is a coding practice.", "category", categoryId);
-        Long id = (Long) question.getId();
-        AnswerOption.createIt("description", "desc1", "question_id", id, "is_correct", 0);
-        AnswerOption.createIt("description", "desc2", "question_id", id, "is_correct", 0);
-        AnswerOption.createIt("description", "desc3", "question_id", id, "is_correct", 0);
-        AnswerOption.createIt("description", "desc4", "question_id", id, "is_correct", 0);
-        AnswerOption.createIt("description", "desc5", "question_id", id, "is_correct", 1);
+        String id = question.getStringId();
+        QuestionOption.createIt(id, "desc1", false);
+        QuestionOption.createIt(id, "desc2", false);
+        QuestionOption.createIt(id, "desc3", false);
+        QuestionOption.createIt(id, "desc4", false);
+        QuestionOption.createIt(id, "desc5", true);
 
         return question;
     }
@@ -58,7 +58,7 @@ public class QuestionControllerTest {
         onlineTest = new OnlineTest(1);
         request.getSession().setAttribute("onlineTest", onlineTest);
 
-        String optionId = question.getFirstOptionId().toString();
+        String optionId = question.getFirstOptionId();
         request.addParameter("optionId", optionId);
         request.addParameter("lastDoneQuestionId", "0");
         controller.doPost(request, response);
@@ -72,8 +72,8 @@ public class QuestionControllerTest {
         onlineTest = new OnlineTest(1);
         request.getSession().setAttribute("onlineTest", onlineTest);
 
-        Long optionId = question.getFirstOptionId();
-        request.addParameter("optionId", optionId.toString());
+        String optionId = question.getFirstOptionId();
+        request.addParameter("optionId", optionId);
         request.addParameter("lastDoneQuestionId", "0");
 
         controller.doPost(request, response);
@@ -85,9 +85,9 @@ public class QuestionControllerTest {
     public void doPostWithMessageOnNotCurrentQuestionPage() throws ServletException, IOException {
         question = createQuestionWithOptions(scrum);
 
-        Long optionId = question.getFirstOptionId();
+        String optionId = question.getFirstOptionId();
         onlineTest = new OnlineTest(2);
-        request.addParameter("optionId", optionId.toString());
+        request.addParameter("optionId", optionId);
         request.addParameter("lastDoneQuestionId", "1");
         request.getSession().setAttribute("onlineTest", onlineTest);
 
@@ -100,9 +100,9 @@ public class QuestionControllerTest {
     public void doPostWithoutMessageOnCurrentQuestionPage() throws ServletException, IOException {
         question = createQuestionWithOptions(scrum);
 
-        Long optionId = question.getFirstOptionId();
+        String optionId = question.getFirstOptionId();
         onlineTest = new OnlineTest(2);
-        request.addParameter("optionId", optionId.toString());
+        request.addParameter("optionId", optionId);
         request.addParameter("lastDoneQuestionId", "0");
         request.getSession().setAttribute("onlineTest", onlineTest);
 
@@ -116,10 +116,10 @@ public class QuestionControllerTest {
     public void doPostWithIncrementCorrectCountOnCorrectAnswer() throws ServletException, IOException {
         question = createQuestionWithOptions(scrum);
 
-        List<Long> optionId = question.getCorrectOption();
+        List<String> optionId = question.getCorrectOption();
         onlineTest = new OnlineTest(2);
 
-        request.addParameter("optionId", optionId.get(0).toString());
+        request.addParameter("optionId", optionId.get(0));
         request.addParameter("lastDoneQuestionId", "0");
         request.getSession().setAttribute("onlineTest", onlineTest);
 
@@ -132,9 +132,9 @@ public class QuestionControllerTest {
     @Test
     public void doPostWithNotIncrementCorrectCountOnIncorrectAnswer() throws ServletException, IOException {
         question = createQuestionWithOptions(scrum);
-        Long optionId = question.getFirstOptionId();
+        String optionId = question.getFirstOptionId();
         onlineTest = new OnlineTest(2);
-        request.addParameter("optionId", optionId.toString());
+        request.addParameter("optionId", optionId);
         request.addParameter("lastDoneQuestionId", "0");
         request.getSession().setAttribute("onlineTest", onlineTest);
 
@@ -165,12 +165,12 @@ public class QuestionControllerTest {
         request.addParameter("lastDoneQuestionId", "0");
         request.getSession().setAttribute("onlineTest", onlineTest);
 
-        Long wrongOptionId = question.getFirstOptionId();
-        List<Long> correctOptionId = question.getCorrectOption();
+        String wrongOptionId = question.getFirstOptionId();
+        List<String> correctOptionId = question.getCorrectOption();
 
         final String[] answeredOption = new String[2];
-        answeredOption[0] = correctOptionId.get(0).toString();
-        answeredOption[1] = wrongOptionId.toString();
+        answeredOption[0] = correctOptionId.get(0);
+        answeredOption[1] = wrongOptionId;
 
         request.addParameter("optionId", answeredOption);
         controller.doPost(request, response);
@@ -183,10 +183,10 @@ public class QuestionControllerTest {
     @Test
     public void doPostWithIncrementScrumCategoryCorrectCountOnCorrectAnswer() throws ServletException, IOException {
         question = createQuestionWithOptions(tech);
-        List<Long> optionId = question.getCorrectOption();
+        List<String> optionId = question.getCorrectOption();
         onlineTest = new OnlineTest(2);
 
-        request.addParameter("optionId", optionId.get(0).toString());
+        request.addParameter("optionId", optionId.get(0));
         request.addParameter("lastDoneQuestionId", "0");
         request.getSession().setAttribute("onlineTest", onlineTest);
 
@@ -201,10 +201,10 @@ public class QuestionControllerTest {
     @Test
     public void doPostWithIncrementScrumCategoryCorrectCountOnCorrectAnswer2() throws ServletException, IOException {
         question = createQuestionWithOptions(tech);
-        List<Long> optionId = question.getCorrectOption();
+        List<String> optionId = question.getCorrectOption();
         onlineTest = new OnlineTest(2);
 
-        request.addParameter("optionId", optionId.get(0).toString());
+        request.addParameter("optionId", optionId.get(0));
         request.addParameter("lastDoneQuestionId", "0");
         request.getSession().setAttribute("onlineTest", onlineTest);
 
@@ -221,10 +221,10 @@ public class QuestionControllerTest {
     @Test
     public void doPostWithIncrementTechCategoryCorrectCountOnCorrectAnswer() throws ServletException, IOException {
         question = createQuestionWithOptions(team);
-        List<Long> optionIds = question.getCorrectOption();
+        List<String> optionIds = question.getCorrectOption();
         onlineTest = new OnlineTest(2);
 
-        request.addParameter("optionId", optionIds.get(0).toString());
+        request.addParameter("optionId", optionIds.get(0));
         request.addParameter("lastDoneQuestionId", "0");
         request.getSession().setAttribute("onlineTest", onlineTest);
 
@@ -239,10 +239,10 @@ public class QuestionControllerTest {
     @Test
     public void answerCurrentQuestionInParameter() throws ServletException, IOException{
         question = createQuestionWithOptions(tech);
-        List<Long> optionIds = question.getCorrectOption();
+        List<String> optionIds = question.getCorrectOption();
         onlineTest = new OnlineTest(2);
 
-        request.addParameter("optionId", optionIds.get(0).toString());
+        request.addParameter("optionId", optionIds.get(0));
         request.addParameter("lastDoneQuestionId", "0");
         request.getSession().setAttribute("onlineTest", onlineTest);
 
@@ -253,7 +253,7 @@ public class QuestionControllerTest {
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
 
 
-        assertEquals(optionIds.get(0).toString(), onlineTest.answers.get(0).getSelectedOptionIds().get(0));
+        assertEquals(optionIds.get(0), onlineTest.answers.get(0).getSelectedOptionIds().get(0));
     }
 
 

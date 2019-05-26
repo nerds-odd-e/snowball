@@ -1,7 +1,5 @@
 package com.odde.massivemailer.model.base;
 
-import com.odde.massivemailer.model.base.Repository;
-import com.odde.massivemailer.model.onlinetest.Category;
 import lombok.Getter;
 import lombok.Setter;
 import org.bson.types.ObjectId;
@@ -21,8 +19,8 @@ public abstract class Entity<T> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Category category = (Category) o;
-        return Objects.equals(id, category.id);
+        Entity entity = (Entity) o;
+        return Objects.equals(id, entity.id);
     }
 
     @Override
@@ -34,4 +32,5 @@ public abstract class Entity<T> {
         return getId().toString();
     }
 
+    public abstract void onBeforeSave();
 }

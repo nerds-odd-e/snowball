@@ -53,7 +53,7 @@
                                     <td id="category">${question.getCategoryName()}</td>
                                 </tr>
                                 <c:forEach items="${question.getOptions()}" var="option" varStatus="status">
-                                <c:set var="optionId">${option.getLongId()}</c:set>
+                                <c:set var="optionId">${option.getStringId()}</c:set>
                                 <c:set var="optionNumber">${status.index+1}</c:set>
                                     <c:if test="${option.isCorrect()}">
                                         <tr id="option${optionNumber}row" class="bg-success">
