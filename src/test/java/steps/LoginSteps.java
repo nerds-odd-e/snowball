@@ -34,7 +34,6 @@ public class LoginSteps {
 
     @Given("^There is a user with \"([^\"]*)\" and \"([^\"]*)\"$")
     public void there_is_a_user_with_and(String email, String password) {
-        User.deleteAll();
         User user = new User(email);
         user.setPassword(password);
         user.saveIt();
@@ -42,7 +41,6 @@ public class LoginSteps {
 
     @Given("^There are users as bellow$")
     public void there_are_users_as_bellow(DataTable userTable) {
-        User.deleteAll();
         Map<String, String> vals = userTable.asMap(String.class, String.class);
         vals.forEach((key, value) -> {
             User user = new User(key);
@@ -86,7 +84,6 @@ public class LoginSteps {
 
     @Given("^There is a user with \"([^\"]*)\" but password initialize is undone$")
     public void there_is_a_user_with_but_password_initialize_is_undone(String email) {
-        User.deleteAll();
         User user = new User(email);
         user.saveIt();
     }

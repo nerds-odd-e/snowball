@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static org.apache.commons.lang3.StringUtils.isEmpty;
+
 @WebServlet("/initialPassword")
 public class InitializePasswordController extends AppController {
 
@@ -33,7 +35,7 @@ public class InitializePasswordController extends AppController {
             resp.sendRedirect("initialize_password_token_error.jsp");
             return;
         }
-        if (user.getHashedPassword() != null) {
+        if (!isEmpty(user.getHashdPassword())) {
             resp.sendRedirect("initialize_password.jsp?error=error");
             return;
         }

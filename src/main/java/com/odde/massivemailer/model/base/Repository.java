@@ -1,13 +1,14 @@
 package com.odde.massivemailer.model.base;
 
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.Filters;
-import com.odde.massivemailer.service.DBConnector;
+import com.odde.massivemailer.service.MongoDBConnector;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.mongodb.client.model.Filters.eq;
 
 public class Repository<T extends Entity> {
     private Class<T> klass;
@@ -23,7 +24,7 @@ public class Repository<T extends Entity> {
     }
 
     public T findById(ObjectId objectId) {
-        return findFirst(Filters.eq("_id", objectId));
+        return findFirst(eq("_id", objectId));
     }
 
     public T findFirst(Bson query) {
@@ -31,7 +32,7 @@ public class Repository<T extends Entity> {
     }
 
     public MongoCollection<T> getCollection() {
-        return DBConnector.instance().getMongoCollection(klass, collectionName);
+        return MongoDBConnector.instance().getMongoCollection(klass, collectionName);
     }
 
     public List<T> findAll() {
@@ -45,8 +46,12 @@ public class Repository<T extends Entity> {
             object.setId(new ObjectId());
             collection.insertOne(object);
         } else {
-            collection.replaceOne(Filters.eq("_id", object.getId()), object);
+            collection.replaceOne(eq("_id", object.getId()), object);
         }
         ;
+    }
+
+    public T findBy(String field, String value) {
+        return findFirst(eq(field, value));
     }
 }

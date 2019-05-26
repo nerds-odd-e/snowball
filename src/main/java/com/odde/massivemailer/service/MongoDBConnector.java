@@ -5,24 +5,25 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.odde.massivemailer.model.User;
 import com.odde.massivemailer.model.onlinetest.Category;
 import com.odde.massivemailer.model.onlinetest.Question;
 import com.odde.massivemailer.model.onlinetest.QuestionOption;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 
-public class DBConnector {
-    static DBConnector dbConnector = null;
+public class MongoDBConnector {
+    static MongoDBConnector dbConnector = null;
     MongoDatabase database;
 
-    public static DBConnector instance() {
+    public static MongoDBConnector instance() {
         if (dbConnector == null) {
-            dbConnector = new DBConnector();
+            dbConnector = new MongoDBConnector();
         }
         return dbConnector;
     }
 
-    public DBConnector() {
+    public MongoDBConnector() {
         MongoClient mongoClient = MongoClients.create();
         database = mongoClient.getDatabase("kyouha_unit_test").withCodecRegistry(getCodecRegistry());
     }
@@ -35,6 +36,7 @@ public class DBConnector {
         CodecRegistry codecRegistry = CodecRegistries.fromCodecs(
                 new Category.CategoryCodec(),
                 new Question.QuestionCodec(),
+                new User.UserCodec(),
                 new QuestionOption.QuestionOptionCodec());
         CodecRegistry defaultCodecRegistry = MongoClientSettings.getDefaultCodecRegistry();
         return CodecRegistries.fromRegistries(codecRegistry, defaultCodecRegistry);

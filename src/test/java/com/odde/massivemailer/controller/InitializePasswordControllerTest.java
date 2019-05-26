@@ -2,6 +2,7 @@ package com.odde.massivemailer.controller;
 
 import com.odde.TestWithDB;
 import com.odde.massivemailer.model.User;
+import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -55,9 +56,9 @@ public class InitializePasswordControllerTest {
         request.setParameter("password_confirm", "sdfgsdfgsdg");
         newUser.saveIt();
         controller.doPost(request, response);
-        User user = User.findFirst("token = ? AND hashed_password IS NOT NULL", newUser.getToken());
-        assertNotNull(user.getHashedPassword());
+        User user = User.repository().findBy("token", newUser.getToken());
         assertEquals("initialize_password_success.jsp", response.getRedirectedUrl());
+        Assertions.assertThat(user.getHashdPassword()).isNotEmpty();
     }
 
     @Test

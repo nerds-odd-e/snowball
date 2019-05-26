@@ -94,7 +94,7 @@ public class SignupControllerTest {
 
         controller.doPost(request, response);
 
-        User actual = User.findFirst("email = ?", "yamada@hoge.com");
+        User actual = User.repository().findBy("email", "yamada@hoge.com");
 
         assertThat(actual.getEmail(), is("yamada@hoge.com"));
     }

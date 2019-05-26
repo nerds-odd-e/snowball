@@ -42,7 +42,7 @@ public class UserTest {
         String password = "hogehoge";
         User user = createUser("hoge@example.com", password);
 
-        User dbUser = User.findFirst("token = ?", user.getToken());
+        User dbUser = User.repository().findBy("token", user.getToken());
         assertNotNull(dbUser);
     }
 

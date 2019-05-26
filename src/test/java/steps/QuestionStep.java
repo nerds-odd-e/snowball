@@ -323,7 +323,6 @@ public class QuestionStep {
 
     @Given("^\"([^\"]*)\"ユーザが登録されている$")
     public void ユーザが登録されている(String arg1) {
-        User.deleteAll();
         User user = new User("terry@hogehoge.com");
         user.setPassword("11111111");
         user.saveIt();

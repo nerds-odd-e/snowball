@@ -18,7 +18,7 @@ public class CategoryAddSteps {
 
     @When("^ユーザーがログインする$")
     public void ユーザーがログインする() {
-        request.getSession().setAttribute("user_id", user.getLongId());
+        request.getSession().setAttribute("user_id", user.getId());
     }
 
     @Then("^カテゴリ追加ボタンが見える$")

@@ -69,9 +69,8 @@ public class SignupSteps {
     @Given("^ユーザー\"([^\"]*)\"がユーザー登録済みである$")
     public void ユーザー_がユーザー登録済みである(String username) {
         // register some user
-        User.deleteAll();
         User user = new User(username + "@example.com");
-        user.setUserName(username);
+        user.setName(username);
         user.setPassword("testpassword");
         user.saveIt();
     }

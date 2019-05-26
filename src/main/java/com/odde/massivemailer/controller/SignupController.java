@@ -18,7 +18,7 @@ public class SignupController extends AppController {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 
-        User existing_user = User.findFirst("name = ?", req.getParameter("userName"));
+        User existing_user = User.repository().findBy("name", req.getParameter("userName"));
         if (existing_user != null){
             resp.sendRedirect("/signup.jsp?status=fail");
             return;
@@ -31,7 +31,7 @@ public class SignupController extends AppController {
         }
 
         User user = new User(req.getParameter("email"));
-        user.setUserName(req.getParameter("userName"));
+        user.setName(req.getParameter("userName"));
         user.setPassword(req.getParameter("password"));
         user.saveIt();
 

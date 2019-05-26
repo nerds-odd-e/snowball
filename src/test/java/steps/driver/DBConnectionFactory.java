@@ -1,11 +1,11 @@
 package steps.driver;
 
-import com.odde.massivemailer.service.DBConnector;
+import com.odde.massivemailer.service.MongoDBConnector;
 import org.javalite.activejdbc.Base;
 
 public class DBConnectionFactory {
     public static void prepare() {
-        DBConnector.resetAll();
+        MongoDBConnector.resetAll();
         Base.open();
         cleanDB();
     }

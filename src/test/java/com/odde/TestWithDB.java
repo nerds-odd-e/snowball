@@ -1,6 +1,6 @@
 package com.odde;
 
-import com.odde.massivemailer.service.DBConnector;
+import com.odde.massivemailer.service.MongoDBConnector;
 import com.odde.massivemailer.startup.DBMigrater;
 import org.javalite.activejdbc.Base;
 import org.junit.runner.notification.RunNotifier;
@@ -18,7 +18,7 @@ public class TestWithDB extends BlockJUnit4ClassRunner {
 
     @Override
     protected void runChild(FrameworkMethod method, RunNotifier notifier) {
-        DBConnector.resetAll();
+        MongoDBConnector.resetAll();
         Base.openTransaction();
         super.runChild(method, notifier);
         Base.rollbackTransaction();
