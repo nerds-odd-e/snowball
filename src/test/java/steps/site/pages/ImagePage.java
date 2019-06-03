@@ -11,7 +11,7 @@ public class ImagePage {
     }
 
     public void load(final String recipient) {
-        String token = SentMailVisit.first("email_address = ?", recipient).getString("id");
+        String token = SentMailVisit.repository().findFirstBy("emailAddress", recipient).getStringId();
         String path = "resources/images/qrcode.png?token=" + token;
         site.visit(path);
     }

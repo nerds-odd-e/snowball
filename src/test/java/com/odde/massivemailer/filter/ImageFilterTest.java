@@ -40,11 +40,10 @@ public class ImageFilterTest {
     public void FilterMustUpdateSentMailvisitMatchingToken() throws IOException, ServletException {
         Template template = new Template("Template", "", "").saveIt();
         SentMail mail = SentMail.createIt("template_id", template.getStringId());
-        SentMailVisit nd = SentMailVisit.createIt("sent_mail_id", mail.getId(), "email_address", "my@a.b.com", "read_count", 0);
-        request.setParameter(ImageFilter.TOKEN, nd.getString("id"));
+        SentMailVisit nd = new SentMailVisit("my@a.b.com", 0, mail.getId().toString()).saveIt();
+        request.setParameter(ImageFilter.TOKEN, nd.getStringId());
         filter.doFilter(request, response, chain);
-        SentMailVisit nd1 = SentMailVisit.findById(nd.getLongId());
-        nd.refresh();
+        SentMailVisit nd1 = SentMailVisit.repository().findById(nd.getId());
         assertEquals(1, nd1.getReadCount());
     }
 }

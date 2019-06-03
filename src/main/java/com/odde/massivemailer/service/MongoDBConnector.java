@@ -5,6 +5,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.odde.massivemailer.model.SentMailVisit;
 import com.odde.massivemailer.model.Template;
 import com.odde.massivemailer.model.User;
 import com.odde.massivemailer.model.onlinetest.Category;
@@ -39,6 +40,7 @@ public class MongoDBConnector {
                 new Question.QuestionCodec(),
                 new User.UserCodec(),
                 new Template.TemplateCodec(),
+                new SentMailVisit.SentMailVisitCodec(),
                 new QuestionOption.QuestionOptionCodec());
         CodecRegistry defaultCodecRegistry = MongoClientSettings.getDefaultCodecRegistry();
         return CodecRegistries.fromRegistries(codecRegistry, defaultCodecRegistry);

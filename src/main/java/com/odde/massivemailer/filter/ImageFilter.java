@@ -17,7 +17,7 @@ public class ImageFilter implements Filter {
         String token = request.getParameter(TOKEN);
 
         if (token != null) {
-            SentMailVisit nd = SentMailVisit.findById(Integer.parseInt(token));
+            SentMailVisit nd = SentMailVisit.repository().findByStringId(token);
             nd.updateViewCount();
         }
 

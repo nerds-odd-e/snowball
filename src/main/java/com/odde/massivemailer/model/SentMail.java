@@ -72,7 +72,7 @@ public class SentMail extends ApplicationModel {
     public SentMail saveAll() {
         saveIt();
         for (SentMailVisit sentMailVisit : getSentMailVisits()) {
-            sentMailVisit.setSentMailId(getLongId());
+            sentMailVisit.setSentMailId(getId().toString());
             sentMailVisit.saveIt();
         }
         return this;

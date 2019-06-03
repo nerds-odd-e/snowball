@@ -3,6 +3,7 @@ package com.odde.massivemailer.util;
 import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.model.SentMail;
 import com.odde.massivemailer.model.SentMailVisit;
+import jdk.nashorn.internal.objects.annotations.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,6 @@ public class NotificationUtil {
         for (String recipient : mail.getReceipts()) {
             SentMailVisit sentMailVisit = new SentMailVisit();
             sentMailVisit.setEmailAddress(recipient);
-            sentMailVisit.setId(System.currentTimeMillis());
             sentMailVisits.add(sentMailVisit);
             mail.getSentMail().setSentMailVisits(sentMailVisits);
         }
