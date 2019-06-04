@@ -1,1 +1,0 @@
-ALTER TABLE `questions` DROP COLUMN `is_multi_question`;

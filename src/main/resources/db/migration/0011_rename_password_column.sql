@@ -1,1 +1,0 @@
-alter table users change password hashed_password VARCHAR(100);

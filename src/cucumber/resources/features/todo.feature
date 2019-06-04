@@ -1,8 +1,8 @@
 Feature:
-  TODO
+  TODO機能
 
-#  Scenario: Update Adviceがサイドメニューに表示される
-#    Given topページが表示されている
-#    When Update Adviceのリンクをクリックする
-#    Then Update Adviceが表示される
+  @now
+  Scenario: Todo一覧が表示される
+    Given Todo一覧ページに遷移
+    Then Todo一覧ページが表示される
 

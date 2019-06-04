@@ -1,1 +1,0 @@
-ALTER TABLE `question_responses` ADD UNIQUE (`test_id`, `question_id`);
