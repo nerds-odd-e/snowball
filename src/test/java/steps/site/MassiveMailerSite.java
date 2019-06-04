@@ -44,8 +44,8 @@ public class MassiveMailerSite {
     }
 
     private String allEmailsThatGotMessages() {
-        return SentMail.findAll().stream().map(m ->
-                String.format("\t\t%s: %s", m.get("receivers").toString(), m.get("subject").toString())
+        return SentMail.repository().findAll().stream().map(m ->
+                String.format("\t\t%s: %s", m.getReceivers(), m.getSubject())
         ).collect(Collectors.joining("\n"));
     }
 

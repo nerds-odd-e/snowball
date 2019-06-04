@@ -29,7 +29,7 @@ function Notification(item) {
         return '<tr class="clickable-row" data-href="email_tracking_details.jsp?sent_mail_id='+this.sentMailId+'"><td class="subject">'+this.subject+'</td><td class="sentDate">'+this.sentDate+'</td></tr></a>';
     }
 
-    this.subject = this.getString(item.attributes.subject);
-    this.sentDate = this.getString(item.attributes.sent_at);
-    this.sentMailId = this.getString(item.attributes.sent_mail_id);
+    this.subject = this.getString(item.subject);
+    this.sentDate = this.getString(item.sent_at);
+    this.sentMailId = this.getString(item.sent_mail_id);
 }

@@ -33,11 +33,6 @@ public class UpcomingCourseNotificationSteps {
             }
     }
 
-    @Given("^the send mail history is empty$")
-    public void the_send_mail_history_is_empty() {
-        SentMail.deleteAll();
-    }
-
     @When("^I send the upcoming courses emails$")
     public void sendTheUpcomingCourseEmails() {
         site.visit("course_list.jsp");
@@ -61,7 +56,7 @@ public class UpcomingCourseNotificationSteps {
 
     @Then("^there should be in total (\\d+) courses in all the emails$")
     public void there_are_in_total_in_all_the_emails(int courses) {
-        int sum = SentMail.findAll().stream().map(mail-> StringUtils.countOccurrencesOf(((SentMail)mail).getContent(), "Event")).mapToInt(Integer::intValue).sum();
+        int sum = SentMail.repository().findAll().stream().map(mail-> StringUtils.countOccurrencesOf(mail.getContent(), "Event")).mapToInt(Integer::intValue).sum();
         assertEquals(courses, sum);
     }
 }

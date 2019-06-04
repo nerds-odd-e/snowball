@@ -3,6 +3,7 @@ package com.odde.massivemailer.service.impl;
 
 import com.odde.massivemailer.model.SentMail;
 import com.odde.massivemailer.model.SentMailVisit;
+import org.bson.types.ObjectId;
 import org.junit.Test;
 
 import java.text.ParseException;
@@ -44,6 +45,8 @@ public class OpenedEmailCounterServiceTest {
         SentMail sentMail = new SentMail();
         sentMail.setMessageId(email_id);
         sentMail.setSubject("test subject");
+        sentMail.setContent("test content");
+        sentMail.setReceivers("");
         String input = "2016-11-18 03:19:03";
         SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         TimeZone tz = TimeZone.getTimeZone("Asia/Singapore");
@@ -53,6 +56,7 @@ public class OpenedEmailCounterServiceTest {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        sentMail.saveIt();
         return sentMail;
     }
 

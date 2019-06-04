@@ -25,14 +25,15 @@ public class EmailOpenedCounterControllerTest {
     public void returnEmailSubject() throws Exception {
 
         SentMail mail = sentMailFactory.buildSentMailWithSubject("Promotional test");
-        req.setParameter("id", String.valueOf(mail.getLongId()));
+        req.setParameter("id", String.valueOf(mail.getStringId()));
 
         emailOpenedCounterController.doGet(req, res);
 
+        //assertEquals("ss", res.getContentAsString());
         SentMail result = AppGson.getGson().fromJson(res.getContentAsString(), SentMail.class);
 
         assertEquals("Promotional test", result.getSubject());
-        assertEquals(mail.getId(), Long.parseLong(result.getStringId()));
+        assertEquals(mail.getId(), result.getId());
     }
 
     @Test
@@ -40,5 +41,5 @@ public class EmailOpenedCounterControllerTest {
         emailOpenedCounterController.doGet(req, res);
         assertEquals("{'error': 'null id'}", res.getContentAsString());
     }
-
 }
+

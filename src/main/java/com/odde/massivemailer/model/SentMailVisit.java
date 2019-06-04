@@ -11,6 +11,7 @@ import org.bson.BsonWriter;
 import org.bson.codecs.Codec;
 import org.bson.codecs.DecoderContext;
 import org.bson.codecs.EncoderContext;
+import org.bson.types.ObjectId;
 
 import static org.apache.commons.lang3.StringUtils.defaultIfEmpty;
 
@@ -22,7 +23,7 @@ import static org.apache.commons.lang3.StringUtils.defaultIfEmpty;
 public class SentMailVisit extends Entity {
     private String emailAddress;
     private int readCount;
-    private String sentMailId;
+    private ObjectId sentMailId;
 
     public static Repository<SentMailVisit> repository() {
         return new Repository<>(SentMailVisit.class, "sent_mail_visits");
@@ -57,7 +58,7 @@ public class SentMailVisit extends Entity {
             writer.writeName("readCount");
             writer.writeInt32(value.readCount);
             writer.writeName("sentMailId");
-            writer.writeString(value.sentMailId);
+            writer.writeObjectId(value.sentMailId);
             writer.writeEndDocument();
         }
 
@@ -71,7 +72,7 @@ public class SentMailVisit extends Entity {
             reader.readName();
             visit.readCount = reader.readInt32();
             reader.readName();
-            visit.sentMailId = reader.readString();
+            visit.sentMailId = reader.readObjectId();
             reader.readEndDocument();
             return visit;
         }

@@ -56,6 +56,14 @@ public class Repository<T extends Entity> {
     }
 
     public List<T> findBy(String fieldName, String value) {
-        return getCollection().find(eq(fieldName, value)).into(new ArrayList<>());
+        return find(eq(fieldName, value));
+    }
+
+    public List<T> find(Bson cond) {
+        return getCollection().find(cond).into(new ArrayList<>());
+    }
+
+    public int count() {
+        return findAll().size();
     }
 }

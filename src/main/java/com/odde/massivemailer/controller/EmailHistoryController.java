@@ -16,6 +16,6 @@ public class EmailHistoryController extends AppController {
     }
 
     private void getEmailList(HttpServletResponse resp) throws IOException {
-        respondWithJSON(resp, SentMail.findAll());
+        respondWithJSON(resp, SentMail.repository().findAll());
     }
 }

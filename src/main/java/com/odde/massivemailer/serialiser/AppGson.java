@@ -10,7 +10,6 @@ public class AppGson {
         return new GsonBuilder()
                 .registerTypeAdapter(Course.class, new CourseSerialiser())
                 .registerTypeAdapter(ContactPerson.class, new ContactPersonSerialiser())
-                .registerTypeAdapter(SentMail.class, new NotificationSerialiser())
                 .registerTypeAdapter(ObjectId.class, new ObjectIdSerialiser())
                 .create();
     }

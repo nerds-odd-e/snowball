@@ -13,12 +13,12 @@ public class EmailOpenedCounterController extends AppController{
     private static final long serialVersionUID = 1L;
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        Object id = req.getParameter("id");
+        String id = req.getParameter("id");
         if(id == null) {
             resp.getOutputStream().print("{'error': 'null id'}");
             return;
         }
-        SentMail email = SentMail.findById(id);
+        SentMail email = SentMail.repository().findByStringId(id);
         if(email!=null){
             respondWithJSON(resp, email);
         }

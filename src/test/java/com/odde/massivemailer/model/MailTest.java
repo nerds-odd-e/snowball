@@ -4,7 +4,6 @@ import com.odde.TestWithDB;
 import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.service.MailService;
 import com.odde.massivemailer.service.MockMailService;
-import com.odde.massivemailer.util.NotificationUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -28,7 +27,7 @@ public class MailTest {
 		mail.setContent("content");
 		mail.setSubject("subject");
 		mail.setReceipts(Collections.singletonList("test@gmail.com"));
-		NotificationUtil.addSentMail(mail);
+		mail.asSentMail();
 
 		List<Message> messages = mail.createMessages(session);
 		
@@ -53,7 +52,7 @@ public class MailTest {
 		mail.setSubject("subject {LastName} - {Email}");
 		mail.setReceipts(Collections.singletonList("test@gmail.com"));
 
-		NotificationUtil.addSentMail(mail);
+		mail.asSentMail();
 
 		List<Message> messages = mail.createMessages(session);
 
@@ -72,7 +71,7 @@ public class MailTest {
 		mail.setContent("content");
 		mail.setSubject("subject");
 		mail.setReceipts(Collections.singletonList("test@gmail.com"));
-		NotificationUtil.addSentMail(mail);
+		mail.asSentMail();
 		List<Message> messages = mail.createMessages(session);
 		String[] address = messages.get(0).getFrom()[0].toString().split("<");
 		

@@ -10,7 +10,6 @@ import com.odde.massivemailer.service.GMailService;
 import com.odde.massivemailer.service.MailConfiguration;
 import com.odde.massivemailer.service.MailService;
 import com.odde.massivemailer.service.ServerConfig;
-import com.odde.massivemailer.util.NotificationUtil;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -55,7 +54,7 @@ public class GmailServiceTest {
         email.setContent("Hi Dude");
         email.setSubject("test subject");
         email.setReceipts(Arrays.asList(RECIPIENTS));
-        NotificationUtil.addSentMail(email);
+        email.asSentMail();
         return email;
     }
 

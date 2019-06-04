@@ -2,8 +2,8 @@ describe('test show tracking function', function() {
 
 	var rootId = "testContainer";
 	var markup = "<table id='trackingTable'><tbody></tbody></table>";
-	var firstNotification = {"attributes":{"sent_mail_id":1,"subject":"test","sent_at":"2016-11-14"}};
-	var mock_json = [ firstNotification ,{"attributes":{"sent_mail_id":2,"subject":"test2","sent_at":"2016-11-14"}}];
+	var firstNotification = {"sent_mail_id":1,"subject":"test","sent_at":"2016-11-14"};
+	var mock_json = [ firstNotification ,{"sent_mail_id":2,"subject":"test2","sent_at":"2016-11-14"}];
 
 	beforeEach(function(){
 		var container = document.createElement('div');
@@ -18,17 +18,17 @@ describe('test show tracking function', function() {
 	});
 
 	it('should render empty string for missing attributes',function() {
-	    delete firstNotification.attributes.subject;
+	    delete firstNotification.subject;
 		renderTrackingEmailList(mock_json, $("#trackingTable tbody"));
 
         expect($("#trackingTable .subject").eq(0).text()).toBe("");
-        expect($("#trackingTable .sentDate").eq(0).text()).toBe(mock_json[0].attributes.sent_at);
+        expect($("#trackingTable .sentDate").eq(0).text()).toBe(mock_json[0].sent_at);
 	});
 
 	describe("Notifiction", function() {
 	    it('should return corret table row', function() {
 	        var row = new Notification(firstNotification).createRow();
-	        expect(row.indexOf("sent_mail_id="+firstNotification.attributes.sent_mail_id) > 0).toBe(true);
+	        expect(row.indexOf("sent_mail_id="+firstNotification.sent_mail_id) > 0).toBe(true);
 	    });
 	});
 

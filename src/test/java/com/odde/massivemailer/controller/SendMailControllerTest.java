@@ -6,7 +6,6 @@ import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Mail;
 import com.odde.massivemailer.model.SentMail;
 import com.odde.massivemailer.service.GMailService;
-import org.javalite.activejdbc.LazyList;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,7 +39,6 @@ public class SendMailControllerTest {
 
     @Captor
     private ArgumentCaptor<Mail> mailCaptor;
-
 
     @Before
     public void setUp() {
@@ -217,7 +215,7 @@ public class SendMailControllerTest {
 
         controller.doPost(request, response);
 
-        LazyList<SentMail> all = SentMail.findAll();
+        List<SentMail> all = SentMail.repository().findAll();
         SentMail capturedSentMail =  all.get(all.size() - 1);
 
         assertNotNull(capturedSentMail.getMessageId());

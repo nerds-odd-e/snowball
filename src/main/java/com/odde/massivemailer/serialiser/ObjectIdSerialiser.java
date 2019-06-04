@@ -15,6 +15,6 @@ public class ObjectIdSerialiser extends TypeAdapter<ObjectId> {
 
     @Override
     public ObjectId read(JsonReader in) throws IOException {
-        return null;
+        return new ObjectId(in.nextString());
     }
 }

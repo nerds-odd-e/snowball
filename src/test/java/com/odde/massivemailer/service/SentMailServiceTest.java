@@ -19,9 +19,11 @@ public class SentMailServiceTest {
     public void NotificationMustBeSaved() {
         SentMail sentMail = new SentMail();
         sentMail.setSubject("Subject");
+        sentMail.setContent("content");
+        sentMail.setReceivers("");
         sentMail.setMessageId(123456789L);
 
-        SentMail savedSentMail = sentMail.saveAll();
+        SentMail savedSentMail = sentMail.saveIt();
 
         assertNotNull(savedSentMail);
         assertNotNull(savedSentMail.getId());
@@ -34,11 +36,14 @@ public class SentMailServiceTest {
     public void SentMailVisitsMustBeSaved() {
         SentMail sentMail = new SentMail();
         sentMail.setSubject("Subject");
+        sentMail.setContent("content");
+        sentMail.setReceivers("");
         sentMail.setMessageId(123456789L);
+        sentMail.saveIt();
 
         sentMail.addEmailAddress("terry@odd-e.com");
 
-        SentMail savedSentMail = sentMail.saveAll();
+        SentMail savedSentMail = sentMail.saveIt();
 
         List<SentMailVisit> savedSentMailVisits = savedSentMail.getSentMailVisits();
 

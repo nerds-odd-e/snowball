@@ -141,11 +141,12 @@ public class Mail {
     }
 
     public SentMail asSentMail() {
-        SentMail sentMail = new SentMail();
+        sentMail = new SentMail();
         sentMail.setReceivers(String.join(";", getReceipts()));
         sentMail.setSubject(getSubject());
         sentMail.setContent(getContent());
         sentMail.setMessageId(getMessageId());
+        sentMail.saveIt();
 
         for (String receipt : getReceipts()) {
             sentMail.addEmailAddress(receipt);
@@ -162,10 +163,6 @@ public class Mail {
         return messageId;
     }
 
-    public void setSentMail(SentMail sentMail) {
-        this.sentMail = sentMail;
-    }
-
     public SentMail getSentMail() {
         return sentMail;
     }
@@ -173,8 +170,6 @@ public class Mail {
     public SentMail sendMailWith(MailService mailService) throws EmailException {
         SentMail sentMail = asSentMail();
         sentMail.saveIt();
-
-        setSentMail(sentMail);
         mailService.send(this);
         return sentMail;
     }

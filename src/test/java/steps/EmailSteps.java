@@ -56,16 +56,16 @@ public class EmailSteps {
 
     @Then("It should not send out emails")
     public void shouldNotSendOutEmails() {
-        assertThat(SentMail.count(), is(0L));
+        assertThat(SentMail.repository().count(), is(0L));
     }
 
     @Then("^It should send (\\d+) emails$")
     public void it_should_send(int expected_email_count) {
-        assertThat(SentMail.count(), is((long)expected_email_count));
+        assertThat(SentMail.repository().count(), is((long)expected_email_count));
     }
 
     @Given("^there are some existing templates$")
-    public void thereAreSomeExistingTemplates() throws Throwable {
+    public void thereAreSomeExistingTemplates() {
         new Template("Default Template 1", "Greeting {FirstName}", "Hi, {FirstName} {LastName} from {Company}").saveIt();
         new Template("RTA Default Template", "Greeting {FirstName}", "Hi, {FirstName} {LastName} from {Company}").saveIt();
         new Template("Pre-course Template", "Greeting {FirstName}", "Hi, {FirstName} {LastName} from {Company}").saveIt();
