@@ -1,7 +1,5 @@
 package steps;
 
-import com.odde.massivemailer.model.Participant;
-import com.odde.massivemailer.model.Todo;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
