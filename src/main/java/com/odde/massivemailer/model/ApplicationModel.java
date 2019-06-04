@@ -11,7 +11,4 @@ public abstract class ApplicationModel extends Model {
         return getLongId().equals(((Model)obj).getLongId());
     }
 
-    public boolean anyDirtyAttributes(String ... fields) {
-        return Arrays.stream(fields).anyMatch(this.dirtyAttributeNames()::contains);
-    }
 }

@@ -3,6 +3,8 @@ Feature:
 
   @now
   Scenario: Todo一覧が表示される
-    Given Todo一覧ページに遷移
+    Given Todoが2つある
+    When Todo一覧ページに遷移する
     Then Todo一覧ページが表示される
+    And Todoが複数表示されている
 
