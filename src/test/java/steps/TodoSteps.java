@@ -40,13 +40,16 @@ public class TodoSteps {
 
 
     @Given("^Todoが(\\d+)つある$")
-    public void todoが_つある(int numberOfTodo) throws Throwable {
-        new Todo();
-        throw new PendingException();
+    public void todoが_つある(int numberOfTodo) {
+
+
+        Todo.createIt("title", "craft beer", "status", "new");
+        Todo.createIt("title", "sake", "status", "new");
     }
 
     @Then("^Todoが複数表示されている$")
-    public void todoが複数表示されている() throws Throwable {
-        throw new PendingException();
+    public void todoが複数表示されている() {
+        assertEquals(true, site.getDriver().getBodyText().contains("sake"));
+        assertEquals(true, site.getDriver().getBodyText().contains("beer"));
     }
 }

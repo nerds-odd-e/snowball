@@ -93,6 +93,10 @@ test {
 }
 
 dependencies {
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.3.4'
+    compile 'com.google.code.gson:gson:2.4'
+
+
     compile group: 'com.sun.mail', name: 'javax.mail', version: '1.5.4'
     compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.6'
     compile group: 'com.google.code.gson', name: 'gson', version: '1.7.1'
