@@ -3,13 +3,13 @@ Feature: Create Course
 
   Scenario: Creating course successfully
     Given There is a course with below details
-      |coursename    | CSD-1         |
+      |courseName    | CSD-1         |
       |duration      | 30            |
       |country       | China         |
       |city          | Chengdu       |
-      |startdate     | 2017-10-23    |
+      |startDate     | 2017-10-23    |
       |address       | odd-e         |
-      |coursedetails | CSD training  |
+      |courseDetails | CSD training  |
       |instructor    | Terry         |
     Then Course should save and successfully saved message should appear
 

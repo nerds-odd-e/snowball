@@ -2,6 +2,7 @@ package com.odde.massivemailer.controller;
 
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Participant;
+import org.bson.types.ObjectId;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -49,8 +50,8 @@ public class EnrollParticipantController extends AppController {
                     "city", line[4],
                     "country", line[5]);
             contactPerson.save();
-            Integer contactPersonId = Integer.parseInt(ContactPerson.getContactByEmail(line[0]).getStringId());
-            new Participant(contactPersonId, Integer.parseInt(this.courseId)).save();
+            String contactPersonId = ContactPerson.getContactByEmail(line[0]).getStringId();
+            new Participant(contactPersonId, new ObjectId(this.courseId)).saveIt();
         }
 
         public String getSingleLine() {

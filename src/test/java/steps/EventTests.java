@@ -18,16 +18,16 @@ public class EventTests {
 
     @When("^Create course \"([^\"]*)\" in \"([^\"]*)\"$")
     public void addEventAndSelectLocationFromDropdown(String courseName, String location, String date) {
-        driver.setTextField("coursename", courseName);
-        driver.setTextField("coursedetails", "nothing important");
-        driver.setTextField("startdate", date);
+        driver.setTextField("courseName", courseName);
+        driver.setTextField("courseDetails", "nothing important");
+        driver.setTextField("startDate", date);
         driver.setDropdownValue("location", location);
     }
 
     private void addEventAndSelectLocationFromDropdownAndTextBox(String courseName, String country, String city, String date) {
-        driver.setTextField("coursename", courseName);
-        driver.setTextField("coursedetails", "nothing important");
-        driver.setTextField("startdate", date);
+        driver.setTextField("courseName", courseName);
+        driver.setTextField("courseDetails", "nothing important");
+        driver.setTextField("startDate", date);
         driver.setDropdownValue("country", country);
         driver.setTextField("city", city);
     }

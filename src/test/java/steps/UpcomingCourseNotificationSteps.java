@@ -49,8 +49,8 @@ public class UpcomingCourseNotificationSteps {
         }
 
         for (int i = 0; i < courses; i++) {
-            Course course  = Course.create("coursename", "Event " + i + " in " + city, "coursedetails", "Event " + i + " in " + city, "country", country, "city", city);
-            assertTrue(course.saveIt());
+            Course course  = Course.create("courseName", "Event " + i + " in " + city, "courseDetails", "Event " + i + " in " + city, "country", country, "city", city);
+            assertTrue(course.saveIt().getId() != null);
         }
     }
 

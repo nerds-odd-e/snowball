@@ -33,13 +33,14 @@ public class Question extends Entity {
     private boolean isApproved;
 
     @Override
-    public void onBeforeSave() {
+    public boolean onBeforeSave() {
         if(isEmpty(description)) {
             throw new ValidationException("`description` cannot be empty");
         }
         if(categoryId == null) {
             throw new ValidationException("`categoryId` cannot be empty");
         }
+        return true;
     }
 
     public static Repository<Question> repository() {

@@ -16,8 +16,6 @@ import org.bson.BsonWriter;
 import org.bson.codecs.Codec;
 import org.bson.codecs.DecoderContext;
 import org.bson.codecs.EncoderContext;
-import org.javalite.activejdbc.LazyList;
-import org.javalite.activejdbc.annotations.Table;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -104,8 +102,9 @@ public class User extends Entity {
     }
 
     @Override
-    public void onBeforeSave() {
+    public boolean onBeforeSave() {
 
+        return true;
     }
 
     public static class UserCodec implements Codec<User> {

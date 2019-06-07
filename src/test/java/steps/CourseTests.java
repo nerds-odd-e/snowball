@@ -40,13 +40,13 @@ public class CourseTests {
     }
 
     private void fill_in_course_data(Map<String, Object> course_data) {
-        driver.setTextField("coursename", (String)course_data.get("coursename"));
+        driver.setTextField("courseName", (String)course_data.get("courseName"));
         driver.setTextField("duration", (String)course_data.get("duration"));
         driver.setDropdownValue("country", (String)course_data.get("country"));
         driver.setTextField("city", (String)course_data.get("city"));
-        driver.setTextField("startdate", (String)course_data.get("startdate"));
+        driver.setTextField("startDate", (String)course_data.get("startDate"));
         driver.setTextField("address", (String)course_data.get("address"));
-        driver.setTextField("coursedetails", (String)course_data.get("coursedetails"));
+        driver.setTextField("courseDetails", (String)course_data.get("courseDetails"));
         driver.setTextField("instructor", (String)course_data.get("instructor"));
     }
 
@@ -66,19 +66,19 @@ public class CourseTests {
     @Given("^There are (\\d+) courses$")
     public void there_are_courses(int num) {
         for (int i = 1; i <= num; i++){
-            new Course().fromMap(createCourseData("Tokyo", "Japan", "CSD-" + i)).saveIt();
+            Course.repository().fromMap(createCourseData("Tokyo", "Japan", "CSD-" + i)).saveIt();
         }
     }
 
-    private HashMap<String, Object> createCourseData(String city, String country, String coursename) {
+    private HashMap<String, Object> createCourseData(String city, String country, String courseName) {
         HashMap<String, Object> vals = new HashMap<>();
         vals.put("country", country);
         vals.put("city", city);
-        vals.put("coursename", coursename);
+        vals.put("courseName", courseName);
         vals.put("duration", "3");
-        vals.put("startdate", "2017-11-23");
+        vals.put("startDate", "2017-11-23");
         vals.put("address", "odd-e");
-        vals.put("coursedetails", "odd-addresse");
+        vals.put("courseDetails", "odd-addresse");
         vals.put("instructor", "someone");
         return vals;
     }

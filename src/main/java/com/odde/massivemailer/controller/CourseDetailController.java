@@ -37,12 +37,12 @@ public class CourseDetailController extends AppController{
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String courseId = request.getParameter("id");
-        Course course = Course.getCourseById(Integer.parseInt(courseId));
+        Course course = Course.repository().findByStringId(courseId);
 
         List<CourseDetailDTO.ParticipantDTO> participants = course.participants().stream()
                 .map(CourseDetailDTO.ParticipantDTO::new)
                 .collect(Collectors.toList());
-        CourseDetailDTO result = new CourseDetailDTO(course.getCoursename(), participants);
+        CourseDetailDTO result = new CourseDetailDTO(course.getCourseName(), participants);
         respondWithJSON(response, result);
     }
 }

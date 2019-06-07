@@ -25,10 +25,10 @@ import static org.mockito.Mockito.*;
 @RunWith(TestWithDB.class)
 public class UpcomingCoursesControllerTest {
 
-    private final Course singaporeEvent = new Course().set("coursename", "Scrum In Singapore", "city", "Singapore", "country", "Singapore");
-    private final Course singaporeEventTwo = new Course().set("coursename", "A-TDD In Singapore", "city", "Singapore", "country", "Singapore");
-    private final Course bangkokEvent = new Course().set("coursename", "Code Smells In Bangkok", "city", "Bangkok", "country", "Thailand");
-    private final Course tokyoEvent = new Course().set("coursename", "Code Refactoring In Tokyo", "city", "Tokyo", "country", "Japan");
+    private final Course singaporeEvent = Course.repository().fromKeyValuePairs("courseName", "Scrum In Singapore", "city", "Singapore", "country", "Singapore");
+    private final Course singaporeEventTwo = Course.repository().fromKeyValuePairs("courseName", "A-TDD In Singapore", "city", "Singapore", "country", "Singapore");
+    private final Course bangkokEvent = Course.repository().fromKeyValuePairs("courseName", "Code Smells In Bangkok", "city", "Bangkok", "country", "Thailand");
+    private final Course tokyoEvent = Course.repository().fromKeyValuePairs("courseName", "Code Refactoring In Tokyo", "city", "Tokyo", "country", "Japan");
 
     private final ContactPerson singaporeContact = uniqueContact().set("city", "Singapore", "country", "Singapore");
     private final ContactPerson singaporeContactTwo = uniqueContact().set("city", "Singapore", "country", "Singapore");

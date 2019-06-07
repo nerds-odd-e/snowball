@@ -13,8 +13,6 @@ import org.bson.codecs.DecoderContext;
 import org.bson.codecs.EncoderContext;
 import org.bson.types.ObjectId;
 
-import static org.apache.commons.lang3.StringUtils.defaultIfEmpty;
-
 
 @Getter
 @Setter
@@ -44,8 +42,9 @@ public class SentMailVisit extends Entity {
     }
 
     @Override
-    public void onBeforeSave() {
+    public boolean onBeforeSave() {
 
+        return true;
     }
 
     public static class SentMailVisitCodec implements Codec<SentMailVisit> {

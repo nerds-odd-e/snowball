@@ -26,28 +26,28 @@ public class CourseTest {
     @Before
     public void Setup() {
         map = new HashMap<String, Object>();
-        map.put("coursename", "Scrum");
+        map.put("courseName", "Scrum");
         map.put("country", "country");
         map.put("city", "city");
         map.put("address", "address");
-        map.put("coursedetails", "coursedetails");
+        map.put("courseDetails", "courseDetails");
         map.put("duration", "15");
         map.put("instructor", "instructor");
-        map.put("startdate", "2017-11-09");
-        aCourse = new Course().fromMap(map);
+        map.put("startDate", "2017-11-09");
+        aCourse = Course.repository().fromMap(map).saveIt();
         GivenIhaveThreeCourcesInSG_Kl_USA();
     }
 
     @Test
     public void testCreateCourseShouldHaveCorrectInformation() {
 
-        assertEquals("Scrum", aCourse.getCoursename());
+        assertEquals("Scrum", aCourse.getCourseName());
         assertEquals("country/city", aCourse.getLocation());
         assertEquals("address", aCourse.getAddress());
-        assertEquals("coursedetails", aCourse.getCoursedetails());
+        assertEquals("courseDetails", aCourse.getCourseDetails());
         assertEquals("15", aCourse.getDuration());
         assertEquals("instructor", aCourse.getInstructor());
-        assertEquals("2017-11-09", aCourse.getStartdate());
+        assertEquals("2017-11-09", aCourse.getStartDate());
     }
 
     @Test
@@ -86,12 +86,12 @@ public class CourseTest {
     }
 
     private Course CreateCourseInDB(String country, String city, String instructor) {
-        map.put("coursename", "Scrum");
+        map.put("courseName", "Scrum");
         map.put("country", country);
         map.put("city", city);
         map.put("instructor", instructor);
-        map.put("coursedetails", "This is a great course");
-        Course course = new Course().fromMap(map);
+        map.put("courseDetails", "This is a great course");
+        Course course = Course.repository().fromMap(map);
         course.saveIt();
         return course;
     }

@@ -3,15 +3,16 @@ Feature: Course Detail
 
   Background:
     Given There is a course with below details
-      | coursename    | CSD Tokyo    |
+      | courseName    | CSD Tokyo    |
       | duration      | 30           |
       | country       | Japan        |
       | city          | Tokyo        |
-      | startdate     | 2017-10-23   |
+      | startDate     | 2017-10-23   |
       | address       | odd-e        |
-      | coursedetails | CSD training |
+      | courseDetails | CSD training |
       | instructor    | Terry        |
 
+  @now
   Scenario: Display course that has no participant
     When I visit "CSD Tokyo" detail page from course list page
     Then "CSD Tokyo" course detail page is shown

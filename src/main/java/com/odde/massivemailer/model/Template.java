@@ -64,7 +64,7 @@ public class Template extends Entity {
 
             populatedContent = populatedContent.replace("{FirstName}", (contactPerson.getName() != null ? contactPerson.getName() : "{FirstName}"));
             populatedContent = populatedContent.replace("{LastName}", (contactPerson.getLastname() != null ? contactPerson.getLastname() : "{LastName}"));
-            populatedContent = populatedContent.replace("{CourseName}", (course.getCoursename() != null ? course.getCoursename() : "{CourseName}"));
+            populatedContent = populatedContent.replace("{CourseName}", (course.getCourseName() != null ? course.getCourseName() : "{CourseName}"));
             populatedContent = populatedContent.replace("{Instructor}", (course.getInstructor() != null ? course.getInstructor() : "{Instructor}"));
             populatedContent = populatedContent.replace("{Location}", (course.getLocation() != null ? course.getLocation() : "{Location}"));
         }
@@ -91,8 +91,9 @@ public class Template extends Entity {
     }
 
     @Override
-    public void onBeforeSave() {
+    public boolean onBeforeSave() {
 
+        return true;
     }
 
     public static class TemplateCodec implements Codec<Template> {

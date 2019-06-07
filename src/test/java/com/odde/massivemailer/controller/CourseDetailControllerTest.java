@@ -4,6 +4,7 @@ import com.odde.TestWithDB;
 import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.Course;
 import com.odde.massivemailer.model.Participant;
+import org.bson.types.ObjectId;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -25,7 +26,7 @@ public class CourseDetailControllerTest {
 
     @Test
     public void doGet_containsTitle() throws IOException {
-        Course.createIt("coursename", "CSD Tokyo", "coursedetails", "hoge");
+        Course.repository().createIt("courseName", "CSD Tokyo", "courseDetails", "hoge");
         String id = Course.getCourseByName("CSD Tokyo").getStringId();
         request.setParameter("id", id);
         controller.doGet(request, response);
@@ -36,11 +37,11 @@ public class CourseDetailControllerTest {
 
     @Test
     public void doGet_containsCourseParticipants() throws IOException {
-        Course.createIt("coursename", "CSD Tokyo", "coursedetails", "hoge");
-        Integer courseId = Integer.valueOf(Course.getCourseByName("CSD Tokyo").getStringId());
+        Course.repository().createIt("courseName", "CSD Tokyo", "courseDetails", "hoge");
+        ObjectId courseId = Course.getCourseByName("CSD Tokyo").getId();
         uniqueContact().set("firstname", "Tommy", "email", "tommy@example.com").saveIt();
-        Integer participantId = Integer.valueOf(ContactPerson.getContactByEmail("tommy@example.com").getStringId());
-        new Participant(participantId, courseId).save();
+        String participantId = ContactPerson.getContactByEmail("tommy@example.com").getStringId();
+        new Participant(participantId, courseId).saveIt();
 
         request.setParameter("id", courseId.toString());
         controller.doGet(request, response);

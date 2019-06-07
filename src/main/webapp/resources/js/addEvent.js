@@ -1,6 +1,6 @@
 
 var addEvents = {
-    allNotNullElementIds: ['#coursename', '#courseDuration', '#courseStartDate', '#address', '#courseDetails'],
+    allNotNullElementIds: ['#courseName', '#courseDuration', '#courseStartDate', '#address', '#courseDetails'],
     allOptionalElementIds: ['#instructor']
 };
 

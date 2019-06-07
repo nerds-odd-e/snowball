@@ -34,7 +34,8 @@ public class AppController extends HttpServlet {
     protected HashMap<String, String> getParameterFromRequest(HttpServletRequest req, String... reqFields) {
         HashMap<String, String> map = new HashMap<>();
         for (String field : reqFields)
-            map.put(field, req.getParameter(field));
+            if (req.getParameter(field) != null)
+                map.put(field, req.getParameter(field));
         return map;
     }
 
@@ -45,11 +46,11 @@ public class AppController extends HttpServlet {
     }
 
     protected void respondWithRedirectAndErrorMessage(HttpServletResponse resp, String page, String message) throws IOException {
-        resp.sendRedirect(page +"?" + "status=fail&msg="+ message);
+        resp.sendRedirect(page + "?" + "status=fail&msg=" + message);
     }
 
     protected void respondWithRedirectAndSuccessMessage(HttpServletResponse resp, String page, String message) throws IOException {
-        resp.sendRedirect(page +"?" + "status=success&msg="+ message);
+        resp.sendRedirect(page + "?" + "status=success&msg=" + message);
     }
 
     protected void respondWithRedirectAndError(HttpServletResponse resp, String page, Errors errors) throws IOException {

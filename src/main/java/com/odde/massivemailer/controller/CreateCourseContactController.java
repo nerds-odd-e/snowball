@@ -1,6 +1,7 @@
 package com.odde.massivemailer.controller;
 
 import com.odde.massivemailer.model.ContactPerson;
+import org.bson.types.ObjectId;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +18,7 @@ public class CreateCourseContactController extends AppController{
             String particpantEmail = req.getParameter("participantEmail");
 
             ContactPerson contact = ContactPerson.getContactByEmail(particpantEmail);
-            contact.AddToCourse(courseId);
+            contact.AddToCourse(new ObjectId(courseId));
 
         } catch (Exception e){
             respondWithRedirectAndErrorMessage(resp, "registerParticipant.jsp", "Unable to register participants");

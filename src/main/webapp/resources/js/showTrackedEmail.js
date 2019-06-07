@@ -30,6 +30,6 @@ function Notification(item) {
     }
 
     this.subject = this.getString(item.subject);
-    this.sentDate = this.getString(item.sent_at);
-    this.sentMailId = this.getString(item.sent_mail_id);
+    this.sentDate = this.getString(item.sentAt);
+    this.sentMailId = this.getString(item.sentMailId);
 }

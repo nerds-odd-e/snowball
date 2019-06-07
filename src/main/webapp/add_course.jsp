@@ -47,7 +47,7 @@
 									    <div class="col-lg-12">
                                             <div class="col-lg-1">Name:</div>
                                             <div class="col-lg-11">
-                                                <input type="text" class="form-control" name="coursename" id="coursename">
+                                                <input type="text" class="form-control" name="courseName" id="courseName">
                                             </div>
 										</div>
 									</div>
@@ -64,7 +64,7 @@
                                             <div class="row">
                                                 <div class="col-lg-2">Start Date:</div>
                                                 <div class="col-lg-10">
-                                                    <input type="text" class="form-control" name="startdate" id="courseStartDate">
+                                                    <input type="text" class="form-control" name="startDate" id="courseStartDate">
                                                  </div>
                                             </div>
                                         </div>
@@ -82,7 +82,7 @@
 									<div class="row">
 										<div class="col-lg-1">Course Details:</div>
 										<div class="col-lg-11">
-										    <textarea name="coursedetails" id="courseDetails" style="width:100%; height:89px;"></textarea>
+										    <textarea name="courseDetails" id="courseDetails" style="width:100%; height:89px;"></textarea>
 										</div>
 									</div>
 									<br> <br>

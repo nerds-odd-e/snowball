@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class UpcomingCourseMailComposer {
     public Mail createUpcomingCourseMail(ContactPerson person, List<Course> coursesNearContact) {
 
-        String content = coursesNearContact.stream().map(Course::getCoursename).collect(Collectors.joining("<br/>\n"));
+        String content = coursesNearContact.stream().map(Course::getCourseName).collect(Collectors.joining("<br/>\n"));
         return Mail.createUpcomingCoursesEmail(content, person.getEmail());
     }
 }

@@ -22,19 +22,19 @@ public class CourseFactory {
     public Course build_csd_course() {
         Map<String, Object> params = new HashMap<>();
 
-        params.put("coursename", "CSD_NEW");
+        params.put("courseName", "CSD_NEW");
         params.put("country", "singapore");
         params.put("city", "singapore");
         params.put("address", "roberts lane");
-        params.put("coursedetails", "CSD new course details");
+        params.put("courseDetails", "CSD new course details");
         params.put("duration", "5");
         params.put("instructor", "ROOF");
-        params.put("startdate", "2017-05-15");
+        params.put("startDate", "2017-05-15");
         params.put("latitude", 100.0);
         params.put("longitude", 100.0);
 
         try {
-            return new Course().fromMap(params);
+            return Course.repository().fromMap(params);
         } catch (Exception e) {
             e.printStackTrace();
         }

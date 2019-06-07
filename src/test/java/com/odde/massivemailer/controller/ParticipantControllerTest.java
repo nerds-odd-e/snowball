@@ -50,7 +50,7 @@ public class  ParticipantControllerTest {
         Assert.assertNotNull(savedCourse);
         Assert.assertNotNull(savedCourse.getId());
 
-        new Participant((Integer)savedPerson.getId(), (Integer)savedCourse.getId()).save();
+        new Participant(savedPerson.getStringId(), savedCourse.getId()).saveIt();
 
         request.setParameter("courseId", String.valueOf(savedCourse.getId()));
         controller.doGet(request, response);

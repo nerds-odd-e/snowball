@@ -34,15 +34,15 @@ public class CoursesControllerTest {
 
     @Test
     public void shouldCreateACourseWithOnlyCourseName() throws IOException {
-        request.setParameter("coursename", "test couree");
+        request.setParameter("courseName", "test couree");
         controller.doPost(request, response);
         assertEquals("add_course.jsp?status=success&msg=Add course successfully",response.getRedirectedUrl());
-        assertEquals("test couree", Course.getCourseByName("test couree").getCoursename());
+        assertEquals("test couree", Course.getCourseByName("test couree").getCourseName());
     }
 
     @Test
     public void shouldCreateACourseWithCourseName_Location() throws IOException, GeoServiceException {
-        request.setParameter("coursename", "test couree");
+        request.setParameter("courseName", "test couree");
         request.setParameter("country", "Japan");
         request.setParameter("city", "Osaka");
         controller.doPost(request, response);
@@ -56,7 +56,7 @@ public class CoursesControllerTest {
 
     @Test
     public void shouldNotCreateACourseWithWrongLocationInformation() throws IOException {
-        request.setParameter("coursename", "test couree");
+        request.setParameter("courseName", "test couree");
         request.setParameter("country", "FooBar");
         request.setParameter("city", "FooBarXXX");
         controller.doPost(request, response);
@@ -93,10 +93,10 @@ public class CoursesControllerTest {
         controller.doGet(request, response);
         List<LinkedTreeMap<String, Object>> courses = AppGson.getGson().fromJson(response.getContentAsString(), List.class);
         assertEquals(2, courses.size());
-        Map attributes = (Map) courses.get(0).get("attributes");
-        assertEquals(bobsCourse.getCoursename(), attributes.get("coursename"));
-        attributes = (Map) courses.get(1).get("attributes");
-        assertEquals(anotherCourse.getCoursename(), attributes.get("coursename"));
+        Map attributes = (Map) courses.get(0);
+        assertEquals(bobsCourse.getCourseName(), attributes.get("courseName"));
+        attributes = (Map) courses.get(1);
+        assertEquals(anotherCourse.getCourseName(), attributes.get("courseName"));
     }
 
     @Test
@@ -105,7 +105,7 @@ public class CoursesControllerTest {
         Course bobsCourse = createCourse("Bob's course");
         createCourse("anotherCourse");
 
-        Participant participant = new Participant(Integer.parseInt(bob.getStringId()), Integer.parseInt(bobsCourse.getStringId()));
+        Participant participant = new Participant(bob.getStringId(), bobsCourse.getId());
         participant.saveIt();
 
         Cookie otherCookie = new Cookie("any", "any");
@@ -114,17 +114,17 @@ public class CoursesControllerTest {
         controller.doGet(request, response);
         List<LinkedTreeMap<String, Object>> courses = AppGson.getGson().fromJson(response.getContentAsString(), List.class);
         assertEquals(1, courses.size());
-        Map attributes = (Map) courses.get(0).get("attributes");
-        assertEquals(bobsCourse.getCoursename(), attributes.get("coursename"));
+        Map attributes = (Map) courses.get(0);
+        assertEquals(bobsCourse.getCourseName(), attributes.get("courseName"));
     }
 
     private Course createCourse(String courseName) {
         HashMap<String, Object> courseValue = new HashMap<>();
-        courseValue.put("coursedetails", "detail");
+        courseValue.put("courseDetails", "detail");
         courseValue.put("city", "Tokyo");
         courseValue.put("country", "Japan");
 
-        Course course = new Course().fromMap(courseValue);
+        Course course = Course.repository().fromMap(courseValue);
         course.setCourseName(courseName);
         course.saveIt();
         return course;

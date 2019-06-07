@@ -51,8 +51,9 @@ public class Category extends Entity {
     }
 
     @Override
-    public void onBeforeSave() {
+    public boolean onBeforeSave() {
 
+        return true;
     }
 
     public static class CategoryCodec implements Codec<Category> {

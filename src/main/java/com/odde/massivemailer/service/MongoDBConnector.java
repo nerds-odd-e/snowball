@@ -5,15 +5,16 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.odde.massivemailer.model.SentMail;
-import com.odde.massivemailer.model.SentMailVisit;
-import com.odde.massivemailer.model.Template;
-import com.odde.massivemailer.model.User;
+import com.odde.massivemailer.model.*;
 import com.odde.massivemailer.model.onlinetest.Category;
 import com.odde.massivemailer.model.onlinetest.Question;
 import com.odde.massivemailer.model.onlinetest.QuestionOption;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
+import org.bson.codecs.pojo.PojoCodecProvider;
+
+import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
+import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 public class MongoDBConnector {
     static MongoDBConnector dbConnector = null;
@@ -43,9 +44,12 @@ public class MongoDBConnector {
                 new Template.TemplateCodec(),
                 new SentMailVisit.SentMailVisitCodec(),
                 new SentMail.SentMailCodec(),
+                new Participant.ParticipantCodec(),
                 new QuestionOption.QuestionOptionCodec());
-        CodecRegistry defaultCodecRegistry = MongoClientSettings.getDefaultCodecRegistry();
-        return CodecRegistries.fromRegistries(codecRegistry, defaultCodecRegistry);
+        CodecRegistry pojoCodecRegistry = fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
+                fromProviders(PojoCodecProvider.builder().automatic(true).build()));
+
+        return CodecRegistries.fromRegistries(codecRegistry, pojoCodecRegistry);
     }
 
     public static void resetAll() {

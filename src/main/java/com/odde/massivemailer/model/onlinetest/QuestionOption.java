@@ -29,13 +29,14 @@ public class QuestionOption extends Entity<QuestionOption> {
     private ObjectId questionId;
 
     @Override
-    public void onBeforeSave() {
+    public boolean onBeforeSave() {
         if(isEmpty(description)) {
             throw new ValidationException("`description` cannot be empty");
         }
         if(questionId == null) {
             throw new ValidationException("`questionId` cannot be empty");
         }
+        return true;
     }
 
     public static Repository<QuestionOption> repository() {

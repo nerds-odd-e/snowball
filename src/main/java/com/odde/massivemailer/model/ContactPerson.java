@@ -3,6 +3,7 @@ package com.odde.massivemailer.model;
 import com.odde.massivemailer.model.callback.LocationCallbacks;
 import com.odde.massivemailer.model.validator.LocationValidator;
 import com.odde.massivemailer.model.validator.UniquenessValidator;
+import org.bson.types.ObjectId;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.annotations.Table;
 
@@ -153,10 +154,10 @@ public class ContactPerson extends ApplicationModel {
         return new Location(getLocation(), getDoubleAttribute(LATITUDE), getDoubleAttribute(LONGITUDE));
     }
 
-    public void AddToCourse(String courseId) {
-        int participantId = (int) getId();
+    public void AddToCourse(ObjectId courseId) {
+        String participantId = getStringId();
 
-        Participant contactParticipant = new Participant(participantId, new Integer(courseId));
+        Participant contactParticipant = new Participant(participantId, courseId);
 
         contactParticipant.saveIt();
     }
@@ -193,7 +194,7 @@ public class ContactPerson extends ApplicationModel {
     }
 
     public List<Participant> getParticipants() {
-        return Participant.where("contact_person_id = ?", getId());
+        return Participant.repository().findBy("contactPersonId", getStringId());
     }
 
     public List<Course> getCourseParticipation() {

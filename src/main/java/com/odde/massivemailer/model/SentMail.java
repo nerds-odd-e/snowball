@@ -62,7 +62,7 @@ public class SentMail extends Entity {
         if (getSentDate() != null) {
             date = dateFormat.format(getSentDate());
         }
-        return "{\"subject\":\""+ getSubject()+"\", \"sent_at\":\""+date+"\", \"total_open_count\":"+count+", \"emails\":["+String.join(", ", sarray)+"]}";
+        return "{\"subject\":\"" + getSubject() + "\", \"sent_at\":\"" + date + "\", \"total_open_count\":" + count + ", \"emails\":[" + String.join(", ", sarray) + "]}";
     }
 
     public List<SentMailVisit> getSentMailVisits() {
@@ -79,15 +79,12 @@ public class SentMail extends Entity {
     }
 
     @Override
-    public void onBeforeSave() {
+    public boolean onBeforeSave() {
 
+        return true;
     }
-        public static class SentMailCodec implements Codec<SentMail> {
-            private Date sentDate;
-            private String subject;
-            private String content;
-            private Long messageId;
-            private String receivers;
+
+    public static class SentMailCodec implements Codec<SentMail> {
         @Override
         public void encode(final BsonWriter writer, final SentMail value, final EncoderContext encoderContext) {
             if (value.sentDate == null) {

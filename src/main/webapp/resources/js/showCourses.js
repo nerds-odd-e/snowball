@@ -35,10 +35,10 @@ function sendEmail(courseId, actionId)
 
 function Course(attributes) {
     this.id = attributes.id===undefined?'':attributes.id;
-    this.coursename = attributes.coursename===undefined?'':attributes.coursename;
+    this.courseName = attributes.courseName===undefined?'':attributes.courseName;
     this.duration = attributes.duration===undefined?'':attributes.duration;
     this.location = attributes.location===undefined?'':attributes.location;
-    this.startdate = attributes.startdate===undefined?'':attributes.startdate;
+    this.startDate = attributes.startDate===undefined?'':attributes.startDate;
     this.instructor = attributes.instructor===undefined?'':attributes.instructor;
 }
 
@@ -62,13 +62,13 @@ function renderCourseList(json, selector)
 	    var sendEvent = 'sendEmail(' + course.id + ', 1 )';
 	    var previewEvent = 'sendEmail(' + course.id + ', 2 )';
         var tableContent = [
-          ['course-name', course.id + ' - ' + course.coursename, course.id],
+          ['course-name', course.id + ' - ' + course.courseName, course.id],
           ['duration', course.duration, null],
           ['location', course.location, null],
-          ['startdate', course.startdate, null],
+          ['startDate', course.startDate, null],
           ['instructor', course.instructor, null],
-          ['', createButtonElement('send_button', 'precourse ' + course.coursename, sendEvent), null],
-          ['', createButtonElement('preview_button', 'preview ' + course.coursename, previewEvent), null],
+          ['', createButtonElement('send_button', 'precourse ' + course.courseName, sendEvent), null],
+          ['', createButtonElement('preview_button', 'preview ' + course.courseName, previewEvent), null],
         ];
         generateTableRow(selector, tableContent);
     })

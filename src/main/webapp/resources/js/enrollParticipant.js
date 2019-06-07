@@ -59,7 +59,7 @@ function populateCourses(courseId)
 	                var selected = " ";
 	                var _course = new Course(item.attributes);
 	                if (_course.id === courseId) {selected = " selected=true";}
-                    $('#courses').append('<option value=' + _course.id + selected +'>' + _course.coursename + '</option>');
+                    $('#courses').append('<option value=' + _course.id + selected +'>' + _course.courseName + '</option>');
                  });
 	     },
 	    async: false
@@ -68,10 +68,10 @@ function populateCourses(courseId)
 
 function Course(attributes) {
     this.id = attributes.id===undefined?'':attributes.id;
-    this.coursename = attributes.coursename===undefined?'':attributes.coursename;
+    this.courseName = attributes.courseName===undefined?'':attributes.courseName;
     this.duration = attributes.duration===undefined?'':attributes.duration;
     this.location = attributes.location===undefined?'':attributes.location;
-    this.startdate = attributes.startdate===undefined?'':attributes.startdate;
+    this.startDate = attributes.startDate===undefined?'':attributes.startDate;
     this.instructor = attributes.instructor===undefined?'':attributes.instructor;
 }
 

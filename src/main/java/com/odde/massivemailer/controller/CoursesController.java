@@ -17,8 +17,8 @@ public class CoursesController extends AppController {
     private static final long serialVersionUID = 1L;
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        Map map = getParameterFromRequest(req, "coursename", "country", "city", "address", "coursedetails", "duration", "instructor", "startdate");
-        Course course = new Course().fromMap(map);
+        Map map = getParameterFromRequest(req, "courseName", "country", "city", "address", "courseDetails", "duration", "instructor", "startDate");
+        Course course = Course.repository().fromMap(map);
         if (!course.save()) {
             respondWithRedirectAndError(resp, "add_course.jsp", course.errors());
             return;
@@ -30,7 +30,7 @@ public class CoursesController extends AppController {
         User currentUser = getCurrentUser(request);
 
         if (currentUser == null) {
-            respondWithJSON(response, Course.findAll());
+            respondWithJSON(response, Course.repository().findAll());
             return;
         }
         ContactPerson contactPerson = ContactPerson.getContactByEmail(currentUser.getEmail());

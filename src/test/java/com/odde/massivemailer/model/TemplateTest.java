@@ -29,8 +29,8 @@ public class TemplateTest {
         course = new Course();
         course.setCourseName("CSD");
         course.setInstructor("Roof-TheExpert");
-        course.set("city", "Singapore");
-        course.set("country", "Singapore");
+        course.setCity("Singapore");
+        course.setCountry("Singapore");
 
         contactPerson = new ContactPerson().set(
                 "firstname", "Madhan",

@@ -59,7 +59,7 @@ public class SendPreviewMail extends AppController {
 
         List<ContactPerson> contactPerson = new ArrayList<>();
         String courseId = req.getParameter("courseId");
-        Course course = Course.getCourseById(new Integer(courseId));
+        Course course = Course.repository().findByStringId(courseId);
 
         String action = req.getParameter("action");
 
