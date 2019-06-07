@@ -21,21 +21,19 @@ public class LocationProviderServiceTest {
 
     @Before
     public void setUp() {
-        LocationProviderService.resetLocations();
+        LocationProviderService.resetCachedLocations();
     }
 
     @Test
     public void getSingaporeByName() throws Exception{
         Location singapore = locationProviderService.getLocationForName("Singapore/Singapore");
         assertNotNull(singapore);
-        assertEquals("Singapore/Singapore", singapore.getName());
     }
 
     @Test
     public void getKyotoByName() throws Exception{
         Location london = locationProviderService.getLocationForName("Japan/Kyoto");
         assertNotNull(london);
-        assertEquals("Kyoto", london.getName());
     }
 
     @Test

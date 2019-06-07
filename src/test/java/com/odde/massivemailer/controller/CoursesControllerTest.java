@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 @RunWith(TestWithDB.class)
@@ -29,7 +30,7 @@ public class CoursesControllerTest {
 
     @Before
     public void setUp() {
-        LocationProviderService.resetLocations();
+        LocationProviderService.resetCachedLocations();
     }
 
     @Test
@@ -47,11 +48,11 @@ public class CoursesControllerTest {
         request.setParameter("city", "Osaka");
         controller.doPost(request, response);
 
-        assertEquals("Japan/Osaka", Course.getCourseByName("test couree").getLocation());
+        assertEquals("Japan/Osaka", Course.getCourseByName("test couree").location());
 
         LocationProviderService service = new LocationProviderService();
         Location storedLocation = service.getLocationForName("Japan/Osaka");
-        assertEquals("Japan/Osaka", storedLocation.getName());
+        assertNotNull(storedLocation);
     }
 
     @Test

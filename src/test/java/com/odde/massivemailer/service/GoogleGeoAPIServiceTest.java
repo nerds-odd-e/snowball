@@ -13,7 +13,6 @@ public class GoogleGeoAPIServiceTest {
 
         Location location = geoAPIService.getGeocode(null, null);
 
-        assertNull(location.getName());
         assert location.getLat() == null;
         assert location.getLng() == null;
     }
@@ -24,7 +23,6 @@ public class GoogleGeoAPIServiceTest {
 
         Location location = geoAPIService.getGeocode("switzerland", "aigle");
 
-        assertEquals("Aigle", location.getName());
         assertEquals("CH", location.getCountryCode());
         assertEquals("Switzerland", location.getCountryName());
         assert location.getLat() == 46.3190253;

@@ -27,8 +27,8 @@ public class CourseTest {
     public void Setup() {
         map = new HashMap<String, Object>();
         map.put("courseName", "Scrum");
-        map.put("country", "country");
-        map.put("city", "city");
+        map.put("country", "Japan");
+        map.put("city", "Tokyo");
         map.put("address", "address");
         map.put("courseDetails", "courseDetails");
         map.put("duration", "15");
@@ -42,7 +42,7 @@ public class CourseTest {
     public void testCreateCourseShouldHaveCorrectInformation() {
 
         assertEquals("Scrum", aCourse.getCourseName());
-        assertEquals("country/city", aCourse.getLocation());
+        assertEquals("Japan/Tokyo", aCourse.location());
         assertEquals("address", aCourse.getAddress());
         assertEquals("courseDetails", aCourse.getCourseDetails());
         assertEquals("15", aCourse.getDuration());
@@ -61,7 +61,7 @@ public class CourseTest {
     @Test
     public void whereNearTo_should_return_courses_In_America_When_America_Location_is_given() {
 
-        Location usa = new Location(usaCourse.getLocation(),40.712775,-74.005973);
+        Location usa = new Location(usaCourse.location(),40.712775,-74.005973);
 
         List<Course> courses = Course.findAllCourseNearTo(usa);
         assertEquals(1, courses.size());
@@ -71,7 +71,7 @@ public class CourseTest {
     @Test
     public void whereNearTo_should_return_courses_In_SG_And_MY_When_SG_Location_is_given() {
 
-        Location sg = new Location(sgCourse.getLocation(),1.352083,103.819836);
+        Location sg = new Location(sgCourse.location(),1.352083,103.819836);
 
         List<Course> courses = Course.findAllCourseNearTo(sg);
         assertEquals(2, courses.size());
@@ -81,8 +81,8 @@ public class CourseTest {
 
     private void GivenIhaveThreeCourcesInSG_Kl_USA() {
         sgCourse = CreateCourseInDB("Singapore","Singapore", "Stanly");
-        klCourse = CreateCourseInDB("Kula Lumpur","Malaysia", "Terry");
-        usaCourse = CreateCourseInDB("New York","America", "Kim");
+        klCourse = CreateCourseInDB("Malaysia", "Kuala Lumpur", "Terry");
+        usaCourse = CreateCourseInDB("USA", "New York", "Kim");
     }
 
     private Course CreateCourseInDB(String country, String city, String instructor) {

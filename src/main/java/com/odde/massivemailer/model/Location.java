@@ -12,7 +12,7 @@ public class Location {
     private Double lng;
 
     public Location(String name, Double lat, Double lng) {
-        this.cityAndCountry = name;
+        setName(name);
         this.lat = lat;
         this.lng = lng;
     }
@@ -41,10 +41,6 @@ public class Location {
         return distanceInKm.intValue();
     }
 
-    public String getName() {
-        return this.cityAndCountry;
-    }
-
     public String getCountryCode() {
         return this.countryCode;
     }
@@ -62,7 +58,9 @@ public class Location {
     }
 
     public void setName(String name) {
-        this.cityAndCountry = name;
+        if(name == null)
+            return;
+        this.cityAndCountry = name.toLowerCase();
     }
 
     public void setCountryCode(String countryCode) {

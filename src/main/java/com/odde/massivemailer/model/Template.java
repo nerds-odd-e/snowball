@@ -66,7 +66,7 @@ public class Template extends Entity {
             populatedContent = populatedContent.replace("{LastName}", (contactPerson.getLastName() != null ? contactPerson.getLastName() : "{LastName}"));
             populatedContent = populatedContent.replace("{CourseName}", (course.getCourseName() != null ? course.getCourseName() : "{CourseName}"));
             populatedContent = populatedContent.replace("{Instructor}", (course.getInstructor() != null ? course.getInstructor() : "{Instructor}"));
-            populatedContent = populatedContent.replace("{Location}", (course.getLocation() != null ? course.getLocation() : "{Location}"));
+            populatedContent = populatedContent.replace("{Location}", (course.location() != null ? course.location() : "{Location}"));
         }
 
         return populatedContent;

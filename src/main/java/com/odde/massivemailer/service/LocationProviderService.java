@@ -16,7 +16,7 @@ public class LocationProviderService {
     private final static String DELIMITER = "/";
 
     static {
-        resetLocations();
+        resetCachedLocations();
     }
 
     public LocationProviderService() {
@@ -32,7 +32,8 @@ public class LocationProviderService {
         return location;
     }
 
-    public Location getLocationForName(String locationString) throws GeoServiceException {
+    public Location getLocationForName(String locationStringWithCase) throws GeoServiceException {
+        String locationString = locationStringWithCase.toLowerCase();
         if (locations.containsKey(locationString)) {
             return locations.get(locationString);
         }
@@ -46,7 +47,7 @@ public class LocationProviderService {
     }
 
     private Location getLocationForCityAndCountry(String city, String country) throws GeoServiceException {
-        String locationString = locationString(city, country);
+        String locationString = locationString(city, country).toLowerCase();
         if (locations.containsKey(locationString)) {
             return locations.get(locationString);
         }
@@ -55,23 +56,29 @@ public class LocationProviderService {
         return location;
     }
 
-    public static void resetLocations() {
+    public static void resetCachedLocations() {
         locations = new TreeMap<>();
-        locations.put("Japan/NotExist", Location.nullLocation());
-        locations.put("Singapore/Singapore", new Location("Singapore/Singapore", 1.3521, 103.8198));
-        locations.put("Thailand/Bangkok", new Location("Thailand/Bangkok", 13.7563, 100.5018));
-        locations.put("Tokyo", new Location("Tokyo", 35.6895, 139.6917));
-        locations.put("Japan/Tokyo", new Location("Japan/Tokyo", 35.6895, 139.6917));
-        locations.put("Japan/Osaka", new Location("Japan/Osaka", 35.6895, 139.6917));
-        locations.put("Jakarta", new Location("Jarkata", -6.174465, 106.822745));
-        locations.put("Kuala Lumpur", new Location("Kuala Lumpur", 3.139003, 101.686855));
-        locations.put("Seoul", new Location("Seoul", 37.566535, 126.977969));
-        locations.put("New Delhi", new Location("New Delhi", 28.613939, 77.209021));
-        locations.put("Bangalore", new Location("Bangalore", 12.971599, 77.594563));
-        locations.put("Hanoi", new Location("Hanoi", 21.027764, 105.834160));
-        locations.put("Manila", new Location("Manila", 14.599512, 120.984219));
-        locations.put("Beijing", new Location("Beijing", 39.904211, 116.407395));
-        locations.put("Shanghai", new Location("Shanghai", 31.230416, 121.473701));
+        locations.put("japan/notexist", Location.nullLocation());
+        addCachedLocation("Singapore/Singapore", "Singapore/Singapore", 1.3521, 103.8198);
+        addCachedLocation("Thailand/Bangkok", "Thailand/Bangkok", 13.7563, 100.5018);
+        addCachedLocation("Tokyo", "Tokyo", 35.6895, 139.6917);
+        addCachedLocation("Japan/Tokyo", "Japan/Tokyo", 35.6895, 139.6917);
+        addCachedLocation("Japan/Osaka", "Japan/Osaka", 35.6895, 139.6917);
+        addCachedLocation("Jakarta", "Jarkata", -6.174465, 106.822745);
+        addCachedLocation("Kuala Lumpur", "Kuala Lumpur", 3.139003, 101.686855);
+        addCachedLocation("Malaysia/Kuala Lumpur", "Kuala Lumpur", 3.139003, 101.686855);
+        addCachedLocation("Seoul", "Seoul", 37.566535, 126.977969);
+        addCachedLocation("New Delhi", "New Delhi", 28.613939, 77.209021);
+        addCachedLocation("Bangalore", "Bangalore", 12.971599, 77.594563);
+        addCachedLocation("Hanoi", "Hanoi", 21.027764, 105.834160);
+        addCachedLocation("Manila", "Manila", 14.599512, 120.984219);
+        addCachedLocation("Beijing", "Beijing", 39.904211, 116.407395);
+        addCachedLocation("Shanghai", "Shanghai", 31.230416, 121.473701);
+        addCachedLocation("USA/New York", "New York", 40.730610, -73.935242);
+    }
+
+    private static void addCachedLocation(String place, String city, double lat, double lng) {
+        locations.put(place.toLowerCase(), new Location(city, lat, lng));
     }
 
     public void addLat_LongToMemory(String country, String city) throws GeoServiceException {

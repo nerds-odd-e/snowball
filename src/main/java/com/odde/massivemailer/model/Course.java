@@ -48,15 +48,15 @@ public class Course extends Entity<Course> {
     }
 
     private boolean isNearTo(Location geoCordinate) {
-        return getGeoCoordinates().IsNear(geoCordinate);
+        return geoCoordinates().IsNear(geoCordinate);
     }
 
-    public String getLocation() {
+    public String location() {
         return LocationProviderService.locationString(city, country);
     }
 
-    private Location getGeoCoordinates() {
-        return new Location(getLocation(), latitude, longitude);
+    private Location geoCoordinates() {
+        return new Location(location(), latitude, longitude);
     }
 
     public static Course getCourseByName(String name) {

@@ -27,7 +27,7 @@ public class BatchContactsControllerTest {
         response = new MockHttpServletResponse();
 
         request.setParameter("data",
-                "email,firstName,lastName,company,country,city;aaa@aaa.com,myname,mylastName,mycompany,singapore,mycity");
+                "email,firstName,lastName,company,country,city;aaa@aaa.com,myname,mylastName,mycompany,singapore,singapore");
     }
 
     @Test
@@ -50,7 +50,7 @@ public class BatchContactsControllerTest {
     @Test
     public void willSaveSingletonContactPersonList() throws Exception {
         request.setParameter("data",
-                "email,firstName,lastName,company,country,city;aaa@aaa.com,myname,mylastName,mycompany,singapore,mycity");
+                "email,firstName,lastName,company,country,city;aaa@aaa.com,myname,mylastName,mycompany,singapore,singapore");
         controller.doPost(request, response);
         assertThat(ContactPerson.repository().count(), is(1));
     }
