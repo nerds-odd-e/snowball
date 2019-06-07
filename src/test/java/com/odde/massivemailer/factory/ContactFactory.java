@@ -7,9 +7,17 @@ public class ContactFactory {
 
     public static ContactPerson uniqueContact() {
         uniq_id += 1;
-        return ContactPerson.create(
-                "firstname", "testName" + uniq_id,
+        return ContactPerson.repository().fromKeyValuePairs(
+                "firstName", "testName" + uniq_id,
                 "email", "test" + uniq_id +"@gmail.com",
-                "lastname", "test1LastName");
+                "lastName", "test1LastName");
     }
+
+    public static ContactPerson aContactFrom(String city, String country) {
+        ContactPerson contact = uniqueContact();
+        contact.setCity(city);
+        contact.setCountry(country);
+        return contact;
+    }
+
 }

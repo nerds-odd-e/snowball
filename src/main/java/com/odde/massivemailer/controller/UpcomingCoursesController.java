@@ -25,9 +25,9 @@ public class UpcomingCoursesController extends AppController {
     private String doSendAllMails() throws IOException {
         int totalMailsSent = 0;
         String courseIDs = "";
-        List<ContactPerson> contactList = ContactPerson.findAll();
+        List<ContactPerson> contactList = ContactPerson.repository().findAll();
         for (ContactPerson person : contactList) {
-            List<Course> nearCourses = Course.findAllCourseNearTo(person.getGeoCoordinates());
+            List<Course> nearCourses = Course.findAllCourseNearTo(person.geoCoordinates());
             if (nearCourses.isEmpty()) {
                 continue;
             }
@@ -45,7 +45,7 @@ public class UpcomingCoursesController extends AppController {
             String text = date.format(formatter);
             LocalDate parsedDate = LocalDate.parse(text, formatter);
 
-            ContactPerson updatePerson = ContactPerson.findById(person.getId());
+            ContactPerson updatePerson = ContactPerson.repository().findById(person.getId());
             updatePerson.setCourseList(courseIDs);
             updatePerson.setSentDate(parsedDate.toString());
             updatePerson.saveIt();

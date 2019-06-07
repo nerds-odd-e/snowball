@@ -7,7 +7,7 @@ describe('Contact View', function() {
 		var checkboxField = "<li><input type='checkbox'></li>";
 		var emailField = "<li><input type='text' id='email' value='a@b.com'/></li>";
 		var nameField = "<li><input type='text' id='name' value='terry'/></li>";
-		var lastNameField = "<li><input type='text' id='lastname' value='odd-e'/></li>";
+		var lastNameField = "<li><input type='text' id='lastName' value='odd-e'/></li>";
 		contactElement ="<ul>"+checkboxField + emailField + nameField + lastNameField + "</ul>"
 		$(contactElement).appendTo(testContainer);
 
@@ -34,8 +34,8 @@ describe('Contact View', function() {
 		expect(showContactView.name()).toEqual('terry');
 	});
 
-	it('should get value of lastname element',function(){
-		expect(showContactView.lastname()).toEqual('odd-e');
+	it('should get value of lastName element',function(){
+		expect(showContactView.lastName()).toEqual('odd-e');
 	});
 	
 	it('should render contact list element',function(){

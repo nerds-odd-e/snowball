@@ -63,7 +63,7 @@
                        <div class="row">
                           <div class="col-md-2">Last Name</div>
                           <div class="col-md-10">
-                             <input type="text" class="form-control" name="lastname" id="lastname">
+                             <input type="text" class="form-control" name="lastName" id="lastName">
                           </div>
                        </div>
                        <br>

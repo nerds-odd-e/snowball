@@ -3,7 +3,7 @@ describe('test show contact function', function() {
 	
 	var rootId = "testContainer";
 	var markup = "<ul id='contactTable' class='list-inline' ></ul>";
-	var mock_json = [{"id":1,"attributes":{"company":"odde","email":"a@a.com","firstname":"Tom","lastname":"Jerry","location":"Singapore"}},{"id":2,"attributes":{"company":"odde2","email":"b@b.com","firstname":"Jerry","lastname":"Tom","location":"Singapore"}}];
+	var mock_json = [{"id":1,"attributes":{"company":"odde","email":"a@a.com","firstName":"Tom","lastName":"Jerry","location":"Singapore"}},{"id":2,"attributes":{"company":"odde2","email":"b@b.com","firstName":"Jerry","lastName":"Tom","location":"Singapore"}}];
 	
 	beforeEach(function(){
 		var container = document.createElement('div');

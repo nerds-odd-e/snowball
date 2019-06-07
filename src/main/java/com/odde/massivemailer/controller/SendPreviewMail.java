@@ -64,8 +64,8 @@ public class SendPreviewMail extends AppController {
         String action = req.getParameter("action");
 
         if("preview".equalsIgnoreCase(action)) {
-            ContactPerson admin = new ContactPerson().set(
-                    "firstname", "Admin",
+            ContactPerson admin = ContactPerson.repository().fromKeyValuePairs(
+                    "firstName", "Admin",
                     "email", "admin@odd-e.com");
             contactPerson.add(admin);
 

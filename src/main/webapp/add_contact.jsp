@@ -29,8 +29,8 @@
 									<div class="row">
 										<div class="col-lg-1">Name:</div>
 										<div class="col-lg-11">
-											<input type="text" class="form-control" name="firstname"
-												id="firstname">
+											<input type="text" class="form-control" name="firstName"
+												id="firstName">
 										</div>
 									</div>
 									<br> <br>
@@ -38,8 +38,8 @@
 									<div class="row">
 										<div class="col-lg-1">Last Name:</div>
 										<div class="col-lg-11">
-											<input type="text" class="form-control" name="lastname"
-												id="lastname">
+											<input type="text" class="form-control" name="lastName"
+												id="lastName">
 										</div>
 									</div>
 									<br> <br>

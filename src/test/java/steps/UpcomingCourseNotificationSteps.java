@@ -42,10 +42,10 @@ public class UpcomingCourseNotificationSteps {
     @Given("^there are (\\d+)/(\\d+) courses and contacts in (.*?), (.*?)$")
     public void there_are_in_Singapore_Singapore(int courses, int contacts, String city, String country) {
         for (int i = 0; i < contacts; i++) {
-            assertTrue(ContactPerson.create(
+            assertTrue(ContactPerson.repository().fromKeyValuePairs(
                     "city", city,
                     "country", country,
-                    "email", "test@test" + i + "-"+city+".com").saveIt());
+                    "email", "test@test" + i + "-"+city+".com").save());
         }
 
         for (int i = 0; i < courses; i++) {

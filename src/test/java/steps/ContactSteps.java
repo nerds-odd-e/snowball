@@ -114,16 +114,16 @@ public class ContactSteps {
         assertFalse(email.isEmpty());
     }
 
-    @When("^I add the contact whose name is \"([^\"]*)\" and lastname is \"([^\"]*)\" and company is \"([^\"]*)\" and email is \"([^\"]*)\" and location is \"([^\"]*)\" and \"([^\"]*)\"$")
-    public void iAddTheContactWhoseNameIsAndLastnameIsAndCompanyIsAndEmailIsAndLocationIsAnd(String name, String lastname, String company, String email, String country, String city) {
+    @When("^I add the contact whose name is \"([^\"]*)\" and lastName is \"([^\"]*)\" and company is \"([^\"]*)\" and email is \"([^\"]*)\" and location is \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void iAddTheContactWhoseNameIsAndLastnameIsAndCompanyIsAndEmailIsAndLocationIsAnd(String name, String lastName, String company, String email, String country, String city) {
         assertNotNull(name);
-        assertNotNull(lastname);
+        assertNotNull(lastName);
         assertNotNull(company);
         assertNotNull(country);
         assertNotNull(email);
         assertNotNull(city);
 
-        site.addContactPage().addContactWithAllInput(email, country, city, name, lastname, company);
+        site.addContactPage().addContactWithAllInput(email, country, city, name, lastName, company);
     }
 
     @Then("^Contact \"([^\"]*)\" record is created$")

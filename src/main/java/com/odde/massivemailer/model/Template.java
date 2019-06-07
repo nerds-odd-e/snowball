@@ -62,8 +62,8 @@ public class Template extends Entity {
         if (contactPerson != null) {
             populatedContent = this.content;
 
-            populatedContent = populatedContent.replace("{FirstName}", (contactPerson.getName() != null ? contactPerson.getName() : "{FirstName}"));
-            populatedContent = populatedContent.replace("{LastName}", (contactPerson.getLastname() != null ? contactPerson.getLastname() : "{LastName}"));
+            populatedContent = populatedContent.replace("{FirstName}", (contactPerson.getFirstName() != null ? contactPerson.getFirstName() : "{FirstName}"));
+            populatedContent = populatedContent.replace("{LastName}", (contactPerson.getLastName() != null ? contactPerson.getLastName() : "{LastName}"));
             populatedContent = populatedContent.replace("{CourseName}", (course.getCourseName() != null ? course.getCourseName() : "{CourseName}"));
             populatedContent = populatedContent.replace("{Instructor}", (course.getInstructor() != null ? course.getInstructor() : "{Instructor}"));
             populatedContent = populatedContent.replace("{Location}", (course.getLocation() != null ? course.getLocation() : "{Location}"));
@@ -74,7 +74,7 @@ public class Template extends Entity {
 
     private String getEmailSubjectFromTemplate(ContactPerson contactPerson) {
         String populatedSubject = this.subject;
-        populatedSubject = populatedSubject.replace("{FirstName}", (contactPerson.getName() != null ? contactPerson.getName() : "{FirstName}"));
+        populatedSubject = populatedSubject.replace("{FirstName}", (contactPerson.getFirstName() != null ? contactPerson.getFirstName() : "{FirstName}"));
 
         return populatedSubject;
     }

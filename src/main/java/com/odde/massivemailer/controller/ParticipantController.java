@@ -22,7 +22,7 @@ public class ParticipantController extends AppController {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String courseId = request.getParameter("courseId");
         String participantId = request.getParameter("participantIdHidden");
-        new Participant(participantId, new ObjectId(courseId)).saveIt();
+        new Participant(new ObjectId(participantId), new ObjectId(courseId)).saveIt();
         response.sendRedirect("enrollParticipant.jsp?courseId="+courseId);
     }
 }

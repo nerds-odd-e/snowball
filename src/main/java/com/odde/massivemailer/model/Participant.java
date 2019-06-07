@@ -19,7 +19,7 @@ import org.bson.types.ObjectId;
 @Setter
 @Getter
 public class Participant extends Entity {
-    private String contactPersonId;
+    private ObjectId contactPersonId;
     private ObjectId courseId;
 
     public static Repository<Participant> repository() {
@@ -27,7 +27,7 @@ public class Participant extends Entity {
     }
 
     ContactPerson getContactPerson() {
-        return ContactPerson.findById(contactPersonId);
+        return ContactPerson.repository().findById(contactPersonId);
     }
 
     Course getCourse() {
@@ -54,7 +54,7 @@ public class Participant extends Entity {
             writer.writeName("courseId");
             writer.writeObjectId(value.courseId);
             writer.writeName("contactPersonId");
-            writer.writeString(value.contactPersonId);
+            writer.writeObjectId(value.contactPersonId);
             writer.writeEndDocument();
         }
 
@@ -66,7 +66,7 @@ public class Participant extends Entity {
             reader.readName();
             visit.courseId = reader.readObjectId();
             reader.readName();
-            visit.contactPersonId = reader.readString();
+            visit.contactPersonId = reader.readObjectId();
             reader.readEndDocument();
             return visit;
         }

@@ -29,7 +29,7 @@ public class AddContactPage {
 
     public void addContactWithAllInput(String email, String country, String city, String name, String lastName, String company) {
         driver.setTextField("name", name);
-        driver.setTextField("lastname", lastName);
+        driver.setTextField("lastName", lastName);
         driver.setTextField("company", company);
         this.addContact(email, country, city);
     }

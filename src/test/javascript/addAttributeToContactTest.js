@@ -18,10 +18,10 @@ describe("Add Firstname and Lastname to Existing Contact",function(){
 		emailLabel.setAttribute('id',"email_label");
 		document.body.appendChild(emailLabel);
 		
-		var lastnameField = document.createElement("input");
-		lastnameField.type = "text";
-		lastnameField.setAttribute('id',"lastname");
-		document.body.appendChild(lastnameField);
+		var lastNameField = document.createElement("input");
+		lastNameField.type = "text";
+		lastNameField.setAttribute('id',"lastName");
+		document.body.appendChild(lastNameField);
 		
 		var nameField = document.createElement("input");
 		nameField.type = "text";
@@ -37,10 +37,10 @@ describe("Add Firstname and Lastname to Existing Contact",function(){
 	afterEach(function() {		
 		var email_cmpt = document.getElementById('email');
 		var name_cmpt = document.getElementById('name');
-		var lastname_cmpt = document.getElementById('lastname');
+		var lastName_cmpt = document.getElementById('lastName');
 		document.body.removeChild(email_cmpt);
 		document.body.removeChild(name_cmpt);
-		document.body.removeChild(lastname_cmpt);
+		document.body.removeChild(lastName_cmpt);
 	});
 
 	
@@ -49,17 +49,17 @@ describe("Add Firstname and Lastname to Existing Contact",function(){
 		spyOn(window,'openEditContactModal');
 		showEditContactDetail(mock_json_contact_item);
 		expect($('#name').val()).toBe("");
-		expect($('#lastname').val()).toBe("");
+		expect($('#lastName').val()).toBe("");
 		expect($('#email').val()).toBe(mock_json_contact_item.attributes.email);
 		expect($('#email_label').text()).toBe(mock_json_contact_item.attributes.email);
 	});
 	
-	it("should show name and lastname as the same as the one that was being clicked", function(){
-		var mock_json_contact_item = {"id":1,"attributes":{"company":"","email":"john@gmail.com","firstname":"John","lastname":"Winyu","location":"Singapore/Singapore"}};
+	it("should show name and lastName as the same as the one that was being clicked", function(){
+		var mock_json_contact_item = {"id":1,"attributes":{"company":"","email":"john@gmail.com","firstName":"John","lastName":"Winyu","location":"Singapore/Singapore"}};
 		spyOn(window,'openEditContactModal');
 		showEditContactDetail(mock_json_contact_item);
-		expect($('#name').val()).toBe(mock_json_contact_item.attributes.firstname);
-		expect($('#lastname').val()).toBe(mock_json_contact_item.attributes.lastname);
+		expect($('#name').val()).toBe(mock_json_contact_item.attributes.firstName);
+		expect($('#lastName').val()).toBe(mock_json_contact_item.attributes.lastName);
 		expect($('#countrydrp').val()).toBe(mock_json_contact_item.attributes.countrydrp);
 		expect($('#city').val()).toBe(mock_json_contact_item.attributes.city);
 		expect($('#email').val()).toBe(mock_json_contact_item.attributes.email);

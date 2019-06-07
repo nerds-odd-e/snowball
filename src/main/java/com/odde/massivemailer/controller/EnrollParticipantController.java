@@ -42,15 +42,15 @@ public class EnrollParticipantController extends AppController {
         }
 
         public void save() {
-            ContactPerson contactPerson = new ContactPerson().set(
+            ContactPerson contactPerson = ContactPerson.repository().fromKeyValuePairs(
                     "email", line[0],
-                    "firstname", line[1],
-                    "lastname", line[2],
+                    "firstName", line[1],
+                    "lastName", line[2],
                     "company", line[3],
                     "city", line[4],
                     "country", line[5]);
             contactPerson.save();
-            String contactPersonId = ContactPerson.getContactByEmail(line[0]).getStringId();
+            ObjectId contactPersonId = ContactPerson.getContactByEmail(line[0]).getId();
             new Participant(contactPersonId, new ObjectId(this.courseId)).saveIt();
         }
 

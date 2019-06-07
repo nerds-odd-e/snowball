@@ -40,8 +40,8 @@ public class MailTest {
 		Properties props = System.getProperties();
 		Session session = Session.getDefaultInstance(props);
 		ContactPerson contactPerson = new ContactPerson();
-		contactPerson.setName("TestName");
-		contactPerson.setLastname("LastName");
+		contactPerson.setFirstName("TestName");
+		contactPerson.setLastName("LastName");
 		contactPerson.setEmail("test@gmail.com");
 		contactPerson.setCompany("CompanyName");
 		contactPerson.saveIt();

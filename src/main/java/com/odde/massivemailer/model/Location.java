@@ -87,6 +87,9 @@ public class Location {
     }
 
     public boolean IsNear(Location geoCoordinate) {
+        if(geoCoordinate.getLat() == null) {
+            return false;
+        }
         return this.distanceFrom(geoCoordinate) <= CLOSE_BY_DISTANCE;
     }
 

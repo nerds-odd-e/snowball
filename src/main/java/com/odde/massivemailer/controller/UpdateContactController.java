@@ -20,14 +20,14 @@ public class UpdateContactController extends HttpServlet {
         LocationProviderService locationProviderService = new LocationProviderService();
         String city = req.getParameter("city");
         String country = req.getParameter("country");
-        String location = country + "/" + city;
-        locationProviderService.cacheLocation(city, country, location);
 
         if (contactPerson != null) {
-            contactPerson.setName(req.getParameter("name"));
-            contactPerson.setLastname(req.getParameter("lastname"));
+            contactPerson.setFirstName(req.getParameter("name"));
+            contactPerson.setLastName(req.getParameter("lastName"));
             contactPerson.setCompany(req.getParameter("company"));
-            contactPerson.setLocation(location);
+            contactPerson.setCity(city);
+            contactPerson.setCountry(country);
+            locationProviderService.cacheLocation(city, country, contactPerson.location());
             contactPerson.saveIt();
             resp.sendRedirect("contactlist.jsp");
 

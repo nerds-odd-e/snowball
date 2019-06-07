@@ -26,28 +26,28 @@ public class UpdateContactControllerTest {
 
     @Test
     public void editExistingContact() throws Exception {
-        new ContactPerson().set(
-                "firstname", "John",
+        ContactPerson.repository().fromKeyValuePairs(
+                "firstName", "John",
                 "email", "john@gmail.com",
-                "lastname", "Doe",
+                "lastName", "Doe",
                 "company", "ComA",
                 "city", "Singapore",
                 "country", "Singapore").saveIt();
-        assertEquals(1, (long) ContactPerson.count());
+        assertEquals(1, (long) ContactPerson.repository().count());
         request.setParameter("email", "john@gmail.com");
         request.setParameter("country", "China");
         request.setParameter("city", "Chengdu");
         request.setParameter("name", "Jack");
         request.setParameter("company", "ComB");
-        request.setParameter("lastname", "Dale");
+        request.setParameter("lastName", "Dale");
 
         controller.doPost(request, response);
-        assertEquals(1, (long) ContactPerson.count());
+        assertEquals(1, (long) ContactPerson.repository().count());
         ContactPerson contact = ContactPerson.getContactByEmail("john@gmail.com");
-        assertEquals("Jack", contact.get("FirstName"));
-        assertEquals("ComB", contact.get("Company"));
-        assertEquals("China/Chengdu", contact.get("Location"));
-        assertEquals("Dale", contact.get("LastName"));
+        assertEquals("Jack", contact.getFirstName());
+        assertEquals("ComB", contact.getCompany());
+        assertEquals("China/Chengdu", contact.location());
+        assertEquals("Dale", contact.getLastName());
 
         assertEquals("contactlist.jsp", response.getRedirectedUrl());
     }

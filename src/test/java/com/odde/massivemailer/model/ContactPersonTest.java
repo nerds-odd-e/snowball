@@ -20,16 +20,16 @@ public class ContactPersonTest {
 
     @Test
     public void testCreateContactObjectWithoutCompany() {
-        ContactPerson.createIt(
-                "firstname", "name",
+        ContactPerson.repository().fromKeyValuePairs(
+                "firstName", "name",
                 "email", "email@abc.com",
-                "lastname", "lastname");
+                "lastName", "lastName").saveIt();
 
         ContactPerson actual = ContactPerson.getContactByEmail("email@abc.com");
 
-        assertEquals("name", actual.getName());
+        assertEquals("name", actual.getFirstName());
         assertEquals("email@abc.com", actual.getEmail());
-        assertEquals("lastname", actual.getLastname());
+        assertEquals("lastName", actual.getLastName());
         assertEquals("", actual.getCompany());
     }
 
@@ -38,19 +38,19 @@ public class ContactPersonTest {
     public void testCreateContactObjectValuesWithLocationAndCoOrdinates() {
 
         Map<String, String> map = new HashMap<>();
-        map.put("firstname", "name");
+        map.put("firstName", "name");
         map.put("email", "email@abc.com");
-        map.put("lastname", "lastname");
+        map.put("lastName", "lastName");
         map.put("company", "myCompany");
         map.put("city", "Singapore");
         map.put("country", "Singapore");
-        new ContactPerson().fromMap(map).saveIt();
+        ContactPerson.repository().fromMap(map).saveIt();
         ContactPerson actual = ContactPerson.getContactByEmail("email@abc.com");
 
-        assertEquals("name", actual.getName());
-        assertEquals("lastname", actual.getLastname());
+        assertEquals("name", actual.getFirstName());
+        assertEquals("lastName", actual.getLastName());
         assertEquals("myCompany", actual.getCompany());
-        assertEquals("Singapore", actual.getString("city"));
+        assertEquals("Singapore", actual.getCity());
         assertNotNull(actual.getLatitude());
         assertNotNull(actual.getLongitude());
 
@@ -58,13 +58,13 @@ public class ContactPersonTest {
 
     @Test
     public void UpdateContactWhenEmailSent() {
-        ContactPerson p = ContactPerson.create("email", "john@gmail.com");
+        ContactPerson p = ContactPerson.repository().fromKeyValuePairs("email", "john@gmail.com");
         p.setCourseList("1,2,3");
         p.setSentDate("2017-11-30");
         p.saveIt();
 
-        ContactPerson actual = ContactPerson.findById(p.getId());
-        assertEquals("1,2,3", actual.getCoursesList());
+        ContactPerson actual = ContactPerson.repository().findById(p.getId());
+        assertEquals("1,2,3", actual.getCourseList());
         assertEquals("2017-11-30", actual.getSentDate().toString());
     }
 
@@ -77,25 +77,8 @@ public class ContactPersonTest {
         assertEquals(2, contacts.size());
     }
 
-    @Test
-    public void test_create_contacts_should_create_same_details_that_was_requested() {
-
-        String csvData = preparecsvDataForTest();
-        ContactPerson.createContactsFromCSVData(csvData);
-
-        List<ContactPerson> contacts = ContactPerson.prepareContactsList(csvData);
-
-        assertTrue(isEquals(contacts, "balakg@gmail.com"));
-        assertFalse(isEquals(contacts, "forshailesh@gmail.com"));
-
-    }
-
     private String preparecsvDataForTest() {
-        return "email,firstname,lastname,company,country,city;balakg@gmail.com,Bala,GovindRaj,CS,Singapore,Singapore;forshailesh@gmail.com,Shailesh,Thakur,CS,Singapore,Singapore";
-    }
-
-    private boolean isEquals(List<ContactPerson> newContacts, String email) {
-        return newContacts.get(0).equals(ContactPerson.getContactByEmail(email));
+        return "email,firstName,lastName,company,country,city;balakg@gmail.com,Bala,GovindRaj,CS,Singapore,Singapore;forshailesh@gmail.com,Shailesh,Thakur,CS,Singapore,Singapore";
     }
 
     private List<ContactPerson> createContactsForTest() {

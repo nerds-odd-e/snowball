@@ -8,7 +8,6 @@ import org.bson.types.ObjectId;
 public class AppGson {
     static public Gson getGson() {
         return new GsonBuilder()
-                .registerTypeAdapter(ContactPerson.class, new ContactPersonSerialiser())
                 .registerTypeAdapter(ObjectId.class, new ObjectIdSerialiser())
                 .create();
     }

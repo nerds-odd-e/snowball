@@ -17,6 +17,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 
 import java.util.List;
 
+import static com.odde.massivemailer.factory.ContactFactory.aContactFrom;
 import static com.odde.massivemailer.factory.ContactFactory.uniqueContact;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -30,9 +31,9 @@ public class UpcomingCoursesControllerTest {
     private final Course bangkokEvent = Course.repository().fromKeyValuePairs("courseName", "Code Smells In Bangkok", "city", "Bangkok", "country", "Thailand");
     private final Course tokyoEvent = Course.repository().fromKeyValuePairs("courseName", "Code Refactoring In Tokyo", "city", "Tokyo", "country", "Japan");
 
-    private final ContactPerson singaporeContact = uniqueContact().set("city", "Singapore", "country", "Singapore");
-    private final ContactPerson singaporeContactTwo = uniqueContact().set("city", "Singapore", "country", "Singapore");
-    private final ContactPerson tokyoContact = uniqueContact().set("city", "Tokyo", "country", "Japan");
+    private final ContactPerson singaporeContact = aContactFrom("Singapore", "Singapore");
+    private final ContactPerson singaporeContactTwo = aContactFrom("Singapore", "Singapore");
+    private final ContactPerson tokyoContact = aContactFrom("Tokyo", "Japan");
     private final ContactPerson noLocContact= uniqueContact();
 
     private final ArgumentCaptor<List<Course>> coursesArgument = ArgumentCaptor.forClass(List.class);

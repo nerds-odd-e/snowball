@@ -39,8 +39,11 @@ public class CourseDetailControllerTest {
     public void doGet_containsCourseParticipants() throws IOException {
         Course.repository().createIt("courseName", "CSD Tokyo", "courseDetails", "hoge");
         ObjectId courseId = Course.getCourseByName("CSD Tokyo").getId();
-        uniqueContact().set("firstname", "Tommy", "email", "tommy@example.com").saveIt();
-        String participantId = ContactPerson.getContactByEmail("tommy@example.com").getStringId();
+        ContactPerson contactPerson = uniqueContact();
+        contactPerson.setFirstName("Tommy");
+        contactPerson.setEmail("tommy@example.com");
+        contactPerson.saveIt();
+        ObjectId participantId = ContactPerson.getContactByEmail("tommy@example.com").getId();
         new Participant(participantId, courseId).saveIt();
 
         request.setParameter("id", courseId.toString());

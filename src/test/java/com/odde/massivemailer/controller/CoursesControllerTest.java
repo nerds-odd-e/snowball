@@ -105,7 +105,7 @@ public class CoursesControllerTest {
         Course bobsCourse = createCourse("Bob's course");
         createCourse("anotherCourse");
 
-        Participant participant = new Participant(bob.getStringId(), bobsCourse.getId());
+        Participant participant = new Participant(bob.getId(), bobsCourse.getId());
         participant.saveIt();
 
         Cookie otherCookie = new Cookie("any", "any");

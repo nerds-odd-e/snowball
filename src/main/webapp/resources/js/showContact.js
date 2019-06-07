@@ -29,8 +29,8 @@ function retrieveContactListFromServer()
 }
 
 function Contact(attributes) {
-    this.firstName = attributes.firstname===undefined?'':attributes.firstname;
-    this.lastName = attributes.lastname===undefined?'':attributes.lastname;
+    this.firstName = attributes.firstName===undefined?'':attributes.firstName;
+    this.lastName = attributes.lastName===undefined?'':attributes.lastName;
     this.company = attributes.company===undefined?'':attributes.company;
     this.location = attributes.location===undefined?'':attributes.location;
     this.email = attributes.email===undefined?'':attributes.email;
@@ -110,8 +110,8 @@ function insertDataIntoContactModal(item){
     var country = positionOfslash[0];
     var city = positionOfslash[1];
 
-	$('#name').val(item.attributes.firstname);
-	$('#lastname').val(item.attributes.lastname);
+	$('#name').val(item.attributes.firstName);
+	$('#lastName').val(item.attributes.lastName);
 	$('#company').val(item.attributes.company);
 	$('#countrydrp').val(country);
 	$('#city').val(city);

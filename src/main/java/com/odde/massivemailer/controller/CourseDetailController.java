@@ -21,7 +21,7 @@ public class CourseDetailController extends AppController{
 
             ParticipantDTO(ContactPerson contactPerson) {
                 this.email = contactPerson.getEmail();
-                this.name = contactPerson.getName();
+                this.name = contactPerson.getFirstName();
             }
         }
         @SuppressWarnings("unused")

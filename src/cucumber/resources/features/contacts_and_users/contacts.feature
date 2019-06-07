@@ -35,7 +35,7 @@ Feature: Contacts
 
   Scenario: Upload CSV with Multiple Contacts
     Given There are the following contacts in the CSV file that do not exist in the system
-      | email,firstname,lastname,company,country,city                |
+      | email,firstName,lastName,company,country,city                |
       | balakg@gmail.com,Bala,GovindRaj,CS,Singapore,Singapore       |
       | forshailesh@gmail.com,Shailesh,Thakur,CS,Singapore,Singapore |
     When I upload the CSV file

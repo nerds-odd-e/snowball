@@ -27,7 +27,7 @@ public class BatchContactsControllerTest {
         response = new MockHttpServletResponse();
 
         request.setParameter("data",
-                "email,firstname,lastname,company,country,city;aaa@aaa.com,myname,mylastname,mycompany,singapore,mycity");
+                "email,firstName,lastName,company,country,city;aaa@aaa.com,myname,mylastName,mycompany,singapore,mycity");
     }
 
     @Test
@@ -42,16 +42,16 @@ public class BatchContactsControllerTest {
     @Test
     public void willNotSaveContactPersonIfListIsEmpty() throws Exception {
         request.setParameter("data",
-                "email,firstname,lastname,company,country,city");
+                "email,firstName,lastName,company,country,city");
         controller.doPost(request, response);
-        assertThat(ContactPerson.count(), is(0L));
+        assertThat(ContactPerson.repository().count(), is(0));
     }
 
     @Test
     public void willSaveSingletonContactPersonList() throws Exception {
         request.setParameter("data",
-                "email,firstname,lastname,company,country,city;aaa@aaa.com,myname,mylastname,mycompany,singapore,mycity");
+                "email,firstName,lastName,company,country,city;aaa@aaa.com,myname,mylastName,mycompany,singapore,mycity");
         controller.doPost(request, response);
-        assertThat(ContactPerson.count(), is(1L));
+        assertThat(ContactPerson.repository().count(), is(1));
     }
 }

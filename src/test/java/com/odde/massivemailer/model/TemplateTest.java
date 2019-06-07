@@ -32,10 +32,10 @@ public class TemplateTest {
         course.setCity("Singapore");
         course.setCountry("Singapore");
 
-        contactPerson = new ContactPerson().set(
-                "firstname", "Madhan",
+        contactPerson = ContactPerson.repository().fromKeyValuePairs(
+                "firstName", "Madhan",
                 "email", "Madhan@CS.com",
-                "lastname", "Karunakaran",
+                "lastName", "Karunakaran",
                 "company", "CS",
                 "country", "Singapore",
                 "city", "Singapore");

@@ -16,15 +16,15 @@ public class ContactsController extends AppController {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String email = req.getParameter("email");
         if (email == null) {
-            respondWithJSON(resp, ContactPerson.findAll());
+            respondWithJSON(resp, ContactPerson.repository().findAll());
             return;
         }
         respondWithJSON(resp, ContactPerson.getContactByEmail(email));
     }
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        Map map = getParameterFromRequest(req, "city", "country", "email", "firstname", "lastname", "company");
-        ContactPerson contact = new ContactPerson().fromMap(map);
+        Map map = getParameterFromRequest(req, "city", "country", "email", "firstName", "lastName", "company");
+        ContactPerson contact = ContactPerson.repository().fromMap(map);
         if (!contact.save()) {
             respondWithRedirectAndError(resp, "add_contact.jsp", contact.errors());
             return;

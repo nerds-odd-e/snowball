@@ -57,7 +57,7 @@ public class ContactsControllerTest {
         controller.doGet(request, response);
 
         assertThat(response.getContentAsString(), containsString("\"email\":\""+contactPerson1.getEmail()+"\""));
-        assertThat(response.getContentAsString(), containsString("\"firstname\":\""+ contactPerson2.getName()+"\""));
+        assertThat(response.getContentAsString(), containsString("\"firstName\":\""+ contactPerson2.getFirstName() +"\""));
     }
 
     @Test
@@ -77,20 +77,20 @@ public class ContactsControllerTest {
     public void addAnExistingContact() throws Exception {
         ContactPerson contactPerson1 = uniqueContact();
         contactPerson1.saveIt();
-        assertEquals(1, (long) ContactPerson.count());
+        assertEquals(1, (long) ContactPerson.repository().count());
         request.setParameter("email", contactPerson1.getEmail());
         request.setParameter("country", "Singapore");
         request.setParameter("city", "Singapore");
         controller.doPost(request, response);
-        assertEquals(1, (long) ContactPerson.count());
+        assertEquals(1, (long) ContactPerson.repository().count());
         assertEquals("add_contact.jsp?status=fail&msg={ email:\"should be unique\" }", response.getRedirectedUrl());
     }
 
     @Test
     public void addNewContact() throws Exception {
         request.setParameter("company", "odd-e");
-        request.setParameter("lastname", "Smith");
-        request.setParameter("firstname", "Mark");
+        request.setParameter("lastName", "Smith");
+        request.setParameter("firstName", "Mark");
         request.setParameter("email", "newbie@example.com");
         request.setParameter("country", "Singapore");
         request.setParameter("city", "Singapore");
@@ -105,8 +105,8 @@ public class ContactsControllerTest {
     @Test
     public void mustSendAnEmailContainingPasswordSettingURLWithTokenWhenAddContact() throws IOException {
         request.setParameter("company", "odd-e");
-        request.setParameter("lastname", "Smith");
-        request.setParameter("firstname", "Mark");
+        request.setParameter("lastName", "Smith");
+        request.setParameter("firstName", "Mark");
         request.setParameter("email", "newbie@gmail.com");
         request.setParameter("country", "Singapore");
         request.setParameter("city", "Singapore");

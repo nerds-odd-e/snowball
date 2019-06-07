@@ -14,6 +14,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Mail {
 
@@ -101,14 +102,12 @@ public class Mail {
     }
 
     public String ReplaceAttibute(String template, ContactPerson contact) {
-
-        for (String attr : contact.getAttributeKeys()) {
-            String regexp = "(?i)(^|[^{])(\\{" + attr + "})([^}]|$)";
-
-            template = template.replaceAll(regexp, "$1" + contact.getAttribute(attr) + "$3");
-        }
-
-        return template;
+        AtomicReference<String> result = new AtomicReference<>(template);
+        contact.asAMap().forEach((key, value)->{
+            String regexp = "(?i)(^|[^{])(\\{" + key + "})([^}]|$)";
+            result.set(result.get().replaceAll(regexp, "$1" + value + "$3"));
+        });
+        return result.get();
     }
 
     public List<Message> createMessages(Session session) throws EmailException,

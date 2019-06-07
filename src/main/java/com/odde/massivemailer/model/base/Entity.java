@@ -1,9 +1,12 @@
 package com.odde.massivemailer.model.base;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.Setter;
 import org.bson.types.ObjectId;
 
+import java.util.Map;
 import java.util.Objects;
 
 @Getter
@@ -34,4 +37,8 @@ public abstract class Entity<T> {
         return Objects.hash(id);
     }
 
+    public Map<String, Object> asAMap() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.convertValue(this, new TypeReference<Map<String, Object>>() {});
+    }
 }

@@ -53,7 +53,8 @@ public class CourseFactory {
 
     public ContactPerson contact_alex() {
         if (contact_alex == null) {
-            contact_alex = uniqueContact().set("firstname", "alex");
+            contact_alex = uniqueContact();
+            contact_alex.setFirstName("alex");
             contact_alex.saveIt();
         }
         return contact_alex;
