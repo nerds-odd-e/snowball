@@ -57,7 +57,7 @@ function populateCourses(courseId)
 	        $('#courses').append('<option value="">Select the course</option>');
 	        $.each(data, function(idx, item) {
 	                var selected = " ";
-	                var _course = new Course(item.attributes);
+	                var _course = new Course(item);
 	                if (_course.id === courseId) {selected = " selected=true";}
                     $('#courses').append('<option value=' + _course.id + selected +'>' + _course.courseName + '</option>');
                  });

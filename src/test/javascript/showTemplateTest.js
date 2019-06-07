@@ -41,7 +41,7 @@ describe('test show template function', function() {
 		$.each(mock_json, function(index, obj)
 		{
 			expect(selectObject.options[index+1].value).toBe(obj.id.toString());
-			expect(selectObject.options[index+1].text).toBe(obj.attributes.TemplateName);
+			expect(selectObject.options[index+1].text).toBe(obj.TemplateName);
 		})	
 
 	});

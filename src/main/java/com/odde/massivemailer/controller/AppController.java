@@ -1,10 +1,10 @@
 package com.odde.massivemailer.controller;
 
 import com.odde.massivemailer.model.User;
+import com.odde.massivemailer.model.base.Errors;
 import com.odde.massivemailer.serialiser.AppGson;
 import com.odde.massivemailer.service.MailService;
 import org.apache.commons.lang3.ArrayUtils;
-import org.javalite.activejdbc.Errors;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;

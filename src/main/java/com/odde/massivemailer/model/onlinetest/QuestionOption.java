@@ -16,7 +16,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 import static com.mongodb.client.model.Filters.eq;
-import static org.codehaus.plexus.util.StringUtils.isEmpty;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 @Getter
 @Setter

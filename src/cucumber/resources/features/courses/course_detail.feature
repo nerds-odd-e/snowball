@@ -12,7 +12,6 @@ Feature: Course Detail
       | courseDetails | CSD training |
       | instructor    | Terry        |
 
-  @now
   Scenario: Display course that has no participant
     When I visit "CSD Tokyo" detail page from course list page
     Then "CSD Tokyo" course detail page is shown

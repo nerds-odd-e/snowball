@@ -50,20 +50,20 @@ describe("Add Firstname and Lastname to Existing Contact",function(){
 		showEditContactDetail(mock_json_contact_item);
 		expect($('#name').val()).toBe("");
 		expect($('#lastName').val()).toBe("");
-		expect($('#email').val()).toBe(mock_json_contact_item.attributes.email);
-		expect($('#email_label').text()).toBe(mock_json_contact_item.attributes.email);
+		expect($('#email').val()).toBe(mock_json_contact_item.email);
+		expect($('#email_label').text()).toBe(mock_json_contact_item.email);
 	});
 	
 	it("should show name and lastName as the same as the one that was being clicked", function(){
 		var mock_json_contact_item = {"id":1,"attributes":{"company":"","email":"john@gmail.com","firstName":"John","lastName":"Winyu","location":"Singapore/Singapore"}};
 		spyOn(window,'openEditContactModal');
 		showEditContactDetail(mock_json_contact_item);
-		expect($('#name').val()).toBe(mock_json_contact_item.attributes.firstName);
-		expect($('#lastName').val()).toBe(mock_json_contact_item.attributes.lastName);
-		expect($('#countrydrp').val()).toBe(mock_json_contact_item.attributes.countrydrp);
-		expect($('#city').val()).toBe(mock_json_contact_item.attributes.city);
-		expect($('#email').val()).toBe(mock_json_contact_item.attributes.email);
-		expect($('#email_label').text()).toBe(mock_json_contact_item.attributes.email);
+		expect($('#name').val()).toBe(mock_json_contact_item.firstName);
+		expect($('#lastName').val()).toBe(mock_json_contact_item.lastName);
+		expect($('#countrydrp').val()).toBe(mock_json_contact_item.countrydrp);
+		expect($('#city').val()).toBe(mock_json_contact_item.city);
+		expect($('#email').val()).toBe(mock_json_contact_item.email);
+		expect($('#email_label').text()).toBe(mock_json_contact_item.email);
 	});
 	
 });

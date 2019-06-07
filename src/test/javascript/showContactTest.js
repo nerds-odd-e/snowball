@@ -33,9 +33,9 @@ describe('test show contact function', function() {
 
 		$.each(mock_json, function(index, obj)
 		{
-			expect($("#contactTable .email-address").eq(index).text()).toBe(obj.attributes.email);
-			expect($("#contactTable .company").eq(index).text()).toBe(obj.attributes.company);
-			expect($("#contactTable .location").eq(index).text()).toBe(obj.attributes.location);
+			expect($("#contactTable .email-address").eq(index).text()).toBe(obj.email);
+			expect($("#contactTable .company").eq(index).text()).toBe(obj.company);
+			expect($("#contactTable .location").eq(index).text()).toBe(obj.location);
 
 		})	
 

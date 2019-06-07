@@ -58,7 +58,7 @@ function renderCourseList(json, selector)
 {
     selector.html('');
 	$.each(json, function(idx, item) {
-        var course = new Course(item.attributes);
+        var course = new Course(item);
 	    var sendEvent = 'sendEmail(' + course.id + ', 1 )';
 	    var previewEvent = 'sendEmail(' + course.id + ', 2 )';
         var tableContent = [

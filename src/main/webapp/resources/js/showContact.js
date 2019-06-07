@@ -50,7 +50,7 @@ function renderContactList(json, selector)
 
     selector.html('');
 	$.each(json, function(idx, item) {
-        var contact = new Contact(item.attributes);
+        var contact = new Contact(item);
         var tableContent = [
           ['email-address', contact.email],
           ['', contact.firstName],
@@ -67,9 +67,9 @@ function renderContactSelectionList(json, selector)
 {
 	selector.html('');
 	$.each(json, function(idx, item) {
-		var contact = new Contact(item.attributes);
+		var contact = new Contact(item);
         var tableContent = [
-            ['email-checkbox', "<input type=\"checkbox\" onclick=\"whenContactIsSelected(" + idx + ")\" id=\"" + idx + "\" value=\"" + item.attributes.email + "\" />"],
+            ['email-checkbox', "<input type=\"checkbox\" onclick=\"whenContactIsSelected(" + idx + ")\" id=\"" + idx + "\" value=\"" + item.email + "\" />"],
             ['email-address', contact.email],
             ['contact-name', contact.firstName],
             ['contact-lname', contact.lastName],
@@ -104,19 +104,19 @@ function showEditContactDetail(item)
 
 function insertDataIntoContactModal(item){
 
-    var location = item.attributes.location;
+    var location = item.location;
 
     var positionOfslash = location.split("/");
     var country = positionOfslash[0];
     var city = positionOfslash[1];
 
-	$('#name').val(item.attributes.firstName);
-	$('#lastName').val(item.attributes.lastName);
-	$('#company').val(item.attributes.company);
+	$('#name').val(item.firstName);
+	$('#lastName').val(item.lastName);
+	$('#company').val(item.company);
 	$('#countrydrp').val(country);
 	$('#city').val(city);
-	$('#email').val(item.attributes.email);
-	$('#email_label').text(item.attributes.email);
+	$('#email').val(item.email);
+	$('#email_label').text(item.email);
 }
 
 function openEditContactModal()

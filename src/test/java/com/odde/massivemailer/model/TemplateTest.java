@@ -1,14 +1,13 @@
 package com.odde.massivemailer.model;
 
 import com.odde.TestWithDB;
-import edu.emory.mathcs.backport.java.util.Collections;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @RunWith(TestWithDB.class)
@@ -53,7 +52,7 @@ public class TemplateTest {
     @Test
     public void mustReturnValidEmailWith_1_CourseParticipant() {
 
-        List<Mail> mailList = template.<Mail>getPopulatedEmailTemplate(course, Collections.<ContactPerson>singletonList(contactPerson));
+        List<Mail> mailList = template.<Mail>getPopulatedEmailTemplate(course, Collections.singletonList(contactPerson));
 
         Assert.assertNotNull(mailList);
         Assert.assertEquals(1, mailList.size());
@@ -65,7 +64,7 @@ public class TemplateTest {
 
     @Test
     public void mustReturnIncompleteEmailWith_1_CourseParticipant() {
-        List<Mail> mailList = template.<Mail>getPopulatedEmailTemplate(course, Collections.<ContactPerson>singletonList(contactPerson));
+        List<Mail> mailList = template.<Mail>getPopulatedEmailTemplate(course, Collections.singletonList(contactPerson));
 
         Assert.assertNotNull(mailList);
         Assert.assertEquals(1, mailList.size());

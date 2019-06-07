@@ -1,8 +1,8 @@
 package com.odde.massivemailer.model.onlinetest;
 
-import edu.emory.mathcs.backport.java.util.Collections;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
