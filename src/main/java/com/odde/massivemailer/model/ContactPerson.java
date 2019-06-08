@@ -11,6 +11,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.bson.types.ObjectId;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -22,6 +29,8 @@ import java.util.stream.Collectors;
 public class ContactPerson extends Entity {
     private String firstName;
     private String lastName;
+    @NotNull(message = "Eamil cannot be null")
+    @Email(message = "Email should be valid")
     private String email;
     private String company = "";
     private String city;
@@ -110,7 +119,7 @@ public class ContactPerson extends Entity {
 
     @Override
     public boolean onBeforeSave() {
-        if (Strings.isNullOrEmpty(city))
+       if (Strings.isNullOrEmpty(city))
             return true;
         Location coordinate = new LocationProviderService().getCoordinate(city, country);
         if (coordinate.getLat() == null) {

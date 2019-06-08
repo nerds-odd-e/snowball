@@ -49,7 +49,7 @@ public class Repository<T extends Entity> {
     }
 
     public void save(T object) {
-        if(object.onBeforeSave()) {
+        if(object.onBeforeSaveEve()) {
             MongoCollection<T> collection = getCollection();
             if (object.getId() == null) {
                 object.setId(new ObjectId());

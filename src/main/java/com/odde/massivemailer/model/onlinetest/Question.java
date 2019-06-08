@@ -14,6 +14,8 @@ import org.bson.codecs.DecoderContext;
 import org.bson.codecs.EncoderContext;
 import org.bson.types.ObjectId;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.*;
 
 import static java.util.stream.Collectors.toList;
@@ -26,20 +28,24 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
 @AllArgsConstructor
 public class Question extends Entity {
 
+    @NotNull(message="Description cannot be empty")
+    @NotBlank(message="Description cannot be empty")
     private String description;
     private String advice;
+    @NotNull(message="Category cannot be empty")
+    @NotBlank(message="Category cannot be empty")
     private ObjectId categoryId;
     private boolean isMultiQuestion;
     private boolean isApproved;
 
     @Override
     public boolean onBeforeSave() {
-        if(isEmpty(description)) {
-            throw new ValidationException("`description` cannot be empty");
-        }
-        if(categoryId == null) {
-            throw new ValidationException("`categoryId` cannot be empty");
-        }
+//        if(isEmpty(description)) {
+//            throw new ValidationException("`description` cannot be empty");
+//        }
+//        if(categoryId == null) {
+//            throw new ValidationException("`categoryId` cannot be empty");
+//        }
         return true;
     }
 

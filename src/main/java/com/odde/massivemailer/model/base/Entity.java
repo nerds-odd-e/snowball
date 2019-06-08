@@ -6,8 +6,13 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bson.types.ObjectId;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -39,6 +44,18 @@ public abstract class Entity<T> {
 
     public Map<String, Object> asAMap() {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.convertValue(this, new TypeReference<Map<String, Object>>() {});
+        return objectMapper.convertValue(this, new TypeReference<Map<String, Object>>() {
+        });
+    }
+
+    public boolean onBeforeSaveEve() {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<Entity<T>>> validate = validator.validate(this);
+        if (validate.size() > 0) {
+            throw new ValidationException(validate);
+        }
+
+        return onBeforeSave();
     }
 }

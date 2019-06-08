@@ -2,6 +2,7 @@ Feature: Contacts
   As the admin I want to maintain contacts,
   so that I can sent newsletters to them later.
 
+  @now
   Scenario Outline: Adding contact with invalid email address
     When Admin add a new contact "<name>" with invalid email: "<email>"
     Then Contact page show "email is invalid"
