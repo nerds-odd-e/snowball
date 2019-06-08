@@ -37,15 +37,7 @@ public class MongoDBConnector {
     }
 
     private static CodecRegistry getCodecRegistry() {
-        CodecRegistry codecRegistry = CodecRegistries.fromCodecs(
-                new Category.CategoryCodec(),
-                new Question.QuestionCodec(),
-                new User.UserCodec(),
-                new Template.TemplateCodec(),
-                new SentMailVisit.SentMailVisitCodec(),
-                new SentMail.SentMailCodec(),
-                new Participant.ParticipantCodec(),
-                new QuestionOption.QuestionOptionCodec());
+        CodecRegistry codecRegistry = CodecRegistries.fromCodecs(new User.UserCodec());
         CodecRegistry pojoCodecRegistry = fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
                 fromProviders(PojoCodecProvider.builder().automatic(true).build()));
 

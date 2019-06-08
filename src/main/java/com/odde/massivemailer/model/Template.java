@@ -96,39 +96,4 @@ public class Template extends Entity {
         return true;
     }
 
-    public static class TemplateCodec implements Codec<Template> {
-        @Override
-        public void encode(final BsonWriter writer, final Template value, final EncoderContext encoderContext) {
-            writer.writeStartDocument();
-            writer.writeObjectId("_id", value.id);
-            writer.writeName("templateName");
-            writer.writeString(defaultIfEmpty(value.templateName, ""));
-            writer.writeName("subject");
-            writer.writeString(defaultIfEmpty(value.subject, ""));
-            writer.writeName("content");
-            writer.writeString(defaultIfEmpty(value.content, ""));
-            writer.writeEndDocument();
-        }
-
-        @Override
-        public Template decode(final BsonReader reader, final DecoderContext decoderContext) {
-            Template template = new Template();
-            reader.readStartDocument();
-            template.id = reader.readObjectId("_id");
-            reader.readName();
-            template.templateName = reader.readString();
-            reader.readName();
-            template.subject = reader.readString();
-            reader.readName();
-            template.content = reader.readString();
-            reader.readEndDocument();
-            return template;
-        }
-
-        @Override
-        public Class<Template> getEncoderClass() {
-            return Template.class;
-        }
-    }
-
 }

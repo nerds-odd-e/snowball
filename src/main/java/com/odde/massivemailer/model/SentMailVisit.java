@@ -47,39 +47,4 @@ public class SentMailVisit extends Entity {
         return true;
     }
 
-    public static class SentMailVisitCodec implements Codec<SentMailVisit> {
-        @Override
-        public void encode(final BsonWriter writer, final SentMailVisit value, final EncoderContext encoderContext) {
-            writer.writeStartDocument();
-            writer.writeObjectId("_id", value.id);
-            writer.writeName("emailAddress");
-            writer.writeString(value.emailAddress);
-            writer.writeName("readCount");
-            writer.writeInt32(value.readCount);
-            writer.writeName("sentMailId");
-            writer.writeObjectId(value.sentMailId);
-            writer.writeEndDocument();
-        }
-
-        @Override
-        public SentMailVisit decode(final BsonReader reader, final DecoderContext decoderContext) {
-            SentMailVisit visit = new SentMailVisit();
-            reader.readStartDocument();
-            visit.id = reader.readObjectId("_id");
-            reader.readName();
-            visit.emailAddress = reader.readString();
-            reader.readName();
-            visit.readCount = reader.readInt32();
-            reader.readName();
-            visit.sentMailId = reader.readObjectId();
-            reader.readEndDocument();
-            return visit;
-        }
-
-        @Override
-        public Class<SentMailVisit> getEncoderClass() {
-            return SentMailVisit.class;
-        }
-    }
-
 }

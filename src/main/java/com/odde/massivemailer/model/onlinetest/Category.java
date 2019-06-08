@@ -56,41 +56,6 @@ public class Category extends Entity {
         return true;
     }
 
-    public static class CategoryCodec implements Codec<Category> {
-        @Override
-        public void encode(final BsonWriter writer, final Category value, final EncoderContext encoderContext) {
-            writer.writeStartDocument();
-            writer.writeObjectId("_id", value.id);
-            writer.writeName("name");
-            writer.writeString(value.getName());
-            writer.writeName("advice");
-            writer.writeString(value.advice);
-            writer.writeName("link");
-            writer.writeString(value.link);
-            writer.writeEndDocument();
-        }
-
-        @Override
-        public Category decode(final BsonReader reader, final DecoderContext decoderContext) {
-            Category cat = new Category();
-            reader.readStartDocument();
-            cat.id = reader.readObjectId("_id");
-            reader.readName();
-            cat.name = reader.readString();
-            reader.readName();
-            cat.advice = reader.readString();
-            reader.readName();
-            cat.link = reader.readString();
-            reader.readEndDocument();
-            return cat;
-        }
-
-        @Override
-        public Class<Category> getEncoderClass() {
-            return Category.class;
-        }
-    }
-
     public static Category createIt(String category_name) {
         return new Category(category_name, "", "").saveIt();
     }

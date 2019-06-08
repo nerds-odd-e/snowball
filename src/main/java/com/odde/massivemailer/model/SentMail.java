@@ -84,49 +84,4 @@ public class SentMail extends Entity {
         return true;
     }
 
-    public static class SentMailCodec implements Codec<SentMail> {
-        @Override
-        public void encode(final BsonWriter writer, final SentMail value, final EncoderContext encoderContext) {
-            if (value.sentDate == null) {
-                value.sentDate = new Date();
-            }
-            writer.writeStartDocument();
-            writer.writeObjectId("_id", value.id);
-            writer.writeName("sentDate");
-            writer.writeDateTime(value.sentDate.getTime());
-            writer.writeName("subject");
-            writer.writeString(value.subject);
-            writer.writeName("content");
-            writer.writeString(value.content);
-            writer.writeName("messageId");
-            writer.writeInt64(value.messageId);
-            writer.writeName("receivers");
-            writer.writeString(value.receivers);
-            writer.writeEndDocument();
-        }
-
-        @Override
-        public SentMail decode(final BsonReader reader, final DecoderContext decoderContext) {
-            SentMail visit = new SentMail();
-            reader.readStartDocument();
-            visit.id = reader.readObjectId("_id");
-            reader.readName();
-            visit.sentDate = new Date(reader.readDateTime());
-            reader.readName();
-            visit.subject = reader.readString();
-            reader.readName();
-            visit.content = reader.readString();
-            reader.readName();
-            visit.messageId = reader.readInt64();
-            reader.readName();
-            visit.receivers = reader.readString();
-            reader.readEndDocument();
-            return visit;
-        }
-
-        @Override
-        public Class<SentMail> getEncoderClass() {
-            return SentMail.class;
-        }
-    }
 }

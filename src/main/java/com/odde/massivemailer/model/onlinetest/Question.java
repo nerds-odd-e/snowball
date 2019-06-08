@@ -122,47 +122,4 @@ public class Question extends Entity {
         return cat.getId().equals(categoryId);
     }
 
-    public static class QuestionCodec implements Codec<Question> {
-        @Override
-        public void encode(final BsonWriter writer, final Question value, final EncoderContext encoderContext) {
-            writer.writeStartDocument();
-            writer.writeObjectId("_id", value.id);
-            writer.writeName("description");
-            writer.writeString(value.description);
-            writer.writeName("advice");
-            writer.writeString(defaultIfEmpty(value.advice, ""));
-            writer.writeName("categoryId");
-            writer.writeObjectId(value.categoryId);
-            writer.writeName("isMultiQuestion");
-            writer.writeBoolean(value.isMultiQuestion);
-            writer.writeName("isApproved");
-            writer.writeBoolean(value.isApproved);
-            writer.writeEndDocument();
-        }
-
-        @Override
-        public Question decode(final BsonReader reader, final DecoderContext decoderContext) {
-            Question option = new Question();
-            reader.readStartDocument();
-            option.id = reader.readObjectId("_id");
-            reader.readName();
-            option.description = reader.readString();
-            reader.readName();
-            option.advice = reader.readString();
-            reader.readName();
-            option.categoryId = reader.readObjectId();
-            reader.readName();
-            option.isMultiQuestion = reader.readBoolean();
-            reader.readName();
-            option.isApproved = reader.readBoolean();
-            reader.readEndDocument();
-            return option;
-        }
-
-        @Override
-        public Class<Question> getEncoderClass() {
-            return Question.class;
-        }
-    }
-
 }
