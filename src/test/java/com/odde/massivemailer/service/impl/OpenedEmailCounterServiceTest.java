@@ -3,7 +3,6 @@ package com.odde.massivemailer.service.impl;
 
 import com.odde.massivemailer.model.SentMail;
 import com.odde.massivemailer.model.SentMailVisit;
-import org.bson.types.ObjectId;
 import org.junit.Test;
 
 import java.text.ParseException;
@@ -13,7 +12,6 @@ import java.util.TimeZone;
 import static org.junit.Assert.assertEquals;
 
 public class OpenedEmailCounterServiceTest {
-    private final long email_id = 123L;
 
     @Test
     public void shouldReturnEmptyJasonWhenNobodyOpenedTheEmail() {
@@ -43,6 +41,7 @@ public class OpenedEmailCounterServiceTest {
 
     private SentMail createNotification() {
         SentMail sentMail = new SentMail();
+        long email_id = 123L;
         sentMail.setMessageId(email_id);
         sentMail.setSubject("test subject");
         sentMail.setContent("test content");

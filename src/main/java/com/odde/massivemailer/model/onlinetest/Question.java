@@ -60,7 +60,7 @@ public class Question extends Entity<Question> {
 
     public boolean verifyAnswer(List<ObjectId> answeredOptionIds) {
         Collection<QuestionOption> optionsByQuestionId = getOptions();
-        List<ObjectId> collectOptions = optionsByQuestionId.stream().filter(QuestionOption::isCorrect).map(answerOption -> answerOption.getId()).collect(toList());
+        List<ObjectId> collectOptions = optionsByQuestionId.stream().filter(QuestionOption::isCorrect).map(Entity::getId).collect(toList());
         return collectOptions.equals(answeredOptionIds);
     }
 

@@ -2,7 +2,6 @@ package com.odde.massivemailer.model;
 
 
 import com.odde.massivemailer.model.base.Entity;
-import com.odde.massivemailer.model.base.Repository;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

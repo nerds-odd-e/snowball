@@ -54,12 +54,12 @@ public class CourseTests {
     @When("^Add a course with location \"([^\"]*)\", \"([^\"]*)\"$")
     public void add_a_course_with_location(String city, String country) {
         visitCreateCoursePage();
-        addCourseWithLocationAndCourseName(city, country, "CSD");
+        addCourseWithLocationAndCourseName(city, country);
 
     }
 
-    private void addCourseWithLocationAndCourseName(String city, String country, String courseName) {
-        HashMap<String, Object> vals = createCourseData(city, country, courseName);
+    private void addCourseWithLocationAndCourseName(String city, String country) {
+        HashMap<String, Object> vals = createCourseData(city, country, "CSD");
         fill_in_course_data(vals);
         clickSaveCourse();
     }

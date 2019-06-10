@@ -1,14 +1,11 @@
 package com.odde.massivemailer.controller.onlinetest;
 
 import com.odde.massivemailer.controller.AppController;
-import com.odde.massivemailer.model.onlinetest.OnlineTest;
 import com.odde.massivemailer.model.onlinetest.Question;
-import org.bson.types.ObjectId;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import static com.odde.massivemailer.model.base.Repository.repo;

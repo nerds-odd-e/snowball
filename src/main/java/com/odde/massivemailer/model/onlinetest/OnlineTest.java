@@ -38,8 +38,7 @@ public class OnlineTest {
         if (!hasNextQuestion()) {
             throw new NoSuchElementException("OnlineTest not started");
         }
-        Question question = questions.get(numberOfAnsweredQuestions + 1);
-        return question;
+        return questions.get(numberOfAnsweredQuestions + 1);
     }
 
     public boolean hasNextQuestion() {
@@ -87,14 +86,14 @@ public class OnlineTest {
     private void incrementCategoryQuestionCount(String categoryId) {
         List<CategoryTestResult> collect = categoryTestResults
                 .stream()
-                .filter(categoryTestResult -> categoryTestResult.categoryId == categoryId)
+                .filter(categoryTestResult -> categoryTestResult.categoryId.equals(categoryId))
                 .collect(Collectors.toList());
         if (collect.size() < 1) {
             CategoryTestResult categoryTestResult = new CategoryTestResult(categoryId);
             categoryTestResults.add(categoryTestResult);
             collect = categoryTestResults
                     .stream()
-                    .filter(result -> result.categoryId == categoryId)
+                    .filter(result -> result.categoryId.equals(categoryId))
                     .collect(Collectors.toList());
         }
         CategoryTestResult categoryTestResult = collect.get(0);

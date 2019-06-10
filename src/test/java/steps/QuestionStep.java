@@ -220,9 +220,7 @@ public class QuestionStep {
         List<WebElement> elements = driver.findElements(By.cssSelector(cssSelector));
         String[] actualTexts = elements.stream().map(WebElement::getText).toArray(String[]::new);
         assertThat(actualTexts, is(optionTexts));
-        elements.forEach((e) -> {
-            assertEquals(e.getCssValue("color"), Color.fromString(color).asRgba());
-        });
+        elements.forEach((e) -> assertEquals(e.getCssValue("color"), Color.fromString(color).asRgba()));
     }
 
     @Then("^User should see \"([^\"]*)\"$")
@@ -242,7 +240,7 @@ public class QuestionStep {
 
     @When("^(\\d+)つ回答を選択する$")
     public void つ回答を選択する(int count) {
-        driver.findElements(By.cssSelector("input[type=checkbox]")).stream().limit(count).forEach(option -> option.click());
+        driver.findElements(By.cssSelector("input[type=checkbox]")).stream().limit(count).forEach(WebElement::click);
     }
 
     @Then("^(\\d+)つ\"([^\"]*)\"の回答が選択されている事$")

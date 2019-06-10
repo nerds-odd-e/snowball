@@ -2,7 +2,6 @@ package com.odde.massivemailer.model;
 
 import com.google.common.base.Strings;
 import com.odde.massivemailer.model.base.Entity;
-import com.odde.massivemailer.model.base.Errors;
 import com.odde.massivemailer.service.LocationProviderService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -8,9 +8,7 @@ public class ValidationException extends RuntimeException {
     private Set<ConstraintViolation<Entity>> validate;
 
     public <T> ValidationException(Set<ConstraintViolation<Entity>> validate) {
-        validate.forEach(v->{
-            errors.put(v.getPropertyPath().toString(), v.getMessage());
-        });
+        validate.forEach(v-> errors.put(v.getPropertyPath().toString(), v.getMessage()));
     }
 
     public ValidationException(String field, String message) {

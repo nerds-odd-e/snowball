@@ -3,7 +3,6 @@ package com.odde.massivemailer.controller;
 import com.odde.massivemailer.model.User;
 import org.apache.commons.lang3.RandomStringUtils;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

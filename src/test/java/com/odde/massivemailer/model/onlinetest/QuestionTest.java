@@ -4,22 +4,18 @@ import com.odde.TestWithDB;
 import com.odde.massivemailer.model.base.ValidationException;
 import org.assertj.core.api.Assertions;
 import org.bson.types.ObjectId;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.odde.massivemailer.model.base.Repository.repo;
-import static junit.framework.TestCase.assertEquals;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
+import static junit.framework.TestCase.*;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static junit.framework.TestCase.assertTrue;
-import static junit.framework.TestCase.assertFalse;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.is;
 
 @RunWith(TestWithDB.class)
 public class QuestionTest {
@@ -83,14 +79,14 @@ public class QuestionTest {
     public void TypeがsingleのときにgetIsMultiQuestionが0を返す() {
         final Question question = new Question("description", "advice", categoryId, false, false);
         final boolean actual = question.isMultiQuestion();
-        assertEquals(actual, false);
+        assertFalse(actual);
     }
 
     @Test
     public void TypeがMultiのときにgetIsMultiQuestionが1を返す() {
         final Question question = new Question("description", "advice", categoryId, true, false);
         final boolean actual = question.isMultiQuestion();
-        assertEquals(actual, true);
+        assertTrue(actual);
     }
 
     @Test

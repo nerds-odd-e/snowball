@@ -11,6 +11,7 @@ import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
 import static com.odde.massivemailer.model.base.Repository.repo;
+import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
@@ -51,7 +52,7 @@ public class UpcomingCourseNotificationSteps {
 
         for (int i = 0; i < courses; i++) {
             Course course  = Course.create("courseName", "Event " + i + " in " + city, "courseDetails", "Event " + i + " in " + city, "country", country, "city", city);
-            assertTrue(course.saveIt().getId() != null);
+            assertNotNull(course.saveIt().getId());
         }
     }
 

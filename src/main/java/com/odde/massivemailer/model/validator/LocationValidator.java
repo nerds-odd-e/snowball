@@ -1,6 +1,5 @@
 package com.odde.massivemailer.model.validator;
 
-import com.odde.massivemailer.model.ContactPerson;
 import com.odde.massivemailer.model.base.Entity;
 
 import javax.validation.ConstraintValidator;

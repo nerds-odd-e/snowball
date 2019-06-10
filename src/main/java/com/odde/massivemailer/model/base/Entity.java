@@ -2,7 +2,6 @@ package com.odde.massivemailer.model.base;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.odde.massivemailer.model.onlinetest.Category;
 import lombok.Getter;
 import lombok.Setter;
 import org.bson.types.ObjectId;
@@ -52,19 +51,17 @@ public abstract class Entity<T> {
         });
     }
 
-    public boolean onBeforeSaveEve() {
+    void onBeforeSaveEve() {
         onBeforeSave();
         Validator validator = validatorFactory.getValidator();
         Set<ConstraintViolation<Entity>> validate = validator.validate(this);
         if (validate.size() > 0) {
             throw new ValidationException(validate);
         }
-
-        return true;
     }
 
-    protected <T extends Entity>Repository<T> repository() {
-        return (Repository<T>) repo(this.getClass());
+    protected <S extends Entity>Repository<S> repository() {
+        return (Repository<S>) repo(this.getClass());
     }
 
     public T saveIt() {

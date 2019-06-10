@@ -50,8 +50,7 @@ public class SignupSteps {
 
     @Then("^特訓のトップページに遷移する$")
     public void 特訓のトップページに遷移する() {
-        String expected = dashboard_url;
-        assertEquals(expected, driver.getCurrentUrl());
+        assertEquals(dashboard_url, driver.getCurrentUrl());
     }
 
     @Then("^自分のユーザー名\"([^\"]*)\"が表示されている$")
@@ -77,6 +76,6 @@ public class SignupSteps {
 
     @When("^user sign up with:$")
     public void userSignUpWith(Map<String, String> table) {
-        table.forEach((k, v)-> driver.setTextField(k, v));
+        table.forEach(driver::setTextField);
     }
 }

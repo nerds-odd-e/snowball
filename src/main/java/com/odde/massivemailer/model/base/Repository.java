@@ -17,8 +17,8 @@ public class Repository<T extends Entity> {
     private Class<T> klass;
     private String collectionName;
 
-    public static <S extends Entity>Repository<S> repo(Class<S> klass) {
-        return new Repository<S>(klass);
+    public static <S extends Entity> Repository<S> repo(Class<S> klass) {
+        return new Repository<>(klass);
     }
 
     public Repository(Class<T> klass) {
@@ -49,18 +49,17 @@ public class Repository<T extends Entity> {
     }
 
     public List<T> findAll() {
-        return getCollection().find().into(new ArrayList<T>());
+        return getCollection().find().into(new ArrayList<>());
     }
 
     public void save(T object) {
-        if(object.onBeforeSaveEve()) {
-            MongoCollection<T> collection = getCollection();
-            if (object.getId() == null) {
-                object.setId(new ObjectId());
-                collection.insertOne(object);
-            } else {
-                collection.replaceOne(eq("_id", object.getId()), object);
-            }
+        object.onBeforeSaveEve();
+        MongoCollection<T> collection = getCollection();
+        if (object.getId() == null) {
+            object.setId(new ObjectId());
+            collection.insertOne(object);
+        } else {
+            collection.replaceOne(eq("_id", object.getId()), object);
         }
     }
 
@@ -80,12 +79,12 @@ public class Repository<T extends Entity> {
         return findAll().size();
     }
 
-    public T fromKeyValuePairs(String ...args) {
+    public T fromKeyValuePairs(String... args) {
         return fromMap(asMap(args));
     }
 
     private Map<String, String> asMap(String... args) {
-        Map<String, String> argMap = new HashMap<String, String>();
+        Map<String, String> argMap = new HashMap<>();
         for (int i = 0; i < args.length; i += 2) {
             String key;
             try {
@@ -103,7 +102,7 @@ public class Repository<T extends Entity> {
         return argMap;
     }
 
-    public void createIt(String ...args) {
+    public void createIt(String... args) {
         save(fromKeyValuePairs(args));
     }
 }

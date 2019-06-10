@@ -80,7 +80,7 @@ public class QuestionCollectionTest {
     @Test
     public void shouldChooseNamingCategories() {
         QuestionCollection questionCollection = createQuestionCollection(0, 0);
-        List<Question> questions = questionCollection.generateQuestionList(asList(scrum), 10);
+        List<Question> questions = questionCollection.generateQuestionList(Collections.singletonList(scrum), 10);
         assertEquals(0, questions.size());
     }
 

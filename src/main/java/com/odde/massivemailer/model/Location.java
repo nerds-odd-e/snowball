@@ -1,6 +1,5 @@
 package com.odde.massivemailer.model;
 
-import com.google.maps.model.LatLng;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

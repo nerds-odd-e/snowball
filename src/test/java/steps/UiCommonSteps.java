@@ -3,14 +3,8 @@ package steps;
 import com.odde.massivemailer.factory.QuestionBuilder;
 import com.odde.massivemailer.model.onlinetest.Category;
 import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import org.openqa.selenium.By;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UiCommonSteps {
 

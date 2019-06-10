@@ -8,7 +8,6 @@ import lombok.Setter;
 import org.bson.types.ObjectId;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
@@ -41,7 +40,7 @@ public class QuestionOption extends Entity<QuestionOption> {
     }
 
     static Collection<QuestionOption> getForQuestion(ObjectId questionId) {
-        return repo(QuestionOption.class).getCollection().find(eq("questionId", questionId)).into(new ArrayList<QuestionOption>());
+        return repo(QuestionOption.class).getCollection().find(eq("questionId", questionId)).into(new ArrayList<>());
     }
 
     static Optional<QuestionOption> getById(String optionId) {
