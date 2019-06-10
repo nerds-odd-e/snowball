@@ -7,13 +7,16 @@
 <h1>Todos List</h1>
 
 <div id="app">
-  <div v-for="todo in todos">
-    {{ todo.title }}
-    {{ todo.status }}
-  </div>
+  <Todos
+    v-for="todo in todos"
+    v-bind:todo="todo"
+  >
+  </Todos>
 </div>
 
 <script>
+
+
 var app = new Vue({
   el: '#app',
   data: {
@@ -27,5 +30,11 @@ var app = new Vue({
      })
   }
 })
+
+Vue.component('Todos', {
+  props: ['todo'],
+  template: '<li>{{todo.title}} {{todo.status}}</li>',
+})
+
 
 </script>

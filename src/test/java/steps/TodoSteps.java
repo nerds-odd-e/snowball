@@ -47,7 +47,7 @@ public class TodoSteps {
 
     @Then("^Todoが複数表示されている$")
     public void todoが複数表示されている() throws InterruptedException {
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         String bodyText = site.getDriver().getBodyText();
         assertEquals(bodyText, true, bodyText.contains("sake"));
         assertEquals(bodyText, true, bodyText.contains("beer"));
