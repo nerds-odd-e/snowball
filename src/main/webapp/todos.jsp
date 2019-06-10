@@ -2,22 +2,29 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
-<%
-        pageContext.setAttribute("json", (String)session.getAttribute("json"));
-%>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-hello
+
+<h1>Todos List</h1>
 
 <div id="app">
-  {{ message }}
+  <div v-for="todo in todos">
+    {{ todo.title }}
+    {{ todo.status }}
+  </div>
 </div>
 
 <script>
 var app = new Vue({
   el: '#app',
   data: {
-    message: 'Hello Vue!',
-    data: ${json}
+    todos: []
+  },
+  mounted: function () {
+    fetch("/todos")
+     .then(response => response.json())
+     .then(todos => {
+        this.todos = todos
+     })
   }
 })
 

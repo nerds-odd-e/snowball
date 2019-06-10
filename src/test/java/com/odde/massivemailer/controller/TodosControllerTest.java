@@ -45,8 +45,7 @@ public class TodosControllerTest {
 
         controller.doGet(req, res);
 
-        String json = (String) req.getAttribute("json");
-        assertThat(json, containsString("todo"));
-        assertThat(json, containsString("doing"));
+        assertThat(res.getContentAsString(), containsString("todo"));
+        assertThat(res.getContentAsString(), containsString("doing"));
     }
 }

@@ -30,12 +30,12 @@ public class TodoSteps {
 
     @Given("^Todo一覧ページに遷移する$")
     public void todo一覧ページに遷移する() {
-        site.visit("/todos");
+        site.visit("/todos.jsp");
     }
 
     @Then("^Todo一覧ページが表示される$")
     public void todo一覧ページが表示される() {
-        assertEquals(true, site.getDriver().getBodyText().contains("hello"));
+        assertEquals(true, site.getDriver().getBodyText().contains("Todos List"));
     }
 
 
@@ -46,8 +46,10 @@ public class TodoSteps {
     }
 
     @Then("^Todoが複数表示されている$")
-    public void todoが複数表示されている() {
-        assertEquals(true, site.getDriver().getBodyText().contains("sake"));
-        assertEquals(true, site.getDriver().getBodyText().contains("beer"));
+    public void todoが複数表示されている() throws InterruptedException {
+        Thread.sleep(1000);
+        String bodyText = site.getDriver().getBodyText();
+        assertEquals(bodyText, true, bodyText.contains("sake"));
+        assertEquals(bodyText, true, bodyText.contains("beer"));
     }
 }
