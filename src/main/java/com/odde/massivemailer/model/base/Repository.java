@@ -89,10 +89,10 @@ public class Repository<T extends Entity> {
         for (int i = 0; i < args.length; i += 2) {
             String key;
             try {
-                key = (String) args[i];
+                key = args[i];
             } catch (ClassCastException cce) {
                 System.err.println(cce.getMessage());
-                System.err.println("args[" + i + "] " + args[i].toString());
+                System.err.println("args[" + i + "] " + args[i]);
                 throw cce;
             }
             if (i + 1 < args.length) {

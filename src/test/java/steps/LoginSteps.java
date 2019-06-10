@@ -134,13 +134,13 @@ public class LoginSteps {
     }
 
     @When("^click the sign up link from the login page$")
-    public void ログインページのサインアップページのリンクを押下する() throws Throwable {
+    public void ログインページのサインアップページのリンクを押下する() {
         visitLoginPage();
         driver.clickById("signup");
     }
 
     @Then("^user should see the sign up page$")
-    public void サインアップページに遷移すること() throws Throwable {
+    public void サインアップページに遷移すること() {
         assertEquals(driver.getCurrentTitle(), "Sign Up");
     }
 }

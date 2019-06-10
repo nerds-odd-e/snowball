@@ -17,22 +17,22 @@ public class QuestionCategorySteps {
     private final WebDriverWrapper driver = site.getDriver();
 
     @Given("^I'm on the category selection page$")
-    public void カテゴリー選択画面が表示される() throws Throwable {
+    public void カテゴリー選択画面が表示される() {
         site.visit("onlinetest/question_category.jsp");
     }
 
     @Given("^all the categories should have been selected$")
-    public void カテゴリーのチェックボックスにチェックが入っている() throws Throwable {
+    public void カテゴリーのチェックボックスにチェックが入っている() {
         assertTrue(driver.findElements(By.cssSelector("input[type=checkbox]:checked")).size() > 0);
     }
 
     @When("^I click the start test button$")
-    public void スタートボタンをクリック() throws Throwable {
+    public void スタートボタンをクリック() {
         driver.findElementById("start_test").click();
     }
 
     @Then("^I should see the test starts$")
-    public void 問題画面へ遷移する() throws Throwable {
+    public void 問題画面へ遷移する() {
         assertEquals("Question", driver.getCurrentTitle());
     }
 }

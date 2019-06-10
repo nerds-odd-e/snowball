@@ -66,7 +66,7 @@ public class ContactPersonTest {
 
         ContactPerson actual = repo(ContactPerson.class).findById(p.getId());
         assertEquals("1,2,3", actual.getCourseList());
-        assertEquals("2017-11-30", actual.getSentDate().toString());
+        assertEquals("2017-11-30", actual.getSentDate());
     }
 
     @Test

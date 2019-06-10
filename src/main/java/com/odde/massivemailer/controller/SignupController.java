@@ -17,7 +17,7 @@ import static com.odde.massivemailer.model.base.Repository.repo;
 public class SignupController extends AppController {
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         User existing_user = repo(User.class).findFirstBy("name", req.getParameter("userName"));
         if (existing_user != null){

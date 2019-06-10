@@ -35,6 +35,8 @@ public class WebDriverWrapper {
 
     public WebDriverWrapper() {
         if (System.getProperty("webdriver").equals("chrome")) {
+            System.setProperty("webdriver.chrome.args", "--disable-logging");
+            System.setProperty("webdriver.chrome.silentOutput", "true");
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions.addArguments("--headless");
             chromeOptions.addArguments("--disable-gpu");

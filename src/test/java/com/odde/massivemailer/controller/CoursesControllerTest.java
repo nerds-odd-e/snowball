@@ -95,9 +95,9 @@ public class CoursesControllerTest {
         controller.doGet(request, response);
         List<LinkedTreeMap<String, Object>> courses = AppGson.getGson().fromJson(response.getContentAsString(), List.class);
         assertEquals(2, courses.size());
-        Map attributes = (Map) courses.get(0);
+        Map attributes = courses.get(0);
         assertEquals(bobsCourse.getCourseName(), attributes.get("courseName"));
-        attributes = (Map) courses.get(1);
+        attributes = courses.get(1);
         assertEquals(anotherCourse.getCourseName(), attributes.get("courseName"));
     }
 
@@ -116,7 +116,7 @@ public class CoursesControllerTest {
         controller.doGet(request, response);
         List<LinkedTreeMap<String, Object>> courses = AppGson.getGson().fromJson(response.getContentAsString(), List.class);
         assertEquals(1, courses.size());
-        Map attributes = (Map) courses.get(0);
+        Map attributes = courses.get(0);
         assertEquals(bobsCourse.getCourseName(), attributes.get("courseName"));
     }
 

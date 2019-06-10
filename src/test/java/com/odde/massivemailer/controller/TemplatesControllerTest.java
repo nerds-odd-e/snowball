@@ -43,7 +43,7 @@ public class TemplatesControllerTest {
 	public void testUpdateTemplate() throws Exception {
         Template template = repo(Template.class).findFirstBy("templateName", "Default");
         ObjectId savedTemplateId = template.getId();
-        req.setParameter("templateList", ((ObjectId) savedTemplateId).toString());
+        req.setParameter("templateList", savedTemplateId.toString());
 		req.setParameter("subject", "Hello Terry");
 		req.setParameter("content", "Hello Terry, Cource details are below.");
 		templateCtrl.doPost(req,res);
