@@ -13,6 +13,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import java.util.Collection;
 import java.util.Optional;
 
+import static com.odde.massivemailer.model.base.Repository.repo;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.*;
 
@@ -71,7 +72,7 @@ public class AddQuestionControllerTest {
     public void doPostAddQuestion() throws Exception {
         setupValidRequest();
         controller.doPost(request, response);
-        Question question = Question.repository().findAll().get(0);
+        Question question = repo(Question.class).findAll().get(0);
 
         String description = request.getParameter("description");
         assertEquals(description, question.getDescription());
@@ -94,7 +95,7 @@ public class AddQuestionControllerTest {
     public void doPostAddQuestion_MultipleChoice() throws Exception {
         setupValidRequestForMultipleChoice();
         controller.doPost(request, response);
-        Question question = Question.repository().findAll().get(0);
+        Question question = repo(Question.class).findAll().get(0);
 
         String description = request.getParameter("description");
         assertEquals(description, question.getDescription());

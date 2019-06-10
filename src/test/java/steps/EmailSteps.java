@@ -9,6 +9,7 @@ import cucumber.api.java.en.When;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
+import static com.odde.massivemailer.model.base.Repository.repo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -56,12 +57,12 @@ public class EmailSteps {
 
     @Then("It should not send out emails")
     public void shouldNotSendOutEmails() {
-        assertThat(SentMail.repository().count(), is(0L));
+        assertThat(repo(SentMail.class).count(), is(0L));
     }
 
     @Then("^It should send (\\d+) emails$")
     public void it_should_send(int expected_email_count) {
-        assertThat(SentMail.repository().count(), is((long)expected_email_count));
+        assertThat(repo(SentMail.class).count(), is((long)expected_email_count));
     }
 
     @Given("^there are some existing templates$")

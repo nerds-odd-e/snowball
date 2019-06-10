@@ -12,6 +12,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import static com.odde.massivemailer.model.base.Repository.repo;
+
 @WebServlet("/sendAllCourses")
 public class UpcomingCoursesController extends AppController {
 
@@ -25,9 +27,9 @@ public class UpcomingCoursesController extends AppController {
     private String doSendAllMails() throws IOException {
         int totalMailsSent = 0;
         String courseIDs = "";
-        List<ContactPerson> contactList = ContactPerson.repository().findAll();
+        List<ContactPerson> contactList = repo(ContactPerson.class).findAll();
         for (ContactPerson person : contactList) {
-            List<Course> nearCourses = Course.findAllCourseNearTo(person.geoCoordinates());
+            List<Course> nearCourses = Course.findAllCourseNearTo(person.getGeoLocation());
             if (nearCourses.isEmpty()) {
                 continue;
             }
@@ -45,7 +47,7 @@ public class UpcomingCoursesController extends AppController {
             String text = date.format(formatter);
             LocalDate parsedDate = LocalDate.parse(text, formatter);
 
-            ContactPerson updatePerson = ContactPerson.repository().findById(person.getId());
+            ContactPerson updatePerson = repo(ContactPerson.class).findById(person.getId());
             updatePerson.setCourseList(courseIDs);
             updatePerson.setSentDate(parsedDate.toString());
             updatePerson.saveIt();

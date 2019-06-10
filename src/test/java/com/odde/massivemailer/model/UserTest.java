@@ -4,6 +4,7 @@ import com.odde.TestWithDB;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static com.odde.massivemailer.model.base.Repository.repo;
 import static org.junit.Assert.*;
 
 @RunWith(TestWithDB.class)
@@ -42,7 +43,7 @@ public class UserTest {
         String password = "hogehoge";
         User user = createUser("hoge@example.com", password);
 
-        User dbUser = User.repository().findFirstBy("token", user.getToken());
+        User dbUser = repo(User.class).findFirstBy("token", user.getToken());
         assertNotNull(dbUser);
     }
 

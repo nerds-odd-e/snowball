@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
+import static com.odde.massivemailer.model.base.Repository.repo;
+
 @WebServlet("/onlinetest/category/advice")
 public class CategoryAdviceController extends AppController {
 
@@ -38,7 +40,10 @@ public class CategoryAdviceController extends AppController {
         String categoryId = req.getParameter("category");
         String advice = req.getParameter("advice");
         String link = req.getParameter("link");
-        Category.saveAdvice(categoryId, advice, link);
+        Category cat = repo(Category.class).findByStringId(categoryId);
+        cat.setAdvice(advice);
+        cat.setLink(link);
+        cat.saveIt();
         RequestDispatcher dispatch = req.getRequestDispatcher("/onlinetest/edit_category_advice.jsp");
         dispatch.forward(req, resp);
     }

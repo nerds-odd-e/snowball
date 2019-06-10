@@ -11,6 +11,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 
 import java.io.IOException;
 
+import static com.odde.massivemailer.model.base.Repository.repo;
 import static org.junit.Assert.*;
 
 @RunWith(TestWithDB.class)
@@ -56,7 +57,7 @@ public class InitializePasswordControllerTest {
         request.setParameter("password_confirm", "sdfgsdfgsdg");
         newUser.saveIt();
         controller.doPost(request, response);
-        User user = User.repository().findFirstBy("token", newUser.getToken());
+        User user = repo(User.class).findFirstBy("token", newUser.getToken());
         assertEquals("initialize_password_success.jsp", response.getRedirectedUrl());
         Assertions.assertThat(user.getHashdPassword()).isNotEmpty();
     }

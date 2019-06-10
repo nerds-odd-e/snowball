@@ -8,6 +8,8 @@ import steps.site.pages.*;
 
 import java.util.stream.Collectors;
 
+import static com.odde.massivemailer.model.base.Repository.repo;
+
 public class MassiveMailerSite {
     public final WebDriverWrapper driver = WebDriverFactory.getDefaultDriver();
 
@@ -44,7 +46,7 @@ public class MassiveMailerSite {
     }
 
     private String allEmailsThatGotMessages() {
-        return SentMail.repository().findAll().stream().map(m ->
+        return repo(SentMail.class).findAll().stream().map(m ->
                 String.format("\t\t%s: %s", m.getReceivers(), m.getSubject())
         ).collect(Collectors.joining("\n"));
     }

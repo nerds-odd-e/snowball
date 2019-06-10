@@ -7,33 +7,24 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.bson.BsonReader;
-import org.bson.BsonWriter;
-import org.bson.codecs.Codec;
-import org.bson.codecs.DecoderContext;
-import org.bson.codecs.EncoderContext;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.apache.commons.lang3.StringUtils.defaultIfEmpty;
+import static com.odde.massivemailer.model.base.Repository.repo;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Template extends Entity {
+public class Template extends Entity<Template> {
     private String templateName;
     private String subject;
     private String content;
 
-    public static Repository<Template> repository() {
-        return new Repository<>(Template.class, "email_templates");
-    }
-
     public static List<Template> findByTemplateName(String templateName) {
-        return repository().findBy("templateName", templateName);
+        return repo(Template.class).findBy("templateName", templateName);
     }
 
     public List<Mail> getPopulatedEmailTemplate(Course course, List<ContactPerson> courseParticipants) {
@@ -85,15 +76,8 @@ public class Template extends Entity {
         saveIt();
     }
 
-    public Template saveIt() {
-        repository().save(this);
-        return this;
-    }
-
     @Override
-    public boolean onBeforeSave() {
-
-        return true;
+    public void onBeforeSave() {
     }
 
 }

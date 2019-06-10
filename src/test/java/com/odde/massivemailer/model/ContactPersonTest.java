@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.odde.massivemailer.model.base.Repository.repo;
 import static org.junit.Assert.*;
 
 @RunWith(TestWithDB.class)
@@ -20,7 +21,7 @@ public class ContactPersonTest {
 
     @Test
     public void testCreateContactObjectWithoutCompany() {
-        ContactPerson.repository().fromKeyValuePairs(
+        repo(ContactPerson.class).fromKeyValuePairs(
                 "firstName", "name",
                 "email", "email@abc.com",
                 "lastName", "lastName").saveIt();
@@ -44,26 +45,26 @@ public class ContactPersonTest {
         map.put("company", "myCompany");
         map.put("city", "Singapore");
         map.put("country", "Singapore");
-        ContactPerson.repository().fromMap(map).saveIt();
+        repo(ContactPerson.class).fromMap(map).saveIt();
         ContactPerson actual = ContactPerson.getContactByEmail("email@abc.com");
 
         assertEquals("name", actual.getFirstName());
         assertEquals("lastName", actual.getLastName());
         assertEquals("myCompany", actual.getCompany());
         assertEquals("Singapore", actual.getCity());
-        assertNotNull(actual.getLatitude());
-        assertNotNull(actual.getLongitude());
+        assertNotNull(actual.getGeoLocation().getLatitude());
+        assertNotNull(actual.getGeoLocation().getLongitude());
 
     }
 
     @Test
     public void UpdateContactWhenEmailSent() {
-        ContactPerson p = ContactPerson.repository().fromKeyValuePairs("email", "john@gmail.com");
+        ContactPerson p = repo(ContactPerson.class).fromKeyValuePairs("email", "john@gmail.com");
         p.setCourseList("1,2,3");
         p.setSentDate("2017-11-30");
         p.saveIt();
 
-        ContactPerson actual = ContactPerson.repository().findById(p.getId());
+        ContactPerson actual = repo(ContactPerson.class).findById(p.getId());
         assertEquals("1,2,3", actual.getCourseList());
         assertEquals("2017-11-30", actual.getSentDate().toString());
     }

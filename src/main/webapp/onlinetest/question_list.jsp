@@ -7,7 +7,7 @@
 <%@ page import="java.util.*" %>
 
 <%
-    List<Question> questions = Question.repository().findAll();
+    List<Question> questions = repo(Question.class).findAll();
 	pageContext.setAttribute("questions", questions);
 %>
 <t:with_side_menu title="Question List">

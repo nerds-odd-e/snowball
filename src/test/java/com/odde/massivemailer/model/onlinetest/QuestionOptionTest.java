@@ -23,7 +23,7 @@ public class QuestionOptionTest {
 
     @Test
     public void shouldBeAbleToPersist() {
-        QuestionOption questionOption = QuestionOption.create("desc", false);
+        QuestionOption questionOption = new QuestionOption("desc", false);
         questionOption.addToQuestion(questionId1);
 
         Optional<QuestionOption> actual = QuestionOption.getById(questionOption.getStringId());
@@ -34,8 +34,8 @@ public class QuestionOptionTest {
 
     @Test
     public void shouldSaveAndReadIsCorrectProperly() {
-        QuestionOption wrongOption = QuestionOption.create("desc1", false);
-        QuestionOption rightOption = QuestionOption.create("desc2", true);
+        QuestionOption wrongOption = new QuestionOption("desc1", false);
+        QuestionOption rightOption = new QuestionOption("desc2", true);
         wrongOption.addToQuestion(questionId1);
         rightOption.addToQuestion(questionId1);
 
@@ -53,7 +53,7 @@ public class QuestionOptionTest {
     @Test
     public void shouldReturnOptionsForQuestion() {
         IntStream.range(0, 3).forEach(i -> {
-            QuestionOption questionOption = QuestionOption.create("desc", false);
+            QuestionOption questionOption = new QuestionOption("desc", false);
             questionOption.addToQuestion(i%2 ==0 ? questionId1 : questionId2);
         });
 

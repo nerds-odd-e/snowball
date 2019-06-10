@@ -3,15 +3,17 @@ package com.odde.massivemailer.model;
 import com.google.common.base.Strings;
 import com.odde.massivemailer.model.base.Entity;
 import com.odde.massivemailer.model.base.Errors;
-import com.odde.massivemailer.model.base.Repository;
 import com.odde.massivemailer.service.LocationProviderService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.odde.massivemailer.model.base.Repository.repo;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,16 +28,12 @@ public class Course extends Entity<Course> {
     private String country="";
     private String startDate="";
     private String address="";
-    private Double latitude;
-    private Double longitude;
-
-    public static Repository<Course> repository() {
-        return new Repository<>(Course.class, "courses");
-    }
+    @Valid
+    private Location geoLocation;
 
     public static List<Course> findAllCourseNearTo(Location geoCordinate) {
         List<Course> nearbyCources = new ArrayList<>();
-        List<Course> allCourse = Course.repository().findAll();
+        List<Course> allCourse = repo(Course.class).findAll();
         for (Course course : allCourse) {
             if (course.isNearTo(geoCordinate))
                 nearbyCources.add(course);
@@ -44,30 +42,26 @@ public class Course extends Entity<Course> {
     }
 
     public static Course create(String ...args) {
-        return repository().fromKeyValuePairs(args);
+        return repo(Course.class).fromKeyValuePairs(args);
     }
 
     private boolean isNearTo(Location geoCordinate) {
-        return geoCoordinates().IsNear(geoCordinate);
+        return geoLocation.IsNear(geoCordinate);
     }
 
     public String location() {
         return LocationProviderService.locationString(city, country);
     }
 
-    private Location geoCoordinates() {
-        return new Location(location(), latitude, longitude);
-    }
-
     public static Course getCourseByName(String name) {
-        List<Course> list = repository().findBy("courseName", name);
+        List<Course> list = repo(Course.class).findBy("courseName", name);
         if (list.size() > 0)
             return list.get(0);
         return null;
     }
 
     private List<Participant> participations() {
-        return Participant.repository().findBy("courseId", getId());
+        return repo(Participant.class).findBy("courseId", getId());
     }
 
     public List<ContactPerson> participants() {
@@ -77,34 +71,10 @@ public class Course extends Entity<Course> {
         return participantDetails;
     }
 
-    public Course saveIt() {
-        repository().save(this);
-        return this;
-    }
-
     @Override
-    public boolean onBeforeSave() {
+    public void onBeforeSave() {
         if (Strings.isNullOrEmpty(city))
-            return true;
-        Location coordinate = new LocationProviderService().getCoordinate(city, country);
-        if (coordinate.getLat() == null) {
-            // throw new ValidationException("city cannot be located");
-            return false;
-        }
-        setLatitude(coordinate.getLat());
-        setLongitude(coordinate.getLng());
-        return true;
+            return;
+        geoLocation = new LocationProviderService().getCoordinate(city, country);
     }
-
-    public boolean save() {
-        saveIt();
-        return getId() != null;
-    }
-
-    public Errors errors() {
-        Errors errors = new Errors();
-        errors.put("city", "cannot be located");
-        return errors;
-    }
-
 }

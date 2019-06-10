@@ -11,6 +11,7 @@ import steps.site.MassiveMailerSite;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.odde.massivemailer.model.base.Repository.repo;
 import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertThat;
@@ -66,7 +67,7 @@ public class CourseTests {
     @Given("^There are (\\d+) courses$")
     public void there_are_courses(int num) {
         for (int i = 1; i <= num; i++){
-            Course.repository().fromMap(createCourseData("Tokyo", "Japan", "CSD-" + i)).saveIt();
+            repo(Course.class).fromMap(createCourseData("Tokyo", "Japan", "CSD-" + i)).saveIt();
         }
     }
 

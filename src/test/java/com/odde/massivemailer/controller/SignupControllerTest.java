@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
+import static com.odde.massivemailer.model.base.Repository.repo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -91,7 +92,7 @@ public class SignupControllerTest {
 
         controller.doPost(request, response);
 
-        User actual = User.repository().findFirstBy("email", "yamada@hoge.com");
+        User actual = repo(User.class).findFirstBy("email", "yamada@hoge.com");
 
         assertThat(actual.getEmail(), is("yamada@hoge.com"));
     }

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.odde.massivemailer.factory.ContactFactory.uniqueContact;
+import static com.odde.massivemailer.model.base.Repository.repo;
 
 public class CourseFactory {
 
@@ -30,11 +31,9 @@ public class CourseFactory {
         params.put("duration", "5");
         params.put("instructor", "ROOF");
         params.put("startDate", "2017-05-15");
-        params.put("latitude", 100.0);
-        params.put("longitude", 100.0);
 
         try {
-            return Course.repository().fromMap(params);
+            return repo(Course.class).fromMap(params);
         } catch (Exception e) {
             e.printStackTrace();
         }

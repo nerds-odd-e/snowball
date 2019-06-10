@@ -19,6 +19,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+import static com.odde.massivemailer.model.base.Repository.repo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
@@ -103,7 +104,7 @@ public class SendMailControllerTest {
         String[] companyRecipients = {"ab1@abc.com", "ab2@abc.com", "ab3@abc.com"};
 
         for (String companyRecipient : companyRecipients) {
-            ContactPerson.repository().fromKeyValuePairs("email", companyRecipient, "company", "abc").saveIt();
+            repo(ContactPerson.class).fromKeyValuePairs("email", companyRecipient, "company", "abc").saveIt();
         }
 
         Mail mail = postAndGetMailBeingSent();
@@ -165,7 +166,7 @@ public class SendMailControllerTest {
         }
 
         ContactPeopleBuilder add(final String email) {
-            ContactPerson.repository().fromKeyValuePairs("email", email, "company", company).saveIt();
+            repo(ContactPerson.class).fromKeyValuePairs("email", email, "company", company).saveIt();
             return this;
         }
     }
@@ -215,7 +216,7 @@ public class SendMailControllerTest {
 
         controller.doPost(request, response);
 
-        List<SentMail> all = SentMail.repository().findAll();
+        List<SentMail> all = repo(SentMail.class).findAll();
         SentMail capturedSentMail =  all.get(all.size() - 1);
 
         assertNotNull(capturedSentMail.getMessageId());

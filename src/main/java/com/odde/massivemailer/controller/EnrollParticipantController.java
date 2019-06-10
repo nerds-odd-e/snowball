@@ -19,6 +19,8 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.odde.massivemailer.model.base.Repository.repo;
+
 @WebServlet("/enroll_participants")
 public class EnrollParticipantController extends AppController {
 
@@ -42,7 +44,7 @@ public class EnrollParticipantController extends AppController {
         }
 
         public void save() {
-            ContactPerson contactPerson = ContactPerson.repository().fromKeyValuePairs(
+            ContactPerson contactPerson = repo(ContactPerson.class).fromKeyValuePairs(
                     "email", line[0],
                     "firstName", line[1],
                     "lastName", line[2],

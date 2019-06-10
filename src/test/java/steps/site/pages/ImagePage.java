@@ -3,6 +3,8 @@ package steps.site.pages;
 import com.odde.massivemailer.model.SentMailVisit;
 import steps.site.MassiveMailerSite;
 
+import static com.odde.massivemailer.model.base.Repository.repo;
+
 public class ImagePage {
     private final MassiveMailerSite site;
 
@@ -11,7 +13,7 @@ public class ImagePage {
     }
 
     public void load(final String recipient) {
-        String token = SentMailVisit.repository().findFirstBy("emailAddress", recipient).getStringId();
+        String token = repo(SentMailVisit.class).findFirstBy("emailAddress", recipient).getStringId();
         String path = "resources/images/qrcode.png?token=" + token;
         site.visit(path);
     }

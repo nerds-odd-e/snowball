@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import static com.odde.massivemailer.model.base.Repository.repo;
+
 public class AppController extends HttpServlet {
 
     private MailService mailService;
@@ -60,7 +62,7 @@ public class AppController extends HttpServlet {
 
     protected User getCurrentUser(HttpServletRequest request) {
         final String email = getUserEmailFromCookie(request);
-        return User.repository().findFirstBy("email", email);
+        return repo(User.class).findFirstBy("email", email);
     }
 
     private String getUserEmailFromCookie(HttpServletRequest request) {

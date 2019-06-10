@@ -24,7 +24,7 @@ public class QuestionWithOptionsTest {
 
     @Test
     public void shouldCreateQuestionHavingDescriptionAndAdviceAndAnswerOptions() {
-        List<QuestionOption> expectedQuestionOptions = IntStream.range(0, 4).mapToObj(index -> QuestionOption.create("option desc"+index, index%4==0)).collect(Collectors.toList());
+        List<QuestionOption> expectedQuestionOptions = IntStream.range(0, 4).mapToObj(index -> new QuestionOption("option desc"+index, index%4==0)).collect(Collectors.toList());
         Question expected  = createWithOptions(expectedQuestionOptions);
 
         Question actual = Question.getById(expected.getId());

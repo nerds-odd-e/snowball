@@ -18,6 +18,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import java.io.IOException;
 
 import static com.odde.massivemailer.factory.ContactFactory.uniqueContact;
+import static com.odde.massivemailer.model.base.Repository.repo;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.verify;
@@ -77,12 +78,12 @@ public class ContactsControllerTest {
     public void addAnExistingContact() throws Exception {
         ContactPerson contactPerson1 = uniqueContact();
         contactPerson1.saveIt();
-        assertEquals(1, (long) ContactPerson.repository().count());
+        assertEquals(1, (long) repo(ContactPerson.class).count());
         request.setParameter("email", contactPerson1.getEmail());
         request.setParameter("country", "Singapore");
         request.setParameter("city", "Singapore");
         controller.doPost(request, response);
-        assertEquals(1, (long) ContactPerson.repository().count());
+        assertEquals(1, (long) repo(ContactPerson.class).count());
         assertEquals("add_contact.jsp?status=fail&msg={ email:\"should be unique\" }", response.getRedirectedUrl());
     }
 
@@ -98,7 +99,7 @@ public class ContactsControllerTest {
 
         assertEquals("contactlist.jsp?status=success&msg=Add contact successfully", response.getRedirectedUrl());
 
-        User user = User.repository().findFirstBy("email", request.getParameter("email"));
+        User user = repo(User.class).findFirstBy("email", request.getParameter("email"));
         assertNotNull(user);
     }
 

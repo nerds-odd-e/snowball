@@ -1,20 +1,29 @@
 package com.odde.massivemailer.model.validator;
 
+import com.odde.massivemailer.model.ContactPerson;
+import com.odde.massivemailer.model.base.Entity;
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+
+import static com.odde.massivemailer.model.base.Repository.repo;
 
 public class LocationValidator implements
         ConstraintValidator<CheckLocation, String> {
 
+    private CheckLocation checkLocation;
+
     @Override
-    public void initialize(CheckLocation contactNumber) {
+    public void initialize(CheckLocation checkLocation) {
+        this.checkLocation = checkLocation;
     }
 
     @Override
     public boolean isValid(String contactField,
                            ConstraintValidatorContext cxt) {
-        return contactField != null && contactField.matches("[0-9]+")
-                && (contactField.length() > 8) && (contactField.length() < 14);
+
+        Entity entity = repo(checkLocation.scope()).findFirstBy(checkLocation.toString(), contactField);
+        return true;
     }
 
 }

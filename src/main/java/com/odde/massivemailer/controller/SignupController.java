@@ -11,13 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import static com.odde.massivemailer.model.base.Repository.repo;
+
 @WebServlet("/signup")
 public class SignupController extends AppController {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 
-        User existing_user = User.repository().findFirstBy("name", req.getParameter("userName"));
+        User existing_user = repo(User.class).findFirstBy("name", req.getParameter("userName"));
         if (existing_user != null){
             resp.sendRedirect("/signup.jsp?status=fail");
             return;

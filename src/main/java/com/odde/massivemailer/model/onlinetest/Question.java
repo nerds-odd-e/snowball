@@ -1,32 +1,24 @@
 package com.odde.massivemailer.model.onlinetest;
 
 import com.odde.massivemailer.model.base.Entity;
-import com.odde.massivemailer.model.base.Repository;
-import com.odde.massivemailer.model.base.ValidationException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.bson.BsonReader;
-import org.bson.BsonWriter;
-import org.bson.codecs.Codec;
-import org.bson.codecs.DecoderContext;
-import org.bson.codecs.EncoderContext;
 import org.bson.types.ObjectId;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.*;
 
+import static com.odde.massivemailer.model.base.Repository.repo;
 import static java.util.stream.Collectors.toList;
-import static org.apache.commons.lang3.StringUtils.defaultIfEmpty;
-import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Question extends Entity {
+public class Question extends Entity<Question> {
 
     @NotNull(message="Description cannot be empty")
     @NotBlank(message="Description cannot be empty")
@@ -39,22 +31,11 @@ public class Question extends Entity {
     private boolean isApproved;
 
     @Override
-    public boolean onBeforeSave() {
-//        if(isEmpty(description)) {
-//            throw new ValidationException("`description` cannot be empty");
-//        }
-//        if(categoryId == null) {
-//            throw new ValidationException("`categoryId` cannot be empty");
-//        }
-        return true;
-    }
-
-    public static Repository<Question> repository() {
-        return new Repository<>(Question.class, "questions");
+    public void onBeforeSave() {
     }
 
     static Question getById(ObjectId questionId) {
-        Question question = repository().findById(questionId);
+        Question question = repo(Question.class).findById(questionId);
         if(question == null) {
            throw new IllegalArgumentException("No question found by given id.");
         }
@@ -62,7 +43,7 @@ public class Question extends Entity {
     }
 
     public Category getCategory() {
-        return Category.repository().findById(categoryId);
+        return repo(Category.class).findById(categoryId);
     }
 
     public String getCategoryName() {
@@ -105,17 +86,12 @@ public class Question extends Entity {
         return correctOptions.contains(optionId);
     }
 
-    public Question saveIt() {
-        repository().save(this);
-        return this;
-    }
-
     public void createWrongOption(String optionText) {
-        new QuestionOption(getId(), optionText, false).saveIt();
+        new QuestionOption(optionText, false, getId()).saveIt();
     }
 
     public void createCorrectOption(String optionText) {
-        new QuestionOption(getId(), optionText, true).saveIt();
+        new QuestionOption(optionText, true, getId()).saveIt();
     }
 
     boolean belongsTo(Category cat) {

@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.odde.massivemailer.model.base.Repository.repo;
 import static junit.framework.TestCase.assertEquals;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.not;
@@ -94,7 +95,7 @@ public class QuestionTest {
 
     @Test
     public void shouldReturnEmptyListByGetAll() {
-        List<Question> questions = Question.repository().findAll();
+        List<Question> questions = repo(Question.class).findAll();
 
         assertEquals(questions.size(), 0);
     }
@@ -103,7 +104,7 @@ public class QuestionTest {
     public void shouldReturnTwoElementByGetAll() {
         new Question("desc", "adv", categoryId, false, false).saveIt();
         new Question("desc", "adv", categoryId, false, false).saveIt();
-        List<Question> questions = Question.repository().findAll();
+        List<Question> questions = repo(Question.class).findAll();
         assertEquals(questions.size(), 2);
     }
 }

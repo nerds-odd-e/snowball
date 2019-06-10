@@ -2,6 +2,7 @@ package com.odde.massivemailer.model.base;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.odde.massivemailer.model.onlinetest.Category;
 import lombok.Getter;
 import lombok.Setter;
 import org.bson.types.ObjectId;
@@ -14,12 +15,15 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import static com.odde.massivemailer.model.base.Repository.repo;
+
 @Getter
 @Setter
 public abstract class Entity<T> {
+    static ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
     protected ObjectId id = null;
 
-    public abstract boolean onBeforeSave();
+    public abstract void onBeforeSave();
 
     public ObjectId getId() {
         return id;
@@ -49,13 +53,26 @@ public abstract class Entity<T> {
     }
 
     public boolean onBeforeSaveEve() {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
-        Set<ConstraintViolation<Entity<T>>> validate = validator.validate(this);
+        onBeforeSave();
+        Validator validator = validatorFactory.getValidator();
+        Set<ConstraintViolation<Entity>> validate = validator.validate(this);
         if (validate.size() > 0) {
             throw new ValidationException(validate);
         }
 
-        return onBeforeSave();
+        return true;
+    }
+
+    protected <T extends Entity>Repository<T> repository() {
+        return (Repository<T>) repo(this.getClass());
+    }
+
+    public T saveIt() {
+        repository().save(this);
+        return (T)this;
+    }
+
+    public void save() throws ValidationException {
+        saveIt();
     }
 }

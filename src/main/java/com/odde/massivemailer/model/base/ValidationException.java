@@ -4,11 +4,20 @@ import javax.validation.ConstraintViolation;
 import java.util.Set;
 
 public class ValidationException extends RuntimeException {
-    public ValidationException(String s) {
-        super(s);
+    private Errors errors = new Errors();
+    private Set<ConstraintViolation<Entity>> validate;
+
+    public <T> ValidationException(Set<ConstraintViolation<Entity>> validate) {
+        validate.forEach(v->{
+            errors.put(v.getPropertyPath().toString(), v.getMessage());
+        });
     }
 
-    public <T> ValidationException(Set<ConstraintViolation<Entity<T>>> validate) {
+    public ValidationException(String field, String message) {
+        errors.put(field, message);
+    }
 
+    public Errors errors() {
+        return errors;
     }
 }

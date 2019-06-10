@@ -3,7 +3,6 @@ package com.odde.massivemailer.model;
 import com.odde.massivemailer.controller.config.ApplicationConfiguration;
 import com.odde.massivemailer.exception.EmailException;
 import com.odde.massivemailer.model.base.Entity;
-import com.odde.massivemailer.model.base.Repository;
 import com.odde.massivemailer.service.MailService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,21 +20,18 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 
 import static com.mongodb.client.model.Filters.eq;
+import static com.odde.massivemailer.model.base.Repository.repo;
 import static org.apache.commons.lang3.StringUtils.defaultIfEmpty;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
-public class User extends Entity {
+public class User extends Entity<User> {
     private String name;
     private String email;
     private String hashdPassword;
     private String token;
-
-    public static Repository<User> repository() {
-        return new Repository<>(User.class, "users");
-    }
 
     public User(String email) {
         setEmail(email);
@@ -55,17 +51,12 @@ public class User extends Entity {
         email.sendMailToRecipient(email1, mailService);
     }
 
-    public User saveIt() {
-        repository().save(this);
-        return this;
-    }
-
     public void setPassword(String password) {
         setHashdPassword(toHashString(password));
     }
 
     public static User getUserByEmail(String email) {
-        return repository().findFirst(eq("email", email));
+        return repo(User.class).findFirst(eq("email", email));
     }
 
     public boolean isPasswordCorrect(String password) {
@@ -94,7 +85,7 @@ public class User extends Entity {
         if (null == token) {
             return null;
         }
-        return repository().findFirst(eq("token", token));
+        return repo(User.class).findFirst(eq("token", token));
     }
 
     public static boolean validatePassword(String password) {
@@ -102,9 +93,7 @@ public class User extends Entity {
     }
 
     @Override
-    public boolean onBeforeSave() {
-
-        return true;
+    public void onBeforeSave() {
     }
 
     public static class UserCodec implements Codec<User> {

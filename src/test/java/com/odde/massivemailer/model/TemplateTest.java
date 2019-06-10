@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static com.odde.massivemailer.model.base.Repository.repo;
+
 @RunWith(TestWithDB.class)
 public class TemplateTest {
 
@@ -31,7 +33,7 @@ public class TemplateTest {
         course.setCity("Singapore");
         course.setCountry("Singapore");
 
-        contactPerson = ContactPerson.repository().fromKeyValuePairs(
+        contactPerson = repo(ContactPerson.class).fromKeyValuePairs(
                 "firstName", "Madhan",
                 "email", "Madhan@CS.com",
                 "lastName", "Karunakaran",

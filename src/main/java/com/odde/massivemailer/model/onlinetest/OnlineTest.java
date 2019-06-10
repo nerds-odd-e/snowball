@@ -1,12 +1,13 @@
 package com.odde.massivemailer.model.onlinetest;
 
 import com.odde.massivemailer.model.base.Entity;
-import com.odde.massivemailer.model.base.Repository;
 
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static com.odde.massivemailer.model.base.Repository.repo;
 
 public class OnlineTest {
 
@@ -18,7 +19,7 @@ public class OnlineTest {
     public List<Answer> answers;
 
     public OnlineTest(int questionCount) {
-        questions = new QuestionCollection(Question.repository().findAll()).generateQuestionList(Category.repository().findAll(), questionCount);
+        questions = new QuestionCollection(repo(Question.class).findAll()).generateQuestionList(repo(Category.class).findAll(), questionCount);
         numberOfAnsweredQuestions = 0;
         categoryCorrectAnswerCount = new HashMap<>();
         categoryTestResults = new ArrayList<>();

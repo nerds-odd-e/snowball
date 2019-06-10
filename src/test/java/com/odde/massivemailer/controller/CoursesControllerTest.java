@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.odde.massivemailer.model.base.Repository.repo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -62,7 +63,7 @@ public class CoursesControllerTest {
         request.setParameter("city", "FooBarXXX");
         controller.doPost(request, response);
         assertNull(Course.getCourseByName("test couree"));
-        assertEquals("add_course.jsp?status=fail&msg={ city:\"cannot be located\" }",response.getRedirectedUrl());
+        assertEquals("add_course.jsp?status=fail&msg={ geoLocation.latitude:\"This location cannot be found\" }",response.getRedirectedUrl());
     }
 
     @Test
@@ -125,7 +126,7 @@ public class CoursesControllerTest {
         courseValue.put("city", "Tokyo");
         courseValue.put("country", "Japan");
 
-        Course course = Course.repository().fromMap(courseValue);
+        Course course = repo(Course.class).fromMap(courseValue);
         course.setCourseName(courseName);
         course.saveIt();
         return course;

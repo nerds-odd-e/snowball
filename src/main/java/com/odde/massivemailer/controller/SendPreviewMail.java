@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.odde.massivemailer.model.base.Repository.repo;
+
 @WebServlet("/previewemail")
 public class SendPreviewMail extends AppController {
 
@@ -59,12 +61,12 @@ public class SendPreviewMail extends AppController {
 
         List<ContactPerson> contactPerson = new ArrayList<>();
         String courseId = req.getParameter("courseId");
-        Course course = Course.repository().findByStringId(courseId);
+        Course course = repo(Course.class).findByStringId(courseId);
 
         String action = req.getParameter("action");
 
         if("preview".equalsIgnoreCase(action)) {
-            ContactPerson admin = ContactPerson.repository().fromKeyValuePairs(
+            ContactPerson admin = repo(ContactPerson.class).fromKeyValuePairs(
                     "firstName", "Admin",
                     "email", "admin@odd-e.com");
             contactPerson.add(admin);

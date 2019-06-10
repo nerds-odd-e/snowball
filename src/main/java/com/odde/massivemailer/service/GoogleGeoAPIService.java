@@ -34,7 +34,8 @@ public class GoogleGeoAPIService {
         for (AddressComponent addressComponent : addressComponents) {
             setAddressInformation(location, addressComponent);
         }
-        location.setLatLong(geocodingResult.geometry.location);
+        location.setLatitude(geocodingResult.geometry.location.lat);
+        location.setLongitude(geocodingResult.geometry.location.lng);
 
         return location;
     }
@@ -43,10 +44,10 @@ public class GoogleGeoAPIService {
         AddressComponentType addressComponentType = addressComponent.types[0];
         if (addressComponentType == AddressComponentType.COUNTRY) {
             location.setCountryCode(addressComponent.shortName);
-            location.setCountryName(addressComponent.longName);
+            location.setCountry(addressComponent.longName);
         }
         if (addressComponentType == AddressComponentType.LOCALITY) {
-            location.setName(addressComponent.longName);
+            location.setCity(addressComponent.longName);
         }
     }
 

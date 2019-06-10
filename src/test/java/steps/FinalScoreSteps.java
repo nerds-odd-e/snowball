@@ -9,6 +9,8 @@ import steps.driver.UiElement;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
+import static com.mongodb.client.model.Filters.eq;
+import static com.odde.massivemailer.model.base.Repository.repo;
 import static org.junit.Assert.assertEquals;
 
 public class FinalScoreSteps {
@@ -60,7 +62,7 @@ public class FinalScoreSteps {
     public void から題出題される(String category, int numberOfQuestions) {
         for (int i = 0; i < numberOfQuestions; i++)
             new QuestionBuilder()
-                    .aQuestion(Category.findByName(category))
+                    .aQuestion(repo(Category.class).findFirst(eq("name", category)))
                     .withWrongOption("wrongOption")
                     .withCorrectOption("correctOption")
                     .please();

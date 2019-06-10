@@ -88,7 +88,7 @@ public class AddQuestionController extends AppController {
             }
             if (!optionDescription.isEmpty()) {
                 boolean isCorrect = checksList.contains(String.valueOf(i + 1));
-                QuestionOption questionOption = new QuestionOption(question.getId(), optionDescription, isCorrect);
+                QuestionOption questionOption = new QuestionOption(optionDescription, isCorrect, question.getId());
                 questionOption.saveIt();
             }
         }

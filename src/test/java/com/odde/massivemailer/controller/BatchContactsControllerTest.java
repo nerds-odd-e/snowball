@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
+import static com.odde.massivemailer.model.base.Repository.repo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -44,7 +45,7 @@ public class BatchContactsControllerTest {
         request.setParameter("data",
                 "email,firstName,lastName,company,country,city");
         controller.doPost(request, response);
-        assertThat(ContactPerson.repository().count(), is(0));
+        assertThat(repo(ContactPerson.class).count(), is(0));
     }
 
     @Test
@@ -52,6 +53,6 @@ public class BatchContactsControllerTest {
         request.setParameter("data",
                 "email,firstName,lastName,company,country,city;aaa@aaa.com,myname,mylastName,mycompany,singapore,singapore");
         controller.doPost(request, response);
-        assertThat(ContactPerson.repository().count(), is(1));
+        assertThat(repo(ContactPerson.class).count(), is(1));
     }
 }

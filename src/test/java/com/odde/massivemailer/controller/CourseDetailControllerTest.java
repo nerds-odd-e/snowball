@@ -13,6 +13,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import java.io.IOException;
 
 import static com.odde.massivemailer.factory.ContactFactory.uniqueContact;
+import static com.odde.massivemailer.model.base.Repository.repo;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
 
@@ -26,7 +27,7 @@ public class CourseDetailControllerTest {
 
     @Test
     public void doGet_containsTitle() throws IOException {
-        Course.repository().createIt("courseName", "CSD Tokyo", "courseDetails", "hoge");
+        repo(Course.class).createIt("courseName", "CSD Tokyo", "courseDetails", "hoge");
         String id = Course.getCourseByName("CSD Tokyo").getStringId();
         request.setParameter("id", id);
         controller.doGet(request, response);
@@ -37,7 +38,7 @@ public class CourseDetailControllerTest {
 
     @Test
     public void doGet_containsCourseParticipants() throws IOException {
-        Course.repository().createIt("courseName", "CSD Tokyo", "courseDetails", "hoge");
+        repo(Course.class).createIt("courseName", "CSD Tokyo", "courseDetails", "hoge");
         ObjectId courseId = Course.getCourseByName("CSD Tokyo").getId();
         ContactPerson contactPerson = uniqueContact();
         contactPerson.setFirstName("Tommy");

@@ -6,11 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.bson.BsonReader;
-import org.bson.BsonWriter;
-import org.bson.codecs.Codec;
-import org.bson.codecs.DecoderContext;
-import org.bson.codecs.EncoderContext;
 import org.bson.types.ObjectId;
 
 
@@ -18,14 +13,10 @@ import org.bson.types.ObjectId;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SentMailVisit extends Entity {
+public class SentMailVisit extends Entity<SentMailVisit> {
     private String emailAddress;
     private int readCount;
     private ObjectId sentMailId;
-
-    public static Repository<SentMailVisit> repository() {
-        return new Repository<>(SentMailVisit.class, "sent_mail_visits");
-    }
 
     public String toJSON() {
         return "{\"email\": \"" + getEmailAddress() + "\", \"open_count\": " + getReadCount() + "}";
@@ -36,15 +27,8 @@ public class SentMailVisit extends Entity {
         saveIt();
     }
 
-    public SentMailVisit saveIt() {
-        repository().save(this);
-        return this;
-    }
-
     @Override
-    public boolean onBeforeSave() {
-
-        return true;
+    public void onBeforeSave() {
     }
 
 }

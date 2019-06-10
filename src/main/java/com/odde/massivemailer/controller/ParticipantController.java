@@ -11,11 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+import static com.odde.massivemailer.model.base.Repository.repo;
+
 @WebServlet("/courseparticipants")
 public class ParticipantController extends AppController {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String courseId = request.getParameter("courseId");
-        List<ContactPerson> participants = Course.repository().findByStringId(courseId).participants();
+        List<ContactPerson> participants = repo(Course.class).findByStringId(courseId).participants();
         respondWithJSON(response, participants);
     }
 

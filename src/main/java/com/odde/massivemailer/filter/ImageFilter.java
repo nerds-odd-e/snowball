@@ -5,6 +5,8 @@ import com.odde.massivemailer.model.SentMailVisit;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 
+import static com.odde.massivemailer.model.base.Repository.repo;
+
 @WebFilter("/resources/images/*")
 public class ImageFilter implements Filter {
     static final String TOKEN = "token";
@@ -17,7 +19,7 @@ public class ImageFilter implements Filter {
         String token = request.getParameter(TOKEN);
 
         if (token != null) {
-            SentMailVisit nd = SentMailVisit.repository().findByStringId(token);
+            SentMailVisit nd = repo(SentMailVisit.class).findByStringId(token);
             nd.updateViewCount();
         }
 

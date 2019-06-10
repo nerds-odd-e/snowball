@@ -11,11 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import static com.odde.massivemailer.model.base.Repository.repo;
+
 @WebServlet("/onlinetest/approve_question")
 public class ApproveQuestionController extends AppController {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Question question = Question.repository().findByStringId(request.getParameter("questionId"));
+        Question question = repo(Question.class).findByStringId(request.getParameter("questionId"));
         question.setApproved(true);
         question.saveIt();
         response.sendRedirect("/onlinetest/question_list.jsp");

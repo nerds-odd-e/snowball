@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.odde.massivemailer.model.base.Repository.repo;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(TestWithDB.class)
@@ -34,7 +35,7 @@ public class CourseTest {
         map.put("duration", "15");
         map.put("instructor", "instructor");
         map.put("startDate", "2017-11-09");
-        aCourse = Course.repository().fromMap(map).saveIt();
+        aCourse = repo(Course.class).fromMap(map).saveIt();
         GivenIhaveThreeCourcesInSG_Kl_USA();
     }
 
@@ -91,7 +92,7 @@ public class CourseTest {
         map.put("city", city);
         map.put("instructor", instructor);
         map.put("courseDetails", "This is a great course");
-        Course course = Course.repository().fromMap(map);
+        Course course = repo(Course.class).fromMap(map);
         course.saveIt();
         return course;
     }

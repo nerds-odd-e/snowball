@@ -18,6 +18,8 @@ import steps.site.MassiveMailerSite;
 import java.util.List;
 import java.util.Map;
 
+import static com.mongodb.client.model.Filters.eq;
+import static com.odde.massivemailer.model.base.Repository.repo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
@@ -74,7 +76,7 @@ public class QuestionStep {
         this.currentTestTotalQuestions = totalQuestions;
         for (int i = 0; i < totalQuestions; i++)
             new QuestionBuilder()
-                    .aQuestion(Category.findByName("Scrum"))
+                    .aQuestion(repo(Category.class).findFirst(eq("name", "Scrum")))
                     .withWrongOption("wrongOption")
                     .withCorrectOption("correctOption")
                     .please();

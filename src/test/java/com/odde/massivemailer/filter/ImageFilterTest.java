@@ -16,6 +16,7 @@ import javax.servlet.ServletResponse;
 import java.io.IOException;
 import java.util.Date;
 
+import static com.odde.massivemailer.model.base.Repository.repo;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(TestWithDB.class)
@@ -42,7 +43,7 @@ public class ImageFilterTest {
         SentMailVisit nd = new SentMailVisit("my@a.b.com", 0, mail.getId()).saveIt();
         request.setParameter(ImageFilter.TOKEN, nd.getStringId());
         filter.doFilter(request, response, chain);
-        SentMailVisit nd1 = SentMailVisit.repository().findById(nd.getId());
+        SentMailVisit nd1 = repo(SentMailVisit.class).findById(nd.getId());
         assertEquals(1, nd1.getReadCount());
     }
 }

@@ -1,16 +1,10 @@
 package com.odde.massivemailer.model;
 
 import com.odde.massivemailer.model.base.Entity;
-import com.odde.massivemailer.model.base.Repository;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.bson.BsonReader;
-import org.bson.BsonWriter;
-import org.bson.codecs.Codec;
-import org.bson.codecs.DecoderContext;
-import org.bson.codecs.EncoderContext;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,21 +13,18 @@ import java.util.List;
 import java.util.TimeZone;
 
 import static com.mongodb.client.model.Filters.eq;
+import static com.odde.massivemailer.model.base.Repository.repo;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SentMail extends Entity {
+public class SentMail extends Entity<SentMail> {
     private Date sentDate;
     private String subject;
     private String content;
     private Long messageId;
     private String receivers;
-
-    public static Repository<SentMail> repository() {
-        return new Repository<>(SentMail.class, "sent_mails");
-    }
 
     public void addEmailAddress(final String emailAddress) {
         SentMailVisit sentMailVisit = new SentMailVisit();
@@ -66,22 +57,15 @@ public class SentMail extends Entity {
     }
 
     public List<SentMailVisit> getSentMailVisits() {
-        return SentMailVisit.repository().find(eq("sentMailId", getId()));
+        return repo(SentMailVisit.class).find(eq("sentMailId", getId()));
     }
 
     public static SentMail getSentMailBy(String email) {
-        return repository().findFirstBy("receivers", email);
-    }
-
-    public SentMail saveIt() {
-        repository().save(this);
-        return this;
+        return repo(SentMail.class).findFirstBy("receivers", email);
     }
 
     @Override
-    public boolean onBeforeSave() {
-
-        return true;
+    public void onBeforeSave() {
     }
 
 }

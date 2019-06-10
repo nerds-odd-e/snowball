@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.odde.massivemailer.model.base.Repository.repo;
+
 @WebServlet("/course/detail")
 public class CourseDetailController extends AppController{
     static class CourseDetailDTO {
@@ -37,7 +39,7 @@ public class CourseDetailController extends AppController{
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String courseId = request.getParameter("id");
-        Course course = Course.repository().findByStringId(courseId);
+        Course course = repo(Course.class).findByStringId(courseId);
 
         List<CourseDetailDTO.ParticipantDTO> participants = course.participants().stream()
                 .map(CourseDetailDTO.ParticipantDTO::new)

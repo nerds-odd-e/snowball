@@ -19,6 +19,7 @@ import java.util.List;
 
 import static com.odde.massivemailer.factory.ContactFactory.aContactFrom;
 import static com.odde.massivemailer.factory.ContactFactory.uniqueContact;
+import static com.odde.massivemailer.model.base.Repository.repo;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -26,10 +27,10 @@ import static org.mockito.Mockito.*;
 @RunWith(TestWithDB.class)
 public class UpcomingCoursesControllerTest {
 
-    private final Course singaporeEvent = Course.repository().fromKeyValuePairs("courseName", "Scrum In Singapore", "city", "Singapore", "country", "Singapore");
-    private final Course singaporeEventTwo = Course.repository().fromKeyValuePairs("courseName", "A-TDD In Singapore", "city", "Singapore", "country", "Singapore");
-    private final Course bangkokEvent = Course.repository().fromKeyValuePairs("courseName", "Code Smells In Bangkok", "city", "Bangkok", "country", "Thailand");
-    private final Course tokyoEvent = Course.repository().fromKeyValuePairs("courseName", "Code Refactoring In Tokyo", "city", "Tokyo", "country", "Japan");
+    private final Course singaporeEvent = repo(Course.class).fromKeyValuePairs("courseName", "Scrum In Singapore", "city", "Singapore", "country", "Singapore");
+    private final Course singaporeEventTwo = repo(Course.class).fromKeyValuePairs("courseName", "A-TDD In Singapore", "city", "Singapore", "country", "Singapore");
+    private final Course bangkokEvent = repo(Course.class).fromKeyValuePairs("courseName", "Code Smells In Bangkok", "city", "Bangkok", "country", "Thailand");
+    private final Course tokyoEvent = repo(Course.class).fromKeyValuePairs("courseName", "Code Refactoring In Tokyo", "city", "Tokyo", "country", "Japan");
 
     private final ContactPerson singaporeContact = aContactFrom("Singapore", "Singapore");
     private final ContactPerson singaporeContactTwo = aContactFrom("Singapore", "Singapore");

@@ -14,35 +14,26 @@ import org.bson.codecs.DecoderContext;
 import org.bson.codecs.EncoderContext;
 import org.bson.types.ObjectId;
 
+import static com.odde.massivemailer.model.base.Repository.repo;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
-public class Participant extends Entity {
+public class Participant extends Entity<Participant> {
     private ObjectId contactPersonId;
     private ObjectId courseId;
 
-    public static Repository<Participant> repository() {
-        return new Repository<>(Participant.class, "participants");
-    }
-
     ContactPerson getContactPerson() {
-        return ContactPerson.repository().findById(contactPersonId);
+        return repo(ContactPerson.class).findById(contactPersonId);
     }
 
     Course getCourse() {
-        return Course.repository().findById(courseId);
-    }
-
-    public Participant saveIt() {
-        repository().save(this);
-        return this;
+        return repo(Course.class).findById(courseId);
     }
 
     @Override
-    public boolean onBeforeSave() {
-
-        return true;
+    public void onBeforeSave() {
     }
 
     public static class ParticipantCodec implements Codec<Participant> {

@@ -4,6 +4,8 @@ import com.google.common.base.Strings;
 import com.odde.massivemailer.model.base.Entity;
 import com.odde.massivemailer.model.base.Errors;
 import com.odde.massivemailer.model.base.Repository;
+import com.odde.massivemailer.model.base.ValidationException;
+import com.odde.massivemailer.model.validator.CheckLocation;
 import com.odde.massivemailer.service.LocationProviderService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,22 +13,20 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.bson.types.ObjectId;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static com.odde.massivemailer.model.base.Repository.repo;
 
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
-public class ContactPerson extends Entity {
+public class ContactPerson extends Entity<ContactPerson> {
     private String firstName;
     private String lastName;
     @NotNull(message = "Eamil cannot be null")
@@ -37,8 +37,8 @@ public class ContactPerson extends Entity {
     private String country;
     private String courseList;
     private String sentDate;
-    private Double longitude;
-    private Double latitude;
+    @Valid
+    private Location geoLocation;
 
     private static int EMAIL_INDEX = 0;
     private static int FIRSTNAME_INDEX = 1;
@@ -52,10 +52,6 @@ public class ContactPerson extends Entity {
 //        validateEmailOf("email").message("email is invalid");
 //        validateWith(new UniquenessValidator("email"));
 //    }
-
-    public static Repository<ContactPerson> repository() {
-        return new Repository<>(ContactPerson.class, "contacts");
-    }
 
     public static void createContactsFromCSVData(String csvData) {
 
@@ -84,7 +80,7 @@ public class ContactPerson extends Entity {
             map.put("company", contactInformation[COMPANY_INDEX]);
             map.put("city", contactInformation[CITY_INDEX]);
             map.put("country", contactInformation[COUNTRY_INDEX]);
-            ContactPerson contactPerson = ContactPerson.repository().fromMap(map);
+            ContactPerson contactPerson = repo(ContactPerson.class).fromMap(map);
             contacts.add(contactPerson);
         }
 
@@ -92,19 +88,15 @@ public class ContactPerson extends Entity {
     }
 
     public static List<ContactPerson> getContactListFromCompany(String company) {
-        return repository().findBy("company", company);
+        return repo(ContactPerson.class).findBy("company", company);
     }
 
     public static ContactPerson getContactByEmail(String emailAddress) {
-        return repository().findFirstBy("email", emailAddress);
+        return repo(ContactPerson.class).findFirstBy("email", emailAddress);
     }
 
     public String location() {
         return LocationProviderService.locationString(city, country);
-    }
-
-    public Location geoCoordinates() {
-        return new Location(location(), latitude, longitude);
     }
 
     public void AddToCourse(ObjectId courseId) {
@@ -112,29 +104,15 @@ public class ContactPerson extends Entity {
         contactParticipant.saveIt();
     }
 
-    public ContactPerson saveIt() {
-        repository().save(this);
-        return this;
-    }
-
     @Override
-    public boolean onBeforeSave() {
-       if (Strings.isNullOrEmpty(city))
-            return true;
-        Location coordinate = new LocationProviderService().getCoordinate(city, country);
-        if (coordinate.getLat() == null) {
-            // TODO: throw new ValidationException("city cannot be located");
-            return false;
-        }
-        ContactPerson person = repository().findFirstBy("email", this.email);
+    public void onBeforeSave() {
+        if (Strings.isNullOrEmpty(city))
+            return;
+        geoLocation = new LocationProviderService().getCoordinate(city, country);
+        ContactPerson person = repo(ContactPerson.class).findFirstBy("email", this.email);
         if (person != null && !person.id.equals(id)) {
-            // TODO: throw new ValidationException("city cannot be located");
-            return false;
+            throw new ValidationException("email", "should be unique");
         }
-        setLatitude(coordinate.getLat());
-        setLongitude(coordinate.getLng());
-        return true;
-
     }
 
     @Override
@@ -146,24 +124,12 @@ public class ContactPerson extends Entity {
     }
 
     public List<Participant> getParticipants() {
-        return Participant.repository().findBy("contactPersonId", getId());
+        return repo(Participant.class).findBy("contactPersonId", getId());
     }
 
     public List<Course> getCourseParticipation() {
         List<Participant> participants = getParticipants();
         return participants.stream(). map(Participant::getCourse). collect(Collectors.toList());
-    }
-
-    public boolean save() {
-        saveIt();
-        return getId() != null;
-    }
-
-    public Errors errors() {
-        Errors errors = new Errors();
-        errors.put("email", "should be unique");
-        return errors;
-
     }
 
 }

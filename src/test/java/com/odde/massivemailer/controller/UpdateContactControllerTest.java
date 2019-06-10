@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
+import static com.odde.massivemailer.model.base.Repository.repo;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(TestWithDB.class)
@@ -26,14 +27,14 @@ public class UpdateContactControllerTest {
 
     @Test
     public void editExistingContact() throws Exception {
-        ContactPerson.repository().fromKeyValuePairs(
+        repo(ContactPerson.class).fromKeyValuePairs(
                 "firstName", "John",
                 "email", "john@gmail.com",
                 "lastName", "Doe",
                 "company", "ComA",
                 "city", "Singapore",
                 "country", "Singapore").saveIt();
-        assertEquals(1, (long) ContactPerson.repository().count());
+        assertEquals(1, (long) repo(ContactPerson.class).count());
         request.setParameter("email", "john@gmail.com");
         request.setParameter("country", "China");
         request.setParameter("city", "Chengdu");
@@ -42,7 +43,7 @@ public class UpdateContactControllerTest {
         request.setParameter("lastName", "Dale");
 
         controller.doPost(request, response);
-        assertEquals(1, (long) ContactPerson.repository().count());
+        assertEquals(1, (long) repo(ContactPerson.class).count());
         ContactPerson contact = ContactPerson.getContactByEmail("john@gmail.com");
         assertEquals("Jack", contact.getFirstName());
         assertEquals("ComB", contact.getCompany());

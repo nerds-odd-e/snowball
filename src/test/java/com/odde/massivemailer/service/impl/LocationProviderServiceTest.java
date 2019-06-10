@@ -39,8 +39,8 @@ public class LocationProviderServiceTest {
     @Test
     public void getUnknownCity() throws Exception {
         Location location = locationProviderService.getLocationForName("foobar/hogehoge");
-        assertNull(location.getLat());
-        assertNull(location.getLng());
+        assertNull(location.getLatitude());
+        assertNull(location.getLongitude());
     }
 
     @Test
@@ -54,8 +54,8 @@ public class LocationProviderServiceTest {
         locationProviderService.addLat_LongToMemory("Japan", "Kobe");
         Location storedLocation = locationProviderService.getLocationForName("Japan/Kobe");
         assertNotNull(storedLocation);
-        assertEquals(34.690083, storedLocation.getLat(), 0.1);
-        assertEquals(135.1955112, storedLocation.getLng(), 0.1);
+        assertEquals(34.690083, storedLocation.getLatitude(), 0.1);
+        assertEquals(135.1955112, storedLocation.getLongitude(), 0.1);
     }
 
     @Test

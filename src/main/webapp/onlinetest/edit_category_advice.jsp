@@ -6,7 +6,7 @@
 
 <%
     String advice = (String) request.getAttribute("advice");
-    List<Category> categoryList = Category.repository().findAll();
+    List<Category> categoryList = repo(Category.class).findAll();
     pageContext.setAttribute("categoryList", categoryList);
 %>
 

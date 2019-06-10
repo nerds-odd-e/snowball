@@ -17,9 +17,13 @@ public class Repository<T extends Entity> {
     private Class<T> klass;
     private String collectionName;
 
-    public Repository(Class<T> klass, String collectionName) {
+    public static <S extends Entity>Repository<S> repo(Class<S> klass) {
+        return new Repository<S>(klass);
+    }
+
+    public Repository(Class<T> klass) {
         this.klass = klass;
-        this.collectionName = collectionName;
+        this.collectionName = klass.getName();
     }
 
     public T fromMap(Map map) {
