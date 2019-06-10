@@ -29,7 +29,7 @@ public class ContactsController extends AppController {
         Map map = getParameterFromRequest(req, "city", "country", "email", "firstName", "lastName", "company");
         ContactPerson contact = repo(ContactPerson.class).fromMap(map);
         try {
-        contact.save();
+            contact.save();
             User.createUnconfirmedUser(contact.getEmail(), getMailService());
             respondWithRedirectAndSuccessMessage(resp, "contactlist.jsp", "Add contact successfully");
         }

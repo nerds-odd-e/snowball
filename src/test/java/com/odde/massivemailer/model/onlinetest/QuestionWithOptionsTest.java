@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
 public class QuestionWithOptionsTest {
 
     private Question createWithOptions(List<QuestionOption> questionOptions) {
-        Question question = new Question("des1", "adv1", new ObjectId(), false, false).saveIt();
+        Question question = new Question("des1", "adv1", new ObjectId(), false, false).save();
         questionOptions.forEach(option -> option.addToQuestion(question.getId()));
         return question;
     }

@@ -94,7 +94,7 @@ public class OnlineTestTest {
 
     @Test
     public void shouldReturn2CorrectAnswer() {
-        Question question = new Question("desc1", "adv1", scrum.getId(), false, false).saveIt();
+        Question question = new Question("desc1", "adv1", scrum.getId(), false, false).save();
         ObjectId id = question.getId();
 
         final String[] answeredOption = new String[2];
@@ -120,7 +120,7 @@ public class OnlineTestTest {
 
     @Test
     public void shouldReturnOneIncorrectAndOneCorrectAnswer() {
-        Question question = new Question("desc1", "adv1", scrum.getId(),false, false).saveIt();
+        Question question = new Question("desc1", "adv1", scrum.getId(),false, false).save();
         ObjectId id = question.getId();
 
         final String[] answeredOption = new String[2];
@@ -152,7 +152,7 @@ public class OnlineTestTest {
 
     @Test
     public void calculateCorrectRate() {
-        Question q1 = new Question("d1", "a1", scrum.getId(),false, false).saveIt();
+        Question q1 = new Question("d1", "a1", scrum.getId(),false, false).save();
         QuestionOption it = QuestionOption.<QuestionOption>createIt(q1.getId(), "d1", true);
         QuestionOption.<QuestionOption>createIt(q1.getId(), "d2", false);
 
@@ -167,7 +167,7 @@ public class OnlineTestTest {
 
     @Test
     public void calculateCorrectRate2() {
-        Question q1 = new Question("d1", "a1", scrum.getId(), false, false).saveIt();
+        Question q1 = new Question("d1", "a1", scrum.getId(), false, false).save();
         QuestionOption.<QuestionOption>createIt(q1.getId(), "d1", true);
         QuestionOption wrongOption = QuestionOption.<QuestionOption>createIt(q1.getId(), "d2", false);
 
@@ -183,23 +183,23 @@ public class OnlineTestTest {
     @Test
     public void calculateCorrectRate70percent() {
 
-        Question q1 = new Question("d1", "a1", scrum.getId(), false, false).saveIt();
+        Question q1 = new Question("d1", "a1", scrum.getId(), false, false).save();
         QuestionOption c1 = QuestionOption.<QuestionOption>createIt(q1.getId(), "d1", true);
         QuestionOption.<QuestionOption>createIt(q1.getId(), "d2", false);
 
-        Question q2 = new Question("d1", "a1", scrum.getId(), false, false).saveIt();
+        Question q2 = new Question("d1", "a1", scrum.getId(), false, false).save();
         QuestionOption c2 = QuestionOption.<QuestionOption>createIt(q2.getId(), "d1", false);
         QuestionOption.<QuestionOption>createIt(q2.getId(), "d2", true);
 
-        Question q3 = new Question("d1", "a1", scrum.getId(), false, false).saveIt();
+        Question q3 = new Question("d1", "a1", scrum.getId(), false, false).save();
         QuestionOption c3 = QuestionOption.<QuestionOption>createIt(q3.getId(), "d1", true);
         QuestionOption.<QuestionOption>createIt(q3.getId(), "d2", false);
 
-        Question q4 = new Question("d1", "a1", scrum.getId(), false, false).saveIt();
+        Question q4 = new Question("d1", "a1", scrum.getId(), false, false).save();
         QuestionOption c4 = QuestionOption.<QuestionOption>createIt(q4.getId(), "d1", true);
         QuestionOption.<QuestionOption>createIt(q4.getId(), "d2", false);
 
-        Question q5 = new Question("d1", "a1", scrum.getId(), false, false).saveIt();
+        Question q5 = new Question("d1", "a1", scrum.getId(), false, false).save();
         QuestionOption.<QuestionOption>createIt(q5.getId(), "d1", true);
         QuestionOption c5 = QuestionOption.<QuestionOption>createIt(q5.getId(), "d2", false);
 
@@ -218,11 +218,11 @@ public class OnlineTestTest {
     }
 
     private void mockQuestion(int numberOfQuestion, ObjectId category) {
-        IntStream.range(0, numberOfQuestion).forEach(index -> new Question("desc" + index, "adv" + index, category, false, false).saveIt());
+        IntStream.range(0, numberOfQuestion).forEach(index -> new Question("desc" + index, "adv" + index, category, false, false).save());
     }
 
     private void mockQuestion(int numberOfQuestion) {
-        IntStream.range(0, numberOfQuestion).forEach(index -> new Question("desc" + index, "adv" + index, scrum.getId(), false, false).saveIt());
+        IntStream.range(0, numberOfQuestion).forEach(index -> new Question("desc" + index, "adv" + index, scrum.getId(), false, false).save());
     }
 
 }

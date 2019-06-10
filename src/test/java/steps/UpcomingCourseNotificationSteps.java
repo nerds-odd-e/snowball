@@ -6,7 +6,6 @@ import com.odde.massivemailer.model.SentMail;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.flywaydb.core.internal.util.StringUtils;
 import steps.driver.WebDriverWrapper;
 import steps.site.MassiveMailerSite;
 
@@ -14,6 +13,7 @@ import static com.odde.massivemailer.model.base.Repository.repo;
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.springframework.util.StringUtils.countOccurrencesOf;
 
 public class UpcomingCourseNotificationSteps {
     private final MassiveMailerSite site = new MassiveMailerSite();
@@ -45,20 +45,20 @@ public class UpcomingCourseNotificationSteps {
     public void there_are_in_Singapore_Singapore(int courses, int contacts, String city, String country) {
         for (int i = 0; i < contacts; i++) {
             repo(ContactPerson.class).fromKeyValuePairs(
-                    "city", city,
-                    "country", country,
-                    "email", "test@test" + i + "-"+city+".com").save();
+                        "city", city,
+                        "country", country,
+                        "email", "test@test" + i + "-"+city+".com").save();
         }
 
         for (int i = 0; i < courses; i++) {
             Course course  = Course.create("courseName", "Event " + i + " in " + city, "courseDetails", "Event " + i + " in " + city, "country", country, "city", city);
-            assertNotNull(course.saveIt().getId());
+            assertNotNull(course.save().getId());
         }
     }
 
     @Then("^there should be in total (\\d+) courses in all the emails$")
     public void there_are_in_total_in_all_the_emails(int courses) {
-        int sum = repo(SentMail.class).findAll().stream().map(mail-> StringUtils.countOccurrencesOf(mail.getContent(), "Event")).mapToInt(Integer::intValue).sum();
+        int sum = repo(SentMail.class).findAll().stream().map(mail-> countOccurrencesOf(mail.getContent(), "Event")).mapToInt(Integer::intValue).sum();
         assertEquals(courses, sum);
     }
 }

@@ -36,7 +36,7 @@ public class LoginSteps {
     public void there_is_a_user_with_and(String email, String password) {
         User user = new User(email);
         user.setPassword(password);
-        user.saveIt();
+        user.save();
     }
 
     @Given("^There are users as bellow$")
@@ -45,7 +45,7 @@ public class LoginSteps {
         vals.forEach((key, value) -> {
             User user = new User(key);
             user.setPassword(value);
-            user.saveIt();
+            user.save();
         });
     }
 
@@ -85,7 +85,7 @@ public class LoginSteps {
     @Given("^There is a user with \"([^\"]*)\" but password initialize is undone$")
     public void there_is_a_user_with_but_password_initialize_is_undone(String email) {
         User user = new User(email);
-        user.saveIt();
+        user.save();
     }
 
     @And("^Login failed message is shown$")

@@ -53,7 +53,7 @@ public class EnrollParticipantController extends AppController {
                     "country", line[5]);
             contactPerson.save();
             ObjectId contactPersonId = ContactPerson.getContactByEmail(line[0]).getId();
-            new Participant(contactPersonId, new ObjectId(this.courseId)).saveIt();
+            new Participant(contactPersonId, new ObjectId(this.courseId)).save();
         }
 
         public String getSingleLine() {

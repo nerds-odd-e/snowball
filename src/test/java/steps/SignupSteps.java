@@ -71,7 +71,7 @@ public class SignupSteps {
         User user = new User(username + "@example.com");
         user.setName(username);
         user.setPassword("testpassword");
-        user.saveIt();
+        user.save();
     }
 
     @When("^user sign up with:$")

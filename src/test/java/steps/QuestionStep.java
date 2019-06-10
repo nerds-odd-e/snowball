@@ -76,7 +76,7 @@ public class QuestionStep {
         this.currentTestTotalQuestions = totalQuestions;
         for (int i = 0; i < totalQuestions; i++)
             new QuestionBuilder()
-                    .aQuestion(repo(Category.class).findFirst(eq("name", "Scrum")))
+                    .aQuestion(repo(Category.class).findFirstBy("name", "Scrum"))
                     .withWrongOption("wrongOption")
                     .withCorrectOption("correctOption")
                     .please();
@@ -325,7 +325,7 @@ public class QuestionStep {
     public void ユーザが登録されている(String arg1) {
         User user = new User("terry@hogehoge.com");
         user.setPassword("11111111");
-        user.saveIt();
+        user.save();
     }
 
     @Given("^\"([^\"]*)\"がログインしている$")

@@ -44,7 +44,7 @@ public class MailTest {
 		contactPerson.setLastName("LastName");
 		contactPerson.setEmail("test@gmail.com");
 		contactPerson.setCompany("CompanyName");
-		contactPerson.saveIt();
+		contactPerson.save();
 
 		Mail mail = new Mail();
 		mail.setMessageId(System.currentTimeMillis());

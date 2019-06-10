@@ -27,7 +27,7 @@ public class CourseDetailControllerTest {
 
     @Test
     public void doGet_containsTitle() throws IOException {
-        repo(Course.class).createIt("courseName", "CSD Tokyo", "courseDetails", "hoge");
+        repo(Course.class).fromKeyValuePairs("courseName", "CSD Tokyo", "courseDetails", "hoge").save();
         String id = Course.getCourseByName("CSD Tokyo").getStringId();
         request.setParameter("id", id);
         controller.doGet(request, response);
@@ -38,14 +38,14 @@ public class CourseDetailControllerTest {
 
     @Test
     public void doGet_containsCourseParticipants() throws IOException {
-        repo(Course.class).createIt("courseName", "CSD Tokyo", "courseDetails", "hoge");
+        repo(Course.class).fromKeyValuePairs("courseName", "CSD Tokyo", "courseDetails", "hoge").save();
         ObjectId courseId = Course.getCourseByName("CSD Tokyo").getId();
         ContactPerson contactPerson = uniqueContact();
         contactPerson.setFirstName("Tommy");
         contactPerson.setEmail("tommy@example.com");
-        contactPerson.saveIt();
+        contactPerson.save();
         ObjectId participantId = ContactPerson.getContactByEmail("tommy@example.com").getId();
-        new Participant(participantId, courseId).saveIt();
+        new Participant(participantId, courseId).save();
 
         request.setParameter("id", courseId.toString());
         controller.doGet(request, response);

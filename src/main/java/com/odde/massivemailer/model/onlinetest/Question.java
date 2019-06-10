@@ -87,11 +87,11 @@ public class Question extends Entity<Question> {
     }
 
     public void createWrongOption(String optionText) {
-        new QuestionOption(optionText, false, getId()).saveIt();
+        new QuestionOption(optionText, false, getId()).save();
     }
 
     public void createCorrectOption(String optionText) {
-        new QuestionOption(optionText, true, getId()).saveIt();
+        new QuestionOption(optionText, true, getId()).save();
     }
 
     boolean belongsTo(Category cat) {

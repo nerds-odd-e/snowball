@@ -52,8 +52,8 @@ public class ContactsControllerTest {
     public void returnContactsInJSON() throws Exception {
         ContactPerson contactPerson1 = uniqueContact();
         ContactPerson contactPerson2 = uniqueContact();
-        contactPerson1.saveIt();
-        contactPerson2.saveIt();
+        contactPerson1.save();
+        contactPerson2.save();
 
         controller.doGet(request, response);
 
@@ -65,8 +65,8 @@ public class ContactsControllerTest {
     public void searchContactsInJSON() throws Exception {
         ContactPerson contactPerson1 = uniqueContact();
         ContactPerson contactPerson2 = uniqueContact();
-        contactPerson1.saveIt();
-        contactPerson2.saveIt();
+        contactPerson1.save();
+        contactPerson2.save();
         request.setParameter("email", contactPerson1.getEmail());
         controller.doGet(request, response);
 
@@ -77,7 +77,7 @@ public class ContactsControllerTest {
     @Test
     public void addAnExistingContact() throws Exception {
         ContactPerson contactPerson1 = uniqueContact();
-        contactPerson1.saveIt();
+        contactPerson1.save();
         assertEquals(1, (long) repo(ContactPerson.class).count());
         request.setParameter("email", contactPerson1.getEmail());
         request.setParameter("country", "Singapore");

@@ -68,7 +68,7 @@ public class CoursesControllerTest {
 
     @Test
     public void mustNotContainAnyCourseWhenCurrentUserIsNotAContact() throws IOException {
-        new User("non_contact@gmail.com").saveIt();
+        new User("non_contact@gmail.com").save();
         createCourse("Bob's course");
         Cookie sessionCookie = new Cookie("session_id", "non_contact@gmail.com");
         request.setCookies(new Cookie[]{sessionCookie});
@@ -108,7 +108,7 @@ public class CoursesControllerTest {
         createCourse("anotherCourse");
 
         Participant participant = new Participant(bob.getId(), bobsCourse.getId());
-        participant.saveIt();
+        participant.save();
 
         Cookie otherCookie = new Cookie("any", "any");
         Cookie sessionCookie = new Cookie("session_id", bob.getEmail());
@@ -128,15 +128,15 @@ public class CoursesControllerTest {
 
         Course course = repo(Course.class).fromMap(courseValue);
         course.setCourseName(courseName);
-        course.saveIt();
+        course.save();
         return course;
     }
 
     private ContactPerson createContactPersonWithUserAccount(String email) {
         ContactPerson contactPerson = new ContactPerson();
         contactPerson.setEmail(email);
-        contactPerson.saveIt();
-        new User(email).saveIt();
+        contactPerson.save();
+        new User(email).save();
         return contactPerson;
     }
 }

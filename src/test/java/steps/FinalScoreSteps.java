@@ -62,7 +62,7 @@ public class FinalScoreSteps {
     public void から題出題される(String category, int numberOfQuestions) {
         for (int i = 0; i < numberOfQuestions; i++)
             new QuestionBuilder()
-                    .aQuestion(repo(Category.class).findFirst(eq("name", category)))
+                    .aQuestion(repo(Category.class).findFirstBy("name", category))
                     .withWrongOption("wrongOption")
                     .withCorrectOption("correctOption")
                     .please();

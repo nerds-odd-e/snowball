@@ -16,7 +16,7 @@ public class ApproveQuestionController extends AppController {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Question question = repo(Question.class).findByStringId(request.getParameter("questionId"));
         question.setApproved(true);
-        question.saveIt();
+        question.save();
         response.sendRedirect("/onlinetest/question_list.jsp");
     }
 }

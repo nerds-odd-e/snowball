@@ -13,7 +13,7 @@ public class UserTest {
     private User createUser(String email, String password) {
         User user = new User(email);
         user.setPassword(password);
-        user.saveIt();
+        user.save();
         return user;
     }
 

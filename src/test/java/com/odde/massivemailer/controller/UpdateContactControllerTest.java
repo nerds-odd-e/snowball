@@ -33,7 +33,7 @@ public class UpdateContactControllerTest {
                 "lastName", "Doe",
                 "company", "ComA",
                 "city", "Singapore",
-                "country", "Singapore").saveIt();
+                "country", "Singapore").save();
         assertEquals(1, (long) repo(ContactPerson.class).count());
         request.setParameter("email", "john@gmail.com");
         request.setParameter("country", "China");

@@ -1,6 +1,5 @@
 package com.odde.massivemailer.model;
 
-import com.google.common.base.Strings;
 import com.odde.massivemailer.model.base.Entity;
 import com.odde.massivemailer.service.LocationProviderService;
 import lombok.AllArgsConstructor;
@@ -72,7 +71,7 @@ public class Course extends Entity<Course> {
 
     @Override
     public void onBeforeSave() {
-        if (Strings.isNullOrEmpty(city))
+        if (city == null || city.isEmpty())
             return;
         geoLocation = new LocationProviderService().getCoordinate(city, country);
     }

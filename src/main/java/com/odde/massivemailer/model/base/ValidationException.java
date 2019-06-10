@@ -5,9 +5,8 @@ import java.util.Set;
 
 public class ValidationException extends RuntimeException {
     private Errors errors = new Errors();
-    private Set<ConstraintViolation<Entity>> validate;
 
-    public <T> ValidationException(Set<ConstraintViolation<Entity>> validate) {
+    <T> ValidationException(Set<ConstraintViolation<Entity>> validate) {
         validate.forEach(v-> errors.put(v.getPropertyPath().toString(), v.getMessage()));
     }
 

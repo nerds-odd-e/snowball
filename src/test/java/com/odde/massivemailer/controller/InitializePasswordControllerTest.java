@@ -30,7 +30,7 @@ public class InitializePasswordControllerTest {
     @Test
     public void showInitialPasswordViewSuccessfully() throws Exception {
         User newUser = new User("user1@odd-e.com");
-        newUser.saveIt();
+        newUser.save();
         request.setParameter("token", newUser.getToken());
         controller.doGet(request,response);
         assertEquals("initialize_password.jsp?token=" + newUser.getToken(), response.getRedirectedUrl());
@@ -55,7 +55,7 @@ public class InitializePasswordControllerTest {
         request.setParameter("token", newUser.getToken());
         request.setParameter("password","sdfgsdfgsdg");
         request.setParameter("password_confirm", "sdfgsdfgsdg");
-        newUser.saveIt();
+        newUser.save();
         controller.doPost(request, response);
         User user = repo(User.class).findFirstBy("token", newUser.getToken());
         assertEquals("initialize_password_success.jsp", response.getRedirectedUrl());
@@ -78,7 +78,7 @@ public class InitializePasswordControllerTest {
         request.setParameter("password_confirm", "123123");
         request.setParameter("email", "user1@odd-e.com");
         User newUser = new User("user1@odd-e.com");
-        newUser.saveIt();
+        newUser.save();
         controller.doPost(request, response);
         assertEquals("initialize_password.jsp?error=error&token=123123", response.getRedirectedUrl());
     }
@@ -91,7 +91,7 @@ public class InitializePasswordControllerTest {
         request.setParameter("password_confirm", "123123");
         request.setParameter("email", "user1@odd-e.com");
         newUser.setPassword(request.getParameter("password"));
-        newUser.saveIt();
+        newUser.save();
 
         controller.doPost(request, response);
         assertEquals("initialize_password.jsp?error=error", response.getRedirectedUrl());

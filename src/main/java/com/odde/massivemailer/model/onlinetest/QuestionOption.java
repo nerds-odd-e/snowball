@@ -10,7 +10,6 @@ import org.bson.types.ObjectId;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -40,7 +39,7 @@ public class QuestionOption extends Entity<QuestionOption> {
     }
 
     static Collection<QuestionOption> getForQuestion(ObjectId questionId) {
-        return repo(QuestionOption.class).getCollection().find(eq("questionId", questionId)).into(new ArrayList<>());
+        return repo(QuestionOption.class).findBy("questionId", questionId);
     }
 
     static Optional<QuestionOption> getById(String optionId) {
@@ -48,12 +47,12 @@ public class QuestionOption extends Entity<QuestionOption> {
     }
 
     public static QuestionOption createIt(ObjectId questionId, String description, boolean isCorrect) {
-        return new QuestionOption(description, isCorrect, questionId).saveIt();
+        return new QuestionOption(description, isCorrect, questionId).save();
     }
 
     void addToQuestion(ObjectId questionId) {
         setQuestionId(questionId);
-        saveIt();
+        save();
     }
 
 }

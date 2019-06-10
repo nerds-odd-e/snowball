@@ -95,7 +95,7 @@ public class QuestionCollectionTest {
     private static List<Question> makeQuestions(int numberOfQuestion, ObjectId categoryId) {
         List<Question> questions = new ArrayList<>();
         IntStream.range(0, numberOfQuestion)
-                .forEach(index -> questions.add(new Question("desc" + index, "adv" + index, categoryId, false, false).saveIt())
+                .forEach(index -> questions.add(new Question("desc" + index, "adv" + index, categoryId, false, false).save())
                 );
         return questions;
     }

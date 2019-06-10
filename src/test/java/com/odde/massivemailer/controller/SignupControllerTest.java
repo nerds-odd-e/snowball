@@ -100,7 +100,7 @@ public class SignupControllerTest {
     private void createUser() {
         User user = new User("mary@example.com");
         user.setPassword("abcd1234");
-        user.saveIt();
+        user.save();
     }
 
 }

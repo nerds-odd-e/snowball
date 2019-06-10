@@ -73,7 +73,7 @@ public class AddQuestionController extends AppController {
         String type = req.getParameter("type");
 
         Question question = new Question(req.getParameter("description"), req.getParameter("advice"), new ObjectId(req.getParameter("category")), type.equals("multiple"), false);
-        question.saveIt();
+        question.save();
 
         final String[] checks = req.getParameterValues("check");
         List<String> checksList = Arrays.asList(checks);
@@ -89,7 +89,7 @@ public class AddQuestionController extends AppController {
             if (!optionDescription.isEmpty()) {
                 boolean isCorrect = checksList.contains(String.valueOf(i + 1));
                 QuestionOption questionOption = new QuestionOption(optionDescription, isCorrect, question.getId());
-                questionOption.saveIt();
+                questionOption.save();
             }
         }
     }

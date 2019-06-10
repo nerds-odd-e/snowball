@@ -9,7 +9,7 @@ public class SentMailFactory {
 
     public SentMail buildSentMailWithSubject(String subject) {
 
-        Template template = new Template("Template", "", "").saveIt();
-        return new SentMail(new Date(), subject, "", 0L, "").saveIt();
+        Template template = new Template("Template", "", "").save();
+        return new SentMail(new Date(), subject, "", 0L, "").save();
     }
 }

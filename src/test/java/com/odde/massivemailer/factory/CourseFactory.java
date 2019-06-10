@@ -45,7 +45,7 @@ public class CourseFactory {
     public Course csd_course() {
         if(csd_course == null) {
             csd_course = build_csd_course();
-            csd_course.saveIt();
+            csd_course.save();
         }
         return csd_course;
     }
@@ -54,7 +54,7 @@ public class CourseFactory {
         if (contact_alex == null) {
             contact_alex = uniqueContact();
             contact_alex.setFirstName("alex");
-            contact_alex.saveIt();
+            contact_alex.save();
         }
         return contact_alex;
     }

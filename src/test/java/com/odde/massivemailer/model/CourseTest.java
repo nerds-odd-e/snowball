@@ -35,7 +35,7 @@ public class CourseTest {
         map.put("duration", "15");
         map.put("instructor", "instructor");
         map.put("startDate", "2017-11-09");
-        aCourse = repo(Course.class).fromMap(map).saveIt();
+        aCourse = repo(Course.class).fromMap(map).save();
         GivenIhaveThreeCourcesInSG_Kl_USA();
     }
 
@@ -93,7 +93,7 @@ public class CourseTest {
         map.put("instructor", instructor);
         map.put("courseDetails", "This is a great course");
         Course course = repo(Course.class).fromMap(map);
-        course.saveIt();
+        course.save();
         return course;
     }
 

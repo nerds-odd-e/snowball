@@ -23,7 +23,7 @@ public class SentMailVisit extends Entity<SentMailVisit> {
 
     public void updateViewCount() {
         setReadCount(getReadCount() + 1);
-        saveIt();
+        save();
     }
 
     @Override

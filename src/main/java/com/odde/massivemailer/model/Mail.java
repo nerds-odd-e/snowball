@@ -145,7 +145,7 @@ public class Mail {
         sentMail.setSubject(getSubject());
         sentMail.setContent(getContent());
         sentMail.setMessageId(getMessageId());
-        sentMail.saveIt();
+        sentMail.save();
 
         for (String receipt : getReceipts()) {
             sentMail.addEmailAddress(receipt);
@@ -168,7 +168,7 @@ public class Mail {
 
     public SentMail sendMailWith(MailService mailService) throws EmailException {
         SentMail sentMail = asSentMail();
-        sentMail.saveIt();
+        sentMail.save();
         mailService.send(this);
         return sentMail;
     }

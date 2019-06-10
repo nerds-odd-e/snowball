@@ -67,7 +67,7 @@ public class CourseTests {
     @Given("^There are (\\d+) courses$")
     public void there_are_courses(int num) {
         for (int i = 1; i <= num; i++){
-            repo(Course.class).fromMap(createCourseData("Tokyo", "Japan", "CSD-" + i)).saveIt();
+            repo(Course.class).fromMap(createCourseData("Tokyo", "Japan", "CSD-" + i)).save();
         }
     }
 

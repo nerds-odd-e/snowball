@@ -20,7 +20,7 @@ public class TestTemplateService {
     @Before
     public void setup() {
         template = new Template("DefaultTestTemplate", "Greetings {FirstName}", "Dear {FirstName} {LastName}. Please find the details of the course {CourseName} {Location} {Instructor} ");
-        template.saveIt();
+        template.save();
 
         try {
             List<Template> tempList = Template.findByTemplateName("DefaultTestTemplate");

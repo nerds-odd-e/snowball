@@ -24,15 +24,11 @@ public class Category extends Entity<Category> {
     }
 
     public static ObjectId getIdByName(String name) {
-        return repo(Category.class).findFirst(eq("name", name)).id;
-    }
-
-    @Override
-    public void onBeforeSave() {
+        return repo(Category.class).findFirstBy("name", name).id;
     }
 
     public static Category createIt(String category_name) {
-        return new Category(category_name, "", "").saveIt();
+        return new Category(category_name, "", "").save();
     }
 
 }

@@ -73,59 +73,59 @@ public class UpcomingCoursesControllerTest {
 
     @Test
     public void send1EventToNoContactsAsMail() throws Exception {
-        singaporeEvent.saveIt();
+        singaporeEvent.save();
         upcomingCoursesController.doPost(request, response);
         assertEquals("course_list.jsp?message=0 emails sent.", response.getRedirectedUrl());
     }
 
     @Test
     public void send1EventTo1ContactsAsMail() throws Exception {
-        singaporeEvent.saveIt();
-        singaporeContact.saveIt();
+        singaporeEvent.save();
+        singaporeContact.save();
         upcomingCoursesController.doPost(request, response);
         assertEquals("course_list.jsp?message=1 emails sent.", response.getRedirectedUrl());
     }
 
     @Test
     public void send1EventTo2ContactsAsMail() throws Exception {
-        singaporeEvent.saveIt();
-        singaporeContact.saveIt();
-        singaporeContactTwo.saveIt();
+        singaporeEvent.save();
+        singaporeContact.save();
+        singaporeContactTwo.save();
         upcomingCoursesController.doPost(request, response);
         assertEquals("course_list.jsp?message=2 emails sent.", response.getRedirectedUrl());
     }
 
     @Test
     public void contactMustReceiveEventInEmailWhenHavingSameLocationAsEvent() throws Exception {
-        singaporeEvent.saveIt();
-        singaporeContact.saveIt();
+        singaporeEvent.save();
+        singaporeContact.save();
         upcomingCoursesController.doPost(request, response);
         assertEquals("course_list.jsp?message=1 emails sent.", response.getRedirectedUrl());
     }
 
     @Test
     public void contactMustNotReceiveEventInEmailWhenContactHasNoLocation() throws Exception {
-        singaporeEvent.saveIt();
-        uniqueContact().saveIt();
+        singaporeEvent.save();
+        uniqueContact().save();
         upcomingCoursesController.doPost(request, response);
         assertEquals("course_list.jsp?message=0 emails sent.", response.getRedirectedUrl());
     }
 
     @Test
     public void send2EventsTo1ContactSameLocation() throws Exception {
-        singaporeEvent.saveIt();
-        singaporeEventTwo.saveIt();
-        singaporeContact.saveIt();
+        singaporeEvent.save();
+        singaporeEventTwo.save();
+        singaporeContact.save();
         upcomingCoursesController.doPost(request, response);
         assertEquals("course_list.jsp?message=1 emails sent.", response.getRedirectedUrl());
     }
 
     @Test
     public void bothContactsReceive2EventsWhenHavingSameLocationAs2Events() throws Exception {
-        singaporeEvent.saveIt();
-        singaporeEventTwo.saveIt();
-        singaporeContact.saveIt();
-        singaporeContactTwo.saveIt();
+        singaporeEvent.save();
+        singaporeEventTwo.save();
+        singaporeContact.save();
+        singaporeContactTwo.save();
 
         upcomingCoursesController.doPost(request, response);
 
@@ -135,10 +135,10 @@ public class UpcomingCoursesControllerTest {
 
     @Test
     public void bothContactsFromSingaporeReceiveOnlyEventInBangkok() throws Exception {
-        bangkokEvent.saveIt();
-        tokyoEvent.saveIt();
-        singaporeContact.saveIt();
-        singaporeContactTwo.saveIt();
+        bangkokEvent.save();
+        tokyoEvent.save();
+        singaporeContact.save();
+        singaporeContactTwo.save();
 
         upcomingCoursesController.doPost(request, response);
 
@@ -149,10 +149,10 @@ public class UpcomingCoursesControllerTest {
 
     @Test
     public void contactFromTokyoDoesNotReceiveEventInBangkokNorSingapore() throws Exception {
-        singaporeEvent.saveIt();
-        bangkokEvent.saveIt();
-        tokyoContact.saveIt();
-        singaporeContact.saveIt();
+        singaporeEvent.save();
+        bangkokEvent.save();
+        tokyoContact.save();
+        singaporeContact.save();
         upcomingCoursesController.doPost(request, response);
 
         verify(mailComposer  , times(1)).createUpcomingCourseMail(eq(singaporeContact), coursesArgument.capture());
@@ -163,9 +163,9 @@ public class UpcomingCoursesControllerTest {
 
     @Test
     public void contactFromTokyoReceiveEventFromTokyoOnly() throws Exception {
-        singaporeEvent.saveIt();
-        bangkokEvent.saveIt();
-        tokyoEvent.saveIt();
+        singaporeEvent.save();
+        bangkokEvent.save();
+        tokyoEvent.save();
         tokyoContact.save();
 
         upcomingCoursesController.doPost(request, response);
@@ -177,8 +177,8 @@ public class UpcomingCoursesControllerTest {
 
     @Test
     public void contactWWithNoLocationMustNotReceiveMail() throws Exception {
-        singaporeEvent.saveIt();
-        noLocContact.saveIt();
+        singaporeEvent.save();
+        noLocContact.save();
         upcomingCoursesController.doPost(request, response);
         verify(mail, times(0)).sendMailWith(gmailService);
     }

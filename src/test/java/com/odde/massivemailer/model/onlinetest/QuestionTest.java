@@ -23,7 +23,7 @@ public class QuestionTest {
 
     @Test
     public void shouldGetQuestionById() {
-        Question question1 = new Question("desc1", "adv1", categoryId, false, false).saveIt();
+        Question question1 = new Question("desc1", "adv1", categoryId, false, false).save();
         ObjectId id = question1.getId();
         Question actual = Question.getById(id);
         assertThat(actual, is(equalTo(question1)));
@@ -31,7 +31,7 @@ public class QuestionTest {
 
     @Test
     public void getCorrectOption_正解のIDの一覧を返す() {
-        Question question = new Question("desc1", "adv1", categoryId, false, false).saveIt();
+        Question question = new Question("desc1", "adv1", categoryId, false, false).save();
         QuestionOption correct1 = QuestionOption.createIt(question.getId(), "desc", true);
         QuestionOption correct2 = QuestionOption.createIt(question.getId(), "desc", true);
         QuestionOption.createIt(question.getId(), "desc", false);
@@ -47,26 +47,26 @@ public class QuestionTest {
 
     @Test(expected = ValidationException.class)
     public void shouldNotAllowEmptyDescription() {
-        new Question(null, "adv1", categoryId, false, false).saveIt();
+        new Question(null, "adv1", categoryId, false, false).save();
 
     }
 
     @Test
     public void shouldAllowEmptyAdvice() {
-        Question question1 = new Question("desc1", null, categoryId, false, false).saveIt();
+        Question question1 = new Question("desc1", null, categoryId, false, false).save();
         assertThat(question1.getId(), is(not(nullValue())));
     }
 
     @Test
     public void shouldFetchOptionsForQuestion() {
-        Question question = new Question("desc1", null, categoryId, false, false).saveIt();
+        Question question = new Question("desc1", null, categoryId, false, false).save();
         QuestionOption.createIt(question.getId(), "desc", false);
         assertThat(question.getOptions(), is(not(empty())));
     }
 
     @Test
     public void shouldFetchOptionsForQuestionWithSameQuestionId() {
-        Question question = new Question("desc1", null, categoryId, false, false).saveIt();
+        Question question = new Question("desc1", null, categoryId, false, false).save();
         ObjectId expectedQuestionId = question.getId();
         QuestionOption.createIt(question.getId(), "desc", false);
         QuestionOption.createIt(question.getId(), "desc", false);
@@ -98,8 +98,8 @@ public class QuestionTest {
 
     @Test
     public void shouldReturnTwoElementByGetAll() {
-        new Question("desc", "adv", categoryId, false, false).saveIt();
-        new Question("desc", "adv", categoryId, false, false).saveIt();
+        new Question("desc", "adv", categoryId, false, false).save();
+        new Question("desc", "adv", categoryId, false, false).save();
         List<Question> questions = repo(Question.class).findAll();
         assertEquals(questions.size(), 2);
     }

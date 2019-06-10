@@ -44,7 +44,7 @@ public class User extends Entity<User> {
 
     public static void createUnconfirmedUser(String email1, MailService mailService) throws EmailException {
         User user = new User(email1);
-        user.saveIt();
+        user.save();
         Mail email = new Mail();
         email.setSubject("");
         email.setContent(new ApplicationConfiguration().getRoot() + "initialPassword?token=" + user.getToken());
@@ -56,7 +56,7 @@ public class User extends Entity<User> {
     }
 
     public static User getUserByEmail(String email) {
-        return repo(User.class).findFirst(eq("email", email));
+        return repo(User.class).findFirstBy("email", email);
     }
 
     public boolean isPasswordCorrect(String password) {
@@ -85,7 +85,7 @@ public class User extends Entity<User> {
         if (null == token) {
             return null;
         }
-        return repo(User.class).findFirst(eq("token", token));
+        return repo(User.class).findFirstBy("token", token);
     }
 
     public static boolean validatePassword(String password) {

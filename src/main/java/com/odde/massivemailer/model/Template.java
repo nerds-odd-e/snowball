@@ -71,7 +71,7 @@ public class Template extends Entity<Template> {
     public void saveTemplate(String subject, String content) {
         setSubject(subject);
         setContent(content);
-        saveIt();
+        save();
     }
 
     @Override

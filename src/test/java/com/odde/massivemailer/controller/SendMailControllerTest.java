@@ -104,7 +104,7 @@ public class SendMailControllerTest {
         String[] companyRecipients = {"ab1@abc.com", "ab2@abc.com", "ab3@abc.com"};
 
         for (String companyRecipient : companyRecipients) {
-            repo(ContactPerson.class).fromKeyValuePairs("email", companyRecipient, "company", "abc").saveIt();
+            repo(ContactPerson.class).fromKeyValuePairs("email", companyRecipient, "company", "abc").save();
         }
 
         Mail mail = postAndGetMailBeingSent();
@@ -166,7 +166,7 @@ public class SendMailControllerTest {
         }
 
         ContactPeopleBuilder add(final String email) {
-            repo(ContactPerson.class).fromKeyValuePairs("email", email, "company", company).saveIt();
+            repo(ContactPerson.class).fromKeyValuePairs("email", email, "company", company).save();
             return this;
         }
     }

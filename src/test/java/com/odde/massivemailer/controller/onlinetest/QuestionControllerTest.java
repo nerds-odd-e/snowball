@@ -43,7 +43,7 @@ public class QuestionControllerTest {
     }
 
     private Question createQuestionWithOptions(ObjectId categoryId) {
-        Question question = new Question("What is Scrum?", "Scrum is a coding practice.", categoryId, false, false).saveIt();
+        Question question = new Question("What is Scrum?", "Scrum is a coding practice.", categoryId, false, false).save();
         ObjectId id = question.getId();
         QuestionOption.createIt(id, "desc1", false);
         QuestionOption.createIt(id, "desc2", false);

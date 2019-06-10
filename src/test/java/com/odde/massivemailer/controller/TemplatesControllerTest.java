@@ -28,7 +28,7 @@ public class TemplatesControllerTest {
 		template.setTemplateName("Default");
 		template.setSubject("Greeting {FirstName}");
 		template.setContent("Hi There {Company}");
-		template.saveIt();
+		template.save();
 	}
 
 	@Test

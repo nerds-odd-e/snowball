@@ -1,6 +1,5 @@
 package com.odde.massivemailer.model;
 
-import com.google.common.base.Strings;
 import com.odde.massivemailer.model.base.Entity;
 import com.odde.massivemailer.model.base.ValidationException;
 import com.odde.massivemailer.service.LocationProviderService;
@@ -51,7 +50,7 @@ public class ContactPerson extends Entity<ContactPerson> {
         for (ContactPerson contact1 : contacts) {
             ContactPerson contact;
             contact = contact1;
-            contact.saveIt();
+            contact.save();
         }
     }
 
@@ -92,12 +91,12 @@ public class ContactPerson extends Entity<ContactPerson> {
 
     public void AddToCourse(ObjectId courseId) {
         Participant contactParticipant = new Participant(getId(), courseId);
-        contactParticipant.saveIt();
+        contactParticipant.save();
     }
 
     @Override
     public void onBeforeSave() {
-        if (Strings.isNullOrEmpty(city))
+        if (city == null || city.isEmpty())
             return;
         geoLocation = new LocationProviderService().getCoordinate(city, country);
         ContactPerson person = repo(ContactPerson.class).findFirstBy("email", this.email);

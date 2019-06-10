@@ -66,8 +66,8 @@ public class EmailSteps {
 
     @Given("^there are some existing templates$")
     public void thereAreSomeExistingTemplates() {
-        new Template("Default Template 1", "Greeting {FirstName}", "Hi, {FirstName} {LastName} from {Company}").saveIt();
-        new Template("RTA Default Template", "Greeting {FirstName}", "Hi, {FirstName} {LastName} from {Company}").saveIt();
-        new Template("Pre-course Template", "Greeting {FirstName}", "Hi, {FirstName} {LastName} from {Company}").saveIt();
+        new Template("Default Template 1", "Greeting {FirstName}", "Hi, {FirstName} {LastName} from {Company}").save();
+        new Template("RTA Default Template", "Greeting {FirstName}", "Hi, {FirstName} {LastName} from {Company}").save();
+        new Template("Pre-course Template", "Greeting {FirstName}", "Hi, {FirstName} {LastName} from {Company}").save();
     }
 }

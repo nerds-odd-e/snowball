@@ -23,7 +23,7 @@ public class SentMailServiceTest {
         sentMail.setReceivers("");
         sentMail.setMessageId(123456789L);
 
-        SentMail savedSentMail = sentMail.saveIt();
+        SentMail savedSentMail = sentMail.save();
 
         assertNotNull(savedSentMail);
         assertNotNull(savedSentMail.getId());
@@ -39,11 +39,11 @@ public class SentMailServiceTest {
         sentMail.setContent("content");
         sentMail.setReceivers("");
         sentMail.setMessageId(123456789L);
-        sentMail.saveIt();
+        sentMail.save();
 
         sentMail.addEmailAddress("terry@odd-e.com");
 
-        SentMail savedSentMail = sentMail.saveIt();
+        SentMail savedSentMail = sentMail.save();
 
         List<SentMailVisit> savedSentMailVisits = savedSentMail.getSentMailVisits();
 

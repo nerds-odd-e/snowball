@@ -43,7 +43,7 @@ public class CategoryAdviceController extends AppController {
         Category cat = repo(Category.class).findByStringId(categoryId);
         cat.setAdvice(advice);
         cat.setLink(link);
-        cat.saveIt();
+        cat.save();
         RequestDispatcher dispatch = req.getRequestDispatcher("/onlinetest/edit_category_advice.jsp");
         dispatch.forward(req, resp);
     }

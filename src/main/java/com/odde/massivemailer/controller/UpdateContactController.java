@@ -28,7 +28,7 @@ public class UpdateContactController extends HttpServlet {
             contactPerson.setCity(city);
             contactPerson.setCountry(country);
             locationProviderService.cacheLocation(city, country, contactPerson.location());
-            contactPerson.saveIt();
+            contactPerson.save();
             resp.sendRedirect("contactlist.jsp");
 
         }

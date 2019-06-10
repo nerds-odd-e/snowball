@@ -6,16 +6,18 @@ import com.odde.massivemailer.service.MongoDBConnector;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+import java.util.*;
 
 import static com.mongodb.client.model.Filters.eq;
 
 public class Repository<T extends Entity> {
+    private static ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
     private Class<T> klass;
-    private String collectionName;
+    private MongoCollection<T> collection;
 
     public static <S extends Entity> Repository<S> repo(Class<S> klass) {
         return new Repository<>(klass);
@@ -23,7 +25,8 @@ public class Repository<T extends Entity> {
 
     public Repository(Class<T> klass) {
         this.klass = klass;
-        this.collectionName = klass.getName();
+        String collectionName = klass.getName();
+        this.collection = MongoDBConnector.instance().getMongoCollection(klass, collectionName);
     }
 
     public T fromMap(Map map) {
@@ -31,30 +34,46 @@ public class Repository<T extends Entity> {
         return mapper.convertValue(map, klass);
     }
 
+    public T fromKeyValuePairs(String... args) {
+        return fromMap(asMap(args));
+    }
 
     public T findByStringId(String stringId) {
         return findById(new ObjectId(stringId));
     }
 
     public T findById(ObjectId objectId) {
-        return findFirst(eq("_id", objectId));
+        return findFirstBy("_id", objectId);
     }
 
-    public T findFirst(Bson query) {
-        return getCollection().find(query).first();
+    public T findFirstBy(String field, Object value) {
+        return collection.find(eq(field, value)).first();
     }
 
-    public MongoCollection<T> getCollection() {
-        return MongoDBConnector.instance().getMongoCollection(klass, collectionName);
+    public List<T> findBy(String fieldName, Object value) {
+        return find(eq(fieldName, value));
+    }
+
+    public List<T> find(Bson cond) {
+        return collection.find(cond).into(new ArrayList<>());
     }
 
     public List<T> findAll() {
-        return getCollection().find().into(new ArrayList<>());
+        return collection.find().into(new ArrayList<>());
     }
 
     public void save(T object) {
-        object.onBeforeSaveEve();
-        MongoCollection<T> collection = getCollection();
+        object.onBeforeSave();
+        validate(object);
+        createOrUpdate(object);
+    }
+
+    public int count() {
+        return findAll().size();
+    }
+
+    private void createOrUpdate(T object) {
+        MongoCollection<T> collection = this.collection;
         if (object.getId() == null) {
             object.setId(new ObjectId());
             collection.insertOne(object);
@@ -63,24 +82,12 @@ public class Repository<T extends Entity> {
         }
     }
 
-    public T findFirstBy(String field, String value) {
-        return findFirst(eq(field, value));
-    }
-
-    public List<T> findBy(String fieldName, Object value) {
-        return find(eq(fieldName, value));
-    }
-
-    public List<T> find(Bson cond) {
-        return getCollection().find(cond).into(new ArrayList<>());
-    }
-
-    public int count() {
-        return findAll().size();
-    }
-
-    public T fromKeyValuePairs(String... args) {
-        return fromMap(asMap(args));
+    private void validate(T object) {
+        Validator validator = validatorFactory.getValidator();
+        Set<ConstraintViolation<Entity>> validate = validator.validate(object);
+        if (validate.size() > 0) {
+            throw new ValidationException(validate);
+        }
     }
 
     private Map<String, String> asMap(String... args) {
@@ -100,9 +107,5 @@ public class Repository<T extends Entity> {
             }
         }
         return argMap;
-    }
-
-    public void createIt(String... args) {
-        save(fromKeyValuePairs(args));
     }
 }

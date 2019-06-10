@@ -55,7 +55,7 @@ public class OpenedEmailCounterServiceTest {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        sentMail.saveIt();
+        sentMail.save();
         return sentMail;
     }
 

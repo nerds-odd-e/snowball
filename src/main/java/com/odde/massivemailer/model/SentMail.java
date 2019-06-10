@@ -35,7 +35,7 @@ public class SentMail extends Entity<SentMail> {
 
     public void addVisit(final SentMailVisit sentMailVisit) {
         sentMailVisit.setSentMailId(getId());
-        sentMailVisit.saveIt();
+        sentMailVisit.save();
     }
 
 

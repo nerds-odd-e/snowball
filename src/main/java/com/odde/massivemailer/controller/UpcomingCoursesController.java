@@ -50,7 +50,7 @@ public class UpcomingCoursesController extends AppController {
             ContactPerson updatePerson = repo(ContactPerson.class).findById(person.getId());
             updatePerson.setCourseList(courseIDs);
             updatePerson.setSentDate(parsedDate.toString());
-            updatePerson.saveIt();
+            updatePerson.save();
 
         }
         return String.format("course_list.jsp?message=%s emails sent.", totalMailsSent);

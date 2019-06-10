@@ -79,7 +79,7 @@ public class TemplateTest {
     @Test
     public void mustContainFirstName() {
         template2 = new Template("DefaultTestTemplate", "Greetings {FirstName}", "Dear {FirstName} {LastName}. Please find the details of the course {CourseName} {Location} {Instructor} ");
-        template2.saveIt();
+        template2.save();
 
         List<Template> tempList = Template.findByTemplateName("DefaultTestTemplate");
 

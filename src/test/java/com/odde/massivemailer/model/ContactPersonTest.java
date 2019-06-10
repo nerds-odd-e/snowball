@@ -24,7 +24,7 @@ public class ContactPersonTest {
         repo(ContactPerson.class).fromKeyValuePairs(
                 "firstName", "name",
                 "email", "email@abc.com",
-                "lastName", "lastName").saveIt();
+                "lastName", "lastName").save();
 
         ContactPerson actual = ContactPerson.getContactByEmail("email@abc.com");
 
@@ -45,7 +45,7 @@ public class ContactPersonTest {
         map.put("company", "myCompany");
         map.put("city", "Singapore");
         map.put("country", "Singapore");
-        repo(ContactPerson.class).fromMap(map).saveIt();
+        repo(ContactPerson.class).fromMap(map).save();
         ContactPerson actual = ContactPerson.getContactByEmail("email@abc.com");
 
         assertEquals("name", actual.getFirstName());
@@ -62,7 +62,7 @@ public class ContactPersonTest {
         ContactPerson p = repo(ContactPerson.class).fromKeyValuePairs("email", "john@gmail.com");
         p.setCourseList("1,2,3");
         p.setSentDate("2017-11-30");
-        p.saveIt();
+        p.save();
 
         ContactPerson actual = repo(ContactPerson.class).findById(p.getId());
         assertEquals("1,2,3", actual.getCourseList());
