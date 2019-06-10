@@ -37,9 +37,11 @@ function Course(attributes) {
     this.id = attributes.id===undefined?'':attributes.id;
     this.courseName = attributes.courseName===undefined?'':attributes.courseName;
     this.duration = attributes.duration===undefined?'':attributes.duration;
-    this.location = attributes.location===undefined?'':attributes.location;
+    this.city = attributes.city===undefined?'':attributes.city;
+    this.country = attributes.country===undefined?'':attributes.country;
     this.startDate = attributes.startDate===undefined?'':attributes.startDate;
     this.instructor = attributes.instructor===undefined?'':attributes.instructor;
+    this.location = this.city + ", " + this.country
 }
 
 function createTableData(cssClasses, value, courseId) {
@@ -59,8 +61,8 @@ function renderCourseList(json, selector)
     selector.html('');
 	$.each(json, function(idx, item) {
         var course = new Course(item);
-	    var sendEvent = 'sendEmail(' + course.id + ', 1 )';
-	    var previewEvent = 'sendEmail(' + course.id + ', 2 )';
+	    var sendEvent = 'sendEmail("' + course.id + '", 1 )';
+	    var previewEvent = 'sendEmail("' + course.id + '", 2 )';
         var tableContent = [
           ['course-name', course.id + ' - ' + course.courseName, course.id],
           ['duration', course.duration, null],

@@ -98,7 +98,7 @@ public class CourseTests {
     @Then("^Course should not save and show error messagea$")
     public void courseShowErrorMassage() {
         driver.expectRedirect(add_course_url);
-        assertThat(driver.getCurrentUrl(), containsString("status=fail&msg={%20city:%22cannot%20be%20located%22%20}"));
+        assertThat(driver.getCurrentUrl(), containsString("status=fail&msg={%20geoLocation.latitude:%22This%20location%20cannot%20be%20found%22%20}"));
     }
 
 }

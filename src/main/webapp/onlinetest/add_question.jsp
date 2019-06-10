@@ -4,11 +4,12 @@
 <%@ page import="com.odde.massivemailer.model.onlinetest.Category" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="com.odde.massivemailer.model.base.Repository" %>;
 <%@ page import="com.odde.massivemailer.model.onlinetest.Category" %>
 <%
     String errorMessage = (String) request.getAttribute("errorMessage");
     pageContext.setAttribute("errorMessage", errorMessage);
-    pageContext.setAttribute("categories", repo(Category.class).findAll());
+    pageContext.setAttribute("categories", Repository.repo(Category.class).findAll());
 %>
 
 

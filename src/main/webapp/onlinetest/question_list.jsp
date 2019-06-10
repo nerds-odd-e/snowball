@@ -4,10 +4,11 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ page import="com.odde.massivemailer.model.onlinetest.OnlineTest" %>
 <%@ page import="com.odde.massivemailer.model.onlinetest.Question" %>
+<%@ page import="com.odde.massivemailer.model.base.Repository" %>;
 <%@ page import="java.util.*" %>
 
 <%
-    List<Question> questions = repo(Question.class).findAll();
+    List<Question> questions = Repository.repo(Question.class).findAll();
 	pageContext.setAttribute("questions", questions);
 %>
 <t:with_side_menu title="Question List">

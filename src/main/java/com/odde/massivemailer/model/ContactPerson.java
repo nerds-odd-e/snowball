@@ -2,10 +2,7 @@ package com.odde.massivemailer.model;
 
 import com.google.common.base.Strings;
 import com.odde.massivemailer.model.base.Entity;
-import com.odde.massivemailer.model.base.Errors;
-import com.odde.massivemailer.model.base.Repository;
 import com.odde.massivemailer.model.base.ValidationException;
-import com.odde.massivemailer.model.validator.CheckLocation;
 import com.odde.massivemailer.service.LocationProviderService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,6 +13,8 @@ import org.bson.types.ObjectId;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -30,7 +29,7 @@ public class ContactPerson extends Entity<ContactPerson> {
     private String firstName;
     private String lastName;
     @NotNull(message = "Eamil cannot be null")
-    @Email(message = "Email should be valid")
+    @Pattern(regexp="[A-Za-z0-9._%-+]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}", message="Email should be valid")
     private String email;
     private String company = "";
     private String city;
@@ -46,12 +45,6 @@ public class ContactPerson extends Entity<ContactPerson> {
     private static int COMPANY_INDEX = 3;
     private static int COUNTRY_INDEX = 4;
     private static int CITY_INDEX = 5;
-
-//    static {
-//        validatePresenceOf("email");
-//        validateEmailOf("email").message("email is invalid");
-//        validateWith(new UniquenessValidator("email"));
-//    }
 
     public static void createContactsFromCSVData(String csvData) {
 

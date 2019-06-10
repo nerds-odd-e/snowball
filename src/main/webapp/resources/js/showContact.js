@@ -32,8 +32,10 @@ function Contact(attributes) {
     this.firstName = attributes.firstName===undefined?'':attributes.firstName;
     this.lastName = attributes.lastName===undefined?'':attributes.lastName;
     this.company = attributes.company===undefined?'':attributes.company;
-    this.location = attributes.location===undefined?'':attributes.location;
+    this.city = attributes.city===undefined?'':attributes.city;
+    this.country = attributes.country===undefined?'':attributes.country;
     this.email = attributes.email===undefined?'':attributes.email;
+    this.location = this.city + ", " + this.country
 }
 
 function createTableData(cssClasses, value) {
@@ -103,18 +105,11 @@ function showEditContactDetail(item)
 }
 
 function insertDataIntoContactModal(item){
-
-    var location = item.location;
-
-    var positionOfslash = location.split("/");
-    var country = positionOfslash[0];
-    var city = positionOfslash[1];
-
 	$('#name').val(item.firstName);
 	$('#lastName').val(item.lastName);
 	$('#company').val(item.company);
-	$('#countrydrp').val(country);
-	$('#city').val(city);
+	$('#countrydrp').val(item.country);
+	$('#city').val(item.city);
 	$('#email').val(item.email);
 	$('#email_label').text(item.email);
 }

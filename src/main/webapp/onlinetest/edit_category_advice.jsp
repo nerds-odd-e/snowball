@@ -2,11 +2,12 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.odde.massivemailer.model.onlinetest.Category" %>
+<%@ page import="com.odde.massivemailer.model.base.Repository" %>;
 <%@ page import="java.util.*" %>
 
 <%
     String advice = (String) request.getAttribute("advice");
-    List<Category> categoryList = repo(Category.class).findAll();
+    List<Category> categoryList = Repository.repo(Category.class).findAll();
     pageContext.setAttribute("categoryList", categoryList);
 %>
 
