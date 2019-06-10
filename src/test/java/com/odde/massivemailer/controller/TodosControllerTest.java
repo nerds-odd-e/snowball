@@ -33,12 +33,6 @@ public class TodosControllerTest {
     }
 
     @Test
-    public void renderTodos() throws Exception {
-        controller.doGet(req, res);
-        assertThat(res.getRedirectedUrl(), is("todos.jsp"));
-    }
-
-    @Test
     public void setTodos() throws Exception {
         Todo.createIt("title", "craft beer", "status", "todo");
         Todo.createIt("title", "sake", "status", "doing");
