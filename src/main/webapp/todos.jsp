@@ -3,8 +3,7 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 <%
-        String data = "{}";//request.getAttribute("json");
-        pageContext.setAttribute("data", data);
+        pageContext.setAttribute("json", (String)session.getAttribute("json"));
 %>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 hello
@@ -18,7 +17,7 @@ var app = new Vue({
   el: '#app',
   data: {
     message: 'Hello Vue!',
-    data: ${data}
+    data: ${json}
   }
 })
 

@@ -41,8 +41,6 @@ public class TodoSteps {
 
     @Given("^Todoが(\\d+)つある$")
     public void todoが_つある(int numberOfTodo) {
-
-
         Todo.createIt("title", "craft beer", "status", "new");
         Todo.createIt("title", "sake", "status", "new");
     }
