@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static com.odde.massivemailer.model.base.Repository.repo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -24,13 +25,13 @@ public class QuestionWithOptionsTest {
 
     @Test
     public void shouldCreateQuestionHavingDescriptionAndAdviceAndAnswerOptions() {
-        List<QuestionOption> expectedQuestionOptions = IntStream.range(0, 4).mapToObj(index -> new QuestionOption("option desc"+index, index%4==0)).collect(Collectors.toList());
+        List<QuestionOption> expectedQuestionOptions = IntStream.range(0, 4).mapToObj(index -> new QuestionOption("option desc"+index, index%4==0, null)).collect(Collectors.toList());
         Question expected  = createWithOptions(expectedQuestionOptions);
 
-        Question actual = Question.getById(expected.getId());
+        Question actual = repo(Question.class).findById(expected.getId());
         assertEquals(expected, actual);
 
-        Collection<QuestionOption> actualQuestionOptions = actual.getOptions();
+        Collection<QuestionOption> actualQuestionOptions = actual.options();
 
         assertEquals(expectedQuestionOptions.size(), actualQuestionOptions.size());
         assertTrue(expectedQuestionOptions.containsAll(actualQuestionOptions));

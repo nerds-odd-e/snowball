@@ -25,9 +25,4 @@ public class SentMailVisit extends Entity<SentMailVisit> {
         setReadCount(getReadCount() + 1);
         save();
     }
-
-    @Override
-    public void onBeforeSave() {
-    }
-
 }

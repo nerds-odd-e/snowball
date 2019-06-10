@@ -1,5 +1,6 @@
 package steps;
 
+import com.odde.massivemailer.controller.config.ApplicationConfiguration;
 import com.odde.massivemailer.service.MongoDBConnector;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -11,6 +12,7 @@ public class Hooks {
 
     @Before
     public void beforeScenario() {
+        MongoDBConnector.setDBName(ApplicationConfiguration.testDBName());
         MongoDBConnector.resetAll();
     }
 

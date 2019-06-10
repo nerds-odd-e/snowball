@@ -39,7 +39,7 @@ public class InitializePasswordController extends AppController {
             resp.sendRedirect("initialize_password.jsp?error=error");
             return;
         }
-        user.setPassword(req.getParameter("password"));
+        user.setupPassword(req.getParameter("password"));
         user.save();
         resp.sendRedirect("initialize_password_success.jsp");
     }

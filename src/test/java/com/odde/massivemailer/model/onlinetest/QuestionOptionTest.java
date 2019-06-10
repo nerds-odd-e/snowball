@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
+import static com.odde.massivemailer.model.base.Repository.repo;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -23,10 +24,10 @@ public class QuestionOptionTest {
 
     @Test
     public void shouldBeAbleToPersist() {
-        QuestionOption questionOption = new QuestionOption("desc", false);
+        QuestionOption questionOption = new QuestionOption("desc", false, null);
         questionOption.addToQuestion(questionId1);
 
-        Optional<QuestionOption> actual = QuestionOption.getById(questionOption.getStringId());
+        Optional<QuestionOption> actual = Optional.ofNullable(repo(QuestionOption.class).findByStringId(questionOption.getStringId()));
 
         assertTrue(actual.isPresent());
         assertThat(actual.get(), is(equalTo(questionOption)));
@@ -34,17 +35,17 @@ public class QuestionOptionTest {
 
     @Test
     public void shouldSaveAndReadIsCorrectProperly() {
-        QuestionOption wrongOption = new QuestionOption("desc1", false);
-        QuestionOption rightOption = new QuestionOption("desc2", true);
+        QuestionOption wrongOption = new QuestionOption("desc1", false, null);
+        QuestionOption rightOption = new QuestionOption("desc2", true, null);
         wrongOption.addToQuestion(questionId1);
         rightOption.addToQuestion(questionId1);
 
-        Optional<QuestionOption> wrongFromDb = QuestionOption.getById(wrongOption.getStringId());
+        Optional<QuestionOption> wrongFromDb = Optional.ofNullable(repo(QuestionOption.class).findByStringId(wrongOption.getStringId()));
         assertTrue(wrongFromDb.isPresent());
         QuestionOption wrong = wrongFromDb.get();
         assertThat(wrong.isCorrect(), is(false));
 
-        Optional<QuestionOption> rightFromDb = QuestionOption.getById(rightOption.getStringId());
+        Optional<QuestionOption> rightFromDb = Optional.ofNullable(repo(QuestionOption.class).findByStringId(rightOption.getStringId()));
         assertTrue(rightFromDb.isPresent());
         QuestionOption right = rightFromDb.get();
         assertThat(right.isCorrect(), is(true));
@@ -53,7 +54,7 @@ public class QuestionOptionTest {
     @Test
     public void shouldReturnOptionsForQuestion() {
         IntStream.range(0, 3).forEach(i -> {
-            QuestionOption questionOption = new QuestionOption("desc", false);
+            QuestionOption questionOption = new QuestionOption("desc", false, null);
             questionOption.addToQuestion(i%2 ==0 ? questionId1 : questionId2);
         });
 

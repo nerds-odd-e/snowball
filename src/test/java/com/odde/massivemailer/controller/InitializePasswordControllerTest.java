@@ -90,7 +90,7 @@ public class InitializePasswordControllerTest {
         request.setParameter("password", "123123");
         request.setParameter("password_confirm", "123123");
         request.setParameter("email", "user1@odd-e.com");
-        newUser.setPassword(request.getParameter("password"));
+        newUser.setupPassword(request.getParameter("password"));
         newUser.save();
 
         controller.doPost(request, response);

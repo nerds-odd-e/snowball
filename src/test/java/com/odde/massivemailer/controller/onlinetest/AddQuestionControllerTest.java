@@ -22,8 +22,8 @@ public class AddQuestionControllerTest {
     private AddQuestionController controller;
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
-    private Category cat1 = Category.createIt("Cat1");
-    private Category cat2 = Category.createIt("Cat2");
+    private Category cat1 = Category.create("Cat1");
+    private Category cat2 = Category.create("Cat2");
 
     @Before
     public void setUpMockService() {
@@ -77,17 +77,17 @@ public class AddQuestionControllerTest {
         String description = request.getParameter("description");
         assertEquals(description, question.getDescription());
 
-        assertEquals("Cat1", question.getCategoryName());
+        assertEquals("Cat1", question.categoryName());
 
         for (int i = 0; i < 6; i++) {
             String option = request.getParameter("option" + (i + 1));
-            boolean hasOption = question.getOptions().stream().anyMatch(opt -> opt.getDescription().equals(option));
+            boolean hasOption = question.options().stream().anyMatch(opt -> opt.getDescription().equals(option));
             assertTrue(hasOption);
         }
 
         String rightOptionDescription = request.getParameter("option1");
 
-        Optional<QuestionOption> rightAnswer = question.getOptions().stream().filter(QuestionOption::isCorrect).findFirst();
+        Optional<QuestionOption> rightAnswer = question.options().stream().filter(QuestionOption::isCorrect).findFirst();
         assertEquals(rightAnswer.get().getDescription(), rightOptionDescription);
     }
 
@@ -102,11 +102,11 @@ public class AddQuestionControllerTest {
 
         for (int i = 0; i < 6; i++) {
             String option = request.getParameter("checkbox" + (i + 1));
-            boolean hasOption = question.getOptions().stream().anyMatch(opt -> opt.getDescription().equals(option));
+            boolean hasOption = question.options().stream().anyMatch(opt -> opt.getDescription().equals(option));
             assertTrue(hasOption);
         }
 
-        Collection<QuestionOption> options = question.getOptions();
+        Collection<QuestionOption> options = question.options();
         assertTrue(((QuestionOption) options.toArray()[0]).isCorrect());
         assertTrue(((QuestionOption) options.toArray()[1]).isCorrect());
         assertFalse(((QuestionOption) options.toArray()[2]).isCorrect());

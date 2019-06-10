@@ -115,7 +115,7 @@ public class Mail {
 
         List<Message> returnMsg = new ArrayList<>();
 
-        List<SentMailVisit> sentMailVisits = sentMail.getSentMailVisits();
+        List<SentMailVisit> sentMailVisits = sentMail.sentMailVisits();
 
         for (SentMailVisit sentMailVisit : sentMailVisits) {
             MimeMessage message = setMessageProperty(session, sentMailVisit);

@@ -48,13 +48,13 @@ public class TemplateTest {
     @Test
     public void mustReturnEmptyEmailWhenNOParticipantsInCourse() {
 
-        Assert.assertEquals(0, template.getPopulatedEmailTemplate(course, new ArrayList<>()).size());
+        Assert.assertEquals(0, template.populateEmailTemplate(course, new ArrayList<>()).size());
     }
 
     @Test
     public void mustReturnValidEmailWith_1_CourseParticipant() {
 
-        List<Mail> mailList = template.<Mail>getPopulatedEmailTemplate(course, Collections.singletonList(contactPerson));
+        List<Mail> mailList = template.<Mail>populateEmailTemplate(course, Collections.singletonList(contactPerson));
 
         Assert.assertNotNull(mailList);
         Assert.assertEquals(1, mailList.size());
@@ -66,7 +66,7 @@ public class TemplateTest {
 
     @Test
     public void mustReturnIncompleteEmailWith_1_CourseParticipant() {
-        List<Mail> mailList = template.<Mail>getPopulatedEmailTemplate(course, Collections.singletonList(contactPerson));
+        List<Mail> mailList = template.<Mail>populateEmailTemplate(course, Collections.singletonList(contactPerson));
 
         Assert.assertNotNull(mailList);
         Assert.assertEquals(1, mailList.size());

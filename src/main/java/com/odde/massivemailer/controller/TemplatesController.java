@@ -21,7 +21,9 @@ public class TemplatesController extends AppController {
         if (templateId != null &&  updateTemplate != null) {
             String subject = req.getParameter("subject");
             String content = req.getParameter("content");
-            updateTemplate.saveTemplate(subject, content);
+            updateTemplate.setSubject(subject);
+            updateTemplate.setContent(content);
+            updateTemplate.save();
             resultMsg = "status=success&msg=Update template successfully";
         }
         resp.sendRedirect("/admin/sendemail.jsp?" + resultMsg);

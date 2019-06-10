@@ -14,6 +14,7 @@ public class TestWithDB extends BlockJUnit4ClassRunner {
 
     @Override
     protected void runChild(FrameworkMethod method, RunNotifier notifier) {
+        MongoDBConnector.setDBName("massive_mailer_test");
         MongoDBConnector.resetAll();
         super.runChild(method, notifier);
     }

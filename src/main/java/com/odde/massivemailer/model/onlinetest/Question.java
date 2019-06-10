@@ -9,7 +9,9 @@ import org.bson.types.ObjectId;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import static com.odde.massivemailer.model.base.Repository.repo;
 import static java.util.stream.Collectors.toList;
@@ -30,42 +32,30 @@ public class Question extends Entity<Question> {
     private boolean isMultiQuestion;
     private boolean isApproved;
 
-    @Override
-    public void onBeforeSave() {
-    }
-
-    static Question getById(ObjectId questionId) {
-        Question question = repo(Question.class).findById(questionId);
-        if(question == null) {
-           throw new IllegalArgumentException("No question found by given id.");
-        }
-        return question;
-    }
-
-    public Category getCategory() {
+    public Category category() {
         return repo(Category.class).findById(categoryId);
     }
 
-    public String getCategoryName() {
-        Category category = getCategory();
+    public String categoryName() {
+        Category category = category();
         if (category == null) {
             return "";
         }
         return category.getName();
     }
 
-    public Collection<QuestionOption> getOptions() {
+    public Collection<QuestionOption> options() {
         return QuestionOption.getForQuestion(this.getId());
     }
 
-    public boolean verifyAnswer(List<ObjectId> answeredOptionIds) {
-        Collection<QuestionOption> optionsByQuestionId = getOptions();
+    boolean verifyAnswer(List<ObjectId> answeredOptionIds) {
+        Collection<QuestionOption> optionsByQuestionId = options();
         List<ObjectId> collectOptions = optionsByQuestionId.stream().filter(QuestionOption::isCorrect).map(Entity::getId).collect(toList());
         return collectOptions.equals(answeredOptionIds);
     }
 
-    public ArrayList<ObjectId> getCorrectOption() {
-        Collection<QuestionOption> optionsByQuestionId = getOptions();
+    public ArrayList<ObjectId> correctOptions() {
+        Collection<QuestionOption> optionsByQuestionId = options();
         final ArrayList<ObjectId> correctOptions = new ArrayList<>();
         for (QuestionOption option : optionsByQuestionId) {
             if (option.isCorrect()) {
@@ -76,14 +66,7 @@ public class Question extends Entity<Question> {
     }
 
     public boolean isCorrect(String optionId) {
-        Collection<QuestionOption> optionsByQuestionId = getOptions();
-        final ArrayList<String> correctOptions = new ArrayList<>();
-        for (QuestionOption option : optionsByQuestionId) {
-            if (option.isCorrect()) {
-                correctOptions.add(option.getStringId());
-            }
-        }
-        return correctOptions.contains(optionId);
+        return correctOptions().contains(new ObjectId(optionId));
     }
 
     public void createWrongOption(String optionText) {
@@ -93,9 +76,4 @@ public class Question extends Entity<Question> {
     public void createCorrectOption(String optionText) {
         new QuestionOption(optionText, true, getId()).save();
     }
-
-    boolean belongsTo(Category cat) {
-        return cat.getId().equals(categoryId);
-    }
-
 }

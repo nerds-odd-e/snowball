@@ -31,7 +31,7 @@
                   </c:if>
                 <ul>
 
-                <c:forEach items="${question.getOptions()}" var="option" varStatus="status">
+                <c:forEach items="${question.options()}" var="option" varStatus="status">
                     <li>
                         <c:if test="${question.isMultiQuestion()}">
                          <input type="checkbox" id="option${status.index + 1}" name="optionId" value="${option.getStringId()}" />${option.getDescription()}</label>

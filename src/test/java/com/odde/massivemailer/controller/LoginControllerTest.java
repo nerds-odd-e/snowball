@@ -49,7 +49,7 @@ public class LoginControllerTest {
 
     private void createUser() {
         User user = new User("mary@example.com");
-        user.setPassword("abcd1234");
+        user.setupPassword("abcd1234");
         user.save();
     }
 

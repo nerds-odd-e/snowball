@@ -14,8 +14,8 @@ import static org.junit.Assert.*;
 
 @RunWith(TestWithDB.class)
 public class OnlineTestTest {
-    private Category scrum = Category.createIt("Scrum");
-    private Category tech = Category.createIt("Tech");
+    private Category scrum = Category.create("Scrum");
+    private Category tech = Category.create("Tech");
 
     @Test
     public void shouldNotGetANewOnlineTestWithNQuestionIdsIfEnoughQuestionsInDatabase() {
@@ -204,11 +204,11 @@ public class OnlineTestTest {
         QuestionOption c5 = QuestionOption.<QuestionOption>createIt(q5.getId(), "d2", false);
 
         OnlineTest onlineTest = new OnlineTest(5);
-        onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().getCorrectOption().stream().map(ObjectId::toString).collect(Collectors.toList()) );
-        onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().getCorrectOption().stream().map(ObjectId::toString).collect(Collectors.toList()) );
-        onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().getCorrectOption().stream().map(ObjectId::toString).collect(Collectors.toList()) );
-        onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().getCorrectOption().stream().map(ObjectId::toString).collect(Collectors.toList()) );
-        onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().getCorrectOption().stream().map(o -> new ObjectId().toString()).collect(Collectors.toList()) );
+        onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().correctOptions().stream().map(ObjectId::toString).collect(Collectors.toList()) );
+        onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().correctOptions().stream().map(ObjectId::toString).collect(Collectors.toList()) );
+        onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().correctOptions().stream().map(ObjectId::toString).collect(Collectors.toList()) );
+        onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().correctOptions().stream().map(ObjectId::toString).collect(Collectors.toList()) );
+        onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().correctOptions().stream().map(o -> new ObjectId().toString()).collect(Collectors.toList()) );
 
         TestResult result = onlineTest.generateTestResult();
 

@@ -70,7 +70,7 @@ public class SignupSteps {
         // register some user
         User user = new User(username + "@example.com");
         user.setName(username);
-        user.setPassword("testpassword");
+        user.setupPassword("testpassword");
         user.save();
     }
 

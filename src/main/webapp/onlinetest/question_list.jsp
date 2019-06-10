@@ -51,9 +51,9 @@
                                 </tr>
                                 <tr>
                                     <th style="width:20%">Category</th>
-                                    <td id="category">${question.getCategoryName()}</td>
+                                    <td id="category">${question.categoryName()}</td>
                                 </tr>
-                                <c:forEach items="${question.getOptions()}" var="option" varStatus="status">
+                                <c:forEach items="${question.options()}" var="option" varStatus="status">
                                 <c:set var="optionId">${option.getStringId()}</c:set>
                                 <c:set var="optionNumber">${status.index+1}</c:set>
                                     <c:if test="${option.isCorrect()}">

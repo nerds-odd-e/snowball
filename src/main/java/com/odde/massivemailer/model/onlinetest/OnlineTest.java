@@ -114,7 +114,7 @@ public class OnlineTest {
         }
         String categories = questions.stream()
                 .sorted(Comparator.comparing(Entity::getId))
-                .map(question -> question.getCategory().getName())
+                .map(question -> question.category().getName())
                 .distinct()
                 .collect(Collectors.joining("と"));
 
@@ -143,7 +143,7 @@ public class OnlineTest {
 
     public boolean answer(String[] answeredOptionIds) {
 
-        String categoryId = getCurrentQuestion().getCategory().getStringId();
+        String categoryId = getCurrentQuestion().category().getStringId();
         Answer answer = answerCurrentQuestion(Arrays.asList(answeredOptionIds));
         boolean isCorrect = answer.isCorrect();
         if (isCorrect) {

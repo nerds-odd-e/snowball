@@ -78,7 +78,7 @@ public class SendPreviewMail extends AppController {
 
         List<Template> precourseTemplates =Template.findByTemplateName("Pre-course Template");
         Template precourseTemplate = precourseTemplates.get(0);
-        emails=precourseTemplate.getPopulatedEmailTemplate(course,contactPerson);
+        emails=precourseTemplate.populateEmailTemplate(course,contactPerson);
 
         return emails;
     }

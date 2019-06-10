@@ -32,7 +32,7 @@ public class SignupController extends AppController {
 
         User user = new User(req.getParameter("email"));
         user.setName(req.getParameter("userName"));
-        user.setPassword(req.getParameter("password"));
+        user.setupPassword(req.getParameter("password"));
         user.save();
 
         String sessionToken = RandomStringUtils.randomAlphanumeric(32);

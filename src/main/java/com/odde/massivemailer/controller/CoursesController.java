@@ -44,7 +44,7 @@ public class CoursesController extends AppController {
             respondWithJSON(response, new ArrayList());
             return;
         }
-        respondWithJSON(response, contactPerson.getCourseParticipation());
+        respondWithJSON(response, contactPerson.courseParticipation());
     }
 
 }

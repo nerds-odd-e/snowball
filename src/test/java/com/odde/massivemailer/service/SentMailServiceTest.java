@@ -45,7 +45,7 @@ public class SentMailServiceTest {
 
         SentMail savedSentMail = sentMail.save();
 
-        List<SentMailVisit> savedSentMailVisits = savedSentMail.getSentMailVisits();
+        List<SentMailVisit> savedSentMailVisits = savedSentMail.sentMailVisits();
 
         assertThat(savedSentMailVisits.size(), is(1));
 

@@ -42,7 +42,7 @@ public class SentMail extends Entity<SentMail> {
     public String extract() {
         ArrayList<String> sarray = new ArrayList<>();
         int count = 0;
-        for (SentMailVisit detail : getSentMailVisits()) {
+        for (SentMailVisit detail : sentMailVisits()) {
             count += detail.getReadCount();
             sarray.add(detail.toJSON());
         }
@@ -56,16 +56,12 @@ public class SentMail extends Entity<SentMail> {
         return "{\"subject\":\"" + getSubject() + "\", \"sent_at\":\"" + date + "\", \"total_open_count\":" + count + ", \"emails\":[" + String.join(", ", sarray) + "]}";
     }
 
-    public List<SentMailVisit> getSentMailVisits() {
+    public List<SentMailVisit> sentMailVisits() {
         return repo(SentMailVisit.class).find(eq("sentMailId", getId()));
     }
 
     public static SentMail getSentMailBy(String email) {
         return repo(SentMail.class).findFirstBy("receivers", email);
-    }
-
-    @Override
-    public void onBeforeSave() {
     }
 
 }

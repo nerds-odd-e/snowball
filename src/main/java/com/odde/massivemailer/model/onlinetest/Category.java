@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.bson.types.ObjectId;
 
-import static com.mongodb.client.model.Filters.eq;
 import static com.odde.massivemailer.model.base.Repository.repo;
 
 @Getter
@@ -19,15 +18,11 @@ public class Category extends Entity<Category> {
     private String link="";
     private String advice="";
 
-    public String getName() {
-        return this.name;
-    }
-
     public static ObjectId getIdByName(String name) {
         return repo(Category.class).findFirstBy("name", name).id;
     }
 
-    public static Category createIt(String category_name) {
+    public static Category create(String category_name) {
         return new Category(category_name, "", "").save();
     }
 

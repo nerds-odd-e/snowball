@@ -11,9 +11,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Collection;
-import java.util.Optional;
 
-import static com.mongodb.client.model.Filters.eq;
 import static com.odde.massivemailer.model.base.Repository.repo;
 
 @Getter
@@ -29,21 +27,8 @@ public class QuestionOption extends Entity<QuestionOption> {
     @NotBlank(message="`questionId` cannot be empty")
     private ObjectId questionId;
 
-    @Override
-    public void onBeforeSave() {
-    }
-
-    public QuestionOption(String description, boolean isCorrect) {
-        setDescription(description);
-        setCorrect(isCorrect);
-    }
-
     static Collection<QuestionOption> getForQuestion(ObjectId questionId) {
         return repo(QuestionOption.class).findBy("questionId", questionId);
-    }
-
-    static Optional<QuestionOption> getById(String optionId) {
-        return Optional.ofNullable(repo(QuestionOption.class).findByStringId(optionId));
     }
 
     public static QuestionOption createIt(ObjectId questionId, String description, boolean isCorrect) {

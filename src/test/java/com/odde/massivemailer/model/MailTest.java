@@ -56,7 +56,7 @@ public class MailTest {
 
 		List<Message> messages = mail.createMessages(session);
 
-		assertEquals("<html><body>content TestName, CompanyName<img height=\"42\" width=\"42\" src=\"http://"+ InetAddress.getLocalHost().getHostAddress()+":8070/resources/images/qrcode.png?token=" + mail.getSentMail().getSentMailVisits().get(0).getId() + "\"></img></body></html>", messages.get(0).getContent());
+		assertEquals("<html><body>content TestName, CompanyName<img height=\"42\" width=\"42\" src=\"http://"+ InetAddress.getLocalHost().getHostAddress()+":8070/resources/images/qrcode.png?token=" + mail.getSentMail().sentMailVisits().get(0).getId() + "\"></img></body></html>", messages.get(0).getContent());
 		assertEquals("subject LastName - test@gmail.com", messages.get(0).getSubject());
 	}
 
@@ -104,8 +104,8 @@ public class MailTest {
 
         SentMail sentMail = mail.asSentMail();
 
-		assertThat(sentMail.getSentMailVisits().size(), is(1));
-        assertThat(sentMail.getSentMailVisits().get(0).getEmailAddress(), is("terry@odd-e.com"));
+		assertThat(sentMail.sentMailVisits().size(), is(1));
+        assertThat(sentMail.sentMailVisits().get(0).getEmailAddress(), is("terry@odd-e.com"));
     }
 
     @Test
@@ -123,10 +123,10 @@ public class MailTest {
 
         SentMail sentMail = mail.asSentMail();
 
-        assertThat(sentMail.getSentMailVisits().size(), is(3));
-        assertThat(sentMail.getSentMailVisits().get(0).getEmailAddress(), is("terry@odd-e.com"));
-        assertThat(sentMail.getSentMailVisits().get(1).getEmailAddress(), is("terry2@odd-e.com"));
-        assertThat(sentMail.getSentMailVisits().get(2).getEmailAddress(), is("terry3@odd-e.com"));
+        assertThat(sentMail.sentMailVisits().size(), is(3));
+        assertThat(sentMail.sentMailVisits().get(0).getEmailAddress(), is("terry@odd-e.com"));
+        assertThat(sentMail.sentMailVisits().get(1).getEmailAddress(), is("terry2@odd-e.com"));
+        assertThat(sentMail.sentMailVisits().get(2).getEmailAddress(), is("terry3@odd-e.com"));
     }
 
     @Test

@@ -25,7 +25,7 @@ public class QuestionTest {
     public void shouldGetQuestionById() {
         Question question1 = new Question("desc1", "adv1", categoryId, false, false).save();
         ObjectId id = question1.getId();
-        Question actual = Question.getById(id);
+        Question actual = repo(Question.class).findById(id);
         assertThat(actual, is(equalTo(question1)));
     }
 
@@ -36,13 +36,8 @@ public class QuestionTest {
         QuestionOption correct2 = QuestionOption.createIt(question.getId(), "desc", true);
         QuestionOption.createIt(question.getId(), "desc", false);
 
-        final ArrayList<ObjectId> actual = question.getCorrectOption();
+        final ArrayList<ObjectId> actual = question.correctOptions();
         Assertions.assertThat(actual).hasSize(2).contains(correct1.getId()).contains(correct2.getId());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowExxxceptionIfInvalidId() {
-        Question.getById(new ObjectId());
     }
 
     @Test(expected = ValidationException.class)
@@ -61,7 +56,7 @@ public class QuestionTest {
     public void shouldFetchOptionsForQuestion() {
         Question question = new Question("desc1", null, categoryId, false, false).save();
         QuestionOption.createIt(question.getId(), "desc", false);
-        assertThat(question.getOptions(), is(not(empty())));
+        assertThat(question.options(), is(not(empty())));
     }
 
     @Test
@@ -72,7 +67,7 @@ public class QuestionTest {
         QuestionOption.createIt(question.getId(), "desc", false);
         QuestionOption.createIt(question.getId(), "desc", false);
 
-        question.getOptions().forEach(option -> assertThat(option.getQuestionId(), is(equalTo(expectedQuestionId))));
+        question.options().forEach(option -> assertThat(option.getQuestionId(), is(equalTo(expectedQuestionId))));
     }
 
     @Test

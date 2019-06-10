@@ -17,7 +17,7 @@ public class CourseFactory {
 
     public static Course uniqueCourse() {
         uniq_id += 1;
-        return Course.create();
+        return new Course();
     }
 
     public Course build_csd_course() {

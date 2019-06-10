@@ -39,10 +39,6 @@ public class Course extends Entity<Course> {
         return nearbyCources;
     }
 
-    public static Course create(String ...args) {
-        return repo(Course.class).fromKeyValuePairs(args);
-    }
-
     private boolean isNearTo(Location geoCordinate) {
         return geoLocation.IsNear(geoCordinate);
     }
@@ -65,7 +61,7 @@ public class Course extends Entity<Course> {
     public List<ContactPerson> participants() {
         List<ContactPerson> participantDetails = new ArrayList<>();
         for (Participant partcipant: participations())
-            participantDetails.add(partcipant.getContactPerson());
+            participantDetails.add(partcipant.contactPerson());
         return participantDetails;
     }
 

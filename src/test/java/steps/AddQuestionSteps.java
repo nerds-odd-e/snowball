@@ -23,7 +23,7 @@ public class AddQuestionSteps {
 
     @Given("^there is a question category \"([^\"]*)\"$")
     public void thereIsAQuestionCategory(String name) {
-        Category.createIt(name);
+        Category.create(name);
     }
 
     @Given("^Add Questionを開いている$")

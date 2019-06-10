@@ -25,18 +25,18 @@ public class Template extends Entity<Template> {
         return repo(Template.class).findBy("templateName", templateName);
     }
 
-    public List<Mail> getPopulatedEmailTemplate(Course course, List<ContactPerson> courseParticipants) {
+    public List<Mail> populateEmailTemplate(Course course, List<ContactPerson> courseParticipants) {
         List<Mail> mails = new ArrayList<>();
 
         String content;
         String contactEmailId;
 
         for (ContactPerson contactPerson : courseParticipants) {
-            content = getEmailContentFromTemplate(contactPerson, course);
+            content = emailContentFromTemplate(contactPerson, course);
             contactEmailId = contactPerson.getEmail();
 
             Mail mail = Mail.createUpcomingCoursesEmail(content, contactEmailId);
-            mail.setSubject(getEmailSubjectFromTemplate(contactPerson));
+            mail.setSubject(emailSubjectFromTemplate(contactPerson));
 
             mails.add(mail);
         }
@@ -45,7 +45,7 @@ public class Template extends Entity<Template> {
     }
 
 
-    private String getEmailContentFromTemplate(ContactPerson contactPerson, Course course) {
+    private String emailContentFromTemplate(ContactPerson contactPerson, Course course) {
 
         String populatedContent = null;
         if (contactPerson != null) {
@@ -61,21 +61,10 @@ public class Template extends Entity<Template> {
         return populatedContent;
     }
 
-    private String getEmailSubjectFromTemplate(ContactPerson contactPerson) {
+    private String emailSubjectFromTemplate(ContactPerson contactPerson) {
         String populatedSubject = this.subject;
         populatedSubject = populatedSubject.replace("{FirstName}", (contactPerson.getFirstName() != null ? contactPerson.getFirstName() : "{FirstName}"));
 
         return populatedSubject;
     }
-
-    public void saveTemplate(String subject, String content) {
-        setSubject(subject);
-        setContent(content);
-        save();
-    }
-
-    @Override
-    public void onBeforeSave() {
-    }
-
 }

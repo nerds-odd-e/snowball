@@ -10,21 +10,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.bson.BsonReader;
-import org.bson.BsonWriter;
-import org.bson.codecs.Codec;
-import org.bson.codecs.DecoderContext;
-import org.bson.codecs.EncoderContext;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
 
-import static com.mongodb.client.model.Filters.eq;
 import static com.odde.massivemailer.model.base.Repository.repo;
-import static org.apache.commons.lang3.StringUtils.defaultIfEmpty;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Setter
 @Getter
 public class User extends Entity<User> {
@@ -51,7 +43,7 @@ public class User extends Entity<User> {
         email.sendMailToRecipient(email1, mailService);
     }
 
-    public void setPassword(String password) {
+    public void setupPassword(String password) {
         setHashdPassword(toHashString(password));
     }
 
@@ -80,7 +72,6 @@ public class User extends Entity<User> {
         }
     }
 
-
     public static User fetchUserByToken(String token) {
         if (null == token) {
             return null;
@@ -90,49 +81,6 @@ public class User extends Entity<User> {
 
     public static boolean validatePassword(String password) {
         return !StringUtils.isEmpty(password);
-    }
-
-    @Override
-    public void onBeforeSave() {
-    }
-
-    public static class UserCodec implements Codec<User> {
-        @Override
-        public void encode(final BsonWriter writer, final User value, final EncoderContext encoderContext) {
-            writer.writeStartDocument();
-            writer.writeObjectId("_id", value.id);
-            writer.writeName("name");
-            writer.writeString(defaultIfEmpty(value.name, ""));
-            writer.writeName("email");
-            writer.writeString(defaultIfEmpty(value.email, ""));
-            writer.writeName("hashdPassword");
-            writer.writeString(defaultIfEmpty(value.hashdPassword, ""));
-            writer.writeName("token");
-            writer.writeString(defaultIfEmpty(value.token, ""));
-            writer.writeEndDocument();
-        }
-
-        @Override
-        public User decode(final BsonReader reader, final DecoderContext decoderContext) {
-            User user = new User();
-            reader.readStartDocument();
-            user.id = reader.readObjectId("_id");
-            reader.readName();
-            user.name = reader.readString();
-            reader.readName();
-            user.email = reader.readString();
-            reader.readName();
-            user.hashdPassword = reader.readString();
-            reader.readName();
-            user.token = reader.readString();
-            reader.readEndDocument();
-            return user;
-        }
-
-        @Override
-        public Class<User> getEncoderClass() {
-            return User.class;
-        }
     }
 
 }

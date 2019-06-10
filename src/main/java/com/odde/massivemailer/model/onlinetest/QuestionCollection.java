@@ -50,7 +50,7 @@ public class QuestionCollection {
 
     private boolean hasNoQuestionBelongCategory(List<Category> categories) {
         for (Category category : categories) {
-            if (allQuestions.stream().anyMatch(question -> question.belongsTo(category))) {
+            if (!getQuestionsOfCategory(category).isEmpty()) {
                 return false;
             }
         }
@@ -62,7 +62,7 @@ public class QuestionCollection {
     }
 
     private List<Question> getQuestionsOfCategory(Category cat) {
-        return allQuestions.stream().filter(q -> q.belongsTo(cat)).collect(Collectors.toList());
+        return allQuestions.stream().filter(q -> cat.getId().equals(q.getCategoryId())).collect(Collectors.toList());
     }
 
     private List<Question> getShuffledQuestions(List<Question> questions) {

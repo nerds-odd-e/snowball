@@ -13,8 +13,8 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(TestWithDB.class)
 public class QuestionCollectionTest {
-    private Category scrum = Category.createIt("Scrum");
-    private Category tech = Category.createIt("Tech");
+    private Category scrum = Category.create("Scrum");
+    private Category tech = Category.create("Tech");
     private List<Category> categories = Collections.singletonList(scrum);
 
     @Test
@@ -54,7 +54,7 @@ public class QuestionCollectionTest {
     public void shouldChooseEquallyFromTwoCategories() {
         QuestionCollection questionCollection = createQuestionCollection(10, 10);
         List<Question> questions = questionCollection.generateQuestionList(asList(scrum, tech), 10);
-        long scrumQuestionCount = questions.stream().filter(q -> q.getCategory().equals(scrum)).count();
+        long scrumQuestionCount = questions.stream().filter(q -> q.category().equals(scrum)).count();
         assertEquals(10, questions.size());
         assertEquals(5, scrumQuestionCount);
     }
@@ -63,7 +63,7 @@ public class QuestionCollectionTest {
     public void shouldChooseAtLeastOneQuestion() {
         QuestionCollection questionCollection = createQuestionCollection(10, 10);
         List<Question> questions = questionCollection.generateQuestionList(asList(scrum, tech), 1);
-        long scrumQuestionCount = questions.stream().filter(q -> q.getCategory().equals(scrum)).count();
+        long scrumQuestionCount = questions.stream().filter(q -> q.category().equals(scrum)).count();
         assertEquals(1, scrumQuestionCount);
         assertEquals(1, questions.size());
     }
@@ -72,7 +72,7 @@ public class QuestionCollectionTest {
     public void shouldChooseNotEquallyFromTwoCategories() {
         QuestionCollection questionCollection = createQuestionCollection(10, 1);
         List<Question> questions = questionCollection.generateQuestionList(asList(scrum, tech), 10);
-        long scrumQuestionCount = questions.stream().filter(q -> q.getCategory().equals(scrum)).count();
+        long scrumQuestionCount = questions.stream().filter(q -> q.category().equals(scrum)).count();
         assertEquals(9, scrumQuestionCount);
         assertEquals(10, questions.size());
     }

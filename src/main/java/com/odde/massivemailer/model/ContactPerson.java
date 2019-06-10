@@ -26,7 +26,7 @@ public class ContactPerson extends Entity<ContactPerson> {
     private String firstName;
     private String lastName;
     @NotNull(message = "Eamil cannot be null")
-    @Pattern(regexp="[A-Za-z0-9._%-+]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}", message="Email should be valid")
+    @Pattern(regexp = "[A-Za-z0-9._%-+]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}", message = "Email should be valid")
     private String email;
     private String company = "";
     private String city;
@@ -54,7 +54,7 @@ public class ContactPerson extends Entity<ContactPerson> {
         }
     }
 
-    public static List<ContactPerson> prepareContactsList(String csvData) {
+    static List<ContactPerson> prepareContactsList(String csvData) {
 
         String[] contactPersonList = csvData.split(";");
         List<ContactPerson> contacts = new ArrayList<>();
@@ -113,13 +113,13 @@ public class ContactPerson extends Entity<ContactPerson> {
         return Objects.equals(email, entity.email);
     }
 
-    public List<Participant> getParticipants() {
+    public List<Participant> participants() {
         return repo(Participant.class).findBy("contactPersonId", getId());
     }
 
-    public List<Course> getCourseParticipation() {
-        List<Participant> participants = getParticipants();
-        return participants.stream(). map(Participant::getCourse). collect(Collectors.toList());
+    public List<Course> courseParticipation() {
+        List<Participant> participants = participants();
+        return participants.stream().map(Participant::course).collect(Collectors.toList());
     }
 
 }

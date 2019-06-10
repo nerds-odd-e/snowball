@@ -35,7 +35,7 @@ public class LoginSteps {
     @Given("^There is a user with \"([^\"]*)\" and \"([^\"]*)\"$")
     public void there_is_a_user_with_and(String email, String password) {
         User user = new User(email);
-        user.setPassword(password);
+        user.setupPassword(password);
         user.save();
     }
 
@@ -44,7 +44,7 @@ public class LoginSteps {
         Map<String, String> vals = userTable.asMap(String.class, String.class);
         vals.forEach((key, value) -> {
             User user = new User(key);
-            user.setPassword(value);
+            user.setupPassword(value);
             user.save();
         });
     }

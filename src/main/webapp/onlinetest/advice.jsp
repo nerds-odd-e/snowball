@@ -28,7 +28,7 @@
                 <h2 id="questionText">${question.getDescription()}</h2>
                 <ul>
 
-               <c:forEach items="${question.getOptions()}" var="option">
+               <c:forEach items="${question.options()}" var="option">
                     <li>
                          <c:set var="optionId">${option.getStringId()}</c:set>
                             <c:if test="${selectedOption.contains(optionId)}">

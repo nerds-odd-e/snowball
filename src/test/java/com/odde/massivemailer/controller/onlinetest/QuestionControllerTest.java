@@ -27,9 +27,9 @@ public class QuestionControllerTest {
     private MockHttpServletResponse response;
     private Question question;
     private OnlineTest onlineTest;
-    private Category scrum = Category.createIt("Scrum");
-    private Category tech = Category.createIt("Tech");
-    private Category team = Category.createIt("Team");
+    private Category scrum = Category.create("Scrum");
+    private Category tech = Category.create("Tech");
+    private Category team = Category.create("Team");
 
     @Before
     public void setUpMockService() {
@@ -118,7 +118,7 @@ public class QuestionControllerTest {
     public void doPostWithIncrementCorrectCountOnCorrectAnswer() throws ServletException, IOException {
         question = createQuestionWithOptions(scrum);
 
-        List<ObjectId> optionId = question.getCorrectOption();
+        List<ObjectId> optionId = question.correctOptions();
         onlineTest = new OnlineTest(2);
 
         request.addParameter("optionId", optionId.get(0).toString());
@@ -168,7 +168,7 @@ public class QuestionControllerTest {
         request.getSession().setAttribute("onlineTest", onlineTest);
 
         String wrongOptionId = getFirstOptionId(question);
-        List<ObjectId> correctOptionId = question.getCorrectOption();
+        List<ObjectId> correctOptionId = question.correctOptions();
 
         final String[] answeredOption = new String[2];
         answeredOption[0] = correctOptionId.get(0).toString();
@@ -185,7 +185,7 @@ public class QuestionControllerTest {
     @Test
     public void doPostWithIncrementScrumCategoryCorrectCountOnCorrectAnswer() throws ServletException, IOException {
         question = createQuestionWithOptions(tech);
-        List<ObjectId> optionId = question.getCorrectOption();
+        List<ObjectId> optionId = question.correctOptions();
         onlineTest = new OnlineTest(2);
 
         request.addParameter("optionId", optionId.get(0).toString());
@@ -203,7 +203,7 @@ public class QuestionControllerTest {
     @Test
     public void doPostWithIncrementScrumCategoryCorrectCountOnCorrectAnswer2() throws ServletException, IOException {
         question = createQuestionWithOptions(tech);
-        List<ObjectId> optionId = question.getCorrectOption();
+        List<ObjectId> optionId = question.correctOptions();
         onlineTest = new OnlineTest(2);
 
         request.addParameter("optionId", optionId.get(0).toString());
@@ -223,7 +223,7 @@ public class QuestionControllerTest {
     @Test
     public void doPostWithIncrementTechCategoryCorrectCountOnCorrectAnswer() throws ServletException, IOException {
         question = createQuestionWithOptions(team);
-        List<ObjectId> optionIds = question.getCorrectOption();
+        List<ObjectId> optionIds = question.correctOptions();
         onlineTest = new OnlineTest(2);
 
         request.addParameter("optionId", optionIds.get(0).toString());
@@ -241,7 +241,7 @@ public class QuestionControllerTest {
     @Test
     public void answerCurrentQuestionInParameter() throws ServletException, IOException{
         question = createQuestionWithOptions(tech);
-        List<ObjectId> optionIds = question.getCorrectOption();
+        List<ObjectId> optionIds = question.correctOptions();
         onlineTest = new OnlineTest(2);
 
         request.addParameter("optionId", optionIds.get(0).toString());
@@ -259,7 +259,7 @@ public class QuestionControllerTest {
     }
 
     public static String getFirstOptionId(Question question) {
-        Collection<QuestionOption> options = question.getOptions();
+        Collection<QuestionOption> options = question.options();
         return options.stream().findFirst().get().getStringId();
     }
 
