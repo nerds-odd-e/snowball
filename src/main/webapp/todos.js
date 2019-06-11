@@ -45,6 +45,14 @@ Vue.component('Todos', {
 
 
 
-new Vue({ el: '#app' })
+new Vue({
+    el: '#app' ,
+    template: `
+        <div>
+          <add-todo-form></add-todo-form>
+          <todos></todos>
+        </div>
+    `
+})
 
 

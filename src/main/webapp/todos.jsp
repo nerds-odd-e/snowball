@@ -6,10 +6,5 @@
 
 <h1>Todos List</h1>
 
-
-<div id="app">
-  <add-todo-form></add-todo-form>
-  <todos></todos>
-</div>
-
+<div id="app"></div>
 <script src="todos.js"></script>
