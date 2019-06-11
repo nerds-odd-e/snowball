@@ -1,17 +1,40 @@
+Vue.component('AddTodoForm', {
+  data() {
+    return {
+      title: '',
+    }
+  },
+  methods: {
+    addTodo() {
+       params = {"title": this.title}
+       options = {
+            "method": "POST",
+            "body": JSON.stringify(params)
+       }
+       fetch("/addTodo", options)
+    }
+  },
+  template: `
+     <div>
+         <input name="title"  v-model="title" />
+         <input type="submit" id="add_todo" v-on:click="addTodo" />
+     </div>
+  `,
+})
+
 Vue.component('Todos', {
-  data: () => {
+  data() {
     return {
       todos: [],
     }
   },
-  mounted: function () {
+  mounted() {
     fetch("/todos")
      .then(response => response.json())
      .then(todos => {
         this.todos = todos
      })
   },
-  props: ['todo'],
   template: `
      <div>
          <li v-for="todo in todos">{{todo.title}} {{todo.status}}</li>
@@ -19,21 +42,9 @@ Vue.component('Todos', {
   `,
 })
 
-new Vue({
-  el: '#app',
-  data: {
-    title: ''
-  },
-  methods: {
-    addTodo: function() {
-       params = {"title": this.title}
-       options= {
-            "method": "POST",
-            "body": JSON.stringify(params)
-       }
-       fetch("/addTodo", options)
-    }
-  }
-})
+
+
+
+new Vue({ el: '#app' })
 
 

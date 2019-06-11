@@ -8,9 +8,8 @@
 
 
 <div id="app">
-  <input name="title"  v-model="title" />
-  <input type="submit" id="add_todo" v-on:click="addTodo" />
-  <Todos></Todos>
+  <add-todo-form></add-todo-form>
+  <todos></todos>
 </div>
 
 <script src="todos.js"></script>
