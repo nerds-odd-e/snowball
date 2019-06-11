@@ -8,7 +8,7 @@
 
 
 <div id="app">
-  <input name="title"  v-model="message" />
+  <input name="title"  v-model="title" />
   <input type="submit" id="add_todo" v-on:click="addTodo" />
   <Todos
     v-for="todo in todos"
