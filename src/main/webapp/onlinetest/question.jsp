@@ -2,8 +2,8 @@
 	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<%@ page import="com.odde.massivemailer.model.onlinetest.OnlineTest" %>
-<%@ page import="com.odde.massivemailer.model.onlinetest.Question" %>
+<%@ page import="com.odde.snowball.model.onlinetest.OnlineTest" %>
+<%@ page import="com.odde.snowball.model.onlinetest.Question" %>
 
 <%
     OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");

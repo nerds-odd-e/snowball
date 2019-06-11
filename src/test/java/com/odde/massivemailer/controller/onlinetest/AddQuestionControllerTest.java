@@ -1,9 +1,9 @@
-package com.odde.massivemailer.controller.onlinetest;
+package com.odde.snowball.controller.onlinetest;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.model.onlinetest.QuestionOption;
-import com.odde.massivemailer.model.onlinetest.Category;
-import com.odde.massivemailer.model.onlinetest.Question;
+import com.odde.snowball.model.onlinetest.QuestionOption;
+import com.odde.snowball.model.onlinetest.Category;
+import com.odde.snowball.model.onlinetest.Question;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,7 +13,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import java.util.Collection;
 import java.util.Optional;
 
-import static com.odde.massivemailer.model.base.Repository.repo;
+import static com.odde.snowball.model.base.Repository.repo;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.*;
 

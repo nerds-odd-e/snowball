@@ -1,7 +1,7 @@
 package steps;
 
-import com.odde.massivemailer.factory.QuestionBuilder;
-import com.odde.massivemailer.model.onlinetest.Question;
+import com.odde.snowball.factory.QuestionBuilder;
+import com.odde.snowball.model.onlinetest.Question;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -9,12 +9,12 @@ import cucumber.api.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import steps.driver.WebDriverWrapper;
-import steps.site.MassiveMailerSite;
+import steps.site.SnowballSite;
 
 import java.util.Map;
 
 public class AdminApprovePublicQuestionSteps {
-    private final MassiveMailerSite site = new MassiveMailerSite();
+    private final SnowballSite site = new SnowballSite();
     private final WebDriverWrapper driver = site.getDriver();
     String questionId;
 

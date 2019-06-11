@@ -1,11 +1,11 @@
-package com.odde.massivemailer.controller;
+package com.odde.snowball.controller;
 
 import com.google.gson.internal.LinkedTreeMap;
 import com.odde.TestWithDB;
-import com.odde.massivemailer.model.*;
-import com.odde.massivemailer.serialiser.AppGson;
-import com.odde.massivemailer.service.LocationProviderService;
-import com.odde.massivemailer.service.exception.GeoServiceException;
+import com.odde.snowball.model.*;
+import com.odde.snowball.serialiser.AppGson;
+import com.odde.snowball.service.LocationProviderService;
+import com.odde.snowball.service.exception.GeoServiceException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.odde.massivemailer.model.base.Repository.repo;
+import static com.odde.snowball.model.base.Repository.repo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;

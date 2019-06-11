@@ -1,10 +1,10 @@
-package com.odde.massivemailer.service.impl;
+package com.odde.snowball.service.impl;
 
 import static org.junit.Assert.*;
 
-import com.odde.massivemailer.model.Location;
-import com.odde.massivemailer.service.LocationProviderService;
-import com.odde.massivemailer.service.exception.GeoServiceException;
+import com.odde.snowball.model.Location;
+import com.odde.snowball.service.LocationProviderService;
+import com.odde.snowball.service.exception.GeoServiceException;
 import org.junit.Before;
 import org.junit.Test;
 

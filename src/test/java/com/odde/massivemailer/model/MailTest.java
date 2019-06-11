@@ -1,9 +1,9 @@
-package com.odde.massivemailer.model;
+package com.odde.snowball.model;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.exception.EmailException;
-import com.odde.massivemailer.service.MailService;
-import com.odde.massivemailer.service.MockMailService;
+import com.odde.snowball.exception.EmailException;
+import com.odde.snowball.service.MailService;
+import com.odde.snowball.service.MockMailService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 

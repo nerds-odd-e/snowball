@@ -27,11 +27,11 @@ apply from: "gradle/idea/idea.gradle"
 
 group = 'com.odde'
 version = '0.0.1-SNAPSHOT'
-description = """massive_mailer"""
+description = """snowball"""
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-war.baseName = 'massive_mailer'
+war.baseName = 'snowball'
 
 
 configurations {

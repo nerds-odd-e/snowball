@@ -1,10 +1,10 @@
-package com.odde.massivemailer.model;
+package com.odde.snowball.model;
 
 import com.odde.TestWithDB;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static com.odde.massivemailer.model.base.Repository.repo;
+import static com.odde.snowball.model.base.Repository.repo;
 import static org.junit.Assert.*;
 
 @RunWith(TestWithDB.class)

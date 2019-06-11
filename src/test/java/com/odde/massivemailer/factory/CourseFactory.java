@@ -1,13 +1,13 @@
-package com.odde.massivemailer.factory;
+package com.odde.snowball.factory;
 
-import com.odde.massivemailer.model.ContactPerson;
-import com.odde.massivemailer.model.Course;
+import com.odde.snowball.model.ContactPerson;
+import com.odde.snowball.model.Course;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.odde.massivemailer.factory.ContactFactory.uniqueContact;
-import static com.odde.massivemailer.model.base.Repository.repo;
+import static com.odde.snowball.factory.ContactFactory.uniqueContact;
+import static com.odde.snowball.model.base.Repository.repo;
 
 public class CourseFactory {
 

@@ -1,9 +1,9 @@
-package com.odde.massivemailer.controller;
+package com.odde.snowball.controller;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.factory.SentMailFactory;
-import com.odde.massivemailer.model.SentMail;
-import com.odde.massivemailer.serialiser.AppGson;
+import com.odde.snowball.factory.SentMailFactory;
+import com.odde.snowball.model.SentMail;
+import com.odde.snowball.serialiser.AppGson;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;

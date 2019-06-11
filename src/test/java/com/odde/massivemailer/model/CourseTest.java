@@ -1,4 +1,4 @@
-package com.odde.massivemailer.model;
+package com.odde.snowball.model;
 import com.odde.TestWithDB;
 import org.junit.Before;
 import org.junit.Rule;
@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.odde.massivemailer.model.base.Repository.repo;
+import static com.odde.snowball.model.base.Repository.repo;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(TestWithDB.class)

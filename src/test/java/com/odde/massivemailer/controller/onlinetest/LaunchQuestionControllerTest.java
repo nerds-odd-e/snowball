@@ -1,9 +1,9 @@
-package com.odde.massivemailer.controller.onlinetest;
+package com.odde.snowball.controller.onlinetest;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.model.onlinetest.Category;
-import com.odde.massivemailer.model.onlinetest.OnlineTest;
-import com.odde.massivemailer.model.onlinetest.Question;
+import com.odde.snowball.model.onlinetest.Category;
+import com.odde.snowball.model.onlinetest.OnlineTest;
+import com.odde.snowball.model.onlinetest.Question;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;

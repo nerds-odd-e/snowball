@@ -1,22 +1,22 @@
 package steps;
 
-import com.odde.massivemailer.model.ContactPerson;
-import com.odde.massivemailer.model.Course;
-import com.odde.massivemailer.model.SentMail;
+import com.odde.snowball.model.ContactPerson;
+import com.odde.snowball.model.Course;
+import com.odde.snowball.model.SentMail;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import steps.driver.WebDriverWrapper;
-import steps.site.MassiveMailerSite;
+import steps.site.SnowballSite;
 
-import static com.odde.massivemailer.model.base.Repository.repo;
+import static com.odde.snowball.model.base.Repository.repo;
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.springframework.util.StringUtils.countOccurrencesOf;
 
 public class UpcomingCourseNotificationSteps {
-    private final MassiveMailerSite site = new MassiveMailerSite();
+    private final SnowballSite site = new SnowballSite();
     private final WebDriverWrapper driver = site.getDriver();
 
     @When("^We create (\\d+) contacts at (.*?), (.*?)$")

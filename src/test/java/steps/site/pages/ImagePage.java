@@ -1,14 +1,14 @@
 package steps.site.pages;
 
-import com.odde.massivemailer.model.SentMailVisit;
-import steps.site.MassiveMailerSite;
+import com.odde.snowball.model.SentMailVisit;
+import steps.site.SnowballSite;
 
-import static com.odde.massivemailer.model.base.Repository.repo;
+import static com.odde.snowball.model.base.Repository.repo;
 
 public class ImagePage {
-    private final MassiveMailerSite site;
+    private final SnowballSite site;
 
-    public ImagePage(MassiveMailerSite site) {
+    public ImagePage(SnowballSite site) {
         this.site = site;
     }
 

@@ -1,7 +1,7 @@
-package com.odde.massivemailer.factory;
+package com.odde.snowball.factory;
 
-import com.odde.massivemailer.model.SentMail;
-import com.odde.massivemailer.model.Template;
+import com.odde.snowball.model.SentMail;
+import com.odde.snowball.model.Template;
 
 import java.util.Date;
 

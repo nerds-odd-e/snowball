@@ -1,13 +1,13 @@
 package steps.site.pages;
 
 import steps.driver.WebDriverWrapper;
-import steps.site.MassiveMailerSite;
+import steps.site.SnowballSite;
 
 public class InitializePasswordPage {
 
     private final WebDriverWrapper driver;
 
-    public InitializePasswordPage(MassiveMailerSite site) {
+    public InitializePasswordPage(SnowballSite site) {
         this.driver = site.getDriver();
     }
 

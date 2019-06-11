@@ -1,11 +1,11 @@
 package steps;
 
-import com.odde.massivemailer.model.User;
+import com.odde.snowball.model.User;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import steps.driver.WebDriverWrapper;
-import steps.site.MassiveMailerSite;
+import steps.site.SnowballSite;
 
 import java.util.Map;
 
@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class SignupSteps {
-    private final MassiveMailerSite site = new MassiveMailerSite();
+    private final SnowballSite site = new SnowballSite();
     private final WebDriverWrapper driver = site.getDriver();
     private final String signup_url = site.baseUrl() + "signup.jsp";
     private final String dashboard_url = site.baseUrl() + "dashboard";

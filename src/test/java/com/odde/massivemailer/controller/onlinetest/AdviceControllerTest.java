@@ -1,7 +1,7 @@
-package com.odde.massivemailer.controller.onlinetest;
+package com.odde.snowball.controller.onlinetest;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.model.onlinetest.OnlineTest;
+import com.odde.snowball.model.onlinetest.OnlineTest;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

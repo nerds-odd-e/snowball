@@ -1,21 +1,21 @@
 package steps;
 
-import com.odde.massivemailer.factory.QuestionBuilder;
-import com.odde.massivemailer.model.onlinetest.Category;
+import com.odde.snowball.factory.QuestionBuilder;
+import com.odde.snowball.model.onlinetest.Category;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import steps.driver.UiElement;
 import steps.driver.WebDriverWrapper;
-import steps.site.MassiveMailerSite;
+import steps.site.SnowballSite;
 
 import static com.mongodb.client.model.Filters.eq;
-import static com.odde.massivemailer.model.base.Repository.repo;
+import static com.odde.snowball.model.base.Repository.repo;
 import static org.junit.Assert.assertEquals;
 
 public class FinalScoreSteps {
 
-    private final MassiveMailerSite site = new MassiveMailerSite();
+    private final SnowballSite site = new SnowballSite();
     private final WebDriverWrapper driver = site.getDriver();
 
     @And("^User answered (\\d+) questions wrong$")

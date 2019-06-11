@@ -1,7 +1,7 @@
-package com.odde.massivemailer.model.onlinetest;
+package com.odde.snowball.model.onlinetest;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.model.base.ValidationException;
+import com.odde.snowball.model.base.ValidationException;
 import org.assertj.core.api.Assertions;
 import org.bson.types.ObjectId;
 import org.junit.Test;
@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.odde.massivemailer.model.base.Repository.repo;
+import static com.odde.snowball.model.base.Repository.repo;
 import static junit.framework.TestCase.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;

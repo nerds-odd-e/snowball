@@ -1,14 +1,14 @@
 package steps;
 
-import com.odde.massivemailer.factory.QuestionBuilder;
-import com.odde.massivemailer.model.onlinetest.Category;
+import com.odde.snowball.factory.QuestionBuilder;
+import com.odde.snowball.model.onlinetest.Category;
 import cucumber.api.java.en.Given;
 import steps.driver.WebDriverWrapper;
-import steps.site.MassiveMailerSite;
+import steps.site.SnowballSite;
 
 public class UiCommonSteps {
 
-    private final MassiveMailerSite site = new MassiveMailerSite();
+    private final SnowballSite site = new SnowballSite();
     private final WebDriverWrapper driver = site.getDriver();
 
     @Given("^I'm on the admin dashboard$")

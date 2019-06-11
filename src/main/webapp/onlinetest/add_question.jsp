@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.odde.massivemailer.model.onlinetest.Category" %>
+<%@ page import="com.odde.snowball.model.onlinetest.Category" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.odde.massivemailer.model.base.Repository" %>;
-<%@ page import="com.odde.massivemailer.model.onlinetest.Category" %>
+<%@ page import="com.odde.snowball.model.base.Repository" %>;
+<%@ page import="com.odde.snowball.model.onlinetest.Category" %>
 <%
     String errorMessage = (String) request.getAttribute("errorMessage");
     pageContext.setAttribute("errorMessage", errorMessage);

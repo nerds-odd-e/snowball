@@ -1,7 +1,7 @@
-package com.odde.massivemailer.controller;
+package com.odde.snowball.controller;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.model.User;
+import com.odde.snowball.model.User;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +11,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 
 import java.io.IOException;
 
-import static com.odde.massivemailer.model.base.Repository.repo;
+import static com.odde.snowball.model.base.Repository.repo;
 import static org.junit.Assert.*;
 
 @RunWith(TestWithDB.class)

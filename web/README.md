@@ -1,4 +1,4 @@
-# massive_mailer
+# snowball
 ### background
 jspはロジックとビューの記述が一緒くたになっているため、
 分離する目的でvue.jsを選定しました

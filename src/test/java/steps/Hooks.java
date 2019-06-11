@@ -1,7 +1,7 @@
 package steps;
 
-import com.odde.massivemailer.controller.config.ApplicationConfiguration;
-import com.odde.massivemailer.service.MongoDBConnector;
+import com.odde.snowball.controller.config.ApplicationConfiguration;
+import com.odde.snowball.service.MongoDBConnector;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;

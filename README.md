@@ -16,9 +16,9 @@ use with no password.
 
 Database names:
 
-* test: massive_mailer_test (for cucumber tests) massive_mailer_unittest (for junit tests)
-* development: massive_mailer_development
-* production: massive_mailer_production
+* test: snowball_test (for cucumber tests) snowball_unittest (for junit tests)
+* development: snowball_development
+* production: snowball_production
 
 ###### DB migration
 

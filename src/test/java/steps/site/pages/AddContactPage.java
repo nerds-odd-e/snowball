@@ -1,14 +1,14 @@
 package steps.site.pages;
 
 import steps.driver.WebDriverWrapper;
-import steps.site.MassiveMailerSite;
+import steps.site.SnowballSite;
 
 public class AddContactPage {
-    private final MassiveMailerSite site;
+    private final SnowballSite site;
     private final WebDriverWrapper driver;
 
-    public AddContactPage(MassiveMailerSite massiveMailerSite) {
-        site = massiveMailerSite;
+    public AddContactPage(SnowballSite snowballSite) {
+        site = snowballSite;
         this.driver = site.getDriver();
         site.visit("add_contact.jsp");
     }

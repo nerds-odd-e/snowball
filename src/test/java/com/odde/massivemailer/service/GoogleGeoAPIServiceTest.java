@@ -1,6 +1,6 @@
-package com.odde.massivemailer.service;
+package com.odde.snowball.service;
 
-import com.odde.massivemailer.model.Location;
+import com.odde.snowball.model.Location;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

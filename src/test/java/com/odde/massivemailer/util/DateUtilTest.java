@@ -1,4 +1,4 @@
-package com.odde.massivemailer.util;
+package com.odde.snowball.util;
 
 import org.junit.Test;
 

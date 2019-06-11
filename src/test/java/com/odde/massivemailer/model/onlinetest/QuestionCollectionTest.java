@@ -1,4 +1,4 @@
-package com.odde.massivemailer.model.onlinetest;
+package com.odde.snowball.model.onlinetest;
 
 import com.odde.TestWithDB;
 import org.bson.types.ObjectId;

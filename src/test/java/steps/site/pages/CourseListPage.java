@@ -1,13 +1,13 @@
 package steps.site.pages;
 
 import steps.driver.WebDriverWrapper;
-import steps.site.MassiveMailerSite;
+import steps.site.SnowballSite;
 
 public class CourseListPage {
     private final WebDriverWrapper driver;
-    private final MassiveMailerSite site;
+    private final SnowballSite site;
 
-    public CourseListPage(MassiveMailerSite site) {
+    public CourseListPage(SnowballSite site) {
 
         this.site = site;
         this.driver = site.driver;

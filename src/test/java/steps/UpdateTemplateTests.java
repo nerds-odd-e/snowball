@@ -5,12 +5,12 @@ package steps;
         import cucumber.api.java.en.Then;
         import cucumber.api.java.en.When;
         import steps.driver.WebDriverWrapper;
-        import steps.site.MassiveMailerSite;
+        import steps.site.SnowballSite;
 
         import java.util.List;
 
 public class UpdateTemplateTests {
-    private final MassiveMailerSite site = new MassiveMailerSite();
+    private final SnowballSite site = new SnowballSite();
     private final WebDriverWrapper driver = site.getDriver();
     private final String sendemail_url = site.baseUrl()+ "admin/sendemail.jsp";
 

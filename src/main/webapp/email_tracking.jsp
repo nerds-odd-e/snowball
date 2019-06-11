@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<%@ page import="com.odde.massivemailer.model.ContactPerson"%>
+<%@ page import="com.odde.snowball.model.ContactPerson"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
 <t:with_side_menu title="ODD-E">

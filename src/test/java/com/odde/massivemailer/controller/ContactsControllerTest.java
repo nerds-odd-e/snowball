@@ -1,10 +1,10 @@
-package com.odde.massivemailer.controller;
+package com.odde.snowball.controller;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.model.ContactPerson;
-import com.odde.massivemailer.model.Mail;
-import com.odde.massivemailer.model.User;
-import com.odde.massivemailer.service.GMailService;
+import com.odde.snowball.model.ContactPerson;
+import com.odde.snowball.model.Mail;
+import com.odde.snowball.model.User;
+import com.odde.snowball.service.GMailService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,8 +17,8 @@ import org.springframework.mock.web.MockHttpServletResponse;
 
 import java.io.IOException;
 
-import static com.odde.massivemailer.factory.ContactFactory.uniqueContact;
-import static com.odde.massivemailer.model.base.Repository.repo;
+import static com.odde.snowball.factory.ContactFactory.uniqueContact;
+import static com.odde.snowball.model.base.Repository.repo;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.verify;

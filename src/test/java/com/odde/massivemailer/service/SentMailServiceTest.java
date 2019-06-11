@@ -1,8 +1,8 @@
-package com.odde.massivemailer.service;
+package com.odde.snowball.service;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.model.SentMail;
-import com.odde.massivemailer.model.SentMailVisit;
+import com.odde.snowball.model.SentMail;
+import com.odde.snowball.model.SentMailVisit;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 

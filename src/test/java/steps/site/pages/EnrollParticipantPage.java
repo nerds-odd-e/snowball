@@ -1,14 +1,14 @@
 package steps.site.pages;
 
-import com.odde.massivemailer.model.Course;
+import com.odde.snowball.model.Course;
 import steps.driver.WebDriverWrapper;
-import steps.site.MassiveMailerSite;
+import steps.site.SnowballSite;
 
 public class EnrollParticipantPage {
-    private final MassiveMailerSite site;
+    private final SnowballSite site;
     private final WebDriverWrapper driver;
 
-    public EnrollParticipantPage(MassiveMailerSite site) {
+    public EnrollParticipantPage(SnowballSite site) {
         this.site = site;
         this.driver = site.driver;
     }

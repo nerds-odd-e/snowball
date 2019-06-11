@@ -1,8 +1,8 @@
-package com.odde.massivemailer.factory;
+package com.odde.snowball.factory;
 
-import com.odde.massivemailer.model.ContactPerson;
+import com.odde.snowball.model.ContactPerson;
 
-import static com.odde.massivemailer.model.base.Repository.repo;
+import static com.odde.snowball.model.base.Repository.repo;
 
 public class ContactFactory {
     private static int uniq_id = 0;

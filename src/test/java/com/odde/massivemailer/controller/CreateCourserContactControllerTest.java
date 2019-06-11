@@ -1,9 +1,9 @@
-package com.odde.massivemailer.controller;
+package com.odde.snowball.controller;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.factory.CourseFactory;
-import com.odde.massivemailer.model.ContactPerson;
-import com.odde.massivemailer.model.Course;
+import com.odde.snowball.factory.CourseFactory;
+import com.odde.snowball.model.ContactPerson;
+import com.odde.snowball.model.Course;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

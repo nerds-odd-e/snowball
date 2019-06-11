@@ -1,15 +1,15 @@
-package com.odde.massivemailer.service.impl;
+package com.odde.snowball.service.impl;
 
 import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.GreenMailUtil;
 import com.icegreen.greenmail.util.ServerSetup;
 import com.odde.TestWithDB;
-import com.odde.massivemailer.exception.EmailException;
-import com.odde.massivemailer.model.Mail;
-import com.odde.massivemailer.service.GMailService;
-import com.odde.massivemailer.service.MailConfiguration;
-import com.odde.massivemailer.service.MailService;
-import com.odde.massivemailer.service.ServerConfig;
+import com.odde.snowball.exception.EmailException;
+import com.odde.snowball.model.Mail;
+import com.odde.snowball.service.GMailService;
+import com.odde.snowball.service.MailConfiguration;
+import com.odde.snowball.service.MailService;
+import com.odde.snowball.service.ServerConfig;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

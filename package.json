@@ -1,5 +1,5 @@
 {
-  "name": "massive_mailer",
+  "name": "snowball",
   "version": "1.0.0",
   "description": "Pre-prerequisite * The environment variables `MM_EMAIL_USERID` and `MM_EMAIL_PASSWORD` are required to send emails out. * On Mac OS X, add the following to your environment variables (~/.bash_profile). ``` export MM_EMAIL_USERID=<your gmail address> export MM_EMAIL_PASSWORD=<your gmail password> launchctl setenv MM_EMAIL_USERID $MM_EMAIL_USERID launchctl setenv MM_EMAIL_PASSWORD $MM_EMAIL_PASSWORD ``` * Reboot your IDE.",
   "main": "karma.conf.js",
@@ -18,12 +18,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nerds-odd-e/massive_mailer.git"
+    "url": "git+https://github.com/nerds-odd-e/snowball.git"
   },
   "author": "odd-e",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/nerds-odd-e/massive_mailer/issues"
+    "url": "https://github.com/nerds-odd-e/snowball/issues"
   },
-  "homepage": "https://github.com/nerds-odd-e/massive_mailer#readme"
+  "homepage": "https://github.com/nerds-odd-e/snowball#readme"
 }

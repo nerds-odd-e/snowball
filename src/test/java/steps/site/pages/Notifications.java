@@ -1,8 +1,8 @@
 package steps.site.pages;
 
-import com.odde.massivemailer.model.SentMailVisit;
+import com.odde.snowball.model.SentMailVisit;
 
-import static com.odde.massivemailer.model.base.Repository.repo;
+import static com.odde.snowball.model.base.Repository.repo;
 
 public class Notifications {
     public static int getSentMailVisitCount(String receipient) {

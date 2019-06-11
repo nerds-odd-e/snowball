@@ -1,6 +1,6 @@
 package steps;
 
-import com.odde.massivemailer.model.User;
+import com.odde.snowball.model.User;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -10,7 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import steps.driver.WebDriverWrapper;
-import steps.site.MassiveMailerSite;
+import steps.site.SnowballSite;
 
 import java.util.*;
 
@@ -18,7 +18,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.*;
 
 public class LoginSteps {
-    private final MassiveMailerSite site = new MassiveMailerSite();
+    private final SnowballSite site = new SnowballSite();
     private final WebDriverWrapper driver = site.getDriver();
     private final String login_url = site.baseUrl() + "login.jsp";
 

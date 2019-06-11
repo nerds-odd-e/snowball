@@ -1,12 +1,12 @@
 package steps;
 
-import com.odde.massivemailer.model.Course;
+import com.odde.snowball.model.Course;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import steps.driver.WebDriverWrapper;
-import steps.site.MassiveMailerSite;
+import steps.site.SnowballSite;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -16,7 +16,7 @@ import static org.junit.Assert.assertTrue;
 
 public class CourseDetailSteps {
 
-    private final MassiveMailerSite site = new MassiveMailerSite();
+    private final SnowballSite site = new SnowballSite();
     private final WebDriverWrapper driver = site.getDriver();
     private final String courseDetailUrl = site.baseUrl() + "course_detail.jsp";
 

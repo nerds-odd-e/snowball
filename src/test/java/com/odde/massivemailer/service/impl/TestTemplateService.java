@@ -1,7 +1,7 @@
-package com.odde.massivemailer.service.impl;
+package com.odde.snowball.service.impl;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.model.Template;
+import com.odde.snowball.model.Template;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

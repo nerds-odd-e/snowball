@@ -1,10 +1,10 @@
-package com.odde.massivemailer.controller;
+package com.odde.snowball.controller;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.factory.CourseFactory;
-import com.odde.massivemailer.model.ContactPerson;
-import com.odde.massivemailer.model.Course;
-import com.odde.massivemailer.model.Participant;
+import com.odde.snowball.factory.CourseFactory;
+import com.odde.snowball.model.ContactPerson;
+import com.odde.snowball.model.Course;
+import com.odde.snowball.model.Participant;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import static com.odde.massivemailer.factory.ContactFactory.uniqueContact;
+import static com.odde.snowball.factory.ContactFactory.uniqueContact;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
 

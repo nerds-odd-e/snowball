@@ -1,4 +1,4 @@
-package com.odde.massivemailer.model.onlinetest;
+package com.odde.snowball.model.onlinetest;
 
 import com.odde.TestWithDB;
 import org.bson.types.ObjectId;
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static com.odde.massivemailer.model.base.Repository.repo;
+import static com.odde.snowball.model.base.Repository.repo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 

@@ -1,6 +1,6 @@
 package com.odde;
 
-import com.odde.massivemailer.service.MongoDBConnector;
+import com.odde.snowball.service.MongoDBConnector;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.model.FrameworkMethod;
@@ -14,7 +14,7 @@ public class TestWithDB extends BlockJUnit4ClassRunner {
 
     @Override
     protected void runChild(FrameworkMethod method, RunNotifier notifier) {
-        MongoDBConnector.setDBName("massive_mailer_test");
+        MongoDBConnector.setDBName("snowball_test");
         MongoDBConnector.resetAll();
         super.runChild(method, notifier);
     }

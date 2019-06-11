@@ -1,4 +1,4 @@
-package com.odde.massivemailer.controller;
+package com.odde.snowball.controller;
 
 import org.junit.Before;
 import org.junit.Test;

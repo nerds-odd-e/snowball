@@ -1,8 +1,8 @@
-package com.odde.massivemailer.controller;
+package com.odde.snowball.controller;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.model.ContactPerson;
-import com.odde.massivemailer.model.Course;
+import com.odde.snowball.model.ContactPerson;
+import com.odde.snowball.model.Course;
 import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.odde.massivemailer.factory.CourseFactory.uniqueCourse;
+import static com.odde.snowball.factory.CourseFactory.uniqueCourse;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.Assert.assertEquals;
 

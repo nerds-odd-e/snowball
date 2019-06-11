@@ -1,4 +1,4 @@
-package com.odde.massivemailer.model;
+package com.odde.snowball.model;
 
 import com.odde.TestWithDB;
 import org.junit.Assert;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static com.odde.massivemailer.model.base.Repository.repo;
+import static com.odde.snowball.model.base.Repository.repo;
 
 @RunWith(TestWithDB.class)
 public class TemplateTest {

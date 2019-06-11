@@ -1,6 +1,6 @@
 package steps;
 
-import com.odde.massivemailer.model.onlinetest.Category;
+import com.odde.snowball.model.onlinetest.Category;
 import org.bson.types.ObjectId;
 
 public class CategoryBuilder {

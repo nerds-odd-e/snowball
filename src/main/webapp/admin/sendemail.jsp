@@ -2,7 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<%@ page import="com.odde.massivemailer.model.ContactPerson"%>
+<%@ page import="com.odde.snowball.model.ContactPerson"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
 

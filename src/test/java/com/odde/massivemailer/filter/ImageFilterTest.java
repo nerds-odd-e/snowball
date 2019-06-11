@@ -1,8 +1,8 @@
-package com.odde.massivemailer.filter;
+package com.odde.snowball.filter;
 
 import com.odde.TestWithDB;
-import com.odde.massivemailer.model.SentMail;
-import com.odde.massivemailer.model.SentMailVisit;
+import com.odde.snowball.model.SentMail;
+import com.odde.snowball.model.SentMailVisit;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +16,7 @@ import javax.servlet.ServletResponse;
 import java.io.IOException;
 import java.util.Date;
 
-import static com.odde.massivemailer.model.base.Repository.repo;
+import static com.odde.snowball.model.base.Repository.repo;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(TestWithDB.class)

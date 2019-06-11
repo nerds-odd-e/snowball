@@ -1,4 +1,4 @@
-package com.odde.massivemailer.model;
+package com.odde.snowball.model;
 
 import org.junit.Assert;
 import org.junit.Before;

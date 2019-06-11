@@ -1,8 +1,8 @@
 package steps;
 
-import com.odde.massivemailer.factory.QuestionBuilder;
-import com.odde.massivemailer.model.User;
-import com.odde.massivemailer.model.onlinetest.Category;
+import com.odde.snowball.factory.QuestionBuilder;
+import com.odde.snowball.model.User;
+import com.odde.snowball.model.onlinetest.Category;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -13,19 +13,19 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.Color;
 import steps.driver.WebDriverWrapper;
-import steps.site.MassiveMailerSite;
+import steps.site.SnowballSite;
 
 import java.util.List;
 import java.util.Map;
 
 import static com.mongodb.client.model.Filters.eq;
-import static com.odde.massivemailer.model.base.Repository.repo;
+import static com.odde.snowball.model.base.Repository.repo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
 public class QuestionStep {
-    private final MassiveMailerSite site = new MassiveMailerSite();
+    private final SnowballSite site = new SnowballSite();
     private final WebDriverWrapper driver = site.getDriver();
     private int totalCounter;
     private int scrumCounter;
