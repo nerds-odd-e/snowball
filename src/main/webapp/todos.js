@@ -42,11 +42,7 @@ Vue.component('Todos', {
   `,
 })
 
-
-
-
-new Vue({
-    el: '#app' ,
+Vue.component('Root', {
     template: `
         <div>
           <add-todo-form></add-todo-form>
@@ -54,5 +50,8 @@ new Vue({
         </div>
     `
 })
+
+
+new Vue({ el: '#app' , template: `<Root></Root>` })
 
 
