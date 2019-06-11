@@ -3,8 +3,11 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vue"></script>
+
 
 <h1>Todos List</h1>
 
 <div id="app"></div>
-<script src="todos.js"></script>
+<script type="module" src="todos.js"></script>
+

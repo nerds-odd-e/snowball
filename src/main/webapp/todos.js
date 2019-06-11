@@ -42,7 +42,7 @@ Vue.component('Todos', {
   `,
 })
 
-Vue.component('Root', {
+var root = Vue.component('Root', {
     template: `
         <div>
           <add-todo-form></add-todo-form>
@@ -51,7 +51,7 @@ Vue.component('Root', {
     `
 })
 
+export default { root: root }
 
 new Vue({ el: '#app' , template: `<Root></Root>` })
-
 
