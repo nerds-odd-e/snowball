@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
@@ -6,7 +6,10 @@
 
 <h1>Todos List</h1>
 
+
 <div id="app">
+  <input name="title" />
+  <input type="submit" id="add_todo" v-on:click="addTodo" />
   <Todos
     v-for="todo in todos"
     v-bind:todo="todo"
@@ -28,6 +31,16 @@ var app = new Vue({
      .then(todos => {
         this.todos = todos
      })
+  },
+  methods: {
+    addTodo: function() {
+       params = {"title": "お風呂掃除"}
+       options= {
+            "method": "POST",
+            "body": JSON.stringify(params)
+       }
+       fetch("/addTodo", options)
+    }
   }
 })
 

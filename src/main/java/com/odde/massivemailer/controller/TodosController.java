@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 public class TodosController extends AppController {
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.setHeader("Content-Type", "application/json; charset=UTF-8");
         resp.getOutputStream().print(toJson(Todo.findAll()));
     }
 
