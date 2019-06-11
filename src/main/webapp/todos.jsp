@@ -8,7 +8,7 @@
 
 
 <div id="app">
-  <input name="title" />
+  <input name="title"  v-model="message" />
   <input type="submit" id="add_todo" v-on:click="addTodo" />
   <Todos
     v-for="todo in todos"
@@ -20,10 +20,11 @@
 <script>
 
 
-var app = new Vue({
+new Vue({
   el: '#app',
   data: {
-    todos: []
+    todos: [],
+    title: ''
   },
   mounted: function () {
     fetch("/todos")
@@ -34,7 +35,7 @@ var app = new Vue({
   },
   methods: {
     addTodo: function() {
-       params = {"title": "お風呂掃除"}
+       params = {"title": this.title}
        options= {
             "method": "POST",
             "body": JSON.stringify(params)
