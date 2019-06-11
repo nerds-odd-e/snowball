@@ -1,8 +1,8 @@
-new Vue({
-  el: '#app',
-  data: {
-    todos: [],
-    title: ''
+Vue.component('Todos', {
+  data: () => {
+    return {
+      todos: [],
+    }
   },
   mounted: function () {
     fetch("/todos")
@@ -10,6 +10,19 @@ new Vue({
      .then(todos => {
         this.todos = todos
      })
+  },
+  props: ['todo'],
+  template: `
+     <div>
+         <li v-for="todo in todos">{{todo.title}} {{todo.status}}</li>
+     </div>
+  `,
+})
+
+new Vue({
+  el: '#app',
+  data: {
+    title: ''
   },
   methods: {
     addTodo: function() {
@@ -23,8 +36,4 @@ new Vue({
   }
 })
 
-Vue.component('Todos', {
-  props: ['todo'],
-  template: '<li>{{todo.title}} {{todo.status}}</li>',
-})
 
