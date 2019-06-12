@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'Todos',
   mounted() {
     let options = {mode: 'cors'}
     fetch("http://localhost:8070/todos", options)
