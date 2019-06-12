@@ -83,8 +83,7 @@ task cucumber_now {
     finalizedBy "cucumber"
     doFirst {
         exec {
-            executable 'sh'
-            args './frontend/build_frontend_for_test.sh'    
+            commandLine 'npm', 'run', '--prefix', 'frontend', 'build'
         }
     }
     doLast {
