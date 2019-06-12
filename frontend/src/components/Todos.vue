@@ -3,7 +3,7 @@
     <h1>Todos List</h1>
     <input name="title"  v-model="title" />
     <input type="submit" id="add_todo" v-on:click="addTodo" />
-    <li v-for="todo in todos">{{todo.title}} {{todo.status}}</li>
+    <li class='todo' v-for="todo in todos">{{todo.title}} {{todo.status}}</li>
   </div>
 </template>
 
@@ -15,6 +15,7 @@ export default {
     fetch("http://localhost:8070/todos", options)
      .then(response => response.json())
      .then(todos => {
+        console.log("hello1111")
         this.todos = todos
      })
   },
@@ -22,7 +23,6 @@ export default {
     return {
       title: '',
       todos: [],
-      msg: 'Welcome to Your Vue.js App'
     }
   },
   methods: {
