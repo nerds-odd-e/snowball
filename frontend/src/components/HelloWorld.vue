@@ -1,113 +1,79 @@
+//Vue.component('AddTodoForm', {
+//  data() {
+//    return {
+//      title: '',
+//    }
+//  },
+//  methods: {
+//    addTodo() {
+//       params = {"title": this.title}
+//       options = {
+//            "method": "POST",
+//            "body": JSON.stringify(params)
+//       }
+//       fetch("/addTodo", options)
+//    }
+//  },
+//  template: `
+//     <div>
+//         <input name="title"  v-model="title" />
+//         <input type="submit" id="add_todo" v-on:click="addTodo" />
+//     </div>
+//  `,
+//})
+//
+//Vue.component('Todos', {
+//  data() {
+//    return {
+//      todos: [],
+//    }
+//  },
+//  mounted() {
+//    fetch("/todos")
+//     .then(response => response.json())
+//     .then(todos => {
+//        this.todos = todos
+//     })
+//  },
+//  template: `
+//     <div>
+//         <li v-for="todo in todos">{{todo.title}} {{todo.status}}</li>
+//     </div>
+//  `,
+//})
+//
+//var root = Vue.component('Root', {
+//    template: `
+//        <div>
+//          <add-todo-form></add-todo-form>
+//          <todos></todos>
+//        </div>
+//    `
+//})
+//
+
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li>
-        <a
-          href="https://vuejs.org"
-          target="_blank"
-        >
-          Core Docs
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://forum.vuejs.org"
-          target="_blank"
-        >
-          Forum
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://chat.vuejs.org"
-          target="_blank"
-        >
-          Community Chat
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://twitter.com/vuejs"
-          target="_blank"
-        >
-          Twitter
-        </a>
-      </li>
-      <br>
-      <li>
-        <a
-          href="http://vuejs-templates.github.io/webpack/"
-          target="_blank"
-        >
-          Docs for This Template
-        </a>
-      </li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li>
-        <a
-          href="http://router.vuejs.org/"
-          target="_blank"
-        >
-          vue-router
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vuex.vuejs.org/"
-          target="_blank"
-        >
-          vuex
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vue-loader.vuejs.org/"
-          target="_blank"
-        >
-          vue-loader
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-        >
-          awesome-vue
-        </a>
-      </li>
-    </ul>
   </div>
 </template>
 
 <script>
 export default {
   name: 'HelloWorld',
+  mounted() {
+    fetch("/todos")
+     .then(response => response.json())
+     .then(todos => {
+        this.todos = todos
+     })
+  },
   data () {
     return {
+      todos: [],
       msg: 'Welcome to Your Vue.js App'
     }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
