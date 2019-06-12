@@ -29,7 +29,7 @@ describe('todos', () => {
     vm.$nextTick().then(() => {
       vm.$nextTick().then(() => {
         expect(fetch.mock.calls.length).toEqual(1)
-        expect(fetch.mock.calls[0][0]).toEqual('http://localhost:8060/todos')
+        expect(fetch.mock.calls[0][0]).toEqual('/todos')
         expect(vm.todos).toEqual(json)
 
         vm.$nextTick().then(() => {

@@ -43,7 +43,7 @@ configurations {
 }
 
 gretty {
-    httpPort = 8070
+    httpPort = 8060
     if(project.gradle.startParameter.taskNames.any{e -> e.startsWith('cucumber')}) {
         jvmArgs = ["-Dactive_env=test"]
         httpPort = 8060
