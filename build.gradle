@@ -87,6 +87,15 @@ task vue_test {
     }
 }
 
+task appVueStart {
+    group "gretty"
+    doFirst {
+        exec {
+            commandLine 'npm', 'run', 'dev', '--prefix', 'frontend'
+        }
+    }
+}
+
 task cucumber_now {
     group "verification"
     finalizedBy "cucumber"

@@ -16,6 +16,7 @@ public class TodoSteps {
 
     @Given("^Todo一覧ページに遷移する$")
     public void todo一覧ページに遷移する() {
+        site.visit("/");
         site.visit("/index.html");
     }
 
@@ -32,8 +33,7 @@ public class TodoSteps {
     }
 
     @Then("^Todoが複数表示されている$")
-    public void todoが複数表示されている() throws InterruptedException {
-        Thread.sleep(2000);
+    public void todoが複数表示されている() {
         site.getDriver().pageShouldContain("sake");
         site.getDriver().pageShouldContain("beer");
     }
@@ -45,10 +45,7 @@ public class TodoSteps {
 
 
     @And("^\"([^\"]*)\"が表示されている$")
-    public void が表示されている(String text) throws InterruptedException {
-        Thread.sleep(2000);
-        assertEquals(1, Todo.findAll().size());
-        assertEquals("お風呂掃除", Todo.findAll().get(0).get("title"));
+    public void が表示されている(String text) {
         site.getDriver().pageShouldContain(text);
     }
 
