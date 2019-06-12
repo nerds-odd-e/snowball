@@ -1,7 +1,6 @@
 package steps;
 
 import com.odde.massivemailer.model.Todo;
-import cucumber.api.PendingException;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -32,12 +31,12 @@ public class TodoSteps {
 
     @Given("^Todo一覧ページに遷移する$")
     public void todo一覧ページに遷移する() {
-        site.visit("/todos.jsp");
+        site.visit("/index.html");
     }
 
     @Then("^Todo一覧ページが表示される$")
     public void todo一覧ページが表示される() {
-        assertEquals(true, site.getDriver().getBodyText().contains("Todos List"));
+        site.getDriver().pageShouldContain("Todos List");
     }
 
 
@@ -50,9 +49,8 @@ public class TodoSteps {
     @Then("^Todoが複数表示されている$")
     public void todoが複数表示されている() throws InterruptedException {
         Thread.sleep(2000);
-        String bodyText = site.getDriver().getBodyText();
-        assertEquals(bodyText, true, bodyText.contains("sake"));
-        assertEquals(bodyText, true, bodyText.contains("beer"));
+        site.getDriver().pageShouldContain("sake");
+        site.getDriver().pageShouldContain("beer");
     }
 
     @When("^\"([^\"]*)\"を\"([^\"]*)\"に入力$")
@@ -64,7 +62,9 @@ public class TodoSteps {
     @And("^\"([^\"]*)\"が表示されている$")
     public void が表示されている(String text) throws InterruptedException {
         Thread.sleep(2000);
-        assertEquals(site.getDriver().getBodyText(), true, site.getDriver().getBodyText().contains(text));
+        assertEquals(1, Todo.findAll().size());
+        assertEquals("お風呂掃除", Todo.findAll().get(0).get("title"));
+        site.getDriver().pageShouldContain(text);
     }
 
     @And("^\"([^\"]*)\"をクリック$")

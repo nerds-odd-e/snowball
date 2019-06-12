@@ -3,12 +3,13 @@ package com.odde.massivemailer.startup;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.DBException;
 
-import java.io.*;
-import java.sql.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 public class DBMigrater {
     public void migrate() {

@@ -82,10 +82,17 @@ task cucumber_now {
     group "verification"
     finalizedBy "cucumber"
     doFirst {
+        exec {
+            executable 'sh'
+            args './frontend/build_frontend_for_test.sh'    
+        }
+    }
+    doLast {
         cucumber {
             tags = ['@now']
         }
     }
+
 }
 
 test {

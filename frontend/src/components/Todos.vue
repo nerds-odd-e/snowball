@@ -12,7 +12,7 @@ export default {
   name: 'Todos',
   mounted() {
     let options = {mode: 'cors'}
-    fetch("http://localhost:8070/todos", options)
+    fetch("http://localhost:8060/todos", options)
      .then(response => response.json())
      .then(todos => {
         this.todos = todos
@@ -31,7 +31,7 @@ export default {
            'method': 'POST',
            'body': JSON.stringify(params)
       }
-      fetch('http://localhost:8070/addTodo', options)
+      fetch('http://localhost:8060/addTodo', options)
     }
   }
 }
