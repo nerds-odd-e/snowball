@@ -1,5 +1,6 @@
 <template>
-  <div class="hello">
+  <div id="todos">
+    <h1>Todos List</h1>
     <input name="title"  v-model="title" />
     <input type="submit" id="add_todo" v-on:click="addTodo" />
     <li v-for="todo in todos">{{todo.title}} {{todo.status}}</li>
