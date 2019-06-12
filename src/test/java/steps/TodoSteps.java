@@ -1,31 +1,16 @@
 package steps;
 
 import com.odde.massivemailer.model.Todo;
-import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.junit.After;
-import steps.driver.DBConnectionFactory;
-import steps.driver.WebDriverFactory;
 import steps.site.MassiveMailerSite;
 
 import static org.junit.Assert.assertEquals;
 
 
 public class TodoSteps {
-
-    @Before
-    public void beforeScenario() {
-        DBConnectionFactory.prepare();
-    }
-
-    @After
-    public void afterScenario() {
-        DBConnectionFactory.close();
-        WebDriverFactory.resetAll();
-    }
 
     private final MassiveMailerSite site = new MassiveMailerSite();
 

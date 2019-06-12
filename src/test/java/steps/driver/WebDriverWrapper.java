@@ -1,5 +1,6 @@
 package steps.driver;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -10,6 +11,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -208,6 +211,18 @@ public class WebDriverWrapper {
 
     public WebDriver.Navigation getNavigate() {
         return this.driver.navigate();
+    }
+
+    public void takeScreenshot(String name) {
+        ChromeDriver chromeDriver = (ChromeDriver)driver;
+        File source = chromeDriver.getScreenshotAs(OutputType.FILE);
+        String dest = name + ".png";
+        File destination = new File(dest);
+        try {
+            FileUtils.copyFile(source, destination);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 

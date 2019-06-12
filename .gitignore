@@ -43,3 +43,5 @@ memo.txt
 
 src/main/webapp/index.html
 src/main/webapp/static/*
+
+tmp/*
