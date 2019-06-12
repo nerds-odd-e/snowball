@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.*;
 
 public class WebDriverWrapper {
@@ -121,6 +122,14 @@ public class WebDriverWrapper {
             return driver.findElement(By.tagName("body")).getText().contains(text);
         });
         assertThat(getBodyText(), containsString(text));
+    }
+
+    public void pageShouldNotContain(String text) {
+        WebDriverWait wait = getWait();
+        wait.until(d->{
+            return driver.findElement(By.tagName("body")).getText().contains(text);
+        });
+        assertThat(getBodyText(), not(containsString(text)));
     }
 
     public String getBodyText() {

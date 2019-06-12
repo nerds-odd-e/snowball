@@ -7,11 +7,41 @@ describe('todos', () => {
   beforeEach(() => {
     fetch.resetMocks()
   })
-  it('render h1', () => {
+
+  let todoComponent = (() => {
     fetch.mockResponseOnce([]);
     const Constructor = Vue.extend(Todos)
-    const vm = new Constructor().$mount()
-    expect(vm.$el.querySelector('#todos h1').textContent).toEqual('Todos List')
+    return new Constructor().$mount()
+  })
+
+  it('search elem', () => {
+    let todos = [
+        {
+          "id": 1,
+          "status":"todo",
+          "title":"first todo"
+        },
+        {
+          "id": 1,
+          "status":"todo",
+          "title":"second todo"
+        },
+        {
+          "id": 1,
+          "status":"todo",
+          "title":"other"
+        },
+    ]
+    let vm = todoComponent()
+    vm.todos = todos
+    vm.searchWord = 'todo'
+    expect(vm.searchedTodos.length).toEqual(2)
+  }),
+  it('exist search elem', () => {
+    expect(todoComponent().$el.querySelector('#search').getAttribute('name')).toEqual('search')
+  })
+  it('render h1', () => {
+    expect(todoComponent().$el.querySelector('#todos h1').textContent).toEqual('Todos List')
   })
   it('render todo', (done) => {
     expect(Todos.data()['todos']).toEqual([])

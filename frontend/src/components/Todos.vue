@@ -3,7 +3,8 @@
     <h1>Todos List</h1>
     <input name="title"  v-model="title" />
     <input type="submit" id="add_todo" v-on:click="addTodo" />
-    <li class='todo' v-for="todo in todos">{{todo.title}} {{todo.status}}</li>
+    <input id="search" name="search" v-model="searchWord" />
+    <li class='todo' v-for="todo in searchedTodos">{{todo.title}} {{todo.status}}</li>
   </div>
 </template>
 
@@ -20,8 +21,14 @@ export default {
   },
   data () {
     return {
+      searchWord: '',
       title: '',
       todos: [],
+    }
+  },
+  computed: {
+    searchedTodos() {
+      return this.todos.filter((o)=>o.title.includes(this.searchWord))
     }
   },
   methods: {

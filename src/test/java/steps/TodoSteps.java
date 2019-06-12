@@ -1,13 +1,12 @@
 package steps;
 
 import com.odde.massivemailer.model.Todo;
+import cucumber.api.DataTable;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import steps.site.MassiveMailerSite;
-
-import static org.junit.Assert.assertEquals;
 
 
 public class TodoSteps {
@@ -52,5 +51,17 @@ public class TodoSteps {
     @And("^\"([^\"]*)\"をクリック$")
     public void をクリック(String id) {
         site.getDriver().clickButton(id);
+    }
+
+    @Given("^以下のTodoがある$")
+    public void 以下のtodoがある(DataTable dataTable) {
+        dataTable.asList(String.class).forEach(title -> {
+            Todo.createIt("title", title, "status", "todo");
+        });
+    }
+
+    @And("^\"([^\"]*)\"が表示されていない$")
+    public void が表示されていない(String text) {
+        site.getDriver().pageShouldNotContain(text);
     }
 }
