@@ -8,6 +8,7 @@ describe('todos', () => {
     fetch.resetMocks()
   })
   it('render h1', () => {
+    fetch.mockResponseOnce([]);
     const Constructor = Vue.extend(Todos)
     const vm = new Constructor().$mount()
     expect(vm.$el.querySelector('#todos h1').textContent).toEqual('Todos List')
