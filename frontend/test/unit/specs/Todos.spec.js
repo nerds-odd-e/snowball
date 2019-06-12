@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Todos from '@/components/Todos'
+import * as flushPromises from "flush-promises";
 
 
 describe('todos', () => {

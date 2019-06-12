@@ -15,7 +15,6 @@ export default {
     fetch("http://localhost:8070/todos", options)
      .then(response => response.json())
      .then(todos => {
-        console.log("hello1111")
         this.todos = todos
      })
   },
