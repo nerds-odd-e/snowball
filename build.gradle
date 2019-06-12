@@ -78,6 +78,15 @@ tasks.cucumber {
     ])
 }
 
+task vue_test {
+    group "verification"
+    doFirst {
+        exec {
+            commandLine 'npm', 'test', '--prefix', 'frontend'
+        }
+    }
+}
+
 task cucumber_now {
     group "verification"
     finalizedBy "cucumber"
