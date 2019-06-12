@@ -1,60 +1,8 @@
-//Vue.component('AddTodoForm', {
-//  data() {
-//    return {
-//      title: '',
-//    }
-//  },
-//  methods: {
-//    addTodo() {
-//       params = {"title": this.title}
-//       options = {
-//            "method": "POST",
-//            "body": JSON.stringify(params)
-//       }
-//       fetch("/addTodo", options)
-//    }
-//  },
-//  template: `
-//     <div>
-//         <input name="title"  v-model="title" />
-//         <input type="submit" id="add_todo" v-on:click="addTodo" />
-//     </div>
-//  `,
-//})
-//
-//Vue.component('Todos', {
-//  data() {
-//    return {
-//      todos: [],
-//    }
-//  },
-//  mounted() {
-//    fetch("/todos")
-//     .then(response => response.json())
-//     .then(todos => {
-//        this.todos = todos
-//     })
-//  },
-//  template: `
-//     <div>
-//         <li v-for="todo in todos">{{todo.title}} {{todo.status}}</li>
-//     </div>
-//  `,
-//})
-//
-//var root = Vue.component('Root', {
-//    template: `
-//        <div>
-//          <add-todo-form></add-todo-form>
-//          <todos></todos>
-//        </div>
-//    `
-//})
-//
-
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
+    <input name="title"  v-model="title" />
+    <input type="submit" id="add_todo" v-on:click="addTodo" />
+    <li v-for="todo in todos">{{todo.title}} {{todo.status}}</li>
   </div>
 </template>
 
@@ -62,7 +10,8 @@
 export default {
   name: 'HelloWorld',
   mounted() {
-    fetch("/todos")
+    let options = {mode: 'cors'}
+    fetch("http://localhost:8070/todos", options)
      .then(response => response.json())
      .then(todos => {
         this.todos = todos
@@ -70,8 +19,19 @@ export default {
   },
   data () {
     return {
+      title: '',
       todos: [],
       msg: 'Welcome to Your Vue.js App'
+    }
+  },
+  methods: {
+    addTodo() {
+      let params = {'title': this.title}
+      let options = {
+           'method': 'POST',
+           'body': JSON.stringify(params)
+      }
+      fetch('http://localhost:8070/addTodo', options)
     }
   }
 }

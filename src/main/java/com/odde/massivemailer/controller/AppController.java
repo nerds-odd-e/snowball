@@ -19,6 +19,10 @@ public class AppController extends HttpServlet {
     }
 
     public void jsonResponse(HttpServletResponse resp, String s) throws IOException {
+        resp.addHeader("Access-Control-Allow-Origin", "*");
+        resp.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
+        resp.addHeader("Access-Control-Allow-Headers", "X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept");
+        resp.addHeader("Access-Control-Max-Age", "1728000");
         resp.setHeader("Content-Type", "application/json; charset=UTF-8");
         resp.getOutputStream().print(s);
     }
