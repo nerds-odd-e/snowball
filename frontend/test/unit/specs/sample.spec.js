@@ -1,7 +1,12 @@
 import Vue from 'vue'
 import Sample from '@/components/Sample'
-import * as flushPromises from "flush-promises";
+// import flushPromises from 'flush-promises'
 
+function flushPromises() {
+  return new Promise(resolve => setImmediate(resolve));
+}
+
+const nextTick = () => new Promise(res => process.nextTick(res));
 
 describe('sample', () => {
   beforeEach(() => {
@@ -16,5 +21,17 @@ describe('sample', () => {
 
   it('show h1', () => {
     expect(sampleComponent().$el.querySelector('#sample h1').textContent).toEqual('Sample page!')
+  })
+
+  it('fetch response', async () => {
+    fetch.mockResponseOnce({'msg':'hello!'});
+    const Constructor = Vue.extend(Sample)
+    const vm = new Constructor().$mount()
+
+    await nextTick()
+
+    expect(fetch.mock.calls.length).toEqual(1)
+    expect(fetch.mock.calls[0][0]).toEqual('/sample')
+    expect(vm.message).toEqual('hello')
   })
 })

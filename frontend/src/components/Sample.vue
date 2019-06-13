@@ -8,9 +8,18 @@
 export default {
   name: 'Sample',
   mounted() {
+    fetch("/sample")
+      .then(response => {
+        return response.json()
+      })
+      .then(json=>{
+        this.message = json.msg
+      })
   },
   data () {
-    return { }
+    return {
+      message: ''
+    }
   },
   methods: {
   }
