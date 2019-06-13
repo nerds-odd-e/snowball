@@ -118,10 +118,7 @@ public class WebDriverWrapper {
 
     public void pageShouldContain(String text) {
         WebDriverWait wait = getWait();
-        wait.until(d->{
-            return driver.findElement(By.tagName("body")).getText().contains(text);
-        });
-        assertThat(getBodyText(), containsString(text));
+        wait.until(ExpectedConditions.textToBePresentInElementLocated(By.tagName("body"), text));
     }
 
     public void pageShouldNotContain(String text) {
