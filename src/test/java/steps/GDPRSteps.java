@@ -22,21 +22,21 @@ public class GDPRSteps {
 
     @Then("^System shows GDPR menu on left panel$")
     public void systemShowsGDPRMenuOnLeftPanel() {
-        driver.pageShouldContain("GDPR");
+        driver.expectPageToContainText("GDPR");
     }
 
     @When("^I click on GDPR in menu$")
     public void clickGDPR() {
-        driver.clickButton("GDPR");
+        driver.click("#GDPR");
     }
 
     @Then("^GDPR page shows in right side of page$")
     public void pageShouldShowGDPRpage() {
-        assertTrue(driver.getCurrentUrl().contains("/gdpr"));
+        driver.expectURLToContain("/gdpr");
     }
 
     @And("^Trigger button should exist in page$")
     public void triggerButtonShouldExist() {
-        assertNotNull(driver.findElementById("triggerBtn"));
+        driver.expectElementToExist("#triggerBtn");
     }
 }

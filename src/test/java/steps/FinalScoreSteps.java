@@ -5,11 +5,9 @@ import com.odde.snowball.model.onlinetest.Category;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
-import steps.driver.UiElement;
 import steps.driver.WebDriverWrapper;
 import steps.site.SnowballSite;
 
-import static com.mongodb.client.model.Filters.eq;
 import static com.odde.snowball.model.base.Repository.repo;
 import static org.junit.Assert.assertEquals;
 
@@ -22,40 +20,35 @@ public class FinalScoreSteps {
     public void userAnsweredWrongTheThQuestionPage(int wrongQuestionNum) {
         for (int i = 0; i < wrongQuestionNum; ++i) {
             driver.clickRadioButton("wrongOption");
-            driver.clickButton("answer");
-            driver.clickButton("next");
+            driver.click("#answer");
+            driver.click("#next");
         }
     }
 
     @Then("^メッセージ欄に\"([^\"]*)\"が表示される$")
     public void メッセージ欄にが表示される(String message) {
-        UiElement element = driver.findElementById("message");
-        assertEquals(message, element.getText());
+        driver.expectElementToContainText("#message", message);
     }
 
     @Then("^分母に(\\d+)が表示される$")
     public void 分母にが表示される(int totalCount) {
-        UiElement element = driver.findElementById("total-count");
-        assertEquals(String.valueOf(totalCount), element.getText());
+        driver.expectElementToContainText("#total-count", String.valueOf(totalCount));
     }
 
     @Then("^分子に(\\d+)が表示される$")
     public void 分子にが表示される(int correctCount) {
-        UiElement element = driver.findElementById("correct-count");
-        assertEquals(String.valueOf(correctCount), element.getText());
+        driver.expectElementToContainText("#correct-count", String.valueOf(correctCount));
     }
 
     @Then("^正答率に(\\d+)が表示される$")
     public void 正答率にが表示される(int correctPercentage) {
-        UiElement element = driver.findElementById("correct-percentage");
-        assertEquals(String.valueOf(correctPercentage), element.getText());
+        driver.expectElementToContainText("#correct-percentage", String.valueOf(correctPercentage));
     }
 
     @Then("^苦手カテゴリーのメッセージ欄に\"([^\"]*)\"が表示される$")
     public void 苦手カテゴリーのメッセージ欄にが表示される(String exceptedMessage) {
-        UiElement categoryMessages = driver.findElementById("category-message");
 
-        assertEquals(exceptedMessage, categoryMessages.getText());
+        driver.expectElementToContainText("#category-message", exceptedMessage);
     }
 
     @Given("^\"([^\"]*)\" から (\\d+) 題出題される$")

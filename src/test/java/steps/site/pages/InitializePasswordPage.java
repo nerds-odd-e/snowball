@@ -20,6 +20,6 @@ public class InitializePasswordPage {
     }
 
     public void submit() {
-        driver.clickButton("submit");
+        driver.click("#submit");
     }
 }

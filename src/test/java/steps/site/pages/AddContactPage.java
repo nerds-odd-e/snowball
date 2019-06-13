@@ -22,9 +22,9 @@ public class AddContactPage {
 
     public void addContact(String email, String country, String city) {
         driver.setTextField("email", email);
-        driver.setDropdownValue("country", country);
+        driver.selectDropdownByValue("country", country);
         driver.setTextField("city", city);
-        driver.clickButton("add_button");
+        driver.click("#add_button");
     }
 
     public void addContactWithAllInput(String email, String country, String city, String name, String lastName, String company) {

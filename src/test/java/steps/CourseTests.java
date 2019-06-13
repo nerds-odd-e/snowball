@@ -13,7 +13,6 @@ import java.util.Map;
 
 import static com.odde.snowball.model.base.Repository.repo;
 import static junit.framework.TestCase.assertTrue;
-import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertThat;
 
 public class CourseTests {
@@ -43,7 +42,7 @@ public class CourseTests {
     private void fill_in_course_data(Map<String, Object> course_data) {
         driver.setTextField("courseName", (String)course_data.get("courseName"));
         driver.setTextField("duration", (String)course_data.get("duration"));
-        driver.setDropdownValue("country", (String)course_data.get("country"));
+        driver.selectDropdownByValue("country", (String)course_data.get("country"));
         driver.setTextField("city", (String)course_data.get("city"));
         driver.setTextField("startDate", (String)course_data.get("startDate"));
         driver.setTextField("address", (String)course_data.get("address"));
@@ -85,20 +84,20 @@ public class CourseTests {
     }
 
     private void clickSaveCourse() {
-        driver.clickButton("save_button");
+        driver.click("#save_button");
     }
 
     @Then("^Course should save and successfully saved message should appear$")
     public void courseListPageShouldContain() {
         driver.expectRedirect(add_course_url);
-        assertTrue(driver.getCurrentUrl().contains("status=success&msg=Add%20course%20successfully"));
+        driver.expectURLToContain("status=success&msg=Add%20course%20successfully");
 
     }
 
     @Then("^Course should not save and show error messagea$")
     public void courseShowErrorMassage() {
         driver.expectRedirect(add_course_url);
-        assertThat(driver.getCurrentUrl(), containsString("status=fail&msg={%20geoLocation.latitude:%22This%20location%20cannot%20be%20found%22%20}"));
+        driver.expectURLToContain("status=fail&msg={%20geoLocation.latitude:%22This%20location%20cannot%20be%20found%22%20}");
     }
 
 }

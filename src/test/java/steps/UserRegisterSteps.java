@@ -13,7 +13,6 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.util.List;
 
-import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.*;
 
 public class UserRegisterSteps {
@@ -34,12 +33,12 @@ public class UserRegisterSteps {
 
     @Then("^Page Should Contain \"([^\"]*)\"$")
     public void pageShouldContain(String text) {
-        driver.pageShouldContain(text);
+        driver.expectPageToContainText(text);
     }
 
     @And("^Page Should Fail$")
     public void pageShouldFail() {
-        assertTrue(driver.getCurrentUrl().contains("status=fail"));
+        driver.expectURLToContain("status=fail");
     }
 
     @When("^Admin add a new contact \"([^\"]*)\" with email: \"([^\"]*)\"$")
@@ -68,12 +67,12 @@ public class UserRegisterSteps {
 
     @Then("^Show valid information$")
     public void show_valid_information() {
-        driver.pageShouldContain("Success!!");
+        driver.expectPageToContainText("Success!!");
     }
 
     @Then("^Show invalid information$")
     public void show_invalid_information() {
-        driver.pageShouldContain("Error!");
+        driver.expectPageToContainText("Error!");
     }
 
     @When("^Admin add a new contact \"([^\"]*)\" with invalid email: \"([^\"]*)\"$")
@@ -83,7 +82,7 @@ public class UserRegisterSteps {
 
     @Then("^Contact page show \"([^\"]*)\"$")
     public void contact_page_show(String errorMsg) {
-        driver.pageShouldContain(errorMsg);
+        driver.expectPageToContainText(errorMsg);
     }
 
     @Then("^Contact was not created$")
@@ -94,8 +93,7 @@ public class UserRegisterSteps {
     @Then("^\"([^\"]*)\" was not contained at Contact List Page$")
     public void was_not_contained_at_Contact_List_Page(String email) {
         driver.visit(site.baseUrl() + "contactlist.jsp");
-    	String contactTable = driver.findElementById("contactTable").getText();
-        assertFalse(contactTable.contains(email));
+        driver.expectNoElementToContainText("#contactTable", email);
     }
 
     @Then("^Mail was not sent$")
@@ -109,8 +107,7 @@ public class UserRegisterSteps {
 
     @Then("^Contact list page show \"([^\"]*)\"$")
     public void contact_list_page_show(String email) {
-        String contactTable = driver.findElementById("contactTable").getText();
-        assertTrue(contactTable.contains(email));
+        driver.expectElementToContainText("#contactTable", email);
     }
 
     @When("^\"([^\"]*)\" change the token in the url to \"([^\"]*)\" and access the new url$")
@@ -123,8 +120,7 @@ public class UserRegisterSteps {
 
     @Then("^\"([^\"]*)\" message is shown$")
     public void message_is_shown(String msg) {
-        String bodyText = driver.getBodyText();
-        assertThat(bodyText, containsString(msg));
+        driver.expectPageToContainText(msg);
     }
 
     @Given("^There are the following contacts in the CSV file that do not exist in the system$")
@@ -150,7 +146,7 @@ public class UserRegisterSteps {
     @When("^I upload the CSV file$")
     public void i_upload_the_CSV_file() {
         site.visit("add_contact_batch.jsp");
-        driver.clickUpload();
+        driver.clickUpload("#batchFile", System.getProperty("java.io.tmpdir") + "/contactsUploadTest.csv");
     }
 
     @Then("^There must be two more contacts added$")
@@ -163,7 +159,7 @@ public class UserRegisterSteps {
     private void checkContactsAreCreated(List<String> emails) {
         site.visit("contactlist.jsp");
         for (String email : emails) {
-            driver.pageShouldContain(email);
+            driver.expectPageToContainText(email);
         }
     }
 

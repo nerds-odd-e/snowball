@@ -24,12 +24,12 @@ public class EmailSteps {
 
     @When("^I Click Send Email$")
     public void clickSendEmail() {
-        driver.clickButton("send_button");
+        driver.click("#send_button");
     }
 
     @Then("^I should get an element with message \"([^\"]*)\"$")
     public void iShouldGetAnElementWithMessage(String msg) {
-        driver.expectElementWithIdToContainText("email_result", msg);
+        driver.expectElementToContainText("#email_result", msg);
     }
 
     @Given("^Default Email with Recipients \"([^\"]*)\"$")

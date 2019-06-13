@@ -7,13 +7,12 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Assert;
-import org.openqa.selenium.By;
 import steps.driver.WebDriverWrapper;
 import steps.site.SnowballSite;
 
 import java.util.Map;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -29,7 +28,7 @@ public class AddQuestionSteps {
     @Given("^Add Questionを開いている$")
     public void AddQuestion() {
         site.visit("onlinetest/add_question.jsp");
-        assertEquals(driver.getCurrentTitle(), "Add Question");
+        driver.expectTitleToBe("Add Question");
     }
 
     @Given("^Descriptionに\"([^\"]*)\" を入力する$")
@@ -39,7 +38,7 @@ public class AddQuestionSteps {
 
     @Given("^Typeを\"([^\"]*)\" を選択する$")
     public void typeを_を選択する(String type) {
-        driver.setDropdownByText("type", type);
+        driver.selectDropdownByText("type", type);
     }
 
     @Given("^option(\\d+)に\"([^\"]*)\"を入力する$")
@@ -60,7 +59,7 @@ public class AddQuestionSteps {
     @Given("^\"([^\"]*)\"番目のoptionを選択する$")
     public void 番目のoptionを選択する(String selectedNumber) {
         if (!"".equals(selectedNumber)) {
-            driver.clickById("option" + selectedNumber);
+            driver.click("#" + ("option" + selectedNumber));
         }
     }
 
@@ -71,7 +70,7 @@ public class AddQuestionSteps {
 
     @When("^Addボタンを押す$")
     public void addボタンを押す() {
-        driver.clickButton("add_button");
+        driver.click("#add_button");
     }
 
     @Given("^Question added$")
@@ -88,26 +87,16 @@ public class AddQuestionSteps {
     @Then("^User should see questions and options in question list page with correct one highlighted$")
     public void userShouldSeeQuestionsAndOptionsInQuestionListPage(DataTable question) {
         Map<String, String> questionMap = question.asMap(String.class, String.class);
-        assertEquals("Question List", driver.getCurrentTitle());
-        assertTrue(driver.getBodyText().contains(questionMap.get("description")));
-        assertTrue(driver.getBodyText().contains(questionMap.get("option1")));
-        assertTrue(driver.getBodyText().contains(questionMap.get("option2")));
-        assertTrue(driver.getBodyHTML().contains("option1row"));
-    }
-
-    class Result {
-        boolean found;
+        driver.expectTitleToBe("Question List");
+        driver.expectPageToContainText(questionMap.get("description"));
+        driver.expectPageToContainText(questionMap.get("option1"));
+        driver.expectPageToContainText(questionMap.get("option2"));
+        driver.expectElementToExist("#option1row");
     }
 
     @Then("^\"([^\"]*)\"というメッセージが表示される$")
     public void というメッセージが表示される(String errorMessage) {
-        Result r = new Result();
-        driver.findElements(By.className("alert")).forEach(el -> {
-            if (el.getText().contains(errorMessage)) {
-                r.found = true;
-            }
-        });
-        Assert.assertTrue(r.found);
+        driver.expectElementToContainText(".alert", errorMessage);
     }
 
     @Given("^Option(\\d+) に\"([^\"]*)\"文字を入力する$")
@@ -125,7 +114,7 @@ public class AddQuestionSteps {
 
     @Given("^\"([^\"]*)\"を回答として選択済み$")
     public void を回答として選択済み(String optionId) {
-        driver.clickById(optionId);
+        driver.click("#" + optionId);
     }
 
     @Given("^adviceが に\"([^\"]*)\"文字を入力する$")
@@ -146,36 +135,36 @@ public class AddQuestionSteps {
 
     @Then("^\"([^\"]*)\"という問題が出題される$")
     public void という問題が出題される(String description) {
-        assertEquals(driver.findElementById("description").getText(),description);
+        driver.expectElementToContainText("#description", description);
     }
 
     @Then("^option(\\d+)に\"([^\"]*)\"が表示される$")
     public void option_に_が表示される(int optionNumber, String optionName) {
-        assertTrue(driver.getBodyText().contains(optionName));
+        driver.expectPageToContainText(optionName);
     }
 
     @Then("^\"([^\"]*)\"を回答として選択する$")
     public void を回答として選択する(String optionName) {
-        driver.clickById(optionName);
+        driver.click("#" + optionName);
     }
 
     @Then("^Answerボタンを押す$")
     public void answerボタンを押す() {
-        driver.clickById("answer");
+        driver.click("#answer");
     }
 
     @Then("^EndOfTheTestが表示される$")
     public void endofthetestが表示される() {
-        assertEquals(driver.getCurrentTitle(), "End Of Test");
+        driver.expectTitleToBe("End Of Test");
     }
 
     @Then("^カテゴリーに \"([^\"]*)\" が表示される$")
     public void カテゴリーに_が表示される(String description) {
-        assertEquals(description, driver.findElementById("category").getText());
+        driver.expectElementToContainText("#category", description);
     }
 
     @Given("^カテゴリーとして\"([^\"]*)\"を選択する$")
     public void カテゴリーとして_を選択する(String category) {
-        driver.setDropdownByText("category", category);
+        driver.selectDropdownByText("category", category);
     }
 }

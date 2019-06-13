@@ -23,16 +23,16 @@ public class QuestionCategorySteps {
 
     @Given("^all the categories should have been selected$")
     public void カテゴリーのチェックボックスにチェックが入っている() {
-        assertTrue(driver.findElements(By.cssSelector("input[type=checkbox]:checked")).size() > 0);
+        driver.expectElementToExist("input[type=checkbox]:checked");
     }
 
     @When("^I click the start test button$")
     public void スタートボタンをクリック() {
-        driver.findElementById("start_test").click();
+        driver.click("#start_test");
     }
 
     @Then("^I should see the test starts$")
     public void 問題画面へ遷移する() {
-        assertEquals("Question", driver.getCurrentTitle());
+        driver.expectTitleToBe("Question");
     }
 }

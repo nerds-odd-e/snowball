@@ -149,6 +149,7 @@ Feature:
       | incorrect option |
       | wrongOption      |
 
+    @now
   Scenario Outline: 質問ページに移動した時に、回答選択肢が何も選択されていない
     Given Add Questionを開いている
     And Descriptionに"What is scrum?" を入力する
@@ -166,6 +167,7 @@ Feature:
       | Single Choice   | option1   | option2   | radio    |
       | Multiple Choice | checkbox1 | checkbox2 | checkbox |
 
+    @now
   Scenario: アドバイスページで正解2つと誤った回答2つがわかる
     Given Add a question "スクラムに含まれる要素は何ですか？（option1とoption4が正解）" of multiple answers
     And User is on the first question

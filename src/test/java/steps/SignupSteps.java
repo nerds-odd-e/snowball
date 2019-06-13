@@ -45,23 +45,22 @@ public class SignupSteps {
 
     @When("^ユーザーはSubmitボタンをクリックする$")
     public void ユーザーはsubmitボタンをクリックする() {
-        driver.clickButton("signup");
+        driver.click("#signup");
     }
 
     @Then("^特訓のトップページに遷移する$")
     public void 特訓のトップページに遷移する() {
-        assertEquals(dashboard_url, driver.getCurrentUrl());
+        driver.expectURLToContain(dashboard_url);
     }
 
     @Then("^自分のユーザー名\"([^\"]*)\"が表示されている$")
     public void 自分のユーザー名_が表示されている(String username) {
-        String actualUserName = driver.findElementById("user_name").getText();
-        assertEquals(username, actualUserName);
+        driver.expectElementToContainText("#user_name", username);
     }
 
     @Then("^サインアップページにエラーメッセージが表示される$")
     public void サインアップページにエラーメッセージが表示される() {
-        assertTrue(driver.getBodyText().contains("Signup failed"));
+        driver.expectPageToContainText("Signup failed");
     }
 
 

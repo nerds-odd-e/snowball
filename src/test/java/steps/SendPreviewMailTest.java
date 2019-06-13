@@ -38,12 +38,7 @@ public class SendPreviewMailTest {
     @When("^i send precourse email for this course$")
     public void i_send_precourse_email_for_this_course() {
         site.courseListPage().sendPrecourseEmailFor(A_COURSE);
-        driver.pageShouldContain("Successfully");
-    }
-
-    @Given("^There is a contact \"([^\"]*)\" at Tokyo$")
-    public void there_is_a_contact_at_Tokyo(String email) {
-        site.addContactPage().addContact(email, "Japan", "Tokyo");
+        driver.expectPageToContainText("Successfully");
     }
 
     @Then("^\"([^\"]*)\" shouldn't receive any email$")

@@ -25,7 +25,7 @@ public class TrackEmailSteps {
         driver.setTextField("subject", subject);
         driver.setTextField("content", "Hello!");
 
-        driver.clickButton("send_button");
+        driver.click("#send_button");
     }
 
     @When("^\"(.*)\" does not open the email$")

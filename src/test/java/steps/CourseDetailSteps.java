@@ -25,8 +25,8 @@ public class CourseDetailSteps {
         site.visit("course_list.jsp");
         Course course = Course.getCourseByName(courseName);
         driver.visit(courseDetailUrl + "?id=" + course.getStringId());
-        driver.pageShouldContain("Course Detail");
-        driver.pageShouldContain(courseName);
+        driver.expectPageToContainText("Course Detail");
+        driver.expectPageToContainText(courseName);
     }
 
     @When("^I enroll participants to \"([^\"]*)\" from course detail page$")
@@ -38,10 +38,9 @@ public class CourseDetailSteps {
 
     @Then("^participant with correct information appears on \"([^\"]*)\" course detail page$")
     public void participantWithCorrectInformationAppearsOnCourseDetailPage(String courseName, DataTable participants) {
-        String tableContent = driver.findElementById("courseTable").getText();
         participants.asLists(String.class).forEach(participant -> {
-            assertTrue(tableContent.contains(participant.get(0)));
-            assertTrue(tableContent.contains(participant.get(1)));
+            driver.expectElementToContainText("#courseTable", participant.get(0));
+            driver.expectElementToContainText("#courseTable", participant.get(1));
         });
     }
 
@@ -51,11 +50,11 @@ public class CourseDetailSteps {
         Optional<String> error = driver.executeJavaScript("return document.getElementById('participants').value");
         assertTrue(error.isPresent());
         assertEquals(errorParticipantData, error.get());
-        driver.pageShouldContain("Check the following participants.");
+        driver.expectPageToContainText("Check the following participants.");
     }
 
     @Then("^\"([^\"]*)\" course detail page is shown$")
     public void courseDetailPageIsShown(String courseName) {
-        driver.pageShouldContain(courseName);
+        driver.expectPageToContainText(courseName);
     }
 }

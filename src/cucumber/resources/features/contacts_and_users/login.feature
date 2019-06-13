@@ -44,7 +44,7 @@ Feature: Login
 
   Scenario: Courses List no login
     When I move to course list page
-    Then Show all courses list "CSD-1,CSD-2,CSD-3"
+    Then Show all courses list "CSD-2"
 
   Scenario: Go to sign up from login page
     When click the sign up link from the login page

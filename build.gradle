@@ -13,9 +13,9 @@ ext {
     junit5Version = '5.3.0'
     groovyVersion = '2.4.5'
     gebVersion = '1.1.1'
-    seleniumVersion = '3.7.1'
+    seleniumVersion = '3.141.59'
     cucumberJvmVersion = '1.2.5'
-    assertJVersion = "3.10.0"
+    assertJVersion = "3.12.2"
     ciBuild = System.getenv('SNAP_CI')
 }
 

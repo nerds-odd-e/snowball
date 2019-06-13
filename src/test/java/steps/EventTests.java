@@ -21,25 +21,25 @@ public class EventTests {
         driver.setTextField("courseName", courseName);
         driver.setTextField("courseDetails", "nothing important");
         driver.setTextField("startDate", date);
-        driver.setDropdownValue("location", location);
+        driver.selectDropdownByValue("location", location);
     }
 
     private void addEventAndSelectLocationFromDropdownAndTextBox(String courseName, String country, String city, String date) {
         driver.setTextField("courseName", courseName);
         driver.setTextField("courseDetails", "nothing important");
         driver.setTextField("startDate", date);
-        driver.setDropdownValue("country", country);
+        driver.selectDropdownByValue("country", country);
         driver.setTextField("city", city);
     }
 
     @When("^I click the save button$")
     public void clickRegisterEvent() {
-        driver.clickButton("save_button");
+        driver.click("#save_button");
     }
 
     @Then("^Course save page should display \"([^\"]*)\"$")
     public void eventListPageShouldContain(String message) {
-        driver.pageShouldContain(message);
+        driver.expectPageToContainText(message);
     }
 
     void addCourseWithCountryAndCity(String courseName, String country, String city, String date) {

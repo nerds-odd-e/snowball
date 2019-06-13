@@ -24,14 +24,14 @@ public class UpdateTemplateTests {
         List<List<String>> templates = templateDetails.raw();
         templates = templates.subList(1, templates.size());
         for(List<String> val:templates){
-            driver.setDropdownByText("templateList", val.get(0));
+            driver.selectDropdownByText("templateList", val.get(0));
             driver.setTextField("content", val.get(1));
         }
     }
 
     @When("^I click on update button$")
     public void clickUpdateTemplate() {
-        driver.clickButton("update_button");
+        driver.click("#update_button");
     }
 
     @Then("^Template contents should be update and I should get an element with message \"<success>\"$")

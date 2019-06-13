@@ -15,48 +15,37 @@ public class ContactSteps {
     private final SnowballSite site = new SnowballSite();
     private final WebDriverWrapper driver = site.getDriver();
 
-    @When("^Add A Contact \"([^\"]*)\" at \"([^\"]*)\"$")
-    public void addAContact(String email, String location) {
-        site.addContactPage().addContactWithLocationString(email, location);
-    }
-
-    @When("^Add A Contact \"([^\"]*)\" at \"([^\"]*)\" and \"([^\"]*)\" for \"([^\"]*)\", \"([^\"]*)\" from \"([^\"]*)\"$")
-    public void addAContactWithAllInputs(String email, String country, String city, String name, String lastName, String company) {
-        site.addContactPage().addContactWithAllInput(email, country, city, name, lastName, company);
-    }
-
     @Given("^I am on the new contact page$")
     public void i_am_on_the_new_contact_page() {
         site.visit("add_contact.jsp");
-        driver.pageShouldContain("Add Contact");
+        driver.expectPageToContainText("Add Contact");
     }
 
     @Then("^I can see the element for \"([^\"]*)\"$")
     public void i_can_see_the_element(String arg1) {
-        driver.findElementById(arg1);
+        driver.expectElementToExist("#" + arg1);
     }
 
     @Then("^I should get an element with message email sent: \"([^\"]*)\"$")
     public void i_should_get_an_element_with_message_email_sent(String emailSent) {
-        driver.pageShouldContain("email sent: " + emailSent);
+        driver.expectPageToContainText("email sent: " + emailSent);
     }
 
     @Then("^it should not create a new contact \"([^\"]*)\"$")
     public void itShouldNotCreateANewContact(String anotherEmail) {
         site.visit("contactlist.jsp");
-        driver.pageShouldContain("user5@odd-e.com");
-        String bodyText = driver.getBodyText();
-        assertFalse(bodyText.contains(anotherEmail));
+        driver.expectPageToContainText("user5@odd-e.com");
+        driver.expectPageNotToContainText(anotherEmail);
     }
 
     @And("^Page Should Success")
     public void pageShouldSuccess() {
-        assertTrue(driver.getCurrentUrl().contains("status=success"));
+        driver.expectURLToContain("status=success");
     }
 
     @Then("^Element \"([^\"]*)\" Should Contain \"([^\"]*)\"$")
     public void expectElementWithIdToContainText(String element, String text) {
-        driver.expectElementWithIdToContainText(element, text);
+        driver.expectElementToContainText("#" + element, text);
     }
 
     @And("^Page Should Contain Exactly (\\d+) \"([^\"]*)\"$")
@@ -72,7 +61,7 @@ public class ContactSteps {
     @And("^Contacts page should contain \"([^\"]*)\"$")
     public void contactsListPageShouldContain(String email) {
         site.visit("contactlist.jsp");
-        driver.pageShouldContain(email);
+        driver.expectPageToContainText(email);
     }
 
     @And("^Contacts page should contain exactly (\\d+) \"([^\"]*)\"$")
@@ -81,31 +70,25 @@ public class ContactSteps {
         pageShouldContainExactlyNElements(count, email);
     }
 
-    @Given("^There is a contact \"([^\"]*)\"$")
-    public void there_is_a_contact(String email) {
-        site.visit("contactlist.jsp");
-        driver.pageShouldContain(email);
-    }
-
     @When("^I change the location information of contact to be \"([^\"]*)\" and \"([^\"]*)\"$")
     public void i_change_the_location_information_of_contact_to_be(String country, String city) {
         site.visit("contactlist.jsp");
-        driver.clickButton("edit_button");
-        driver.setDropdownValue("country", country);
+        driver.click("#edit_button");
+        driver.selectDropdownByValue("country", country);
         driver.setTextField("city", city);
-        driver.clickButton("save_button");
+        driver.click("#save_button");
     }
 
     @Then("^contact \"([^\"]*)\"'s locations should be \"([^\"]*)\"$")
     public void contact_s_locations_should_be(String email, String location) {
-        driver.pageShouldContain(email);
-        driver.pageShouldContain(location);
+        driver.expectPageToContainText(email);
+        driver.expectPageToContainText(location);
     }
 
     @When("^I open edit contact page for contact \"([^\"]*)\"$")
     public void iOpenEditContactPageForContact(String email) {
         site.visit("contactlist.jsp");
-        driver.clickButton("edit_button");
+        driver.click("#edit_button");
     }
 
     @Given("^Contact for \"([^\"]*)\" which is not existing in the system$")
@@ -129,6 +112,6 @@ public class ContactSteps {
     @Then("^Contact \"([^\"]*)\" record is created$")
     public void contactRecordIsCreated(String email) {
         site.visit("contactlist.jsp");
-        driver.pageShouldContain(email);
+        driver.expectPageToContainText(email);
     }
 }

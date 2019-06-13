@@ -23,7 +23,7 @@ public class TrackEmailWithMultipleRecipientsSteps {
         driver.setTextField("subject", "Subject");
         driver.setTextField("content", "Hello!");
 
-        driver.clickButton("send_button");
+        driver.click("#send_button");
     }
 
     @When("^no recipient opens their email$")

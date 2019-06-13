@@ -21,9 +21,8 @@ public class UpcomingCourseNotificationSteps {
 
     @When("^We create (\\d+) contacts at (.*?), (.*?)$")
     public void createContactsForLocations(int numberOfContacts, String city, String country) {
-        ContactSteps contactTests = new ContactSteps();
         for (int i = 0; i < numberOfContacts; i++) {
-            contactTests.addAContact("test@test" + i + city+".com", country + "/"+city);
+            site.addContactPage().addContactWithLocationString("test@test" + i + city+".com", country + "/"+city);
         }
     }
 
@@ -38,7 +37,7 @@ public class UpcomingCourseNotificationSteps {
     @When("^I send the upcoming courses emails$")
     public void sendTheUpcomingCourseEmails() {
         site.visit("course_list.jsp");
-        driver.clickButton("send_button");
+        driver.click("#send_button");
     }
 
     @Given("^there are (\\d+)/(\\d+) courses and contacts in (.*?), (.*?)$")

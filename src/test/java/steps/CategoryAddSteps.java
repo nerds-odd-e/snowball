@@ -23,30 +23,30 @@ public class CategoryAddSteps {
 
     @Then("^カテゴリ追加ボタンが見える$")
     public void カテゴリ追加ボタンが見える() {
-        assertTrue(driver.findElementById("add_category_button").getText().contains("Add Category"));
+        driver.expectElementToContainText("#add_category_button", "Add Category");
     }
 
 
     @When("^click the add category button")
     public void カテゴリ追加ボタンを押す() {
-        driver.clickButton("add_category_button");
-        assertEquals("Add Category", driver.getCurrentTitle());
+        driver.click("#add_category_button");
+        driver.expectTitleToBe("Add Category");
     }
 
     @When("^add a new category$")
     public void 新しいカテゴリを入力する() {
         driver.setTextField("category_name","新カテゴリ");
-        driver.clickButton("add_category");
+        driver.click("#add_category");
     }
 
     @Then("^it should be redirected to the add question page$")
     public void 問題作成画面に遷移する() {
-        assertEquals("Add Question", driver.getCurrentTitle());
+        driver.expectTitleToBe("Add Question");
     }
 
     @Then("^I can  select the new category$")
     public void 新しいカテゴリが選択できる() {
-        assertTrue(driver.findElementById("categoryList").getText().contains("新カテゴリ"));
+        driver.expectElementToContainText("#categoryList", "新カテゴリ");
     }
 
 

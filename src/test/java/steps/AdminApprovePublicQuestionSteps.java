@@ -32,11 +32,11 @@ public class AdminApprovePublicQuestionSteps {
     @When("^Adminが承認する$")
     public void adminが承認する(){
         site.visit("onlinetest/question_list.jsp");
-        driver.clickButton("approve-" + questionId);
+        driver.click("#" + ("approve-" + questionId));
     }
 
     @Then("^問題が承認済みになる$")
     public void 問題が承認済みになる(){
-        Assert.assertEquals(0, driver.findElements(By.id("approve-" + questionId)).size());
+        driver.expectElementNotToExist("#approve-" + questionId);
     }
 }

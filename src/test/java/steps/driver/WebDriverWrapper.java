@@ -1,12 +1,8 @@
 package steps.driver;
 
-import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriverService;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -16,13 +12,15 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.openqa.selenium.support.ui.ExpectedConditions.not;
+import static org.openqa.selenium.support.ui.ExpectedConditions.textToBePresentInElementLocated;
+import static org.seleniumhq.jetty9.util.IO.copyFile;
 
 public class WebDriverWrapper {
     private final WebDriver driver;
@@ -34,148 +32,113 @@ public class WebDriverWrapper {
     }
 
     public WebDriverWrapper() {
-        if (System.getProperty("webdriver").equals("chrome")) {
-            System.setProperty("webdriver.chrome.args", "--disable-logging");
-            System.setProperty("webdriver.chrome.silentOutput", "true");
-            ChromeOptions chromeOptions = new ChromeOptions();
-            chromeOptions.addArguments("--headless");
-            chromeOptions.addArguments("--disable-gpu");
-            chromeOptions.addArguments("--no-sandbox");
-            chromeOptions.addArguments("--silent");
-            chromeOptions.addArguments("--start-maximized");
-            driver = new ChromeDriver(chromeOptions);
-        } else {
-            DesiredCapabilities dcap = new DesiredCapabilities();
-            String[] phantomArgs = new String[]{
-                    "--webdriver-loglevel=NONE"
-            };
-            dcap.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs);
-            driver = new PhantomJSDriver(dcap);
-            Logger.getLogger(PhantomJSDriverService.class.getName()).setLevel(Level.OFF);
-            driver.manage().window().maximize();
-        }
+        System.setProperty("webdriver.chrome.args", "--disable-logging");
+        System.setProperty("webdriver.chrome.silentOutput", "true");
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("--headless");
+        chromeOptions.addArguments("--disable-gpu");
+        chromeOptions.addArguments("--no-sandbox");
+        chromeOptions.addArguments("--silent");
+        chromeOptions.addArguments("--start-maximized");
+        driver = new ChromeDriver(chromeOptions);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
     }
 
-    @SuppressWarnings("unused")
-    public String getCurrentTitle() {
-        return driver.getTitle();
+    void closeAll() {
+        driver.close();
+        driver.quit();
+    }
+
+    public void expectTitleToBe(String title) {
+        assertThat(driver.getTitle()).as("page title").isEqualTo(title);
     }
 
     public void visit(String url) {
         driver.get(url);
     }
 
-    public void closeAll() {
-        driver.close();
-        driver.quit();
-    }
-
-    public void isAtURL(String url) {
-        assertEquals(driver.getCurrentUrl(), url);
-    }
-
-    public String getCurrentUrl() {
-        return driver.getCurrentUrl();
-    }
-
-    @SuppressWarnings("WeakerAccess")
-    public UiElement findElementByName(String name) {
-        return new SeleniumWebElement(driver.findElement(By.name(name)));
+    public void expectURLToContain(String s) {
+        assertThat(driver.getCurrentUrl()).as("current url").contains(s);
     }
 
     public void setTextField(String field_name, String text) {
-        UiElement e = findElementByName(field_name);
-        e.sendKeys(text);
-    }
-
-    public void clickButton(String button_id) {
-        getWait().until(ExpectedConditions.presenceOfElementLocated(By.id(button_id))).click();
+        waitForElementByName(field_name).sendKeys(text);
     }
 
     public void clickButtonByName(String button_name) {
-        getWait().until(ExpectedConditions.presenceOfElementLocated(By.name(button_name))).click();
+        waitForElementByName(button_name).click();
     }
 
-    public void clickById(String id) {
-        driver.findElement(By.id(id)).click();
+    public void click(String smartSelector) {
+        getWebElementBySmartSelector(smartSelector).click();
     }
 
-    public UiElement findElementById(String id) {
-        return new SeleniumWebElement(driver.findElement(By.id(id)));
+    public void expectElementToExist(String smartSelector) {
+        getWebElementBySmartSelector(smartSelector);
     }
 
-    public void expectAlert(String msg) {
-        getWait().until(ExpectedConditions.alertIsPresent());
-        Alert alert = driver.switchTo().alert();
-        assertEquals(msg, alert.getText());
-        alert.accept();
+    public void expectElementToExist(String smartSelector, int count) {
+        waitUntil(ExpectedConditions.numberOfElementsToBe(By.cssSelector(smartSelector), count));
     }
 
-    public void expectRedirect(String url) {
-        getWait().until(ExpectedConditions.urlContains(url));
+    public void expectElementNotToExist(String smartSelector) {
+        assertThat(driver.findElements(By.cssSelector(smartSelector))).as("element by selector `%s`", smartSelector)
+                .isEmpty();
     }
 
-    public void pageShouldContain(String text) {
-        String bodyText = getBodyText();
-        assertThat(bodyText, containsString(text));
+    public void expectNoElementToContainText(String smartSelect, String text) {
+        waitUntil(not(textToBePresentInElementLocated(By.cssSelector(smartSelect), text)));
     }
 
-    public String getBodyText() {
-        return driver.findElement(By.tagName("body")).getText();
+    public void expectElementToContainText(String smartSelect, String text) {
+        waitUntil(textToBePresentInElementLocated(By.cssSelector(smartSelect), text));
     }
 
-    public void expectElementWithIdToContainText(String id, String text) {
-        String actualText = findElementById(id).getText();
-        assertTrue("Text not found! actual: " + actualText + ", expected:`" + text + "` But got: `" + getBodyText() + "`", actualText.contains(text));
+    public void expectPageToContainText(String text) {
+        expectElementToContainText("body", text);
     }
 
-    public void expectElementWithIdToContainValue(String id, String value) {
-        assertEquals(value, findElementById(id).getText());
+    public void expectPageNotToContainText(String text) {
+        expectNoElementToContainText("body", text);
     }
 
     public void expectPageToContainExactlyNElements(String text, int count) {
         List<WebElement> elements = driver.findElements(By.xpath("//*[contains(text(),'" + text + "')]"));
-        assertEquals(elements.size(), count);
+        assertThat(elements).hasSize(count);
     }
 
-    public void clickUpload() {
-        UiElement uploadBtn = findElementById("batchFile");
-        uploadBtn.sendKeys(System.getProperty("java.io.tmpdir") + "/contactsUploadTest.csv");
+    public void expectElementsToHaveTexts(String cssSelector, List<String> optionTexts) {
+        List<WebElement> elements = findElements(cssSelector);
+        List<String> actualTexts = elements.stream().map(WebElement::getText).collect(Collectors.toList());
+        assertThat(actualTexts).containsExactlyElementsOf(optionTexts);
     }
 
-    public void setDropdownByText(String dropdownName, String text) {
-        Select dropdown = new Select(getWait().until(ExpectedConditions.visibilityOfElementLocated(By.name(dropdownName))));
-        dropdown.selectByVisibleText(text);
+    public void forEachElement(String cssSelector, Consumer<WebElement> action) {
+        findElements(cssSelector).forEach(action);
     }
 
-    public String getDropdownTextByName(String dropdownName) {
-        Select select = new Select(driver.findElements(By.name(dropdownName)).get(0));
-        return select.getFirstSelectedOption().getText();
+    public void expectAlert(String msg) {
+        waitUntil(ExpectedConditions.alertIsPresent());
+        Alert alert = driver.switchTo().alert();
+        assertThat(alert.getText()).as("alert message").isEqualTo(msg);
+        alert.accept();
     }
 
-    public void setDropdownValue(String dropdownName, String text) {
-        Select dropdown = new Select(getWait().until(ExpectedConditions.visibilityOfElementLocated(By.name(dropdownName))));
-        dropdown.selectByValue(text);
+    public void expectRedirect(String url) {
+        waitUntil(ExpectedConditions.urlContains(url));
     }
 
-    private WebDriverWait getWait() {
-        return new WebDriverWait(driver, 10);
+    public void clickUpload(String smartSelector, String filename) {
+        getWebElementBySmartSelector(smartSelector).sendKeys(filename);
     }
 
-    @SuppressWarnings("unused")
-    public void waitForDisplayed(String domId) {
-        getWait().until(webDriver -> webDriver.findElement(By.id(domId)).isDisplayed());
+    public void selectDropdownByText(String dropdownName, String text) {
+        getSelect(dropdownName).selectByVisibleText(text);
     }
 
-    public List<WebElement> findElements(By by) {
-        return driver.findElements(by);
-    }
-
-    @SuppressWarnings("unused")
-    public String getBodyHTML() {
-        return findElements(By.tagName("body")).get(0).getAttribute("outerHTML");
+    public void selectDropdownByValue(String dropdownName, String text) {
+        getSelect(dropdownName).selectByValue(text);
     }
 
     public void clickRadioButton(String text) {
@@ -186,29 +149,8 @@ public class WebDriverWrapper {
         getInputBySelectorAndText("input", text).click();
     }
 
-    private WebElement getInputBySelectorAndText(String selector, String text) {
-        return getWebElementStreamOfParents(selector)
-                .filter(e-> e.getText().equals(text))
-                .findFirst()
-                .orElseThrow(() -> new AssertionError(
-                        String.format("Can not find element with selector `%s` and text `%s`, but found %s",
-                                selector,
-                                text,
-                                getWebElementStreamOfParents(selector).map(WebElement::getText).collect(Collectors.joining( "," ) )
-                                )))
-                .findElement(By.cssSelector(selector));
-    }
-
-    private Stream<WebElement> getWebElementStreamOfParents(String selector) {
-        return findElements(By.cssSelector(selector)).stream().map(e -> e.findElement(By.xpath("./..")));
-    }
-
     public void expectRadioButtonWithText(String optionText) {
         getInputBySelectorAndText("input[type='radio']", optionText);
-    }
-
-    public void expectCheckBoxWithText(String optionText) {
-        getInputBySelectorAndText("input[type='checkbox']", optionText);
     }
 
     public WebDriver.Navigation getNavigate() {
@@ -216,15 +158,55 @@ public class WebDriverWrapper {
     }
 
     public void takeScreenshot(String name) {
-        ChromeDriver chromeDriver = (ChromeDriver)driver;
+        ChromeDriver chromeDriver = (ChromeDriver) driver;
         File source = chromeDriver.getScreenshotAs(OutputType.FILE);
         String dest = name + ".png";
         File destination = new File(dest);
         try {
-            FileUtils.copyFile(source, destination);
+            copyFile(source, destination);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-}
 
+    private <V> V waitUntil(Function<WebDriver, V> isTrue) {
+        return new WebDriverWait(driver, 2).until(isTrue);
+    }
+
+    private WebElement getWebElementBySmartSelector(String smartSelector) {
+        return waitForElement(By.cssSelector(smartSelector));
+    }
+
+    private WebElement waitForElement(By by) {
+        return waitUntil(ExpectedConditions.visibilityOfElementLocated(by));
+    }
+
+    private WebElement getInputBySelectorAndText(String selector, String text) {
+        return getWebElementStreamOfParents(selector)
+                .filter(e -> e.getText().equals(text))
+                .findFirst()
+                .orElseThrow(() -> new AssertionError(
+                        String.format("Can not find element with selector `%s` and text `%s`, but found %s",
+                                selector,
+                                text,
+                                getWebElementStreamOfParents(selector).map(WebElement::getText).collect(Collectors.joining(","))
+                        )))
+                .findElement(By.cssSelector(selector));
+    }
+
+    private Stream<WebElement> getWebElementStreamOfParents(String selector) {
+        return findElements(selector).stream().map(e -> e.findElement(By.xpath("./..")));
+    }
+
+    private List<WebElement> findElements(String selector) {
+        return waitUntil(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector(selector)));
+    }
+
+    private Select getSelect(String dropdownName) {
+        return new Select(waitForElementByName(dropdownName));
+    }
+
+    private WebElement waitForElementByName(String name) {
+        return waitForElement(By.name(name));
+    }
+}

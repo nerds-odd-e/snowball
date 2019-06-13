@@ -7,8 +7,6 @@ import cucumber.api.java.en.When;
 import steps.driver.WebDriverWrapper;
 import steps.site.SnowballSite;
 
-import static org.junit.Assert.*;
-
 public class EditAdviceSteps {
     private final SnowballSite site = new SnowballSite();
     private final WebDriverWrapper driver = site.getDriver();
@@ -20,7 +18,7 @@ public class EditAdviceSteps {
 
     @When("^I select category \"([^\"]*)\"$")
     public void 任意のカテゴリを選択している(String category) {
-        driver.setDropdownByText("category", category);
+        driver.selectDropdownByText("category", category);
     }
 
     @When("^I set the advice as \"([^\"]*)\"$")
@@ -35,8 +33,8 @@ public class EditAdviceSteps {
 
     @Then("^the advice link for \"([^\"]*)\" has become \"([^\"]*)\"$")
     public void updateAdvice画面に戻ってきてカテゴリがでアドバイスリンクがになってる(String category, String link) {
-        assertTrue(driver.getBodyText().contains(category));
-        assertTrue(driver.getBodyText().contains(link));
+        driver.expectPageToContainText(category);
+        driver.expectPageToContainText(link);
     }
 
     @When("^I click the update button$")
@@ -46,7 +44,7 @@ public class EditAdviceSteps {
 
     @Then("^I should see the advice for \"([^\"]*)\" has become \"([^\"]*)\"$")
     public void update_Advice画面に戻ってきてアドバイスが更新されている(String category, String updatedAdvice) {
-        driver.setDropdownByText("category", category);
-        assertTrue(driver.getBodyText().contains(updatedAdvice));
+        driver.selectDropdownByText("category", category);
+        driver.expectPageToContainText(updatedAdvice);
     }
 }
