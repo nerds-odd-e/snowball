@@ -1,10 +1,5 @@
 import Vue from 'vue'
 import Sample from '@/components/Sample'
-// import flushPromises from 'flush-promises'
-
-function flushPromises() {
-  return new Promise(resolve => setImmediate(resolve));
-}
 
 const nextTick = () => new Promise(res => process.nextTick(res));
 
@@ -24,7 +19,7 @@ describe('sample', () => {
   })
 
   it('fetch response', async () => {
-    fetch.mockResponseOnce({'msg':'hello!'});
+    fetch.mockResponseOnce(JSON.stringify({msg:'hello!'}));
     const Constructor = Vue.extend(Sample)
     const vm = new Constructor().$mount()
 
@@ -32,6 +27,7 @@ describe('sample', () => {
 
     expect(fetch.mock.calls.length).toEqual(1)
     expect(fetch.mock.calls[0][0]).toEqual('/sample')
-    expect(vm.message).toEqual('hello')
+    expect(vm.message).toEqual('hello!')
+    expect(vm.$el.querySelector("#sample h2").textContent).toEqual('hello!')
   })
 })
