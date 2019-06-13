@@ -1,8 +1,6 @@
 package com.odde.massivemailer.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.odde.TestWithDB;
-import com.odde.massivemailer.model.Todo;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,36 +8,35 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 
 @RunWith(TestWithDB.class)
-public class TodosControllerTest {
-    private TodosController controller;
+public class SampleControllerTest {
+    private SampleController controller;
     private MockHttpServletRequest req;
     private MockHttpServletResponse res;
 
     @Before
     public void setUpMockService() {
         MockitoAnnotations.initMocks(this);
-        controller = new TodosController();
+        controller = new SampleController();
         req = new MockHttpServletRequest();
         res = new MockHttpServletResponse();
     }
 
     @Test
-    public void setTodos() throws Exception {
-        Todo.createIt("title", "craft beer", "status", "todo");
-        Todo.createIt("title", "sake", "status", "doing");
-
+    public void doGet() throws Exception {
         controller.doGet(req, res);
-
-        assertThat(res.getContentAsString(), containsString("todo"));
-        assertThat(res.getContentAsString(), containsString("doing"));
+        assertThat(res.getContentAsString(), containsString("response!"));
     }
+
+    @Test
+    public void doPost() throws Exception {
+        req.setContent("{\"key\": \"value\"}".getBytes());
+        controller.doPost(req, res);
+    }
+
+
 }
