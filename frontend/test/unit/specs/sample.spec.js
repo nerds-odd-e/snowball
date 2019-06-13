@@ -18,7 +18,7 @@ describe('sample', () => {
     expect(sampleComponent().$el.querySelector('#sample h1').textContent).toEqual('Sample page!')
   })
 
-  it('fetch response', async () => {
+  it('fetch response and re render', async () => {
     fetch.mockResponseOnce(JSON.stringify({msg:'hello!'}));
     const Constructor = Vue.extend(Sample)
     const vm = new Constructor().$mount()
