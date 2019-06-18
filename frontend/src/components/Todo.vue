@@ -4,7 +4,7 @@
     <input name="todo_item" v-model="inputValue" />
     <input type="button" id="todo_register" v-on:click="addTodo">
     <div v-for="todo in todos" class="todo_list">
-      <input :value="todo.title">
+      <input class="row" :value="todo.title">
     </div>
   </div>
 
@@ -14,7 +14,7 @@
 export default {
   name: 'Todo',
   mounted () {
-    fetch('http://localhost:8060/todo').
+    fetch('/todo').
     then(response =>
     response.json()
     ).
@@ -32,7 +32,7 @@ export default {
   methods: {
     addTodo() {
       this.todos.push({title: this.inputValue})
-      fetch('http://localhost:8060/todo', {method: 'POST',body:JSON.stringify({inputValue:this.inputValue})})
+      fetch('/todo', {method: 'POST',body:JSON.stringify({inputValue:this.inputValue})})
     }
   }
 }
