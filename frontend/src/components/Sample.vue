@@ -8,12 +8,12 @@
 <script>
 export default {
   name: 'Sample',
-  mounted() {
-    fetch("/sample")
+  mounted () {
+    fetch('/sample')
       .then(response => {
         return response.json()
       })
-      .then(json=>{
+      .then(json => {
         this.message = json.msg
       })
   },
