@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Sample from '@/components/Sample'
+import { mount } from '@vue/test-utils'
 
 const nextTick = () => new Promise(res => process.nextTick(res));
 
@@ -8,26 +9,25 @@ describe('sample', () => {
     fetch.resetMocks()
   })
 
-  let sampleComponent = (() => {
+  let component = (() => {
     fetch.mockResponseOnce([]);
-    const Constructor = Vue.extend(Sample)
-    return new Constructor().$mount()
+    return mount(Sample)
   })
 
   it('show h1', () => {
-    expect(sampleComponent().$el.querySelector('#sample h1').textContent).toEqual('Sample page!')
+    expect(component().find("#sample h1").text()).toEqual('Sample page!')
   })
 
   it('fetch response and re render', async () => {
     fetch.mockResponseOnce(JSON.stringify({msg:'hello!'}));
-    const Constructor = Vue.extend(Sample)
-    const vm = new Constructor().$mount()
+    const wrapper = mount(Sample)
 
     await nextTick()
 
     expect(fetch.mock.calls.length).toEqual(1)
     expect(fetch.mock.calls[0][0]).toEqual('/sample')
-    expect(vm.message).toEqual('hello!')
-    expect(vm.$el.querySelector("#sample h2").textContent).toEqual('hello!')
+    expect(wrapper.vm.message).toEqual('hello!')
+    expect(wrapper.find("#sample h2").text()).toEqual('hello!')
   })
+
 })
