@@ -5,6 +5,7 @@ import { mount } from '@vue/test-utils'
 
 const nextTick = () => new Promise(res => process.nextTick(res));
 
+
 describe('todo', () => {
   beforeEach(() => {
     fetch.resetMocks()

@@ -82,7 +82,8 @@ task vue_test {
     group "verification"
     doFirst {
         exec {
-            commandLine 'npm', 'run', 'test:watch', '--prefix', 'frontend'
+//            commandLine 'npm', 'run', 'test:watch', '--prefix', 'frontend'
+            commandLine 'npm', 'test', '--prefix', 'frontend'
         }
     }
 }
