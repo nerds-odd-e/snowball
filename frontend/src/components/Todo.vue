@@ -14,7 +14,7 @@
 export default {
   name: 'Todo',
   mounted () {
-    fetch('/todo').
+    fetch(`${this.baseurl}/todo`).
     then(response =>
     response.json()
     ).
@@ -25,6 +25,8 @@ export default {
   },
   data () {
     return {
+//      baseurl: 'http://localhost:8060',
+      baseurl: '',
       todos: [],
       inputValue: '',
     }
@@ -32,7 +34,7 @@ export default {
   methods: {
     addTodo() {
       this.todos.push({title: this.inputValue})
-      fetch('/todo', {method: 'POST',body:JSON.stringify({inputValue:this.inputValue})})
+      fetch(`${this.baseurl}/todo`, {method: 'POST',body:JSON.stringify({inputValue:this.inputValue})})
     }
   }
 }
