@@ -11,22 +11,17 @@
 </template>
 
 <script>
+import HttpClient from './HttpClient.js'
 export default {
   name: 'Todo',
   mounted () {
-    fetch(`${this.baseurl}/todo`).
-    then(response =>
-    response.json()
-    ).
-    then(response => {
+    HttpClient.fetch('/todo')
+    .then(response => {
       this.todos = response;
-
     })
   },
   data () {
     return {
-//      baseurl: 'http://localhost:8060',
-      baseurl: '',
       todos: [],
       inputValue: '',
     }
@@ -34,7 +29,7 @@ export default {
   methods: {
     addTodo() {
       this.todos.push({title: this.inputValue})
-      fetch(`${this.baseurl}/todo`, {method: 'POST',body:JSON.stringify({inputValue:this.inputValue})})
+      HttpClient.fetch('/todo', {method: 'POST',body:JSON.stringify({inputValue:this.inputValue})})
     }
   }
 }

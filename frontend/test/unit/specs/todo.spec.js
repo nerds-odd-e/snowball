@@ -11,26 +11,29 @@ describe('todo', () => {
     fetch.resetMocks()
   })
 
-  let todoComponent = (() => {
-    fetch.mockResponseOnce([]);
-    return mount(Todo)
-  })
-
   it('exist todo input', () => {
-    expect(todoComponent().find('input[name="todo_item"]').exists()).toBe(true)
+    fetch.mockResponseOnce([]);
+    const wrapper = mount(Todo)
+    expect(wrapper.find('input[name="todo_item"]').exists()).toBe(true)
   })
   it('exist todo register', () => {
-    expect(todoComponent().find('#todo_register').exists()).toBe(true)
+    fetch.mockResponseOnce([]);
+    const wrapper = mount(Todo)
+    expect(wrapper.find('#todo_register').exists()).toBe(true)
   })
-  it('add todo', async () => {
-    const wrapper = todoComponent()
+  it('add todo to elem', async () => {
+    fetch.mockResponseOnce([]);
+    fetch.mockResponseOnce([]);
+    const wrapper = mount(Todo)
     wrapper.find('[name="todo_item"]').setValue('555')
     wrapper.find('#todo_register').trigger('click')
     expect(wrapper.findAll('.todo_list input').length).toEqual(1)
     expect(wrapper.findAll('.todo_list input').at(0).element.value).toEqual("555")
   })
-  it('regist todo', () => {
-    const wrapper = todoComponent()
+  it('add todo call api', () => {
+    fetch.mockResponseOnce([]);
+    fetch.mockResponseOnce([]);
+    const wrapper = mount(Todo)
     wrapper.find('[name="todo_item"]').setValue('555')
     wrapper.find('#todo_register').trigger('click')
     expect(fetch.mock.calls.length).toEqual(2)
