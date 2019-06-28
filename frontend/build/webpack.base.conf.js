@@ -1,4 +1,4 @@
-'use strict'
+    'use strict'
 const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
@@ -40,7 +40,7 @@ module.exports = {
   },
   module: {
     rules: [
-      ...(config.dev.useEslint ? [createLintingRule()] : []),
+//      ...(config.dev.useEslint ? [createLintingRule()] : []),
       {
         test: /\.vue$/,
         loader: 'vue-loader',
