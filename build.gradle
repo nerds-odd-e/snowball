@@ -4,9 +4,9 @@ buildscript {
         mavenCentral()
     }
 
-    dependencies {
-        classpath "com.github.samueltbrown:gradle-cucumber-plugin:0.8"
-    }
+//    dependencies {
+//        classpath "com.github.samueltbrown:gradle-cucumber-plugin:0.8"
+//    }
 }
 
 ext {
@@ -14,12 +14,12 @@ ext {
     groovyVersion = '2.4.5'
     gebVersion = '1.1.1'
     seleniumVersion = '3.141.59'
-    cucumberJvmVersion = '1.2.5'
+    cucumberJvmVersion = '4.3.1'
     assertJVersion = "3.12.2"
     ciBuild = System.getenv('SNAP_CI')
 }
 
-apply plugin: "com.github.samueltbrown.cucumber"
+//apply plugin: "com.github.samueltbrown.cucumber"
 apply plugin: 'java'
 apply plugin: 'war'
 apply from: 'gradle/gretty.gradle'
@@ -31,16 +31,17 @@ description = """snowball"""
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-war.baseName = 'snowball'
+war.archiveBaseName = 'root'
 
 
 configurations {
     cucumberRuntime {
-        extendsFrom testRuntime
+        extendsFrom testImplementation
     }
 }
 
 gretty {
+    contextPath="/"
     httpPort = 8070
     if(project.gradle.startParameter.taskNames.any{e -> e.startsWith('cucumber')}) {
         jvmArgs = ["-Dactive_env=test"]
@@ -48,43 +49,51 @@ gretty {
     }
 }
 
-cucumber {
-    formats = [
-            'pretty', // prints nice format out to the console
-            'html:build/reports/cucumber', // html
-            'junit:build/cucumber.xml' // junit format for integration with CI tool etc
-    ]
-    // src/cucumber/resources is included automatically
-    glueDirs = [
-            "classpath:io.jdev.geb.cucumber.steps.groovy.en", 'classpath:steps'
-    ]
-
-    tags = ['~@system', '~@slow', '~@developing']
-    strict = true
-}
-
-tasks.cucumber {
-    dependsOn assemble, testClasses, 'appBeforeIntegrationTest'
+//cucumber {
+//    formats = [
+//            'pretty', // prints nice format out to the console
+//            'html:build/reports/cucumber', // html
+//            'junit:build/cucumber.xml' // junit format for integration with CI tool etc
+//    ]
+//    // src/cucumber/resources is included automatically
+//    glueDirs = [
+//            "classpath:io.jdev.geb.cucumber.steps.groovy.en", 'classpath:steps'
+//    ]
+//
+//    tags = ['~@system', '~@slow', '~@developing']
+//    strict = true
+//}
+//
+task cucumber {
+    group "verification"
+    dependsOn assemble, compileTestJava, 'appBeforeIntegrationTest'
     finalizedBy 'appAfterIntegrationTest'
 
-    jvmOptions.systemProperties("webdriver.chrome.driver": "/usr/local/bin/chromedriver")
-    jvmOptions.systemProperties([
-            "geb.cucumber.step.packages": "steps",
-            "geb.env": System.getProperty("geb.env"),
-            "webdriver": "chrome",
-            "active_env": "test",
-    ])
-}
-
-task cucumber_now {
-    group "verification"
-    finalizedBy "cucumber"
-    doFirst {
-        cucumber {
-            tags = ['@now']
+//    jvmOptions.systemProperties("webdriver.chrome.driver": "/usr/local/bin/chromedriver")
+//    jvmOptions.systemProperties([
+//            "geb.cucumber.step.packages": "steps",
+//            "geb.env": System.getProperty("geb.env"),
+//            "webdriver": "chrome",
+//            "active_env": "test",
+//    ])
+    doLast {
+        javaexec {
+            main = "cucumber.api.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'cucumber.steps', '--tags', '@now and not @system and not @slow and not @developing',  'src/test/resources']
         }
     }
 }
+//
+//task cucumber_now {
+//    group "verification"
+//    finalizedBy "cucumber"
+//    doFirst {
+//        cucumber {
+//            tags = ['@now']
+//        }
+//    }
+//}
 
 test {
   useJUnitPlatform()
@@ -117,10 +126,10 @@ dependencies {
     testCompile "org.seleniumhq.selenium:selenium-api:$seleniumVersion"
     testCompile "org.seleniumhq.selenium:selenium-java:$seleniumVersion"
     testCompile "org.seleniumhq.selenium:selenium-server:$seleniumVersion"
-    testCompile "info.cukes:cucumber-core:$cucumberJvmVersion"
-    testCompile "info.cukes:cucumber-java:$cucumberJvmVersion"
-    testCompile "info.cukes:cucumber-junit:$cucumberJvmVersion"
     testCompile "org.assertj:assertj-core:$assertJVersion"
+
+    testImplementation "io.cucumber:cucumber-java:$cucumberJvmVersion"
+    testImplementation "io.cucumber:cucumber-junit:$cucumberJvmVersion"
 
     compile group: "com.google.maps", name: "google-maps-services", version: "0.2.4"
 }

@@ -32,6 +32,8 @@ The first four digits are the id of the migration, which will be persisited into
 
 ##### Run development app
 
+The current Gradle version is 5.5.
+
 Go to the root directory of this project and:
 
 `./gradlew appStart
