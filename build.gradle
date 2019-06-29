@@ -1,12 +1,10 @@
-buildscript {
-    repositories {
-        jcenter()
-        mavenCentral()
-    }
+plugins {
+    id "org.gretty" version "2.3.1"
+}
 
-//    dependencies {
-//        classpath "com.github.samueltbrown:gradle-cucumber-plugin:0.8"
-//    }
+repositories {
+    jcenter()
+    mavenCentral()
 }
 
 ext {
@@ -14,15 +12,12 @@ ext {
     groovyVersion = '2.4.5'
     gebVersion = '1.1.1'
     seleniumVersion = '3.141.59'
-    cucumberJvmVersion = '4.3.1'
     assertJVersion = "3.12.2"
     ciBuild = System.getenv('SNAP_CI')
 }
 
-//apply plugin: "com.github.samueltbrown.cucumber"
 apply plugin: 'java'
 apply plugin: 'war'
-apply from: 'gradle/gretty.gradle'
 apply from: "gradle/idea/idea.gradle"
 
 group = 'com.odde'
@@ -41,68 +36,37 @@ configurations {
 }
 
 gretty {
-    contextPath="/"
+    contextPath = "/"
     httpPort = 8070
-    if(project.gradle.startParameter.taskNames.any{e -> e.startsWith('cucumber')}) {
+    integrationTestTask = "cucumber"
+    if (project.gradle.startParameter.taskNames.any { e -> e.startsWith('cucumber') || e.startsWith('appBeforeIntegrationTest') }) {
         jvmArgs = ["-Dactive_env=test"]
         httpPort = 8060
     }
 }
 
-//cucumber {
-//    formats = [
-//            'pretty', // prints nice format out to the console
-//            'html:build/reports/cucumber', // html
-//            'junit:build/cucumber.xml' // junit format for integration with CI tool etc
-//    ]
-//    // src/cucumber/resources is included automatically
-//    glueDirs = [
-//            "classpath:io.jdev.geb.cucumber.steps.groovy.en", 'classpath:steps'
-//    ]
-//
-//    tags = ['~@system', '~@slow', '~@developing']
-//    strict = true
-//}
-//
 task cucumber {
     group "verification"
-    dependsOn assemble, compileTestJava, 'appBeforeIntegrationTest'
-    finalizedBy 'appAfterIntegrationTest'
+    dependsOn assemble, compileTestJava
 
-//    jvmOptions.systemProperties("webdriver.chrome.driver": "/usr/local/bin/chromedriver")
-//    jvmOptions.systemProperties([
-//            "geb.cucumber.step.packages": "steps",
-//            "geb.env": System.getProperty("geb.env"),
-//            "webdriver": "chrome",
-//            "active_env": "test",
-//    ])
     doLast {
         javaexec {
             main = "cucumber.api.cli.Main"
             classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
-            args = ['--plugin', 'pretty', '--glue', 'cucumber.steps', '--tags', '@now and not @system and not @slow and not @developing',  'src/test/resources']
+            args = ['--plugin', 'pretty', '--glue', 'cucumber.steps', '--tags', /*'@now and */'not @system and not @slow and not @developing', 'src/test/resources']
         }
     }
 }
-//
-//task cucumber_now {
-//    group "verification"
-//    finalizedBy "cucumber"
-//    doFirst {
-//        cucumber {
-//            tags = ['@now']
-//        }
-//    }
-//}
+
 
 test {
-  useJUnitPlatform()
+    useJUnitPlatform()
 }
 
 dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.8'
     annotationProcessor 'org.projectlombok:lombok:1.18.8'
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.9'
     compile group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
     compile group: 'org.hibernate', name: 'hibernate-validator', version: '5.1.3.Final'
     compile group: 'javax.el', name: 'javax.el-api', version: '3.0.0'
@@ -128,8 +92,7 @@ dependencies {
     testCompile "org.seleniumhq.selenium:selenium-server:$seleniumVersion"
     testCompile "org.assertj:assertj-core:$assertJVersion"
 
-    testImplementation "io.cucumber:cucumber-java:$cucumberJvmVersion"
-    testImplementation "io.cucumber:cucumber-junit:$cucumberJvmVersion"
+    testImplementation "io.cucumber:cucumber-java:4.4.0"
 
     compile group: "com.google.maps", name: "google-maps-services", version: "0.2.4"
 }

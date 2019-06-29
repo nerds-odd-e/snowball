@@ -1,4 +1,3 @@
-@now
 Feature: Create Course
   As an admin I want to create courses
 
