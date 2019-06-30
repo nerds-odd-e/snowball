@@ -36,7 +36,8 @@
     ]
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint src/main/webapp/resources/js/"
   },
   "repository": {
     "type": "git",
