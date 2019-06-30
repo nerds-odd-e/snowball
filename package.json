@@ -37,7 +37,8 @@
   },
   "scripts": {
     "test": "jest",
-    "lint": "eslint src/main/webapp/resources/js/"
+    "lint": "eslint src/main/webapp/resources/js/*.js",
+    "format": "prettier --write 'src/main/webapp/resources/js/*.js'"
   },
   "repository": {
     "type": "git",
