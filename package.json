@@ -5,16 +5,26 @@
   "main": "karma.conf.js",
   "dependencies": {
     "karma-chrome-launcher": "^2.0.0",
-    "npm": "^6.4.0"
+    "npm": "^6.9.2"
   },
   "devDependencies": {
     "jasmine-core": "^2.5.2",
     "karma": "^3.0.0",
     "karma-chrome-launcher": "^2.0.0",
-    "karma-jasmine": "^1.0.2"
+    "karma-jasmine": "^1.0.2",
+    "@testing-library/dom": "^5.4.0",
+    "jest": "^24.8.0",
+    "jest-dom": "^3.5.0",
+    "jest-extended": "^0.11.1"
+  },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "jest-extended",
+      "jest-dom/extend-expect"
+    ]
   },
   "scripts": {
-    "test": "./node_modules/karma/bin/karma start karma.conf.js"
+    "test": "jest"
   },
   "repository": {
     "type": "git",

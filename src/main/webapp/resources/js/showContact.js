@@ -1,3 +1,5 @@
+var $ = require('../lib/bootstrap/js/jquery.js');
+
 function render() {
   var contactList = retrieveContactListFromServer();
 	renderContactList(contactList, $('#contactTable'), false);
@@ -98,9 +100,10 @@ function getParameterByName(name) {
 }
 
 
-function showEditContactDetail(item)
+exports.showEditContactDetail = function showEditContactDetail(item)
 {
 	openEditContactModal();
+	console.log("showEditContactDetail", item);
 	insertDataIntoContactModal(item);
 }
 
@@ -114,7 +117,7 @@ function insertDataIntoContactModal(item){
 	$('#email_label').text(item.email);
 }
 
-function openEditContactModal()
+exports.openEditContactModal = function openEditContactModal()
 {
 	$('#editContactModal').modal();
 }
