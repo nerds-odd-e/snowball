@@ -8,17 +8,28 @@
     "npm": "^6.9.2"
   },
   "devDependencies": {
+    "@testing-library/dom": "^5.4.0",
+    "eslint": "^6.0.1",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-jsx-a11y": "^6.2.2",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.14.2",
     "jasmine-core": "^2.5.2",
+    "jest": "^24.8.0",
+    "jest-dom": "^3.5.0",
+    "jest-extended": "^0.11.1",
     "karma": "^3.0.0",
     "karma-chrome-launcher": "^2.0.0",
     "karma-jasmine": "^1.0.2",
-    "@testing-library/dom": "^5.4.0",
-    "jest": "^24.8.0",
-    "jest-dom": "^3.5.0",
-    "jest-extended": "^0.11.1"
+    "prettier": "^1.18.2",
+    "pretty-quick": "^1.11.1"
   },
   "jest": {
-    "setupFiles": ["./test-env.js"],
+    "setupFiles": [
+      "./test-env.js"
+    ],
     "setupFilesAfterEnv": [
       "jest-extended",
       "jest-dom/extend-expect"
