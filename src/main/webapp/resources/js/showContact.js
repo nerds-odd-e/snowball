@@ -17,8 +17,8 @@ $(document).ready(function() {
 
 function retrieveContactListFromServer()
 {
-	var contactList = [];	
-	
+	var contactList = [];
+
 	$.ajax({
 	    type: 'GET',
 	    url: '/contacts',
@@ -26,7 +26,7 @@ function retrieveContactListFromServer()
 	    success: function(data) {contactList = data },
 	    async: false
 	});
-	
+
 	return contactList;
 }
 
@@ -53,7 +53,7 @@ function renderContactList(json, selector)
 {
 
     selector.html('');
-	$.each(json, function(idx, item) {
+	  $.each(json, function(idx, item) {
         var contact = new Contact(item);
         var tableContent = [
           ['email-address', contact.email],
@@ -103,7 +103,6 @@ function getParameterByName(name) {
 exports.showEditContactDetail = function showEditContactDetail(item)
 {
 	openEditContactModal();
-	console.log("showEditContactDetail", item);
 	insertDataIntoContactModal(item);
 }
 
