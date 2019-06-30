@@ -97,13 +97,6 @@ function getParameterByName(name) {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-
-exports.showEditContactDetail = function showEditContactDetail(item)
-{
-	openEditContactModal();
-	insertDataIntoContactModal(item);
-}
-
 function insertDataIntoContactModal(item) {
 	$('#name').val(item.firstName);
 	$('#lastName').val(item.lastName);
@@ -114,11 +107,15 @@ function insertDataIntoContactModal(item) {
 	$('#email_label').text(item.email);
 }
 
-exports.openEditContactModal = function openEditContactModal()
-{
-	$('#editContactModal').modal();
-}
-
 function submitEditContact() {
 	$("#editContact").submit();
+}
+
+exports.showEditContactDetail = function showEditContactDetail(item) {
+	openEditContactModal();
+	insertDataIntoContactModal(item);
+}
+
+exports.openEditContactModal = function openEditContactModal() {
+	$('#editContactModal').modal();
 }

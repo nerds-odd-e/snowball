@@ -5,7 +5,7 @@ $("#batchFile").change(function() {
         reader.readAsText(batchContent,'ISO-8559-1');
         reader.onload = function(e) {
              var csvValue = reader.result;
-             formatCsvData(csvValue);
+             this.formatCsvData(csvValue);
              submitUploadData();
         };
     })
