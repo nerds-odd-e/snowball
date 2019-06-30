@@ -1,5 +1,3 @@
-var $ = require('../lib/bootstrap/js/jquery.js');
-
 function render() {
   var contactList = retrieveContactListFromServer();
 	renderContactList(contactList, $('#contactTable'), false);

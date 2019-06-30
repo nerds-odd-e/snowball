@@ -18,6 +18,7 @@
     "jest-extended": "^0.11.1"
   },
   "jest": {
+    "setupFiles": ["./test-env.js"],
     "setupFilesAfterEnv": [
       "jest-extended",
       "jest-dom/extend-expect"
