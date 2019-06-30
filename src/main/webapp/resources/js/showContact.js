@@ -104,7 +104,7 @@ exports.showEditContactDetail = function showEditContactDetail(item)
 	insertDataIntoContactModal(item);
 }
 
-function insertDataIntoContactModal(item){
+function insertDataIntoContactModal(item) {
 	$('#name').val(item.firstName);
 	$('#lastName').val(item.lastName);
 	$('#company').val(item.company);

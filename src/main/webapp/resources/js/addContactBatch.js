@@ -11,13 +11,12 @@ $("#batchFile").change(function() {
     })
  })
 
-function submitUploadData(){
+function submitUploadData() {
     document.forms[0].submit();
     alert("Batch Contacts Uploaded");
 }
 
-function formatCsvData(value) {
-    console.log(value);
+exports.formatCsvData = function formatCsvData(value) {
     var rows = value.replace(/\n/g,';');
     document.getElementById("data").value = rows;
 }

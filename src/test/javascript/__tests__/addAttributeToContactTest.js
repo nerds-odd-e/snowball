@@ -1,8 +1,7 @@
-var $ = require('../../../main/webapp/resources/lib/bootstrap/js/jquery.js');
 var showContactFunctions = require("../../../main/webapp/resources/js/showContact.js");
-var { queryByTestId, getByTestId, wait } = require("@testing-library/dom");
+var { queryByTestId, wait } = require("@testing-library/dom");
 
-describe("Add Firstname and Lastname to Existing Contact",function(){
+describe("Add Firstname and Lastname to Existing Contact",function() {
 	var rootId = "testContainer";
 	var markup="";
   var pageDOM;
@@ -59,7 +58,7 @@ describe("Add Firstname and Lastname to Existing Contact",function(){
 		document.body.removeChild(lastName_cmpt);
 	});
 
-	it("should show email as the same as the one that was being clicked", async function(){
+	it("should show email as the same as the one that was being clicked", async function() {
 		var mock_json_contact_item = {"id":1,"email":"john@gmail.com","location":"Singapore/Singapore"};
 		showContactFunctions.showEditContactDetail(mock_json_contact_item);
 		await wait(function() {
@@ -70,7 +69,7 @@ describe("Add Firstname and Lastname to Existing Contact",function(){
 		});
 	});
 
-	it("should show name and lastName as the same as the one that was being clicked", async function(){
+	it("should show name and lastName as the same as the one that was being clicked", async function() {
 		var mock_json_contact_item = {"id":1,"company":"","email":"john@gmail.com","firstName":"John","lastName":"Winyu","location":"Singapore/Singapore"};
 		showContactFunctions.showEditContactDetail(mock_json_contact_item);
 		await wait(function() {
