@@ -5,7 +5,7 @@ $("#batchFile").change(function() {
         reader.readAsText(batchContent,'ISO-8559-1');
         reader.onload = function(e) {
              var csvValue = reader.result;
-             this.formatCsvData(csvValue);
+             formatCsvData(csvValue);
              submitUploadData();
         };
     })
@@ -16,7 +16,7 @@ function submitUploadData() {
     alert("Batch Contacts Uploaded");
 }
 
-exports.formatCsvData = function formatCsvData(value) {
+function formatCsvData(value) {
     var rows = value.replace(/\n/g,';');
     document.getElementById("data").value = rows;
 }

@@ -111,11 +111,11 @@ function submitEditContact() {
 	$("#editContact").submit();
 }
 
-exports.showEditContactDetail = function showEditContactDetail(item) {
+function showEditContactDetail(item) {
 	openEditContactModal();
 	insertDataIntoContactModal(item);
 }
 
-exports.openEditContactModal = function openEditContactModal() {
+function openEditContactModal() {
 	$('#editContactModal').modal();
 }

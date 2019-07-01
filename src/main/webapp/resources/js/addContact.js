@@ -25,7 +25,7 @@ function disableAddButton() {
 	$("#add_button").attr('disabled', 'disabled');
 }
 
-exports.checkAddInputElement = function checkAddInputElement() {
+function checkAddInputElement() {
 
 	if (this.isChange($("#email").val())) {
 		enableAddButton();
@@ -34,6 +34,6 @@ exports.checkAddInputElement = function checkAddInputElement() {
 	}
 }
 
-exports.isChange = function isChange(value) {
+function isChange(value) {
 	return value.replace(/^\s+|\s+$/gm,'') !== "";
 }

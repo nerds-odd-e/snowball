@@ -36,7 +36,7 @@
     ]
   },
   "scripts": {
-    "test": "jest",
+    "test": "./node_modules/karma/bin/karma start karma.conf.js",
     "lint": "eslint src/main/webapp/resources/js/*.js",
     "format": "prettier --write 'src/main/webapp/resources/js/*.js'"
   },
