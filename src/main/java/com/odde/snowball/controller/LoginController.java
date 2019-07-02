@@ -24,6 +24,7 @@ public class LoginController extends AppController {
 
             HttpSession session = req.getSession();
             session.setAttribute("loggedIn", true);
+            session.setAttribute("userId", user.getId());
             redirectUrl = "/dashboard";
         } else {
             redirectUrl = "/login.jsp?status=fail";

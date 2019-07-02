@@ -9,6 +9,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpSession;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.*;
@@ -47,10 +48,11 @@ public class LoginControllerTest {
         assertEquals("/dashboard", response.getRedirectedUrl());
     }
 
-    private void createUser() {
+    private User createUser() {
         User user = new User("mary@example.com");
         user.setupPassword("abcd1234");
         user.save();
+        return user;
     }
 
     @Test
@@ -68,7 +70,19 @@ public class LoginControllerTest {
     }
 
     @Test
-    public void notSetCookieWhenLoginSuccess() throws Exception {
+    public void setSessionWhenLoginSuccess() throws Exception {
+        User user = createUser();
+        request.setParameter("email", "mary@example.com");
+        request.setParameter("password", "abcd1234");
+        controller.doPost(request, response);
+
+        HttpSession session = request.getSession();
+        assertNotNull(session);
+        assertEquals(user.getId(), session.getAttribute("userId"));
+    }
+
+    @Test
+    public void notSetCookieWhenLoginFail() throws Exception {
         createUser();
         request.setParameter("email", "mary@example.com");
         request.setParameter("password", "incorrect");
