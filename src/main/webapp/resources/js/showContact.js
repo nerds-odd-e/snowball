@@ -1,6 +1,6 @@
 function render() {
   var contactList = retrieveContactListFromServer();
-	renderContactList(contactList, $('#contactTable'), false);
+  renderContactList(contactList, $('#contactTable'), false);
 
 }
 
@@ -11,10 +11,7 @@ $(document).ready(function() {
 	});
 });
 
-
-
-function retrieveContactListFromServer()
-{
+function retrieveContactListFromServer() {
 	var contactList = [];
 
 	$.ajax({
@@ -29,27 +26,25 @@ function retrieveContactListFromServer()
 }
 
 function Contact(attributes) {
-    this.firstName = attributes.firstName===undefined?'':attributes.firstName;
-    this.lastName = attributes.lastName===undefined?'':attributes.lastName;
-    this.company = attributes.company===undefined?'':attributes.company;
-    this.city = attributes.city===undefined?'':attributes.city;
-    this.country = attributes.country===undefined?'':attributes.country;
-    this.email = attributes.email===undefined?'':attributes.email;
-    this.location = this.city + ", " + this.country
+  this.firstName = attributes.firstName===undefined?'':attributes.firstName;
+  this.lastName = attributes.lastName===undefined?'':attributes.lastName;
+  this.company = attributes.company===undefined?'':attributes.company;
+  this.city = attributes.city===undefined?'':attributes.city;
+  this.country = attributes.country===undefined?'':attributes.country;
+  this.email = attributes.email===undefined?'':attributes.email;
+  this.location = this.city + ", " + this.country
 }
 
 function createTableData(cssClasses, value) {
-    var tableRow = $('<tr>');
-    return '<td class="' + cssClasses + '" style="text-align: left; line-height: 200%;">' + value + '</td>';
+  var tableRow = $('<tr>');
+  return '<td class="' + cssClasses + '" style="text-align: left; line-height: 200%;">' + value + '</td>';
 }
 
 function createButtonElement(buttonId, buttonName, clickEvent) {
-    return '<button class="btn btn-default" id="' + buttonId + '" name="' + buttonName + '" onclick=\'' + clickEvent + '\'>' + buttonName +'</button>';
+  return '<button class="btn btn-default" id="' + buttonId + '" name="' + buttonName + '" onclick=\'' + clickEvent + '\'>' + buttonName +'</button>';
 }
 
-function renderContactList(json, selector)
-{
-
+function renderContactList(json, selector) {
     selector.html('');
 	  $.each(json, function(idx, item) {
         var contact = new Contact(item);
@@ -65,8 +60,7 @@ function renderContactList(json, selector)
     })
 }
 
-function renderContactSelectionList(json, selector)
-{
+function renderContactSelectionList(json, selector) {
 	selector.html('');
 	$.each(json, function(idx, item) {
 		var contact = new Contact(item);
@@ -83,39 +77,44 @@ function renderContactSelectionList(json, selector)
 }
 
 function generateContactTableRow(selector, content) {
-    var tr = $('<tr>' );
-    selector.append(tr);
-    content.forEach(function(element) {
-        tr.append(createTableData(element[0], element[1]));
-    });
+  var tr = $('<tr>' );
+  selector.append(tr);
+  content.forEach(function(element) {
+    tr.append(createTableData(element[0], element[1]));
+  });
 }
 
 function getParameterByName(name) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search);
-    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+  name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+  var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+              results = regex.exec(location.search);
+  return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
 function insertDataIntoContactModal(item) {
-	$('#name').val(item.firstName);
-	$('#lastName').val(item.lastName);
-	$('#company').val(item.company);
-	$('#countrydrp').val(item.country);
-	$('#city').val(item.city);
-	$('#email').val(item.email);
-	$('#email_label').text(item.email);
+  $('#name').val(item.firstName);
+  $('#lastName').val(item.lastName);
+  $('#company').val(item.company);
+  $('#countrydrp').val(item.country);
+  $('#city').val(item.city);
+  $('#email').val(item.email);
+  $('#email_label').text(item.email);
 }
 
 function submitEditContact() {
-	$("#editContact").submit();
+  $("#editContact").submit();
 }
 
 function showEditContactDetail(item) {
-	openEditContactModal();
-	insertDataIntoContactModal(item);
+  openEditContactModal();
+  insertDataIntoContactModal(item);
 }
 
 function openEditContactModal() {
-	$('#editContactModal').modal();
+  $('#editContactModal').modal();
+}
+
+module.exports = {
+  openEditContactModalExp: openEditContactModal,
+  showEditContactDetailExp: showEditContactDetail
 }

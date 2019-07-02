@@ -2,10 +2,8 @@
   "name": "snowball",
   "version": "1.0.0",
   "description": "Pre-prerequisite * The environment variables `MM_EMAIL_USERID` and `MM_EMAIL_PASSWORD` are required to send emails out. * On Mac OS X, add the following to your environment variables (~/.bash_profile). ``` export MM_EMAIL_USERID=<your gmail address> export MM_EMAIL_PASSWORD=<your gmail password> launchctl setenv MM_EMAIL_USERID $MM_EMAIL_USERID launchctl setenv MM_EMAIL_PASSWORD $MM_EMAIL_PASSWORD ``` * Reboot your IDE.",
-  "main": "karma.conf.js",
   "dependencies": {
-    "karma-chrome-launcher": "^2.0.0",
-    "npm": "^6.9.2"
+    "npm": "^6.10.0"
   },
   "devDependencies": {
     "@testing-library/dom": "^5.4.0",
@@ -16,13 +14,9 @@
     "eslint-plugin-jsx-a11y": "^6.2.2",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.14.2",
-    "jasmine-core": "^2.5.2",
     "jest": "^24.8.0",
     "jest-dom": "^3.5.0",
     "jest-extended": "^0.11.1",
-    "karma": "^3.0.0",
-    "karma-chrome-launcher": "^2.0.0",
-    "karma-jasmine": "^1.0.2",
     "prettier": "^1.18.2",
     "pretty-quick": "^1.11.1"
   },
@@ -36,7 +30,7 @@
     ]
   },
   "scripts": {
-    "test": "./node_modules/karma/bin/karma start karma.conf.js",
+    "test": "jest",
     "lint": "eslint src/main/webapp/resources/js/*.js",
     "format": "prettier --write 'src/main/webapp/resources/js/*.js'"
   },

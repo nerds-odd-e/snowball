@@ -1,14 +1,14 @@
-var addContactFunctions = require("../../../main/webapp/resources/js/addContact.js");
 var { wait } = require("@testing-library/dom");
+var addContactFunctions = require("../../../main/webapp/resources/js/addContact.js");
 
 describe('isChange function',function(){
 	
   it('should return true when pass blank value', function() {
-	  expect(addContactFunctions.isChange("  ")).toBe(false);
+	  expect(addContactFunctions.isChangeExp("  ")).toBe(false);
   });
   
   it('should return false when pass not blank value',function() {
-	   expect(addContactFunctions.isChange("mail@mail.com")).toBe(true);
+	   expect(addContactFunctions.isChangeExp("mail@mail.com")).toBe(true);
  });
 });
 
@@ -30,14 +30,14 @@ describe('checkAddInputElement function', function(){
 	});
 
 	it('should disable add contact button when add contact field is changed',function(){
-		addContactFunctions.checkAddInputElement();
+		addContactFunctions.checkAddInputElementExp();
         expect(document.getElementById("add_button").disabled).toBe(true);
 	});
 	
 	it('should enable add contact button when field is not changed',function(){
         document.getElementById("email").value = "mail@mail.com";
         
-        addContactFunctions.checkAddInputElement();
+        addContactFunctions.checkAddInputElementExp();
         
         expect(document.getElementById("add_button").disabled).toBe(false);
 	});

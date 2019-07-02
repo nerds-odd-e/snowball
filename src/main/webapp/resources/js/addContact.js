@@ -1,5 +1,4 @@
 $(document).ready(function() {
-
 	disableAddButton();
 
 	$("#email").keyup(function() {
@@ -26,8 +25,7 @@ function disableAddButton() {
 }
 
 function checkAddInputElement() {
-
-	if (this.isChange($("#email").val())) {
+	if (isChange($("#email").val())) {
 		enableAddButton();
 	} else {
 		disableAddButton();
@@ -37,3 +35,8 @@ function checkAddInputElement() {
 function isChange(value) {
 	return value.replace(/^\s+|\s+$/gm,'') !== "";
 }
+
+module.exports = {
+  checkAddInputElementExp: checkAddInputElement,
+  isChangeExp: isChange
+};
