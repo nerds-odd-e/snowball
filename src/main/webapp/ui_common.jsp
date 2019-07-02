@@ -47,6 +47,9 @@
 
                 <ul><li><a href="/category/question_add_category.jsp" id="add_category_button"><span
                                        class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Category</a></li>
+                      <li><a id="add_question" href="/onlinetest/add_question.jsp"><span
+                                          class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                                          Add Question</a></li>
                       </ul>
 
 
