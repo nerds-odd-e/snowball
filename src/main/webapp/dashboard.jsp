@@ -28,6 +28,9 @@
                     <form name="onlinetest" id="onlinetest" method="get" action="/onlinetest/launchQuestion">
                         <button type="submit" class="btn btn-default" id="start_button">Start Test</button>
                     </form>
+                     <form name="practice" id="practice" method="get" action="/launchPractice">
+                                            <button type="submit" class="btn btn-default" id="start_practice_button">Start Practice</button>
+                                        </form>
                 </div>
             </div>
             <div class="row">

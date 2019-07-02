@@ -6,6 +6,7 @@ Feature:
     And there is a question category "Tech"
     And there is a question category "Team"
 
+    @now
   Scenario: Start test with all the categories
     Given there is one question exist in the system
     And I'm on the category selection page

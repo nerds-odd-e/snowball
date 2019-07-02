@@ -46,7 +46,7 @@ public class QuestionController extends AppController {
         dispatch.forward(req, resp);
     }
 
-    private String getRedirectPageName(boolean moreQuestionsExist) {
+    public String getRedirectPageName(boolean moreQuestionsExist) {
         String redirectPageName = "/onlinetest/end_of_test.jsp";
         if (moreQuestionsExist) {
             redirectPageName = "/onlinetest/question.jsp";

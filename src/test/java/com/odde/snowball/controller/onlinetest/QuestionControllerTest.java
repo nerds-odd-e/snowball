@@ -257,7 +257,18 @@ public class QuestionControllerTest {
 
         assertEquals(optionIds.get(0), onlineTest.answers.get(0).getSelectedOptionIds().get(0));
     }
-
+    @Test
+    public void getRedirectPageNameTestWhenNoMoreQuestion(){
+        String actual = controller.getRedirectPageName(false);
+        String expected = "/onlinetest/end_of_test.jsp";
+        assertEquals(expected,actual);
+    }
+    @Test
+    public void getRedirectPageNameTestWhenMoreQuestions(){
+        String actual = controller.getRedirectPageName(true);
+        String expected = "/onlinetest/question.jsp";
+        assertEquals(expected,actual);
+    }
     public static String getFirstOptionId(Question question) {
         Collection<QuestionOption> options = question.options();
         return options.stream().findFirst().get().getStringId();

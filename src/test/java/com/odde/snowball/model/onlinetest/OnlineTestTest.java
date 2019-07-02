@@ -228,6 +228,7 @@ public class OnlineTestTest {
         OnlineTest onlineTest = new OnlineTest(1);
         assertEquals(onlineTest.getTestType(), TestType.OnlineTest);
     }
+
     private void mockQuestion(int numberOfQuestion, ObjectId category) {
         IntStream.range(0, numberOfQuestion).forEach(index -> new Question("desc" + index, "adv" + index, category, false, false).save());
     }
