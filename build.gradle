@@ -59,7 +59,8 @@ task cucumber {
 
 task cucumberNow {
     group "verification"
-    dependsOn assemble, compileTestJava
+    dependsOn assemble, compileTestJava, "appBeforeIntegrationTest"
+    finalizedBy "appAfterIntegrationTest"
     doLast {
         javaexec {
             main = "cucumber.api.cli.Main"
