@@ -1,5 +1,6 @@
 package com.odde.snowball.model.onlinetest;
 
+import com.odde.snowball.enumeration.TestType;
 import com.odde.snowball.model.base.Entity;
 
 import java.time.Duration;
@@ -17,9 +18,20 @@ public class OnlineTest {
     private Map<String, Integer> categoryCorrectAnswerCount;
     public List<CategoryTestResult> categoryTestResults;
     public List<Answer> answers;
+    private TestType testType;
 
     public OnlineTest(int questionCount) {
         questions = new QuestionCollection(repo(Question.class).findAll()).generateQuestionList(repo(Category.class).findAll(), questionCount);
+        testType = TestType.OnlineTest;
+        numberOfAnsweredQuestions = 0;
+        categoryCorrectAnswerCount = new HashMap<>();
+        categoryTestResults = new ArrayList<>();
+        answers = new ArrayList<>();
+    }
+
+    public OnlineTest(int questionCount, int cycleId) {
+        questions = new QuestionCollection(repo(Question.class).findAll()).generateQuestionList(repo(Category.class).findBy("name", "Retro"), 1);
+        testType = TestType.Practice;
         numberOfAnsweredQuestions = 0;
         categoryCorrectAnswerCount = new HashMap<>();
         categoryTestResults = new ArrayList<>();
@@ -179,4 +191,7 @@ public class OnlineTest {
         return new TestResult(questions, answers);
     }
 
+    public TestType getTestType() {
+        return testType;
+    }
 }

@@ -1,6 +1,7 @@
 package com.odde.snowball.model.onlinetest;
 
 import com.odde.TestWithDB;
+import com.odde.snowball.enumeration.TestType;
 import org.bson.types.ObjectId;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -217,6 +218,16 @@ public class OnlineTestTest {
         assertEquals(80, correctRate);
     }
 
+    @Test
+    public void onlineTestObjectShouldHaveTestTypeAttributePractice() {
+        OnlineTest onlineTest = new OnlineTest(1, 1);
+        assertEquals(onlineTest.getTestType(), TestType.Practice);
+    }
+    @Test
+    public void onlineTestObjectShouldHaveTestTypeAttributeOnlineTest() {
+        OnlineTest onlineTest = new OnlineTest(1);
+        assertEquals(onlineTest.getTestType(), TestType.OnlineTest);
+    }
     private void mockQuestion(int numberOfQuestion, ObjectId category) {
         IntStream.range(0, numberOfQuestion).forEach(index -> new Question("desc" + index, "adv" + index, category, false, false).save());
     }
