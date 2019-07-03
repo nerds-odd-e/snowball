@@ -11,6 +11,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static com.odde.snowball.model.base.Repository.repo;
 import static org.junit.Assert.*;
 
 @RunWith(TestWithDB.class)
@@ -220,7 +221,9 @@ public class OnlineTestTest {
 
     @Test
     public void onlineTestObjectShouldHaveTestTypeAttributePractice() {
-        OnlineTest onlineTest = new OnlineTest(1, 1);
+        List<Question> notAnswered = repo(Question.class).findBy("answered", false);
+        List<Question> questions = new QuestionCollection(notAnswered).generateQuestionList(repo(Category.class).findBy("name", "Retro"), 1);
+        OnlineTest onlineTest = OnlineTest.getOnlineTest(questions);
         assertEquals(onlineTest.getTestType(), TestType.Practice);
     }
     @Test

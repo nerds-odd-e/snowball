@@ -21,21 +21,22 @@ public class OnlineTest {
     private TestType testType;
 
     public OnlineTest(int questionCount) {
-        questions = new QuestionCollection(repo(Question.class).findAll()).generateQuestionList(repo(Category.class).findAll(), questionCount);
+        this(new QuestionCollection(repo(Question.class).findAll()).generateQuestionList(repo(Category.class).findAll(), questionCount));
         testType = TestType.OnlineTest;
+    }
+
+    public OnlineTest(List<Question>  questions) {
+        this.questions = questions;
         numberOfAnsweredQuestions = 0;
         categoryCorrectAnswerCount = new HashMap<>();
         categoryTestResults = new ArrayList<>();
         answers = new ArrayList<>();
     }
 
-    public OnlineTest(int questionCount, int cycleId) {
-        questions = new QuestionCollection(repo(Question.class).findBy("answered", false)).generateQuestionList(repo(Category.class).findBy("name", "Retro"), 1);
-        testType = TestType.Practice;
-        numberOfAnsweredQuestions = 0;
-        categoryCorrectAnswerCount = new HashMap<>();
-        categoryTestResults = new ArrayList<>();
-        answers = new ArrayList<>();
+    public static OnlineTest getOnlineTest(List<Question> questions) {
+        OnlineTest onlineTest = new OnlineTest(questions);
+        onlineTest.testType = TestType.Practice;
+        return onlineTest;
     }
 
     public Question getPreviousQuestion() {

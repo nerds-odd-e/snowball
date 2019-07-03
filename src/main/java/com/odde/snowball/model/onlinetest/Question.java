@@ -87,7 +87,7 @@ public class Question extends Entity<Question> {
         new QuestionOption(optionText, true, getId()).save();
     }
 
-    public void answeredBy(ObjectId id) {
+    public void answeredBy(ObjectId userId) {
         this.answered=true;
         this.save();
     }
