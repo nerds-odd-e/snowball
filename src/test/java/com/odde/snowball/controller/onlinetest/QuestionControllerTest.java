@@ -1,6 +1,7 @@
 package com.odde.snowball.controller.onlinetest;
 
 import com.odde.TestWithDB;
+import com.odde.snowball.enumeration.TestType;
 import com.odde.snowball.model.onlinetest.*;
 import org.bson.types.ObjectId;
 import org.junit.Before;
@@ -266,6 +267,19 @@ public class QuestionControllerTest {
     @Test
     public void getRedirectPageNameTestWhenMoreQuestions(){
         String actual = controller.getRedirectPageName(true);
+        String expected = "/onlinetest/question.jsp";
+        assertEquals(expected,actual);
+    }
+
+    @Test
+    public void getRedirectPageNameTestWhenNoMoreQuestionWhenPractice(){
+        String actual = controller.getRedirectPageName(false, TestType.Practice);
+        String expected = "/practice/completed_practice.jsp";
+        assertEquals(expected,actual);
+    }
+    @Test
+    public void getRedirectPageNameTestWhenMoreQuestionsWhenPractice(){
+        String actual = controller.getRedirectPageName(true,TestType.Practice);
         String expected = "/onlinetest/question.jsp";
         assertEquals(expected,actual);
     }

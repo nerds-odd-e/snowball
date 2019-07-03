@@ -1,6 +1,7 @@
 package com.odde.snowball.controller.onlinetest;
 
 import com.odde.snowball.controller.AppController;
+import com.odde.snowball.enumeration.TestType;
 import com.odde.snowball.model.onlinetest.OnlineTest;
 
 import javax.servlet.RequestDispatcher;
@@ -22,7 +23,7 @@ public class QuestionController extends AppController {
         String[] answeredOptionIds = req.getParameterValues("optionId");
 
         if (req.getParameterValues("optionId") == null) {
-            resp.sendRedirect(getRedirectPageName(true));
+            resp.sendRedirect(getRedirectPageName(true,onlineTest.getTestType()));
             return;
         }
 
@@ -31,16 +32,19 @@ public class QuestionController extends AppController {
         session.setAttribute("alertMsg", alertMsg);
 
         if (!lastDoneQuestionId.equals(String.valueOf(onlineTest.getNumberOfAnsweredQuestions()))) {
-            resp.sendRedirect(getRedirectPageName(onlineTest.hasNextQuestion()));
+            resp.sendRedirect(getRedirectPageName(onlineTest.hasNextQuestion(),onlineTest.getTestType()));
             return;
         }
 
 
         if (onlineTest.answer(answeredOptionIds)) {
-            resp.sendRedirect(getRedirectPageName(onlineTest.hasNextQuestion()));
+            resp.sendRedirect(getRedirectPageName(onlineTest.hasNextQuestion(),onlineTest.getTestType()));
             return;
         }
-
+        if (onlineTest.getTestType() == TestType.Practice) {
+            resp.sendRedirect(getRedirectPageName(onlineTest.hasNextQuestion(),onlineTest.getTestType()));
+            return;
+        }
         req.setAttribute("selectedOption", new ArrayList(Arrays.asList(answeredOptionIds)));
         RequestDispatcher dispatch = req.getRequestDispatcher("/onlinetest/advice.jsp");
         dispatch.forward(req, resp);
@@ -51,6 +55,16 @@ public class QuestionController extends AppController {
         if (moreQuestionsExist) {
             redirectPageName = "/onlinetest/question.jsp";
         }
+        return redirectPageName;
+    }
+
+    public String getRedirectPageName(boolean moreQuestionsExist, TestType practice) {
+        if (moreQuestionsExist) {
+            return "/onlinetest/question.jsp";
+        }
+        String redirectPageName = "/onlinetest/end_of_test.jsp";
+        if( practice == TestType.Practice)
+            redirectPageName = "/practice/completed_practice.jsp";
         return redirectPageName;
     }
 }
