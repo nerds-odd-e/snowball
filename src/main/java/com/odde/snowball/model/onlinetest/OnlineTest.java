@@ -2,6 +2,7 @@ package com.odde.snowball.model.onlinetest;
 
 import com.odde.snowball.enumeration.TestType;
 import com.odde.snowball.model.base.Entity;
+import com.odde.snowball.model.practice.Record;
 import org.bson.types.ObjectId;
 
 import java.time.Duration;
@@ -40,6 +41,22 @@ public class OnlineTest {
         OnlineTest onlineTest = new OnlineTest(questions);
         onlineTest.testType = TestType.Practice;
         return onlineTest;
+    }
+
+    public static Question getQuestionsByRecords(ObjectId userId) {
+        Collection<Record> records= new Record().fetchRecordsByUserId(userId);
+        ArrayList<Question> questions = new ArrayList<Question>() {
+        };
+        if (records.size()==0){
+            Question question = repo(Question.class).findAll().get(0);
+            Record newRecord = new Record(userId, question.getId(),new Date(),0);
+            newRecord.save();
+            return question;
+        }
+
+            records.forEach(x->questions.add(repo(Question.class).findById(x.getQuestionId())));
+
+        return questions.isEmpty()?null:questions.get(0);
     }
 
     public Question getPreviousQuestion() {
