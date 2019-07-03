@@ -76,4 +76,8 @@ public class Question extends Entity<Question> {
     public void createCorrectOption(String optionText) {
         new QuestionOption(optionText, true, getId()).save();
     }
+
+    public void answeredBy(ObjectId id) {
+
+    }
 }

@@ -2,25 +2,24 @@ package com.odde.snowball.controller.onlinetest;
 
 import com.odde.TestWithDB;
 import com.odde.snowball.controller.PracticeController;
-import com.odde.snowball.model.onlinetest.*;
-import org.bson.types.ObjectId;
+import com.odde.snowball.model.User;
+import com.odde.snowball.model.base.Entity;
+import com.odde.snowball.model.onlinetest.Category;
+import com.odde.snowball.model.onlinetest.OnlineTest;
+import com.odde.snowball.model.onlinetest.Question;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.mockito.Mockito.*;
 
 @RunWith(TestWithDB.class)
 public class PracticeControllerTest {
@@ -39,11 +38,13 @@ public class PracticeControllerTest {
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
     }
+
     @Test
     public void redirectToAddQuestionPageIfNoQuestionsInOnlineTest() throws Exception {
-        controller.doGet(request,response);
+        controller.doGet(request, response);
         assertEquals("/practice/completed_practice.jsp", response.getRedirectedUrl());
     }
+
     @Test
     public void redirect_to_question_jsp()
             throws Exception {
@@ -52,9 +53,31 @@ public class PracticeControllerTest {
         assertEquals("/onlinetest/question.jsp", response.getRedirectedUrl());
     }
 
-    private void mockQuestion() {
+    private List<Question> mockQuestion() {
         Category cat = Category.create("Retro");
-        IntStream.range(0, 1).forEach(index -> new Question("desc" + index, "adv" + index, cat.getId(), false, false).save());
+        return IntStream.range(0, 1)
+                .mapToObj(index1 -> new Question("desc" + index1, "adv" + index1, cat.getId(), false, false))
+                .map(Entity::save)
+                .collect(Collectors.toList());
+    }
+
+    @Test
+    public void userMustSeeTheQuestionIfSheHasNotDoneItBefore() throws IOException {
+        mockQuestion();
+        controller.doGet(request, response);
+        OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
+        assertThat(onlineTest.getNumberOfQuestions()).isEqualTo(1);
+    }
+
+    @Test
+    public void userMustNotSeeTheQuestionIfSheHasDoneItOnTheSameDay() throws IOException {
+        User user = new User().save();
+        request.getSession().setAttribute("userId", user.getId());
+        List<Question> questions = mockQuestion();
+        questions.get(0).answeredBy(user.getId());
+        controller.doGet(request, response);
+        OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
+        assertThat(onlineTest.getNumberOfQuestions()).isEqualTo(0);
     }
 
 }

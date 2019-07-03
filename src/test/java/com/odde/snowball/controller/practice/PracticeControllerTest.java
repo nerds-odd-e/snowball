@@ -1,6 +1,7 @@
 package com.odde.snowball.controller.practice;
 
 import com.odde.TestWithDB;
+import com.odde.snowball.model.onlinetest.Question;
 import com.odde.snowball.model.practice.Practice;
 import org.bson.types.ObjectId;
 import org.junit.Assert;
@@ -10,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -32,12 +34,14 @@ public class PracticeControllerTest {
         practice.save();
     }
 
+
     @Before
-    public void setUpMockService() {
+    public void setUpMocks() {
         controller = new PracticeController();
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
         request.getSession().setAttribute("userId", userId);
+
     }
 
     @Test
@@ -54,5 +58,9 @@ public class PracticeControllerTest {
         assertNotNull(practice);
     }
 
+    @Test
+    public void testDoGet() throws IOException {
+        controller.doGet(request, response);
+    }
 
 }
