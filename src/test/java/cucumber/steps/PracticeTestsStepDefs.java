@@ -18,7 +18,6 @@ public class PracticeTestsStepDefs {
         driver.clickButtonByName("start_practice_button");
     }
 
-
     @When("I answer {int} question correctly")
     public void iAnswerQuestionCorrectly(int count) {
         for (int i = 0; i < count; i++) {
@@ -40,5 +39,10 @@ public class PracticeTestsStepDefs {
     @Given("the user chooses the question category {string}")
     public void theUserChoosesTheQuestionCategory(String category) {
         Category.create(category);
+    }
+
+    @Given("User is taking a practiceTest")
+    public void userIsTakingAPracticeTest() {
+        site.visit("launchPractice?practice_category=Retro&question_count=2");
     }
 }

@@ -62,7 +62,7 @@
                 <li><a id="start_test" href="/onlinetest/question_category.jsp"><span
                     class="glyphicon glyphicon-file" aria-hidden="true"></span>
                     Start Test</a></li>
-                <li><a id="start_practice" href="/practice/practice.jsp"><span
+                <li><a id="start_practice" href="/launchPractice"><span
                     class="glyphicon glyphicon-file" aria-hidden="true"></span>
                     Start Practice</a></li>
             </ul>

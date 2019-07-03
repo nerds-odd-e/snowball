@@ -41,7 +41,6 @@ public class QuestionStep {
         driver.expectPageToContainText("Login Massive Mailer");
     }
 
-
     @Given("^Add a question \"([^\"]*)\" with dummy options and chosen category \"([^\"]*)\"$")
     public void add_a_question(String description, String category) {
         add_a_question(description, category, "");
@@ -55,7 +54,7 @@ public class QuestionStep {
                 .withWrongOption("Drink")
                 .withWrongOption("Country")
                 .withWrongOption("Animal")
-                .withCorrectOption("None of the above")
+                .withCorrectOption("correctOption")
                 .please();
     }
 
@@ -133,7 +132,7 @@ public class QuestionStep {
         driver.expectPageToContainText("Question");
     }
 
-    @Given("^User answered (\\d+) questions correctly$")
+    @Given("^User answered (\\d+) questions? correctly$")
     public void user_answered_correctly_the(int answeredCount) {
         this.numberOfCorrectAnsweredQuestion = answeredCount;
         for (int i = 0; i < answeredCount; ++i) {

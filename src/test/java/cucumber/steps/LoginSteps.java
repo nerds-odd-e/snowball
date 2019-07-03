@@ -33,8 +33,8 @@ public class LoginSteps {
         user.save();
     }
 
-    @Given("^There are users as bellow$")
-    public void there_are_users_as_bellow(Map<String, String> userTable) {
+    @Given("^There are users as below$")
+    public void there_are_users_as_below(Map<String, String> userTable) {
         userTable.forEach((key, value) -> {
             User user = new User(key);
             user.setupPassword(value);

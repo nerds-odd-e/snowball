@@ -2,7 +2,6 @@
 Feature:
   User can practice questions using Spaced Repetition.
 
-
   Background:
     Given the user chooses the question category "Retro"
     And Add a question "Q1" with dummy options and chosen category "Retro"
@@ -43,18 +42,21 @@ Feature:
     Given User has answered all the due questions today
     Then User should not see any questions in the practice page
 
-      @developing
-  Scenario: User can practice question on interval
-   Given There are users as bellow
-      | mary@example.com | abcd1234 |
-    When I login with "mary@example.com" and "abcd1234"
-    And  I start a practice with 1 question
-    When I answer 1 question correctly
-    Then I should see "You have finished your practice for today"
-    When I start a fixed repetition practice with 1 question again on the same day
-    Then I should see "You have finished your practice for today"
+  @now
+  Scenario: User can practice question
+   Given User is taking a practiceTest
+    When User answered 1 questions correctly
+    Then User should see "You have finished your practice for today"
 
-    @developing
+  @developing
+  Scenario: No questions should be shown if questions have been answered today
+    Given User is taking a practiceTest
+    When User answered 1 question correctly
+    Then User should see "You have finished your practice for today"
+    When User start a fixed repetition practice with 1 question again on the same day
+    Then User should see "You have finished your practice for today"
+
+  @developing
   Scenario: User repeats the fixed interval practice
     Given There is a user with "mary@example.com" but password initialize is undone
     When I login with "mary@example.com" and "abcd1234"
