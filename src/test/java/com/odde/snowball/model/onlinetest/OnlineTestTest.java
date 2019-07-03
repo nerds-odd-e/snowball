@@ -2,6 +2,7 @@ package com.odde.snowball.model.onlinetest;
 
 import com.odde.TestWithDB;
 import com.odde.snowball.enumeration.TestType;
+import com.odde.snowball.model.User;
 import org.bson.types.ObjectId;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -221,9 +222,8 @@ public class OnlineTestTest {
 
     @Test
     public void onlineTestObjectShouldHaveTestTypeAttributePractice() {
-        List<Question> notAnswered = repo(Question.class).findBy("answered", false);
-        List<Question> questions = new QuestionCollection(notAnswered).generateQuestionList(repo(Category.class).findBy("name", "Retro"), 1);
-        OnlineTest onlineTest = OnlineTest.getOnlineTest(questions);
+        User user = new User();
+        OnlineTest onlineTest = OnlineTest.getOnlineTest(user.getId());
         assertEquals(onlineTest.getTestType(), TestType.Practice);
     }
     @Test

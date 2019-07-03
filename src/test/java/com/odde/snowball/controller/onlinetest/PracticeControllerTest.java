@@ -31,12 +31,15 @@ public class PracticeControllerTest {
     private Category scrum = Category.create("Scrum");
     private Category tech = Category.create("Tech");
     private Category team = Category.create("Team");
+    private User user1 = new User().save();
+    private User user2 = new User().save();
 
     @Before
     public void setUpMockService() {
         controller = new PracticeController();
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
+        request.getSession().setAttribute("userId", user1.getId());
     }
 
     @Test
@@ -71,21 +74,16 @@ public class PracticeControllerTest {
 
     @Test
     public void userMustNotSeeTheQuestionIfSheHasDoneItOnTheSameDay() throws IOException {
-        User user = new User().save();
         List<Question> questions = mockQuestion();
-        questions.get(0).answeredBy(user.getId());
-        request.getSession().setAttribute("userId", user.getId());
+        questions.get(0).answeredBy(user1.getId());
         controller.doGet(request, response);
         assertEquals("/practice/completed_practice.jsp", response.getRedirectedUrl());
     }
 
     @Test
-    public void userMustNotSeeTheQuestionIfSheHasDoneItOnTheSameDaywertwer() throws IOException {
-        User user1 = new User().save();
-        User user2 = new User().save();
+    public void userMustSeeQuestionEvenIfAnsweredByAnotherUser() throws IOException {
         List<Question> questions = mockQuestion();
         questions.get(0).answeredBy(user2.getId());
-        request.getSession().setAttribute("userId", user1.getId());
         controller.doGet(request, response);
         OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
         assertThat(onlineTest.getNumberOfQuestions()).isEqualTo(1);

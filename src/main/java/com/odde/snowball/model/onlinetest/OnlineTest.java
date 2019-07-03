@@ -2,6 +2,7 @@ package com.odde.snowball.model.onlinetest;
 
 import com.odde.snowball.enumeration.TestType;
 import com.odde.snowball.model.base.Entity;
+import org.bson.types.ObjectId;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -33,7 +34,9 @@ public class OnlineTest {
         answers = new ArrayList<>();
     }
 
-    public static OnlineTest getOnlineTest(List<Question> questions) {
+    public static OnlineTest getOnlineTest(ObjectId userId) {
+        List<Question> notAnswered = repo(Question.class).findAll().stream().filter(q->!q.getAnswered().contains(userId)).collect(Collectors.toList());
+        List<Question> questions = new QuestionCollection(notAnswered).generateQuestionList(repo(Category.class).findBy("name", "Retro"), 1);
         OnlineTest onlineTest = new OnlineTest(questions);
         onlineTest.testType = TestType.Practice;
         return onlineTest;

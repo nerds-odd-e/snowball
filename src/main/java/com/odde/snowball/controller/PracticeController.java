@@ -22,9 +22,7 @@ public class PracticeController extends AppController {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession(true);
         ObjectId userId = (ObjectId) session.getAttribute("userId");
-        List<Question> notAnswered = repo(Question.class).findAll().stream().filter(q->!q.getAnswered().contains(userId)).collect(Collectors.toList());
-        List<Question> questions = new QuestionCollection(notAnswered).generateQuestionList(repo(Category.class).findBy("name", "Retro"), 1);
-        OnlineTest onlineTest = OnlineTest.getOnlineTest(questions);
+        OnlineTest onlineTest = OnlineTest.getOnlineTest(userId);
         if(!onlineTest.hasNextQuestion()){
             resp.sendRedirect("/practice/completed_practice.jsp");
             return;
