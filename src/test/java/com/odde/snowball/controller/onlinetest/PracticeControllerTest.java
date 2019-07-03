@@ -76,8 +76,7 @@ public class PracticeControllerTest {
         List<Question> questions = mockQuestion();
         questions.get(0).answeredBy(user.getId());
         controller.doGet(request, response);
-        OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
-        assertThat(onlineTest.getNumberOfQuestions()).isEqualTo(0);
+        assertEquals("/practice/completed_practice.jsp", response.getRedirectedUrl());
     }
 
 }

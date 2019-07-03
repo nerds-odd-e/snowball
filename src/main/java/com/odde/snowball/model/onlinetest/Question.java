@@ -31,6 +31,16 @@ public class Question extends Entity<Question> {
     private ObjectId categoryId;
     private boolean isMultiQuestion;
     private boolean isApproved;
+    private boolean answered;
+
+    public Question(String description, String advice, ObjectId categoryId, boolean isMultiQuestion, boolean isApproved) {
+        this.description = description;
+        this.advice = advice;
+        this.categoryId = categoryId;
+        this.isMultiQuestion = isMultiQuestion;
+        this.isApproved = isApproved;
+        this.answered = false;
+    }
 
     public Category category() {
         return repo(Category.class).findById(categoryId);
@@ -78,6 +88,7 @@ public class Question extends Entity<Question> {
     }
 
     public void answeredBy(ObjectId id) {
-
+        this.answered=true;
+        this.save();
     }
 }

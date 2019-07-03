@@ -30,7 +30,7 @@ public class OnlineTest {
     }
 
     public OnlineTest(int questionCount, int cycleId) {
-        questions = new QuestionCollection(repo(Question.class).findAll()).generateQuestionList(repo(Category.class).findBy("name", "Retro"), 1);
+        questions = new QuestionCollection(repo(Question.class).findBy("answered", false)).generateQuestionList(repo(Category.class).findBy("name", "Retro"), 1);
         testType = TestType.Practice;
         numberOfAnsweredQuestions = 0;
         categoryCorrectAnswerCount = new HashMap<>();
