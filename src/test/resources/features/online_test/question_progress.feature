@@ -3,9 +3,9 @@ Feature:
 
   Background:
     Given there is a question category "Scrum"
-    And Add a question "What is scrum?" with dummy options
-    And Add a question "What is Scrum Master?" with dummy options
-    And Add a question "What is Product Owner?" with dummy options
+    And Add a question "What is scrum?" with dummy options and chosen category "Scrum"
+    And Add a question "What is Scrum Master?" with dummy options and chosen category "Scrum"
+    And Add a question "What is Product Owner?" with dummy options and chosen category "Scrum"
 
   Scenario: Displaying the question progress ( 1 of 3 )
     And User is on the first question

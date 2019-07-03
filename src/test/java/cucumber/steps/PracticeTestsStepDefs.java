@@ -1,6 +1,8 @@
 package cucumber.steps;
 
+import com.odde.snowball.model.onlinetest.Category;
 import cucumber.api.java.en.And;
+import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.steps.driver.WebDriverWrapper;
@@ -19,21 +21,24 @@ public class PracticeTestsStepDefs {
 
     @When("I answer {int} question correctly")
     public void iAnswerQuestionCorrectly(int count) {
-        //TODO Test after implementing questions and answer page
-//        for (int i = 0; i < count; i++) {
-//            driver.clickRadioButton("None of the above");
-//            driver.click("#answer");
-//        }
+        for (int i = 0; i < count; i++) {
+            driver.clickRadioButton("None of the above");
+            driver.click("#answer");
+        }
     }
 
     @Then("I should see {string}")
     public void iShouldSee(String expectedString) {
-//        driver.expectPageToContainText(expectedString);
-        //TODO Check after implementing the "Test Complete" page
+        driver.expectPageToContainText(expectedString);
     }
 
     @When("I start a fixed repetition practice with {int} question again on the same day")
     public void iStartAFixedRepetitionPracticeWithQuestionAgainOnTheSameDay(int arg0) {
         //TODO change db date of previous entry to day before
+    }
+
+    @Given("the user chooses the question category {string}")
+    public void theUserChoosesTheQuestionCategory(String category) {
+        Category.create(category);
     }
 }

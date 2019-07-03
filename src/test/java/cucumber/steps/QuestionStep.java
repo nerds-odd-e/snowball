@@ -42,15 +42,15 @@ public class QuestionStep {
     }
 
 
-    @Given("^Add a question \"([^\"]*)\" with dummy options$")
-    public void add_a_question(String description) {
-        add_a_question(description, "");
+    @Given("^Add a question \"([^\"]*)\" with dummy options and chosen category \"([^\"]*)\"$")
+    public void add_a_question(String description, String category) {
+        add_a_question(description, category, "");
     }
 
-    @Given("^Add a question \"([^\"]*)\" with dummy options and advice \"([^\"]*)\"$")
-    public void add_a_question(String description, String advice) {
+    @Given("^Add a question \"([^\"]*)\" with dummy options and chosen category \"([^\"]*)\" and advice \"([^\"]*)\"$")
+    public void add_a_question(String description, String category, String advice) {
         new QuestionBuilder()
-                .aQuestion(description, advice, categoryBuilder.categoryByName("Scrum"))
+                .aQuestion(description, advice, categoryBuilder.categoryByName(category))
                 .withWrongOption("Food")
                 .withWrongOption("Drink")
                 .withWrongOption("Country")

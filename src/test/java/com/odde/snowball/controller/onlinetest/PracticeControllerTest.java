@@ -40,6 +40,8 @@ public class PracticeControllerTest {
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
         request.getSession().setAttribute("userId", user1.getId());
+        request.setParameter("practice_category","Retro");
+        request.setParameter("question_count", "1");
     }
 
     @Test

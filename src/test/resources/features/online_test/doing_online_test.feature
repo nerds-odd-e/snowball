@@ -5,7 +5,7 @@ Feature:
     Given there is a question category "Scrum"
 
   Scenario: Displaying the question
-    Given Add a question "What is scrum?" with dummy options
+    Given Add a question "What is scrum?" with dummy options and chosen category "Scrum"
     And User is on the first question
     And User should see a question and options
       | description | What is scrum?    |
@@ -27,7 +27,7 @@ Feature:
       | correctOption   | Question     |
 
   Scenario Outline: advice page should include clear feedback
-    Given Add a question "スクラムとは何ですか？" with dummy options and advice "Read the Scrum Guide again, please"
+    Given Add a question "スクラムとは何ですか？" with dummy options and chosen category "Scrum" and advice "Read the Scrum Guide again, please"
     And User is on the first question
     When User chooses the "<incorrect option>" answer
     And User clicks the answer button

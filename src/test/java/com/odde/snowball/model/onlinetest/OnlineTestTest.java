@@ -223,7 +223,7 @@ public class OnlineTestTest {
     @Test
     public void onlineTestObjectShouldHaveTestTypeAttributePractice() {
         User user = new User();
-        OnlineTest onlineTest = OnlineTest.getOnlineTest(user.getId());
+        OnlineTest onlineTest = OnlineTest.getOnlineTest(user.getId(), "Retro");
         assertEquals(onlineTest.getTestType(), TestType.Practice);
     }
     @Test

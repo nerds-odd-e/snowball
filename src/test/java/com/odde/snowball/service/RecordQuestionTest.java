@@ -31,7 +31,7 @@ public class RecordQuestionTest {
     public void whenNoRecordInsertNewDafaultRecordTest(){
         User user = createUser();
         ObjectId userid = user.getId();
-        OnlineTest onlineTest = OnlineTest.getOnlineTest(userid);
+        OnlineTest onlineTest = OnlineTest.getOnlineTest(userid, "Retro");
         Question firstQuestion = createQuestionWithOptions(retro.getId());
         Question question = onlineTest.getQuestionsByRecords(userid);
         Assert.assertEquals(firstQuestion,question);

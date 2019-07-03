@@ -9,7 +9,7 @@
     <jsp:body>
 
         <div class="container-fluid">
-            <h1 id="title">You have completed the practice</h1>
+            <h1 id="title">You have finished your practice for today</h1>
         </div>
     </jsp:body>
 </t:with_side_menu>

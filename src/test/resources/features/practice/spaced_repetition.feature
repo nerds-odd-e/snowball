@@ -2,11 +2,12 @@
 Feature:
   User can practice questions using Spaced Repetition.
 
+
   Background:
-    Given there is a question category "Scrum"
-    And Add a question "Q1" with dummy options
-    And Add a question "Q2" with dummy options
-    And Add a question "Q3" with dummy options
+    Given the user chooses the question category "Retro"
+    And Add a question "Q1" with dummy options and chosen category "Retro"
+    And Add a question "Q3" with dummy options and chosen category "Retro"
+    And Add a question "Q2" with dummy options and chosen category "Retro"
 
 @developing
   Scenario: User can practise using spaced repetition of interval 1,3,7 days
@@ -42,7 +43,7 @@ Feature:
     Given User has answered all the due questions today
     Then User should not see any questions in the practice page
 
-      @now
+      @developing
   Scenario: User can practice question on interval
    Given There are users as bellow
       | mary@example.com | abcd1234 |
