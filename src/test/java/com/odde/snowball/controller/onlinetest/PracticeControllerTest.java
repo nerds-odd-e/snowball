@@ -56,9 +56,13 @@ public class PracticeControllerTest {
         assertEquals("/onlinetest/question.jsp", response.getRedirectedUrl());
     }
 
+
     private List<Question> mockQuestion() {
+        return mockQuestion(1);
+    }
+    private List<Question> mockQuestion(int num) {
         Category cat = Category.create("Retro");
-        return IntStream.range(0, 1)
+        return IntStream.range(0, num)
                 .mapToObj(index1 -> new Question("desc" + index1, "adv" + index1, cat.getId(), false, false))
                 .map(Entity::save)
                 .collect(Collectors.toList());
@@ -89,4 +93,12 @@ public class PracticeControllerTest {
         assertThat(onlineTest.getNumberOfQuestions()).isEqualTo(1);
     }
 
+    @Test
+    public void userMustSee2QuestionsIfThereAre2QuestionsDue() throws IOException {
+        List<Question> questions = mockQuestion(2);
+        questions.get(0).answeredBy(user2.getId());
+        controller.doGet(request, response);
+        OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
+        assertThat(onlineTest.getNumberOfQuestions()).isEqualTo(2);
+    }
 }
