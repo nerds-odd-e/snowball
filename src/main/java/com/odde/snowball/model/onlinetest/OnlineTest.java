@@ -21,6 +21,7 @@ public class OnlineTest {
     public List<CategoryTestResult> categoryTestResults;
     public List<Answer> answers;
     private TestType testType;
+    private LocalDate answeredTime;
 
     public OnlineTest(int questionCount) {
         this(new QuestionCollection(repo(Question.class).findAll()).generateQuestionList(repo(Category.class).findAll(), questionCount));
@@ -44,7 +45,7 @@ public class OnlineTest {
     }
 
     public static Question getQuestionsByRecords(ObjectId userId) {
-        Collection<Record> records = new Record().fetchRecordsByUserId(userId);
+        Collection<Record> records = Record.fetchRecordsByUserId(userId);
         ArrayList<Question> questions = new ArrayList<Question>() {
         };
         if (records.size() == 0) {
@@ -175,36 +176,34 @@ public class OnlineTest {
         categoryCorrectAnswerCount.put(categoryId, count + 1);
     }
 
-    public boolean answer(String[] answeredOptionIds) {
-
-        String categoryId = getCurrentQuestion().category().getStringId();
-        Answer answer = answerCurrentQuestion(Arrays.asList(answeredOptionIds));
-        boolean isCorrect = answer.isCorrect();
-        if (isCorrect) {
-            incrementCorrectAnswerCount();
-            incrementCategoryQuestionCount(categoryId);
-            incrementCategoryCorrectAnswerCount(categoryId);
-            return true;
-        }
-        return false;
-    }
-
     public List<CategoryTestResult> getFailedCategoryTestResults() {
         return categoryTestResults;
+    }
+
+    public Answer answerCurrentQuestion(String[] answeredOptionIds) {
+        return answerCurrentQuestion(Arrays.asList(answeredOptionIds));
     }
 
     public Answer answerCurrentQuestion(List<String> selectedOptionIds) {
         Answer answer = new Answer(getCurrentQuestion(), selectedOptionIds);
         answers.add(answer);
+        updateCacheIfCorrect(answer);
         addAnsweredQuestionNumber();
         return answer;
     }
 
-    private LocalDate answeredTime;
+    private void updateCacheIfCorrect(Answer answer) {
+        boolean isCorrect = answer.isCorrect();
+        if (isCorrect) {
+            String categoryId = getCurrentQuestion().category().getStringId();
+            incrementCorrectAnswerCount();
+            incrementCategoryQuestionCount(categoryId);
+            incrementCategoryCorrectAnswerCount(categoryId);
+        }
+    }
 
     public void recordAnswerWithTime(LocalDate answeredTime) {
         this.answeredTime = answeredTime;
-
     }
 
     public long getPassedDaysSinceAnswered() {

@@ -2,6 +2,7 @@ package com.odde.snowball.controller.onlinetest;
 
 import com.odde.snowball.controller.AppController;
 import com.odde.snowball.enumeration.TestType;
+import com.odde.snowball.model.onlinetest.Answer;
 import com.odde.snowball.model.onlinetest.OnlineTest;
 
 import javax.servlet.RequestDispatcher;
@@ -36,26 +37,14 @@ public class QuestionController extends AppController {
             return;
         }
 
-
-        if (onlineTest.answer(answeredOptionIds)) {
-            resp.sendRedirect(getRedirectPageName(onlineTest.hasNextQuestion(),onlineTest.getTestType()));
-            return;
-        }
-        if (onlineTest.getTestType() == TestType.Practice) {
+        Answer answer = onlineTest.answerCurrentQuestion(answeredOptionIds);
+        if (answer.isCorrect()) {
             resp.sendRedirect(getRedirectPageName(onlineTest.hasNextQuestion(),onlineTest.getTestType()));
             return;
         }
         req.setAttribute("selectedOption", new ArrayList(Arrays.asList(answeredOptionIds)));
         RequestDispatcher dispatch = req.getRequestDispatcher("/onlinetest/advice.jsp");
         dispatch.forward(req, resp);
-    }
-
-    public String getRedirectPageName(boolean moreQuestionsExist) {
-        String redirectPageName = "/onlinetest/end_of_test.jsp";
-        if (moreQuestionsExist) {
-            redirectPageName = "/onlinetest/question.jsp";
-        }
-        return redirectPageName;
     }
 
     public String getRedirectPageName(boolean moreQuestionsExist, TestType practice) {
