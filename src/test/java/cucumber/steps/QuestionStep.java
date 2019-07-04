@@ -41,9 +41,16 @@ public class QuestionStep {
         driver.expectPageToContainText("Login Massive Mailer");
     }
 
-    @Given("^Add a question \"([^\"]*)\" with dummy options and chosen category \"([^\"]*)\"$")
+    @Given("^Add a question \"([^\"]*)\" with dummy options and chosen category \"([^\"]*)\" and correct option$")
     public void add_a_question(String description, String category) {
-        add_a_question(description, category, "");
+        new QuestionBuilder()
+                .aQuestion(description, "", categoryBuilder.categoryByName(category))
+                .withWrongOption("Food")
+                .withWrongOption("Drink")
+                .withWrongOption("Country")
+                .withWrongOption("Animal")
+                .withCorrectOption("correctOption")
+                .please();
     }
 
     @Given("^Add a question \"([^\"]*)\" with dummy options and chosen category \"([^\"]*)\" and advice \"([^\"]*)\"$")
@@ -54,7 +61,7 @@ public class QuestionStep {
                 .withWrongOption("Drink")
                 .withWrongOption("Country")
                 .withWrongOption("Animal")
-                .withCorrectOption("correctOption")
+                .withCorrectOption("None of the above")
                 .please();
     }
 

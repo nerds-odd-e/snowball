@@ -4,14 +4,19 @@ Feature:
 
   Background:
     Given the user chooses the question category "Retro"
-#    And Add a question "Q3" with dummy options and chosen category "Retro"
-#    And Add a question "Q2" with dummy options and chosen category "Retro"
+    Given Add a question "Q1" with dummy options and chosen category "Retro" and correct option
 
-  @now
   Scenario: User can practice question
-    Given Add a question "Q1" with dummy options and chosen category "Retro"
     Given User is taking a practiceTest
     When User answered 1 questions correctly
+    Then User should see "You have finished your practice for today"
+
+  @developing
+  Scenario: No questions should be shown if questions have been answered today
+    Given User is taking a practiceTest
+    When User answered 1 question correctly
+    Then User should see "You have finished your practice for today"
+    When User is taking a practiceTest
     Then User should see "You have finished your practice for today"
 
 @developing
@@ -50,13 +55,7 @@ Feature:
 
 
 
-  @developing
-  Scenario: No questions should be shown if questions have been answered today
-    Given User is taking a practiceTest
-    When User answered 1 question correctly
-    Then User should see "You have finished your practice for today"
-    When User start a fixed repetition practice with 1 question again on the same day
-    Then User should see "You have finished your practice for today"
+
 
   @developing
   Scenario: User repeats the fixed interval practice
