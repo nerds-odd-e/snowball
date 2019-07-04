@@ -1,40 +1,57 @@
 package com.odde.snowball.service;
 
 import com.odde.TestWithDB;
-import com.odde.snowball.controller.EnrollParticipantController;
 import com.odde.snowball.model.User;
 import com.odde.snowball.model.onlinetest.Category;
 import com.odde.snowball.model.onlinetest.OnlineTest;
 import com.odde.snowball.model.onlinetest.Question;
 import com.odde.snowball.model.onlinetest.QuestionOption;
+import com.odde.snowball.model.practice.Record;
 import org.bson.types.ObjectId;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
+
+import java.util.Date;
 
 @RunWith(TestWithDB.class)
 public class RecordQuestionTest {
-    private Category scrum = Category.create("Scrum");
-    private Category tech = Category.create("Tech");
-    private Category team = Category.create("Team");
     private Category retro = Category.create("Retro");
 
-    @Before
-    public void setUpMockService() {
-
+    @Test
+    public void whenNoRecordInsertNewDafaultRecordTest() {
+        User user = createUser();
+        OnlineTest onlineTest = createPracticeForFirstTime(user);
+        Question firstQuestion = createQuestionWithOptions(retro.getId());
+        Question shownQuestion = onlineTest.getQuestionsByRecords(user.getId());
+        Assert.assertEquals(firstQuestion, shownQuestion);
     }
 
     @Test
-    public void whenNoRecordInsertNewDafaultRecordTest(){
+    public void whenUserHasMoreThanOneExistingPracticeRecords() {
         User user = createUser();
-        ObjectId userid = user.getId();
-        OnlineTest onlineTest = OnlineTest.getOnlineTest(userid, "Retro");
-        Question firstQuestion = createQuestionWithOptions(retro.getId());
-        Question question = onlineTest.getQuestionsByRecords(userid);
-        Assert.assertEquals(firstQuestion,question);
+        OnlineTest onlineTest = createPracticeForFirstTime(user);
+        Question expectedQuestion = createMockUserDataInRecordTable(user);
+        Question actualQuestion = onlineTest.getQuestionsByRecords(user.getId());
+        Assert.assertEquals(expectedQuestion, actualQuestion);
+    }
+
+    private Question createMockUserDataInRecordTable(User user) {
+        Question expectedQuestion = null;
+        for (int i = 0; i < 3; i++) {
+            Question question = createQuestionWithOptions(retro.getId());
+            if (i < 1) {
+                expectedQuestion = question;
+            }
+            Record record = new Record(user.getId(), question.getId(), new Date(), i * 2);
+            record.save();
+        }
+        return expectedQuestion;
+
+    }
+
+    private OnlineTest createPracticeForFirstTime(User inputUser) {
+        return OnlineTest.getOnlineTest(inputUser.getId(), "Retro");
     }
 
     private User createUser() {
@@ -44,7 +61,7 @@ public class RecordQuestionTest {
         return user;
     }
 
-     private Question createQuestionWithOptions(ObjectId categoryId) {
+    private Question createQuestionWithOptions(ObjectId categoryId) {
         Question question = new Question("What is Retro? 5 is correct answer", "Retro advvice", categoryId, true, false).save();
         ObjectId id = question.getId();
         QuestionOption.createIt(id, "desc1", false);

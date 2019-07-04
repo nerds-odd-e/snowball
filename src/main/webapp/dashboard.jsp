@@ -14,6 +14,9 @@
 %>
 
 <t:basic title="Dashboard">
+    <jsp:attribute name="extra_head">
+        <link href="/resources/practice.css" rel="stylesheet">
+    </jsp:attribute>
     <jsp:body>
         <div class="container-fluid">
             <!-- Page Heading -->
@@ -25,11 +28,11 @@
             </div>
             <!-- /.row -->
             <div class="row">
-                    <div class="col-lg-12" id="">
-                    <form name="onlinetest" id="onlinetest" method="get" action="/onlinetest/launchQuestion">
+                    <div class="col-lg-12" id=""> 
+                    <form class="dashboard_button" name="onlinetest" id="onlinetest" method="get" action="/onlinetest/launchQuestion">
                         <button type="submit" class="btn btn-default" id="start_button">Start Test</button>
                     </form>
-                     <form name="practice" id="practice" method="get" action="/launchPractice">
+                     <form class="dashboard_button" name="practice" id="practice" method="get" action="/launchPractice">
                         <input type="number" name="question_count" id="question_count" value=1 hidden />
                         <input type="text" name="practice_category" id="practice_category" value="Retro" hidden />
                         <button type="submit" class="btn btn-default" name = "start_practice_button" id="start_practice_button">Start Practice</button>

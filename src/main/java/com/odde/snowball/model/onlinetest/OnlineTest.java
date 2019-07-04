@@ -27,7 +27,7 @@ public class OnlineTest {
         testType = TestType.OnlineTest;
     }
 
-    public OnlineTest(List<Question>  questions) {
+    public OnlineTest(List<Question> questions) {
         this.questions = questions;
         numberOfAnsweredQuestions = 0;
         categoryCorrectAnswerCount = new HashMap<>();
@@ -36,7 +36,7 @@ public class OnlineTest {
     }
 
     public static OnlineTest getOnlineTest(ObjectId userId, String category) {
-        List<Question> notAnswered = repo(Question.class).findAll().stream().filter(q->!q.getAnswered().contains(userId)).collect(Collectors.toList());
+        List<Question> notAnswered = repo(Question.class).findAll().stream().filter(q -> !q.getAnswered().contains(userId)).collect(Collectors.toList());
         List<Question> questions = new QuestionCollection(notAnswered).generateQuestionList(repo(Category.class).findBy("name", category), notAnswered.size());
         OnlineTest onlineTest = new OnlineTest(questions);
         onlineTest.testType = TestType.Practice;
@@ -44,19 +44,20 @@ public class OnlineTest {
     }
 
     public static Question getQuestionsByRecords(ObjectId userId) {
-        Collection<Record> records= new Record().fetchRecordsByUserId(userId);
+        Collection<Record> records = new Record().fetchRecordsByUserId(userId);
         ArrayList<Question> questions = new ArrayList<Question>() {
         };
-        if (records.size()==0){
+        if (records.size() == 0) {
             Question question = repo(Question.class).findAll().get(0);
-            Record newRecord = new Record(userId, question.getId(),new Date(),0);
+            Record newRecord = new Record(userId, question.getId(), new Date(), 0);
             newRecord.save();
             return question;
         }
 
-            records.forEach(x->questions.add(repo(Question.class).findById(x.getQuestionId())));
+        records.stream().filter(record -> record.getCycleState() < 2)
+                .forEach(record -> questions.add(repo(Question.class).findById(record.getQuestionId())));
 
-        return questions.isEmpty()?null:questions.get(0);
+        return questions.isEmpty() ? null : questions.get(0);
     }
 
     public Question getPreviousQuestion() {
@@ -193,12 +194,14 @@ public class OnlineTest {
     }
 
     public Answer answerCurrentQuestion(List<String> selectedOptionIds) {
-    Answer answer = new Answer(getCurrentQuestion(), selectedOptionIds);
+        Answer answer = new Answer(getCurrentQuestion(), selectedOptionIds);
         answers.add(answer);
         addAnsweredQuestionNumber();
         return answer;
     }
+
     private LocalDate answeredTime;
+
     public void recordAnswerWithTime(LocalDate answeredTime) {
         this.answeredTime = answeredTime;
 
