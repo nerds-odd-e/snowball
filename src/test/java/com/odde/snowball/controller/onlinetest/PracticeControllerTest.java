@@ -2,6 +2,7 @@ package com.odde.snowball.controller.onlinetest;
 
 import com.odde.TestWithDB;
 import com.odde.snowball.controller.PracticeController;
+import com.odde.snowball.enumeration.TestType;
 import com.odde.snowball.model.User;
 import com.odde.snowball.model.base.Entity;
 import com.odde.snowball.model.onlinetest.Category;
@@ -40,9 +41,11 @@ public class PracticeControllerTest {
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
         request.getSession().setAttribute("userId", user1.getId());
-        request.setParameter("practice_category","Retro");
+        request.setParameter("practice_category", "Retro");
         request.setParameter("question_count", "1");
     }
+
+
 
     @Test
     public void redirectToAddQuestionPageIfNoQuestionsInOnlineTest() throws Exception {
@@ -62,6 +65,7 @@ public class PracticeControllerTest {
     private List<Question> mockQuestion() {
         return mockQuestion(1);
     }
+
     private List<Question> mockQuestion(int num) {
         Category cat = Category.create("Retro");
         return IntStream.range(0, num)

@@ -55,8 +55,6 @@ Feature:
 
 
 
-
-
   @developing
   Scenario: User repeats the fixed interval practice
     Given There is a user with "mary@example.com" but password initialize is undone
