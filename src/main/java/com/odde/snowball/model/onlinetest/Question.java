@@ -26,18 +26,19 @@ import static java.util.stream.Collectors.toList;
 @AllArgsConstructor
 public class Question extends Entity<Question> {
 
-    @NotNull(message="Description cannot be empty")
-    @NotBlank(message="Description cannot be empty")
+    @NotNull(message = "Description cannot be empty")
+    @NotBlank(message = "Description cannot be empty")
     private String description;
     private String advice;
-    @NotNull(message="Category cannot be empty")
-    @NotBlank(message="Category cannot be empty")
+    @NotNull(message = "Category cannot be empty")
+    @NotBlank(message = "Category cannot be empty")
     private ObjectId categoryId;
     private boolean isMultiQuestion;
     private boolean isApproved;
 
-    boolean notQuetsionAnsweredBy(ObjectId userId) {
-        return repo(Record.class).find(and(eq("userId",userId),eq("questionId",getId()))).isEmpty();
+    boolean questionsDueForTheUser(ObjectId userId) {
+        List<Record> record = repo(Record.class).find(and(eq("userId", userId), eq("questionId", getId())));
+        return ((record == null || record.isEmpty()) || (!record.get(0).getLastUpdated().isEqual(LocalDate.now()) && record.get(0).getCycleState() < 2));
     }
 
     public Category category() {

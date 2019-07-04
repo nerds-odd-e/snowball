@@ -37,7 +37,7 @@ public class OnlineTest {
     }
 
     public static OnlineTest getOnlineTest(ObjectId userId, String category) {
-        List<Question> notAnswered = repo(Question.class).findAll().stream().filter(q-> q.notQuetsionAnsweredBy(userId)).collect(Collectors.toList());
+        List<Question> notAnswered = repo(Question.class).findAll().stream().filter(q -> q.questionsDueForTheUser(userId)).collect(Collectors.toList());
         List<Question> questions = new QuestionCollection(notAnswered).generateQuestionList(repo(Category.class).findBy("name", category), notAnswered.size());
         OnlineTest onlineTest = new OnlineTest(questions);
         onlineTest.testType = TestType.Practice;
@@ -49,7 +49,7 @@ public class OnlineTest {
         ArrayList<Question> questions = new ArrayList<Question>() {
         };
         if (records.size() == 0) {
-            if(repo(Question.class).findAll() == null || repo(Question.class).findAll().isEmpty()) return null;
+            if (repo(Question.class).findAll() == null || repo(Question.class).findAll().isEmpty()) return null;
             Question question = repo(Question.class).findAll().get(0);
             Record newRecord = new Record(userId, question.getId(), LocalDate.now(), 0);
             newRecord.save();
