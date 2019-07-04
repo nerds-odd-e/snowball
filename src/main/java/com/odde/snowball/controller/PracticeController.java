@@ -1,6 +1,7 @@
 package com.odde.snowball.controller;
 
 import com.odde.snowball.model.onlinetest.OnlineTest;
+import com.odde.snowball.model.practice.Practice;
 import org.bson.types.ObjectId;
 
 import javax.servlet.annotation.WebServlet;
@@ -15,6 +16,9 @@ public class PracticeController extends AppController {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession(true);
         ObjectId userId = (ObjectId) session.getAttribute("userId");
+
+        Practice.generatePractice(userId);
+
         OnlineTest onlineTest = OnlineTest.getOnlineTest(userId, req.getParameter("practice_category"));
         if (!onlineTest.hasNextQuestion()) {
             resp.sendRedirect("/practice/completed_practice.jsp");

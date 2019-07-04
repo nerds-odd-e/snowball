@@ -10,6 +10,7 @@ import org.bson.types.ObjectId;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -84,8 +85,4 @@ public class Question extends Entity<Question> {
         new QuestionOption(optionText, true, getId()).save();
     }
 
-    public void answeredBy(ObjectId userId) {
-        new Record(userId, getId()).save();
-        this.save();
-    }
 }

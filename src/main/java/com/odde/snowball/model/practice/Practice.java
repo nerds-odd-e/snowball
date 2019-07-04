@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.bson.types.ObjectId;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -20,6 +22,10 @@ public class Practice extends Entity<Practice> {
     private Collection<ObjectId> categories;
     private List<Integer> cycle;
 
+    public Practice(ObjectId userId) {
+        this(userId, 1, new ArrayList<>(), Arrays.asList(1, 3, 7));
+    }
+
     public Practice(ObjectId userId, int numberOfQuestions, Collection<ObjectId> categories, List<Integer> cycle) {
         this.userId = userId;
         this.numberOfQuestions = numberOfQuestions;
@@ -32,6 +38,15 @@ public class Practice extends Entity<Practice> {
             return null;
         }
         return repo(Practice.class).findFirstBy("userId", userId);
+    }
+
+    public static void generatePractice(ObjectId userId) {
+        Practice practice = Practice.fetchPracticeByUserId(userId);
+
+        if (practice == null) {
+            practice = new Practice(userId);
+            practice.save();
+        }
     }
 
 }

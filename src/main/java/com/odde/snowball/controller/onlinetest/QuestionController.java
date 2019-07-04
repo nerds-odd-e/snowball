@@ -4,6 +4,8 @@ import com.odde.snowball.controller.AppController;
 import com.odde.snowball.enumeration.TestType;
 import com.odde.snowball.model.onlinetest.Answer;
 import com.odde.snowball.model.onlinetest.OnlineTest;
+import com.odde.snowball.model.practice.Record;
+import org.bson.types.ObjectId;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,6 +22,7 @@ public class QuestionController extends AppController {
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(true);
+        ObjectId userId = (ObjectId) session.getAttribute("userId");
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
         String[] answeredOptionIds = req.getParameterValues("optionId");
 
@@ -37,7 +40,11 @@ public class QuestionController extends AppController {
             return;
         }
 
+        ObjectId questionId = onlineTest.getCurrentQuestion().getId();
         Answer answer = onlineTest.answerCurrentQuestion(answeredOptionIds);
+
+        Record.recordQuestionForUser(userId, questionId);
+
         if (answer.isCorrect()) {
             resp.sendRedirect(getRedirectPageName(onlineTest.hasNextQuestion(),onlineTest.getTestType()));
             return;

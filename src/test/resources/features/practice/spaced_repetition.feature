@@ -11,7 +11,7 @@ Feature:
     When User answered 1 questions correctly
     Then User should see "You have finished your practice for today"
 
-  @developing
+  @now
   Scenario: No questions should be shown if questions have been answered today
     Given User is taking a practiceTest
     When User answered 1 question correctly
