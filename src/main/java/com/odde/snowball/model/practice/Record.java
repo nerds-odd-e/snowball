@@ -6,10 +6,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.bson.types.ObjectId;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
+import static com.mongodb.client.model.Filters.and;
+import static com.mongodb.client.model.Filters.eq;
 import static com.odde.snowball.model.base.Repository.repo;
 
 @NoArgsConstructor
@@ -18,10 +23,10 @@ import static com.odde.snowball.model.base.Repository.repo;
 public class Record extends Entity<Record> {
     private ObjectId userId;
     private ObjectId questionId;
-    private Date lastUpdated;
+    private LocalDate lastUpdated;
     private int cycleState;
 
-    public Record(ObjectId userId, ObjectId questionId, Date lastUpdated, int cycleState) {
+    public Record(ObjectId userId, ObjectId questionId, LocalDate lastUpdated, int cycleState) {
         this.userId = userId;
         this.questionId = questionId;
         this.lastUpdated = lastUpdated;
@@ -36,5 +41,16 @@ public class Record extends Entity<Record> {
         return repo(Record.class).findBy("userId", userId);
     }
 
-
+    public static void recordQuestionForUser(ObjectId userId, ObjectId questionId) {
+        List<Record> records = repo(Record.class).find(and(eq("userId", userId), eq("questionId", questionId)));
+        if(records.size() == 0){
+            Record record = new Record(userId, questionId, LocalDate.now(), 1);
+            record.save();
+        } else {
+            Record record = records.get(0);
+            record.setLastUpdated(LocalDate.now());
+            record.setCycleState(record.getCycleState()+1);
+            record.save();
+        }
+    }
 }

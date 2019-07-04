@@ -12,7 +12,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @RunWith(TestWithDB.class)
 public class RecordQuestionTest {
@@ -43,7 +43,7 @@ public class RecordQuestionTest {
             if (i < 1) {
                 expectedQuestion = question;
             }
-            Record record = new Record(user.getId(), question.getId(), new Date(), i * 2);
+            Record record = new Record(user.getId(), question.getId(), LocalDate.now(), i * 2);
             record.save();
         }
         return expectedQuestion;

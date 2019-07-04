@@ -50,7 +50,7 @@ public class OnlineTest {
         };
         if (records.size() == 0) {
             Question question = repo(Question.class).findAll().get(0);
-            Record newRecord = new Record(userId, question.getId(), new Date(), 0);
+            Record newRecord = new Record(userId, question.getId(), LocalDate.now(), 0);
             newRecord.save();
             return question;
         }
