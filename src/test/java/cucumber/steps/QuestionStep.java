@@ -223,7 +223,7 @@ public class QuestionStep {
 
     @Then("^User should see \"([^\"]*)\"$")
     public void user_should_see(String text) {
-        driver.expectElementToContainText("#advice", text);
+        driver.expectPageToContainText(text);
     }
 
     @Then("^Move to next question page$")
