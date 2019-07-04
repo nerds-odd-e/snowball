@@ -33,6 +33,10 @@ public class Record extends Entity<Record> {
         this.cycleState = cycleState;
     }
 
+    public Record(ObjectId userId, ObjectId quetsionId) {
+        this(userId, quetsionId, new Date(), 0);
+    }
+
     public static Collection<Record> fetchRecordsByUserId(ObjectId userId) {
         if (null == userId) {
             return new ArrayList<>();

@@ -1,6 +1,7 @@
 package com.odde.snowball.model.onlinetest;
 
 import com.odde.snowball.model.base.Entity;
+import com.odde.snowball.model.practice.Record;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import static com.mongodb.client.model.Filters.and;
+import static com.mongodb.client.model.Filters.eq;
 import static com.odde.snowball.model.base.Repository.repo;
 import static java.util.stream.Collectors.toList;
 
@@ -31,15 +34,9 @@ public class Question extends Entity<Question> {
     private ObjectId categoryId;
     private boolean isMultiQuestion;
     private boolean isApproved;
-    private List<ObjectId> answered;
 
-    public Question(String description, String advice, ObjectId categoryId, boolean isMultiQuestion, boolean isApproved) {
-        this.description = description;
-        this.advice = advice;
-        this.categoryId = categoryId;
-        this.isMultiQuestion = isMultiQuestion;
-        this.isApproved = isApproved;
-        this.answered = new ArrayList<>();
+    boolean notQuetsionAnsweredBy(ObjectId userId) {
+        return repo(Record.class).find(and(eq("userId",userId),eq("questionId",getId()))).isEmpty();
     }
 
     public Category category() {
@@ -88,7 +85,7 @@ public class Question extends Entity<Question> {
     }
 
     public void answeredBy(ObjectId userId) {
-        this.answered.add(userId);
+        new Record(userId, getId()).save();
         this.save();
     }
 }

@@ -37,7 +37,7 @@ public class OnlineTest {
     }
 
     public static OnlineTest getOnlineTest(ObjectId userId, String category) {
-        List<Question> notAnswered = repo(Question.class).findAll().stream().filter(q -> !q.getAnswered().contains(userId)).collect(Collectors.toList());
+        List<Question> notAnswered = repo(Question.class).findAll().stream().filter(q-> q.notQuetsionAnsweredBy(userId)).collect(Collectors.toList());
         List<Question> questions = new QuestionCollection(notAnswered).generateQuestionList(repo(Category.class).findBy("name", category), notAnswered.size());
         OnlineTest onlineTest = new OnlineTest(questions);
         onlineTest.testType = TestType.Practice;
