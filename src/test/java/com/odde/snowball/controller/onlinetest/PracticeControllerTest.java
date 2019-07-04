@@ -16,6 +16,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -86,7 +87,7 @@ public class PracticeControllerTest {
     @Test
     public void userMustNotSeeTheQuestionIfSheHasDoneItOnTheSameDay() throws IOException {
         List<Question> questions = mockQuestion();
-        Record.recordQuestionForUser(user1.getId(), questions.get(0).getId());
+        Record.recordQuestionForUser(user1.getId(), questions.get(0).getId(), LocalDate.now());
         controller.doGet(request, response);
         assertEquals("/practice/completed_practice.jsp", response.getRedirectedUrl());
     }
@@ -94,7 +95,7 @@ public class PracticeControllerTest {
     @Test
     public void userMustSeeQuestionEvenIfAnsweredByAnotherUser() throws IOException {
         List<Question> questions = mockQuestion();
-        Record.recordQuestionForUser(user2.getId(), questions.get(0).getId());
+        Record.recordQuestionForUser(user2.getId(), questions.get(0).getId(), LocalDate.now());
         controller.doGet(request, response);
         OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
         assertThat(onlineTest.getNumberOfQuestions()).isEqualTo(1);
@@ -103,7 +104,7 @@ public class PracticeControllerTest {
     @Test
     public void userMustSee2QuestionsIfThereAre2QuestionsDue() throws IOException {
         List<Question> questions = mockQuestion(2);
-        Record.recordQuestionForUser(user2.getId(), questions.get(0).getId());
+        Record.recordQuestionForUser(user2.getId(), questions.get(0).getId(), LocalDate.now());
         controller.doGet(request, response);
         OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
         assertThat(onlineTest.getNumberOfQuestions()).isEqualTo(2);

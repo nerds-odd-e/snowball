@@ -11,7 +11,6 @@ Feature:
     When User answered 1 questions correctly
     Then User should see "You have finished your practice for today"
 
-  @now
   Scenario: No questions should be shown if questions have been answered today
     Given User is taking a practiceTest
     When User answered 1 question correctly
@@ -21,9 +20,9 @@ Feature:
 
 @developing
   Scenario: User can practise using spaced repetition of interval 1,3,7 days
-    Given User has an active practice
-    And User should see a question "What is Scrum"
-    Then User submits answer
+    Given User is taking a practiceTest
+    When User answered 1 questions correctly
+    Then User should see "You have finished your practice for today"
     Then date is increased by 1 days
     And User does a practise
     Then User shuold see a question "What is Scrum"

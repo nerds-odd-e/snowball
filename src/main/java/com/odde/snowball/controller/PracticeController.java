@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @WebServlet("/launchPractice")
@@ -18,6 +19,7 @@ public class PracticeController extends AppController {
         ObjectId userId = (ObjectId) session.getAttribute("userId");
 
         Practice.generatePractice(userId);
+        session.setAttribute("date", LocalDate.now());
 
         OnlineTest onlineTest = OnlineTest.getOnlineTest(userId, req.getParameter("practice_category"));
         if (!onlineTest.hasNextQuestion()) {

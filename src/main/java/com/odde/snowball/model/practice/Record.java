@@ -33,8 +33,8 @@ public class Record extends Entity<Record> {
         this.cycleState = cycleState;
     }
 
-    public Record(ObjectId userId, ObjectId quetsionId) {
-        this(userId, quetsionId, LocalDate.now(), 0);
+    public Record(ObjectId userId, ObjectId questionId) {
+        this(userId, questionId, LocalDate.now(), 0);
     }
 
     public static Collection<Record> fetchRecordsByUserId(ObjectId userId) {
@@ -45,14 +45,14 @@ public class Record extends Entity<Record> {
         return repo(Record.class).findBy("userId", userId);
     }
 
-    public static void recordQuestionForUser(ObjectId userId, ObjectId questionId) {
+    public static void recordQuestionForUser(ObjectId userId, ObjectId questionId, LocalDate date) {
         List<Record> records = repo(Record.class).find(and(eq("userId", userId), eq("questionId", questionId)));
         if(records.size() == 0){
-            Record record = new Record(userId, questionId, LocalDate.now(), 1);
+            Record record = new Record(userId, questionId, date, 1);
             record.save();
         } else {
             Record record = records.get(0);
-            record.setLastUpdated(LocalDate.now());
+            record.setLastUpdated(date);
             record.setCycleState(record.getCycleState()+1);
             record.save();
         }

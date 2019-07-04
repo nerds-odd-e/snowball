@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -23,6 +24,8 @@ public class QuestionController extends AppController {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(true);
         ObjectId userId = (ObjectId) session.getAttribute("userId");
+        LocalDate date = (LocalDate) session.getAttribute("date");
+
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
         String[] answeredOptionIds = req.getParameterValues("optionId");
 
@@ -43,7 +46,7 @@ public class QuestionController extends AppController {
         ObjectId questionId = onlineTest.getCurrentQuestion().getId();
         Answer answer = onlineTest.answerCurrentQuestion(answeredOptionIds);
 
-        Record.recordQuestionForUser(userId, questionId);
+        Record.recordQuestionForUser(userId, questionId, date);
 
         if (answer.isCorrect()) {
             resp.sendRedirect(getRedirectPageName(onlineTest.hasNextQuestion(),onlineTest.getTestType()));

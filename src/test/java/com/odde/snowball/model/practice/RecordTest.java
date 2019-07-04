@@ -38,13 +38,13 @@ public class RecordTest {
 
     @Test
     public void testSaveRecordQuestionForFirstTime() {
-        Record.recordQuestionForUser(userId2, questionId2);
+        Record.recordQuestionForUser(userId2, questionId2, LocalDate.now());
         assertEquals(1, Record.fetchRecordsByUserId(userId2).size());
     }
 
     @Test
     public void testSaveRecordWithUpdatedCycleState() {
-        Record.recordQuestionForUser(userId1, questionId1);
+        Record.recordQuestionForUser(userId1, questionId1, LocalDate.now());
         Collection<Record> records = Record.fetchRecordsByUserId(userId1);
         assertEquals(1, records.iterator().next().getCycleState());
     }
