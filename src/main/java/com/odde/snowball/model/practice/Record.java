@@ -34,7 +34,7 @@ public class Record extends Entity<Record> {
     }
 
     public Record(ObjectId userId, ObjectId quetsionId) {
-        this(userId, quetsionId, new Date(), 0);
+        this(userId, quetsionId, LocalDate.now(), 0);
     }
 
     public static Collection<Record> fetchRecordsByUserId(ObjectId userId) {
