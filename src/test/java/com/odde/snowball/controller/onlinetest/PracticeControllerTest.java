@@ -2,7 +2,6 @@ package com.odde.snowball.controller.onlinetest;
 
 import com.odde.TestWithDB;
 import com.odde.snowball.controller.PracticeController;
-import com.odde.snowball.enumeration.TestType;
 import com.odde.snowball.model.User;
 import com.odde.snowball.model.base.Entity;
 import com.odde.snowball.model.onlinetest.Category;
@@ -46,7 +45,6 @@ public class PracticeControllerTest {
         request.setParameter("practice_category", "Retro");
         request.setParameter("question_count", "1");
     }
-
 
 
     @Test

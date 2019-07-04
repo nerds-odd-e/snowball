@@ -44,23 +44,6 @@ public class OnlineTest {
         return onlineTest;
     }
 
-    public static Question getQuestionsByRecords(ObjectId userId) {
-        Collection<Record> records = Record.fetchRecordsByUserId(userId);
-        ArrayList<Question> questions = new ArrayList<Question>() {
-        };
-        if (records.size() == 0) {
-            if (repo(Question.class).findAll() == null || repo(Question.class).findAll().isEmpty()) return null;
-            Question question = repo(Question.class).findAll().get(0);
-            Record newRecord = new Record(userId, question.getId(), LocalDate.now(), 0);
-            newRecord.save();
-            return question;
-        }
-
-        records.stream().filter(record -> record.getCycleState() < 2)
-                .forEach(record -> questions.add(repo(Question.class).findById(record.getQuestionId())));
-
-        return questions.isEmpty() ? null : questions.get(0);
-    }
 
     public Question getPreviousQuestion() {
         return questions.get(numberOfAnsweredQuestions - 1);
