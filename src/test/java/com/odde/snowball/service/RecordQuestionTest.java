@@ -21,8 +21,8 @@ public class RecordQuestionTest {
     @Test
     public void whenNoRecordInsertNewDafaultRecordTest() {
         User user = createUser();
-        OnlineTest onlineTest = createPracticeForFirstTime(user);
         Question firstQuestion = createQuestionWithOptions(retro.getId());
+        OnlineTest onlineTest = createPracticeForFirstTime(user);
         Question shownQuestion = onlineTest.getQuestionsByRecords(user.getId());
         Assert.assertEquals(firstQuestion, shownQuestion);
     }
@@ -30,8 +30,8 @@ public class RecordQuestionTest {
     @Test
     public void whenUserHasMoreThanOneExistingPracticeRecords() {
         User user = createUser();
-        OnlineTest onlineTest = createPracticeForFirstTime(user);
         Question expectedQuestion = createMockUserDataInRecordTable(user);
+        OnlineTest onlineTest = createPracticeForFirstTime(user);
         Question actualQuestion = onlineTest.getQuestionsByRecords(user.getId());
         Assert.assertEquals(expectedQuestion, actualQuestion);
     }
