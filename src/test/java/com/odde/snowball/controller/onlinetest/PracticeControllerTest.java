@@ -8,6 +8,7 @@ import com.odde.snowball.model.base.Entity;
 import com.odde.snowball.model.onlinetest.Category;
 import com.odde.snowball.model.onlinetest.OnlineTest;
 import com.odde.snowball.model.onlinetest.Question;
+import com.odde.snowball.model.practice.Record;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -85,7 +86,7 @@ public class PracticeControllerTest {
     @Test
     public void userMustNotSeeTheQuestionIfSheHasDoneItOnTheSameDay() throws IOException {
         List<Question> questions = mockQuestion();
-        questions.get(0).answeredBy(user1.getId());
+        Record.recordQuestionForUser(user1.getId(), questions.get(0).getId());
         controller.doGet(request, response);
         assertEquals("/practice/completed_practice.jsp", response.getRedirectedUrl());
     }
@@ -93,7 +94,7 @@ public class PracticeControllerTest {
     @Test
     public void userMustSeeQuestionEvenIfAnsweredByAnotherUser() throws IOException {
         List<Question> questions = mockQuestion();
-        questions.get(0).answeredBy(user2.getId());
+        Record.recordQuestionForUser(user2.getId(), questions.get(0).getId());
         controller.doGet(request, response);
         OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
         assertThat(onlineTest.getNumberOfQuestions()).isEqualTo(1);
@@ -102,7 +103,7 @@ public class PracticeControllerTest {
     @Test
     public void userMustSee2QuestionsIfThereAre2QuestionsDue() throws IOException {
         List<Question> questions = mockQuestion(2);
-        questions.get(0).answeredBy(user2.getId());
+        Record.recordQuestionForUser(user2.getId(), questions.get(0).getId());
         controller.doGet(request, response);
         OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
         assertThat(onlineTest.getNumberOfQuestions()).isEqualTo(2);
