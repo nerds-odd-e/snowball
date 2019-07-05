@@ -11,6 +11,7 @@ Feature:
     When User answered 1 questions correctly
     Then User should see "You have finished your practice for today"
 
+
   Scenario: No questions should be shown if questions have been answered today
     Given User is taking a practiceTest
     When User answered 1 question correctly
@@ -18,7 +19,16 @@ Feature:
     When User is taking a practiceTest
     Then User should see "You have finished your practice for today"
 
-@developing
+  @developing
+  Scenario: If user answers wrongly, user should be shown advice page and be redirected to see completed practice page
+    Given User is taking a practiceTest
+    When User answered 1 question wrongly
+    Then User should see Advice page
+    When User clicks on Next on Advice page
+    Then User should see "You have finished your practice for today"
+
+
+  @developing
   Scenario: User can practise using spaced repetition of interval 1,3,7 days
     Given User is taking a practiceTest
     When User answered 1 questions correctly

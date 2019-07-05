@@ -45,4 +45,22 @@ public class PracticeTestsStepDefs {
     public void userIsTakingAPracticeTest() {
         site.visit("launchPractice?practice_category=Retro&question_count=2");
     }
+
+    @When("User answered {int} question wrongly")
+    public void userAnsweredQuestionWrongly(int questionNum) {
+        for (int i = 0; i < questionNum; i++) {
+            driver.clickRadioButton("Animal");
+            driver.click("#answer");
+        }
+    }
+
+    @Then("User should see Advice page")
+    public void userShouldSeeAdvicePage() {
+        driver.expectPageToContainText("Advice");
+    }
+
+    @When("User clicks on Next on Advice page")
+    public void userClicksOnNextOnAdvicePage() {
+        driver.click("#next");
+    }
 }
