@@ -20,7 +20,8 @@ import static org.junit.Assert.*;
 @RunWith(TestWithDB.class)
 public class OnlineTestTest {
     private Category scrum = Category.create("Scrum");
-    private Category tech = Category.create("Tech");;
+    private Category tech = Category.create("Tech");
+    ;
     private Category retro = Category.create("Retro");
 
     @Test
@@ -47,7 +48,7 @@ public class OnlineTestTest {
         mockQuestion(6);
         OnlineTest newOnlineTest = new OnlineTest(5);
         Set<Question> questions = new HashSet<>();
-        while(newOnlineTest.hasNextQuestion()) {
+        while (newOnlineTest.hasNextQuestion()) {
             questions.add(newOnlineTest.getCurrentQuestion());
             newOnlineTest.addAnsweredQuestionNumber();
         }
@@ -55,7 +56,7 @@ public class OnlineTestTest {
     }
 
     @Test
-    public void showMultiCategoryMessage(){
+    public void showMultiCategoryMessage() {
         mockQuestion(2, scrum.getId());
         OnlineTest onlineTest = new OnlineTest(2);
 
@@ -65,7 +66,7 @@ public class OnlineTestTest {
     }
 
     @Test
-    public void showWrongSingleCategoryMessage(){
+    public void showWrongSingleCategoryMessage() {
         mockQuestion(2, scrum.getId());
         OnlineTest onlineTest = new OnlineTest(2);
 
@@ -75,7 +76,7 @@ public class OnlineTestTest {
     }
 
     @Test
-    public void showWrongMultiCategoryMessage(){
+    public void showWrongMultiCategoryMessage() {
         mockQuestion(1, scrum.getId());
         mockQuestion(1, tech.getId());
         OnlineTest onlineTest = new OnlineTest(2);
@@ -126,7 +127,7 @@ public class OnlineTestTest {
 
     @Test
     public void shouldReturnOneIncorrectAndOneCorrectAnswer() {
-        Question question = new Question("desc1", "adv1", scrum.getId(),false, false).save();
+        Question question = new Question("desc1", "adv1", scrum.getId(), false, false).save();
         ObjectId id = question.getId();
 
         final String[] answeredOption = new String[2];
@@ -150,7 +151,7 @@ public class OnlineTestTest {
 
     @Test
     public void answerCurrentQuestion() {
-        mockQuestion(3,scrum.getId());
+        mockQuestion(3, scrum.getId());
         OnlineTest onlineTest = new OnlineTest(1);
         onlineTest.answerCurrentQuestion(Collections.singletonList(new ObjectId().toString()));
         assertEquals(1, onlineTest.answers.size());
@@ -158,7 +159,7 @@ public class OnlineTestTest {
 
     @Test
     public void calculateCorrectRate() {
-        Question q1 = new Question("d1", "a1", scrum.getId(),false, false).save();
+        Question q1 = new Question("d1", "a1", scrum.getId(), false, false).save();
         QuestionOption it = QuestionOption.<QuestionOption>createIt(q1.getId(), "d1", true);
         QuestionOption.<QuestionOption>createIt(q1.getId(), "d2", false);
 
@@ -210,11 +211,11 @@ public class OnlineTestTest {
         QuestionOption c5 = QuestionOption.<QuestionOption>createIt(q5.getId(), "d2", false);
 
         OnlineTest onlineTest = new OnlineTest(5);
-        onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().correctOptions().stream().map(ObjectId::toString).collect(Collectors.toList()) );
-        onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().correctOptions().stream().map(ObjectId::toString).collect(Collectors.toList()) );
-        onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().correctOptions().stream().map(ObjectId::toString).collect(Collectors.toList()) );
-        onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().correctOptions().stream().map(ObjectId::toString).collect(Collectors.toList()) );
-        onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().correctOptions().stream().map(o -> new ObjectId().toString()).collect(Collectors.toList()) );
+        onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().correctOptions().stream().map(ObjectId::toString).collect(Collectors.toList()));
+        onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().correctOptions().stream().map(ObjectId::toString).collect(Collectors.toList()));
+        onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().correctOptions().stream().map(ObjectId::toString).collect(Collectors.toList()));
+        onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().correctOptions().stream().map(ObjectId::toString).collect(Collectors.toList()));
+        onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().correctOptions().stream().map(o -> new ObjectId().toString()).collect(Collectors.toList()));
 
         TestResult result = onlineTest.generateTestResult();
 
@@ -229,6 +230,7 @@ public class OnlineTestTest {
         OnlineTest onlineTest = OnlineTest.getOnlineTest(user.getId(), "Retro");
         assertEquals(onlineTest.getTestType(), TestType.Practice);
     }
+
     @Test
     public void onlineTestObjectShouldHaveTestTypeAttributeOnlineTest() {
         OnlineTest onlineTest = new OnlineTest(1);
@@ -253,9 +255,31 @@ public class OnlineTestTest {
         assertEquals(onlineTest.getTestType(), TestType.Practice);
     }
 
+
     private List<Question> mockQuestion(int numberOfQuestion, ObjectId category) {
         return IntStream.range(0, numberOfQuestion).mapToObj(index -> new Question("desc" + index, "adv" + index, category, false, false).save()).collect(Collectors.toList());
     }
+
+    @Test
+    public void should_return_questions_page_if_test_has_not_ended() {
+        mockQuestion(1);
+        OnlineTest onlineTest = new OnlineTest(1);
+        assertEquals(onlineTest.getNextPageName(), "/onlinetest/question.jsp");
+    }
+
+    @Test
+    public void should_return_completed_test_page_if_test_ends() {
+        OnlineTest onlineTest = new OnlineTest(0);
+        assertEquals(onlineTest.getNextPageName(), "/onlinetest/end_of_test.jsp");
+    }
+
+    @Test
+    public void should_return_completed_practice_if_practice_ends() {
+        User user = new User();
+        OnlineTest onlineTest = OnlineTest.getOnlineTest(user.getId(), "Retro");
+        assertEquals(onlineTest.getNextPageName(), "/practice/completed_practice.jsp");
+    }
+
 
     private void mockQuestion(int numberOfQuestion) {
         mockQuestion(numberOfQuestion, scrum.getId());

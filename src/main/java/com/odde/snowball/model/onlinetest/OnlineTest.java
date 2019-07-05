@@ -202,4 +202,12 @@ public class OnlineTest {
     public TestType getTestType() {
         return testType;
     }
+
+    public String getNextPageName() {
+        String redirectUrl = getTestType().equals(TestType.Practice)? "/practice/completed_practice.jsp" : "/onlinetest/end_of_test.jsp";
+        if(hasNextQuestion()){
+            redirectUrl = "/onlinetest/question.jsp";
+        }
+        return redirectUrl;
+    }
 }

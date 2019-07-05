@@ -15,11 +15,8 @@ public class AdviceController extends AppController {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         OnlineTest onlineTest = (OnlineTest)session.getAttribute("onlineTest");
-        String url = "/onlinetest/end_of_test.jsp";
-        if(onlineTest.hasNextQuestion()){
-            url = "/onlinetest/question.jsp";
-        }
-        response.sendRedirect(url);
+        String redirectUrl = onlineTest.getNextPageName();
+        response.sendRedirect(redirectUrl);
     }
 
 }

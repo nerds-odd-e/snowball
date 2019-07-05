@@ -30,7 +30,7 @@ public class QuestionController extends AppController {
         String[] answeredOptionIds = req.getParameterValues("optionId");
 
         if (req.getParameterValues("optionId") == null) {
-            resp.sendRedirect(getRedirectPageName(true,onlineTest.getTestType()));
+            resp.sendRedirect("/onlinetest/question.jsp");
             return;
         }
 
@@ -39,7 +39,7 @@ public class QuestionController extends AppController {
         session.setAttribute("alertMsg", alertMsg);
 
         if (!lastDoneQuestionId.equals(String.valueOf(onlineTest.getNumberOfAnsweredQuestions()))) {
-            resp.sendRedirect(getRedirectPageName(onlineTest.hasNextQuestion(),onlineTest.getTestType()));
+            resp.sendRedirect(onlineTest.getNextPageName());
             return;
         }
 
@@ -49,7 +49,7 @@ public class QuestionController extends AppController {
         Record.recordQuestionForUser(userId, questionId, date);
 
         if (answer.isCorrect()) {
-            resp.sendRedirect(getRedirectPageName(onlineTest.hasNextQuestion(),onlineTest.getTestType()));
+            resp.sendRedirect(onlineTest.getNextPageName());
             return;
         }
         req.setAttribute("selectedOption", new ArrayList(Arrays.asList(answeredOptionIds)));
@@ -57,13 +57,4 @@ public class QuestionController extends AppController {
         dispatch.forward(req, resp);
     }
 
-    private String getRedirectPageName(boolean moreQuestionsExist, TestType practice) {
-        if (moreQuestionsExist) {
-            return "/onlinetest/question.jsp";
-        }
-        String redirectPageName = "/onlinetest/end_of_test.jsp";
-        if( practice == TestType.Practice)
-            redirectPageName = "/practice/completed_practice.jsp";
-        return redirectPageName;
-    }
 }

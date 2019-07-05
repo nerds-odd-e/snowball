@@ -47,14 +47,15 @@ public class Record extends Entity<Record> {
 
     public static void recordQuestionForUser(ObjectId userId, ObjectId questionId, LocalDate date) {
         List<Record> records = repo(Record.class).find(and(eq("userId", userId), eq("questionId", questionId)));
-        if(records.size() == 0){
+        if (records.size() == 0) {
             Record record = new Record(userId, questionId, date, 1);
             record.save();
         } else {
             Record record = records.get(0);
             record.setLastUpdated(date);
-            record.setCycleState(record.getCycleState()+1);
+            record.setCycleState(record.getCycleState() + 1);
             record.save();
         }
     }
+
 }
