@@ -32,6 +32,7 @@ public class PracticeControllerTest {
     private Category scrum = Category.create("Scrum");
     private Category tech = Category.create("Tech");
     private Category team = Category.create("Team");
+    private Category retro = Category.create("Retro");
     private User user1 = new User().save();
     private User user2 = new User().save();
 
@@ -99,10 +100,10 @@ public class PracticeControllerTest {
     }
 
     @Test
-    public void userMustSee2QuestionsIfThereAre2QuestionsDue() throws IOException {
+    public void userMustSeeOnly1QuestionEvenIfThereAre2QuestionsUnanswered() throws IOException {
         mockQuestion(2);
         controller.doGet(request, response);
         OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
-        assertThat(onlineTest.getNumberOfQuestions()).isEqualTo(2);
+        assertThat(onlineTest.getNumberOfQuestions()).isEqualTo(1);
     }
 }

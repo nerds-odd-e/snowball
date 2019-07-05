@@ -37,8 +37,13 @@ public class OnlineTest {
     }
 
     public static OnlineTest createOnlinePractice(ObjectId userId, String category) {
-        List<Question> notAnswered = repo(Question.class).findAll().stream().filter(q-> q.isDueForUser(userId)).collect(Collectors.toList());
-        List<Question> questions = new QuestionCollection(notAnswered).generateQuestionList(repo(Category.class).findBy("name", category), notAnswered.size());
+        List<Question> allQuestions = repo(Question.class).findAll();
+        List<Question> dueQuestions = allQuestions.stream().filter(q-> q.isDueForUser(userId)).collect(Collectors.toList());
+        if (dueQuestions.size() == 0) {
+            Optional<Question> newQuestions = allQuestions.stream().filter(q -> q.notAnswered(userId)).findFirst();
+            newQuestions.ifPresent(dueQuestions::add);
+        }
+        List<Question> questions = new QuestionCollection(dueQuestions).generateQuestionList(repo(Category.class).findBy("name", category), dueQuestions.size());
         OnlineTest onlineTest = new OnlinePractice(questions);
         return onlineTest;
     }

@@ -54,11 +54,11 @@ public class Question extends Entity<Question> {
         List<Integer> cycle = Arrays.asList(1,2,4);
         List<Record> records = repo(Record.class).find(and(eq("userId",userId),eq("questionId",getId())));
         if (records.size()==0){
-            return true;
+            return false;
         }
         Record record = records.get(0);
-        if (record.getCycleState()==0){
-            return true;
+        if (record.getCycleState()==0) {
+            return record.getLastUpdated().isBefore(LocalDate.now());
         }
         if (record.getCycleState()>cycle.size()){
             return false;
@@ -124,5 +124,10 @@ public class Question extends Entity<Question> {
             record.setCycleState(0);
             record.save();
         }
+    }
+
+    public boolean notAnswered(ObjectId userId) {
+        List<Record> records = repo(Record.class).find(and(eq("userId", userId), eq("questionId", getId())));
+        return records.size() == 0;
     }
 }

@@ -18,7 +18,6 @@ Feature:
     When User is taking a practiceTest
     Then User should see "You have finished your practice for today"
 
-    @developing
   Scenario: If user answers wrongly, user should be shown advice page and be redirected to see completed practice page
     Given User is taking a practiceTest
     When User answered 1 question wrongly
