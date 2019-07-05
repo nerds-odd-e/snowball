@@ -2,6 +2,8 @@ package com.odde.snowball.controller.onlinetest;
 
 import com.odde.TestWithDB;
 import com.odde.snowball.enumeration.TestType;
+import com.odde.snowball.model.onlinetest.OnlinePractice;
+import com.odde.snowball.model.onlinetest.OnlineQuiz;
 import com.odde.snowball.model.onlinetest.OnlineTest;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +31,7 @@ public class AdviceControllerTest {
         controller = new AdviceController();
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
-        request.getSession().setAttribute("onlineTest", new OnlineTest(5));
+        request.getSession().setAttribute("onlineTest", OnlineQuiz.createOnlineQuiz(5));
     }
 
     @Test
@@ -40,7 +42,7 @@ public class AdviceControllerTest {
 
     @Test
     public void checkFromAdvicePageToQuestionPage() throws Exception {
-        OnlineTest onlineTest = mock(OnlineTest.class);
+        OnlineQuiz onlineTest = mock(OnlineQuiz.class);
         String redirectUrl = "/onlinetest/question.jsp";
 
         when(onlineTest.getNextPageName()).thenReturn(redirectUrl);
@@ -54,7 +56,7 @@ public class AdviceControllerTest {
 
     @Test
     public void checkFromAdvicePageToEndOfTestPageWhenNoMoreQuestions() throws Exception {
-        OnlineTest onlineTest = mock(OnlineTest.class);
+        OnlineQuiz onlineTest = mock(OnlineQuiz.class);
         String redirectUrl = "/onlinetest/end_of_test.jsp";
 
         when(onlineTest.getNextPageName()).thenReturn(redirectUrl);
@@ -68,7 +70,7 @@ public class AdviceControllerTest {
 
     @Test
     public void should_redirect_to_end_of_practice_page_if_type_is_practice() throws IOException {
-        OnlineTest onlineTest = mock(OnlineTest.class);
+        OnlinePractice onlineTest = mock(OnlinePractice.class);
         String redirectUrl = "/practice/completed_practice.jsp";
 
         when(onlineTest.getNextPageName()).thenReturn(redirectUrl);

@@ -1,7 +1,6 @@
 package com.odde.snowball.controller.onlinetest;
 
 import com.odde.TestWithDB;
-import com.odde.snowball.enumeration.TestType;
 import com.odde.snowball.model.onlinetest.*;
 import org.bson.types.ObjectId;
 import org.junit.Before;
@@ -58,7 +57,7 @@ public class QuestionControllerTest {
     @Test
     public void postIncorrect() throws ServletException, IOException {
         question = createQuestionWithOptions(scrum);
-        onlineTest = new OnlineTest(1);
+        onlineTest = OnlineQuiz.createOnlineQuiz(1);
         request.getSession().setAttribute("onlineTest", onlineTest);
 
         String optionId = getFirstOptionId(question);
@@ -72,7 +71,7 @@ public class QuestionControllerTest {
     @Test
     public void doPostWithNoOptionsInDatabase() throws ServletException, IOException {
         question = createQuestionWithOptions(scrum);
-        onlineTest = new OnlineTest(1);
+        onlineTest = OnlineQuiz.createOnlineQuiz(1);
         request.getSession().setAttribute("onlineTest", onlineTest);
 
         String optionId = getFirstOptionId(question);
@@ -89,7 +88,7 @@ public class QuestionControllerTest {
         question = createQuestionWithOptions(scrum);
 
         String optionId = getFirstOptionId(question);
-        onlineTest = new OnlineTest(2);
+        onlineTest = OnlineQuiz.createOnlineQuiz(2);
         request.addParameter("optionId", optionId);
         request.addParameter("lastDoneQuestionId", "1");
         request.getSession().setAttribute("onlineTest", onlineTest);
@@ -104,7 +103,7 @@ public class QuestionControllerTest {
         question = createQuestionWithOptions(scrum);
 
         String optionId = getFirstOptionId(question);
-        onlineTest = new OnlineTest(2);
+        onlineTest = OnlineQuiz.createOnlineQuiz(2);
         request.addParameter("optionId", optionId);
         request.addParameter("lastDoneQuestionId", "0");
         request.getSession().setAttribute("onlineTest", onlineTest);
@@ -120,7 +119,7 @@ public class QuestionControllerTest {
         question = createQuestionWithOptions(scrum);
 
         List<ObjectId> optionId = question.correctOptions();
-        onlineTest = new OnlineTest(2);
+        onlineTest = OnlineQuiz.createOnlineQuiz(2);
 
         request.addParameter("optionId", optionId.get(0).toString());
         request.addParameter("lastDoneQuestionId", "0");
@@ -136,7 +135,7 @@ public class QuestionControllerTest {
     public void doPostWithNotIncrementCorrectCountOnIncorrectAnswer() throws ServletException, IOException {
         question = createQuestionWithOptions(scrum);
         String optionId = getFirstOptionId(question);
-        onlineTest = new OnlineTest(2);
+        onlineTest = OnlineQuiz.createOnlineQuiz(2);
         request.addParameter("optionId", optionId);
         request.addParameter("lastDoneQuestionId", "0");
         request.getSession().setAttribute("onlineTest", onlineTest);
@@ -150,7 +149,7 @@ public class QuestionControllerTest {
     @Test
     public void doPostWithNoSelectedOptions() throws ServletException, IOException {
         question = createQuestionWithOptions(scrum);
-        onlineTest = new OnlineTest(2);
+        onlineTest = OnlineQuiz.createOnlineQuiz(2);
         request.addParameter("lastDoneQuestionId", "0");
         request.getSession().setAttribute("onlineTest", onlineTest);
 
@@ -163,7 +162,7 @@ public class QuestionControllerTest {
     @Test
     public void doPostWithOneCorrectOptionAndOneIncorrectOption() throws ServletException, IOException {
         question = createQuestionWithOptions(scrum);
-        onlineTest = spy(new OnlineTest(1));
+        onlineTest = spy(OnlineQuiz.createOnlineQuiz(1));
 
         request.addParameter("lastDoneQuestionId", "0");
         request.getSession().setAttribute("onlineTest", onlineTest);
@@ -187,7 +186,7 @@ public class QuestionControllerTest {
     public void doPostWithIncrementScrumCategoryCorrectCountOnCorrectAnswer() throws ServletException, IOException {
         question = createQuestionWithOptions(tech);
         List<ObjectId> optionId = question.correctOptions();
-        onlineTest = new OnlineTest(2);
+        onlineTest = OnlineQuiz.createOnlineQuiz(2);
 
         request.addParameter("optionId", optionId.get(0).toString());
         request.addParameter("lastDoneQuestionId", "0");
@@ -205,7 +204,7 @@ public class QuestionControllerTest {
     public void doPostWithIncrementScrumCategoryCorrectCountOnCorrectAnswer2() throws ServletException, IOException {
         question = createQuestionWithOptions(tech);
         List<ObjectId> optionId = question.correctOptions();
-        onlineTest = new OnlineTest(2);
+        onlineTest = OnlineQuiz.createOnlineQuiz(2);
 
         request.addParameter("optionId", optionId.get(0).toString());
         request.addParameter("lastDoneQuestionId", "0");
@@ -225,7 +224,7 @@ public class QuestionControllerTest {
     public void doPostWithIncrementTechCategoryCorrectCountOnCorrectAnswer() throws ServletException, IOException {
         question = createQuestionWithOptions(team);
         List<ObjectId> optionIds = question.correctOptions();
-        onlineTest = new OnlineTest(2);
+        onlineTest = OnlineQuiz.createOnlineQuiz(2);
 
         request.addParameter("optionId", optionIds.get(0).toString());
         request.addParameter("lastDoneQuestionId", "0");
@@ -243,7 +242,7 @@ public class QuestionControllerTest {
     public void answerCurrentQuestionInParameter() throws ServletException, IOException{
         question = createQuestionWithOptions(tech);
         List<ObjectId> optionIds = question.correctOptions();
-        onlineTest = new OnlineTest(2);
+        onlineTest = OnlineQuiz.createOnlineQuiz(2);
 
         request.addParameter("optionId", optionIds.get(0).toString());
         request.addParameter("lastDoneQuestionId", "0");

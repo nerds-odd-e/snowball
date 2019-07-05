@@ -3,6 +3,7 @@ package cucumber.steps;
 import com.odde.snowball.factory.QuestionBuilder;
 import com.odde.snowball.model.User;
 import com.odde.snowball.model.onlinetest.Category;
+import com.odde.snowball.model.onlinetest.OnlineQuiz;
 import com.odde.snowball.model.onlinetest.OnlineTest;
 import com.odde.snowball.model.onlinetest.Question;
 import cucumber.api.java.en.And;
@@ -308,7 +309,7 @@ public class QuestionStep {
     public void startをクリックしてすべての問題を回答したとき(int count) {
         totalCounter = 0;
         scrumCounter = 0;
-        OnlineTest onlineTest = new OnlineTest(count);
+        OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(count);
         while (onlineTest.hasNextQuestion()) {
             totalCounter++;
             Question currentQuestion = onlineTest.getCurrentQuestion();

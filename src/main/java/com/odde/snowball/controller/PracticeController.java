@@ -21,7 +21,7 @@ public class PracticeController extends AppController {
         Practice.generatePractice(userId);
         session.setAttribute("date", LocalDate.now());
 
-        OnlineTest onlineTest = OnlineTest.getOnlineTest(userId, req.getParameter("practice_category"));
+        OnlineTest onlineTest = OnlineTest.createOnlinePractice(userId, req.getParameter("practice_category"));
         if (!onlineTest.hasNextQuestion()) {
             resp.sendRedirect("/practice/completed_practice.jsp");
             return;

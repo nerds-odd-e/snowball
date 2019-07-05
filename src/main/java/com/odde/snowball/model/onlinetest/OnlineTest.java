@@ -22,12 +22,10 @@ public class OnlineTest {
     private Map<String, Integer> categoryCorrectAnswerCount;
     public List<CategoryTestResult> categoryTestResults;
     public List<Answer> answers;
-    private TestType testType;
     private LocalDate answeredTime;
 
     public OnlineTest(int questionCount) {
         this(new QuestionCollection(repo(Question.class).findAll()).generateQuestionList(repo(Category.class).findAll(), questionCount));
-        testType = TestType.OnlineTest;
     }
 
     public OnlineTest(List<Question> questions) {
@@ -38,11 +36,10 @@ public class OnlineTest {
         answers = new ArrayList<>();
     }
 
-    public static OnlineTest getOnlineTest(ObjectId userId, String category) {
+    public static OnlineTest createOnlinePractice(ObjectId userId, String category) {
         List<Question> notAnswered = repo(Question.class).findAll().stream().filter(q-> q.isDueForUser(userId)).collect(Collectors.toList());
         List<Question> questions = new QuestionCollection(notAnswered).generateQuestionList(repo(Category.class).findBy("name", category), notAnswered.size());
-        OnlineTest onlineTest = new OnlineTest(questions);
-        onlineTest.testType = TestType.Practice;
+        OnlineTest onlineTest = new OnlinePractice(questions);
         return onlineTest;
     }
 
@@ -205,14 +202,13 @@ public class OnlineTest {
     }
 
     public TestType getTestType() {
-        return testType;
+        return null;
     }
 
     public String getNextPageName() {
-        String redirectUrl = getTestType().equals(TestType.Practice)? "/practice/completed_practice.jsp" : "/onlinetest/end_of_test.jsp";
-        if(hasNextQuestion()){
-            redirectUrl = "/onlinetest/question.jsp";
+        if (hasNextQuestion()) {
+            return "/onlinetest/question.jsp";
         }
-        return redirectUrl;
+        return "/onlinetest/end_of_test.jsp";
     }
 }

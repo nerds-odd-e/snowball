@@ -31,27 +31,27 @@ public class OnlineTestTest {
 
     @Test
     public void shouldNotGetANewOnlineTestWithNQuestionIdsIfEnoughQuestionsInDatabase() {
-        OnlineTest newOnlineTest = new OnlineTest(5);
+        OnlineTest newOnlineTest = OnlineQuiz.createOnlineQuiz(5);
         assertEquals(0, newOnlineTest.getNumberOfQuestions());
     }
 
     @Test
     public void shouldGetNextQuestionWhenHaveMoreQuestionsAvailable() {
         mockQuestion(5);
-        OnlineTest newOnlineTest = new OnlineTest(5);
+        OnlineTest newOnlineTest = OnlineQuiz.createOnlineQuiz(5);
         assertEquals(5, newOnlineTest.getNumberOfQuestions());
     }
 
     @Test(expected = NoSuchElementException.class)
     public void shouldNotGetNextQuestionWhenNoMoreQuestionsLeft() {
-        OnlineTest newOnlineTest = new OnlineTest(5);
+        OnlineTest newOnlineTest = OnlineQuiz.createOnlineQuiz(5);
         newOnlineTest.getNextQuestion();
     }
 
     @Test
     public void shouldNotRepeatQuestions() {
         mockQuestion(6);
-        OnlineTest newOnlineTest = new OnlineTest(5);
+        OnlineTest newOnlineTest = OnlineQuiz.createOnlineQuiz(5);
         Set<Question> questions = new HashSet<>();
         while (newOnlineTest.hasNextQuestion()) {
             questions.add(newOnlineTest.getCurrentQuestion());
@@ -63,7 +63,7 @@ public class OnlineTestTest {
     @Test
     public void showMultiCategoryMessage() {
         mockQuestion(2, scrum.getId());
-        OnlineTest onlineTest = new OnlineTest(2);
+        OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(2);
 
         onlineTest.setCorrectAnswerCount(2);
         assertEquals("", onlineTest.getCategoryMessage());
@@ -73,7 +73,7 @@ public class OnlineTestTest {
     @Test
     public void showWrongSingleCategoryMessage() {
         mockQuestion(2, scrum.getId());
-        OnlineTest onlineTest = new OnlineTest(2);
+        OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(2);
 
         onlineTest.setCorrectAnswerCount(0);
         assertEquals("Scrumをもっと勉強して", onlineTest.getCategoryMessage());
@@ -84,7 +84,7 @@ public class OnlineTestTest {
     public void showWrongMultiCategoryMessage() {
         mockQuestion(1, scrum.getId());
         mockQuestion(1, tech.getId());
-        OnlineTest onlineTest = new OnlineTest(2);
+        OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(2);
 
         onlineTest.setCorrectAnswerCount(0);
         assertEquals("ScrumとTechをもっと勉強して", onlineTest.getCategoryMessage());
@@ -94,7 +94,7 @@ public class OnlineTestTest {
     @Test
     public void showChangeAdvice() {
         mockQuestion(5, scrum.getId());
-        OnlineTest onlineTest = new OnlineTest(5);
+        OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(5);
 
         onlineTest.setCorrectAnswerCount(4);
         assertEquals("", onlineTest.getCategoryMessage());
@@ -113,7 +113,7 @@ public class OnlineTestTest {
         answeredOption[0] = QuestionOption.<QuestionOption>createIt(id, "desc1", true).getStringId();
         answeredOption[1] = QuestionOption.<QuestionOption>createIt(id, "desc2", true).getStringId();
 
-        OnlineTest onlineTest = new OnlineTest(1);
+        OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(1);
 
         Answer answer = onlineTest.answerCurrentQuestion(Arrays.asList(answeredOption), user.getId(), LocalDate.now());
         boolean result = answer.isCorrect();
@@ -123,7 +123,7 @@ public class OnlineTestTest {
     @Test
     public void aQuestionThatWasAnsweredOneDayAgoKnowsItIsOneDayOld() {
         LocalDate answeredTime = LocalDate.now().minusDays(1);
-        OnlineTest onlineTest = new OnlineTest(1);
+        OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(1);
 
         onlineTest.recordAnswerWithTime(answeredTime);
         long passedDays = onlineTest.getPassedDaysSinceAnswered();
@@ -140,7 +140,7 @@ public class OnlineTestTest {
         answeredOption[1] = QuestionOption.<QuestionOption>createIt(id, "desc2", true).getStringId();
         QuestionOption.<QuestionOption>createIt(id, "desc3", true).getStringId();
 
-        OnlineTest onlineTest = new OnlineTest(1);
+        OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(1);
         Answer answer = onlineTest.answerCurrentQuestion(Arrays.asList(answeredOption), user.getId(), LocalDate.now());
         boolean result = answer.isCorrect();
         assertFalse(result);
@@ -148,7 +148,7 @@ public class OnlineTestTest {
 
     @Test
     public void getEmptyFailedCategoryTestResults() {
-        OnlineTest onlineTest = new OnlineTest(0);
+        OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(0);
         List<CategoryTestResult> failedCategoryTestResults = onlineTest.getFailedCategoryTestResults();
 
         assertEquals(0, failedCategoryTestResults.size());
@@ -157,7 +157,7 @@ public class OnlineTestTest {
     @Test
     public void answerCurrentQuestion() {
         mockQuestion(3, scrum.getId());
-        OnlineTest onlineTest = new OnlineTest(1);
+        OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(1);
         onlineTest.answerCurrentQuestion(Collections.singletonList(new ObjectId().toString()), user.getId(), LocalDate.now());
         assertEquals(1, onlineTest.answers.size());
     }
@@ -168,7 +168,7 @@ public class OnlineTestTest {
         QuestionOption it = QuestionOption.<QuestionOption>createIt(q1.getId(), "d1", true);
         QuestionOption.<QuestionOption>createIt(q1.getId(), "d2", false);
 
-        OnlineTest onlineTest = new OnlineTest(1);
+        OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(1);
         onlineTest.answerCurrentQuestion(Collections.singletonList(it.getStringId()), user.getId(), LocalDate.now());
 
         TestResult result = onlineTest.generateTestResult();
@@ -183,7 +183,7 @@ public class OnlineTestTest {
         QuestionOption.<QuestionOption>createIt(q1.getId(), "d1", true);
         QuestionOption wrongOption = QuestionOption.<QuestionOption>createIt(q1.getId(), "d2", false);
 
-        OnlineTest onlineTest = new OnlineTest(1);
+        OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(1);
         onlineTest.answerCurrentQuestion(Collections.singletonList(wrongOption.getStringId()), user.getId(), LocalDate.now());
 
         TestResult result = onlineTest.generateTestResult();
@@ -215,7 +215,7 @@ public class OnlineTestTest {
         QuestionOption.<QuestionOption>createIt(q5.getId(), "d1", true);
         QuestionOption c5 = QuestionOption.<QuestionOption>createIt(q5.getId(), "d2", false);
 
-        OnlineTest onlineTest = new OnlineTest(5);
+        OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(5);
         for (int i=0;i<4;i++) {
             onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().correctOptions().stream().map(ObjectId::toString).collect(Collectors.toList()), user.getId(), LocalDate.now());
         }
@@ -231,13 +231,13 @@ public class OnlineTestTest {
     @Test
     public void onlineTestObjectShouldHaveTestTypeAttributePractice() {
         User user = new User();
-        OnlineTest onlineTest = OnlineTest.getOnlineTest(user.getId(), "Retro");
+        OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user.getId(), "Retro");
         assertEquals(onlineTest.getTestType(), TestType.Practice);
     }
 
     @Test
     public void onlineTestObjectShouldHaveTestTypeAttributeOnlineTest() {
-        OnlineTest onlineTest = new OnlineTest(1);
+        OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(1);
         assertEquals(onlineTest.getTestType(), TestType.OnlineTest);
     }
 
@@ -249,7 +249,7 @@ public class OnlineTestTest {
         questions.get(0).recordQuestionForUser(user.getId(), LocalDate.now().minusDays(2));
         questions.get(1).recordQuestionForUser(user.getId(), LocalDate.now().minusDays(1));
         questions.get(2).recordQuestionForUser(user.getId(), LocalDate.now());
-        OnlineTest onlineTest = OnlineTest.getOnlineTest(user.getId(), "Retro");
+        OnlineTest onlineTest = OnlineTest.createOnlinePractice(user.getId(), "Retro");
         assertEquals(2, onlineTest.getNumberOfQuestions());
         Set<ObjectId> expected = new HashSet<ObjectId>();
         expected.add(questions.get(0).getId());
@@ -268,7 +268,7 @@ public class OnlineTestTest {
         question.recordQuestionForUser(user.getId(), LocalDate.now().minusDays(37));
         question.recordQuestionForUser(user.getId(), LocalDate.now().minusDays(35));
         question.recordQuestionForUser(user.getId(), LocalDate.now().minusDays(31));
-        OnlineTest onlineTest = OnlineTest.getOnlineTest(user.getId(), "Retro");
+        OnlineTest onlineTest = OnlineTest.createOnlinePractice(user.getId(), "Retro");
         assertEquals(0, onlineTest.getNumberOfQuestions());
     }
 
@@ -279,20 +279,20 @@ public class OnlineTestTest {
     @Test
     public void should_return_questions_page_if_test_has_not_ended() {
         mockQuestion(1);
-        OnlineTest onlineTest = new OnlineTest(1);
+        OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(1);
         assertEquals(onlineTest.getNextPageName(), "/onlinetest/question.jsp");
     }
 
     @Test
     public void should_return_completed_test_page_if_test_ends() {
-        OnlineTest onlineTest = new OnlineTest(0);
+        OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(0);
         assertEquals(onlineTest.getNextPageName(), "/onlinetest/end_of_test.jsp");
     }
 
     @Test
     public void should_return_completed_practice_if_practice_ends() {
         User user = new User();
-        OnlineTest onlineTest = OnlineTest.getOnlineTest(user.getId(), "Retro");
+        OnlineTest onlineTest = OnlineTest.createOnlinePractice(user.getId(), "Retro");
         assertEquals(onlineTest.getNextPageName(), "/practice/completed_practice.jsp");
     }
 
