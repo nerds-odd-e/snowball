@@ -37,6 +37,19 @@ public class Question extends Entity<Question> {
     private boolean isMultiQuestion;
     private boolean isApproved;
 
+    public void recordQuestionForUser(ObjectId userId, LocalDate date) {
+        List<Record> records = repo(Record.class).find(and(eq("userId", userId), eq("questionId", getId())));
+        if(records.size() == 0){
+            Record record = new Record(userId, getId(), date, 1);
+            record.save();
+        } else {
+            Record record = records.get(0);
+            record.setLastUpdated(date);
+            record.setCycleState(record.getCycleState()+1);
+            record.save();
+        }
+    }
+
     boolean isDueForUser(ObjectId userId) {
         List<Integer> cycle = Arrays.asList(1,2,4);
         List<Record> records = repo(Record.class).find(and(eq("userId",userId),eq("questionId",getId())));
@@ -46,6 +59,9 @@ public class Question extends Entity<Question> {
         Record record = records.get(0);
         if (record.getCycleState()==0){
             return true;
+        }
+        if (record.getCycleState()>cycle.size()){
+            return false;
         }
         return !record.getLastUpdated()
                 .plusDays(cycle.get(record.getCycleState()-1))

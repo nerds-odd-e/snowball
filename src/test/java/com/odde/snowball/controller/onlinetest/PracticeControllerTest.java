@@ -7,7 +7,6 @@ import com.odde.snowball.model.base.Entity;
 import com.odde.snowball.model.onlinetest.Category;
 import com.odde.snowball.model.onlinetest.OnlineTest;
 import com.odde.snowball.model.onlinetest.Question;
-import com.odde.snowball.model.practice.Record;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -84,16 +83,16 @@ public class PracticeControllerTest {
 
     @Test
     public void userMustNotSeeTheQuestionIfSheHasDoneItOnTheSameDay() throws IOException {
-        List<Question> questions = mockQuestion();
-        Record.recordQuestionForUser(user1.getId(), questions.get(0).getId(), LocalDate.now());
+        Question question = mockQuestion().get(0);
+        question.recordQuestionForUser(user1.getId(), LocalDate.now());
         controller.doGet(request, response);
         assertEquals("/practice/completed_practice.jsp", response.getRedirectedUrl());
     }
 
     @Test
     public void userMustSeeQuestionEvenIfAnsweredByAnotherUser() throws IOException {
-        List<Question> questions = mockQuestion();
-        Record.recordQuestionForUser(user2.getId(), questions.get(0).getId(), LocalDate.now());
+        Question question = mockQuestion().get(0);
+        question.recordQuestionForUser(user2.getId(), LocalDate.now());
         controller.doGet(request, response);
         OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
         assertThat(onlineTest.getNumberOfQuestions()).isEqualTo(1);
@@ -101,8 +100,7 @@ public class PracticeControllerTest {
 
     @Test
     public void userMustSee2QuestionsIfThereAre2QuestionsDue() throws IOException {
-        List<Question> questions = mockQuestion(2);
-        Record.recordQuestionForUser(user2.getId(), questions.get(0).getId(), LocalDate.now());
+        mockQuestion(2);
         controller.doGet(request, response);
         OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
         assertThat(onlineTest.getNumberOfQuestions()).isEqualTo(2);

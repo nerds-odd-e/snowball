@@ -23,7 +23,7 @@ public class Practice extends Entity<Practice> {
     private List<Integer> cycle;
 
     public Practice(ObjectId userId) {
-        this(userId, 1, new ArrayList<>(), Arrays.asList(1, 3, 7));
+        this(userId, 1, new ArrayList<>(), Arrays.asList(1, 2, 4));
     }
 
     public Practice(ObjectId userId, int numberOfQuestions, Collection<ObjectId> categories, List<Integer> cycle) {

@@ -4,7 +4,6 @@ import com.odde.TestWithDB;
 import com.odde.snowball.enumeration.TestType;
 import com.odde.snowball.model.User;
 import com.odde.snowball.model.base.Entity;
-import com.odde.snowball.model.practice.Record;
 import org.bson.types.ObjectId;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,14 +13,12 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static com.odde.snowball.model.base.Repository.repo;
 import static org.junit.Assert.*;
 
 @RunWith(TestWithDB.class)
 public class OnlineTestTest {
     private Category scrum = Category.create("Scrum");
     private Category tech = Category.create("Tech");
-    ;
     private Category retro = Category.create("Retro");
 
     @Test
@@ -241,10 +238,10 @@ public class OnlineTestTest {
     public void practiceShouldShowAllDueQuestionsWhenTheyAreDue() {
         User user = new User();
         List<Question> questions = mockQuestion(3, retro.getId());
-        Record.recordQuestionForUser(user.getId(), questions.get(0).getId(), LocalDate.now().minusDays(3));
-        Record.recordQuestionForUser(user.getId(), questions.get(0).getId(), LocalDate.now().minusDays(2));
-        Record.recordQuestionForUser(user.getId(), questions.get(1).getId(), LocalDate.now().minusDays(1));
-        Record.recordQuestionForUser(user.getId(), questions.get(2).getId(), LocalDate.now());
+        questions.get(0).recordQuestionForUser(user.getId(), LocalDate.now().minusDays(3));
+        questions.get(0).recordQuestionForUser(user.getId(), LocalDate.now().minusDays(2));
+        questions.get(1).recordQuestionForUser(user.getId(), LocalDate.now().minusDays(1));
+        questions.get(2).recordQuestionForUser(user.getId(), LocalDate.now());
         OnlineTest onlineTest = OnlineTest.getOnlineTest(user.getId(), "Retro");
         assertEquals(2, onlineTest.getNumberOfQuestions());
         Set<ObjectId> expected = new HashSet<ObjectId>();
@@ -255,6 +252,18 @@ public class OnlineTestTest {
         assertEquals(onlineTest.getTestType(), TestType.Practice);
     }
 
+
+    @Test
+    public void practiceShouldShowNotShowQuestionWhenCycleIsComplete() {
+        User user = new User();
+        Question question = mockQuestion(1, retro.getId()).get(0);
+        question.recordQuestionForUser(user.getId(), LocalDate.now().minusDays(38));
+        question.recordQuestionForUser(user.getId(), LocalDate.now().minusDays(37));
+        question.recordQuestionForUser(user.getId(), LocalDate.now().minusDays(35));
+        question.recordQuestionForUser(user.getId(), LocalDate.now().minusDays(31));
+        OnlineTest onlineTest = OnlineTest.getOnlineTest(user.getId(), "Retro");
+        assertEquals(0, onlineTest.getNumberOfQuestions());
+    }
 
     private List<Question> mockQuestion(int numberOfQuestion, ObjectId category) {
         return IntStream.range(0, numberOfQuestion).mapToObj(index -> new Question("desc" + index, "adv" + index, category, false, false).save()).collect(Collectors.toList());

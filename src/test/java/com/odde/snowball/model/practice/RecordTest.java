@@ -1,6 +1,8 @@
 package com.odde.snowball.model.practice;
 
 import com.odde.TestWithDB;
+import com.odde.snowball.model.User;
+import com.odde.snowball.model.onlinetest.Question;
 import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,39 +15,38 @@ import static org.junit.Assert.*;
 
 @RunWith(TestWithDB.class)
 public class RecordTest {
-    private final ObjectId userId1 = new ObjectId();
-    private final ObjectId userId2 = new ObjectId();
-
-    private final ObjectId questionId1 = new ObjectId();
-    private final ObjectId questionId2 = new ObjectId();
+    private final User user = new User("test@test.com");
+    private final Question question = new Question("test", "advice", new ObjectId(), false, true);
 
     @Before
-    public void setUp() {
-        createRecord();
+    public void setUp(){
+        user.save();
+        question.save();
     }
 
     private void createRecord() {
-        Record record = new Record(userId1, questionId1, LocalDate.now(), 0);
+        Record record = new Record(user.getId(), question.getId(), LocalDate.now(), 0);
         record.save();
     }
 
     @Test
     public void testFetchRecordsByUserId() {
-        Collection<Record> records = Record.fetchRecordsByUserId(userId1);
-        assertNotNull(records);
-        assertEquals(questionId1, records.iterator().next().getQuestionId());
+        createRecord();
+        Collection<Record> records = Record.fetchRecordsByUserId(user.getId());
+        assertEquals(question.getId(), records.iterator().next().getQuestionId());
     }
 
     @Test
     public void testSaveRecordQuestionForFirstTime() {
-        Record.recordQuestionForUser(userId2, questionId2, LocalDate.now());
-        assertEquals(1, Record.fetchRecordsByUserId(userId2).size());
+        question.recordQuestionForUser(user.getId(), LocalDate.now());
+        assertEquals(1, Record.fetchRecordsByUserId(user.getId()).size());
     }
 
     @Test
     public void testSaveRecordWithUpdatedCycleState() {
-        Record.recordQuestionForUser(userId1, questionId1, LocalDate.now());
-        Collection<Record> records = Record.fetchRecordsByUserId(userId1);
+        createRecord();
+        question.recordQuestionForUser(user.getId(), LocalDate.now());
+        Collection<Record> records = Record.fetchRecordsByUserId(user.getId());
         assertEquals(1, records.iterator().next().getCycleState());
     }
 

@@ -4,7 +4,7 @@ import com.odde.snowball.controller.AppController;
 import com.odde.snowball.enumeration.TestType;
 import com.odde.snowball.model.onlinetest.Answer;
 import com.odde.snowball.model.onlinetest.OnlineTest;
-import com.odde.snowball.model.practice.Record;
+import com.odde.snowball.model.onlinetest.Question;
 import org.bson.types.ObjectId;
 
 import javax.servlet.RequestDispatcher;
@@ -43,10 +43,8 @@ public class QuestionController extends AppController {
             return;
         }
 
-        ObjectId questionId = onlineTest.getCurrentQuestion().getId();
+        onlineTest.getCurrentQuestion().recordQuestionForUser(userId, date);
         Answer answer = onlineTest.answerCurrentQuestion(answeredOptionIds);
-
-        Record.recordQuestionForUser(userId, questionId, date);
 
         if (answer.isCorrect()) {
             resp.sendRedirect(onlineTest.getNextPageName());
