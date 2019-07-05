@@ -12,6 +12,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -36,9 +37,19 @@ public class Question extends Entity<Question> {
     private boolean isMultiQuestion;
     private boolean isApproved;
 
-    boolean questionsDueForTheUser(ObjectId userId) {
-        List<Record> record = repo(Record.class).find(and(eq("userId", userId), eq("questionId", getId())));
-        return ((record == null || record.isEmpty()) || (!record.get(0).getLastUpdated().isEqual(LocalDate.now()) && record.get(0).getCycleState() < 2));
+    boolean isDueForUser(ObjectId userId) {
+        List<Integer> cycle = Arrays.asList(1,2,4);
+        List<Record> records = repo(Record.class).find(and(eq("userId",userId),eq("questionId",getId())));
+        if (records.size()==0){
+            return true;
+        }
+        Record record = records.get(0);
+        if (record.getCycleState()==0){
+            return true;
+        }
+        return !record.getLastUpdated()
+                .plusDays(cycle.get(record.getCycleState()-1))
+                .isAfter(LocalDate.now());
     }
 
     public Category category() {

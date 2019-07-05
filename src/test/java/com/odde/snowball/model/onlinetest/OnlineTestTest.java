@@ -3,6 +3,8 @@ package com.odde.snowball.model.onlinetest;
 import com.odde.TestWithDB;
 import com.odde.snowball.enumeration.TestType;
 import com.odde.snowball.model.User;
+import com.odde.snowball.model.base.Entity;
+import com.odde.snowball.model.practice.Record;
 import org.bson.types.ObjectId;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +20,8 @@ import static org.junit.Assert.*;
 @RunWith(TestWithDB.class)
 public class OnlineTestTest {
     private Category scrum = Category.create("Scrum");
-    private Category tech = Category.create("Tech");
+    private Category tech = Category.create("Tech");;
+    private Category retro = Category.create("Retro");
 
     @Test
     public void shouldNotGetANewOnlineTestWithNQuestionIdsIfEnoughQuestionsInDatabase() {
@@ -232,12 +235,30 @@ public class OnlineTestTest {
         assertEquals(onlineTest.getTestType(), TestType.OnlineTest);
     }
 
-    private void mockQuestion(int numberOfQuestion, ObjectId category) {
-        IntStream.range(0, numberOfQuestion).forEach(index -> new Question("desc" + index, "adv" + index, category, false, false).save());
+    @Test
+    public void practiceShouldShowAllDueQuestionsWhenTheyAreDue() {
+        User user = new User();
+        List<Question> questions = mockQuestion(3, retro.getId());
+        Record.recordQuestionForUser(user.getId(), questions.get(0).getId(), LocalDate.now().minusDays(3));
+        Record.recordQuestionForUser(user.getId(), questions.get(0).getId(), LocalDate.now().minusDays(2));
+        Record.recordQuestionForUser(user.getId(), questions.get(1).getId(), LocalDate.now().minusDays(1));
+        Record.recordQuestionForUser(user.getId(), questions.get(2).getId(), LocalDate.now());
+        OnlineTest onlineTest = OnlineTest.getOnlineTest(user.getId(), "Retro");
+        assertEquals(2, onlineTest.getNumberOfQuestions());
+        Set<ObjectId> expected = new HashSet<ObjectId>();
+        expected.add(questions.get(0).getId());
+        expected.add(questions.get(1).getId());
+        Set<ObjectId> actual = onlineTest.getQuestions().stream().map(Entity::getId).collect(Collectors.toSet());
+        assertEquals(expected, actual);
+        assertEquals(onlineTest.getTestType(), TestType.Practice);
+    }
+
+    private List<Question> mockQuestion(int numberOfQuestion, ObjectId category) {
+        return IntStream.range(0, numberOfQuestion).mapToObj(index -> new Question("desc" + index, "adv" + index, category, false, false).save()).collect(Collectors.toList());
     }
 
     private void mockQuestion(int numberOfQuestion) {
-        IntStream.range(0, numberOfQuestion).forEach(index -> new Question("desc" + index, "adv" + index, scrum.getId(), false, false).save());
+        mockQuestion(numberOfQuestion, scrum.getId());
     }
 
 }

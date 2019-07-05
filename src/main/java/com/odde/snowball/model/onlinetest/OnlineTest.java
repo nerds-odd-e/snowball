@@ -3,6 +3,7 @@ package com.odde.snowball.model.onlinetest;
 import com.odde.snowball.enumeration.TestType;
 import com.odde.snowball.model.base.Entity;
 import com.odde.snowball.model.practice.Record;
+import lombok.Getter;
 import org.bson.types.ObjectId;
 
 import java.time.Duration;
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 
 import static com.odde.snowball.model.base.Repository.repo;
 
+@Getter
 public class OnlineTest {
 
     private final List<Question> questions;
@@ -37,13 +39,12 @@ public class OnlineTest {
     }
 
     public static OnlineTest getOnlineTest(ObjectId userId, String category) {
-        List<Question> notAnswered = repo(Question.class).findAll().stream().filter(q -> q.questionsDueForTheUser(userId)).collect(Collectors.toList());
+        List<Question> notAnswered = repo(Question.class).findAll().stream().filter(q-> q.isDueForUser(userId)).collect(Collectors.toList());
         List<Question> questions = new QuestionCollection(notAnswered).generateQuestionList(repo(Category.class).findBy("name", category), notAnswered.size());
         OnlineTest onlineTest = new OnlineTest(questions);
         onlineTest.testType = TestType.Practice;
         return onlineTest;
     }
-
 
     public Question getPreviousQuestion() {
         return questions.get(numberOfAnsweredQuestions - 1);

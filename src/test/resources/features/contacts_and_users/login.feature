@@ -16,7 +16,7 @@ Feature: Login
     Then user should be redirected to login page
 
   Scenario Outline: login
-    Given There are users as bellow
+    Given There are users as below
       | mary@example.com | abcd1234 |
     When I login with "<email>" and "<password>"
     Then I should move to page with url "<url>"
@@ -35,7 +35,7 @@ Feature: Login
     And Login failed message is shown
 
   Scenario: Preserve login info after navigation
-    Given There are users as bellow
+    Given There are users as below
       | john@example.com | abcd1002 |
     And I login with "john@example.com" and "abcd1002"
     And I move to top page
