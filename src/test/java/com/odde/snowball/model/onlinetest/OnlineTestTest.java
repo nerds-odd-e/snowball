@@ -5,6 +5,7 @@ import com.odde.snowball.enumeration.TestType;
 import com.odde.snowball.model.User;
 import com.odde.snowball.model.base.Entity;
 import org.bson.types.ObjectId;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -20,6 +21,13 @@ public class OnlineTestTest {
     private Category scrum = Category.create("Scrum");
     private Category tech = Category.create("Tech");
     private Category retro = Category.create("Retro");
+
+    private User user = new User("email@email.com");
+
+    @Before
+    public void setUp(){
+        user.save();
+    }
 
     @Test
     public void shouldNotGetANewOnlineTestWithNQuestionIdsIfEnoughQuestionsInDatabase() {
@@ -107,7 +115,7 @@ public class OnlineTestTest {
 
         OnlineTest onlineTest = new OnlineTest(1);
 
-        Answer answer = onlineTest.answerCurrentQuestion(Arrays.asList(answeredOption));
+        Answer answer = onlineTest.answerCurrentQuestion(Arrays.asList(answeredOption), user.getId(), LocalDate.now());
         boolean result = answer.isCorrect();
         assertTrue(result);
     }
@@ -133,7 +141,7 @@ public class OnlineTestTest {
         QuestionOption.<QuestionOption>createIt(id, "desc3", true).getStringId();
 
         OnlineTest onlineTest = new OnlineTest(1);
-        Answer answer = onlineTest.answerCurrentQuestion(Arrays.asList(answeredOption));
+        Answer answer = onlineTest.answerCurrentQuestion(Arrays.asList(answeredOption), user.getId(), LocalDate.now());
         boolean result = answer.isCorrect();
         assertFalse(result);
     }
@@ -150,7 +158,7 @@ public class OnlineTestTest {
     public void answerCurrentQuestion() {
         mockQuestion(3, scrum.getId());
         OnlineTest onlineTest = new OnlineTest(1);
-        onlineTest.answerCurrentQuestion(Collections.singletonList(new ObjectId().toString()));
+        onlineTest.answerCurrentQuestion(Collections.singletonList(new ObjectId().toString()), user.getId(), LocalDate.now());
         assertEquals(1, onlineTest.answers.size());
     }
 
@@ -161,7 +169,7 @@ public class OnlineTestTest {
         QuestionOption.<QuestionOption>createIt(q1.getId(), "d2", false);
 
         OnlineTest onlineTest = new OnlineTest(1);
-        onlineTest.answerCurrentQuestion(Collections.singletonList(it.getStringId()));
+        onlineTest.answerCurrentQuestion(Collections.singletonList(it.getStringId()), user.getId(), LocalDate.now());
 
         TestResult result = onlineTest.generateTestResult();
 
@@ -176,7 +184,7 @@ public class OnlineTestTest {
         QuestionOption wrongOption = QuestionOption.<QuestionOption>createIt(q1.getId(), "d2", false);
 
         OnlineTest onlineTest = new OnlineTest(1);
-        onlineTest.answerCurrentQuestion(Collections.singletonList(wrongOption.getStringId()));
+        onlineTest.answerCurrentQuestion(Collections.singletonList(wrongOption.getStringId()), user.getId(), LocalDate.now());
 
         TestResult result = onlineTest.generateTestResult();
 
@@ -185,7 +193,7 @@ public class OnlineTestTest {
     }
 
     @Test
-    public void calculateCorrectRate70percent() {
+    public void calculateCorrectRate80percent() {
 
         Question q1 = new Question("d1", "a1", scrum.getId(), false, false).save();
         QuestionOption c1 = QuestionOption.<QuestionOption>createIt(q1.getId(), "d1", true);
@@ -208,11 +216,10 @@ public class OnlineTestTest {
         QuestionOption c5 = QuestionOption.<QuestionOption>createIt(q5.getId(), "d2", false);
 
         OnlineTest onlineTest = new OnlineTest(5);
-        onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().correctOptions().stream().map(ObjectId::toString).collect(Collectors.toList()));
-        onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().correctOptions().stream().map(ObjectId::toString).collect(Collectors.toList()));
-        onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().correctOptions().stream().map(ObjectId::toString).collect(Collectors.toList()));
-        onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().correctOptions().stream().map(ObjectId::toString).collect(Collectors.toList()));
-        onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().correctOptions().stream().map(o -> new ObjectId().toString()).collect(Collectors.toList()));
+        for (int i=0;i<4;i++) {
+            onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().correctOptions().stream().map(ObjectId::toString).collect(Collectors.toList()), user.getId(), LocalDate.now());
+        }
+        onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().correctOptions().stream().map(o -> new ObjectId().toString()).collect(Collectors.toList()), user.getId(), LocalDate.now());
 
         TestResult result = onlineTest.generateTestResult();
 

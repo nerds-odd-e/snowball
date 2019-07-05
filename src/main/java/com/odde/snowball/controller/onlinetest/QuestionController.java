@@ -24,7 +24,6 @@ public class QuestionController extends AppController {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(true);
         ObjectId userId = (ObjectId) session.getAttribute("userId");
-        LocalDate date = (LocalDate) session.getAttribute("date");
 
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
         String[] answeredOptionIds = req.getParameterValues("optionId");
@@ -43,13 +42,13 @@ public class QuestionController extends AppController {
             return;
         }
 
-        onlineTest.getCurrentQuestion().recordQuestionForUser(userId, date);
-        Answer answer = onlineTest.answerCurrentQuestion(answeredOptionIds);
+        Answer answer = onlineTest.answerCurrentQuestion(answeredOptionIds, userId, LocalDate.now());
 
         if (answer.isCorrect()) {
             resp.sendRedirect(onlineTest.getNextPageName());
             return;
         }
+
         req.setAttribute("selectedOption", new ArrayList(Arrays.asList(answeredOptionIds)));
         RequestDispatcher dispatch = req.getRequestDispatcher("/onlinetest/advice.jsp");
         dispatch.forward(req, resp);

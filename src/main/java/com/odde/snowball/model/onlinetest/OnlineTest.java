@@ -165,14 +165,19 @@ public class OnlineTest {
         return categoryTestResults;
     }
 
-    public Answer answerCurrentQuestion(String[] answeredOptionIds) {
-        return answerCurrentQuestion(Arrays.asList(answeredOptionIds));
+    public Answer answerCurrentQuestion(String[] answeredOptionIds, ObjectId userId, LocalDate date) {
+        return answerCurrentQuestion(Arrays.asList(answeredOptionIds), userId, date);
     }
 
-    public Answer answerCurrentQuestion(List<String> selectedOptionIds) {
+    public Answer answerCurrentQuestion(List<String> selectedOptionIds, ObjectId userId, LocalDate date) {
         Answer answer = new Answer(getCurrentQuestion(), selectedOptionIds);
         answers.add(answer);
         updateCacheIfCorrect(answer);
+        if (answer.isCorrect()) {
+            getCurrentQuestion().recordQuestionForUser(userId, date);
+        } else {
+            getCurrentQuestion().resetCycle(userId, date);
+        }
         addAnsweredQuestionNumber();
         return answer;
     }

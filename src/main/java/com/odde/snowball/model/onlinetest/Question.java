@@ -113,4 +113,16 @@ public class Question extends Entity<Question> {
         new QuestionOption(optionText, true, getId()).save();
     }
 
+    public void resetCycle(ObjectId userId, LocalDate date) {
+        List<Record> records = repo(Record.class).find(and(eq("userId", userId), eq("questionId", getId())));
+        if(records.size() == 0){
+            Record record = new Record(userId, getId(), date, 0);
+            record.save();
+        } else {
+            Record record = records.get(0);
+            record.setLastUpdated(date);
+            record.setCycleState(0);
+            record.save();
+        }
+    }
 }
