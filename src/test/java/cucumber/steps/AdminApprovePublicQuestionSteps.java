@@ -17,11 +17,7 @@ public class AdminApprovePublicQuestionSteps {
 
     @Given("^未承認の問題がある$")
     public void 未承認の問題がある(Map<String, String> questionMap){
-        Question q = new QuestionBuilder()
-                .aQuestion(questionMap.get("description"),null, new CategoryBuilder().categoryByName("Scrum"))
-                .withCorrectOption(questionMap.get("option1"))
-                .withWrongOption(questionMap.get("option2"))
-                .please();
+        Question q = QuestionBuilder.buildDefaultQuestion("Scrum").please();
         questionId = q.getStringId();
     }
 

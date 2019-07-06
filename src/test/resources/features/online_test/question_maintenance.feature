@@ -86,19 +86,18 @@ Feature:
     And EndOfTheTestが表示される
 
   Scenario: Added question would be shown in question list page
-    Given Question added
-      | description | What is scrum?  |
-      | option1     | Rugby           |
-      | option2     | Football        |
+    Given There are questions with dummy options:
+      | description    | correctOption     | category |
+      | What is scrum? | None of the above | Scrum    |
     Then User should see questions and options in question list page with correct one highlighted
-      | description | What is scrum?  |
-      | option1     | Rugby           |
-      | option2     | Football        |
+      | description | What is scrum?    |
+      | option1     | Food              |
+      | option2     | None of the above |
 
   Scenario: 公開問題をAdminが承認すると承認済みになる
     Given 未承認の問題がある
-      | description | What is scrum?  |
-      | option1     | Rugby           |
-      | option2     | Football        |
+      | description | What is scrum? |
+      | option1     | Rugby          |
+      | option2     | Football       |
     When Adminが承認する
     Then 問題が承認済みになる

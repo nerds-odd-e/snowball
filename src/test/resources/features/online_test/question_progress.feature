@@ -2,10 +2,11 @@ Feature:
   User can see his progress on the Question and Advice page :)
 
   Background:
-    Given there is a question category "Scrum"
-    And Add a question "What is scrum?" with dummy options and chosen category "Scrum"
-    And Add a question "What is Scrum Master?" with dummy options and chosen category "Scrum"
-    And Add a question "What is Product Owner?" with dummy options and chosen category "Scrum"
+    Given There are questions with dummy options:
+      | description            | category |
+      | What is scrum?         | Scrum    |
+      | What is scrum Master?  | Scrum    |
+      | What is Product Owner? | Scrum    |
 
   Scenario: Displaying the question progress ( 1 of 3 )
     And User is on the first question

@@ -2,7 +2,6 @@ package cucumber.steps;
 
 import com.odde.snowball.factory.QuestionBuilder;
 import com.odde.snowball.model.User;
-import com.odde.snowball.model.onlinetest.Category;
 import com.odde.snowball.model.onlinetest.OnlineQuiz;
 import com.odde.snowball.model.onlinetest.OnlineTest;
 import com.odde.snowball.model.onlinetest.Question;
@@ -12,18 +11,15 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.steps.driver.WebDriverWrapper;
 import cucumber.steps.site.SnowballSite;
-import org.bson.types.ObjectId;
 import org.openqa.selenium.support.Color;
 
 import java.util.List;
 import java.util.Map;
 
-import static com.mongodb.client.model.Filters.eq;
-import static com.odde.snowball.model.base.Repository.repo;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class QuestionStep {
     private final SnowballSite site = new SnowballSite();
@@ -33,7 +29,6 @@ public class QuestionStep {
     private int numberOfCorrectAnsweredQuestion;
     private int currentTestTotalQuestions;
     private final String add_question_url = site.baseUrl() + "onlinetest/add_question.jsp";
-    private final CategoryBuilder categoryBuilder = new CategoryBuilder();
 
     private final String login_url = site.baseUrl() + "login.jsp";
 
@@ -42,34 +37,27 @@ public class QuestionStep {
         driver.expectPageToContainText("Login Massive Mailer");
     }
 
-    @Given("^Add a question \"([^\"]*)\" with dummy options and chosen category \"([^\"]*)\" and correct option$")
-    public void add_a_question(String description, String category) {
-        new QuestionBuilder()
-                .aQuestion(description, "", categoryBuilder.categoryByName(category))
+    @Given("^There are questions with dummy options:$")
+    public void add_questions(List<Map<String, String>> questions) {
+        questions.forEach(questionAttributes -> new QuestionBuilder()
+                .aQuestion(
+                        questionAttributes.getOrDefault("description", "What is scrum"),
+                        questionAttributes.getOrDefault("advice", ""),
+                        questionAttributes.getOrDefault("category", "Scrum"))
                 .withWrongOption("Food")
                 .withWrongOption("Drink")
                 .withWrongOption("Country")
                 .withWrongOption("Animal")
-                .withCorrectOption("correctOption")
-                .please();
+                .withCorrectOption(
+                        questionAttributes.getOrDefault("correctOption", "None of the above"))
+                .please()
+        );
     }
 
-    @Given("^Add a question \"([^\"]*)\" with dummy options and chosen category \"([^\"]*)\" and advice \"([^\"]*)\"$")
-    public void add_a_question(String description, String category, String advice) {
-        new QuestionBuilder()
-                .aQuestion(description, advice, categoryBuilder.categoryByName(category))
-                .withWrongOption("Food")
-                .withWrongOption("Drink")
-                .withWrongOption("Country")
-                .withWrongOption("Animal")
-                .withCorrectOption("None of the above")
-                .please();
-    }
-
-    @Given("^Add a question \"([^\"]*)\" of multiple answers$")
+    @Given("^there is a question \"([^\"]*)\" of multiple answers$")
     public void add_a_question_of_multiple_answers(String description) {
         new QuestionBuilder()
-                .aQuestion(description, "advice", categoryBuilder.categoryByName("Scrum"))
+                .aQuestion(description, "advice", "Scrum")
                 .mutipleSelections()
                 .withCorrectOption("correctOption1")
                 .withWrongOption("wrongOption1")
@@ -78,29 +66,41 @@ public class QuestionStep {
                 .please();
     }
 
+    @Given("^there are (\\d+) questions of category \"([^\"]*)\"$")
+    public void create_multiple_questions(int numberOfQuestions, String category) {
+        for (int i = 0; i < numberOfQuestions; i++) {
+            QuestionBuilder.buildDefaultQuestion(category).please();
+        }
+    }
+
+    @When("^OnlineTestを開始する$")
+    public void start_onlinetest() {
+        site.visit("onlinetest/launchQuestion");
+    }
+
     @Given("^User is taking a onlineTest with (\\d+) questions$")
     public void user_is_taking_a_onlineTest_with_n_single_questions(int totalQuestions) {
         this.currentTestTotalQuestions = totalQuestions;
-        for (int i = 0; i < totalQuestions; i++)
-            new QuestionBuilder()
-                    .aQuestion(repo(Category.class).findFirstBy("name", "Scrum"))
-                    .withWrongOption("wrongOption")
-                    .withCorrectOption("correctOption")
-                    .please();
         site.visit(String.format("onlinetest/launchQuestion?question_count=%d", totalQuestions));
     }
 
-    @Given("^User is taking a onlineTest with (\\d+) single choice questions$")
-    public void user_is_taking_a_onlineTest_with_n_questions(int totalQuestions) {
+    @Given("^User is taking a onlineTest with (\\d+) questions and there are enough questions$")
+    public void user_is_taking_a_onlineTest_with_all_questions(int totalQuestions) {
+        create_multiple_questions(totalQuestions, "aCategory");
         user_is_taking_a_onlineTest_with_n_single_questions(totalQuestions);
     }
 
-    @Given("^User is taking a onlineTest with (\\d+) multiple choice questions$")
+    @Given("^User is taking a onlineTest with (\\d+) single choice questions and there are enough questions$")
+    public void user_is_taking_a_onlineTest_with_n_questions(int totalQuestions) {
+        user_is_taking_a_onlineTest_with_all_questions(totalQuestions);
+    }
+
+    @Given("^User is taking a onlineTest with (\\d+) multiple choice questions and there are enough questions$")
     public void user_is_taking_a_onlineTest_with_multiple_choice_questions(int n) {
         for (int i = 0; i < n; i++) {
             add_a_question_of_multiple_answers("multiple choice question");
         }
-        site.visit(String.format("onlinetest/launchQuestion?question_count=%d", n));
+        user_is_taking_a_onlineTest_with_n_single_questions(n);
     }
 
     @Given("^User is on the first question$")
@@ -271,23 +271,6 @@ public class QuestionStep {
         driver.forEachElement(".alertMsg", e ->
                 assertEquals(e.getCssValue("color"), Color.fromString("#dc3545").asRgba())
         );
-    }
-
-    @Given("^問題が出題される$")
-    public void 問題が出題される() {
-        site.visit("onlinetest/launchQuestion");
-    }
-
-    @Given("In \"([^\"]*)\" there are (\\d+) questions$")
-    public void categoryNameに_問が登録されている(String categoryName, int numOfQuestions) {
-        ObjectId categoryId = categoryBuilder.categoryByName(categoryName);
-
-        for (int i = 0; i < numOfQuestions; i++) {
-            new QuestionBuilder()
-                    .aQuestion(categoryName, null, categoryId)
-                    .withCorrectOption("CorrectOption")
-                    .please();
-        }
     }
 
     @Then("^there should be >=(\\d+) Scrum questions$")

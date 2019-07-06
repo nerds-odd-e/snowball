@@ -56,15 +56,9 @@
                 <li><a href="/onlinetest/category/advice" id="update_advice"><span
                         class="glyphicon glyphicon-file" aria-hidden="true"></span>
                         Update Advice</a></li>
-                　<!-- <li><a id="start_test" href="/onlinetest/launchQuestion"><span
-                        class="glyphicon glyphicon-file" aria-hidden="true"></span>
-                        Start Test</a></li> -->
-                <li><a id="start_test" href="/onlinetest/question_category.jsp"><span
+                <li><a id="home" href="/"><span
                     class="glyphicon glyphicon-file" aria-hidden="true"></span>
-                    Start Test</a></li>
-                <li><a id="start_practice" href="/launchPractice"><span
-                    class="glyphicon glyphicon-file" aria-hidden="true"></span>
-                    Start Practice</a></li>
+                    Home</a></li>
             </ul>
         </div>
     <!-- /.navbar-collapse -->

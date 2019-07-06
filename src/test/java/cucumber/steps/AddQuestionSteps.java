@@ -1,19 +1,14 @@
 package cucumber.steps;
 
-import com.odde.snowball.factory.QuestionBuilder;
 import com.odde.snowball.model.onlinetest.Category;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.apache.commons.lang3.StringUtils;
 import cucumber.steps.driver.WebDriverWrapper;
 import cucumber.steps.site.SnowballSite;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class AddQuestionSteps {
     private final SnowballSite site = new SnowballSite();
@@ -72,23 +67,14 @@ public class AddQuestionSteps {
         driver.click("#add_button");
     }
 
-    @Given("^Question added$")
-    public void questionAdded(Map<String, String> questionMap) {
-        new QuestionBuilder()
-                .aQuestion(questionMap.get("description"),null, new CategoryBuilder().categoryByName("Scrum"))
-                .withCorrectOption(questionMap.get("option1"))
-                .withWrongOption(questionMap.get("option2"))
-                .please();
-        site.visit("onlinetest/question_list.jsp");
-    }
-
     @Then("^User should see questions and options in question list page with correct one highlighted$")
     public void userShouldSeeQuestionsAndOptionsInQuestionListPage(Map<String, String> questionMap) {
+        site.visit("onlinetest/question_list.jsp");
         driver.expectTitleToBe("Question List");
         driver.expectPageToContainText(questionMap.get("description"));
         driver.expectPageToContainText(questionMap.get("option1"));
         driver.expectPageToContainText(questionMap.get("option2"));
-        driver.expectElementToExist("#option1row");
+        driver.expectElementToExist("#option5row");
     }
 
     @Then("^\"([^\"]*)\"というメッセージが表示される$")
@@ -123,11 +109,6 @@ public class AddQuestionSteps {
     @Given("^advice に\"([^\"]*)\" を入力する$")
     public void advice_に_を入力する(String advice) {
         driver.setTextField("advice", advice);
-    }
-
-    @When("^OnlineTestを開始する$")
-    public void onlinetestを開始する() {
-        site.visit("onlinetest/launchQuestion");
     }
 
     @Then("^\"([^\"]*)\"という問題が出題される$")

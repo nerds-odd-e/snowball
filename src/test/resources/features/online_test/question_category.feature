@@ -1,23 +1,10 @@
 Feature:
   問題表示の前にカテゴリー選択が表示される
 
-  Background:
-    Given there is a question category "Scrum"
-    And there is a question category "Tech"
-    And there is a question category "Team"
-
-
-  Scenario: Start test with all the categories
-    Given there is one question exist in the system
-    And I'm on the category selection page
-    And all the categories should have been selected
-    When I click the start test button
-    Then I should see the test starts
-
   Scenario Outline: Questions should be selected from categories evenly
-    Given In "Scrum" there are <scrum_stored> questions
-    And In "Tech" there are <tech_stored> questions
-    And In "Team" there are <team_stored> questions
+    Given there are <scrum_stored> questions of category "Scrum"
+    Given there are <tech_stored> questions of category "Tech"
+    Given there are <team_stored> questions of category "Team"
     When do a test with 10 questions
     Then there should be <scrum_shown> Scrum questions
     And in total <total_shown> questions

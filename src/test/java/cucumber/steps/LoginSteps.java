@@ -33,13 +33,11 @@ public class LoginSteps {
         user.save();
     }
 
-    @Given("^There are users as below$")
-    public void there_are_users_as_below(Map<String, String> userTable) {
-        userTable.forEach((key, value) -> {
-            User user = new User(key);
-            user.setupPassword(value);
-            user.save();
-        });
+    @Given("^There is a user with email \"([^\"]*)\" and password \"([^\"]*)\"$")
+    public void there_are_users_as_below(String userName, String password) {
+        User user = new User(userName);
+        user.setupPassword(password);
+        user.save();
     }
 
     @Given("^I login with \"([^\"]*)\" and \"([^\"]*)\"$")

@@ -18,10 +18,6 @@ public class Category extends Entity<Category> {
     private String link="";
     private String advice="";
 
-    public static ObjectId getIdByName(String name) {
-        return repo(Category.class).findFirstBy("name", name).id;
-    }
-
     public static Category create(String category_name) {
         return new Category(category_name, "", "").save();
     }

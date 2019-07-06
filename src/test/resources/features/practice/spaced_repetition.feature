@@ -1,10 +1,11 @@
-
 Feature:
   User can practice questions using Spaced Repetition.
 
   Background:
     Given the user chooses the question category "Retro"
-    Given Add a question "Q1" with dummy options and chosen category "Retro" and correct option
+    Given There are questions with dummy options:
+      | description | correctOption | category |
+      | Q1          | correctOption | Retro    |
 
   Scenario: User can practice question
     Given User is taking a practiceTest
@@ -57,11 +58,10 @@ Feature:
     And User submits answer
     Then User should see a question "What is Scrum Master"
 
-    @developing
+  @developing
   Scenario: No questions should be shown if questions have been answered today
     Given User has answered all the due questions today
     Then User should not see any questions in the practice page
-
 
 
   @developing

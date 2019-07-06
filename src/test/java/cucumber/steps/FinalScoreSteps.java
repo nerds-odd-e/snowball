@@ -1,29 +1,13 @@
 package cucumber.steps;
 
-import com.odde.snowball.factory.QuestionBuilder;
-import com.odde.snowball.model.onlinetest.Category;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.steps.driver.WebDriverWrapper;
 import cucumber.steps.site.SnowballSite;
-
-import static com.odde.snowball.model.base.Repository.repo;
-import static org.junit.Assert.assertEquals;
 
 public class FinalScoreSteps {
 
     private final SnowballSite site = new SnowballSite();
     private final WebDriverWrapper driver = site.getDriver();
-
-    @And("^User answered (\\d+) questions wrong$")
-    public void userAnsweredWrongTheThQuestionPage(int wrongQuestionNum) {
-        for (int i = 0; i < wrongQuestionNum; ++i) {
-            driver.clickRadioButton("wrongOption");
-            driver.click("#answer");
-            driver.click("#next");
-        }
-    }
 
     @Then("^メッセージ欄に\"([^\"]*)\"が表示される$")
     public void メッセージ欄にが表示される(String message) {
@@ -49,17 +33,6 @@ public class FinalScoreSteps {
     public void 苦手カテゴリーのメッセージ欄にが表示される(String exceptedMessage) {
 
         driver.expectElementToContainText("#category-message", exceptedMessage);
-    }
-
-    @Given("^\"([^\"]*)\" から (\\d+) 題出題される$")
-    public void から題出題される(String category, int numberOfQuestions) {
-        for (int i = 0; i < numberOfQuestions; i++)
-            new QuestionBuilder()
-                    .aQuestion(repo(Category.class).findFirstBy("name", category))
-                    .withWrongOption("wrongOption")
-                    .withCorrectOption("correctOption")
-                    .please();
-        site.visit(String.format("onlinetest/launchQuestion?question_count=%d", numberOfQuestions));
     }
 
 }
