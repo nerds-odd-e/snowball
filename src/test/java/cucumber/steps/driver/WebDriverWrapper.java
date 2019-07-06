@@ -9,6 +9,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -163,6 +165,7 @@ public class WebDriverWrapper {
         String dest = name + ".png";
         File destination = new File(dest);
         try {
+            Files.createDirectories(Paths.get(destination.getParent()));
             copyFile(source, destination);
         } catch (IOException e) {
             e.printStackTrace();
