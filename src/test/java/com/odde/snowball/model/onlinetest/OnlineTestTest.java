@@ -280,7 +280,7 @@ public class OnlineTestTest {
     public void should_return_questions_page_if_test_has_not_ended() {
         mockQuestion(1);
         OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(1);
-        assertEquals(onlineTest.getNextPageName(), "/onlinetest/question.jsp");
+        assertEquals(onlineTest.getNextPageName(), "/onlinetest/question");
     }
 
     @Test

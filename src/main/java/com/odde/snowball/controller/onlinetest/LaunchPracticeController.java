@@ -1,5 +1,6 @@
-package com.odde.snowball.controller;
+package com.odde.snowball.controller.onlinetest;
 
+import com.odde.snowball.controller.AppController;
 import com.odde.snowball.model.onlinetest.OnlineTest;
 import com.odde.snowball.model.practice.Practice;
 import org.bson.types.ObjectId;
@@ -13,7 +14,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @WebServlet("/launchPractice")
-public class PracticeController extends AppController {
+public class LaunchPracticeController extends AppController {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession(true);
         ObjectId userId = (ObjectId) session.getAttribute("userId");
@@ -26,17 +27,7 @@ public class PracticeController extends AppController {
             resp.sendRedirect("/practice/completed_practice.jsp");
             return;
         }
-        session.setAttribute("answeredCount", 0);
         session.setAttribute("onlineTest", onlineTest);
-        session.setAttribute("testId", UUID.randomUUID().toString());
-        session.setAttribute("alertMsg", "");
-        resp.sendRedirect("/onlinetest/question.jsp");
-    }
-
-    private int getQuestionCount(HttpServletRequest req) {
-        String questionCountStr = req.getParameter("question_count");
-        if (questionCountStr == null)
-            return 10;
-        return Integer.parseInt(questionCountStr);
+        resp.sendRedirect("/onlinetest/question");
     }
 }

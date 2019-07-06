@@ -29,7 +29,7 @@
             <!-- /.row -->
             <div class="row">
                     <div class="col-lg-12" id=""> 
-                    <form class="dashboard_button" name="onlinetest" id="onlinetest" method="get" action="/onlinetest/launchQuestion">
+                    <form class="dashboard_button" name="onlinetest" id="onlinetest" method="get" action="/onlinetest/launchQuiz">
                         <button type="submit" class="btn btn-default" id="start_button">Start Test</button>
                     </form>
                      <form class="dashboard_button" name="practice" id="practice" method="get" action="/launchPractice">

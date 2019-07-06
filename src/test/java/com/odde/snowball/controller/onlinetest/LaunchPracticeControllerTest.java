@@ -1,7 +1,6 @@
 package com.odde.snowball.controller.onlinetest;
 
 import com.odde.TestWithDB;
-import com.odde.snowball.controller.PracticeController;
 import com.odde.snowball.model.User;
 import com.odde.snowball.model.base.Entity;
 import com.odde.snowball.model.onlinetest.Category;
@@ -23,8 +22,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(TestWithDB.class)
-public class PracticeControllerTest {
-    private PracticeController controller;
+public class LaunchPracticeControllerTest {
+    private LaunchPracticeController controller;
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
     private Question question;
@@ -38,7 +37,7 @@ public class PracticeControllerTest {
 
     @Before
     public void setUpMockService() {
-        controller = new PracticeController();
+        controller = new LaunchPracticeController();
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
         request.getSession().setAttribute("userId", user1.getId());
@@ -54,11 +53,11 @@ public class PracticeControllerTest {
     }
 
     @Test
-    public void redirect_to_question_jsp()
+    public void redirect_to_question()
             throws Exception {
         mockQuestion();
         controller.doGet(request, response);
-        assertEquals("/onlinetest/question.jsp", response.getRedirectedUrl());
+        assertEquals("/onlinetest/question", response.getRedirectedUrl());
     }
 
 

@@ -16,15 +16,15 @@ import java.util.stream.IntStream;
 import static org.junit.Assert.*;
 
 @RunWith(TestWithDB.class)
-public class LaunchQuestionControllerTest {
+public class LaunchQuizControllerTest {
 
-    private LaunchQuestionController controller;
+    private LaunchQuizController controller;
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
 
     @Before
     public void setUpMockService() {
-        controller = new LaunchQuestionController();
+        controller = new LaunchQuizController();
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
         request.getSession().setAttribute("answeredCount", 0);
@@ -33,11 +33,11 @@ public class LaunchQuestionControllerTest {
     }
 
     @Test
-    public void redirect_to_question_jsp()
+    public void redirect_to_question_page()
             throws Exception {
         mockQuestion();
         controller.doGet(request, response);
-        assertEquals("/onlinetest/question.jsp", response.getRedirectedUrl());
+        assertEquals("/onlinetest/question", response.getRedirectedUrl());
     }
 
     @Test
@@ -45,11 +45,7 @@ public class LaunchQuestionControllerTest {
         mockQuestion();
         controller.doGet(request, response);
         OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
-        String testId = (String) request.getSession().getAttribute("testId");
-
         assertNotNull(onlineTest);
-        assertNotNull(testId);
-        assertTrue(StringUtils.isNotEmpty(testId));
     }
 
     @Test

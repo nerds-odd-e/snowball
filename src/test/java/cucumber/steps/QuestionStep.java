@@ -75,13 +75,13 @@ public class QuestionStep {
 
     @When("^OnlineTestを開始する$")
     public void start_onlinetest() {
-        site.visit("onlinetest/launchQuestion");
+        site.visit("onlinetest/launchQuiz");
     }
 
     @Given("^User is taking a onlineTest with (\\d+) questions$")
     public void user_is_taking_a_onlineTest_with_n_single_questions(int totalQuestions) {
         this.currentTestTotalQuestions = totalQuestions;
-        site.visit(String.format("onlinetest/launchQuestion?question_count=%d", totalQuestions));
+        site.visit(String.format("onlinetest/launchQuiz?question_count=%d", totalQuestions));
     }
 
     @Given("^User is taking a onlineTest with (\\d+) questions and there are enough questions$")
@@ -105,12 +105,12 @@ public class QuestionStep {
 
     @Given("^User is on the first question$")
     public void user_is_in_the_test_page() {
-        site.visit("onlinetest/launchQuestion");
+        site.visit("onlinetest/launchQuiz");
     }
 
     @Given("^User is on the second question$")
     public void user_is_on_the_second_question() {
-        site.visit("onlinetest/launchQuestion");
+        site.visit("onlinetest/launchQuiz");
         driver.clickRadioButton("None of the above");
         driver.click("#answer");
         driver.expectPageToContainText("Question");
@@ -118,7 +118,7 @@ public class QuestionStep {
 
     @Given("^User picked the wrong answer on the second question$")
     public void user_picked_the_wrong_answer_on_the_second_question() {
-        site.visit("onlinetest/launchQuestion");
+        site.visit("onlinetest/launchQuiz");
         driver.clickRadioButton("None of the above");
         driver.click("#answer");
         driver.expectPageToContainText("Question");

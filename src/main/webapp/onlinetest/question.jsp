@@ -21,7 +21,7 @@
     <jsp:body>
         <div id="page-wrapper">
             <form name="question" id="questionForm" method="post"
-                action="question">
+                action="/onlinetest/answer">
                     <input type="hidden" id="lastDoneQuestionId" name="lastDoneQuestionId" value="${onlineTest.getNumberOfAnsweredQuestions()}">
             <div class="container-fluid">
                 <p class="alertMsg">${alertMsg}</p>

@@ -52,7 +52,7 @@
 
                 </ul>
                 <div id="advice" class="jumbotron">${question.getAdvice()}</div>
-                <form action="/onlinetest/advice" method="post">
+                <form action="/onlinetest/question" method="get">
                     <input type="submit" id="next" value="Next" class="btn-primary btn"/>
                 </form>
                 <div style="float:right;" id="progress">

@@ -10,7 +10,7 @@ public class OnlinePractice extends OnlineTest {
     }
     public String getNextPageName() {
         if (hasNextQuestion()) {
-            return "/onlinetest/question.jsp";
+            return "/onlinetest/question";
         }
         return "/practice/completed_practice.jsp";
     }

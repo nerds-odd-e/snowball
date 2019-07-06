@@ -21,8 +21,8 @@ import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.*;
 
 @RunWith(TestWithDB.class)
-public class QuestionControllerTest {
-    private QuestionController controller;
+public class AnswerControllerTest {
+    private AnswerController controller;
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
     private Question question;
@@ -33,7 +33,7 @@ public class QuestionControllerTest {
 
     @Before
     public void setUpMockService() {
-        controller = new QuestionController();
+        controller = new AnswerController();
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
     }

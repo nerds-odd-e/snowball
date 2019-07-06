@@ -11,8 +11,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.UUID;
 
-@WebServlet("/onlinetest/launchQuestion")
-public class LaunchQuestionController extends AppController {
+@WebServlet("/onlinetest/launchQuiz")
+public class LaunchQuizController extends AppController {
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession(true);
@@ -21,11 +21,8 @@ public class LaunchQuestionController extends AppController {
             resp.sendRedirect("add_question.jsp");
             return;
         }
-        session.setAttribute("answeredCount", 0);
         session.setAttribute("onlineTest", onlineTest);
-        session.setAttribute("testId", UUID.randomUUID().toString());
-        session.setAttribute("alertMsg", "");
-        resp.sendRedirect("/onlinetest/question.jsp");
+        resp.sendRedirect("/onlinetest/question");
     }
 
     private int getQuestionCount(HttpServletRequest req) {

@@ -6,7 +6,7 @@
 <t:basic title="Question Category">
     <jsp:body>
     <div id="page-wrapper">
-        <form name="question" id="questionForm" method="get" action="/onlinetest/launchQuestion">
+        <form name="question" id="questionForm" method="get" action="/onlinetest/launchQuiz">
         <div class="container-fluid">
         <h1>Select Category</h1>
         <li><input type="checkbox" name="optionId" value="Scrum" disabled checked /><label />Scrum</label></li>

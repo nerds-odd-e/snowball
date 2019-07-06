@@ -212,7 +212,7 @@ public class OnlineTest {
 
     public String getNextPageName() {
         if (hasNextQuestion()) {
-            return "/onlinetest/question.jsp";
+            return "/onlinetest/question";
         }
         return "/onlinetest/end_of_test.jsp";
     }
