@@ -1,15 +1,14 @@
 package com.odde.snowball.model.onlinetest;
 
 import com.odde.snowball.enumeration.TestType;
-import com.odde.snowball.model.base.Entity;
-import com.odde.snowball.model.practice.Record;
+import com.odde.snowball.model.User;
 import lombok.Getter;
-import org.bson.types.ObjectId;
 
 import java.time.Duration;
 import java.time.LocalDate;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 import static com.odde.snowball.model.base.Repository.repo;
 
@@ -17,11 +16,7 @@ import static com.odde.snowball.model.base.Repository.repo;
 public class OnlineTest {
 
     private final List<Question> questions;
-    private int numberOfAnsweredQuestions;
-    private int correctAnswerCount;
-    private Map<String, Integer> categoryCorrectAnswerCount;
-    public List<CategoryTestResult> categoryTestResults;
-    public List<Answer> answers;
+    private List<Answer> answers;
     private LocalDate answeredTime;
 
     public OnlineTest(int questionCount) {
@@ -30,37 +25,22 @@ public class OnlineTest {
 
     public OnlineTest(List<Question> questions) {
         this.questions = questions;
-        numberOfAnsweredQuestions = 0;
-        categoryCorrectAnswerCount = new HashMap<>();
-        categoryTestResults = new ArrayList<>();
         answers = new ArrayList<>();
     }
 
-    public static OnlineTest createOnlinePractice(ObjectId userId, String category) {
-        List<Question> allQuestions = repo(Question.class).findAll();
-        List<Question> dueQuestions = allQuestions.stream().filter(q-> q.isDueForUser(userId)).collect(Collectors.toList());
-        if (dueQuestions.size() == 0) {
-            Optional<Question> newQuestions = allQuestions.stream().filter(q -> q.notAnswered(userId)).findFirst();
-            newQuestions.ifPresent(dueQuestions::add);
-        }
-        List<Question> questions = new QuestionCollection(dueQuestions).generateQuestionList(repo(Category.class).findBy("name", category), dueQuestions.size());
-        OnlineTest onlineTest = new OnlinePractice(questions);
-        return onlineTest;
-    }
-
     public Question getPreviousQuestion() {
-        return questions.get(numberOfAnsweredQuestions - 1);
+        return questions.get(getNumberOfAnsweredQuestions() - 1);
     }
 
     public Question getCurrentQuestion() {
-        return questions.get(numberOfAnsweredQuestions);
+        return questions.get(getNumberOfAnsweredQuestions());
     }
 
     public Question getNextQuestion() {
         if (!hasNextQuestion()) {
             throw new NoSuchElementException("OnlineTest not started");
         }
-        return questions.get(numberOfAnsweredQuestions + 1);
+        return questions.get(getNumberOfAnsweredQuestions() + 1);
     }
 
     public boolean hasNextQuestion() {
@@ -68,19 +48,19 @@ public class OnlineTest {
     }
 
     public int getNumberOfAnsweredQuestions() {
-        return this.numberOfAnsweredQuestions;
+        return this.answers.size();
+    }
+
+    public long getCorrectAnswerCount() {
+        return answers.stream().filter(Answer::isCorrect).count();
     }
 
     public int getCurrentQuestionIndex() {
-        return this.numberOfAnsweredQuestions + 1;
+        return getNumberOfAnsweredQuestions() + 1;
     }
 
     public int getNumberOfQuestions() {
         return (questions != null) ? questions.size() : 0;
-    }
-
-    public void addAnsweredQuestionNumber() {
-        numberOfAnsweredQuestions++;
     }
 
     public String showFinalMessage() {
@@ -93,35 +73,6 @@ public class OnlineTest {
         return "あともう少し";
     }
 
-    public int getCorrectAnswerCount() {
-        return correctAnswerCount;
-    }
-
-    public void setCorrectAnswerCount(int correctlyAnsweredCount) {
-        this.correctAnswerCount = correctlyAnsweredCount;
-    }
-
-    public void incrementCorrectAnswerCount() {
-        correctAnswerCount++;
-    }
-
-    private void incrementCategoryQuestionCount(String categoryId) {
-        List<CategoryTestResult> collect = categoryTestResults
-                .stream()
-                .filter(categoryTestResult -> categoryTestResult.categoryId.equals(categoryId))
-                .collect(Collectors.toList());
-        if (collect.size() < 1) {
-            CategoryTestResult categoryTestResult = new CategoryTestResult(categoryId);
-            categoryTestResults.add(categoryTestResult);
-            collect = categoryTestResults
-                    .stream()
-                    .filter(result -> result.categoryId.equals(categoryId))
-                    .collect(Collectors.toList());
-        }
-        CategoryTestResult categoryTestResult = collect.get(0);
-        categoryTestResult.questionCount++;
-    }
-
     public String getAlertMsg(String lastDoneQuestionId) {
         String alertMsg = "";
         if (!lastDoneQuestionId.equals(String.valueOf(getNumberOfAnsweredQuestions()))) {
@@ -130,68 +81,18 @@ public class OnlineTest {
         return alertMsg;
     }
 
-    public String getCategoryMessage() {
-        if (getShowAdvice()) {
-            return "";
-        }
-        String categories = questions.stream()
-                .sorted(Comparator.comparing(Entity::getId))
-                .map(question -> question.category().getName())
-                .distinct()
-                .collect(Collectors.joining("と"));
-
-        return categories + "をもっと勉強して";
-    }
-
-    public boolean getShowAdvice() {
-        return getCorrectAnswerCount() != 0 && (getCorrectAnswerCount() * 1.0 / questions.size() * 1.0) * 100 >= 80;
-    }
-
-    public int getCategoryCorrectAnswerCount(String categoryId) {
-        Integer count = categoryCorrectAnswerCount.get(categoryId);
-        if (count == null) {
-            return 0;
-        }
-        return count;
-    }
-
-    public void incrementCategoryCorrectAnswerCount(String categoryId) {
-        Integer count = categoryCorrectAnswerCount.get(categoryId);
-        if (count == null) {
-            count = 0;
-        }
-        categoryCorrectAnswerCount.put(categoryId, count + 1);
-    }
-
-    public List<CategoryTestResult> getFailedCategoryTestResults() {
-        return categoryTestResults;
-    }
-
-    public Answer answerCurrentQuestion(String[] answeredOptionIds, ObjectId userId, LocalDate date) {
-        return answerCurrentQuestion(Arrays.asList(answeredOptionIds), userId, date);
-    }
-
-    public Answer answerCurrentQuestion(List<String> selectedOptionIds, ObjectId userId, LocalDate date) {
-        Answer answer = new Answer(getCurrentQuestion(), selectedOptionIds);
+    public Answer answerCurrentQuestion(List<String> selectedOptionIds, User user, LocalDate date) {
+        Question currentQuestion = getCurrentQuestion();
+        Answer answer = new Answer(currentQuestion, selectedOptionIds);
         answers.add(answer);
-        updateCacheIfCorrect(answer);
-        if (answer.isCorrect()) {
-            getCurrentQuestion().recordQuestionForUser(userId, date);
-        } else {
-            getCurrentQuestion().resetCycle(userId, date);
+        if (user != null) {
+            if (answer.isCorrect()) {
+                currentQuestion.recordQuestionForUser(user, date);
+            } else {
+                currentQuestion.resetCycle(user, date);
+            }
         }
-        addAnsweredQuestionNumber();
         return answer;
-    }
-
-    private void updateCacheIfCorrect(Answer answer) {
-        boolean isCorrect = answer.isCorrect();
-        if (isCorrect) {
-            String categoryId = getCurrentQuestion().category().getStringId();
-            incrementCorrectAnswerCount();
-            incrementCategoryQuestionCount(categoryId);
-            incrementCategoryCorrectAnswerCount(categoryId);
-        }
     }
 
     public void recordAnswerWithTime(LocalDate answeredTime) {

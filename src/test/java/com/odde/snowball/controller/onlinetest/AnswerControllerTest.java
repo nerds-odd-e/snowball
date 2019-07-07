@@ -1,6 +1,7 @@
 package com.odde.snowball.controller.onlinetest;
 
 import com.odde.TestWithDB;
+import com.odde.snowball.model.User;
 import com.odde.snowball.model.onlinetest.*;
 import org.bson.types.ObjectId;
 import org.junit.Before;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.*;
@@ -30,12 +32,14 @@ public class AnswerControllerTest {
     private Category scrum = Category.create("Scrum");
     private Category tech = Category.create("Tech");
     private Category team = Category.create("Team");
+    private User currentUser = new User().save();
 
     @Before
     public void setUpMockService() {
         controller = new AnswerController();
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
+        request.getSession().setAttribute("currentUser", currentUser);
     }
 
     private Question createQuestionWithOptions(Category category) {
@@ -178,84 +182,7 @@ public class AnswerControllerTest {
         controller.doPost(request, response);
         HttpSession session = request.getSession();
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
-
-        verify(onlineTest, times(0)).incrementCorrectAnswerCount();
-    }
-
-    @Test
-    public void doPostWithIncrementScrumCategoryCorrectCountOnCorrectAnswer() throws ServletException, IOException {
-        question = createQuestionWithOptions(tech);
-        List<ObjectId> optionId = question.correctOptions();
-        onlineTest = OnlineQuiz.createOnlineQuiz(2);
-
-        request.addParameter("optionId", optionId.get(0).toString());
-        request.addParameter("lastDoneQuestionId", "0");
-        request.getSession().setAttribute("onlineTest", onlineTest);
-
-        controller.doPost(request, response);
-
-        HttpSession session = request.getSession();
-
-        OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
-        assertEquals(1, onlineTest.getCategoryCorrectAnswerCount(tech.getStringId()));
-    }
-
-    @Test
-    public void doPostWithIncrementScrumCategoryCorrectCountOnCorrectAnswer2() throws ServletException, IOException {
-        question = createQuestionWithOptions(tech);
-        List<ObjectId> optionId = question.correctOptions();
-        onlineTest = OnlineQuiz.createOnlineQuiz(2);
-
-        request.addParameter("optionId", optionId.get(0).toString());
-        request.addParameter("lastDoneQuestionId", "0");
-        request.getSession().setAttribute("onlineTest", onlineTest);
-
-        controller.doPost(request, response);
-
-        HttpSession session = request.getSession();
-
-        OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
-
-        List<CategoryTestResult> categoryQuestionList = onlineTest.categoryTestResults;
-        assertEquals(1, categoryQuestionList.get(0).questionCount);
-    }
-
-    @Test
-    public void doPostWithIncrementTechCategoryCorrectCountOnCorrectAnswer() throws ServletException, IOException {
-        question = createQuestionWithOptions(team);
-        List<ObjectId> optionIds = question.correctOptions();
-        onlineTest = OnlineQuiz.createOnlineQuiz(2);
-
-        request.addParameter("optionId", optionIds.get(0).toString());
-        request.addParameter("lastDoneQuestionId", "0");
-        request.getSession().setAttribute("onlineTest", onlineTest);
-
-        controller.doPost(request, response);
-
-        HttpSession session = request.getSession();
-
-        OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
-        assertEquals(1, onlineTest.getCategoryCorrectAnswerCount(team.getStringId()));
-    }
-
-    @Test
-    public void answerCurrentQuestionInParameter() throws ServletException, IOException{
-        question = createQuestionWithOptions(tech);
-        List<ObjectId> optionIds = question.correctOptions();
-        onlineTest = OnlineQuiz.createOnlineQuiz(2);
-
-        request.addParameter("optionId", optionIds.get(0).toString());
-        request.addParameter("lastDoneQuestionId", "0");
-        request.getSession().setAttribute("onlineTest", onlineTest);
-
-        Question currentQuestion = onlineTest.getCurrentQuestion();
-        controller.doPost(request, response);
-        HttpSession session = request.getSession();
-
-        OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
-
-
-        assertEquals(optionIds.get(0), onlineTest.answers.get(0).getSelectedOptionIds().get(0));
+        assertThat(onlineTest.getCorrectAnswerCount()).isEqualTo(0);
     }
 
     public static String getFirstOptionId(Question question) {

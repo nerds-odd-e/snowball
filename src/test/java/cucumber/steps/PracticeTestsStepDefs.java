@@ -43,7 +43,7 @@ public class PracticeTestsStepDefs {
 
     @Given("User is taking a practiceTest")
     public void userIsTakingAPracticeTest() {
-        site.visit("launchPractice?practice_category=Retro&question_count=2");
+        site.visit("launchPractice?question_count=2");
     }
 
     @When("User answered {int} question wrongly")

@@ -3,9 +3,10 @@ Feature:
 
   Background:
     Given the user chooses the question category "Retro"
-    Given There are questions with dummy options:
+    And There are questions with dummy options:
       | description | correctOption | category |
       | Q1          | correctOption | Retro    |
+    Given user "mary" has logged in successfully
 
   Scenario: User can practice question
     Given User is taking a practiceTest
@@ -66,8 +67,6 @@ Feature:
 
   @developing
   Scenario: User repeats the fixed interval practice
-    Given There is a user with "mary@example.com" but password initialize is undone
-    When I login with "mary@example.com" and "abcd1234"
     When I start a practice with 1 question each day, he should see these questions
       | days | question |
       | 0    | Q1       |

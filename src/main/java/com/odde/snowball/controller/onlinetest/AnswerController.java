@@ -1,6 +1,7 @@
 package com.odde.snowball.controller.onlinetest;
 
 import com.odde.snowball.controller.AppController;
+import com.odde.snowball.model.User;
 import com.odde.snowball.model.onlinetest.Answer;
 import com.odde.snowball.model.onlinetest.OnlineTest;
 import com.odde.snowball.model.onlinetest.Question;
@@ -17,11 +18,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static java.util.Arrays.asList;
+
 @WebServlet("/onlinetest/answer")
 public class AnswerController extends AppController {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(true);
-        ObjectId userId = (ObjectId) session.getAttribute("userId");
+        User user = (User) session.getAttribute("currentUser");
 
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
         String[] answeredOptionIds = req.getParameterValues("optionId");
@@ -40,14 +43,14 @@ public class AnswerController extends AppController {
             return;
         }
 
-        Answer answer = onlineTest.answerCurrentQuestion(answeredOptionIds, userId, LocalDate.now());
+        Answer answer = onlineTest.answerCurrentQuestion(asList(answeredOptionIds), user, LocalDate.now());
 
         if (answer.isCorrect()) {
             resp.sendRedirect(onlineTest.getNextPageName());
             return;
         }
 
-        req.setAttribute("selectedOption", new ArrayList(Arrays.asList(answeredOptionIds)));
+        req.setAttribute("selectedOption", new ArrayList(asList(answeredOptionIds)));
         RequestDispatcher dispatch = req.getRequestDispatcher("/onlinetest/advice.jsp");
         dispatch.forward(req, resp);
     }

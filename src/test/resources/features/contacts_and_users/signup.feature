@@ -3,6 +3,11 @@ Feature: Signup
   Background:
     Given user is on the sign up page
 
+  Scenario: Redirect to login if not yet
+    Given user hasn't logged in
+    When visiting dashboard
+    Then user should be redirected to login page
+
   Scenario: user sign up a new account
     When user sign up with:
       | userName         | yamada               |
@@ -10,6 +15,7 @@ Feature: Signup
       | password         | hogepassword         |
       | password_confirm | hogepassword         |
     And ユーザーはSubmitボタンをクリックする
+    And I login with "tanaka@tokoroten.com" and "hogepassword"
     Then 特訓のトップページに遷移する
     And 自分のユーザー名"yamada"が表示されている
 

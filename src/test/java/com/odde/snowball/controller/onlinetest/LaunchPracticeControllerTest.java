@@ -26,12 +26,6 @@ public class LaunchPracticeControllerTest {
     private LaunchPracticeController controller;
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
-    private Question question;
-    private OnlineTest onlineTest;
-    private Category scrum = Category.create("Scrum");
-    private Category tech = Category.create("Tech");
-    private Category team = Category.create("Team");
-    private Category retro = Category.create("Retro");
     private User user1 = new User().save();
     private User user2 = new User().save();
 
@@ -40,8 +34,7 @@ public class LaunchPracticeControllerTest {
         controller = new LaunchPracticeController();
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
-        request.getSession().setAttribute("userId", user1.getId());
-        request.setParameter("practice_category", "Retro");
+        request.getSession().setAttribute("currentUser", user1);
         request.setParameter("question_count", "1");
     }
 
@@ -84,7 +77,7 @@ public class LaunchPracticeControllerTest {
     @Test
     public void userMustNotSeeTheQuestionIfSheHasDoneItOnTheSameDay() throws IOException {
         Question question = mockQuestion().get(0);
-        question.recordQuestionForUser(user1.getId(), LocalDate.now());
+        question.recordQuestionForUser(user1, LocalDate.now());
         controller.doGet(request, response);
         assertEquals("/practice/completed_practice.jsp", response.getRedirectedUrl());
     }
@@ -92,7 +85,7 @@ public class LaunchPracticeControllerTest {
     @Test
     public void userMustSeeQuestionEvenIfAnsweredByAnotherUser() throws IOException {
         Question question = mockQuestion().get(0);
-        question.recordQuestionForUser(user2.getId(), LocalDate.now());
+        question.recordQuestionForUser(user2, LocalDate.now());
         controller.doGet(request, response);
         OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
         assertThat(onlineTest.getNumberOfQuestions()).isEqualTo(1);

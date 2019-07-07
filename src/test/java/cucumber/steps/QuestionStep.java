@@ -11,12 +11,15 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.steps.driver.WebDriverWrapper;
 import cucumber.steps.site.SnowballSite;
+import org.bson.types.ObjectId;
 import org.openqa.selenium.support.Color;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -296,10 +299,10 @@ public class QuestionStep {
         while (onlineTest.hasNextQuestion()) {
             totalCounter++;
             Question currentQuestion = onlineTest.getCurrentQuestion();
+            onlineTest.answerCurrentQuestion(singletonList(new ObjectId().toString()), null, LocalDate.now());
             if (currentQuestion.categoryName().equals("Scrum")) {
                 scrumCounter++;
             }
-            onlineTest.addAnsweredQuestionNumber();
         }
     }
 

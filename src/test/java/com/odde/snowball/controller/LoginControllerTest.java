@@ -78,7 +78,7 @@ public class LoginControllerTest {
 
         HttpSession session = request.getSession();
         assertNotNull(session);
-        assertEquals(user.getId(), session.getAttribute("userId"));
+        assertEquals(user, session.getAttribute("currentUser"));
     }
 
     @Test

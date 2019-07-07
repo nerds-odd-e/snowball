@@ -34,8 +34,8 @@ public class LoginSteps {
     }
 
     @Given("^There is a user with email \"([^\"]*)\" and password \"([^\"]*)\"$")
-    public void there_are_users_as_below(String userName, String password) {
-        User user = new User(userName);
+    public void there_is_a_user(String email, String password) {
+        User user = new User(email);
         user.setupPassword(password);
         user.save();
     }
@@ -121,5 +121,13 @@ public class LoginSteps {
     @Then("^user should see the sign up page$")
     public void サインアップページに遷移すること() {
         driver.expectTitleToBe("Sign Up");
+    }
+
+    @Given("user {string} has logged in successfully")
+    public void userHasLoggedInSuccessfully(String username) {
+        String email = username + "@email.com";
+        String pwd = username + "pwd";
+        there_is_a_user(email, pwd);
+        login_in_with_email_and_pwd(email, pwd);
     }
 }

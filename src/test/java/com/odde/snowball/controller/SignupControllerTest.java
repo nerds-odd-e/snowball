@@ -42,31 +42,7 @@ public class SignupControllerTest {
         request.setParameter("password", "passhoge");
         request.setParameter("password_confirm", "passhoge");
         controller.doPost(request, response);
-        assertThat(response.getRedirectedUrl(), CoreMatchers.containsString("dashboard"));
-    }
-
-    @Test
-    public void saveUserYamadaInfoToCookie() throws Exception {
-        request.setParameter("userName", "yamada");
-        request.setParameter("password", "passhoge");
-        request.setParameter("password_confirm", "passhoge");
-
-        controller.doPost(request, response);
-        String actual = (String) request.getSession().getAttribute("userName");
-
-        assertEquals("yamada", actual);
-    }
-
-    @Test
-    public void saveUserTanakaInfoToCookie() throws Exception {
-        request.setParameter("userName", "tanaka");
-        request.setParameter("password", "passhoge");
-        request.setParameter("password_confirm", "passhoge");
-
-        controller.doPost(request, response);
-        String actual = (String) request.getSession().getAttribute("userName");
-
-        assertEquals("tanaka", actual);
+        assertThat(response.getRedirectedUrl(), CoreMatchers.containsString("/login"));
     }
 
     @Test

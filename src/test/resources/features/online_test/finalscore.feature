@@ -15,16 +15,3 @@ Feature:
       | 7                  | 6                 | 85                 | あともう少し        |
       | 2                  | 2                 | 100                | あなたはスクラムマスター！ |
 
-  Scenario Outline: 1カテゴリーのみが出題される
-    Given there are <number_of_questions> questions of category "<category>"
-    And User is taking a onlineTest with <number_of_questions> questions
-    When  User answered <number_of_correct> questions correctly
-    And  User answered all other questions wrong
-    Then 苦手カテゴリーのメッセージ欄に"<message>"が表示される
-
-    Examples:
-      | category | number_of_questions | number_of_wrong | number_of_correct | message       |
-      | Scrum    | 1                   | 0               | 1                 |               |
-      | Scrum    | 1                   | 1               | 0                 | Scrumをもっと勉強して |
-      | Team     | 5                   | 3               | 2                 | Teamをもっと勉強して  |
-      | Team     | 5                   | 1               | 4                 |               |

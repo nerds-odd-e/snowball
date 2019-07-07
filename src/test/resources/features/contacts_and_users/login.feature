@@ -8,12 +8,6 @@ Feature: Login
       | JaneDoe@mail.com	John	Fisher	CS	Singapore Singapore |
     And I enroll participants to "CSD-2" from course detail page
       | john@example.com	john	jon	CS	Singapore Singapore    |
-      | JaneDoe@mail.com	John	Fisher	CS	Singapore Singapore |
-
-  Scenario: Redirect to login if not yet
-    Given user hasn't logged in
-    When visiting dashboard
-    Then user should be redirected to login page
 
   Scenario Outline: login
     Given There is a user with email "mary@example.com" and password "abcd1234"

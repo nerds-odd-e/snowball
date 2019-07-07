@@ -40,11 +40,6 @@ public class SignupController extends AppController {
         sessionCookie.setHttpOnly(true);
         resp.addCookie(sessionCookie);
 
-        String redirectUrl = "dashboard";
-        String userName = req.getParameter("userName");
-        HttpSession session = req.getSession(true);
-        session.setAttribute("userName", userName);
-        session.setAttribute("loggedIn", true);
-        resp.sendRedirect(redirectUrl);
+        resp.sendRedirect("/login");
     }
 }

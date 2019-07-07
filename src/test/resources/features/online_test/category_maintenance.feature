@@ -15,8 +15,10 @@ Feature: Question Category
       | Scrum    | You should study scrum | http://google.co.jp |
       | Tech     | You should study tech  | http://facebook.com |
 
+    @now
   Scenario: Add new category
-    Given I'm on the admin dashboard
+    Given user "Mary" has logged in successfully
+    And I'm on the admin dashboard
     And click the add category button
     When add a new category
     Then it should be redirected to the add question page

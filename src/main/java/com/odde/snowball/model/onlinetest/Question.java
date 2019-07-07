@@ -1,5 +1,6 @@
 package com.odde.snowball.model.onlinetest;
 
+import com.odde.snowball.model.User;
 import com.odde.snowball.model.base.Entity;
 import com.odde.snowball.model.practice.Record;
 import lombok.AllArgsConstructor;
@@ -37,10 +38,10 @@ public class Question extends Entity<Question> {
     private boolean isMultiQuestion;
     private boolean isApproved;
 
-    public void recordQuestionForUser(ObjectId userId, LocalDate date) {
-        List<Record> records = repo(Record.class).find(and(eq("userId", userId), eq("questionId", getId())));
+    public void recordQuestionForUser(User user, LocalDate date) {
+        List<Record> records = repo(Record.class).find(and(eq("userId", user.getId()), eq("questionId", getId())));
         if(records.size() == 0){
-            Record record = new Record(userId, getId(), date, 1);
+            Record record = new Record(user.getId(), getId(), date, 1);
             record.save();
         } else {
             Record record = records.get(0);
@@ -50,9 +51,9 @@ public class Question extends Entity<Question> {
         }
     }
 
-    boolean isDueForUser(ObjectId userId) {
+    boolean isDueForUser(User user) {
         List<Integer> cycle = Arrays.asList(1,2,4);
-        List<Record> records = repo(Record.class).find(and(eq("userId",userId),eq("questionId",getId())));
+        List<Record> records = repo(Record.class).find(and(eq("userId",user.getId()),eq("questionId",getId())));
         if (records.size()==0){
             return false;
         }
@@ -113,10 +114,10 @@ public class Question extends Entity<Question> {
         new QuestionOption(optionText, true, getId()).save();
     }
 
-    public void resetCycle(ObjectId userId, LocalDate date) {
-        List<Record> records = repo(Record.class).find(and(eq("userId", userId), eq("questionId", getId())));
+    public void resetCycle(User user, LocalDate date) {
+        List<Record> records = repo(Record.class).find(and(eq("userId", user.getId()), eq("questionId", getId())));
         if(records.size() == 0){
-            Record record = new Record(userId, getId(), date, 0);
+            Record record = new Record(user.getId(), getId(), date, 0);
             record.save();
         } else {
             Record record = records.get(0);
@@ -126,8 +127,8 @@ public class Question extends Entity<Question> {
         }
     }
 
-    public boolean notAnswered(ObjectId userId) {
-        List<Record> records = repo(Record.class).find(and(eq("userId", userId), eq("questionId", getId())));
+    public boolean notAnswered(User user) {
+        List<Record> records = repo(Record.class).find(and(eq("userId", user.getId()), eq("questionId", getId())));
         return records.size() == 0;
     }
 }

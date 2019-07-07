@@ -1,5 +1,6 @@
 package com.odde.snowball.model.practice;
 
+import com.odde.snowball.model.User;
 import com.odde.snowball.model.base.Entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,8 +23,8 @@ public class Practice extends Entity<Practice> {
     private Collection<ObjectId> categories;
     private List<Integer> cycle;
 
-    public Practice(ObjectId userId) {
-        this(userId, 1, new ArrayList<>(), Arrays.asList(1, 2, 4));
+    public Practice(User user) {
+        this(user.getId(), 1, new ArrayList<>(), Arrays.asList(1, 2, 4));
     }
 
     public Practice(ObjectId userId, int numberOfQuestions, Collection<ObjectId> categories, List<Integer> cycle) {
@@ -33,18 +34,18 @@ public class Practice extends Entity<Practice> {
         this.cycle = cycle;
     }
 
-    public static Practice fetchPracticeByUserId(ObjectId userId) {
-        if (null == userId) {
+    public static Practice fetchPracticeByUser(User user) {
+        if (null == user) {
             return null;
         }
-        return repo(Practice.class).findFirstBy("userId", userId);
+        return repo(Practice.class).findFirstBy("userId", user.getId());
     }
 
-    public static void generatePractice(ObjectId userId) {
-        Practice practice = Practice.fetchPracticeByUserId(userId);
+    public static void generatePractice(User user) {
+        Practice practice = Practice.fetchPracticeByUser(user);
 
         if (practice == null) {
-            practice = new Practice(userId);
+            practice = new Practice(user);
             practice.save();
         }
     }

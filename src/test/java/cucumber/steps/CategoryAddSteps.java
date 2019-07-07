@@ -1,14 +1,12 @@
 package cucumber.steps;
 
 import com.odde.snowball.model.User;
+import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.springframework.mock.web.MockHttpServletRequest;
 import cucumber.steps.driver.WebDriverWrapper;
 import cucumber.steps.site.SnowballSite;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.springframework.mock.web.MockHttpServletRequest;
 
 public class CategoryAddSteps {
     private final SnowballSite site = new SnowballSite();
@@ -49,5 +47,8 @@ public class CategoryAddSteps {
         driver.expectElementToContainText("#categoryList", "新カテゴリ");
     }
 
-
+    @Given("^I'm on the admin dashboard$")
+    public void メニューを選択できる画面に遷移する() {
+        site.visit("admin/dashboard.jsp");
+    }
 }

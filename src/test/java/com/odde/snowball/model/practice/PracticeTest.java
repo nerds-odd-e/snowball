@@ -1,6 +1,7 @@
 package com.odde.snowball.model.practice;
 
 import com.odde.TestWithDB;
+import com.odde.snowball.model.User;
 import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,8 +19,8 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(TestWithDB.class)
 public class PracticeTest {
 
-    private final ObjectId userId1 = new ObjectId();
-    private final ObjectId userId2 = new ObjectId();
+    private final User user1 = new User().save();
+    private final User user2 = new User().save();
 
     @Before
     public void setUp() {
@@ -30,29 +31,29 @@ public class PracticeTest {
         Collection<ObjectId> categories = new ArrayList<>();
         List<Integer> cycle = Arrays.asList(1, 3, 7);
 
-        Practice practice = new Practice(userId1, 1, categories, cycle);
+        Practice practice = new Practice(user1.getId(), 1, categories, cycle);
         practice.save();
     }
 
     @Test
     public void testFetchPracticeByUserId() {
-        Practice practice = Practice.fetchPracticeByUserId(userId1);
+        Practice practice = Practice.fetchPracticeByUser(user1);
         assertNotNull(practice);
     }
 
     @Test
     public void testGeneratePractice() {
-        Practice.generatePractice(userId2);
+        Practice.generatePractice(user2);
 
-        Practice practice = Practice.fetchPracticeByUserId(userId2);
+        Practice practice = Practice.fetchPracticeByUser(user2);
         assertNotNull(practice);
     }
 
     @Test
     public void testMultipleGeneratePracticeCreateOnlyOneUniquePractice() {
-        Practice.generatePractice(userId1);
+        Practice.generatePractice(user1);
 
-        List<Practice> practices = repo(Practice.class).findBy("userId", userId1);
+        List<Practice> practices = repo(Practice.class).findBy("userId", user1.getId());
         assertEquals(1, practices.size());
     }
 

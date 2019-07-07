@@ -22,9 +22,8 @@ public class LoginController extends AppController {
             sessionCookie.setHttpOnly(true);
             resp.addCookie(sessionCookie);
 
-            HttpSession session = req.getSession();
-            session.setAttribute("loggedIn", true);
-            session.setAttribute("userId", user.getId());
+            HttpSession session = req.getSession(true);
+            session.setAttribute("currentUser", user);
             redirectUrl = "/dashboard";
         } else {
             redirectUrl = "/login.jsp?status=fail";

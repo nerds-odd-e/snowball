@@ -28,11 +28,4 @@ public class FinalScoreSteps {
     public void 正答率にが表示される(int correctPercentage) {
         driver.expectElementToContainText("#correct-percentage", String.valueOf(correctPercentage));
     }
-
-    @Then("^苦手カテゴリーのメッセージ欄に\"([^\"]*)\"が表示される$")
-    public void 苦手カテゴリーのメッセージ欄にが表示される(String exceptedMessage) {
-
-        driver.expectElementToContainText("#category-message", exceptedMessage);
-    }
-
 }
