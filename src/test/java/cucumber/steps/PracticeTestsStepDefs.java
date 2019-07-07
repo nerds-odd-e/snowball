@@ -36,11 +36,6 @@ public class PracticeTestsStepDefs {
         //TODO change db date of previous entry to day before
     }
 
-    @Given("the user chooses the question category {string}")
-    public void theUserChoosesTheQuestionCategory(String category) {
-        Category.create(category);
-    }
-
     @Given("User is taking a practiceTest")
     public void userIsTakingAPracticeTest() {
         site.visit("launchPractice?question_count=2");
