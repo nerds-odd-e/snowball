@@ -1,7 +1,6 @@
 package com.odde.snowball.controller.onlinetest;
 
 import com.odde.snowball.controller.AppController;
-import com.odde.snowball.model.onlinetest.QuestionOption;
 import com.odde.snowball.model.onlinetest.Question;
 import org.bson.types.ObjectId;
 
@@ -73,11 +72,9 @@ public class AddQuestionController extends AppController {
         String type = req.getParameter("type");
 
         Question question = new Question(req.getParameter("description"), req.getParameter("advice"), new ObjectId(req.getParameter("category")), type.equals("multiple"), false);
-        question.save();
 
         final String[] checks = req.getParameterValues("check");
         List<String> checksList = Arrays.asList(checks);
-
 
         for (int i = 0; i < 6; i++) {
             String optionDescription;
@@ -88,10 +85,10 @@ public class AddQuestionController extends AppController {
             }
             if (!optionDescription.isEmpty()) {
                 boolean isCorrect = checksList.contains(String.valueOf(i + 1));
-                QuestionOption questionOption = new QuestionOption(optionDescription, isCorrect, question.getId());
-                questionOption.save();
+                question.withOption(optionDescription, isCorrect);
             }
         }
+        question.save();
     }
 
     private class EmptyValidator {

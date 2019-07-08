@@ -17,28 +17,27 @@ public class QuestionBuilder {
     }
 
     public Question please() {
-        return currentQuestion;
+        return currentQuestion.save();
     }
 
     public QuestionBuilder aQuestion(String questionDescription, String advice, String categoryName) {
         ObjectId categoryId = getOrCreateCategory(categoryName);
-        currentQuestion = new Question(questionDescription, advice, categoryId, false, false).save();
+        currentQuestion = new Question(questionDescription, advice, categoryId, false, false);
         return this;
     }
 
     public QuestionBuilder withWrongOption(String optionText) {
-        currentQuestion.createWrongOption(optionText);
+        currentQuestion.withOption(optionText, false);
         return this;
     }
 
     public QuestionBuilder withCorrectOption(String optionText) {
-        currentQuestion.createCorrectOption(optionText);
+        currentQuestion.withOption(optionText, true);
         return this;
     }
 
     public QuestionBuilder mutipleSelections() {
         currentQuestion.setMultiQuestion(true);
-        currentQuestion.save();
         return this;
     }
 

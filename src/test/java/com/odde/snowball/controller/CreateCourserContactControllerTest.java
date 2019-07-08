@@ -31,7 +31,7 @@ public class CreateCourserContactControllerTest  {
 
     @Test
     public void shouldNotAddNonexistingParticipant() throws Exception {
-        request.setParameter("courseId", course.getStringId());
+        request.setParameter("courseId", course.stringId());
         request.setParameter("participantEmail", new String[]{ "doesn't_exist"});
         controller.doPost(request,response);
         assertEquals("registerParticipant.jsp?status=fail&msg=Unable to register participants", response.getRedirectedUrl());
@@ -40,13 +40,13 @@ public class CreateCourserContactControllerTest  {
     @Test
     public void shouldHaveSucessfulMessageWhenCreated() throws Exception {
         ContactPerson participant = dataMother.contact_alex();
-        request.setParameter("courseId", course.getStringId());
+        request.setParameter("courseId", course.stringId());
         request.setParameter("participantEmail", participant.getEmail());
 
         controller.doPost(request,response);
 
         List<ContactPerson> participants = course.participants();
-        assertEquals(participant.getStringId(), participants.get(participants.size() - 1).getStringId());
+        assertEquals(participant.stringId(), participants.get(participants.size() - 1).stringId());
     }
 
 }

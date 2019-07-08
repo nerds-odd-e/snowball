@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bson.types.ObjectId;
 
+import java.beans.Transient;
 import java.util.Map;
 import java.util.Objects;
 
@@ -19,7 +20,8 @@ public abstract class Entity<T> {
     public void onBeforeSave() {
     }
 
-    public String getStringId() {
+    @Transient
+    public String stringId() {
         return getId().toString();
     }
 

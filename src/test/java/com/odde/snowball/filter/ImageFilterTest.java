@@ -41,7 +41,7 @@ public class ImageFilterTest {
     public void FilterMustUpdateSentMailvisitMatchingToken() throws IOException, ServletException {
         SentMail mail = new SentMail(new Date(), "asdf", "", 0L, "").save();
         SentMailVisit nd = new SentMailVisit("my@a.b.com", 0, mail.getId()).save();
-        request.setParameter(ImageFilter.TOKEN, nd.getStringId());
+        request.setParameter(ImageFilter.TOKEN, nd.stringId());
         filter.doFilter(request, response, chain);
         SentMailVisit nd1 = repo(SentMailVisit.class).findById(nd.getId());
         assertEquals(1, nd1.getReadCount());

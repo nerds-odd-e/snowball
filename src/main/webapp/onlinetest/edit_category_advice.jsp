@@ -19,7 +19,7 @@
              <label for="category">Category</label>
                  <select name="category" id="category">
                     <c:forEach items="${categoryList}" var="category" varStatus="Status">
-                        <option value="${category.getStringId()}">${category.getName()}</option>
+                        <option value="${category.stringId()}">${category.getName()}</option>
                     </c:forEach>
                  </select>
              </div>

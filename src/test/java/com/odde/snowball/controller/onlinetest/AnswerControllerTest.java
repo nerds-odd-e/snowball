@@ -45,13 +45,13 @@ public class AnswerControllerTest {
     }
 
     private Question createQuestionWithOptions(ObjectId categoryId) {
-        Question question = new Question("What is Scrum?", "Scrum is a coding practice.", categoryId, false, false).save();
-        ObjectId id = question.getId();
-        QuestionOption.createIt(id, "desc1", false);
-        QuestionOption.createIt(id, "desc2", false);
-        QuestionOption.createIt(id, "desc3", false);
-        QuestionOption.createIt(id, "desc4", false);
-        QuestionOption.createIt(id, "desc5", true);
+        Question question = new Question("What is Scrum?", "Scrum is a coding practice.", categoryId, false, false)
+                .withOption("desc1", false)
+                .withOption("desc2", false)
+                .withOption("desc3", false)
+                .withOption("desc4", false)
+                .withOption("desc5", true)
+                .save();
 
         return question;
     }
@@ -66,25 +66,10 @@ public class AnswerControllerTest {
         request.addParameter("optionId", optionId);
         request.addParameter("currentQuestionId", getCurrentQuestionId());
         controller.doPost(request, response);
-        ArrayList<String> selectedOption =  (ArrayList<String>) request.getAttribute("selectedOption");
+        ArrayList<String> selectedOption = (ArrayList<String>) request.getAttribute("selectedOption");
         assertEquals(optionId, selectedOption.get(0));
         assertThat((Question) request.getAttribute("currentQuestion")).isNotNull();
         assertThat(response.getForwardedUrl()).isEqualTo("/onlinetest/advice.jsp");
-    }
-
-    @Test
-    public void doPostWithNoOptionsInDatabase() throws ServletException, IOException {
-        question = createQuestionWithOptions(scrum);
-        onlineTest = OnlineQuiz.createOnlineQuiz(1);
-        request.getSession().setAttribute("onlineTest", onlineTest);
-
-        String optionId = getFirstOptionId(question);
-        request.addParameter("optionId", optionId);
-        request.addParameter("currentQuestionId", getCurrentQuestionId());
-
-        controller.doPost(request, response);
-        HttpSession session = request.getSession();
-        assertNull(session.getAttribute("options"));
     }
 
     @Test
@@ -119,17 +104,17 @@ public class AnswerControllerTest {
     }
 
     private String getCurrentQuestionId() {
-        return onlineTest.getCurrentQuestion().getStringId();
+        return onlineTest.getCurrentQuestion().stringId();
     }
 
     @Test
     public void doPostWithIncrementCorrectCountOnCorrectAnswer() throws ServletException, IOException {
         question = createQuestionWithOptions(scrum);
 
-        List<ObjectId> optionId = question.correctOptions();
+        List<String> optionId = question.correctOptions();
         onlineTest = OnlineQuiz.createOnlineQuiz(2);
 
-        request.addParameter("optionId", optionId.get(0).toString());
+        request.addParameter("optionId", optionId.get(0));
         request.addParameter("currentQuestionId", getCurrentQuestionId());
         request.getSession().setAttribute("onlineTest", onlineTest);
 
@@ -177,10 +162,10 @@ public class AnswerControllerTest {
         request.getSession().setAttribute("onlineTest", onlineTest);
 
         String wrongOptionId = getFirstOptionId(question);
-        List<ObjectId> correctOptionId = question.correctOptions();
+        List<String> correctOptionId = question.correctOptions();
 
         final String[] answeredOption = new String[2];
-        answeredOption[0] = correctOptionId.get(0).toString();
+        answeredOption[0] = correctOptionId.get(0);
         answeredOption[1] = wrongOptionId;
 
         request.addParameter("optionId", answeredOption);
@@ -191,8 +176,8 @@ public class AnswerControllerTest {
     }
 
     public static String getFirstOptionId(Question question) {
-        Collection<QuestionOption> options = question.options();
-        return options.stream().findFirst().get().getStringId();
+        Collection<QuestionOption> options = question.getOptions();
+        return options.stream().findFirst().get().stringId();
     }
 
 

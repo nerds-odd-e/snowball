@@ -25,7 +25,7 @@ public class EmailOpenedCounterControllerTest {
     public void returnEmailSubject() throws Exception {
 
         SentMail mail = sentMailFactory.buildSentMailWithSubject("Promotional test");
-        req.setParameter("id", String.valueOf(mail.getStringId()));
+        req.setParameter("id", String.valueOf(mail.stringId()));
 
         emailOpenedCounterController.doGet(req, res);
 

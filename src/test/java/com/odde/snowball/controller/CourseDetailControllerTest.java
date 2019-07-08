@@ -28,7 +28,7 @@ public class CourseDetailControllerTest {
     @Test
     public void doGet_containsTitle() throws IOException {
         repo(Course.class).fromKeyValuePairs("courseName", "CSD Tokyo", "courseDetails", "hoge").save();
-        String id = Course.getCourseByName("CSD Tokyo").getStringId();
+        String id = Course.getCourseByName("CSD Tokyo").stringId();
         request.setParameter("id", id);
         controller.doGet(request, response);
 

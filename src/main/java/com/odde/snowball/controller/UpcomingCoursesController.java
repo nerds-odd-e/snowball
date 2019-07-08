@@ -35,7 +35,7 @@ public class UpcomingCoursesController extends AppController {
             }
 
             for (Course course : nearCourses) {
-                courseIDs = courseIDs + "," + course.getStringId();
+                courseIDs = courseIDs + "," + course.stringId();
             }
             courseIDs = courseIDs.replaceFirst(",","");
 

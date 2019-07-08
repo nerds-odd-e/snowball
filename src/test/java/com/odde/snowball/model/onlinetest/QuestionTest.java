@@ -7,7 +7,6 @@ import org.bson.types.ObjectId;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.odde.snowball.model.base.Repository.repo;
@@ -31,13 +30,14 @@ public class QuestionTest {
 
     @Test
     public void getCorrectOption_正解のIDの一覧を返す() {
-        Question question = new Question("desc1", "adv1", categoryId, false, false).save();
-        QuestionOption correct1 = QuestionOption.createIt(question.getId(), "desc", true);
-        QuestionOption correct2 = QuestionOption.createIt(question.getId(), "desc", true);
-        QuestionOption.createIt(question.getId(), "desc", false);
+        Question question = new Question("desc1", "adv1", categoryId, false, false);
+        QuestionOption correct1 = question.addOption("desc", true);
+        QuestionOption correct2 = question.addOption("desc", true);
+        question.addOption("desc", false);
+        question.save();
 
-        final ArrayList<ObjectId> actual = question.correctOptions();
-        Assertions.assertThat(actual).hasSize(2).contains(correct1.getId()).contains(correct2.getId());
+        final List<String> actual = question.correctOptions();
+        Assertions.assertThat(actual).hasSize(2).contains(correct1.stringId()).contains(correct2.stringId());
     }
 
     @Test(expected = ValidationException.class)
@@ -55,19 +55,8 @@ public class QuestionTest {
     @Test
     public void shouldFetchOptionsForQuestion() {
         Question question = new Question("desc1", null, categoryId, false, false).save();
-        QuestionOption.createIt(question.getId(), "desc", false);
-        assertThat(question.options(), is(not(empty())));
-    }
-
-    @Test
-    public void shouldFetchOptionsForQuestionWithSameQuestionId() {
-        Question question = new Question("desc1", null, categoryId, false, false).save();
-        ObjectId expectedQuestionId = question.getId();
-        QuestionOption.createIt(question.getId(), "desc", false);
-        QuestionOption.createIt(question.getId(), "desc", false);
-        QuestionOption.createIt(question.getId(), "desc", false);
-
-        question.options().forEach(option -> assertThat(option.getQuestionId(), is(equalTo(expectedQuestionId))));
+        question.addOption("desc", false);
+        assertThat(question.getOptions(), is(not(empty())));
     }
 
     @Test

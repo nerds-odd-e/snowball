@@ -15,23 +15,23 @@
                 <h2 id="questionText">${currentQuestion.getDescription()}</h2>
                 <ul>
 
-               <c:forEach items="${currentQuestion.options()}" var="option">
+               <c:forEach items="${currentQuestion.getOptions()}" var="option">
                     <li>
-                         <c:set var="optionId">${option.getStringId()}</c:set>
+                         <c:set var="optionId">${option.stringId()}</c:set>
                             <c:if test="${selectedOption.contains(optionId)}">
                                 <c:if test="${currentQuestion.isCorrect(optionId)}">
-                                    <input type="checkbox" name="optionId" value="${option.getStringId()}" checked disabled/><label class="selected_correct"/>${option.getDescription()}</label>
+                                    <input type="checkbox" name="optionId" value="${option.stringId()}" checked disabled/><label class="selected_correct"/>${option.getDescription()}</label>
                                </c:if>
                                <c:if test="${!currentQuestion.isCorrect(optionId)}">
-                                    <input type="checkbox" name="optionId" value="${option.getStringId()}" checked disabled/><label class="selected_incorrect"/>${option.getDescription()}</label>
+                                    <input type="checkbox" name="optionId" value="${option.stringId()}" checked disabled/><label class="selected_incorrect"/>${option.getDescription()}</label>
                                </c:if>
                             </c:if>
                             <c:if test="${!selectedOption.contains(optionId)}">
                                 <c:if test="${currentQuestion.isCorrect(optionId)}">
-                                    <input type="checkbox" name="optionId" value="${option.getStringId()}" disabled/><label class="unselected_correct"/>${option.getDescription()}</label>
+                                    <input type="checkbox" name="optionId" value="${option.stringId()}" disabled/><label class="unselected_correct"/>${option.getDescription()}</label>
                                 </c:if>
                                 <c:if test="${!currentQuestion.isCorrect(optionId)}">
-                                    <input type="checkbox" name="optionId" value="${option.getStringId()}" disabled/><label class="unselected_incorrect"/> ${option.getDescription()}</label>
+                                    <input type="checkbox" name="optionId" value="${option.stringId()}" disabled/><label class="unselected_incorrect"/> ${option.getDescription()}</label>
                                 </c:if>
                             </c:if>
                     </li>

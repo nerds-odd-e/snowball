@@ -3,12 +3,12 @@ package com.odde.snowball.model.onlinetest;
 import com.odde.snowball.model.User;
 import com.odde.snowball.model.base.Entity;
 import com.odde.snowball.model.practice.Record;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.bson.types.ObjectId;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -25,7 +25,6 @@ import static java.util.stream.Collectors.toList;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Question extends Entity<Question> {
 
     @NotNull(message = "Description cannot be empty")
@@ -37,6 +36,16 @@ public class Question extends Entity<Question> {
     private ObjectId categoryId;
     private boolean isMultiQuestion;
     private boolean isApproved;
+    @Valid
+    private List<QuestionOption> options = new ArrayList<>();
+
+    public Question(String description, String advice, ObjectId category, boolean multiple, boolean b) {
+        this.description = description;
+        this.advice = advice;
+        this.categoryId = category;
+        this.isMultiQuestion = multiple;
+        this.isApproved = b;
+    }
 
     public void recordQuestionForUser(User user, LocalDate date) {
         List<Record> records = repo(Record.class).find(and(eq("userId", user.getId()), eq("questionId", getId())));
@@ -81,37 +90,18 @@ public class Question extends Entity<Question> {
         return category.getName();
     }
 
-    public Collection<QuestionOption> options() {
-        return QuestionOption.getForQuestion(this.getId());
-    }
-
-    boolean verifyAnswer(List<ObjectId> answeredOptionIds) {
-        Collection<QuestionOption> optionsByQuestionId = options();
-        List<ObjectId> collectOptions = optionsByQuestionId.stream().filter(QuestionOption::isCorrect).map(Entity::getId).collect(toList());
-        return collectOptions.equals(answeredOptionIds);
-    }
-
-    public ArrayList<ObjectId> correctOptions() {
-        Collection<QuestionOption> optionsByQuestionId = options();
-        final ArrayList<ObjectId> correctOptions = new ArrayList<>();
-        for (QuestionOption option : optionsByQuestionId) {
-            if (option.isCorrect()) {
-                correctOptions.add(option.getId());
-            }
-        }
-        return correctOptions;
+    public List<String> correctOptions() {
+        return getOptions().stream().filter(QuestionOption::isCorrect).map(QuestionOption::stringId).collect(toList());
     }
 
     public boolean isCorrect(String optionId) {
-        return correctOptions().contains(new ObjectId(optionId));
+        return correctOptions().contains(optionId);
     }
 
-    public void createWrongOption(String optionText) {
-        new QuestionOption(optionText, false, getId()).save();
-    }
-
-    public void createCorrectOption(String optionText) {
-        new QuestionOption(optionText, true, getId()).save();
+    boolean verifyAnswer(List<String> answeredOptionIds) {
+        Collection<QuestionOption> optionsByQuestionId = getOptions();
+        List<String> collectOptions = optionsByQuestionId.stream().filter(QuestionOption::isCorrect).map(QuestionOption::stringId).collect(toList());
+        return collectOptions.equals(answeredOptionIds);
     }
 
     public void resetCycle(User user, LocalDate date) {
@@ -130,5 +120,16 @@ public class Question extends Entity<Question> {
     public boolean notAnswered(User user) {
         List<Record> records = repo(Record.class).find(and(eq("userId", user.getId()), eq("questionId", getId())));
         return records.size() == 0;
+    }
+
+    public Question withOption(String optionDescription, boolean isCorrect) {
+        addOption(optionDescription, isCorrect);
+        return this;
+    }
+
+    public QuestionOption addOption(String optionDescription, boolean isCorrect) {
+        QuestionOption questionOption = new QuestionOption(optionDescription, isCorrect);
+        options.add(questionOption);
+        return questionOption;
     }
 }

@@ -18,7 +18,7 @@ public class AdminApprovePublicQuestionSteps {
     @Given("^未承認の問題がある$")
     public void 未承認の問題がある(Map<String, String> questionMap){
         Question q = QuestionBuilder.buildDefaultQuestion("Scrum").please();
-        questionId = q.getStringId();
+        questionId = q.stringId();
     }
 
     @When("^Adminが承認する$")

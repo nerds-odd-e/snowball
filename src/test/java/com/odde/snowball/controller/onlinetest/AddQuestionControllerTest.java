@@ -35,7 +35,7 @@ public class AddQuestionControllerTest {
     private void setupValidRequest() {
         request.setParameter("description", "aaaaaaaaaaaaaaaa");
         request.setParameter("type", "single");
-        request.setParameter("category", cat1.getStringId());
+        request.setParameter("category", cat1.stringId());
         request.setParameter("option1", "option1");
         request.setParameter("option2", "option2");
         request.setParameter("option3", "option3");
@@ -49,7 +49,7 @@ public class AddQuestionControllerTest {
     private void setupValidRequestForMultipleChoice() {
         request.setParameter("description", "aaaaaaaaaaaaaaaa");
         request.setParameter("type", "multiple");
-        request.setParameter("category", cat2.getStringId());
+        request.setParameter("category", cat2.stringId());
         request.setParameter("checkbox1", "checkbox1");
         request.setParameter("checkbox2", "checkbox2");
         request.setParameter("checkbox3", "checkbox3");
@@ -81,13 +81,13 @@ public class AddQuestionControllerTest {
 
         for (int i = 0; i < 6; i++) {
             String option = request.getParameter("option" + (i + 1));
-            boolean hasOption = question.options().stream().anyMatch(opt -> opt.getDescription().equals(option));
+            boolean hasOption = question.getOptions().stream().anyMatch(opt -> opt.getDescription().equals(option));
             assertTrue(hasOption);
         }
 
         String rightOptionDescription = request.getParameter("option1");
 
-        Optional<QuestionOption> rightAnswer = question.options().stream().filter(QuestionOption::isCorrect).findFirst();
+        Optional<QuestionOption> rightAnswer = question.getOptions().stream().filter(QuestionOption::isCorrect).findFirst();
         assertEquals(rightAnswer.get().getDescription(), rightOptionDescription);
     }
 
@@ -102,11 +102,11 @@ public class AddQuestionControllerTest {
 
         for (int i = 0; i < 6; i++) {
             String option = request.getParameter("checkbox" + (i + 1));
-            boolean hasOption = question.options().stream().anyMatch(opt -> opt.getDescription().equals(option));
+            boolean hasOption = question.getOptions().stream().anyMatch(opt -> opt.getDescription().equals(option));
             assertTrue(hasOption);
         }
 
-        Collection<QuestionOption> options = question.options();
+        Collection<QuestionOption> options = question.getOptions();
         assertTrue(((QuestionOption) options.toArray()[0]).isCorrect());
         assertTrue(((QuestionOption) options.toArray()[1]).isCorrect());
         assertFalse(((QuestionOption) options.toArray()[2]).isCorrect());

@@ -15,7 +15,7 @@ public class EnrollParticipantPage {
 
     public void enrollParticipants(String courseName, String participants) {
         Course course = Course.getCourseByName(courseName);
-        driver.visit(site.baseUrl() + "course_detail.jsp?id=" + course.getStringId());
+        driver.visit(site.baseUrl() + "course_detail.jsp?id=" + course.stringId());
         driver.executeJavaScript("document.getElementById('participants').value = '" + participants + "';");
         driver.click("#add_button");
     }

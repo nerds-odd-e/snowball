@@ -11,20 +11,20 @@
         <div id="page-wrapper">
             <form name="question" id="questionForm" method="post"
                 action="/onlinetest/answer">
-                    <input type="hidden" id="currentQuestionId" name="currentQuestionId" value="${currentQuestion.getStringId()}">
+                    <input type="hidden" id="currentQuestionId" name="currentQuestionId" value="${currentQuestion.stringId()}">
             <div class="container-fluid">
                 <p class="alertMsg">${alertMsg}</p>
                 <h1>Question</h1>
                 <h2 id="description">${currentQuestion.getDescription()}</h2>
                 <ul>
 
-                <c:forEach items="${currentQuestion.options()}" var="option" varStatus="status">
+                <c:forEach items="${currentQuestion.getOptions()}" var="option" varStatus="status">
                     <li>
                         <c:if test="${currentQuestion.isMultiQuestion()}">
-                         <input type="checkbox" id="option${status.index + 1}" name="optionId" value="${option.getStringId()}" />${option.getDescription()}</label>
+                         <input type="checkbox" id="option${status.index + 1}" name="optionId" value="${option.stringId()}" />${option.getDescription()}</label>
                         </c:if>
                         <c:if test="${!currentQuestion.isMultiQuestion()}">
-                         <input type="radio" id="option${status.index + 1}" name="optionId" value="${option.getStringId()}" />${option.getDescription()}</label>
+                         <input type="radio" id="option${status.index + 1}" name="optionId" value="${option.stringId()}" />${option.getDescription()}</label>
                         </c:if>
                     </li>
                 </c:forEach>

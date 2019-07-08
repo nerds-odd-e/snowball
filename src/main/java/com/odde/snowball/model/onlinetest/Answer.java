@@ -1,25 +1,22 @@
 package com.odde.snowball.model.onlinetest;
 
-import org.bson.types.ObjectId;
-
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Answer {
 
     private Question question;
-    private List<ObjectId> selectedOptionIds;
+    private List<String> selectedOptionIds;
 
     Answer(Question question, List<String> selectedOptionIds) {
         this.question = question;
-        this.selectedOptionIds = selectedOptionIds.stream().map(ObjectId::new).collect(Collectors.toList());
+        this.selectedOptionIds = selectedOptionIds;
     }
 
     public Question getQuestion() {
         return question;
     }
 
-    public List<ObjectId> getSelectedOptionIds() {
+    private List<String> getSelectedOptionIds() {
         return selectedOptionIds;
     }
 

@@ -32,7 +32,7 @@ public class AnswerController extends AppController {
         }
 
         Question currentQuestion = onlineTest.getCurrentQuestion();
-        if (currentQuestion == null || !currentQuestion.getStringId().equals(req.getParameter("currentQuestionId"))) {
+        if (currentQuestion == null || !currentQuestion.stringId().equals(req.getParameter("currentQuestionId"))) {
             redirectToShowQuestionWithMsg(resp, session, "You answered previous question twice");
             return;
         }
