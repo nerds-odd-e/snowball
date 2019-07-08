@@ -1,6 +1,5 @@
 package com.odde.snowball.model.onlinetest;
 
-import com.odde.snowball.enumeration.TestType;
 import com.odde.snowball.model.User;
 import lombok.Getter;
 
@@ -13,7 +12,7 @@ import java.util.NoSuchElementException;
 import static com.odde.snowball.model.base.Repository.repo;
 
 @Getter
-public class OnlineTest {
+public abstract class OnlineTest {
 
     private final List<Question> questions;
     private List<Answer> answers;
@@ -33,6 +32,9 @@ public class OnlineTest {
     }
 
     public Question getCurrentQuestion() {
+        if (!hasNextQuestion()) {
+            return null;
+        }
         return questions.get(getNumberOfAnsweredQuestions());
     }
 
@@ -73,14 +75,6 @@ public class OnlineTest {
         return "あともう少し";
     }
 
-    public String getAlertMsg(String lastDoneQuestionId) {
-        String alertMsg = "";
-        if (!lastDoneQuestionId.equals(String.valueOf(getNumberOfAnsweredQuestions()))) {
-            alertMsg = "You answered previous question twice";
-        }
-        return alertMsg;
-    }
-
     public Answer answerCurrentQuestion(List<String> selectedOptionIds, User user, LocalDate date) {
         Question currentQuestion = getCurrentQuestion();
         Answer answer = new Answer(currentQuestion, selectedOptionIds);
@@ -107,14 +101,9 @@ public class OnlineTest {
         return new TestResult(questions, answers);
     }
 
-    public TestType getTestType() {
-        return null;
-    }
+    public abstract String endPageName();
 
-    public String getNextPageName() {
-        if (hasNextQuestion()) {
-            return "/onlinetest/question";
-        }
-        return "/onlinetest/end_of_test.jsp";
+    public String progress() {
+        return "" + getCurrentQuestionIndex() + "/" + getNumberOfQuestions();
     }
 }

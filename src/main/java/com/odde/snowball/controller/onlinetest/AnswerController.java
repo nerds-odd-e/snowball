@@ -5,7 +5,6 @@ import com.odde.snowball.model.User;
 import com.odde.snowball.model.onlinetest.Answer;
 import com.odde.snowball.model.onlinetest.OnlineTest;
 import com.odde.snowball.model.onlinetest.Question;
-import org.bson.types.ObjectId;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,7 +15,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import static java.util.Arrays.asList;
 
@@ -27,32 +25,32 @@ public class AnswerController extends AppController {
         User user = (User) session.getAttribute("currentUser");
 
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
-        String[] answeredOptionIds = req.getParameterValues("optionId");
+        String[] selectedOtpionIds = req.getParameterValues("optionId");
 
-        if (req.getParameterValues("optionId") == null) {
-            resp.sendRedirect("/onlinetest/question");
+        if (selectedOtpionIds == null) {
+            redirectToShowQuestionWithMsg(resp, session, "You haven't selected any option.");
             return;
         }
 
-        String lastDoneQuestionId = req.getParameter("lastDoneQuestionId");
-        String alertMsg = onlineTest.getAlertMsg(lastDoneQuestionId);
-        session.setAttribute("alertMsg", alertMsg);
-
-        if (!lastDoneQuestionId.equals(String.valueOf(onlineTest.getNumberOfAnsweredQuestions()))) {
-            resp.sendRedirect(onlineTest.getNextPageName());
+        Question currentQuestion = onlineTest.getCurrentQuestion();
+        if (currentQuestion == null || !currentQuestion.getStringId().equals(req.getParameter("currentQuestionId"))) {
+            redirectToShowQuestionWithMsg(resp, session, "You answered previous question twice");
             return;
         }
 
-        Answer answer = onlineTest.answerCurrentQuestion(asList(answeredOptionIds), user, LocalDate.now());
-
+        Answer answer = onlineTest.answerCurrentQuestion(asList(selectedOtpionIds), user, LocalDate.now());
         if (answer.isCorrect()) {
-            resp.sendRedirect(onlineTest.getNextPageName());
+            redirectToShowQuestionWithMsg(resp, session, null);
             return;
         }
-
-        req.setAttribute("selectedOption", new ArrayList(asList(answeredOptionIds)));
+        req.setAttribute("selectedOption", new ArrayList(asList(selectedOtpionIds)));
         RequestDispatcher dispatch = req.getRequestDispatcher("/onlinetest/advice.jsp");
         dispatch.forward(req, resp);
+    }
+
+    private void redirectToShowQuestionWithMsg(HttpServletResponse resp, HttpSession session, String msg) throws IOException {
+        session.setAttribute("alertMsg", msg);
+        resp.sendRedirect("/onlinetest/question");
     }
 
 }

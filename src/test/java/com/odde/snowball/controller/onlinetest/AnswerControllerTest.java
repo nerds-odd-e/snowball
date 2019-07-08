@@ -115,7 +115,7 @@ public class AnswerControllerTest {
         controller.doPost(request, response);
         HttpSession session = request.getSession();
 
-        assertEquals("", session.getAttribute("alertMsg"));
+        assertEquals(null, session.getAttribute("alertMsg"));
     }
 
     @Test
@@ -161,6 +161,7 @@ public class AnswerControllerTest {
         HttpSession session = request.getSession();
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
         assertEquals(0, onlineTest.getNumberOfAnsweredQuestions());
+        assertEquals("You haven't selected any option.", session.getAttribute("alertMsg"));
     }
 
     @Test

@@ -2,17 +2,6 @@
 	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<%@ page import="com.odde.snowball.model.onlinetest.OnlineTest" %>
-<%@ page import="com.odde.snowball.model.onlinetest.Question" %>
-
-<%
-    OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
-    String alertMsg = (String) request.getSession().getAttribute("alertMsg");
-    Question question = null;
-    question = onlineTest.getCurrentQuestion();
-    pageContext.setAttribute("alertMsg", alertMsg);
-    pageContext.setAttribute("question", question);
-%>
 
 <t:basic title="Question">
     <jsp:attribute name="extra_head">
@@ -22,21 +11,19 @@
         <div id="page-wrapper">
             <form name="question" id="questionForm" method="post"
                 action="/onlinetest/answer">
-                    <input type="hidden" id="lastDoneQuestionId" name="lastDoneQuestionId" value="${onlineTest.getNumberOfAnsweredQuestions()}">
+                    <input type="hidden" id="currentQuestionId" name="currentQuestionId" value="${requestScope.currentQuestion.getStringId()}">
             <div class="container-fluid">
-                <p class="alertMsg">${alertMsg}</p>
+                <p class="alertMsg">${requestScope.alertMsg}</p>
                 <h1>Question</h1>
-                 <c:if test="${not empty question }" >
-                    <h2 id="description">${question.getDescription()}</h2>
-                  </c:if>
+                <h2 id="description">${requestScope.currentQuestion.getDescription()}</h2>
                 <ul>
 
-                <c:forEach items="${question.options()}" var="option" varStatus="status">
+                <c:forEach items="${requestScope.currentQuestion.options()}" var="option" varStatus="status">
                     <li>
-                        <c:if test="${question.isMultiQuestion()}">
+                        <c:if test="${requestScope.currentQuestion.isMultiQuestion()}">
                          <input type="checkbox" id="option${status.index + 1}" name="optionId" value="${option.getStringId()}" />${option.getDescription()}</label>
                         </c:if>
-                        <c:if test="${!question.isMultiQuestion()}">
+                        <c:if test="${!requestScope.currentQuestion.isMultiQuestion()}">
                          <input type="radio" id="option${status.index + 1}" name="optionId" value="${option.getStringId()}" />${option.getDescription()}</label>
                         </c:if>
                     </li>
@@ -46,7 +33,7 @@
                     <input type="submit" id="answer" value="Answer">
                 </div>
                 <div style="float:right;" id="progress">
-                    <span id="currentQuestionIndex">${onlineTest.getCurrentQuestionIndex()}</span>/${onlineTest.getNumberOfQuestions()}
+                    <span id="currentQuestionIndex">${requestScope.progress}</span>
                 </div>
             </div>
             </form>

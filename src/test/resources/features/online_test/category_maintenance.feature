@@ -15,7 +15,6 @@ Feature: Question Category
       | Scrum    | You should study scrum | http://google.co.jp |
       | Tech     | You should study tech  | http://facebook.com |
 
-    @now
   Scenario: Add new category
     Given user "Mary" has logged in successfully
     And I'm on the admin dashboard

@@ -1,8 +1,6 @@
 package com.odde.snowball.model.onlinetest;
 
-import com.odde.snowball.enumeration.TestType;
 import com.odde.snowball.model.User;
-import org.bson.types.ObjectId;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +9,7 @@ import java.util.stream.Collectors;
 import static com.odde.snowball.model.base.Repository.repo;
 
 public class OnlinePractice extends OnlineTest {
-    public OnlinePractice(List<Question> questions) {
+    private OnlinePractice(List<Question> questions) {
         super(questions);
     }
 
@@ -26,14 +24,7 @@ public class OnlinePractice extends OnlineTest {
         return new OnlinePractice(questions);
     }
 
-    public String getNextPageName() {
-        if (hasNextQuestion()) {
-            return "/onlinetest/question";
-        }
+    public String endPageName() {
         return "/practice/completed_practice.jsp";
-    }
-
-    public TestType getTestType() {
-        return TestType.Practice;
     }
 }

@@ -1,7 +1,6 @@
 package com.odde.snowball.model.onlinetest;
 
 import com.odde.TestWithDB;
-import com.odde.snowball.enumeration.TestType;
 import com.odde.snowball.model.User;
 import com.odde.snowball.model.base.Entity;
 import org.bson.types.ObjectId;
@@ -166,19 +165,6 @@ public class OnlineTestTest {
     }
 
     @Test
-    public void onlineTestObjectShouldHaveTestTypeAttributePractice() {
-        User user = new User();
-        OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user);
-        assertEquals(onlineTest.getTestType(), TestType.Practice);
-    }
-
-    @Test
-    public void onlineTestObjectShouldHaveTestTypeAttributeOnlineTest() {
-        OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(1);
-        assertEquals(onlineTest.getTestType(), TestType.OnlineTest);
-    }
-
-    @Test
     public void practiceShouldShowAllDueQuestionsWhenTheyAreDue() {
         User user = new User();
         List<Question> questions = mockQuestion(3, retro.getId());
@@ -193,7 +179,6 @@ public class OnlineTestTest {
         expected.add(questions.get(1).getId());
         Set<ObjectId> actual = onlineTest.getQuestions().stream().map(Entity::getId).collect(Collectors.toSet());
         assertEquals(expected, actual);
-        assertEquals(onlineTest.getTestType(), TestType.Practice);
     }
 
 
@@ -214,23 +199,16 @@ public class OnlineTestTest {
     }
 
     @Test
-    public void should_return_questions_page_if_test_has_not_ended() {
-        mockQuestion(1);
-        OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(1);
-        assertEquals(onlineTest.getNextPageName(), "/onlinetest/question");
-    }
-
-    @Test
     public void should_return_completed_test_page_if_test_ends() {
         OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(0);
-        assertEquals(onlineTest.getNextPageName(), "/onlinetest/end_of_test.jsp");
+        assertEquals(onlineTest.endPageName(), "/onlinetest/end_of_test.jsp");
     }
 
     @Test
     public void should_return_completed_practice_if_practice_ends() {
         User user = new User();
         OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user);
-        assertEquals(onlineTest.getNextPageName(), "/practice/completed_practice.jsp");
+        assertEquals(onlineTest.endPageName(), "/practice/completed_practice.jsp");
     }
 
 
