@@ -90,12 +90,4 @@ public class LaunchPracticeControllerTest {
         OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
         assertThat(onlineTest.getNumberOfQuestions()).isEqualTo(1);
     }
-
-    @Test
-    public void userMustSeeOnly1QuestionEvenIfThereAre2QuestionsUnanswered() throws IOException {
-        mockQuestion(2);
-        controller.doGet(request, response);
-        OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
-        assertThat(onlineTest.getNumberOfQuestions()).isEqualTo(1);
-    }
 }

@@ -19,18 +19,18 @@
                     <li>
                          <c:set var="optionId">${option.stringId()}</c:set>
                             <c:if test="${selectedOption.contains(optionId)}">
-                                <c:if test="${currentQuestion.isCorrect(optionId)}">
+                                <c:if test="${option.isCorrect()}">
                                     <input type="checkbox" name="optionId" value="${option.stringId()}" checked disabled/><label class="selected_correct"/>${option.getDescription()}</label>
                                </c:if>
-                               <c:if test="${!currentQuestion.isCorrect(optionId)}">
+                               <c:if test="${!option.isCorrect()}">
                                     <input type="checkbox" name="optionId" value="${option.stringId()}" checked disabled/><label class="selected_incorrect"/>${option.getDescription()}</label>
                                </c:if>
                             </c:if>
                             <c:if test="${!selectedOption.contains(optionId)}">
-                                <c:if test="${currentQuestion.isCorrect(optionId)}">
+                                <c:if test="${option.isCorrect()}">
                                     <input type="checkbox" name="optionId" value="${option.stringId()}" disabled/><label class="unselected_correct"/>${option.getDescription()}</label>
                                 </c:if>
-                                <c:if test="${!currentQuestion.isCorrect(optionId)}">
+                                <c:if test="${!option.isCorrect()}">
                                     <input type="checkbox" name="optionId" value="${option.stringId()}" disabled/><label class="unselected_incorrect"/> ${option.getDescription()}</label>
                                 </c:if>
                             </c:if>

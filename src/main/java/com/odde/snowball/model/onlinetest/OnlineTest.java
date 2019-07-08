@@ -38,11 +38,7 @@ public abstract class OnlineTest {
         Answer answer = new Answer(currentQuestion, selectedOptionIds);
         answers.add(answer);
         if (user != null) {
-            if (answer.isCorrect()) {
-                currentQuestion.recordQuestionForUser(user, date);
-            } else {
-                currentQuestion.resetCycle(user, date);
-            }
+            currentQuestion.recordQuestionForUser(user, date);
         }
         return answer;
     }

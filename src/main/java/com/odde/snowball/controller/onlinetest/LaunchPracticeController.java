@@ -4,7 +4,6 @@ import com.odde.snowball.controller.AppController;
 import com.odde.snowball.model.User;
 import com.odde.snowball.model.onlinetest.OnlinePractice;
 import com.odde.snowball.model.onlinetest.OnlineTest;
-import com.odde.snowball.model.practice.Practice;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +18,6 @@ public class LaunchPracticeController extends AppController {
         HttpSession session = req.getSession(true);
         User user = (User) session.getAttribute("currentUser");
 
-        Practice.generatePractice(user);
         session.setAttribute("date", LocalDate.now());
 
         OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user);

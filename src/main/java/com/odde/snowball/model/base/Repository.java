@@ -58,6 +58,10 @@ public class Repository<T extends Entity> {
         return collection.find(cond).into(new ArrayList<>());
     }
 
+    public T findFirst(Bson cond) {
+        return collection.find(cond).first();
+    }
+
     public List<T> findAll() {
         return collection.find().into(new ArrayList<>());
     }

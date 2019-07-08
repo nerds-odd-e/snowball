@@ -2,7 +2,6 @@ package com.odde.snowball.model.onlinetest;
 
 import com.odde.snowball.model.User;
 import com.odde.snowball.model.base.Entity;
-import com.odde.snowball.model.practice.Record;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,12 +12,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import static com.mongodb.client.model.Filters.and;
-import static com.mongodb.client.model.Filters.eq;
 import static com.odde.snowball.model.base.Repository.repo;
 import static java.util.stream.Collectors.toList;
 
@@ -48,34 +44,14 @@ public class Question extends Entity<Question> {
     }
 
     public void recordQuestionForUser(User user, LocalDate date) {
-        List<Record> records = repo(Record.class).find(and(eq("userId", user.getId()), eq("questionId", getId())));
-        if(records.size() == 0){
-            Record record = new Record(user.getId(), getId(), date, 1);
-            record.save();
-        } else {
-            Record record = records.get(0);
-            record.setLastUpdated(date);
-            record.setCycleState(record.getCycleState()+1);
-            record.save();
-        }
+        Record record = Record.getOrInitializeRecord(user, this);
+        record.setLastUpdated(date);
+        record.setCycleState(record.getCycleState() + 1);
+        record.save();
     }
 
     boolean isDueForUser(User user) {
-        List<Integer> cycle = Arrays.asList(1,2,4);
-        List<Record> records = repo(Record.class).find(and(eq("userId",user.getId()),eq("questionId",getId())));
-        if (records.size()==0){
-            return false;
-        }
-        Record record = records.get(0);
-        if (record.getCycleState()==0) {
-            return record.getLastUpdated().isBefore(LocalDate.now());
-        }
-        if (record.getCycleState()>cycle.size()){
-            return false;
-        }
-        return !record.getLastUpdated()
-                .plusDays(cycle.get(record.getCycleState()-1))
-                .isAfter(LocalDate.now());
+        return Record.getOrInitializeRecord(user, this).isDue();
     }
 
     public Category category() {
@@ -94,32 +70,10 @@ public class Question extends Entity<Question> {
         return getOptions().stream().filter(QuestionOption::isCorrect).map(QuestionOption::stringId).collect(toList());
     }
 
-    public boolean isCorrect(String optionId) {
-        return correctOptions().contains(optionId);
-    }
-
     boolean verifyAnswer(List<String> answeredOptionIds) {
         Collection<QuestionOption> optionsByQuestionId = getOptions();
         List<String> collectOptions = optionsByQuestionId.stream().filter(QuestionOption::isCorrect).map(QuestionOption::stringId).collect(toList());
         return collectOptions.equals(answeredOptionIds);
-    }
-
-    public void resetCycle(User user, LocalDate date) {
-        List<Record> records = repo(Record.class).find(and(eq("userId", user.getId()), eq("questionId", getId())));
-        if(records.size() == 0){
-            Record record = new Record(user.getId(), getId(), date, 0);
-            record.save();
-        } else {
-            Record record = records.get(0);
-            record.setLastUpdated(date);
-            record.setCycleState(0);
-            record.save();
-        }
-    }
-
-    public boolean notAnswered(User user) {
-        List<Record> records = repo(Record.class).find(and(eq("userId", user.getId()), eq("questionId", getId())));
-        return records.size() == 0;
     }
 
     public Question withOption(String optionDescription, boolean isCorrect) {
