@@ -5,7 +5,6 @@ import com.odde.snowball.model.User;
 import com.odde.snowball.model.onlinetest.OnlinePractice;
 import com.odde.snowball.model.onlinetest.OnlineTest;
 import com.odde.snowball.model.practice.Practice;
-import org.bson.types.ObjectId;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +23,7 @@ public class LaunchPracticeController extends AppController {
         session.setAttribute("date", LocalDate.now());
 
         OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user);
-        if (!onlineTest.hasNextQuestion()) {
+        if (onlineTest.getCurrentQuestion() == null) {
             resp.sendRedirect("/practice/completed_practice.jsp");
             return;
         }

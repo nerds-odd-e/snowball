@@ -41,12 +41,6 @@ public class OnlineTestTest {
         assertEquals(5, newOnlineTest.getNumberOfQuestions());
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void shouldNotGetNextQuestionWhenNoMoreQuestionsLeft() {
-        OnlineTest newOnlineTest = OnlineQuiz.createOnlineQuiz(5);
-        newOnlineTest.getNextQuestion();
-    }
-
     @Test
     public void shouldReturn2CorrectAnswer() {
         Question question = new Question("desc1", "adv1", scrum.getId(), false, false).save();
@@ -64,24 +58,14 @@ public class OnlineTestTest {
     }
 
     @Test
-    public void aQuestionThatWasAnsweredOneDayAgoKnowsItIsOneDayOld() {
-        LocalDate answeredTime = LocalDate.now().minusDays(1);
-        OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(1);
-
-        onlineTest.recordAnswerWithTime(answeredTime);
-        long passedDays = onlineTest.getPassedDaysSinceAnswered();
-        assertEquals(1, passedDays);
-    }
-
-    @Test
     public void shouldReturnOneIncorrectAndOneCorrectAnswer() {
         Question question = new Question("desc1", "adv1", scrum.getId(), false, false).save();
         ObjectId id = question.getId();
 
         final String[] answeredOption = new String[2];
-        answeredOption[0] = QuestionOption.<QuestionOption>createIt(id, "desc1", false).getStringId();
-        answeredOption[1] = QuestionOption.<QuestionOption>createIt(id, "desc2", true).getStringId();
-        QuestionOption.<QuestionOption>createIt(id, "desc3", true).getStringId();
+        answeredOption[0] = QuestionOption.createIt(id, "desc1", false).getStringId();
+        answeredOption[1] = QuestionOption.createIt(id, "desc2", true).getStringId();
+        QuestionOption.createIt(id, "desc3", true).getStringId();
 
         OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(1);
         Answer answer = onlineTest.answerCurrentQuestion(Arrays.asList(answeredOption), user, LocalDate.now());
@@ -95,19 +79,19 @@ public class OnlineTestTest {
         OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(1);
         onlineTest.answerCurrentQuestion(Collections.singletonList(new ObjectId().toString()), user, LocalDate.now());
         assertEquals(1, onlineTest.getNumberOfAnsweredQuestions());
-        assertEquals(0, onlineTest.getCorrectAnswerCount());
+        assertEquals(0, onlineTest.testResult().getCorrectAnswerCount());
     }
 
     @Test
     public void calculateCorrectRate() {
         Question q1 = new Question("d1", "a1", scrum.getId(), false, false).save();
-        QuestionOption it = QuestionOption.<QuestionOption>createIt(q1.getId(), "d1", true);
-        QuestionOption.<QuestionOption>createIt(q1.getId(), "d2", false);
+        QuestionOption it = QuestionOption.createIt(q1.getId(), "d1", true);
+        QuestionOption.createIt(q1.getId(), "d2", false);
 
         OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(1);
         onlineTest.answerCurrentQuestion(Collections.singletonList(it.getStringId()), user, LocalDate.now());
 
-        TestResult result = onlineTest.generateTestResult();
+        TestResult result = onlineTest.testResult();
 
         int correctRate = result.correctPercentage();
         assertEquals(100, correctRate);
@@ -116,13 +100,13 @@ public class OnlineTestTest {
     @Test
     public void calculateCorrectRate2() {
         Question q1 = new Question("d1", "a1", scrum.getId(), false, false).save();
-        QuestionOption.<QuestionOption>createIt(q1.getId(), "d1", true);
-        QuestionOption wrongOption = QuestionOption.<QuestionOption>createIt(q1.getId(), "d2", false);
+        QuestionOption.createIt(q1.getId(), "d1", true);
+        QuestionOption wrongOption = QuestionOption.createIt(q1.getId(), "d2", false);
 
         OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(1);
         onlineTest.answerCurrentQuestion(Collections.singletonList(wrongOption.getStringId()), user, LocalDate.now());
 
-        TestResult result = onlineTest.generateTestResult();
+        TestResult result = onlineTest.testResult();
 
         int correctRate = result.correctPercentage();
         assertEquals(0, correctRate);
@@ -132,24 +116,24 @@ public class OnlineTestTest {
     public void calculateCorrectRate80percent() {
 
         Question q1 = new Question("d1", "a1", scrum.getId(), false, false).save();
-        QuestionOption c1 = QuestionOption.<QuestionOption>createIt(q1.getId(), "d1", true);
-        QuestionOption.<QuestionOption>createIt(q1.getId(), "d2", false);
+        QuestionOption c1 = QuestionOption.createIt(q1.getId(), "d1", true);
+        QuestionOption.createIt(q1.getId(), "d2", false);
 
         Question q2 = new Question("d1", "a1", scrum.getId(), false, false).save();
-        QuestionOption c2 = QuestionOption.<QuestionOption>createIt(q2.getId(), "d1", false);
-        QuestionOption.<QuestionOption>createIt(q2.getId(), "d2", true);
+        QuestionOption c2 = QuestionOption.createIt(q2.getId(), "d1", false);
+        QuestionOption.createIt(q2.getId(), "d2", true);
 
         Question q3 = new Question("d1", "a1", scrum.getId(), false, false).save();
-        QuestionOption c3 = QuestionOption.<QuestionOption>createIt(q3.getId(), "d1", true);
-        QuestionOption.<QuestionOption>createIt(q3.getId(), "d2", false);
+        QuestionOption c3 = QuestionOption.createIt(q3.getId(), "d1", true);
+        QuestionOption.createIt(q3.getId(), "d2", false);
 
         Question q4 = new Question("d1", "a1", scrum.getId(), false, false).save();
-        QuestionOption c4 = QuestionOption.<QuestionOption>createIt(q4.getId(), "d1", true);
-        QuestionOption.<QuestionOption>createIt(q4.getId(), "d2", false);
+        QuestionOption c4 = QuestionOption.createIt(q4.getId(), "d1", true);
+        QuestionOption.createIt(q4.getId(), "d2", false);
 
         Question q5 = new Question("d1", "a1", scrum.getId(), false, false).save();
-        QuestionOption.<QuestionOption>createIt(q5.getId(), "d1", true);
-        QuestionOption c5 = QuestionOption.<QuestionOption>createIt(q5.getId(), "d2", false);
+        QuestionOption.createIt(q5.getId(), "d1", true);
+        QuestionOption c5 = QuestionOption.createIt(q5.getId(), "d2", false);
 
         OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(5);
         for (int i=0;i<4;i++) {
@@ -157,7 +141,7 @@ public class OnlineTestTest {
         }
         onlineTest.answerCurrentQuestion(onlineTest.getCurrentQuestion().correctOptions().stream().map(o -> new ObjectId().toString()).collect(Collectors.toList()), user, LocalDate.now());
 
-        TestResult result = onlineTest.generateTestResult();
+        TestResult result = onlineTest.testResult();
 
         int correctRate = result.correctPercentage();
 

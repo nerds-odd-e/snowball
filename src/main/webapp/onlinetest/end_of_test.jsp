@@ -2,11 +2,6 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<%
-    String alertMsg = (String) request.getSession().getAttribute("alertMsg");
-    pageContext.setAttribute("alertMsg", alertMsg);
-%>
-
 <t:with_side_menu title="End Of Test">
     <jsp:attribute name="extra_head">
         <link href="/resources/question.css" rel="stylesheet">
@@ -17,11 +12,11 @@
             <p class="alertMsg">${alertMsg}</p>
             <h1 id="title">End Of Test</h1>
             <div>
-                <span id="correct-count">${onlineTest.getCorrectAnswerCount()}</span>
+                <span id="correct-count">${testResult.getCorrectAnswerCount()}</span>
                 /
-                <span id="total-count">${onlineTest.getNumberOfQuestions()}</span>問
-                <p>あなたの正解率は<span><span id="correct-percentage">${onlineTest.generateTestResult().correctPercentage()}</span>%</span></p>
-                <p id="message">${onlineTest.showFinalMessage()}</p>
+                <span id="total-count">${testResult.getTotal()}</span>問
+                <p>あなたの正解率は<span><span id="correct-percentage">${testResult.correctPercentage()}</span>%</span></p>
+                <p id="message">${testResult.showFinalMessage()}</p>
             </div>
             <p>
                 Thank you for your hard work.

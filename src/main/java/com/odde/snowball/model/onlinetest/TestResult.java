@@ -1,32 +1,34 @@
 package com.odde.snowball.model.onlinetest;
 
-import org.bson.types.ObjectId;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class TestResult {
     private List<Answer> answers;
 
-    public TestResult(List<Question> questions, List<Answer> answers) {
+    public TestResult(List<Answer> answers) {
         this.answers = answers;
+    }
 
-        Map<ObjectId, Question> questionMap = new HashMap<>();
-        for (Question q : questions) {
-            questionMap.put(q.getId(), q);
-        }
+    public long getCorrectAnswerCount() {
+        return answers.stream().filter(Answer::isCorrect).count();
     }
 
     public int correctPercentage() {
-        float correct = 0;
-        float q_num = 0;
-        for (Answer a: answers) {
-            q_num++;
-            if (a.isCorrect()) {
-                correct++;
-            }
-        }
-        return (int) (correct * 100 / q_num);
+        return (int) (getCorrectAnswerCount() * 100 / getTotal());
     }
+
+    public int getTotal() {
+        return answers.size();
+    }
+
+    public String showFinalMessage() {
+        int correctPercentage = correctPercentage();
+        if (correctPercentage < 85) {
+            return "基本を学びなおしましょう";
+        } else if (correctPercentage == 100) {
+            return "あなたはスクラムマスター！";
+        }
+        return "あともう少し";
+    }
+
 }

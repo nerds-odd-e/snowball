@@ -6,7 +6,6 @@ import com.odde.snowball.model.onlinetest.Answer;
 import com.odde.snowball.model.onlinetest.OnlineTest;
 import com.odde.snowball.model.onlinetest.Question;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -43,9 +42,10 @@ public class AnswerController extends AppController {
             redirectToShowQuestionWithMsg(resp, session, null);
             return;
         }
-        req.setAttribute("selectedOption", new ArrayList(asList(selectedOtpionIds)));
-        RequestDispatcher dispatch = req.getRequestDispatcher("/onlinetest/advice.jsp");
-        dispatch.forward(req, resp);
+        req.setAttribute("selectedOption", new ArrayList<>(asList(selectedOtpionIds)));
+        req.setAttribute("currentQuestion", currentQuestion);
+        req.setAttribute("progress", onlineTest.progress(-1));
+        req.getRequestDispatcher("/onlinetest/advice.jsp").forward(req, resp);
     }
 
     private void redirectToShowQuestionWithMsg(HttpServletResponse resp, HttpSession session, String msg) throws IOException {

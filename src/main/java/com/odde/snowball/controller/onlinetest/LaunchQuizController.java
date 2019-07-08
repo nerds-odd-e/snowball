@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.UUID;
 
 @WebServlet("/onlinetest/launchQuiz")
 public class LaunchQuizController extends AppController {
@@ -17,7 +16,7 @@ public class LaunchQuizController extends AppController {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession(true);
         OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(getQuestionCount(req));
-        if(!onlineTest.hasNextQuestion()){
+        if(onlineTest.getCurrentQuestion() == null){
             resp.sendRedirect("add_question.jsp");
             return;
         }

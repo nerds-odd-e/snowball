@@ -296,7 +296,7 @@ public class QuestionStep {
         totalCounter = 0;
         scrumCounter = 0;
         OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(count);
-        while (onlineTest.hasNextQuestion()) {
+        while (onlineTest.getCurrentQuestion() != null) {
             totalCounter++;
             Question currentQuestion = onlineTest.getCurrentQuestion();
             onlineTest.answerCurrentQuestion(singletonList(new ObjectId().toString()), null, LocalDate.now());

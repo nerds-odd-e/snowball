@@ -2,9 +2,6 @@
 	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<%@ page import="com.odde.snowball.model.onlinetest.OnlineTest" %>
-<%@ page import="com.odde.snowball.model.onlinetest.Question" %>
-<%@ page import="java.util.*" %>
 
 <t:basic title="Dashboard">
     <jsp:attribute name="extra_head">

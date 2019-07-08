@@ -30,8 +30,6 @@ public class AnswerControllerTest {
     private Question question;
     private OnlineTest onlineTest;
     private Category scrum = Category.create("Scrum");
-    private Category tech = Category.create("Tech");
-    private Category team = Category.create("Team");
     private User currentUser = new User().save();
 
     @Before
@@ -66,10 +64,12 @@ public class AnswerControllerTest {
 
         String optionId = getFirstOptionId(question);
         request.addParameter("optionId", optionId);
-        request.addParameter("lastDoneQuestionId", "0");
+        request.addParameter("currentQuestionId", getCurrentQuestionId());
         controller.doPost(request, response);
         ArrayList<String> selectedOption =  (ArrayList<String>) request.getAttribute("selectedOption");
         assertEquals(optionId, selectedOption.get(0));
+        assertThat((Question) request.getAttribute("currentQuestion")).isNotNull();
+        assertThat(response.getForwardedUrl()).isEqualTo("/onlinetest/advice.jsp");
     }
 
     @Test
@@ -80,7 +80,7 @@ public class AnswerControllerTest {
 
         String optionId = getFirstOptionId(question);
         request.addParameter("optionId", optionId);
-        request.addParameter("lastDoneQuestionId", "0");
+        request.addParameter("currentQuestionId", getCurrentQuestionId());
 
         controller.doPost(request, response);
         HttpSession session = request.getSession();
@@ -94,7 +94,7 @@ public class AnswerControllerTest {
         String optionId = getFirstOptionId(question);
         onlineTest = OnlineQuiz.createOnlineQuiz(2);
         request.addParameter("optionId", optionId);
-        request.addParameter("lastDoneQuestionId", "1");
+        request.addParameter("currentQuestionId", new ObjectId().toString());
         request.getSession().setAttribute("onlineTest", onlineTest);
 
         controller.doPost(request, response);
@@ -109,13 +109,17 @@ public class AnswerControllerTest {
         String optionId = getFirstOptionId(question);
         onlineTest = OnlineQuiz.createOnlineQuiz(2);
         request.addParameter("optionId", optionId);
-        request.addParameter("lastDoneQuestionId", "0");
+        request.addParameter("currentQuestionId", getCurrentQuestionId());
         request.getSession().setAttribute("onlineTest", onlineTest);
 
         controller.doPost(request, response);
         HttpSession session = request.getSession();
 
         assertEquals(null, session.getAttribute("alertMsg"));
+    }
+
+    private String getCurrentQuestionId() {
+        return onlineTest.getCurrentQuestion().getStringId();
     }
 
     @Test
@@ -126,13 +130,13 @@ public class AnswerControllerTest {
         onlineTest = OnlineQuiz.createOnlineQuiz(2);
 
         request.addParameter("optionId", optionId.get(0).toString());
-        request.addParameter("lastDoneQuestionId", "0");
+        request.addParameter("currentQuestionId", getCurrentQuestionId());
         request.getSession().setAttribute("onlineTest", onlineTest);
 
         controller.doPost(request, response);
         HttpSession session = request.getSession();
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
-        assertEquals(1, onlineTest.getCorrectAnswerCount());
+        assertEquals(1, onlineTest.testResult().getCorrectAnswerCount());
     }
 
     @Test
@@ -141,20 +145,20 @@ public class AnswerControllerTest {
         String optionId = getFirstOptionId(question);
         onlineTest = OnlineQuiz.createOnlineQuiz(2);
         request.addParameter("optionId", optionId);
-        request.addParameter("lastDoneQuestionId", "0");
+        request.addParameter("currentQuestionId", getCurrentQuestionId());
         request.getSession().setAttribute("onlineTest", onlineTest);
 
         controller.doPost(request, response);
         HttpSession session = request.getSession();
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
-        assertEquals(0, onlineTest.getCorrectAnswerCount());
+        assertEquals(0, onlineTest.testResult().getCorrectAnswerCount());
     }
 
     @Test
     public void doPostWithNoSelectedOptions() throws ServletException, IOException {
         question = createQuestionWithOptions(scrum);
         onlineTest = OnlineQuiz.createOnlineQuiz(2);
-        request.addParameter("lastDoneQuestionId", "0");
+        request.addParameter("currentQuestionId", getCurrentQuestionId());
         request.getSession().setAttribute("onlineTest", onlineTest);
 
         controller.doPost(request, response);
@@ -169,7 +173,7 @@ public class AnswerControllerTest {
         question = createQuestionWithOptions(scrum);
         onlineTest = spy(OnlineQuiz.createOnlineQuiz(1));
 
-        request.addParameter("lastDoneQuestionId", "0");
+        request.addParameter("currentQuestionId", getCurrentQuestionId());
         request.getSession().setAttribute("onlineTest", onlineTest);
 
         String wrongOptionId = getFirstOptionId(question);
@@ -183,7 +187,7 @@ public class AnswerControllerTest {
         controller.doPost(request, response);
         HttpSession session = request.getSession();
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
-        assertThat(onlineTest.getCorrectAnswerCount()).isEqualTo(0);
+        assertThat(onlineTest.testResult().getCorrectAnswerCount()).isEqualTo(0);
     }
 
     public static String getFirstOptionId(Question question) {

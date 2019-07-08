@@ -11,19 +11,19 @@
         <div id="page-wrapper">
             <form name="question" id="questionForm" method="post"
                 action="/onlinetest/answer">
-                    <input type="hidden" id="currentQuestionId" name="currentQuestionId" value="${requestScope.currentQuestion.getStringId()}">
+                    <input type="hidden" id="currentQuestionId" name="currentQuestionId" value="${currentQuestion.getStringId()}">
             <div class="container-fluid">
-                <p class="alertMsg">${requestScope.alertMsg}</p>
+                <p class="alertMsg">${alertMsg}</p>
                 <h1>Question</h1>
-                <h2 id="description">${requestScope.currentQuestion.getDescription()}</h2>
+                <h2 id="description">${currentQuestion.getDescription()}</h2>
                 <ul>
 
-                <c:forEach items="${requestScope.currentQuestion.options()}" var="option" varStatus="status">
+                <c:forEach items="${currentQuestion.options()}" var="option" varStatus="status">
                     <li>
-                        <c:if test="${requestScope.currentQuestion.isMultiQuestion()}">
+                        <c:if test="${currentQuestion.isMultiQuestion()}">
                          <input type="checkbox" id="option${status.index + 1}" name="optionId" value="${option.getStringId()}" />${option.getDescription()}</label>
                         </c:if>
-                        <c:if test="${!requestScope.currentQuestion.isMultiQuestion()}">
+                        <c:if test="${!currentQuestion.isMultiQuestion()}">
                          <input type="radio" id="option${status.index + 1}" name="optionId" value="${option.getStringId()}" />${option.getDescription()}</label>
                         </c:if>
                     </li>
@@ -33,7 +33,7 @@
                     <input type="submit" id="answer" value="Answer">
                 </div>
                 <div style="float:right;" id="progress">
-                    <span id="currentQuestionIndex">${requestScope.progress}</span>
+                    <span id="currentQuestionIndex">${progress}</span>
                 </div>
             </div>
             </form>

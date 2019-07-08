@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<%@ page import="com.odde.snowball.model.onlinetest.OnlineTest" %>
-<%@ page import="com.odde.snowball.model.onlinetest.Question" %>
 
 <t:with_side_menu title="Add Category">
     <jsp:attribute name="extra_head">
