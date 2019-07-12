@@ -9,6 +9,7 @@
 /target
 .settings/
 .profile
+.tool-versions
 .idea/
 *.db
 **/**/*.pyc
@@ -16,6 +17,7 @@
 **/**/log.html
 **/**/report.html
 **/**/output.xml
+**/**/.tern-port
 *.exe
 /bin/
 .gradle
