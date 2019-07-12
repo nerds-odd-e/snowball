@@ -1,12 +1,10 @@
 var selectedContact = "";
 
-function getCurrentSelectedContactValue()
-{
+function getCurrentSelectedContactValue() {
 	return selectedContact;
 }
 
-function setCurrentSelectedContactValue(data)
-{
+function setCurrentSelectedContactValue(data) {
 	selectedContact = "";
 }
 
@@ -23,8 +21,14 @@ function whenContactIsSelected(checkBoxID) {
 }
 
 function whenAddButtonIsClicked() {
-	
 	var existingContact = $('#recipient').val();
-	$('#recipient').val(existingContact + getCurrentSelectedContactValue());
+	$('#recipient').val(existingContact + $.getCurrentSelectedContactValue());
 	$('#selectContactModal').modal('hide');
+}
+
+module.exports = {
+  getCurrentSelectedContactValueExp: getCurrentSelectedContactValue,
+  setCurrentSelectedContactValueExp: setCurrentSelectedContactValue,
+  whenContactIsSelectedExp: whenContactIsSelected,
+  whenAddButtonIsClickedExp: whenAddButtonIsClicked
 }

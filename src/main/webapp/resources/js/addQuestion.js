@@ -2,8 +2,7 @@ $(document).ready(function() {
 	switchOptionView("single");
 });
 
-function switchOptionView(choiceType)
-{
+function switchOptionView(choiceType) {
     if (choiceType === "single") {
         $("#options").css("display", "block");
         $("#checkboxes").css("display", "none");
@@ -11,4 +10,8 @@ function switchOptionView(choiceType)
         $("#options").css("display", "none");
         $("#checkboxes").css("display", "block");
     }
+}
+
+module.exports = {
+  switchOptionViewExp:  switchOptionView
 }

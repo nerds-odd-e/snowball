@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).ready(function() {
 	$("#editContact").click(function() {
 		$('#editContactModal').show();
 		$('#emailLabel').val($('#emailField').val());
