@@ -1,4 +1,4 @@
-var addQuestionFunctions = require("../../../main/webapp/resources/js/addQuestion.js");
+const addQuestionFunctions = require("../../../main/webapp/resources/js/addQuestion.js");
 
 describe('Add Question Page', function() {
   const rootId = 'testContainer';

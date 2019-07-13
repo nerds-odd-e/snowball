@@ -1,5 +1,5 @@
-var { wait } = require("@testing-library/dom");
-var addContactFunctions = require("../../../main/webapp/resources/js/addContact.js");
+const { wait } = require("@testing-library/dom");
+const addContactFunctions = require("../../../main/webapp/resources/js/addContact.js");
 
 describe('isChange function',function(){
 	

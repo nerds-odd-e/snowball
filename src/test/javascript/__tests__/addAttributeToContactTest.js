@@ -1,41 +1,41 @@
-var showContactFunctions = require("../../../main/webapp/resources/js/showContact.js");
-var { queryByTestId, wait } = require("@testing-library/dom");
+const showContactFunctions = require("../../../main/webapp/resources/js/showContact.js");
+const { queryByTestId, wait } = require("@testing-library/dom");
 
 describe("Add Firstname and Lastname to Existing Contact",function() {
-	var rootId = "testContainer";
-	var markup="";
-    var pageDOM;
+	const rootId = "testContainer";
+	const markup="";
+    let pageDOM;
 
 	function getPageDOM() {
-		var modal = document.createElement('div');
+		const modal = document.createElement('div');
 		modal.setAttribute('id', "editContactModal");
 		document.body.appendChild(modal);
 
-		var emailField = document.createElement("input");
+		const emailField = document.createElement("input");
 		emailField.type = "hidden";
 		emailField.setAttribute('id',"email");
 		emailField.setAttribute('data-testid',"email");
 		document.body.appendChild(emailField);
 
-		var emailLabel = document.createElement("label");
+		const emailLabel = document.createElement("label");
 		emailLabel.label = "testExistEmail@test.com";
 		emailLabel.setAttribute('id',"email_label");
 		emailLabel.setAttribute('data-testid',"email_label");
 		document.body.appendChild(emailLabel);
 
-		var lastNameField = document.createElement("input");
+		const lastNameField = document.createElement("input");
 		lastNameField.type = "text";
 		lastNameField.setAttribute('id',"lastName");
 		lastNameField.setAttribute('data-testid',"lastName");
 		document.body.appendChild(lastNameField);
 
-		var nameField = document.createElement("input");
+		const nameField = document.createElement("input");
 		nameField.type = "text";
 		nameField.setAttribute('id',"name");
 		nameField.setAttribute('data-testid',"name");
 		document.body.appendChild(nameField);
 
-		var saveButton = document.createElement("button");
+		const saveButton = document.createElement("button");
 		saveButton.setAttribute('id',"save_button");
 		document.body.appendChild(saveButton);
 
@@ -51,10 +51,10 @@ describe("Add Firstname and Lastname to Existing Contact",function() {
     });
 
 	afterEach(function() {
-	  var email_cmpt = document.getElementById('email');
-	  var name_cmpt = document.getElementById('name');
-	  var lastName_cmpt = document.getElementById('lastName');
-	  var email_label_cmpt = document.getElementById('email_label');
+	  const email_cmpt = document.getElementById('email');
+	  const name_cmpt = document.getElementById('name');
+	  const lastName_cmpt = document.getElementById('lastName');
+	  const email_label_cmpt = document.getElementById('email_label');
 	  document.body.removeChild(email_cmpt);
 	  document.body.removeChild(email_label_cmpt);
 	  document.body.removeChild(name_cmpt);
@@ -62,7 +62,7 @@ describe("Add Firstname and Lastname to Existing Contact",function() {
 	});
 
 	it("should show email as the same as the one that was being clicked", async function() {
-	  var mock_json_contact_item = {"id":1,"email":"john@gmail.com","location":"Singapore/Singapore"};
+	  const mock_json_contact_item = {"id":1,"email":"john@gmail.com","location":"Singapore/Singapore"};
 	  showContactFunctions.showEditContactDetailExp(mock_json_contact_item);
 	  await wait(function() {
 		expect(queryByTestId(pageDOM, 'name')).toHaveTextContent('');
@@ -73,7 +73,7 @@ describe("Add Firstname and Lastname to Existing Contact",function() {
 	});
 
 	it("should show name and lastName as the same as the one that was being clicked", async function() {
-	  var mock_json_contact_item = {"id":1,"company":"","email":"john@gmail.com","firstName":"John","lastName":"Winyu","location":"Singapore/Singapore"};
+	  const mock_json_contact_item = {"id":1,"company":"","email":"john@gmail.com","firstName":"John","lastName":"Winyu","location":"Singapore/Singapore"};
 	  showContactFunctions.showEditContactDetailExp(mock_json_contact_item);
 	  await wait(function() {
 	    expect(queryByTestId(pageDOM, 'name').value).toEqualCaseInsensitive(mock_json_contact_item.firstName);
