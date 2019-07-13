@@ -86,3 +86,11 @@ function enableAddContactButton() {
 function disableAddContactButton() {
 	$("#add_contact").attr('disabled', 'disabled');
 }
+
+module.exports = {
+  checkAddContactInputElementExp: checkAddContactInputElement,
+  checkSendEmailInputElementExp: checkSendEmailInputElement,
+  isBlankExp: isBlank,
+  isRecipientCompanyFormatExp: isRecipientCompanyFormat,
+  isRecipientEmailFormatExp: isRecipientEmailFormat,
+}
