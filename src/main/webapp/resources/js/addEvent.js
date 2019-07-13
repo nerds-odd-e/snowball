@@ -72,7 +72,7 @@ function disableAddButton() {
 }
 
 function getUrlParameter(sParam) {
-    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+    var sPageURL = $.decodeURIComponent(window.location.search.substring(1)),
         sURLVariables = sPageURL.split('&'),
         sParameterName,
         i;
@@ -84,5 +84,12 @@ function getUrlParameter(sParam) {
             return sParameterName[1] === undefined ? true : sParameterName[1];
         }
     }
-};
+}
 
+module.exports = {
+  isChangeExp: isChange,
+  checkSaveInputElementExp: checkSaveInputElement,
+  enableSaveButtonExp: enableSaveButton,
+  disableSaveButtonExp: disableSaveButton,
+  getUrlParameterExp: getUrlParameter
+}
