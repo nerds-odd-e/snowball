@@ -1,4 +1,4 @@
-var ShowContactView = function() {};
+const ShowContactView = function() {};
 
 ShowContactView.prototype.email = function() {
 	return $('#email').val();
@@ -15,4 +15,8 @@ ShowContactView.prototype.lastName = function() {
 ShowContactView.prototype.renderContact = function() {
 	return "<ul><li><input type='checkbox'></li><li><input type='text' id='email' value='a@b.com'/></li><li><input type='text' id='name' value='terry'/></li><li><input type='text' id='lastName' value='odd-e'/></li></ul>";
 };
+
+module.exports = {
+  ShowContactViewExp: ShowContactView,
+}
 
