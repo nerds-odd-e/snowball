@@ -1,5 +1,4 @@
-function retrieveCourseDetailFromServer()
-{
+function retrieveCourseDetailFromServer() {
 	var courseDetailData = {};
     var course_id = getUrlParameter('id');
 
@@ -29,8 +28,7 @@ function getUrlParameter(sParam) {
     }
 };
 
-function renderParticipantRows(json, selector)
-{
+function renderParticipantRows(json, selector) {
 	$.each(json.participants, function(idx, item) {
         selector.append(ParticipantRow(item).createRow());
 	})
@@ -47,4 +45,8 @@ function ParticipantRow(participant) {
             return tableRow;
         }
     }
+}
+
+module.exports = {
+  renderParticipantRowsExp: renderParticipantRows,
 }
