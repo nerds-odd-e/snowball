@@ -29,7 +29,7 @@ Database names:
 
 ##### Run development app
 
-The current Gradle version is 5.5.
+The current Gradle version is 5.6.
 
 Go to the root directory of this project and:
 
@@ -70,4 +70,3 @@ Adding the following to the /etc/hosts will solve the problem:
 127.0.0.1   localhost mbpro.local
 ::1         localhost mbpro.local
 ```
-
