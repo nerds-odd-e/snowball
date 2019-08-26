@@ -40,6 +40,6 @@ public class SignupController extends AppController {
         sessionCookie.setHttpOnly(true);
         resp.addCookie(sessionCookie);
 
-        resp.sendRedirect("/login");
+        resp.sendRedirect("/");
     }
 }
