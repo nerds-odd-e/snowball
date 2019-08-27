@@ -33,18 +33,18 @@ Feature:
   @developing
   @simple-review
   Scenario: ユーザがプラクティスを開始できること
-    Given ユーザがログインした状態である
-    And 問題が15個存在する
+    Given 問題が15個存在する
+    And ユーザがログインした状態である
     When プラクティスを開始
     And 問題に10回正解する
-    Then User should see "You have finished your practice for today"
+    Then "お疲れ様でした"のメッセージが表示される
 
   @developing
   @simple-review
   Scenario: 解答日時によってソートされること
-    Given ユーザがログインした状態である
+    Given 問題1と問題2が存在する
+    And ユーザがログインした状態である
     And 今日は2019年8月27日である
-    And 問題1と問題2が存在する
     And 問題1の解答日時が2019年8月27日17時00分00秒である
     And 問題2の解答日時が2019年8月27日17時02分00秒である
     When プラクティスを開始
@@ -52,7 +52,20 @@ Feature:
     When 問題1に正解する
     Then 問題2が出題される
     When 問題2に正解する
-    Then User should see "You have finished your practice for today"
+    Then "お疲れ様でした"のメッセージが表示される
+
+  @developing
+  @simple-review
+  Scenario: 一部未解答の問題が存在する時は未解答問題だけが出題されること
+    Given 問題1と問題2が存在する
+    And ユーザがログインした状態である
+    And 今日は2019年8月27日である
+    And 問題1の解答日時が2019年8月27日である
+    And 問題2は解答していない
+    When プラクティスを開始
+    Then 問題2が出題される
+    When 問題2に正解する
+    Then "お疲れ様でした"のメッセージが表示される
 
   # space-based repetation
   @developing
