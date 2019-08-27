@@ -103,7 +103,6 @@ Feature:
     Then 問題が承認済みになる
 
   @developing
-  @now
   Scenario Outline: 質問の追加が成功する
     Given "Terry"ユーザが登録されている
     And "admin2"ユーザが登録されている
