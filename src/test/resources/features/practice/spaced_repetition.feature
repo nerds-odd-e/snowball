@@ -1,6 +1,7 @@
 Feature:
   User can practice questions using Spaced Repetition.
 
+
   Background:
     And There are questions with dummy options:
       | description | correctOption | category |
@@ -27,3 +28,15 @@ Feature:
     Then User should see "You have finished your practice for today"
     When User is taking a practiceTest
     Then User should see "You have finished your practice for today"
+
+  @developing
+  Scenario: 回答した問題は1日後に表示する
+    Given 問題を回答し1日経過する
+    When テストをうけること
+    Then 同じ問題が画面に表示されること
+
+  @developing
+  Scenario: 回答した問題は2日後には表示しない
+    Given 問題を回答し2日経過する
+    When テストをうけること
+    Then 同じ問題が画面に表示しないこと
