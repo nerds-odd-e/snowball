@@ -30,18 +30,6 @@ Feature:
     Then User should see "You have finished your practice for today"
 
   @developing
-  Scenario: 回答した問題は1日後に表示する
-    Given 問題を回答し1日経過する
-    When テストをうけること
-    Then 同じ問題が画面に表示されること
-
-  @developing
-  Scenario: 回答した問題は2日後には表示しない
-    Given 問題を回答し2日経過する
-    When テストをうけること
-    Then 同じ問題が画面に表示しないこと
-
-  @developing
   Scenario: ユーザがテストを開始できること
     Given ユーザがログインした状態である
     And 問題が15個存在する
@@ -58,6 +46,17 @@ Feature:
     Then 問題1が出題される
     When 問題1に正解する
     Then 問題2が出題される
+
+  # space-based repetation
+  @developing
+  Scenario: 回答した問題は回答日から起算して仕様に従った間隔で再度出題されること
+    Given ユーザがログインした状態である
+    And 問題1と問題2が存在する
+    And 問題1の解答日時が2019年8月26日17時00分00秒である
+    And 問題2は未解答である
+    And 現在は2019年8月27日である
+    When "Start Practice"をする
+    Then 問題1が出題される
 
   @developing
   Scenario: 再度出題された問題に回答しなかった場合翌日も出題される
