@@ -29,23 +29,30 @@ Feature:
     When User is taking a practiceTest
     Then User should see "You have finished your practice for today"
 
+
   @developing
-  Scenario: ユーザがテストを開始できること
+  @simple-review
+  Scenario: ユーザがプラクティスを開始できること
     Given ユーザがログインした状態である
     And 問題が15個存在する
     When プラクティスを開始
-    Then 10個の問題が表示される
+    And 問題に10回正解する
+    Then User should see "You have finished your practice for today"
 
   @developing
+  @simple-review
   Scenario: 解答日時によってソートされること
     Given ユーザがログインした状態である
+    And 今日は2019年8月27日である
     And 問題1と問題2が存在する
-    And 問題1の解答日時が2019年8月26日17時00分00秒である
-    And 問題2の解答日時が2019年8月26日17時02分00秒である
+    And 問題1の解答日時が2019年8月27日17時00分00秒である
+    And 問題2の解答日時が2019年8月27日17時02分00秒である
     When プラクティスを開始
     Then 問題1が出題される
     When 問題1に正解する
     Then 問題2が出題される
+    When 問題2に正解する
+    Then User should see "You have finished your practice for today"
 
   # space-based repetation
   @developing
@@ -86,12 +93,3 @@ Feature:
     When 今日は2019年8月31日である
     And テストを開始
     Then 問題1が出題される
-
-  @developing
-  Scenario: 解答したことのある問題と未解答の問題がそんざいする
-
-  @developing
-  Scenario: 登録済みの問題の数が１０未満
-
-  @developing
-  Scenario: 問題１が出題されて、解答しないで、またプラクティスを開始すると問題１が表示される
