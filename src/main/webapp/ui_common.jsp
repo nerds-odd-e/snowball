@@ -56,7 +56,7 @@
                 <li><a href="/onlinetest/category/advice" id="update_advice"><span
                         class="glyphicon glyphicon-file" aria-hidden="true"></span>
                         Update Advice</a></li>
-                <li><a id="home" href="/"><span
+                <li><a id="home" href="/dashboard"><span
                     class="glyphicon glyphicon-file" aria-hidden="true"></span>
                     Home</a></li>
             </ul>

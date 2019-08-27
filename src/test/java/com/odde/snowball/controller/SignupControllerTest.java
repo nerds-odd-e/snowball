@@ -2,7 +2,6 @@ package com.odde.snowball.controller;
 
 import com.odde.TestWithDB;
 import com.odde.snowball.model.User;
-import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,10 +10,10 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 import static com.odde.snowball.model.base.Repository.repo;
+import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
 
 @RunWith(TestWithDB.class)
 public class SignupControllerTest {
@@ -42,7 +41,7 @@ public class SignupControllerTest {
         request.setParameter("password", "passhoge");
         request.setParameter("password_confirm", "passhoge");
         controller.doPost(request, response);
-        assertThat(response.getRedirectedUrl(), CoreMatchers.containsString("/login"));
+        assertThat(response.getRedirectedUrl()).isEqualTo("/");
     }
 
     @Test
@@ -70,7 +69,7 @@ public class SignupControllerTest {
 
         User actual = repo(User.class).findFirstBy("email", "yamada@hoge.com");
 
-        assertThat(actual.getEmail(), is("yamada@hoge.com"));
+        assertThat(actual.getEmail()).isEqualTo("yamada@hoge.com");
     }
 
     private void createUser() {
