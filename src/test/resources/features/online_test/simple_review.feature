@@ -1,4 +1,6 @@
 Feature:　Simple Review
+
+  @developing
   Scenario: ユーザがテストを開始できること
     Given ユーザがログインした状態である
     And 問題が15個存在する
