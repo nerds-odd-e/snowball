@@ -172,6 +172,10 @@ public class WebDriverWrapper {
         }
     }
 
+    public List<WebElement> findElements(String selector) {
+        return waitUntil(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector(selector)));
+    }
+
     private <V> V waitUntil(Function<WebDriver, V> isTrue) {
         return new WebDriverWait(driver, 2).until(isTrue);
     }
@@ -199,10 +203,6 @@ public class WebDriverWrapper {
 
     private Stream<WebElement> getWebElementStreamOfParents(String selector) {
         return findElements(selector).stream().map(e -> e.findElement(By.xpath("./..")));
-    }
-
-    private List<WebElement> findElements(String selector) {
-        return waitUntil(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector(selector)));
     }
 
     private Select getSelect(String dropdownName) {

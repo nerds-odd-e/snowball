@@ -101,3 +101,21 @@ Feature:
       | option2     | Football       |
     When Adminが承認する
     Then 問題が承認済みになる
+
+  @developing
+  @now
+  Scenario Outline: 質問の追加が成功する
+    Given "Terry"ユーザが登録されている
+    And "admin2"ユーザが登録されている
+    And "Terry"がログインしている
+    And Add Questionを開いている
+    And Descriptionに"<description>" を入力する
+    And is-publicに"<is-public>" を入力する
+    When Addボタンを押す
+    And "admin2"でログインする
+    Then "<description>"という問題が"<is-display>"
+
+    Examples:
+      | description      | is-public | is-display |
+      | What is scrum?   | 1         | 出題される |
+      | What is Gharkin? |           | 出題されない |

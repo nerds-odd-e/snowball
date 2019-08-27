@@ -30,6 +30,11 @@ public class AddQuestionSteps {
         driver.setTextField("description", description);
     }
 
+    @Given("^is-publicに\"([^\"]*)\" を入力する$")
+    public void isPublicに_が入力する(String isPublic) {
+        driver.setTextField("is-public", isPublic);
+    }
+
     @Given("^Typeを\"([^\"]*)\" を選択する$")
     public void typeを_を選択する(String type) {
         driver.selectDropdownByText("type", type);

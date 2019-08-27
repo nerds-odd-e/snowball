@@ -21,8 +21,7 @@ import java.util.Map;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 public class QuestionStep {
     private final SnowballSite site = new SnowballSite();
@@ -32,6 +31,7 @@ public class QuestionStep {
     private int numberOfCorrectAnsweredQuestion;
     private int currentTestTotalQuestions;
     private final String add_question_url = site.baseUrl() + "onlinetest/add_question.jsp";
+    private final String dashboard_url = site.baseUrl() + "dashboard";
 
     private final String login_url = site.baseUrl() + "login.jsp";
 
@@ -307,8 +307,8 @@ public class QuestionStep {
     }
 
     @Given("^\"([^\"]*)\"ユーザが登録されている$")
-    public void ユーザが登録されている(String arg1) {
-        User user = new User("terry@hogehoge.com");
+    public void ユーザが登録されている(String userName) {
+        User user = new User(userName.toLowerCase() + "@hogehoge.com");
         user.setupPassword("11111111");
         user.save();
     }
@@ -337,4 +337,23 @@ public class QuestionStep {
         driver.expectPageToContainText("PrivateDescription");
     }
 
+    @When("^\"([^\"]*)\"でログインする$")
+    public void でログインする(String userName) {
+        visitLoginPage();
+        driver.setTextField("email", userName.toLowerCase() + "@hogehoge.com");
+        driver.setTextField("password", "11111111");
+        driver.click("#login");
+    }
+
+    @Then("^\"([^\"]*)\"という問題が\"([^\"]*)\"$")
+    public void _という問題が_(String description, String isDisplay) {
+        //ダッシュボードページを開く
+        driver.visit(dashboard_url);
+
+        //description文字列がページにisDisplay
+        driver.expectElementToContainText(".description", description);
+        boolean isExists = driver.findElements(".description").stream()
+                .anyMatch(e -> description.equals(e.getText()));
+        assertTrue(isDisplay.equals("出題される") == isExists);
+    }
 }
