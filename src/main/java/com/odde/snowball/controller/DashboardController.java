@@ -20,6 +20,7 @@ public class DashboardController extends AppController {
             resp.sendRedirect("/login.jsp");
             return;
         }
+        //TODO public もしくは 自分の作ったprivate の質問一覧を取得する
         List<Question> questions = repo(Question.class).findAll();
         req.setAttribute("questions", questions);
         RequestDispatcher dispatch = req.getRequestDispatcher("dashboard.jsp");
