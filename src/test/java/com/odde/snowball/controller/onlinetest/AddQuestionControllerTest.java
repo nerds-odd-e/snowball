@@ -1,6 +1,7 @@
 package com.odde.snowball.controller.onlinetest;
 
 import com.odde.TestWithDB;
+import com.odde.snowball.model.User;
 import com.odde.snowball.model.onlinetest.QuestionOption;
 import com.odde.snowball.model.onlinetest.Category;
 import com.odde.snowball.model.onlinetest.Question;
@@ -24,6 +25,7 @@ public class AddQuestionControllerTest {
     private MockHttpServletResponse response;
     private Category cat1 = Category.create("Cat1");
     private Category cat2 = Category.create("Cat2");
+    private User currentUser = new User().save();
 
     @Before
     public void setUpMockService() {
@@ -135,6 +137,15 @@ public class AddQuestionControllerTest {
         controller.doPost(request, response);
         Question question = repo(Question.class).findAll().get(0);
         assertTrue(question.isPublic());
+    }
+
+    @Test
+    public void doPostAddQuestion_CheckQuestionCreator() throws Exception {
+        request.getSession().setAttribute("currentUser", currentUser);
+        setupValidRequestForPublicQuestion();
+        controller.doPost(request, response);
+        Question question = repo(Question.class).findAll().get(0);
+        assertEquals(currentUser, question.getCreateUser());
     }
 
     @Test

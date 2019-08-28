@@ -33,6 +33,7 @@ public class Question extends Entity<Question> {
     private boolean isMultiQuestion;
     private boolean isApproved;
     private boolean isPublic;
+    private User createUser;
 
     @Valid
     private List<QuestionOption> options = new ArrayList<>();
