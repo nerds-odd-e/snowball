@@ -4,6 +4,7 @@ import com.odde.TestWithDB;
 import com.odde.snowball.model.User;
 import org.bson.types.ObjectId;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 
 import java.time.LocalDate;
@@ -79,8 +80,39 @@ public class OnlinePracticeTest {
         assertEquals(question1.getId(), questions.get(0).getId());
         assertEquals(1, questions.size());
     }
-    //TODO
-    // 指定の件数以下で次回出題日、最終回答日が古い順で取得されること
+
+    @Test
+    public void 指定の件数以下で次回出題日が古い順で取得されること() {
+        final LocalDate yesterday = LocalDate.of(2019,8,26);
+        final LocalDate today = yesterday.plusDays(1);
+        final ObjectId objectId = new ObjectId();
+
+        // setup
+        User user1 = new User().save();
+
+        Question question1 = new Question("desc", "adv", objectId, false, false).save();
+        Question question2 = new Question("desc", "adv", objectId, false, false).save();
+        Question question3 = new Question("desc", "adv", objectId, false, false).save();
+
+        Record record1 = new Record(user1, question1);
+        record1.setNextShowDate(today);
+        record1.save();
+        Record record2 = new Record(user1, question2);
+        record2.setNextShowDate(today);
+        record2.save();
+
+        Record record3 = new Record(user1, question3);
+        record3.setNextShowDate(today.minusDays(1));
+        record3.save();
+
+
+        // execute
+        List<Question> questions =
+                OnlinePractice.findSpaceBasedRepetations(2, user1, today);
+        assertEquals(question3.getId(), questions.get(0).getId());
+        assertEquals(2, questions.size());
+    }
+
 
     @Test
     public void 一度も解答してない場合次回出題日はnullである() {

@@ -1,6 +1,7 @@
 package com.odde.snowball.model.base;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.odde.snowball.service.MongoDBConnector;
 import org.bson.conversions.Bson;
@@ -14,6 +15,7 @@ import java.util.*;
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.in;
+import static java.util.Objects.isNull;
 
 public class Repository<T extends Entity> {
     private static ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
@@ -61,6 +63,21 @@ public class Repository<T extends Entity> {
 
     public List<T> find(Bson cond) {
         return collection.find(cond).into(new ArrayList<>());
+    }
+
+    public List<T> find(Bson cond, Bson sortCond, Integer limit) {
+
+        FindIterable<T> ts = collection.find(cond);
+
+        if(!isNull(sortCond)){
+            ts = ts.sort(sortCond);
+        }
+
+        if(!isNull(limit)){
+            ts = ts.limit(limit);
+        }
+
+        return ts.into(new ArrayList<>());
     }
 
     public T findFirst(Bson cond) {
