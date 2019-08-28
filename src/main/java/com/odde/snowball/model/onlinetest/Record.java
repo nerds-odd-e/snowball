@@ -22,6 +22,7 @@ public class Record extends Entity<Record> {
     private ObjectId userId;
     private ObjectId questionId;
     private LocalDate lastUpdated;
+    private LocalDate nextShowDate;
     private int cycleState;
 
     public Record(User user, Question question) {
