@@ -42,7 +42,7 @@
                                 <tbody id="questionTable">
                                     <tr>
                                         <th style="width:20%">Description</th>
-                                        <td id="description">${question.getDescription()}</td>
+                                        <td id="description" class="description">${question.getDescription()}</td>
                                     </tr>
                                     <tr>
                                         <th style="width:20%">Category</th>

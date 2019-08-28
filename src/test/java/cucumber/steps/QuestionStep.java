@@ -348,8 +348,8 @@ public class QuestionStep {
     @When("^\"([^\"]*)\"でログインする$")
     public void でログインする(String userName) {
         visitLoginPage();
-        driver.setTextField("email", userName.toLowerCase() + "@hogehoge.com");
-        driver.setTextField("password", "11111111");
+        driver.setTextField("email", userName.toLowerCase() + "@mail.com");
+        driver.setTextField("password", "password");
         driver.click("#login");
     }
 

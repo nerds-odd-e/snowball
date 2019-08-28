@@ -110,6 +110,13 @@ Feature:
     And Add Questionを開いている
     And Descriptionに"<description>" を入力する
     And is-publicに"<is-public>" を入力する
+    And option1に"Scrum is Rugby"を入力する
+    And option2に"Scrum is Baseball"を入力する
+    And option3に"Scrum is Soccer"を入力する
+    And option4に"Scrum is Sumo"を入力する
+    And option5に"Scrum is BasketBall"を入力する
+    And option6に"Scrum is Swimming"を入力する
+    And "option6"を回答として選択済み
     When Addボタンを押す
     And "admin2"でログインする
     Then "<description>"という問題が"<is-display>"
@@ -117,4 +124,4 @@ Feature:
     Examples:
       | description      | is-public | is-display |
       | What is scrum?   | 1         | 出題される |
-      | What is Gharkin? |           | 出題されない |
+      | What is Gherkin? |           | 出題されない |
