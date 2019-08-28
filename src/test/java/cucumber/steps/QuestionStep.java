@@ -322,9 +322,9 @@ public class QuestionStep {
     }
 
     @Given("^\"([^\"]*)\"がログインしている$")
-    public void がログインしている(String arg1) {
+    public void がログインしている(String userName) {
         visitLoginPage();
-        driver.setTextField("email", "terry@hogehoge.com");
+        driver.setTextField("email", userName.toLowerCase() + "@hogehoge.com");
         driver.setTextField("password", "11111111");
         driver.click("#login");
     }
@@ -348,20 +348,18 @@ public class QuestionStep {
     @When("^\"([^\"]*)\"でログインする$")
     public void でログインする(String userName) {
         visitLoginPage();
-        driver.setTextField("email", userName.toLowerCase() + "@mail.com");
-        driver.setTextField("password", "password");
+        driver.setTextField("email", userName.toLowerCase() + "@hogehoge.com");
+        driver.setTextField("password", "11111111");
         driver.click("#login");
     }
 
-    @Then("^\"([^\"]*)\"という問題が\"([^\"]*)\"$")
-    public void _という問題が_(String description, String isDisplay) {
+    @Then("問題が\"([^\"]*)\"$")
+    public void 問題が_(String isDisplay) {
         //ダッシュボードページを開く
         driver.visit(dashboard_url);
 
         //description文字列がページにisDisplay
-        driver.expectElementToContainText(".description", description);
-        boolean isExists = driver.findElements(".description").stream()
-                .anyMatch(e -> description.equals(e.getText()));
-        assertTrue(isDisplay.equals("出題される") == isExists);
+        boolean isExists = !driver.findElementsWithoutWait(".description").isEmpty();
+        assertEquals(isExists, isDisplay.equals("表示される"));
     }
 }

@@ -151,6 +151,10 @@ public class WebDriverWrapper {
         getInputBySelectorAndText("input", text).click();
     }
 
+    public void clickCheckBoxById(String id) {
+        driver.findElement(By.id(id)).click();
+    }
+
     public void expectRadioButtonWithText(String optionText) {
         getInputBySelectorAndText("input[type='radio']", optionText);
     }
@@ -174,6 +178,10 @@ public class WebDriverWrapper {
 
     public List<WebElement> findElements(String selector) {
         return waitUntil(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector(selector)));
+    }
+
+    public List<WebElement> findElementsWithoutWait(String selector) {
+        return driver.findElements(By.cssSelector(selector));
     }
 
     private <V> V waitUntil(Function<WebDriver, V> isTrue) {

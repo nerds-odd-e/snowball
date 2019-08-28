@@ -102,26 +102,39 @@ Feature:
     When Adminが承認する
     Then 問題が承認済みになる
 
-  @developing
-  Scenario Outline: 質問の追加が成功する
+  Scenario Outline: publicな質問の追加が成功する
     Given "Terry"ユーザが登録されている
     And "admin2"ユーザが登録されている
     And "Terry"がログインしている
     And Add Questionを開いている
-    And Descriptionに"<description>" を入力する
+    And Descriptionに"What is scrum?" を入力する
     And option1に"Scrum is Rugby"を入力する
     And option2に"Scrum is Baseball"を入力する
-    And option3に"Scrum is Soccer"を入力する
-    And option4に"Scrum is Sumo"を入力する
-    And option5に"Scrum is BasketBall"を入力する
-    And option6に"Scrum is Swimming"を入力する
     And "option1"を回答として選択済み
-    And is-publicに"<is-public>" を入力する
+    And is-publicをチェックする
     When Addボタンを押す
-    And "admin2"でログインする
-    Then "<description>"という問題が"<is-display>"
+    And "<user>"でログインする
+    Then 問題が"<is-display>"
 
     Examples:
-      | description      | is-public | is-display |
-      | What is scrum?   | 1         | 出題される |
-      | What is Gherkin? |           | 出題されない |
+      | user   | is-display |
+      | Terry  | 表示される      |
+      | admin2 | 表示される      |
+
+  Scenario Outline: privateな質問の追加が成功する
+    Given "Terry"ユーザが登録されている
+    And "admin2"ユーザが登録されている
+    And "Terry"がログインしている
+    And Add Questionを開いている
+    And Descriptionに"What is scrum?" を入力する
+    And option1に"Scrum is Rugby"を入力する
+    And option2に"Scrum is Baseball"を入力する
+    And "option1"を回答として選択済み
+    When Addボタンを押す
+    And "<user>"でログインする
+    Then 問題が"<is-display>"
+
+    Examples:
+      | user   | is-display |
+      | Terry  | 表示される      |
+      | admin2 | 表示されない     |
