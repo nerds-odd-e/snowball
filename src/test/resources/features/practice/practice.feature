@@ -29,9 +29,8 @@ Feature:
     When User is taking a practiceTest
     Then User should see "You have finished your practice for today"
 
-
-  @developing
-  @simple-review
+  @develpoing
+#  @now
   Scenario: ユーザがプラクティスを開始できること
     Given 問題が15個存在する
     And ユーザがログインした状態である

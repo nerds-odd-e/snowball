@@ -49,6 +49,7 @@ public class PracticeTestsStepDefs {
         }
     }
 
+    //　TODO ここから
     @Then("User should see Advice page")
     public void userShouldSeeAdvicePage() {
         driver.expectPageToContainText("Advice");
@@ -57,5 +58,35 @@ public class PracticeTestsStepDefs {
     @When("User clicks on Next on Advice page")
     public void userClicksOnNextOnAdvicePage() {
         driver.click("#next");
+    }
+
+    @Given("問題が{int}個存在する")
+    public void 問題が_個存在する(Integer int1) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new cucumber.api.PendingException();
+    }
+
+    @Given("ユーザがログインした状態である")
+    public void ユーザがログインした状態である() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new cucumber.api.PendingException();
+    }
+
+    @When("プラクティスを開始")
+    public void プラクティスを開始() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new cucumber.api.PendingException();
+    }
+
+    @When("問題に{int}回正解する")
+    public void 問題に_回正解する(Integer int1) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new cucumber.api.PendingException();
+    }
+
+    @Then("{string}のメッセージが表示される")
+    public void のメッセージが表示される(String string) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new cucumber.api.PendingException();
     }
 }
