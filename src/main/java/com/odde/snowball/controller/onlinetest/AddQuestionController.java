@@ -69,10 +69,11 @@ public class AddQuestionController extends AppController {
     }
 
     private void saveQuestion(HttpServletRequest req) {
-        //TODO is-public を登録する
         String type = req.getParameter("type");
+        boolean isPublic = req.getParameter("is-public") != null && req.getParameter("is-public").equals("1");
 
         Question question = new Question(req.getParameter("description"), req.getParameter("advice"), new ObjectId(req.getParameter("category")), type.equals("multiple"), false);
+        question.setPublic(isPublic);
 
         final String[] checks = req.getParameterValues("check");
         List<String> checksList = Arrays.asList(checks);

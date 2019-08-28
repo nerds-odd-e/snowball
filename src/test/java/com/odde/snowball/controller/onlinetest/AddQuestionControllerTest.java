@@ -62,6 +62,20 @@ public class AddQuestionControllerTest {
         request.setParameter("check", checks);
     }
 
+    private void setupValidRequestForPublicQuestion() {
+        request.setParameter("description", "aaaaaaaaaaaaaaaa");
+        request.setParameter("type", "single");
+        request.setParameter("category", cat1.stringId());
+        request.setParameter("option1", "option1");
+        request.setParameter("option2", "option2");
+        request.setParameter("option3", "option3");
+        request.setParameter("option4", "option4");
+        request.setParameter("option5", "option5");
+        request.setParameter("option6", "option6");
+        request.setParameter("is-public", "1");
+        request.setParameter("check", String.valueOf(1));
+    }
+
     @Test
     public void doGet() throws Exception {
         controller.doGet(request, response);
@@ -115,6 +129,13 @@ public class AddQuestionControllerTest {
         assertFalse(((QuestionOption) options.toArray()[5]).isCorrect());
     }
 
+    @Test
+    public void doPostAddQuestion_PublicQuestion() throws Exception {
+        setupValidRequestForPublicQuestion();
+        controller.doPost(request, response);
+        Question question = repo(Question.class).findAll().get(0);
+        assertTrue(question.isPublic());
+    }
 
     @Test
     public void redirectToDashboard() throws Exception {

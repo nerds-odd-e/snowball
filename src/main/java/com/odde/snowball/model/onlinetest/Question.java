@@ -32,6 +32,8 @@ public class Question extends Entity<Question> {
     private ObjectId categoryId;
     private boolean isMultiQuestion;
     private boolean isApproved;
+    private boolean isPublic;
+
     @Valid
     private List<QuestionOption> options = new ArrayList<>();
 
