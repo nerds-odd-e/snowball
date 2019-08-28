@@ -2,6 +2,7 @@ package com.odde.snowball.model.onlinetest;
 
 import com.odde.snowball.model.User;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -21,9 +22,8 @@ public class OnlinePractice extends OnlineTest {
         return new OnlinePractice(questions);
     }
 
-    public static List<Question> findSpaceBasedRepetations(int count, User user, Date currentDate) {
-        List<Question> questions = repo(Question.class).findAll();
-        return Collections.emptyList();
+    public static List<Question> findSpaceBasedRepetations(int count, User user, LocalDate currentDate) {
+        return null;
     }
 
     public String endPageName() {
