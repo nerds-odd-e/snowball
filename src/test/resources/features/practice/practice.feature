@@ -73,12 +73,11 @@ Feature:
     Given There are questions with dummy options:
       | description | correctOption | category |
       | Q2          | correctOption | Retro    |
-    And user "Bob" has logged in successfully
     And 今日は2019年8月27日である
     And 問題1の解答日時が2019年8月27日である
     And 問題2は解答していない
     When プラクティスを開始
-    Then "Q2"が出題される
+    Then 問題"2"が出題される
 #    Then "Q2"という問題が"出題される"
     When 問題2に正解する
     Then "Good job!"のメッセージが表示される

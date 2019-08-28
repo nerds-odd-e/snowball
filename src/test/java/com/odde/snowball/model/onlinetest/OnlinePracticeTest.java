@@ -188,28 +188,6 @@ public class OnlinePracticeTest {
 
     }
 
-//    @Test
-    public void name() {
-        User user1 = new User().save();
-        Category scrum = Category.create("Scrum");
-        Question question1 = new Question("Q1", "adv", scrum.getId(), false, false).save();
-        Record record1 = new Record(user1, question1);
-        record1.setNextShowDate();
-        record1.save();
-
-        Question question2 = new Question("Q2", "adv", scrum.getId(), false, false).save();
-        Record record2 = new Record(user1, question2);
-        record2.setNextShowDate();
-        record2.save();
-
-        OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user1, 10);
-        List<Question> expectedList = Arrays.asList(question1, question2);
-
-        assertEquals(expectedList.get(0).getDescription(), onlineTest.getQuestions().get(0).getDescription());
-        assertEquals(expectedList.get(1).getDescription(), onlineTest.getQuestions().get(1).getDescription());
-    }
-
-
     @Test
     public void 問題が11問存在する時_10問のみ返されること() {
         // setup

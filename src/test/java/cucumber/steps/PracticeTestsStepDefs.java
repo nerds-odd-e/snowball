@@ -142,22 +142,19 @@ public class PracticeTestsStepDefs {
 
     // TODO 解答日時未設定
     @Given("問題{int}の解答日時が{int}年{int}月{int}日である")
-    public void 問題_の解答日時が_年_月_日である(Integer int1, Integer int2, Integer int3, Integer int4) {
-        // Write code here that turns the phrase above into concrete actions
-        site.visit("launchPractice?question_count=2");
-        driver.takeScreenshot("tmp/screen1");
-//        this.currentTestTotalQuestions = totalQuestions;
-//        questionStep.user_answered_correctly_the(int1);
-        driver.clickRadioButton("correctOption");
-        driver.click("#answer");
-        driver.takeScreenshot("tmp/screen2");
+    public void 問題_の解答日時が_年_月_日である(int questionNum, Integer year, Integer month, Integer dayOfMonth) {
+        Question question = repo(Question.class)
+                .findFirstBy("description", "Q" + questionNum);
 
+        User user = User.getUserByEmail("mary@email.com");
+
+        Record record = Record.getOrInitializeRecord(user, question);
+        record.setLastUpdated(LocalDate.of(year, month, dayOfMonth));
+        record.setCycleState(record.getCycleState() + 1);
+        record.save();
     }
 
     @Given("問題{int}は解答していない")
     public void 問題_は解答していない(Integer int1) {
-        // Write code here that turns the phrase above into concrete actions
-//        throw new cucumber.api.PendingException();
-        site.visit("dashboard");
     }
 }
