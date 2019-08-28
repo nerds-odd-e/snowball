@@ -151,14 +151,36 @@ public class OnlinePracticeTest {
         User user = new User();
         Question question = new Question();
         Record record = Record.getOrInitializeRecord(user, question);
-        record.setLastUpdated(LocalDate.of(2019,8,1));
+        record.setLastUpdated(LocalDate.of(2019, 8, 1));
 
         record.setCycleState(record.getCycle().size());
         record.setNextShowDate();
-        assertEquals(LocalDate.of(2019,10,30),record.getNextShowDate());
+        assertEquals(LocalDate.of(2019, 10, 30), record.getNextShowDate());
 
-        record.setCycleState(record.getCycle().size() +1);
+        record.setCycleState(record.getCycle().size() + 1);
         record.setNextShowDate();
-        assertEquals(LocalDate.of(2019,10,30),record.getNextShowDate());
+        assertEquals(LocalDate.of(2019, 10, 30), record.getNextShowDate());
+
+    }
+
+//    @Test
+    public void name() {
+        User user1 = new User().save();
+        Category scrum = Category.create("Scrum");
+        Question question1 = new Question("Q1", "adv", scrum.getId(), false, false).save();
+        Record record1 = new Record(user1, question1);
+        record1.setNextShowDate();
+        record1.save();
+
+        Question question2 = new Question("Q2", "adv", scrum.getId(), false, false).save();
+        Record record2 = new Record(user1, question2);
+        record2.setNextShowDate();
+        record2.save();
+
+        OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user1);
+        List<Question> expectedList = Arrays.asList(question1, question2);
+
+        assertEquals(expectedList.get(0).getDescription(), onlineTest.getQuestions().get(0).getDescription());
+        assertEquals(expectedList.get(1).getDescription(), onlineTest.getQuestions().get(1).getDescription());
     }
 }

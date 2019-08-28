@@ -2,7 +2,6 @@ package cucumber.steps;
 
 import com.odde.snowball.factory.QuestionBuilder;
 import com.odde.snowball.model.User;
-import com.odde.snowball.model.onlinetest.Category;
 import com.odde.snowball.model.onlinetest.Question;
 import com.odde.snowball.model.onlinetest.Record;
 import cucumber.api.java.en.And;
@@ -11,11 +10,12 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.steps.driver.WebDriverWrapper;
 import cucumber.steps.site.SnowballSite;
+import org.openqa.selenium.WebElement;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import static com.odde.snowball.model.base.Repository.repo;
+import static org.junit.Assert.assertEquals;
 
 public class PracticeTestsStepDefs {
 
@@ -115,9 +115,15 @@ public class PracticeTestsStepDefs {
         record.save();
     }
 
-    @Then("問題(\\d+)が出題される")
-    public void 問題_が出題される(Integer num) {
-        driver.expectPageToContainText("Q" + num);
+    @Then("{string}が出題される")
+    public void が出題される(String description) {
+        driver.takeScreenshot("tmp/hoge1");
+        driver.expectElementToContainText("#description", description);
+        String foundStr= "";
+        for (WebElement e : driver.findElements("#description")) {
+            foundStr = e.getText();
+        }
+        assertEquals(description, foundStr);
     }
 
     @When("問題{int}に正解する")
@@ -139,8 +145,13 @@ public class PracticeTestsStepDefs {
     public void 問題_の解答日時が_年_月_日である(Integer int1, Integer int2, Integer int3, Integer int4) {
         // Write code here that turns the phrase above into concrete actions
         site.visit("launchPractice?question_count=2");
-        QuestionStep questionStep = new QuestionStep();
-        questionStep.user_answered_correctly_the(int1);
+        driver.takeScreenshot("tmp/screen1");
+//        this.currentTestTotalQuestions = totalQuestions;
+//        questionStep.user_answered_correctly_the(int1);
+        driver.clickRadioButton("correctOption");
+        driver.click("#answer");
+        driver.takeScreenshot("tmp/screen2");
+
     }
 
     @Given("問題{int}は解答していない")
