@@ -4,7 +4,6 @@ import com.odde.snowball.model.User;
 
 import java.time.LocalDate;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,7 +22,11 @@ public class OnlinePractice extends OnlineTest {
     }
 
     public static List<Question> findSpaceBasedRepetations(int count, User user, LocalDate currentDate) {
-        return null;
+        List<Record> records = repo(Record.class).findBy("userId", user.getId());
+        if(records.isEmpty())
+            return Collections.emptyList();
+
+        return repo(Question.class).findBy("_id", records.stream().map(Record::getQuestionId).collect(Collectors.toList()).toArray());
     }
 
     public String endPageName() {

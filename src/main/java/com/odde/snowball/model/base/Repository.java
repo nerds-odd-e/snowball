@@ -13,6 +13,7 @@ import javax.validation.ValidatorFactory;
 import java.util.*;
 
 import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.in;
 
 public class Repository<T extends Entity> {
     private static ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
@@ -52,6 +53,10 @@ public class Repository<T extends Entity> {
 
     public List<T> findBy(String fieldName, Object value) {
         return find(eq(fieldName, value));
+    }
+
+    public List<T> findBy(String fieldName, Object... values) {
+        return find(in(fieldName, values));
     }
 
     public List<T> find(Bson cond) {
