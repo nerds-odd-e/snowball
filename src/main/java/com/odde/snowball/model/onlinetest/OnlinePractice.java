@@ -7,6 +7,7 @@ import org.bson.types.ObjectId;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import static com.mongodb.client.model.Filters.*;
@@ -19,12 +20,20 @@ public class OnlinePractice extends OnlineTest {
 
     public static OnlineTest createOnlinePractice(User user, int max) {
         List<Question> allQuestions = repo(Question.class).findAll();
-        List<Question> dueQuestions = allQuestions.stream().filter(q-> q.isDueForUser(user)).collect(Collectors.toList());
-
+        List<Question> dueQuestions = allQuestions.stream().filter(q -> q.isDueForUser(user)).collect(Collectors.toList());
         int maxQuestionCount = dueQuestions.size() > max ? max : dueQuestions.size();
 
+        if (dueQuestions.isEmpty()) {
+            System.out.println(allQuestions);
+            List<Record> recordList = repo(Record.class).findBy("userId", user.getId());
+            recordList.sort((s1, s2) -> s2.getLastUpdated().compareTo(s1.getLastUpdated()));
+            List<Question> questList = new ArrayList<>();
+            for (Record record : recordList) {
+                questList.add(repo(Question.class).findFirst(eq("_id", record.getQuestionId())));
+            }
+            return new OnlinePractice(questList);
+        }
         List<Question> questions = new QuestionCollection(dueQuestions).generateQuestionList(repo(Category.class).findAll(), maxQuestionCount);
-
         return new OnlinePractice(questions);
     }
 

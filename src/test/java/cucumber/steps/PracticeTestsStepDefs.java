@@ -86,7 +86,7 @@ public class PracticeTestsStepDefs {
 
     @Then("{string}のメッセージが表示される")
     public void のメッセージが表示される(String expectedString) {
-//        driver.takeScreenshot("tmp/hoge");
+        driver.takeScreenshot("tmp/hoge");
         // Write code here that turns the phrase above into concrete actions
         driver.expectPageToContainText(expectedString);
     }
@@ -115,15 +115,15 @@ public class PracticeTestsStepDefs {
         record.save();
     }
 
-    @Then("{string}が出題される")
-    public void が出題される(String description) {
+    @Then("問題(\\d+)が出題される")
+    public void が出題される(Integer description) {
         driver.takeScreenshot("tmp/hoge1");
-        driver.expectElementToContainText("#description", description);
+        driver.expectElementToContainText("#description", "Q" + description);
         String foundStr= "";
         for (WebElement e : driver.findElements("#description")) {
             foundStr = e.getText();
         }
-        assertEquals(description, foundStr);
+        assertEquals("Q" + description, foundStr);
     }
 
     @When("問題{int}に正解する")
