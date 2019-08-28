@@ -30,6 +30,7 @@ public class DashboardControllerTest {
         response = new MockHttpServletResponse();
         request.getSession().setAttribute("currentUser", currentUser);
         Question question = new Question("description", "advice", cat1.getId(), false, true);
+        question.setCreateUser(currentUser);
         question.save();
     }
 
@@ -39,5 +40,15 @@ public class DashboardControllerTest {
         Question question = ((List<Question>)request.getAttribute("questions")).get(0);
         assertNotNull(question);
         assertEquals("description", question.getDescription());
+    }
+
+    @Test
+    public void showOtherUsersPublicQuestion() throws Exception {
+        User otherUser = new User();
+        request.getSession().setAttribute("currentUser", otherUser);
+        controller.doGet(request, response);
+        Question question = ((List<Question>)request.getAttribute("questions")).get(0);
+        assertNotNull(question);
+        assertNotEquals(question.getCreateUser(), otherUser);
     }
 }
