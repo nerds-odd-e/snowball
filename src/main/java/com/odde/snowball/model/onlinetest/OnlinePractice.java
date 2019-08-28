@@ -29,10 +29,8 @@ public class OnlinePractice extends OnlineTest {
     }
 
     public static List<Question> findSpaceBasedRepetations(int count, User user, LocalDate currentDate) {
-
         // 1：昇順
         //-1：降順
-
         BasicDBObject sortCond = new BasicDBObject("nextShowDate", 1).append("lastUpdated", 1);
 
         List<Record> records = repo(Record.class).find(and(

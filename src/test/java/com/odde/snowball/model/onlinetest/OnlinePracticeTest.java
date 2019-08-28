@@ -10,6 +10,8 @@ import org.junit.runner.RunWith;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -112,6 +114,46 @@ public class OnlinePracticeTest {
         assertEquals(question3.getId(), questions.get(0).getId());
         assertEquals(2, questions.size());
     }
+
+    @Test
+    public void 指定の件数以下で次回出題日と最終更新日が古い順で取得されること() {
+        final LocalDate yesterday = LocalDate.of(2019,8,26);
+        final LocalDate today = yesterday.plusDays(1);
+        final ObjectId objectId = new ObjectId();
+
+        // setup
+        User user1 = new User().save();
+
+        Question question1 = new Question("desc", "adv", objectId, false, false).save();
+        Question question2 = new Question("desc", "adv", objectId, false, false).save();
+        Question question3 = new Question("desc", "adv", objectId, false, false).save();
+        Question question4 = new Question("desc", "adv", objectId, false, false).save();
+
+        Record record1 = new Record(user1, question1);
+        record1.setNextShowDate(today);
+        record1.save();
+        Record record2 = new Record(user1, question2);
+        record2.setNextShowDate(today);
+        record2.save();
+
+        Record record3 = new Record(user1, question3);
+        record3.setNextShowDate(today.minusDays(1));
+        record3.setLastUpdated(today);
+        record3.save();
+
+        Record record4 = new Record(user1, question4);
+        record4.setNextShowDate(today.minusDays(1));
+        record4.setLastUpdated(today.minusDays(1));
+        record4.save();
+
+
+        // execute
+        List<Question> questions =
+                OnlinePractice.findSpaceBasedRepetations(3, user1, today);
+        assertEquals(question4.getId(), questions.get(0).getId());
+        assertEquals(3, questions.size());
+    }
+
 
 
     @Test
