@@ -20,9 +20,6 @@ public class OnlinePractice extends OnlineTest {
     public static OnlineTest createOnlinePractice(User user) {
         List<Question> allQuestions = repo(Question.class).findAll();
         List<Question> dueQuestions = allQuestions.stream().filter(q -> q.isDueForUser(user)).collect(Collectors.toList());
-        if (dueQuestions.isEmpty()) {
-            return new OnlinePractice(allQuestions);
-        }
         List<Question> questions = new QuestionCollection(dueQuestions).generateQuestionList(repo(Category.class).findAll(), dueQuestions.size());
         return new OnlinePractice(questions);
     }
