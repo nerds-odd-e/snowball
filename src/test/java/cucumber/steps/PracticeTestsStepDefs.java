@@ -133,12 +133,6 @@ public class PracticeTestsStepDefs {
 //        throw new cucumber.api.PendingException();
     }
 
-    @Given("問題{int}と問題{int}が存在する")
-    public void 問題_と問題_が存在する(Integer int1, Integer int2) {
-        // Write code here that turns the phrase above into concrete actions
-//        throw new cucumber.api.PendingException();
-    }
-
     // TODO 解答日時未設定
     @Given("問題{int}の解答日時が{int}年{int}月{int}日である")
     public void 問題_の解答日時が_年_月_日である(Integer int1, Integer int2, Integer int3, Integer int4) {
