@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -81,13 +82,49 @@ public class OnlinePracticeTest {
     //TODO
     // 指定の件数以下で次回出題日、最終回答日が古い順で取得されること
 
-    // @Test
-    public void 問題に解答したら次回出題日が更新される() {
+    @Test
+    public void 一度も解答してない場合次回出題日はnullである() {
         User user = new User();
         Question question = new Question();
         Record record = Record.getOrInitializeRecord(user, question);
+        record.setLastUpdated(LocalDate.of(2019,8,1));
+        record.setCycleState(0);
         record.setNextShowDate();
-        assertEquals(LocalDate.of(2019,8,28),record.getNextShowDate());
+        assertEquals(null,record.getNextShowDate());
 
+    }
+
+    @Test
+    public void 問題に解答したら次回出題日が設定される() {
+        User user = new User();
+        Question question = new Question();
+        Record record = Record.getOrInitializeRecord(user, question);
+        record.setLastUpdated(LocalDate.of(2019,8,1));
+        List<LocalDate> expected = Arrays.asList(
+            LocalDate.of(2019,8,2),
+            LocalDate.of(2019,8,4),
+            LocalDate.of(2019,8,11),
+            LocalDate.of(2019,8,31),
+            LocalDate.of(2019,10,30)
+        );
+        for (int i = 1; i <= record.getCycle().size(); i++) {
+            record.setCycleState(i);
+            record.setNextShowDate();
+            assertEquals(expected.get(i -1),record.getNextShowDate());
+        }
+    }
+
+    @Test
+    public void 問題に最終回まで解答したら次回出題日が設定されない() {
+        User user = new User();
+        Question question = new Question();
+        Record record = Record.getOrInitializeRecord(user, question);
+        record.setLastUpdated(LocalDate.of(2019,8,1));
+        record.setCycleState(record.getCycle().size());
+        record.setNextShowDate();
+        assertEquals(LocalDate.of(2019,10,30),record.getNextShowDate());
+        record.setCycleState(record.getCycle().size() +1);
+        record.setNextShowDate();
+        assertEquals(LocalDate.of(2019,10,30),record.getNextShowDate());
     }
 }

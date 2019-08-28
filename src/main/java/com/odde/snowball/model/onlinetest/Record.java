@@ -24,6 +24,7 @@ public class Record extends Entity<Record> {
     private LocalDate lastUpdated;
     private LocalDate nextShowDate;
     private int cycleState;
+    private List<Integer> cycle = Arrays.asList(1, 3, 10, 30, 90);
 
     public Record(User user, Question question) {
         this.userId = user.getId();
@@ -39,19 +40,22 @@ public class Record extends Entity<Record> {
         return record;
     }
 
-    public void setNextShowDate(){}
+    public void setNextShowDate() {
+        if (this.lastUpdated != null && getCycleState() != 0 && getCycleState() <= cycle.size()) {
+            this.nextShowDate = getLastUpdated().plusDays(cycle.get(getCycleState() - 1));
+        }
+    }
 
 
     public boolean isDue() {
-        List<Integer> cycle = Arrays.asList(1, 2, 4);
         if (getCycleState() == 0) {
             return true;
         }
         if (getCycleState() > cycle.size()) {
             return false;
         }
-        return !getLastUpdated() // 2019/8/28
-                .plusDays(cycle.get(getCycleState() - 1)) //2019/08/29
+        return !getLastUpdated()
+                .plusDays(cycle.get(getCycleState() - 1))
                 .isAfter(LocalDate.now());
     }
 }
