@@ -75,11 +75,12 @@ public class LaunchPracticeControllerTest {
     }
 
     @Test
-    public void userMustNotSeeTheQuestionIfSheHasDoneItOnTheSameDay() throws IOException {
+    public void userMustSeeTheQuestionIfSheHasDoneItOnTheSameDay() throws IOException {
         Question question = mockQuestion().get(0);
         question.recordQuestionForUser(user1, LocalDate.now());
         controller.doGet(request, response);
-        assertEquals("/practice/completed_practice.jsp", response.getRedirectedUrl());
+        OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
+        assertThat(onlineTest.getNumberOfQuestions()).isEqualTo(1);
     }
 
     @Test

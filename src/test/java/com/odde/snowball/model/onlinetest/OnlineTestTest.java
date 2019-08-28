@@ -169,21 +169,6 @@ public class OnlineTestTest {
         assertEquals(expected, actual);
     }
 
-
-    @Test
-    public void practiceShouldShowNotShowQuestionWhenCycleIsComplete() {
-        User user = new User();
-        Question question = mockQuestion(1, retro.getId()).get(0);
-        question.recordQuestionForUser(user, LocalDate.now().minusDays(91));
-        question.recordQuestionForUser(user, LocalDate.now().minusDays(90));
-        question.recordQuestionForUser(user, LocalDate.now().minusDays(87));
-        question.recordQuestionForUser(user, LocalDate.now().minusDays(81));
-        question.recordQuestionForUser(user, LocalDate.now().minusDays(61));
-        question.recordQuestionForUser(user, LocalDate.now().minusDays(1));
-        OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user);
-        assertEquals(0, onlineTest.getNumberOfQuestions());
-    }
-
     private List<Question> mockQuestion(int numberOfQuestion, ObjectId category) {
         return IntStream.range(0, numberOfQuestion).mapToObj(index -> new Question("desc" + index, "adv" + index, category, false, false).save()).collect(Collectors.toList());
     }
