@@ -38,6 +38,15 @@ public class DashboardControllerTest {
         privateQuestion.setCreateUser(currentUser);
         privateQuestion.setPublic(false);
         privateQuestion.save();
+        Question questionByAnonymousUser = new Question("description", "advice", cat1.getId(), false, true);
+        privateQuestion.setPublic(true);
+        questionByAnonymousUser.save();
+    }
+
+    private User loginOtherUser() {
+        User otherUser = new User();
+        request.getSession().setAttribute("currentUser", otherUser);
+        return otherUser;
     }
 
     @Test
@@ -50,8 +59,7 @@ public class DashboardControllerTest {
 
     @Test
     public void showOtherUsersPublicQuestion() throws Exception {
-        User otherUser = new User();
-        request.getSession().setAttribute("currentUser", otherUser);
+        User otherUser = loginOtherUser();
         controller.doGet(request, response);
         Question question = ((List<Question>)request.getAttribute("questions")).get(0);
         assertNotNull(question);
@@ -67,5 +75,16 @@ public class DashboardControllerTest {
                 .findFirst();
         assertDoesNotThrow(questions::get);
         assertFalse(questions.get().isPublic());
+    }
+
+    @Test
+    public void notShowOtherUsersPrivateQuestion() throws Exception {
+        loginOtherUser();
+        controller.doGet(request, response);
+        Optional<Question> questions = ((List<Question>) request.getAttribute("questions"))
+                .stream()
+                .filter(q -> !q.isPublic())
+                .findFirst();
+        assertFalse(questions.isPresent());
     }
 }

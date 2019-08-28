@@ -57,6 +57,10 @@ public class Question extends Entity<Question> {
         return Record.getOrInitializeRecord(user, this).isDue();
     }
 
+    public boolean isVisibleForUser(User user) {
+        return isPublic || user.equals(createUser);
+    }
+
     public Category category() {
         return repo(Category.class).findById(categoryId);
     }
