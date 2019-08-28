@@ -52,6 +52,6 @@ public class Record extends Entity<Record> {
         }
         return !getLastUpdated() // 2019/8/28
                 .plusDays(cycle.get(getCycleState() - 1)) //2019/08/29
-                .isAfter(LocalDate.of(2019,8,30));
+                .isAfter(LocalDate.now());
     }
 }
