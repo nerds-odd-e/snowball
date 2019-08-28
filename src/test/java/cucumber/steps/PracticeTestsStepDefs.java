@@ -1,12 +1,21 @@
 package cucumber.steps;
 
+import com.odde.snowball.factory.QuestionBuilder;
+import com.odde.snowball.model.User;
 import com.odde.snowball.model.onlinetest.Category;
+import com.odde.snowball.model.onlinetest.Question;
+import com.odde.snowball.model.onlinetest.Record;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.steps.driver.WebDriverWrapper;
 import cucumber.steps.site.SnowballSite;
+
+import java.time.LocalDate;
+import java.util.Date;
+
+import static com.odde.snowball.model.base.Repository.repo;
 
 public class PracticeTestsStepDefs {
 
@@ -76,7 +85,48 @@ public class PracticeTestsStepDefs {
     }
 
     @Then("{string}のメッセージが表示される")
-    public void のメッセージが表示される(String string) {
+    public void のメッセージが表示される(String expectedString) {
+//        driver.takeScreenshot("tmp/hoge");
+        // Write code here that turns the phrase above into concrete actions
+        driver.expectPageToContainText(expectedString);
+    }
+
+    @Given("問題1と問題2が存在する")
+    public void 問題1と問題2が存在する() {
+        new QuestionBuilder()
+                .aQuestion("問題1", "advice", "Scrum")
+                .withWrongOption("wrongOption1")
+                .withCorrectOption("correctOption1")
+                .please();
+        new QuestionBuilder()
+                .aQuestion("問題2", "advice", "Scrum")
+                .withWrongOption("wrongOption1")
+                .withCorrectOption("correctOption1")
+                .please();
+    }
+
+    @Given("([^\"]*)に解答する")
+    public void 問題に解答する(String description) {
+
+        Question question = repo(Question.class)
+                .findFirstBy("description", description);
+
+        User user = User.getUserByEmail("gulliver@email.com");
+
+        Record record = Record.getOrInitializeRecord(user, question);
+        record.setLastUpdated(LocalDate.now());
+        record.setCycleState(1);
+        record.save();
+    }
+
+    @Then("問題{int}が出題される")
+    public void 問題_が出題される(Integer int1) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new cucumber.api.PendingException();
+    }
+
+    @When("問題{int}に正解する")
+    public void 問題_に正解する(Integer int1) {
         // Write code here that turns the phrase above into concrete actions
         throw new cucumber.api.PendingException();
     }
