@@ -73,14 +73,14 @@ Feature:
 #    Given 問題1と問題2が存在する
     Given There are questions with dummy options:
       | description | correctOption | category |
-      | Q1          | correctOption | Retro    |
       | Q2          | correctOption | Retro    |
     And user "Bob" has logged in successfully
     And 今日は2019年8月27日である
     And 問題1の解答日時が2019年8月27日である
     And 問題2は解答していない
     When プラクティスを開始
-    Then 問題2が出題される
+#    Then 問題2が出題される
+    Then "Q2"という問題が"出題される"
     When 問題2に正解する
     Then "お疲れ様でした"のメッセージが表示される
 
