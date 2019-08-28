@@ -39,6 +39,9 @@ public class Record extends Entity<Record> {
         return record;
     }
 
+    public void setNextShowDate(){}
+
+
     public boolean isDue() {
         List<Integer> cycle = Arrays.asList(1, 2, 4);
         if (getCycleState() == 0) {
@@ -47,8 +50,8 @@ public class Record extends Entity<Record> {
         if (getCycleState() > cycle.size()) {
             return false;
         }
-        return !getLastUpdated()
-                .plusDays(cycle.get(getCycleState() - 1))
-                .isAfter(LocalDate.now());
+        return !getLastUpdated() // 2019/8/28
+                .plusDays(cycle.get(getCycleState() - 1)) //2019/08/29
+                .isAfter(LocalDate.of(2019,8,30));
     }
 }

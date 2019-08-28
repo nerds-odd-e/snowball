@@ -9,7 +9,8 @@ import org.junit.runner.RunWith;
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @RunWith(TestWithDB.class)
 public class OnlinePracticeTest {
@@ -46,7 +47,7 @@ public class OnlinePracticeTest {
     }
     @Test
     public void 自分が解答済みの問題が存在する場合_その問題が取得できること() {
-        final LocalDate yesterday = LocalDate.of(2019,8,26);
+        final LocalDate yesterday = LocalDate.of(2019, 8, 26);
         final ObjectId objectId = new ObjectId();
         final LocalDate today = yesterday.plusDays(1);
 
@@ -67,6 +68,16 @@ public class OnlinePracticeTest {
                 OnlinePractice.findSpaceBasedRepetations(2, user1, today);
         assertEquals(question1.getId(), questions.get(0).getId());
         assertEquals(1, questions.size());
+    }
+
+    // @Test
+    public void 問題に解答したら次回出題日が更新される() {
+        User user = new User();
+        Question question = new Question();
+        Record record = Record.getOrInitializeRecord(user, question);
+        record.setNextShowDate();
+        assertEquals(LocalDate.of(2019,8,28),record.getNextShowDate());
+
     }
 
 }
