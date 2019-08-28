@@ -11,23 +11,23 @@ Feature:
   Scenario: User can practice question
     Given User is taking a practiceTest
     When User answered 1 questions correctly
-    Then User should see "You have finished your practice for today"
+    Then User should see "Good job!"
 
   Scenario: No questions should be shown if questions have been answered today
     Given User is taking a practiceTest
     When User answered 1 question correctly
-    Then User should see "You have finished your practice for today"
+    Then User should see "Good job!"
     When User is taking a practiceTest
-    Then User should see "You have finished your practice for today"
+    Then User should see "Good job!"
 
   Scenario: If user answers wrongly, user should be shown advice page and be redirected to see completed practice page
     Given User is taking a practiceTest
     When User answered 1 question wrongly
     Then User should see Advice page
     When User clicks on Next on Advice page
-    Then User should see "You have finished your practice for today"
+    Then User should see "Good job!"
     When User is taking a practiceTest
-    Then User should see "You have finished your practice for today"
+    Then User should see "Good job!"
 
   @simple-review
   Scenario: ユーザがプラクティスを開始できること
@@ -49,7 +49,7 @@ Feature:
       | Q15          | correctOption | Retro    |
     And User is taking a practiceTest
     When User answered 10 questions correctly
-    Then User should see "You have finished your practice for today"
+    Then User should see "Good job!"
 
   @developing
   @simple-review
@@ -63,7 +63,7 @@ Feature:
     When 問題1に正解する
     Then 問題2が出題される
     When 問題2に正解する
-    Then "お疲れ様でした"のメッセージが表示される
+    Then "Good job!"のメッセージが表示される
 
   @developing
   @simple-review
@@ -81,7 +81,7 @@ Feature:
     Then "Q2"が出題される
 #    Then "Q2"という問題が"出題される"
     When 問題2に正解する
-    Then "お疲れ様でした"のメッセージが表示される
+    Then "Good job!"のメッセージが表示される
 
   # space-based repetation
   @developing
