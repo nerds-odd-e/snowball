@@ -177,10 +177,27 @@ public class OnlinePracticeTest {
         record2.setNextShowDate();
         record2.save();
 
-        OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user1);
+        OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user1, 10);
         List<Question> expectedList = Arrays.asList(question1, question2);
 
         assertEquals(expectedList.get(0).getDescription(), onlineTest.getQuestions().get(0).getDescription());
         assertEquals(expectedList.get(1).getDescription(), onlineTest.getQuestions().get(1).getDescription());
+    }
+
+    @Test
+    public void 問題が11問存在する時_10問のみ返されること() {
+        // setup
+        User user = new User().save();
+
+        Category scrum = Category.create("Scrum");
+        final ObjectId objectId = scrum.getId();
+        for (int i = 0 ; i < 3 ; i++) {
+            new Question("desc", "adv", objectId, false, false).save();
+        }
+        // exercise
+        OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user, 2);
+        // verify
+        int numberOfQuestions = onlineTest.getNumberOfQuestions();
+        assertEquals(2, numberOfQuestions);
     }
 }

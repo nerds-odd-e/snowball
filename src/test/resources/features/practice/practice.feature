@@ -49,7 +49,7 @@ Feature:
       | Q14          | correctOption | Retro    |
       | Q15          | correctOption | Retro    |
     And User is taking a practiceTest
-    When User answered 15 questions correctly
+    When User answered 10 questions correctly
     Then User should see "You have finished your practice for today"
 
   @developing

@@ -17,10 +17,14 @@ public class OnlinePractice extends OnlineTest {
         super(questions);
     }
 
-    public static OnlineTest createOnlinePractice(User user) {
+    public static OnlineTest createOnlinePractice(User user, int max) {
         List<Question> allQuestions = repo(Question.class).findAll();
-        List<Question> dueQuestions = allQuestions.stream().filter(q -> q.isDueForUser(user)).collect(Collectors.toList());
-        List<Question> questions = new QuestionCollection(dueQuestions).generateQuestionList(repo(Category.class).findAll(), dueQuestions.size());
+        List<Question> dueQuestions = allQuestions.stream().filter(q-> q.isDueForUser(user)).collect(Collectors.toList());
+
+        int maxQuestionCount = dueQuestions.size() > max ? max : dueQuestions.size();
+
+        List<Question> questions = new QuestionCollection(dueQuestions).generateQuestionList(repo(Category.class).findAll(), maxQuestionCount);
+
         return new OnlinePractice(questions);
     }
 

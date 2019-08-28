@@ -20,7 +20,7 @@ public class LaunchPracticeController extends AppController {
 
         session.setAttribute("date", LocalDate.now());
 
-        OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user);
+        OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user, 10); // TODO get from request parameter
         if (onlineTest.getCurrentQuestion() == null) {
             resp.sendRedirect("/practice/completed_practice.jsp");
             return;

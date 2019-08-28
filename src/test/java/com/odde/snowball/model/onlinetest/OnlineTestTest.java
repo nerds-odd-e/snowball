@@ -160,13 +160,25 @@ public class OnlineTestTest {
         questions.get(0).recordQuestionForUser(user, LocalDate.now().minusDays(3));
         questions.get(1).recordQuestionForUser(user, LocalDate.now().minusDays(3));
         questions.get(2).recordQuestionForUser(user, LocalDate.now());
-        OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user);
+        OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user, 10);
         assertEquals(2, onlineTest.getNumberOfQuestions());
         Set<ObjectId> expected = new HashSet<ObjectId>();
         expected.add(questions.get(0).getId());
         expected.add(questions.get(1).getId());
         Set<ObjectId> actual = onlineTest.getQuestions().stream().map(Entity::getId).collect(Collectors.toSet());
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void practiceShouldShowNotShowQuestionWhenCycleIsComplete() {
+        User user = new User();
+        Question question = mockQuestion(1, retro.getId()).get(0);
+        question.recordQuestionForUser(user, LocalDate.now().minusDays(38));
+        question.recordQuestionForUser(user, LocalDate.now().minusDays(37));
+        question.recordQuestionForUser(user, LocalDate.now().minusDays(35));
+        question.recordQuestionForUser(user, LocalDate.now().minusDays(31));
+        OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user, 10);
+        assertEquals(0, onlineTest.getNumberOfQuestions());
     }
 
     private List<Question> mockQuestion(int numberOfQuestion, ObjectId category) {
@@ -182,10 +194,9 @@ public class OnlineTestTest {
     @Test
     public void should_return_completed_practice_if_practice_ends() {
         User user = new User();
-        OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user);
+        OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user, 10);
         assertEquals(onlineTest.endPageName(), "/practice/completed_practice.jsp");
     }
-
 
     private void mockQuestion(int numberOfQuestion) {
         mockQuestion(numberOfQuestion, scrum.getId());
