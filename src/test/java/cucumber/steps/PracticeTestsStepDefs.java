@@ -130,4 +130,45 @@ public class PracticeTestsStepDefs {
         // Write code here that turns the phrase above into concrete actions
         throw new cucumber.api.PendingException();
     }
+
+    // TODO 空実装
+    @Given("今日は{int}年{int}月{int}日である")
+    public void 今日は_年_月_日である(Integer int1, Integer int2, Integer int3) {
+        // Write code here that turns the phrase above into concrete actions
+//        throw new cucumber.api.PendingException();
+    }
+
+    @Given("問題{int}と問題{int}が存在する")
+    public void 問題_と問題_が存在する(Integer int1, Integer int2) {
+        // Write code here that turns the phrase above into concrete actions
+//        throw new cucumber.api.PendingException();
+    }
+
+    // TODO 解答日時未設定
+    @Given("問題{int}の解答日時が{int}年{int}月{int}日である")
+    public void 問題_の解答日時が_年_月_日である(Integer int1, Integer int2, Integer int3, Integer int4) {
+        // Write code here that turns the phrase above into concrete actions
+        site.visit("launchPractice?question_count=2");
+        QuestionStep questionStep = new QuestionStep();
+        questionStep.user_answered_correctly_the(int1);
+    }
+
+    @Given("問題{int}は解答していない")
+    public void 問題_は解答していない(Integer int1) {
+        // Write code here that turns the phrase above into concrete actions
+//        throw new cucumber.api.PendingException();
+        site.visit("dashboard");
+    }
+
+    @Then("問題{int}が出題される")
+    public void 問題_が出題される(Integer int1) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new cucumber.api.PendingException();
+    }
+
+    @When("問題{int}に正解する")
+    public void 問題_に正解する(Integer int1) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new cucumber.api.PendingException();
+    }
 }

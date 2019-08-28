@@ -68,9 +68,14 @@ Feature:
 
   @developing
   @simple-review
+#  @now
   Scenario: 一部未解答の問題が存在する時は未解答問題だけが出題されること
-    Given 問題1と問題2が存在する
-    And ユーザがログインした状態である
+#    Given 問題1と問題2が存在する
+    Given There are questions with dummy options:
+      | description | correctOption | category |
+      | Q1          | correctOption | Retro    |
+      | Q2          | correctOption | Retro    |
+    And user "Bob" has logged in successfully
     And 今日は2019年8月27日である
     And 問題1の解答日時が2019年8月27日である
     And 問題2は解答していない
