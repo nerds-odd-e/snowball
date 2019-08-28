@@ -138,21 +138,32 @@ public class OnlinePracticeTest {
     }
 
 
+    //@Test
+    public void 問題に最終回まで解答した場合_問題が取得されないこと() {
+        // setup
+        User user1 = new User().save();
+        mockQuestion(1);
+
+        List<Question> questions =
+                OnlinePractice.findSpaceBasedRepetations(1, user1, null);
+        assertTrue(questions.isEmpty());
+    }
+
 
     @Test
-    public void 一度も解答してない場合次回出題日はnullである() {
+    public void 一度も解答してない場合_次回出題日はnullである() {
         User user = new User();
         Question question = new Question();
         Record record = Record.getOrInitializeRecord(user, question);
         record.setLastUpdated(LocalDate.of(2019,8,1));
         record.setCycleState(0);
-        record.setNextShowDate();
+        record.calculateNextShowDate();
         assertEquals(null,record.getNextShowDate());
 
     }
 
     @Test
-    public void 問題に解答したら次回出題日が設定される() {
+    public void 問題に解答した場合_次回出題日が設定される() {
         User user = new User();
         Question question = new Question();
         Record record = Record.getOrInitializeRecord(user, question);
@@ -166,27 +177,49 @@ public class OnlinePracticeTest {
         );
         for (int i = 1; i <= Record.CYCLE.size(); i++) {
             record.setCycleState(i);
-            record.setNextShowDate();
+            record.calculateNextShowDate();
             assertEquals(expected.get(i - 1),record.getNextShowDate());
         }
     }
 
     @Test
-    public void 問題に最終回まで解答したら次回出題日が設定されない() {
+    public void 問題に最終回まで解答した場合_次回出題日が設定されない() {
         User user = new User();
         Question question = new Question();
         Record record = Record.getOrInitializeRecord(user, question);
         record.setLastUpdated(LocalDate.of(2019, 8, 1));
 
         record.setCycleState(Record.CYCLE.size());
-        record.setNextShowDate();
+        record.calculateNextShowDate();
         assertEquals(LocalDate.of(2019, 10, 30), record.getNextShowDate());
 
         record.setCycleState(Record.CYCLE.size() +1);
-        record.setNextShowDate();
+        record.calculateNextShowDate();
         assertEquals(LocalDate.of(2019, 10, 30), record.getNextShowDate());
 
     }
+
+//    @Test
+    public void name() {
+        User user1 = new User().save();
+        Category scrum = Category.create("Scrum");
+        Question question1 = new Question("Q1", "adv", scrum.getId(), false, false).save();
+        Record record1 = new Record(user1, question1);
+        record1.calculateNextShowDate();
+        record1.save();
+
+        Question question2 = new Question("Q2", "adv", scrum.getId(), false, false).save();
+        Record record2 = new Record(user1, question2);
+        record2.calculateNextShowDate();
+        record2.save();
+
+        OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user1, 10);
+        List<Question> expectedList = Arrays.asList(question1, question2);
+
+        assertEquals(expectedList.get(0).getDescription(), onlineTest.getQuestions().get(0).getDescription());
+        assertEquals(expectedList.get(1).getDescription(), onlineTest.getQuestions().get(1).getDescription());
+    }
+
 
     @Test
     public void 問題が11問存在する時_10問のみ返されること() {

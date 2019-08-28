@@ -50,7 +50,7 @@ public class Question extends Entity<Question> {
         Record record = Record.getOrInitializeRecord(user, this);
         record.setLastUpdated(date);
         record.setCycleState(record.getCycleState() + 1);
-        record.setNextShowDate();
+        record.calculateNextShowDate();
         record.save();
     }
 

@@ -40,7 +40,7 @@ public class Record extends Entity<Record> {
         return record;
     }
 
-    public void setNextShowDate() {
+    public void calculateNextShowDate() {
         if (this.lastUpdated != null && getCycleState() != 0 && !isOverCycle()) {
             this.nextShowDate = getLastUpdated().plusDays(CYCLE.get(getCycleState() - 1));
         }
