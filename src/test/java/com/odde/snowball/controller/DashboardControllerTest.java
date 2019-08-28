@@ -11,6 +11,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,9 +30,14 @@ public class DashboardControllerTest {
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
         request.getSession().setAttribute("currentUser", currentUser);
-        Question question = new Question("description", "advice", cat1.getId(), false, true);
-        question.setCreateUser(currentUser);
-        question.save();
+        Question publicQuestion = new Question("description", "advice", cat1.getId(), false, true);
+        publicQuestion.setCreateUser(currentUser);
+        publicQuestion.setPublic(true);
+        publicQuestion.save();
+        Question privateQuestion = new Question("description", "advice", cat1.getId(), false, true);
+        privateQuestion.setCreateUser(currentUser);
+        privateQuestion.setPublic(false);
+        privateQuestion.save();
     }
 
     @Test
@@ -50,5 +56,16 @@ public class DashboardControllerTest {
         Question question = ((List<Question>)request.getAttribute("questions")).get(0);
         assertNotNull(question);
         assertNotEquals(question.getCreateUser(), otherUser);
+    }
+
+    @Test
+    public void showMyPrivateQuestion() throws Exception {
+        controller.doGet(request, response);
+        Optional<Question> questions = ((List<Question>) request.getAttribute("questions"))
+                .stream()
+                .filter(q -> !q.isPublic())
+                .findFirst();
+        assertDoesNotThrow(questions::get);
+        assertFalse(questions.get().isPublic());
     }
 }
