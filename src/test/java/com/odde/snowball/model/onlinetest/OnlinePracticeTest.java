@@ -45,7 +45,7 @@ public class OnlinePracticeTest {
         assertEquals(1, questions.size());
     }
     @Test
-    public void 次回出題日が現在日である問題が存在する場合_その問題が取得できること() {
+    public void 自分が解答済みの問題が存在する場合_その問題が取得できること() {
         final LocalDate yesterday = LocalDate.of(2019,8,26);
         final ObjectId objectId = new ObjectId();
         final LocalDate today = yesterday.plusDays(1);
@@ -54,8 +54,8 @@ public class OnlinePracticeTest {
         User user1 = new User().save();
         User user2 = new User().save();
 
-        Question question2 = new Question("desc", "adv", objectId, false, false).save();
         Question question1 = new Question("desc", "adv", objectId, false, false).save();
+        Question question2 = new Question("desc", "adv", objectId, false, false).save();
         Record record1 = new Record(user1, question1);
         record1.setNextShowDate(today);
         record1.save();
@@ -64,8 +64,9 @@ public class OnlinePracticeTest {
         record2.save();
         // execute
         List<Question> questions =
-                OnlinePractice.findSpaceBasedRepetations(1, user1, today);
+                OnlinePractice.findSpaceBasedRepetations(2, user1, today);
         assertEquals(question1.getId(), questions.get(0).getId());
+        assertEquals(1, questions.size());
     }
 
 }
