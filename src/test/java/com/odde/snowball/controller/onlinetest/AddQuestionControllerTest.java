@@ -149,6 +149,14 @@ public class AddQuestionControllerTest {
     }
 
     @Test
+    public void doPostAddQuestionByNotLoginUser_CheckQuestionCreator() throws Exception {
+        setupValidRequestForPublicQuestion();
+        controller.doPost(request, response);
+        Question question = repo(Question.class).findAll().get(0);
+        assertNull(question.getCreateUser());
+    }
+
+    @Test
     public void redirectToDashboard() throws Exception {
         setupValidRequest();
         controller.doPost(request, response);

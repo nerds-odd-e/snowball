@@ -75,7 +75,6 @@ public class AddQuestionController extends AppController {
 
         Question question = new Question(req.getParameter("description"), req.getParameter("advice"), new ObjectId(req.getParameter("category")), type.equals("multiple"), false);
         question.setPublic(isPublic);
-
         question.setCreateUser((User)req.getSession().getAttribute("currentUser"));
 
         final String[] checks = req.getParameterValues("check");
