@@ -164,11 +164,10 @@ public class OnlinePracticeTest {
             LocalDate.of(2019,8,31),
             LocalDate.of(2019,10,30)
         );
-
-        for (int i = 1; i <= record.getCycle().size(); i++) {
+        for (int i = 1; i <= Record.CYCLE.size(); i++) {
             record.setCycleState(i);
             record.setNextShowDate();
-            assertEquals(expected.get(i -1),record.getNextShowDate());
+            assertEquals(expected.get(i - 1),record.getNextShowDate());
         }
     }
 
@@ -179,11 +178,11 @@ public class OnlinePracticeTest {
         Record record = Record.getOrInitializeRecord(user, question);
         record.setLastUpdated(LocalDate.of(2019, 8, 1));
 
-        record.setCycleState(record.getCycle().size());
+        record.setCycleState(Record.CYCLE.size());
         record.setNextShowDate();
         assertEquals(LocalDate.of(2019, 10, 30), record.getNextShowDate());
 
-        record.setCycleState(record.getCycle().size() + 1);
+        record.setCycleState(Record.CYCLE.size() +1);
         record.setNextShowDate();
         assertEquals(LocalDate.of(2019, 10, 30), record.getNextShowDate());
 

@@ -190,4 +190,19 @@ public class OnlineTestTest {
         mockQuestion(numberOfQuestion, scrum.getId());
     }
 
+    @Test
+    public void 問題に解答したら次回出題日が更新される() {
+        User user = new User();
+        LocalDate answerDate = LocalDate.of(2019, 9, 1);
+        Question question = mockQuestion(1, retro.getId()).get(0);
+        question.recordQuestionForUser(
+                user,
+                answerDate
+        );
+
+        LocalDate actual = Record.getOrInitializeRecord(user, question).getNextShowDate();
+        LocalDate expected = answerDate.plusDays(Record.CYCLE.get(0));
+
+        assertEquals(expected, actual);
+    }
 }
