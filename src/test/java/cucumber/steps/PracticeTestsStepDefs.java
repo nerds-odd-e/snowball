@@ -60,22 +60,19 @@ public class PracticeTestsStepDefs {
         driver.click("#next");
     }
 
-    @Given("ユーザがログインした状態である")
-    public void ユーザがログインした状態である() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
-    }
-
     @When("プラクティスを開始")
     public void プラクティスを開始() {
         // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
+        driver.clickButtonByName("start_practice_button");
     }
 
     @When("問題に{int}回正解する")
-    public void 問題に_回正解する(Integer int1) {
+    public void 問題に_回正解する(Integer count) {
         // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
+        for (int i = 0; i < count; i++) {
+            driver.clickRadioButton("correctOption");
+            driver.click("#answer");
+        }
     }
 
     @Then("{string}のメッセージが表示される")
