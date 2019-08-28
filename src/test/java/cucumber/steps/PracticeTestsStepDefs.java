@@ -96,8 +96,8 @@ public class PracticeTestsStepDefs {
         // 問題1はbackgroundで登録済み
         new QuestionBuilder()
                 .aQuestion("Q2", "advice", "Scrum")
-                .withWrongOption("wrongOption1")
-                .withCorrectOption("correctOption1")
+                .withWrongOption("wrongOption")
+                .withCorrectOption("correctOption")
                 .please();
     }
 
@@ -123,7 +123,8 @@ public class PracticeTestsStepDefs {
     @When("問題{int}に正解する")
     public void 問題_に正解する(Integer int1) {
         // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
+        driver.clickRadioButton("correctOption");
+        driver.click("#answer");
     }
 
     // TODO 空実装
