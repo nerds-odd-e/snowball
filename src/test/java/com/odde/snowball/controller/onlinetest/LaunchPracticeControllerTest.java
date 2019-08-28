@@ -90,4 +90,42 @@ public class LaunchPracticeControllerTest {
         OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
         assertThat(onlineTest.getNumberOfQuestions()).isEqualTo(1);
     }
+
+    @Test
+    public void questionLimit10() throws IOException {
+        mockQuestion(11);
+        controller.doGet(request, response);
+        OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
+        assertThat(onlineTest.getNumberOfQuestions()).isEqualTo(10);
+    }
+
+    @Test
+    public void questionLimit_指定() throws IOException {
+        mockQuestion(11);
+        request.addParameter("questionLimit", "5");
+        controller.doGet(request, response);
+
+        OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
+        assertThat(onlineTest.getNumberOfQuestions()).isEqualTo(5);
+    }
+
+    @Test
+    public void questionLimit_str() throws IOException {
+        mockQuestion(11);
+        request.addParameter("questionLimit", "a");
+        controller.doGet(request, response);
+
+        OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
+        assertThat(onlineTest.getNumberOfQuestions()).isEqualTo(10);
+    }
+
+    @Test
+    public void questionLimit_0() throws IOException {
+        mockQuestion(11);
+        request.addParameter("questionLimit", "0");
+        controller.doGet(request, response);
+
+        OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
+        assertThat(onlineTest).isNull();
+    }
 }
