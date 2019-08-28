@@ -29,8 +29,7 @@ Feature:
     When User is taking a practiceTest
     Then User should see "You have finished your practice for today"
 
-  @developing
-#  @now
+  @simple-review
   Scenario: ユーザがプラクティスを開始できること
     Given There are questions with dummy options:
       | description | correctOption | category |
