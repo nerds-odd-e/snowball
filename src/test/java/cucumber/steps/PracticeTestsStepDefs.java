@@ -93,23 +93,19 @@ public class PracticeTestsStepDefs {
 
     @Given("問題1と問題2が存在する")
     public void 問題1と問題2が存在する() {
+        // 問題1はbackgroundで登録済み
         new QuestionBuilder()
-                .aQuestion("問題1", "advice", "Scrum")
-                .withWrongOption("wrongOption1")
-                .withCorrectOption("correctOption1")
-                .please();
-        new QuestionBuilder()
-                .aQuestion("問題2", "advice", "Scrum")
+                .aQuestion("Q2", "advice", "Scrum")
                 .withWrongOption("wrongOption1")
                 .withCorrectOption("correctOption1")
                 .please();
     }
 
-    @Given("([^\"]*)に解答する")
-    public void 問題に解答する(String description) {
+    @Given("問題(\\d+)に解答する")
+    public void 問題に解答する(Integer num) {
 
         Question question = repo(Question.class)
-                .findFirstBy("description", description);
+                .findFirstBy("description", "Q" + num);
 
         User user = User.getUserByEmail("gulliver@email.com");
 
@@ -119,10 +115,9 @@ public class PracticeTestsStepDefs {
         record.save();
     }
 
-    @Then("問題{int}が出題される")
-    public void 問題_が出題される(Integer int1) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
+    @Then("問題(\\d+)が出題される")
+    public void 問題_が出題される(Integer num) {
+        driver.expectPageToContainText("Q" + num);
     }
 
     @When("問題{int}に正解する")
