@@ -156,9 +156,9 @@ public class OnlineTestTest {
     public void practiceShouldShowAllDueQuestionsWhenTheyAreDue() {
         User user = new User();
         List<Question> questions = mockQuestion(3, retro.getId());
+        questions.get(0).recordQuestionForUser(user, LocalDate.now().minusDays(4));
         questions.get(0).recordQuestionForUser(user, LocalDate.now().minusDays(3));
-        questions.get(0).recordQuestionForUser(user, LocalDate.now().minusDays(2));
-        questions.get(1).recordQuestionForUser(user, LocalDate.now().minusDays(1));
+        questions.get(1).recordQuestionForUser(user, LocalDate.now().minusDays(3));
         questions.get(2).recordQuestionForUser(user, LocalDate.now());
         OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user);
         assertEquals(2, onlineTest.getNumberOfQuestions());
@@ -174,10 +174,12 @@ public class OnlineTestTest {
     public void practiceShouldShowNotShowQuestionWhenCycleIsComplete() {
         User user = new User();
         Question question = mockQuestion(1, retro.getId()).get(0);
-        question.recordQuestionForUser(user, LocalDate.now().minusDays(38));
-        question.recordQuestionForUser(user, LocalDate.now().minusDays(37));
-        question.recordQuestionForUser(user, LocalDate.now().minusDays(35));
-        question.recordQuestionForUser(user, LocalDate.now().minusDays(31));
+        question.recordQuestionForUser(user, LocalDate.now().minusDays(91));
+        question.recordQuestionForUser(user, LocalDate.now().minusDays(90));
+        question.recordQuestionForUser(user, LocalDate.now().minusDays(87));
+        question.recordQuestionForUser(user, LocalDate.now().minusDays(81));
+        question.recordQuestionForUser(user, LocalDate.now().minusDays(61));
+        question.recordQuestionForUser(user, LocalDate.now().minusDays(1));
         OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user);
         assertEquals(0, onlineTest.getNumberOfQuestions());
     }

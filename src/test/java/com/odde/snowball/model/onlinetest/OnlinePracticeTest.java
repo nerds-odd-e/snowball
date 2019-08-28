@@ -152,9 +152,11 @@ public class OnlinePracticeTest {
         Question question = new Question();
         Record record = Record.getOrInitializeRecord(user, question);
         record.setLastUpdated(LocalDate.of(2019,8,1));
+
         record.setCycleState(record.getCycle().size());
         record.setNextShowDate();
         assertEquals(LocalDate.of(2019,10,30),record.getNextShowDate());
+
         record.setCycleState(record.getCycle().size() +1);
         record.setNextShowDate();
         assertEquals(LocalDate.of(2019,10,30),record.getNextShowDate());
