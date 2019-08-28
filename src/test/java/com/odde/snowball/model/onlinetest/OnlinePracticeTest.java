@@ -42,8 +42,6 @@ public class OnlinePracticeTest {
 
     @Test
     public void 自分が解答済みの問題が存在する場合_その問題が取得できること() {
-        final ObjectId objectId = new ObjectId();
-
         // setup
         User user1 = new User().save();
         User user2 = new User().save();
@@ -66,7 +64,6 @@ public class OnlinePracticeTest {
 
         // setup
         User user1 = new User().save();
-
         List<Question> mockQuestions = mockQuestion(2);
 
         Record record1 = new Record(user1, mockQuestions.get(0));
@@ -75,6 +72,7 @@ public class OnlinePracticeTest {
         Record record2 = new Record(user1, mockQuestions.get(1));
         record2.setNextShowDate(today.plusDays(1));
         record2.save();
+
         // execute
         List<Question> expectedQuestions =
                 OnlinePractice.findSpaceBasedRepetations(2, user1, today);
@@ -89,9 +87,7 @@ public class OnlinePracticeTest {
 
         // setup
         User user1 = new User().save();
-
         List<Question> mockQuestions = mockQuestion(3);
-
 
         Record record1 = new Record(user1, mockQuestions.get(0));
         record1.setNextShowDate(today);
@@ -99,11 +95,9 @@ public class OnlinePracticeTest {
         Record record2 = new Record(user1, mockQuestions.get(1));
         record2.setNextShowDate(today);
         record2.save();
-
         Record record3 = new Record(user1, mockQuestions.get(2));
         record3.setNextShowDate(today.minusDays(1));
         record3.save();
-
 
         // execute
         List<Question> expectedQuestions =
@@ -119,7 +113,6 @@ public class OnlinePracticeTest {
 
         // setup
         User user1 = new User().save();
-
         List<Question> mockQuestions = mockQuestion(4);
 
         Record record1 = new Record(user1, mockQuestions.get(0));
@@ -128,17 +121,14 @@ public class OnlinePracticeTest {
         Record record2 = new Record(user1, mockQuestions.get(1));
         record2.setNextShowDate(today);
         record2.save();
-
         Record record3 = new Record(user1, mockQuestions.get(2));
         record3.setNextShowDate(today.minusDays(1));
         record3.setLastUpdated(today);
         record3.save();
-
         Record record4 = new Record(user1, mockQuestions.get(3));
         record4.setNextShowDate(today.minusDays(1));
         record4.setLastUpdated(today.minusDays(1));
         record4.save();
-
 
         // execute
         List<Question> expectedQuestions =
@@ -174,6 +164,7 @@ public class OnlinePracticeTest {
             LocalDate.of(2019,8,31),
             LocalDate.of(2019,10,30)
         );
+
         for (int i = 1; i <= record.getCycle().size(); i++) {
             record.setCycleState(i);
             record.setNextShowDate();
