@@ -60,12 +60,6 @@ public class PracticeTestsStepDefs {
         driver.click("#next");
     }
 
-    @Given("問題が{int}個存在する")
-    public void 問題が_個存在する(Integer int1) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
-    }
-
     @Given("ユーザがログインした状態である")
     public void ユーザがログインした状態である() {
         // Write code here that turns the phrase above into concrete actions

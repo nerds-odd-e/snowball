@@ -76,6 +76,14 @@ public class QuestionStep {
         }
     }
 
+
+    @Given("問題が{int}個存在する")
+    public void create_questions(int numberOfQuestions) {
+        for (int i = 0; i < numberOfQuestions; i++) {
+            QuestionBuilder.buildDefaultQuestion("Category").please();
+        }
+    }
+
     @When("^OnlineTestを開始する$")
     public void start_onlinetest() {
         site.visit("onlinetest/launchQuiz");
