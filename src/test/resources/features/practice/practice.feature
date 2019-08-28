@@ -29,7 +29,7 @@ Feature:
     When User is taking a practiceTest
     Then User should see "You have finished your practice for today"
 
-  @develpoing
+  @developing
 #  @now
   Scenario: ユーザがプラクティスを開始できること
     Given 問題が15個存在する
