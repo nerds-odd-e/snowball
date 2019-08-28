@@ -159,16 +159,4 @@ public class PracticeTestsStepDefs {
 //        throw new cucumber.api.PendingException();
         site.visit("dashboard");
     }
-
-    @Then("問題{int}が出題される")
-    public void 問題_が出題される(Integer int1) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
-    }
-
-    @When("問題{int}に正解する")
-    public void 問題_に正解する(Integer int1) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
-    }
 }
