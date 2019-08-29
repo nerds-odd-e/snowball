@@ -152,23 +152,6 @@ public class OnlineTestTest {
         assertEquals(80, correctRate);
     }
 
-    @Test
-    public void practiceShouldShowAllDueQuestionsWhenTheyAreDue() {
-        User user = new User();
-        List<Question> questions = mockQuestion(3, retro.getId());
-        questions.get(0).recordQuestionForUser(user, LocalDate.now().minusDays(4));
-        questions.get(0).recordQuestionForUser(user, LocalDate.now().minusDays(3));
-        questions.get(1).recordQuestionForUser(user, LocalDate.now().minusDays(3));
-        questions.get(2).recordQuestionForUser(user, LocalDate.now());
-        OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user, 10);
-        assertEquals(2, onlineTest.getNumberOfQuestions());
-        Set<ObjectId> expected = new HashSet<ObjectId>();
-        expected.add(questions.get(0).getId());
-        expected.add(questions.get(1).getId());
-        Set<ObjectId> actual = onlineTest.getQuestions().stream().map(Entity::getId).collect(Collectors.toSet());
-        assertEquals(expected, actual);
-    }
-
     private List<Question> mockQuestion(int numberOfQuestion, ObjectId category) {
         return IntStream.range(0, numberOfQuestion).mapToObj(index -> new Question("desc" + index, "adv" + index, category, false, false).save()).collect(Collectors.toList());
     }

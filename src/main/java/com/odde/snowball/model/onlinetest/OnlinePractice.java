@@ -5,9 +5,9 @@ import com.odde.snowball.model.User;
 import org.bson.types.ObjectId;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import static com.mongodb.client.model.Filters.*;
@@ -19,6 +19,13 @@ public class OnlinePractice extends OnlineTest {
     }
 
     public static OnlineTest createOnlinePractice(User user, int max) {
+        // SpaceBasedRepetition
+        List<Question> repetitionQuestions = findSpaceBasedRepetitions(max, user, LocalDate.now());
+        if(repetitionQuestions.size() >= max) {
+            return new OnlinePractice(repetitionQuestions);
+        }
+
+        // SimpleReview
         List<Question> allQuestions = repo(Question.class).findAll();
         List<Question> dueQuestions = allQuestions.stream().filter(q -> q.isDueForUser(user)).collect(Collectors.toList());
         int maxQuestionCount = dueQuestions.size() > max ? max : dueQuestions.size();
@@ -33,11 +40,13 @@ public class OnlinePractice extends OnlineTest {
             }
             return new OnlinePractice(questList);
         }
+
         List<Question> questions = new QuestionCollection(dueQuestions).generateQuestionList(repo(Category.class).findAll(), maxQuestionCount);
+
         return new OnlinePractice(questions);
     }
 
-    public static List<Question> findSpaceBasedRepetations(int count, User user, LocalDate currentDate) {
+    public static List<Question> findSpaceBasedRepetitions(int count, User user, LocalDate currentDate) {
         // 1：昇順
         //-1：降順
         BasicDBObject sortCond = new BasicDBObject("nextShowDate", 1).append("lastUpdated", 1);

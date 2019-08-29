@@ -32,7 +32,7 @@ public class Question extends Entity<Question> {
     private ObjectId categoryId;
     private boolean isMultiQuestion;
     private boolean isApproved;
-    private boolean isPublic;
+    private boolean isPublic = true;
     private User createUser;
 
     @Valid

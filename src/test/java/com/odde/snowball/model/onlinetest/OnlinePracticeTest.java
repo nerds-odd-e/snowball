@@ -2,7 +2,6 @@ package com.odde.snowball.model.onlinetest;
 
 import com.odde.TestWithDB;
 import com.odde.snowball.model.User;
-import org.bson.types.ObjectId;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -24,7 +23,7 @@ public class OnlinePracticeTest {
         mockQuestion(1);
 
         List<Question> questions =
-                OnlinePractice.findSpaceBasedRepetations(1, user1, null);
+                OnlinePractice.findSpaceBasedRepetitions(1, user1, null);
         assertTrue(questions.isEmpty());
     }
     @Test
@@ -36,7 +35,7 @@ public class OnlinePracticeTest {
         new Record(user1, mockQuestions.get(0)).save();
 
         List<Question> expectedQuestions =
-                OnlinePractice.findSpaceBasedRepetations(1, user1, null);
+                OnlinePractice.findSpaceBasedRepetitions(1, user1, null);
         assertEquals(1, expectedQuestions.size());
     }
 
@@ -52,7 +51,7 @@ public class OnlinePracticeTest {
         new Record(user2, mockQuestions.get(1)).save();
         // execute
         List<Question> expectedQuestions =
-                OnlinePractice.findSpaceBasedRepetations(2, user1, null);
+                OnlinePractice.findSpaceBasedRepetitions(2, user1, null);
         assertEquals(mockQuestions.get(0).getId(), expectedQuestions.get(0).getId());
         assertEquals(1, expectedQuestions.size());
     }
@@ -75,7 +74,7 @@ public class OnlinePracticeTest {
 
         // execute
         List<Question> expectedQuestions =
-                OnlinePractice.findSpaceBasedRepetations(2, user1, today);
+                OnlinePractice.findSpaceBasedRepetitions(2, user1, today);
         assertEquals( mockQuestions.get(0).getId(), expectedQuestions.get(0).getId());
         assertEquals(1, expectedQuestions.size());
     }
@@ -101,7 +100,7 @@ public class OnlinePracticeTest {
 
         // execute
         List<Question> expectedQuestions =
-                OnlinePractice.findSpaceBasedRepetations(2, user1, today);
+                OnlinePractice.findSpaceBasedRepetitions(2, user1, today);
         assertEquals(mockQuestions.get(2).getId(), expectedQuestions.get(0).getId());
         assertEquals(2, expectedQuestions.size());
     }
@@ -132,7 +131,7 @@ public class OnlinePracticeTest {
 
         // execute
         List<Question> expectedQuestions =
-                OnlinePractice.findSpaceBasedRepetations(3, user1, today);
+                OnlinePractice.findSpaceBasedRepetitions(3, user1, today);
         assertEquals(mockQuestions.get(3).getId(), expectedQuestions.get(0).getId());
         assertEquals(3, expectedQuestions.size());
     }
@@ -230,15 +229,11 @@ public class OnlinePracticeTest {
 
 
     @Test
-    public void 問題が11問存在する時_10問のみ返されること() {
+    public void 問題が3問存在する時_2問のみ返されること() {
         // setup
         User user = new User().save();
 
-        Category scrum = Category.create("Scrum");
-        final ObjectId objectId = scrum.getId();
-        for (int i = 0; i < 3; i++) {
-            new Question("desc", "adv", objectId, false, false).save();
-        }
+        mockQuestion(3);
         // exercise
         OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user, 2);
         // verify
@@ -247,7 +242,7 @@ public class OnlinePracticeTest {
     }
 
     private List<Question> mockQuestion(int numberOfQuestion) {
-        ObjectId category = new ObjectId();
-        return IntStream.range(0, numberOfQuestion).mapToObj(index -> new Question("desc" + index, "adv" + index, category, false, false).save()).collect(Collectors.toList());
+        Category category = new Category().save();
+        return IntStream.range(0, numberOfQuestion).mapToObj(index -> new Question("desc" + index, "adv" + index, category.getId(), false, false).save()).collect(Collectors.toList());
     }
 }
