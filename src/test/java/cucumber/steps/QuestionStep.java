@@ -352,16 +352,6 @@ public class QuestionStep {
         driver.click("#login");
     }
 
-    @Then("問題が\"([^\"]*)\"$")
-    public void 問題が_(String isDisplay) {
-        //ダッシュボードページを開く
-        driver.visit(dashboard_url);
-
-        //description文字列がページにisDisplay
-        boolean isExists = !driver.findElementsWithoutWait(".description").isEmpty();
-        assertEquals(isExists, isDisplay.equals("表示される"));
-    }
-
     @Then("ダッシュボードに問題が{string}")
     public void ダッシュボードに問題が(String isDisplay) {
         //ダッシュボードページを開く
@@ -392,11 +382,11 @@ public class QuestionStep {
         driver.visit(practice_url);
 
         //description文字列がページにisDisplay
-        String text = driver.findElementsWithoutWait("#description").get(0).getText();
         if (isDisplay.equals("表示される")) {
+            String text = driver.findElementsWithoutWait("#description").get(0).getText();
             assertEquals("What is scrum?", text);
         } else {
-            assertEquals("", text);
+            driver.expectURLToContain("/practice/completed_practice.jsp");
         }
     }
 }

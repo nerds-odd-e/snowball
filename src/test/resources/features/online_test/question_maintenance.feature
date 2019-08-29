@@ -54,7 +54,7 @@ Feature:
     And option4に"Scrum is Sumo"を入力する
     And option5に"Scrum is BasketBall"を入力する
     And option6に"Scrum is Swimming"を入力する
-    And isPublicをチェックする
+    And is-publicをチェックする
     And "option1"を回答として選択済み
     And advice に"Rugby is Scrum!!" を入力する
     When Addボタンを押す
@@ -75,6 +75,7 @@ Feature:
     And Descriptionに"Terryさんはどこに住んでいますか？" を入力する
     And option1に"シンガポール"を入力する
     And option2に"カナダ"を入力する
+    And is-publicをチェックする
     And "option1"を回答として選択済み
     And advice に"Rugby is Scrum!!" を入力する
     When Addボタンを押す
@@ -103,8 +104,6 @@ Feature:
     When Adminが承認する
     Then 問題が承認済みになる
 
-  @developing
-  #@now
   Scenario Outline: 公開範囲に従って追加した質問が表示される
     Given "Terry"ユーザが登録されている
     And "admin2"ユーザが登録されている
