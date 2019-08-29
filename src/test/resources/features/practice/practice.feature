@@ -49,7 +49,7 @@ Feature:
 
   @developing
   @simple-review
-#  @now
+  @now
   Scenario: 一部未解答の問題が存在する時は未解答問題だけが出題されること
 #    Given 問題1と問題2が存在する
     Given There are questions with dummy options:
@@ -59,7 +59,7 @@ Feature:
     And 問題1の解答日時が2019年8月27日である
     And 問題2は解答していない
     When プラクティスを開始
-    Then 問題"2"が出題される
+    Then 問題2が出題される
 #    Then "Q2"という問題が"出題される"
     When 問題2に正解する
     Then "Good job!"のメッセージが表示される

@@ -8,10 +8,12 @@ import org.junit.runner.RunWith;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @RunWith(TestWithDB.class)
@@ -222,5 +224,20 @@ public class OnlinePracticeTest {
     private List<Question> mockQuestion(int numberOfQuestion) {
         Category category = new Category().save();
         return IntStream.range(0, numberOfQuestion).mapToObj(index -> new Question("desc" + index, "adv" + index, category.getId(), false, false).save()).collect(Collectors.toList());
+    }
+
+    @Test
+    public void _2問中1問が未回答の場合に未回答の問題だけが出題される() {
+
+        User user = new User().save();
+        List<Question> allQuestions = mockQuestion(2);
+
+        Question question1 = allQuestions.get(0);
+        question1.recordQuestionForUser(user, LocalDate.now().minusDays(3L));
+
+        OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user, 2);
+        List<Question> questions = onlineTest.getQuestions();
+        assertEquals(1, questions.size());
+        assertNotEquals(question1.getId(), questions.get(0).getId());
     }
 }
