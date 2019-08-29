@@ -30,16 +30,11 @@ public class DashboardControllerTest {
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
         request.getSession().setAttribute("currentUser", currentUser);
-        Question publicQuestion = new Question("description", "advice", cat1.getId(), false, true);
-        publicQuestion.setCreateUser(currentUser);
-        publicQuestion.setPublic(true);
+        Question publicQuestion = new Question("description", "advice", cat1.getId(), false, true, true, currentUser);
         publicQuestion.save();
-        Question privateQuestion = new Question("description", "advice", cat1.getId(), false, true);
-        privateQuestion.setCreateUser(currentUser);
-        privateQuestion.setPublic(false);
+        Question privateQuestion = new Question("description", "advice", cat1.getId(), false, true, false, currentUser);
         privateQuestion.save();
         Question questionByAnonymousUser = new Question("description", "advice", cat1.getId(), false, true);
-        privateQuestion.setPublic(true);
         questionByAnonymousUser.save();
     }
 
@@ -52,7 +47,7 @@ public class DashboardControllerTest {
     @Test
     public void showQuestion() throws Exception {
         controller.doGet(request, response);
-        Question question = ((List<Question>)request.getAttribute("questions")).get(0);
+        Question question = ((List<Question>) request.getAttribute("questions")).get(0);
         assertNotNull(question);
         assertEquals("description", question.getDescription());
     }
@@ -61,7 +56,7 @@ public class DashboardControllerTest {
     public void showOtherUsersPublicQuestion() throws Exception {
         User otherUser = loginOtherUser();
         controller.doGet(request, response);
-        Question question = ((List<Question>)request.getAttribute("questions")).get(0);
+        Question question = ((List<Question>) request.getAttribute("questions")).get(0);
         assertNotNull(question);
         assertNotEquals(question.getCreateUser(), otherUser);
     }

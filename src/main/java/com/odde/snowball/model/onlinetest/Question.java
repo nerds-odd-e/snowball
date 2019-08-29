@@ -38,12 +38,18 @@ public class Question extends Entity<Question> {
     @Valid
     private List<QuestionOption> options = new ArrayList<>();
 
-    public Question(String description, String advice, ObjectId category, boolean multiple, boolean b) {
+    public Question(String description, String advice, ObjectId category, boolean multiple, boolean isApproved) {
         this.description = description;
         this.advice = advice;
         this.categoryId = category;
         this.isMultiQuestion = multiple;
-        this.isApproved = b;
+        this.isApproved = isApproved;
+    }
+
+    public Question(String description, String advice, ObjectId category, boolean multiple, boolean isApproved, boolean isPublic, User createUser) {
+        this(description, advice, category, multiple, isApproved);
+        this.isPublic = isPublic;
+        this.createUser = createUser;
     }
 
     public void recordQuestionForUser(User user, LocalDate date) {

@@ -72,10 +72,15 @@ public class AddQuestionController extends AppController {
     private void saveQuestion(HttpServletRequest req) {
         String type = req.getParameter("type");
         boolean isPublic = req.getParameter("is-public") != null && req.getParameter("is-public").equals("1");
-
-        Question question = new Question(req.getParameter("description"), req.getParameter("advice"), new ObjectId(req.getParameter("category")), type.equals("multiple"), false);
-        question.setPublic(isPublic);
-        question.setCreateUser((User)req.getSession().getAttribute("currentUser"));
+        User user = (User) req.getSession().getAttribute("currentUser");
+        Question question = new Question(req.getParameter("description"),
+                req.getParameter("advice"),
+                new ObjectId(req.getParameter("category")),
+                type.equals("multiple"),
+                false,
+                isPublic,
+                user
+                );
 
         final String[] checks = req.getParameterValues("check");
         List<String> checksList = Arrays.asList(checks);
