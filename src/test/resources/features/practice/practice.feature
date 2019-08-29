@@ -35,17 +35,21 @@ Feature:
     Then User should see "Good job!"
 
   @simple-review
-  Scenario: 解答した順にソートされること
-    Given 問題1と問題2が存在する
-    And ユーザがログインした状態である
-    And 問題1に解答する
-    And 問題2に解答する
+  Scenario Outline: 解答した順にソートされること
+    Given <FirstQuestion>と<SecondQuestion>が存在する
+    And "mary"が<FirstQuestion>に解答する
+    And "mary"が<SecondQuestion>に解答する
     When プラクティスを開始
-    Then 問題1が出題される
-    When 問題1に正解する
-    Then 問題2が出題される
-    When 問題2に正解する
+    Then <FirstQuestion>が出題される
+    When <FirstQuestion>に正解する
+    Then <SecondQuestion>が出題される
+    When <SecondQuestion>に正解する
     Then "Good job!"のメッセージが表示される
+    Examples:
+      | FirstQuestion | SecondQuestion |
+      | 問題1           | 問題2            |
+      | 問題2           | 問題1            |
+
 
   @developing
   @simple-review

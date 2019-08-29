@@ -91,8 +91,8 @@ public class PracticeTestsStepDefs {
         driver.expectPageToContainText(expectedString);
     }
 
-    @Given("問題1と問題2が存在する")
-    public void 問題1と問題2が存在する() {
+    @Given("問題{int}と問題{int}が存在する")
+    public void 問題1と問題2が存在する(Integer _first, Integer _second) {
         // 問題1はbackgroundで登録済み
         new QuestionBuilder()
                 .aQuestion("Q2", "advice", "Scrum")
@@ -101,13 +101,12 @@ public class PracticeTestsStepDefs {
                 .please();
     }
 
-    @Given("問題(\\d+)に解答する")
-    public void 問題に解答する(Integer num) {
-
+    @Given("{string}が問題{int}に解答する")
+    public void が問題_に解答する(String user_name, Integer num) {
         Question question = repo(Question.class)
                 .findFirstBy("description", "Q" + num);
 
-        User user = User.getUserByEmail("gulliver@email.com");
+        User user = User.getUserByEmail(user_name + "@email.com");
 
         Record record = Record.getOrInitializeRecord(user, question);
         record.setLastUpdated(LocalDate.now());
