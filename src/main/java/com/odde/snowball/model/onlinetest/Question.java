@@ -88,13 +88,17 @@ public class Question extends Entity<Question> {
     }
 
     public Question withOption(String optionDescription, boolean isCorrect) {
-        addOption(optionDescription, isCorrect);
+        addOption(new QuestionOption(optionDescription, isCorrect));
         return this;
     }
 
-    public QuestionOption addOption(String optionDescription, boolean isCorrect) {
-        QuestionOption questionOption = new QuestionOption(optionDescription, isCorrect);
-        options.add(questionOption);
-        return questionOption;
+    public QuestionOption addOption(QuestionOption option) {
+        options.add(option);
+        return option;
+    }
+
+    public Question withOption(QuestionOption option) {
+        addOption(option);
+        return this;
     }
 }

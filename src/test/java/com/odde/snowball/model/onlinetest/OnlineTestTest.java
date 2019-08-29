@@ -2,7 +2,6 @@ package com.odde.snowball.model.onlinetest;
 
 import com.odde.TestWithDB;
 import com.odde.snowball.model.User;
-import com.odde.snowball.model.base.Entity;
 import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +16,9 @@ import static org.junit.Assert.*;
 
 @RunWith(TestWithDB.class)
 public class OnlineTestTest {
+    private static final QuestionOption correctOption1 = new QuestionOption("desc1", true);
+    private static final QuestionOption correctOption2 = new QuestionOption("desc2", true);
+    private static final QuestionOption wrongOption = new QuestionOption("desc1", false);
     private Category scrum = Category.create("Scrum");
     private Category retro = Category.create("Retro");
 
@@ -41,33 +43,18 @@ public class OnlineTestTest {
     }
 
     @Test
-    public void shouldReturn2CorrectAnswer() {
-        final String[] answeredOption = new String[2];
-        Question question = new Question("desc1", "adv1", scrum.getId(), false, false);
-        answeredOption[0] = question.addOption("desc1", true).stringId();
-        answeredOption[1] = question.addOption("desc2", true).stringId();
-        question.save();
-
+    public void answerCorrectly() {
+        createQuestionWith(correctOption1, correctOption2);
         OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(1);
-
-        Answer answer = onlineTest.answerCurrentQuestion(Arrays.asList(answeredOption), user, LocalDate.now());
-        boolean result = answer.isCorrect();
-        assertTrue(result);
+        Answer answer = onlineTest.answerCurrentQuestion(stringIdsOf(correctOption1, correctOption2), user, LocalDate.now());
+        assertTrue(answer.isCorrect());
     }
-
     @Test
-    public void shouldReturnOneIncorrectAndOneCorrectAnswer() {
-        final String[] answeredOption = new String[2];
-        Question question = new Question("desc1", "adv1", scrum.getId(), false, false);
-        answeredOption[0] = question.addOption("desc1", false).stringId();
-        answeredOption[1] = question.addOption("desc2", true).stringId();
-        question.addOption("desc3", true);
-        question.save();
-
+    public void answerIncorrectly() {
+        createQuestionWith(wrongOption, correctOption2, correctOption1);
         OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(1);
-        Answer answer = onlineTest.answerCurrentQuestion(Arrays.asList(answeredOption), user, LocalDate.now());
-        boolean result = answer.isCorrect();
-        assertFalse(result);
+        Answer answer = onlineTest.answerCurrentQuestion(stringIdsOf(wrongOption, correctOption2), user, LocalDate.now());
+        assertFalse(answer.isCorrect());
     }
 
     @Test
@@ -82,8 +69,8 @@ public class OnlineTestTest {
     @Test
     public void calculateCorrectRate() {
         Question q1 = new Question("d1", "a1", scrum.getId(), false, false);
-        QuestionOption it = q1.addOption("d1", true);
-        q1.addOption("d2", false);
+        QuestionOption it = q1.addOption(new QuestionOption("d1", true));
+        q1.addOption(new QuestionOption("d2", false));
         q1.save();
 
         OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(1);
@@ -98,8 +85,8 @@ public class OnlineTestTest {
     @Test
     public void calculateCorrectRate2() {
         Question q1 = new Question("d1", "a1", scrum.getId(), false, false);
-        q1.addOption("d1", true);
-        QuestionOption wrongOption = q1.addOption("d2", false);
+        q1.addOption(new QuestionOption("d1", true));
+        QuestionOption wrongOption = q1.addOption(new QuestionOption("d2", false));
         q1.save();
 
         OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(1);
@@ -187,5 +174,17 @@ public class OnlineTestTest {
         LocalDate expected = answerDate.plusDays(Record.CYCLE.get(0));
 
         assertEquals(expected, actual);
+    }
+
+    private List<String> stringIdsOf(QuestionOption... options) {
+        return Arrays.stream(options).map(QuestionOption::stringId).collect(Collectors.toList());
+    }
+
+    private void createQuestionWith(QuestionOption... options) {
+        Question question = new Question("desc1", "adv1", scrum.getId(), false, false);
+        for (QuestionOption option : options) {
+            question.withOption(option);
+        }
+        question.save();
     }
 }

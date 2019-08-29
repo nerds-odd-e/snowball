@@ -31,9 +31,9 @@ public class QuestionTest {
     @Test
     public void getCorrectOption_正解のIDの一覧を返す() {
         Question question = new Question("desc1", "adv1", categoryId, false, false);
-        QuestionOption correct1 = question.addOption("desc", true);
-        QuestionOption correct2 = question.addOption("desc", true);
-        question.addOption("desc", false);
+        QuestionOption correct1 = question.addOption(new QuestionOption("desc", true));
+        QuestionOption correct2 = question.addOption(new QuestionOption("desc", true));
+        question.addOption(new QuestionOption("desc", false));
         question.save();
 
         final List<String> actual = question.correctOptions();
@@ -55,7 +55,7 @@ public class QuestionTest {
     @Test
     public void shouldFetchOptionsForQuestion() {
         Question question = new Question("desc1", null, categoryId, false, false).save();
-        question.addOption("desc", false);
+        question.addOption(new QuestionOption("desc", false));
         assertThat(question.getOptions(), is(not(empty())));
     }
 
