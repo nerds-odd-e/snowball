@@ -20,13 +20,13 @@ public class LaunchPracticeController extends AppController {
         User user = (User) session.getAttribute("currentUser");
         session.setAttribute("date", LocalDate.now());
 
-        int questionLimit = 10;
-        String limitParameter = req.getParameter("question_count");
-        if (NumberUtils.isNumber(limitParameter)) {
-            questionLimit = Integer.parseInt(limitParameter);
+        int questionCount = 10;
+        String countParameter = req.getParameter("question_count");
+        if (NumberUtils.isNumber(countParameter)) {
+            questionCount = Integer.parseInt(countParameter);
         }
 
-        OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user, questionLimit);
+        OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user, questionCount);
         if (onlineTest.getCurrentQuestion() == null) {
             resp.sendRedirect("/practice/completed_practice.jsp");
             return;

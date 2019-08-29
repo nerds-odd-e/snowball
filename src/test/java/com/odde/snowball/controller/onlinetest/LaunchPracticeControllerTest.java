@@ -35,7 +35,6 @@ public class LaunchPracticeControllerTest {
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
         request.getSession().setAttribute("currentUser", user1);
-        request.setParameter("question_count", "1");
     }
 
 
@@ -93,7 +92,7 @@ public class LaunchPracticeControllerTest {
     }
 
     @Test
-    public void questionLimit10() throws IOException {
+    public void questionCount10() throws IOException {
         mockQuestion(11);
         controller.doGet(request, response);
         OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
@@ -101,9 +100,9 @@ public class LaunchPracticeControllerTest {
     }
 
     @Test
-    public void questionLimit_指定() throws IOException {
+    public void questionCount_指定() throws IOException {
         mockQuestion(11);
-        request.addParameter("questionLimit", "5");
+        request.addParameter("question_count", "5");
         controller.doGet(request, response);
 
         OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
@@ -111,9 +110,9 @@ public class LaunchPracticeControllerTest {
     }
 
     @Test
-    public void questionLimit_str() throws IOException {
+    public void questionCount_str() throws IOException {
         mockQuestion(11);
-        request.addParameter("questionLimit", "a");
+        request.addParameter("question_count", "a");
         controller.doGet(request, response);
 
         OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
@@ -121,9 +120,9 @@ public class LaunchPracticeControllerTest {
     }
 
     @Test
-    public void questionLimit_0() throws IOException {
+    public void questionCount_0() throws IOException {
         mockQuestion(11);
-        request.addParameter("questionLimit", "0");
+        request.addParameter("question_count", "0");
         controller.doGet(request, response);
 
         OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
