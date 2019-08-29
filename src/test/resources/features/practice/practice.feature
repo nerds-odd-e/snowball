@@ -29,7 +29,6 @@ Feature:
     Then User should see "Good job!"
 
   @simple-review
-  @now
   Scenario: ユーザがプラクティスを開始できること
     Given 問題が15個存在する
     When User is taking a practiceTest
