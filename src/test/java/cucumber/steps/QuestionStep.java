@@ -32,6 +32,8 @@ public class QuestionStep {
     private int currentTestTotalQuestions;
     private final String add_question_url = site.baseUrl() + "onlinetest/add_question.jsp";
     private final String dashboard_url = site.baseUrl() + "dashboard";
+    private final String onlinetest_url = site.baseUrl() + "onlinetest/launchQuiz";
+    private final String practice_url = site.baseUrl() + "launchPractice";
 
     private final String login_url = site.baseUrl() + "login.jsp";
 
@@ -358,5 +360,43 @@ public class QuestionStep {
         //description文字列がページにisDisplay
         boolean isExists = !driver.findElementsWithoutWait(".description").isEmpty();
         assertEquals(isExists, isDisplay.equals("表示される"));
+    }
+
+    @Then("ダッシュボードに問題が{string}")
+    public void ダッシュボードに問題が(String isDisplay) {
+        //ダッシュボードページを開く
+        driver.visit(dashboard_url);
+
+        //description文字列がページにisDisplay
+        boolean isExists = !driver.findElementsWithoutWait(".description").isEmpty();
+        assertEquals(isExists, isDisplay.equals("表示される"));
+    }
+
+    @Then("オンラインテストに問題が{string}")
+    public void オンラインテストに問題が(String isDisplay) {
+        //ダッシュボードページを開く
+        driver.visit(onlinetest_url);
+
+        //description文字列がページにisDisplay
+        String text = driver.findElementsWithoutWait("#description").get(0).getText();
+        if (isDisplay.equals("表示される")) {
+            assertEquals("What is scrum?", text);
+        } else {
+            assertEquals("", text);
+        }
+    }
+
+    @Then("プラクティスに問題が{string}")
+    public void プラクティスに問題が(String isDisplay) {
+        //ダッシュボードページを開く
+        driver.visit(practice_url);
+
+        //description文字列がページにisDisplay
+        String text = driver.findElementsWithoutWait("#description").get(0).getText();
+        if (isDisplay.equals("表示される")) {
+            assertEquals("What is scrum?", text);
+        } else {
+            assertEquals("", text);
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.odde.snowball.controller.onlinetest;
 
 import com.odde.snowball.controller.AppController;
+import com.odde.snowball.model.User;
 import com.odde.snowball.model.onlinetest.OnlineQuiz;
 import com.odde.snowball.model.onlinetest.OnlineTest;
 
@@ -15,7 +16,7 @@ public class LaunchQuizController extends AppController {
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession(true);
-        OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(getQuestionCount(req));
+        OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(getQuestionCount(req), (User) req.getSession().getAttribute("currentUser"));
         if(onlineTest.getCurrentQuestion() == null){
             resp.sendRedirect("add_question.jsp");
             return;

@@ -102,12 +102,16 @@ Feature:
     When Adminが承認する
     Then 問題が承認済みになる
 
-  Scenario Outline: 質問の追加が成功する
+  @developing
+  //@now
+  Scenario Outline: 公開範囲に従って追加した質問が表示される
     Given "Terry"ユーザが登録されている
     And "admin2"ユーザが登録されている
     And "<is-public>"な質問が"<creator>"によって登録されている
     When "<user>"でログインする
-    Then 問題が"<is-display>"
+    Then ダッシュボードに問題が"<is-display>"
+    Then オンラインテストに問題が"<is-display>"
+    Then プラクティスに問題が"<is-display>"
 
     Examples:
       | is-public | creator | user   | is-display |
