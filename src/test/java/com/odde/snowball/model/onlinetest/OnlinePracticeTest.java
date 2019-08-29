@@ -138,14 +138,22 @@ public class OnlinePracticeTest {
     }
 
 
-    //@Test
+    @Test
     public void 問題に最終回まで解答した場合_問題が取得されないこと() {
+        final LocalDate yesterday = LocalDate.of(2019,8,1);
+        final LocalDate today = yesterday.plusDays(1);
         // setup
-        User user1 = new User().save();
-        mockQuestion(1);
+        User user = new User().save();
+        List<Question> mockQuestions = mockQuestion(1);
+
+        Record record = Record.getOrInitializeRecord(user, mockQuestions.get(0));
+        record.setLastUpdated(yesterday);
+        record.setCycleState(Record.CYCLE.size());
+        record.setNextShowDate(today);
+        record.save();
 
         List<Question> questions =
-                OnlinePractice.findSpaceBasedRepetations(1, user1, null);
+                OnlinePractice.findSpaceBasedRepetations(1, user, today);
         assertTrue(questions.isEmpty());
     }
 

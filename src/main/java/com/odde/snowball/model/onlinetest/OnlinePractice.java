@@ -44,7 +44,8 @@ public class OnlinePractice extends OnlineTest {
 
         List<Record> records = repo(Record.class).find(and(
                 eq("userId", user.getId()),
-                lte("nextShowDate", currentDate)),
+                lte("nextShowDate", currentDate),
+                lt("cycleState", Record.CYCLE.size())),
                 sortCond, count);
 
         if (records.isEmpty())
