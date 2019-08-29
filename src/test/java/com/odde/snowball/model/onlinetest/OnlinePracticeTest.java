@@ -152,7 +152,7 @@ public class OnlinePracticeTest {
         record.save();
 
         List<Question> questions =
-                OnlinePractice.findSpaceBasedRepetations(1, user, today);
+                OnlinePractice.findSpaceBasedRepetitions(1, user, today);
         assertTrue(questions.isEmpty());
     }
 
