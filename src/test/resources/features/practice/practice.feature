@@ -53,7 +53,6 @@ Feature:
 
   @developing
   @simple-review
-  @now
   Scenario: 一部未解答の問題が存在する時は未解答問題だけが出題されること
 #    Given 問題1と問題2が存在する
     Given There are questions with dummy options:
@@ -72,15 +71,14 @@ Feature:
   @developing
   Scenario Outline: 解答した問題は解答日から起算して仕様に従った間隔で再度出題されること
     Given ユーザがログインした状態である
-    And 問題1が存在する
     And "<last-answered-date>"に問題1に対して"<answered-count>"回目の解答をした
     When "<today>"にテストを開始
     Then 問題1が"<is-display>"
     Examples:
       | last-answered-date | answered-count | today     | is-display |
-      | 2019/8/26          | 1              | 2019/8/27 | 表示される      |
-      | 2019/8/26          | 1              | 2019/8/28 | 表示される      |
-      | 2019/8/26          | 2              | 2019/8/28 | 表示されない     |
+      | 2019-08-26          | 1              | 2019-08-27 | 表示される      |
+      | 2019-08-26          | 1              | 2019-08-28 | 表示される      |
+      | 2019-08-26          | 2              | 2019-08-28 | 表示されない     |
 
   @developing
   Scenario: 延期された問題に解答した場合直近の解答日から起算して再出題される

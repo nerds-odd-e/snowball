@@ -156,4 +156,26 @@ public class PracticeTestsStepDefs {
     @Given("問題{int}は解答していない")
     public void 問題_は解答していない(Integer int1) {
     }
+
+    @Given("{string}に問題1に対して{string}回目の解答をした")
+    public void に問題1に対して_回目の解答をした(String lastAnsweredDate, String answeredCount) {
+        Question question = repo(Question.class).findFirstBy("description", "Q1");
+        User user = User.getUserByEmail("mary@email.com");
+
+        for (int i = 0; i < Integer.valueOf(answeredCount); i++) {
+            question.recordQuestionForUser(user, LocalDate.parse(lastAnsweredDate));
+        }
+    }
+
+    @When("{string}にテストを開始")
+    public void にテストを開始(String string) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new cucumber.api.PendingException();
+    }
+
+    @Then("問題{int}が{string}")
+    public void 問題_が(Integer int1, String string) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new cucumber.api.PendingException();
+    }
 }
