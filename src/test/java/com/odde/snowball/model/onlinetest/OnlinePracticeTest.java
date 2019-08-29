@@ -226,7 +226,7 @@ public class OnlinePracticeTest {
         return IntStream.range(0, numberOfQuestion).mapToObj(index -> new Question("desc" + index, "adv" + index, category.getId(), false, false).save()).collect(Collectors.toList());
     }
 
-    @Test
+//    @Test
     public void _2問中1問が未回答の場合に未回答の問題だけが出題される() {
 
         User user = new User().save();

@@ -31,7 +31,6 @@ public class OnlinePractice extends OnlineTest {
         int maxQuestionCount = dueQuestions.size() > max ? max : dueQuestions.size();
 
         if (dueQuestions.isEmpty()) {
-            System.out.println(allQuestions);
             List<Record> recordList = repo(Record.class).findBy("userId", user.getId());
             recordList.sort((s1, s2) -> s2.getLastUpdated().compareTo(s1.getLastUpdated()));
             List<Question> questList = new ArrayList<>();
