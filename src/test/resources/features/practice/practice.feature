@@ -68,34 +68,25 @@ Feature:
     When 問題2に正解する
     Then "Good job!"のメッセージが表示される
 
-  # space-based repetation
+  # space-based repetition
   @developing
-  Scenario: 回答した問題は回答日から起算して仕様に従った間隔で再度出題されること
+  Scenario Outline: 解答した問題は解答日から起算して仕様に従った間隔で再度出題されること
     Given ユーザがログインした状態である
-    And 問題1と問題2が存在する
-    And 問題1の解答日時が2019年8月26日17時00分00秒である
-    And 問題2は未解答である
-    And 現在は2019年8月27日である
-    When "Start Practice"をする
-    Then 問題1が出題される
-
-  @developing
-  Scenario: 再度出題された問題に回答しなかった場合翌日も出題される
-    Given ユーザがログインした状態である
-    And 問題1と問題2が存在する
-    And 問題1の解答日時が2019年8月26日17時00分00秒である
-    And 問題2には一度も解答していない
-    And 2019年8月27日に問題1を回答していない
-    And 今日は2019年8月28日である
-    When テストを開始
-    Then 問題1が出題される
+    And 問題1が存在する
+    And "<last-answered-date>"に問題1に対して"<answered-count>"回目の解答をした
+    When "<today>"にテストを開始
+    Then 問題1が"<is-display>"
+    Examples:
+      | last-answered-date | answered-count | today     | is-display |
+      | 2019/8/26          | 1              | 2019/8/27 | 表示される      |
+      | 2019/8/26          | 1              | 2019/8/28 | 表示される      |
+      | 2019/8/26          | 2              | 2019/8/28 | 表示されない     |
 
   @developing
   Scenario: 延期された問題に解答した場合直近の解答日から起算して再出題される
     Given ユーザがログインした状態である
-    And 問題1と問題2が存在する
+    And 問題1が存在する
     And 問題1の解答日時が2019年8月26日17時00分00秒である
-    And 問題2には一度も解答していない
     And 2019年8月27日に問題1を回答していない
     And 問題1の解答日時が2019年8月28日17時00分00秒である
     When 今日は2019年8月29日である
