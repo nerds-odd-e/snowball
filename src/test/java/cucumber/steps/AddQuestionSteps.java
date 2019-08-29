@@ -150,4 +150,36 @@ public class AddQuestionSteps {
     public void カテゴリーとして_を選択する(String category) {
         driver.selectDropdownByText("category", category);
     }
+
+
+    private final String login_url = site.baseUrl() + "login.jsp";
+    private void visitLoginPage() {
+        driver.visit(login_url);
+        driver.expectPageToContainText("Login Massive Mailer");
+    }
+
+    @Given("{string}な質問が{string}によって登録されている")
+    public void な質問が_によって登録されている(String isPublic, String user) {
+
+        visitLoginPage();
+        driver.setTextField("email", user.toLowerCase() + "@hogehoge.com");
+        driver.setTextField("password", "11111111");
+        driver.click("#login");
+
+        site.visit("onlinetest/add_question.jsp");
+        driver.expectTitleToBe("Add Question");
+
+        driver.setTextField("description", "What is scrum?");
+
+        driver.setTextField("option1", "Scrum is Rugby");
+        driver.setTextField("option2", "Scrum is Baseball");
+        driver.click("#option1");
+
+        if("public".equals(isPublic)) {
+            driver.clickCheckBoxById("is-public");
+        }
+
+        driver.click("#add_button");
+
+    }
 }

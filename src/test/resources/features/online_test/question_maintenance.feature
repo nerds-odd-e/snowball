@@ -102,39 +102,17 @@ Feature:
     When Adminが承認する
     Then 問題が承認済みになる
 
-  Scenario Outline: publicな質問の追加が成功する
+
+  Scenario Outline: 質問の追加が成功する
     Given "Terry"ユーザが登録されている
     And "admin2"ユーザが登録されている
-    And "Terry"がログインしている
-    And Add Questionを開いている
-    And Descriptionに"What is scrum?" を入力する
-    And option1に"Scrum is Rugby"を入力する
-    And option2に"Scrum is Baseball"を入力する
-    And "option1"を回答として選択済み
-    And is-publicをチェックする
-    When Addボタンを押す
-    And "<user>"でログインする
+    And "<is-public>"な質問が"<creator>"によって登録されている
+    When "<user>"でログインする
     Then 問題が"<is-display>"
 
     Examples:
-      | user   | is-display |
-      | Terry  | 表示される      |
-      | admin2 | 表示される      |
-
-  Scenario Outline: privateな質問の追加が成功する
-    Given "Terry"ユーザが登録されている
-    And "admin2"ユーザが登録されている
-    And "Terry"がログインしている
-    And Add Questionを開いている
-    And Descriptionに"What is scrum?" を入力する
-    And option1に"Scrum is Rugby"を入力する
-    And option2に"Scrum is Baseball"を入力する
-    And "option1"を回答として選択済み
-    When Addボタンを押す
-    And "<user>"でログインする
-    Then 問題が"<is-display>"
-
-    Examples:
-      | user   | is-display |
-      | Terry  | 表示される      |
-      | admin2 | 表示されない     |
+      | is-public | creator | user   | is-display |
+      | public    | Terry   | Terry  | 表示される      |
+      | public    | Terry   | admin2 | 表示される      |
+      | private   | Terry   | Terry  | 表示される      |
+      | private   | Terry   | admin2 | 表示されない     |
