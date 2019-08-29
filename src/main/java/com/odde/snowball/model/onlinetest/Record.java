@@ -53,6 +53,18 @@ public class Record extends Entity<Record> {
         save();
     }
 
+    public boolean isDue() {
+        if (getCycleState() == 0) {
+            return true;
+        }
+        if (isOverCycle()) {
+            return false;
+        }
+        return !getLastUpdated()
+                .plusDays(CYCLE.get(getCycleState() - 1))
+                .isAfter(LocalDate.now());
+    }
+
     private boolean isOverCycle() {
         return getCycleState() > CYCLE.size();
     }

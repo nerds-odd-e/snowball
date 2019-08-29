@@ -29,6 +29,7 @@ public class OnlinePractice extends OnlineTest {
         List<Question> allQuestions = repo(Question.class).findAll();
         List<Question> dueQuestions = allQuestions.stream()
                 .filter(q -> q.isVisibleForUser(user))
+                .filter(q -> q.isDueForUser(user))
                 .collect(Collectors.toList());
         int maxQuestionCount = dueQuestions.size() > max ? max : dueQuestions.size();
 
