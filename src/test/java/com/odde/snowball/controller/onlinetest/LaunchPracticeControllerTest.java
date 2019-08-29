@@ -81,7 +81,6 @@ public class LaunchPracticeControllerTest {
         controller.doGet(request, response);
         OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
         assertThat(onlineTest.getNumberOfQuestions()).isEqualTo(1);
-        assertEquals("/practice/completed_practice.jsp", response.getRedirectedUrl());
     }
 
     @Test
