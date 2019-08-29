@@ -54,6 +54,7 @@ Feature:
     And option4に"Scrum is Sumo"を入力する
     And option5に"Scrum is BasketBall"を入力する
     And option6に"Scrum is Swimming"を入力する
+    And isPublicをチェックする
     And "option1"を回答として選択済み
     And advice に"Rugby is Scrum!!" を入力する
     When Addボタンを押す
@@ -103,6 +104,7 @@ Feature:
     Then 問題が承認済みになる
 
   @developing
+  #@now
   Scenario Outline: 公開範囲に従って追加した質問が表示される
     Given "Terry"ユーザが登録されている
     And "admin2"ユーザが登録されている
