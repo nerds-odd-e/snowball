@@ -54,10 +54,7 @@ public class Question extends Entity<Question> {
 
     public void recordQuestionForUser(User user, LocalDate date) {
         Record record = Record.getOrInitializeRecord(user, this);
-        record.setLastUpdated(date);
-        record.setCycleState(record.getCycleState() + 1);
-        record.calculateNextShowDate();
-        record.save();
+        record.update(date);
     }
 
     boolean isDueForUser(User user) {

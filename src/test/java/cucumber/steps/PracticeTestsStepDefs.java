@@ -86,7 +86,7 @@ public class PracticeTestsStepDefs {
 
     @Then("{string}のメッセージが表示される")
     public void のメッセージが表示される(String expectedString) {
-        driver.takeScreenshot("tmp/hoge");
+        driver.takeScreenshot("tmp/update");
         // Write code here that turns the phrase above into concrete actions
         driver.expectPageToContainText(expectedString);
     }

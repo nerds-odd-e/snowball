@@ -46,6 +46,12 @@ public class Record extends Entity<Record> {
         }
     }
 
+    public void update(LocalDate date) {
+        setLastUpdated(date);
+        setCycleState(getCycleState() + 1);
+        calculateNextShowDate();
+        save();
+    }
 
     public boolean isDue() {
         if (getCycleState() == 0) {

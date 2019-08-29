@@ -20,7 +20,7 @@ public class UserTest {
     @Test
     public void testValidPassword() {
         String password = "hogehoge";
-        User user = createUser("hoge@example.com", password);
+        User user = createUser("update@example.com", password);
 
         User dbUser = User.getUserByEmail(user.getEmail());
         assertNotNull(dbUser);
@@ -30,7 +30,7 @@ public class UserTest {
     @Test
     public void testInvalidPassword() {
         String password = "hogehoge";
-        User user = createUser("hoge@example.com", password);
+        User user = createUser("update@example.com", password);
 
         String invalidPassword = "invalidhoge";
         User dbUser = User.getUserByEmail(user.getEmail());
@@ -41,7 +41,7 @@ public class UserTest {
     @Test
     public void testFetchUserByToken() {
         String password = "hogehoge";
-        User user = createUser("hoge@example.com", password);
+        User user = createUser("update@example.com", password);
 
         User dbUser = repo(User.class).findFirstBy("token", user.getToken());
         assertNotNull(dbUser);

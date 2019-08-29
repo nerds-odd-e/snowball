@@ -47,7 +47,7 @@ public class SignupControllerTest {
     @Test
     public void saveSessionIdTanakaInfoToCookie() throws Exception {
         request.setParameter("userName", "yamada");
-        request.setParameter("email", "yamada@hoge.com");
+        request.setParameter("email", "yamada@update.com");
         request.setParameter("password", "passhoge");
         request.setParameter("password_confirm", "passhoge");
 
@@ -61,15 +61,15 @@ public class SignupControllerTest {
     @Test
     public void registerTanakaDataIntoDatabase() throws Exception {
         request.setParameter("userName", "yamada");
-        request.setParameter("email", "yamada@hoge.com");
+        request.setParameter("email", "yamada@update.com");
         request.setParameter("password", "passhoge");
         request.setParameter("password_confirm", "passhoge");
 
         controller.doPost(request, response);
 
-        User actual = repo(User.class).findFirstBy("email", "yamada@hoge.com");
+        User actual = repo(User.class).findFirstBy("email", "yamada@update.com");
 
-        assertThat(actual.getEmail()).isEqualTo("yamada@hoge.com");
+        assertThat(actual.getEmail()).isEqualTo("yamada@update.com");
     }
 
     private void createUser() {
