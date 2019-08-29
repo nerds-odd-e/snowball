@@ -13,20 +13,18 @@ Feature:
     When User answered 1 questions correctly
     Then User should see "Good job!"
 
-  Scenario: No questions should be shown if questions have been answered today
+  Scenario: Return first question should be shown if questions have been answered today
     Given User is taking a practiceTest
     When User answered 1 question correctly
     Then User should see "Good job!"
     When User is taking a practiceTest
-    Then User should see "Good job!"
+    Then 問題1が出題される
 
   Scenario: If user answers wrongly, user should be shown advice page and be redirected to see completed practice page
     Given User is taking a practiceTest
     When User answered 1 question wrongly
     Then User should see Advice page
     When User clicks on Next on Advice page
-    Then User should see "Good job!"
-    When User is taking a practiceTest
     Then User should see "Good job!"
 
   @simple-review
@@ -51,7 +49,6 @@ Feature:
     When User answered 10 questions correctly
     Then User should see "Good job!"
 
-  @developing
   @simple-review
   Scenario: 解答した順にソートされること
     Given 問題1と問題2が存在する
