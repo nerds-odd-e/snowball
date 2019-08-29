@@ -21,7 +21,7 @@ public class LaunchPracticeController extends AppController {
         session.setAttribute("date", LocalDate.now());
 
         int questionLimit = 10;
-        String limitParameter = req.getParameter("questionLimit");
+        String limitParameter = req.getParameter("question_count");
         if (NumberUtils.isNumber(limitParameter)) {
             questionLimit = Integer.parseInt(limitParameter);
         }

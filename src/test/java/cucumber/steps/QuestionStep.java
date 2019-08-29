@@ -70,18 +70,15 @@ public class QuestionStep {
     }
 
     @Given("^there are (\\d+) questions of category \"([^\"]*)\"$")
-    public void create_multiple_questions(int numberOfQuestions, String category) {
+    public void create_questions_with_category(int numberOfQuestions, String category) {
         for (int i = 0; i < numberOfQuestions; i++) {
             QuestionBuilder.buildDefaultQuestion(category).please();
         }
     }
 
-
     @Given("問題が{int}個存在する")
     public void create_questions(int numberOfQuestions) {
-        for (int i = 0; i < numberOfQuestions; i++) {
-            QuestionBuilder.buildDefaultQuestion("Category").please();
-        }
+        create_questions_with_category(numberOfQuestions, "Category");
     }
 
     @When("^OnlineTestを開始する$")
@@ -97,7 +94,7 @@ public class QuestionStep {
 
     @Given("^User is taking a onlineTest with (\\d+) questions and there are enough questions$")
     public void user_is_taking_a_onlineTest_with_all_questions(int totalQuestions) {
-        create_multiple_questions(totalQuestions, "aCategory");
+        create_questions_with_category(totalQuestions, "aCategory");
         user_is_taking_a_onlineTest_with_n_single_questions(totalQuestions);
     }
 

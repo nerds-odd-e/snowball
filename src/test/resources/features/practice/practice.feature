@@ -1,3 +1,4 @@
+@now
 Feature:
   User can practice questions using Spaced Repetition.
 
@@ -28,25 +29,11 @@ Feature:
     Then User should see "Good job!"
 
   @simple-review
+  @now
   Scenario: ユーザがプラクティスを開始できること
-    Given There are questions with dummy options:
-      | description | correctOption | category |
-      | Q2          | correctOption | Retro    |
-      | Q3          | correctOption | Retro    |
-      | Q4          | correctOption | Retro    |
-      | Q5          | correctOption | Retro    |
-      | Q6          | correctOption | Retro    |
-      | Q7          | correctOption | Retro    |
-      | Q8          | correctOption | Retro    |
-      | Q9          | correctOption | Retro    |
-      | Q10          | correctOption | Retro    |
-      | Q11          | correctOption | Retro    |
-      | Q12          | correctOption | Retro    |
-      | Q13          | correctOption | Retro    |
-      | Q14          | correctOption | Retro    |
-      | Q15          | correctOption | Retro    |
-    And User is taking a practiceTest
-    When User answered 10 questions correctly
+    Given 問題が15個存在する
+    When User is taking a practiceTest
+    And User answered 10 questions correctly
     Then User should see "Good job!"
 
   @simple-review
