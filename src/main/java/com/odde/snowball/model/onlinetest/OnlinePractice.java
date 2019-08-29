@@ -49,16 +49,7 @@ public class OnlinePractice extends OnlineTest {
     }
 
     public static List<Question> findSpaceBasedRepetitions(int count, User user, LocalDate currentDate) {
-        // 1：昇順
-        //-1：降順
-        BasicDBObject sortCond = new BasicDBObject("nextShowDate", 1).append("lastUpdated", 1);
-
-        List<Record> records = repo(Record.class).find(and(
-                eq("userId", user.getId()),
-                lte("nextShowDate", currentDate),
-                lt("cycleState", Record.CYCLE.size())),
-                sortCond, count);
-
+        List<Record> records = findUserRecords(count, user, currentDate);
         if (records.isEmpty())
             return Collections.emptyList();
 
@@ -72,6 +63,17 @@ public class OnlinePractice extends OnlineTest {
         });
 
         return questions;
+    }
+
+    private static List<Record> findUserRecords(int count, User user, LocalDate currentDate) {
+        // 1：昇順
+        //-1：降順
+        BasicDBObject sortCond = new BasicDBObject("nextShowDate", 1).append("lastUpdated", 1);
+        return repo(Record.class).find(and(
+                eq("userId", user.getId()),
+                lte("nextShowDate", currentDate),
+                lt("cycleState", Record.CYCLE.size())),
+                sortCond, count);
     }
 
     public String endPageName() {
