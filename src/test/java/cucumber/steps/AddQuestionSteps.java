@@ -160,26 +160,24 @@ public class AddQuestionSteps {
 
     @Given("{string}な質問が{string}によって登録されている")
     public void な質問が_によって登録されている(String isPublic, String user) {
-
         visitLoginPage();
         driver.setTextField("email", user.toLowerCase() + "@hogehoge.com");
         driver.setTextField("password", "11111111");
         driver.click("#login");
 
-        site.visit("onlinetest/add_question.jsp");
-        driver.expectTitleToBe("Add Question");
+        AddQuestion();
 
-        driver.setTextField("description", "What is scrum?");
+        descriptionに_が入力されている("What is scrum?");
 
-        driver.setTextField("option1", "Scrum is Rugby");
-        driver.setTextField("option2", "Scrum is Baseball");
-        driver.click("#option1");
+        option_に_を入力する(1, "Scrum is Rugby");
+        option_に_を入力する(2, "Scrum is Baseball");
+
+        を回答として選択済み("option1");
 
         if("public".equals(isPublic)) {
-            driver.clickCheckBoxById("is-public");
+            isPublicをチェックする();
         }
 
-        driver.click("#add_button");
-
+        addボタンを押す();
     }
 }
