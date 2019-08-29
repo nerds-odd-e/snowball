@@ -103,7 +103,6 @@ Feature:
     Then 問題が承認済みになる
 
   @developing
-  //@now
   Scenario Outline: 公開範囲に従って追加した質問が表示される
     Given "Terry"ユーザが登録されている
     And "admin2"ユーザが登録されている
