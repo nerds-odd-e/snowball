@@ -21,24 +21,7 @@ public class OnlinePractice1 {
         this.max = max;
     }
 
-    static OnlineTest create(OnlinePractice1 onlinePractice1) {
-        // SpaceBasedRepetition
-        List<Question> repetitionQuestions = OnlinePractice.findSpaceBasedRepetitions(onlinePractice1.max, onlinePractice1.user, LocalDate.now());
-        if (repetitionQuestions.size() >= onlinePractice1.max) {
-            return new OnlinePractice(repetitionQuestions);
-        }
-
-        // SimpleReview
-        List<Question> visibleQuestions = createVisibleQuestions(onlinePractice1.user);
-        List<Record> recordList = getRecord(onlinePractice1.user);
-        if (recordList.isEmpty()) {
-            return createQuestionsForNewUser(onlinePractice1.max, visibleQuestions);
-        } else {
-            return createQuestions(recordList, onlinePractice1.max, visibleQuestions);
-        }
-    }
-
-    public static OnlineTest createQuestions(List<Record> recordList, int max, List<Question> visibleQuestionList) {
+    private OnlineTest createQuestions(List<Record> recordList, int max, List<Question> visibleQuestionList) {
 
         List<ObjectId> answeredQuestionIdList = recordList.stream()
                 .sorted(Comparator.comparing(Record::getLastUpdated))
@@ -61,19 +44,36 @@ public class OnlinePractice1 {
         return new OnlinePractice(answeredQuestionList);
     }
 
-    public static List<Record> getRecord(User user) {
+    private List<Record> getRecord(User user) {
         return repo(Record.class).findBy("userId", user.getId());
     }
 
-    public static List<Question> createVisibleQuestions(User user) {
+    private List<Question> createVisibleQuestions(User user) {
         return repo(Question.class).findAll().stream()
                     .filter(q -> q.isVisibleForUser(user))
                     .collect(Collectors.toList());
     }
 
-    public static OnlineTest createQuestionsForNewUser(int max, List<Question> dueQuestions) {
+    private OnlineTest createQuestionsForNewUser(int max, List<Question> dueQuestions) {
         int maxQuestionCount = dueQuestions.size() > max ? max : dueQuestions.size();
         List<Question> questions = new QuestionCollection(dueQuestions).generateQuestionList(repo(Category.class).findAll(), maxQuestionCount);
         return new OnlinePractice(questions);
+    }
+
+    OnlineTest create() {
+        // SpaceBasedRepetition
+        List<Question> repetitionQuestions = OnlinePractice.findSpaceBasedRepetitions(max, user, LocalDate.now());
+        if (repetitionQuestions.size() >= max) {
+            return new OnlinePractice(repetitionQuestions);
+        }
+
+        // SimpleReview
+        List<Question> visibleQuestions = createVisibleQuestions(user);
+        List<Record> recordList = getRecord(user);
+        if (recordList.isEmpty()) {
+            return createQuestionsForNewUser(max, visibleQuestions);
+        } else {
+            return createQuestions(recordList, max, visibleQuestions);
+        }
     }
 }

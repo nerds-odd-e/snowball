@@ -19,7 +19,7 @@ public class OnlinePractice extends OnlineTest {
     }
 
     public static OnlineTest createOnlinePractice(User user, int max) {
-        return OnlinePractice1.create(new OnlinePractice1(user, max));
+        return new OnlinePractice1(user, max).create();
     }
 
     public static List<Question> findSpaceBasedRepetitions(int count, User user, LocalDate currentDate) {
