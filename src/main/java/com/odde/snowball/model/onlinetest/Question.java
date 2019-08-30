@@ -57,10 +57,6 @@ public class Question extends Entity<Question> {
         record.update(date);
     }
 
-    boolean isDueForUser(User user) {
-        return Record.getOrInitializeRecord(user, this).isDue();
-    }
-
     public boolean isVisibleForUser(User user) {
         return isPublic || user.equals(createUser);
     }
