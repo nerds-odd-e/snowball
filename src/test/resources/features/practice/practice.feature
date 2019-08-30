@@ -1,4 +1,3 @@
-@now
 Feature:
   User can practice questions using Spaced Repetition.
 

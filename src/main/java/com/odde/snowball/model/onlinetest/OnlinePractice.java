@@ -22,45 +22,6 @@ public class OnlinePractice extends OnlineTest {
         return OnlinePractice1.create(new OnlinePractice1(user, max));
     }
 
-    public static List<Record> getRecord(User user) {
-        return repo(Record.class).findBy("userId", user.getId());
-    }
-
-    public static List<Question> createVisibleQuestions(User user) {
-        return repo(Question.class).findAll().stream()
-                    .filter(q -> q.isVisibleForUser(user))
-                    .collect(Collectors.toList());
-    }
-
-    public static OnlineTest createQuestions(List<Record> recordList, int max, List<Question> visibleQuestionList) {
-
-        List<ObjectId> answeredQuestionIdList = recordList.stream()
-                .sorted(Comparator.comparing(Record::getLastUpdated))
-                .map(Record::getQuestionId)
-                .collect(Collectors.toList());
-
-        List<Question> noAnsweredQuestions = visibleQuestionList.stream()
-                .filter(visibleQuestion -> !answeredQuestionIdList.contains(visibleQuestion.getId()))
-                .limit(max)
-                .collect(Collectors.toList());
-
-        if (!noAnsweredQuestions.isEmpty()) {
-            return new OnlinePractice(noAnsweredQuestions);
-        }
-
-        List<Question> answeredQuestionList = answeredQuestionIdList.stream()
-                .map(answeredQuestionId -> repo(Question.class).findById(answeredQuestionId))
-                .limit(max)
-                .collect(Collectors.toList());
-        return new OnlinePractice(answeredQuestionList);
-    }
-
-    public static OnlineTest createQuestionsForNewUser(int max, List<Question> dueQuestions) {
-        int maxQuestionCount = dueQuestions.size() > max ? max : dueQuestions.size();
-        List<Question> questions = new QuestionCollection(dueQuestions).generateQuestionList(repo(Category.class).findAll(), maxQuestionCount);
-        return new OnlinePractice(questions);
-    }
-
     public static List<Question> findSpaceBasedRepetitions(int count, User user, LocalDate currentDate) {
         List<Record> records = findUserRecords(count, user, currentDate);
         if (records.isEmpty())
