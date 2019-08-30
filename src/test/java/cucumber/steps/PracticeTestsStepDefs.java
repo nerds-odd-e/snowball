@@ -125,7 +125,7 @@ public class PracticeTestsStepDefs {
         assertEquals("Q" + description, foundStr);
     }
 
-    @When("問題{int}に正解する")
+    @When("問題(\\d+)に正解する")
     public void 問題_に正解する(Integer int1) {
         // Write code here that turns the phrase above into concrete actions
         driver.clickRadioButton("correctOption");
