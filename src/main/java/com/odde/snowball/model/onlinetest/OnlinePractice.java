@@ -7,6 +7,7 @@ import org.bson.types.ObjectId;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,6 +49,7 @@ public class OnlinePractice extends OnlineTest {
     private static OnlineTest createQuestions(List<Record> recordList, int max, List<Question> visibleQuestionList) {
 
         List<ObjectId> answeredQuestionIdList = recordList.stream()
+                .sorted(Comparator.comparing(Record::getLastUpdated))
                 .map(Record::getQuestionId)
                 .collect(Collectors.toList());
 
@@ -60,9 +62,10 @@ public class OnlinePractice extends OnlineTest {
             return new OnlinePractice(noAnsweredQuestions);
         }
 
-        BasicDBObject sortCond = new BasicDBObject("nextShowDate", 1).append("lastUpdated", 1);
-        List<Question> answeredQuestionList = repo(Question.class)
-                .find(in("_id", answeredQuestionIdList), sortCond, max);
+        List<Question> answeredQuestionList = answeredQuestionIdList.stream()
+                .map(answeredQuestionId -> repo(Question.class).findById(answeredQuestionId))
+                .limit(max)
+                .collect(Collectors.toList());
         return new OnlinePractice(answeredQuestionList);
     }
 

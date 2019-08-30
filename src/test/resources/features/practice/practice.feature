@@ -1,3 +1,4 @@
+@now
 Feature:
   User can practice questions using Spaced Repetition.
 
@@ -34,11 +35,12 @@ Feature:
     And User answered 10 questions correctly
     Then User should see "Good job!"
 
+
   @simple-review
   Scenario Outline: 解答した順にソートされること
     Given <FirstQuestion>と<SecondQuestion>が存在する
-    And "mary"が<FirstQuestion>に解答する
-    And "mary"が<SecondQuestion>に解答する
+    And <FirstQuestion>の解答日時が2019年8月26日である
+    And <SecondQuestion>の解答日時が2019年8月27日である
     When プラクティスを開始
     Then <FirstQuestion>が出題される
     When <FirstQuestion>に正解する
