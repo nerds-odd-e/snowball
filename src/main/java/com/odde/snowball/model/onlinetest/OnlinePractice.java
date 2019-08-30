@@ -29,10 +29,10 @@ public class OnlinePractice extends OnlineTest {
         List<Question> dueQuestions = repo(Question.class).findAll().stream()
                 .filter(q -> q.isVisibleForUser(user))
                 .collect(Collectors.toList());
-        int maxQuestionCount = dueQuestions.size() > max ? max : dueQuestions.size();
 
         List<Record> recordList = repo(Record.class).findBy("userId", user.getId());
         if (recordList.isEmpty()) {
+            int maxQuestionCount = dueQuestions.size() > max ? max : dueQuestions.size();
             List<Question> questions = new QuestionCollection(dueQuestions).generateQuestionList(repo(Category.class).findAll(), maxQuestionCount);
             return new OnlinePractice(questions);
         }
