@@ -26,14 +26,14 @@ public class OnlinePractice extends OnlineTest {
         }
 
         // SimpleReview
-        List<Question> dueQuestions = repo(Question.class).findAll().stream()
+        List<Question> visibleQuestions = repo(Question.class).findAll().stream()
                 .filter(q -> q.isVisibleForUser(user))
                 .collect(Collectors.toList());
 
         List<Record> recordList = repo(Record.class).findBy("userId", user.getId());
         if (recordList.isEmpty()) {
-            int maxQuestionCount = dueQuestions.size() > max ? max : dueQuestions.size();
-            List<Question> questions = new QuestionCollection(dueQuestions).generateQuestionList(repo(Category.class).findAll(), maxQuestionCount);
+            int maxQuestionCount = visibleQuestions.size() > max ? max : visibleQuestions.size();
+            List<Question> questions = new QuestionCollection(visibleQuestions).generateQuestionList(repo(Category.class).findAll(), maxQuestionCount);
             return new OnlinePractice(questions);
         }
         recordList.sort((s1, s2) -> s2.getLastUpdated().compareTo(s1.getLastUpdated()));
