@@ -40,17 +40,24 @@ public class Record extends Entity<Record> {
         return record;
     }
 
-    public void calculateNextShowDate() {
-        if (this.lastUpdated != null && getCycleState() != 0 && !isOverCycle()) {
-            this.nextShowDate = getLastUpdated().plusDays(CYCLE.get(getCycleState() - 1));
+    public void update(LocalDate date) {
+        updateRepetition(date);
+        setLastUpdated(date);
+        save();
+    }
+
+    private void updateRepetition(LocalDate date) {
+        if (date.equals(lastUpdated)) {
+            return;
+        }
+        setCycleState(getCycleState() + 1);
+        if (!isOverCycle()) {
+            setNextShowDate(calculateNextShowDate(date));
         }
     }
 
-    public void update(LocalDate date) {
-        setLastUpdated(date);
-        setCycleState(getCycleState() + 1);
-        calculateNextShowDate();
-        save();
+    private LocalDate calculateNextShowDate(LocalDate date) {
+        return date.plusDays(CYCLE.get(getCycleState() - 1));
     }
 
     private boolean isOverCycle() {

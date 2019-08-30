@@ -12,9 +12,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(TestWithDB.class)
 public class OnlinePracticeTest {
@@ -181,11 +179,7 @@ public class OnlinePracticeTest {
         User user = new User();
         Question question = new Question();
         Record record = Record.getOrInitializeRecord(user, question);
-        record.setLastUpdated(LocalDate.of(2019, 8, 1));
-        record.setCycleState(0);
-        record.calculateNextShowDate();
-        assertEquals(null, record.getNextShowDate());
-
+        assertNull(record.getNextShowDate());
     }
 
     @Test
@@ -193,18 +187,17 @@ public class OnlinePracticeTest {
         User user = new User();
         Question question = new Question();
         Record record = Record.getOrInitializeRecord(user, question);
-        record.setLastUpdated(LocalDate.of(2019, 8, 1));
-        List<LocalDate> expected = Arrays.asList(
-                LocalDate.of(2019, 8, 2),
-                LocalDate.of(2019, 8, 4),
-                LocalDate.of(2019, 8, 11),
-                LocalDate.of(2019, 8, 31),
-                LocalDate.of(2019, 10, 30)
+        List<LocalDate> answeredDateList = Arrays.asList(
+                LocalDate.of(2019, 8, 1),
+                LocalDate.of(2020, 8, 1),
+                LocalDate.of(2021, 8, 5),
+                LocalDate.of(2022, 8, 15),
+                LocalDate.of(2023, 9, 14)
         );
-        for (int i = 1; i <= Record.CYCLE.size(); i++) {
-            record.setCycleState(i);
-            record.calculateNextShowDate();
-            assertEquals(expected.get(i - 1), record.getNextShowDate());
+        for (int i = 0; i <= Record.CYCLE.size() - 1; i++) {
+            LocalDate answeredDate = answeredDateList.get(i);
+            record.update(answeredDate);
+            assertEquals(answeredDate.plusDays(Record.CYCLE.get(i)), record.getNextShowDate());
         }
     }
 
@@ -213,14 +206,11 @@ public class OnlinePracticeTest {
         User user = new User();
         Question question = new Question();
         Record record = Record.getOrInitializeRecord(user, question);
-        record.setLastUpdated(LocalDate.of(2019, 8, 1));
-
-        record.setCycleState(Record.CYCLE.size());
-        record.calculateNextShowDate();
+        record.setCycleState(Record.CYCLE.size() - 1);
+        record.update(LocalDate.of(2019, 8, 1));
         assertEquals(LocalDate.of(2019, 10, 30), record.getNextShowDate());
 
-        record.setCycleState(Record.CYCLE.size() + 1);
-        record.calculateNextShowDate();
+        record.update(LocalDate.of(2019, 8, 1));
         assertEquals(LocalDate.of(2019, 10, 30), record.getNextShowDate());
 
     }
