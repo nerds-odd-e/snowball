@@ -96,7 +96,7 @@ public class OnlinePractice extends OnlineTest {
         return repo(Record.class).find(and(
                 eq("userId", user.getId()),
                 lte("nextShowDate", currentDate),
-                lt("cycleState", Record.CYCLE.size())),
+                lte("cycleState", Record.CYCLE.size())),
                 sortCond, count);
     }
 

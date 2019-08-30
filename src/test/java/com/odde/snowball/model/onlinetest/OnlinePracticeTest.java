@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -21,7 +22,7 @@ public class OnlinePracticeTest {
     public void 解答済みの問題が存在しない場合_問題が取得されないこと() {
         // setup
         User user1 = new User().save();
-        mockQuestion(1);
+        generateQuestion(1);
 
         List<Question> questions =
                 OnlinePractice.findSpaceBasedRepetitions(1, user1, null);
@@ -32,13 +33,13 @@ public class OnlinePracticeTest {
     public void 解答済みの問題が存在する場合_問題が取得されること() {
         // setup
         User user1 = new User().save();
-        List<Question> mockQuestions = mockQuestion(1);
+        List<Question> questions = generateQuestion(1);
 
-        new Record(user1, mockQuestions.get(0)).save();
+        new Record(user1, questions.get(0)).save();
 
-        List<Question> expectedQuestions =
+        List<Question> actual =
                 OnlinePractice.findSpaceBasedRepetitions(1, user1, null);
-        assertEquals(1, expectedQuestions.size());
+        assertEquals(1, actual.size());
     }
 
     @Test
@@ -47,15 +48,15 @@ public class OnlinePracticeTest {
         User user1 = new User().save();
         User user2 = new User().save();
 
-        List<Question> mockQuestions = mockQuestion(2);
+        List<Question> questions = generateQuestion(2);
 
-        new Record(user1, mockQuestions.get(0)).save();
-        new Record(user2, mockQuestions.get(1)).save();
+        new Record(user1, questions.get(0)).save();
+        new Record(user2, questions.get(1)).save();
         // execute
-        List<Question> expectedQuestions =
+        List<Question> actual =
                 OnlinePractice.findSpaceBasedRepetitions(2, user1, null);
-        assertEquals(mockQuestions.get(0).getId(), expectedQuestions.get(0).getId());
-        assertEquals(1, expectedQuestions.size());
+        assertEquals(questions.get(0).getId(), actual.get(0).getId());
+        assertEquals(1, actual.size());
     }
 
     @Test
@@ -63,22 +64,21 @@ public class OnlinePracticeTest {
         final LocalDate yesterday = LocalDate.of(2019, 8, 26);
         final LocalDate today = yesterday.plusDays(1);
 
-        // setup
         User user1 = new User().save();
-        List<Question> mockQuestions = mockQuestion(2);
+        List<Question> questions = generateQuestion(2);
 
-        Record record1 = new Record(user1, mockQuestions.get(0));
+        Record record1 = new Record(user1, questions.get(0));
         record1.setNextShowDate(today);
         record1.save();
-        Record record2 = new Record(user1, mockQuestions.get(1));
+        Record record2 = new Record(user1, questions.get(1));
         record2.setNextShowDate(today.plusDays(1));
         record2.save();
 
         // execute
-        List<Question> expectedQuestions =
+        List<Question> actual =
                 OnlinePractice.findSpaceBasedRepetitions(2, user1, today);
-        assertEquals(mockQuestions.get(0).getId(), expectedQuestions.get(0).getId());
-        assertEquals(1, expectedQuestions.size());
+        assertEquals(questions.get(0).getId(), actual.get(0).getId());
+        assertEquals(1, actual.size());
     }
 
     @Test
@@ -88,23 +88,23 @@ public class OnlinePracticeTest {
 
         // setup
         User user1 = new User().save();
-        List<Question> mockQuestions = mockQuestion(3);
+        List<Question> questions = generateQuestion(3);
 
-        Record record1 = new Record(user1, mockQuestions.get(0));
+        Record record1 = new Record(user1, questions.get(0));
         record1.setNextShowDate(today);
         record1.save();
-        Record record2 = new Record(user1, mockQuestions.get(1));
+        Record record2 = new Record(user1, questions.get(1));
         record2.setNextShowDate(today);
         record2.save();
-        Record record3 = new Record(user1, mockQuestions.get(2));
+        Record record3 = new Record(user1, questions.get(2));
         record3.setNextShowDate(today.minusDays(1));
         record3.save();
 
         // execute
-        List<Question> expectedQuestions =
+        List<Question> actual =
                 OnlinePractice.findSpaceBasedRepetitions(2, user1, today);
-        assertEquals(mockQuestions.get(2).getId(), expectedQuestions.get(0).getId());
-        assertEquals(2, expectedQuestions.size());
+        assertEquals(questions.get(2).getId(), actual.get(0).getId());
+        assertEquals(2, actual.size());
     }
 
     @Test
@@ -114,28 +114,45 @@ public class OnlinePracticeTest {
 
         // setup
         User user1 = new User().save();
-        List<Question> mockQuestions = mockQuestion(4);
+        List<Question> questions = generateQuestion(4);
 
-        Record record1 = new Record(user1, mockQuestions.get(0));
+        Record record1 = new Record(user1, questions.get(0));
         record1.setNextShowDate(today);
         record1.save();
-        Record record2 = new Record(user1, mockQuestions.get(1));
+        Record record2 = new Record(user1, questions.get(1));
         record2.setNextShowDate(today);
         record2.save();
-        Record record3 = new Record(user1, mockQuestions.get(2));
+        Record record3 = new Record(user1, questions.get(2));
         record3.setNextShowDate(today.minusDays(1));
         record3.setLastUpdated(today);
         record3.save();
-        Record record4 = new Record(user1, mockQuestions.get(3));
+        Record record4 = new Record(user1, questions.get(3));
         record4.setNextShowDate(today.minusDays(1));
         record4.setLastUpdated(today.minusDays(1));
         record4.save();
 
         // execute
-        List<Question> expectedQuestions =
+        List<Question> actual =
                 OnlinePractice.findSpaceBasedRepetitions(3, user1, today);
-        assertEquals(mockQuestions.get(3).getId(), expectedQuestions.get(0).getId());
-        assertEquals(3, expectedQuestions.size());
+        assertEquals(questions.get(3).getId(), actual.get(0).getId());
+        assertEquals(3, actual.size());
+    }
+
+    @Test
+    public void 最出題5回問題が取得できること() {
+        final LocalDate today = LocalDate.now();
+        User user = new User().save();
+        List<Question> questions = generateQuestion(1);
+        Record record = Record.getOrInitializeRecord(user, questions.get(0));
+        record.setLastUpdated(today);
+        record.setNextShowDate(today);
+
+        for (int i = 1; i <= 5; i++) {
+            record.setCycleState(i);
+            record.save();
+            List<Question> actual = OnlinePractice.findSpaceBasedRepetitions(1, user, today);
+            assertFalse("index is " + i, actual.isEmpty());
+        }
     }
 
 
@@ -145,11 +162,11 @@ public class OnlinePracticeTest {
         final LocalDate today = yesterday.plusDays(1);
         // setup
         User user = new User().save();
-        List<Question> mockQuestions = mockQuestion(1);
+        List<Question> Questions = generateQuestion(1);
 
-        Record record = Record.getOrInitializeRecord(user, mockQuestions.get(0));
+        Record record = Record.getOrInitializeRecord(user, Questions.get(0));
         record.setLastUpdated(yesterday);
-        record.setCycleState(Record.CYCLE.size());
+        record.setCycleState(Record.CYCLE.size() + 1);
         record.setNextShowDate(today);
         record.save();
 
@@ -213,7 +230,7 @@ public class OnlinePracticeTest {
         // setup
         User user = new User().save();
 
-        mockQuestion(3);
+        generateQuestion(3);
         // exercise
         OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user, 2);
         // verify
@@ -221,7 +238,7 @@ public class OnlinePracticeTest {
         assertEquals(2, numberOfQuestions);
     }
 
-    private List<Question> mockQuestion(int numberOfQuestion) {
+    private List<Question> generateQuestion(int numberOfQuestion) {
         Category category = new Category().save();
         return IntStream.range(0, numberOfQuestion).mapToObj(index -> new Question("desc" + index, "adv" + index, category.getId(), false, false).save()).collect(Collectors.toList());
     }
@@ -230,7 +247,7 @@ public class OnlinePracticeTest {
     public void _2問中1問が未回答の場合に未回答の問題だけが出題される() {
 
         User user = new User().save();
-        List<Question> allQuestions = mockQuestion(2);
+        List<Question> allQuestions = generateQuestion(2);
 
         Question question1 = allQuestions.get(0);
         question1.recordQuestionForUser(user, LocalDate.now());
@@ -244,7 +261,7 @@ public class OnlinePracticeTest {
     @Test
     public void _hasNotAnsweredAnyQuestions() {
         User user = new User().save();
-        List<Question> allQuestions = mockQuestion(2);
+        List<Question> allQuestions = generateQuestion(2);
 
         allQuestions.forEach(question -> question.recordQuestionForUser(user, LocalDate.now()));
 
@@ -257,7 +274,7 @@ public class OnlinePracticeTest {
     @Test
     public void _hasNotAnswered1Questions() {
         User user = new User().save();
-        List<Question> allQuestions = mockQuestion(2);
+        List<Question> allQuestions = generateQuestion(2);
 
         allQuestions.get(0).recordQuestionForUser(user, LocalDate.now());
         OnlineTest onlinePractice = OnlinePractice.createOnlinePractice(user, 10);
