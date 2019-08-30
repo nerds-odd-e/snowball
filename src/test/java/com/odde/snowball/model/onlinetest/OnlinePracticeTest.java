@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static java.util.Objects.isNull;
 import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,7 +30,8 @@ public class OnlinePracticeTest {
     public void 解答済みの問題が存在する場合_問題が取得されること() {
         User user = generateUsers(1).get(0);
         List<Question> questions = generateQuestions(1);
-        new Record(user, questions.get(0)).save();
+        generateRecord(null, null, user, questions.get(0));
+
 
         List<Question> actual =
                 OnlinePractice.findSpaceBasedRepetitions(1, user, null);
@@ -40,9 +42,9 @@ public class OnlinePracticeTest {
     public void 自分が解答済みの問題が存在する場合_その問題が取得できること() {
         List<User> users = generateUsers(2);
         List<Question> questions = generateQuestions(2);
+        generateRecord(null, null, users.get(0), questions.get(0));
+        generateRecord(null, null, users.get(1), questions.get(1));
 
-        new Record(users.get(0), questions.get(0)).save();
-        new Record(users.get(1), questions.get(1)).save();
         // execute
         List<Question> actual =
                 OnlinePractice.findSpaceBasedRepetitions(2, users.get(0), null);
@@ -54,16 +56,10 @@ public class OnlinePracticeTest {
     public void 自分への次回出題日が指定の日付以前の質問が存在する場合_その問題が取得できること() {
         final LocalDate yesterday = LocalDate.of(2019, 8, 26);
         final LocalDate today = yesterday.plusDays(1);
-
         User user = generateUsers(1).get(0);
         List<Question> questions = generateQuestions(2);
-
-        Record record1 = new Record(user, questions.get(0));
-        record1.setNextShowDate(today);
-        record1.save();
-        Record record2 = new Record(user, questions.get(1));
-        record2.setNextShowDate(today.plusDays(1));
-        record2.save();
+        generateRecord(today, null, user, questions.get(0));
+        generateRecord(today.plusDays(1), null, user, questions.get(1));
 
         // execute
         List<Question> actual =
@@ -76,19 +72,11 @@ public class OnlinePracticeTest {
     public void 指定の件数以下で次回出題日が古い順で取得されること() {
         final LocalDate yesterday = LocalDate.of(2019, 8, 26);
         final LocalDate today = yesterday.plusDays(1);
-
         User user = generateUsers(1).get(0);
         List<Question> questions = generateQuestions(3);
-
-        Record record1 = new Record(user, questions.get(0));
-        record1.setNextShowDate(today);
-        record1.save();
-        Record record2 = new Record(user, questions.get(1));
-        record2.setNextShowDate(today);
-        record2.save();
-        Record record3 = new Record(user, questions.get(2));
-        record3.setNextShowDate(today.minusDays(1));
-        record3.save();
+        generateRecord(today, null, user, questions.get(0));
+        generateRecord(today, null, user, questions.get(1));
+        generateRecord(today.minusDays(1), null, user, questions.get(2));
 
         // execute
         List<Question> actual =
@@ -96,6 +84,7 @@ public class OnlinePracticeTest {
         assertEquals(questions.get(2).getId(), actual.get(0).getId());
         assertEquals(2, actual.size());
     }
+
 
     @Test
     public void 指定の件数以下で次回出題日と最終更新日が古い順で取得されること() {
@@ -105,34 +94,25 @@ public class OnlinePracticeTest {
         User user = generateUsers(1).get(0);
         List<Question> questions = generateQuestions(4);
 
-        Record record1 = new Record(user, questions.get(0));
-        record1.setNextShowDate(today);
-        record1.save();
-        Record record2 = new Record(user, questions.get(1));
-        record2.setNextShowDate(today);
-        record2.save();
-        Record record3 = new Record(user, questions.get(2));
-        record3.setNextShowDate(today.minusDays(1));
-        record3.setLastUpdated(today);
-        record3.save();
-        Record record4 = new Record(user, questions.get(3));
-        record4.setNextShowDate(today.minusDays(1));
-        record4.setLastUpdated(today.minusDays(1));
-        record4.save();
+        generateRecord(today, null, user, questions.get(0));
+        generateRecord(today, null, user, questions.get(1));
+        generateRecord(today.minusDays(1), today, user, questions.get(2));
+        generateRecord(today.minusDays(1), today.minusDays(1), user, questions.get(3));
 
-        // execute
+        // execute®
         List<Question> actual =
                 OnlinePractice.findSpaceBasedRepetitions(3, user, today);
+
         assertEquals(questions.get(3).getId(), actual.get(0).getId());
         assertEquals(3, actual.size());
     }
+
 
     @Test
     public void 最出題5回問題が取得できること() {
         final LocalDate today = LocalDate.now();
         User user = generateUsers(1).get(0);
         List<Question> questions = generateQuestions(1);
-
         Record record = Record.getOrInitializeRecord(user, questions.get(0));
         record.setLastUpdated(today);
         record.setNextShowDate(today);
@@ -226,6 +206,19 @@ public class OnlinePracticeTest {
     private List<Question> generateQuestions(int numberOfQuestion) {
         Category category = new Category().save();
         return IntStream.range(0, numberOfQuestion).mapToObj(index -> new Question("desc" + index, "adv" + index, category.getId(), false, false).save()).collect(Collectors.toList());
+    }
+
+    private void generateRecord(LocalDate showDate, LocalDate lastUpdate, User user, Question question) {
+        Record record = new Record(user, question);
+
+        if (!isNull(showDate)) {
+            record.setNextShowDate(showDate);
+        }
+
+        if (!isNull(lastUpdate)) {
+            record.setLastUpdated(lastUpdate);
+        }
+        record.save();
     }
 
     @Test
