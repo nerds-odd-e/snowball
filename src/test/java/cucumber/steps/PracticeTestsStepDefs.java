@@ -154,7 +154,7 @@ public class PracticeTestsStepDefs {
     public void 問題_は解答していない(Integer int1) {
     }
 
-    @Given("問題{int}に対して{string}日前に{string}回目の解答をした")
+    @Given("問題(\\d+)に対して\"([^\"]*)\"日前に\"([^\"]*)\"回目の解答をした")
     public void 問題_に対して_日前に_回目の解答をした(Integer int1, String beforeDays, String answeredCount) {
         Question question = repo(Question.class).findFirstBy("description", "Q" + String.valueOf(int1));
         User user = User.getUserByEmail("mary@email.com");
