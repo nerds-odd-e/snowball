@@ -24,7 +24,7 @@ public class Record extends Entity<Record> {
     private LocalDate lastUpdated;
     private LocalDate nextShowDate;
     private int cycleState;
-    public final static List<Integer> CYCLE = Arrays.asList(1, 3, 10, 30, 90);
+    public final static List<Integer> CYCLE = Arrays.asList(1, 2, 7, 20, 60);
 
     public Record(User user, Question question) {
         this.userId = user.getId();
