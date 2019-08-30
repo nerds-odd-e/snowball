@@ -66,7 +66,6 @@ Feature:
 
   # space-based repetition
   @developing
-  @now
   Scenario Outline: 解答した問題は解答日から起算して仕様に従った間隔で再度出題されること
     Given 問題1と問題2が存在する
     And ユーザがログインした状態である
