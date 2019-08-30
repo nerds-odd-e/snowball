@@ -139,8 +139,7 @@ public class PracticeTestsStepDefs {
 //        throw new cucumber.api.PendingException();
     }
 
-    // TODO 解答日時未設定
-    @Given("問題{int}の解答日時が{int}年{int}月{int}日である")
+    @Given("問題(\\d+)の解答日時が(\\d+)年(\\d+)月(\\d+)日である")
     public void 問題_の解答日時が_年_月_日である(int questionNum, Integer year, Integer month, Integer dayOfMonth) {
         Question question = repo(Question.class)
                 .findFirstBy("description", "Q" + questionNum);
