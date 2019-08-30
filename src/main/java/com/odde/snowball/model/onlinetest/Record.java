@@ -47,7 +47,7 @@ public class Record extends Entity<Record> {
     }
 
     private void updateRepetition(LocalDate date) {
-        if (date.equals(lastUpdated)) {
+        if (nextShowDate != null && date.isBefore(nextShowDate)) {
             return;
         }
         setCycleState(getCycleState() + 1);

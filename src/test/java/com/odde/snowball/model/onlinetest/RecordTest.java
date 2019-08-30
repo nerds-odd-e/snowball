@@ -9,20 +9,20 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class RecordTest {
 
     @Test
-    public void 同日に解答した問題は次回出題日が更新されないこと(){
-        LocalDate expectedDate = LocalDate.now().plusDays(1);
-        int expectedCycleState = 1;
-        Record record = createAnsweredRecord(expectedDate, expectedCycleState);
+    public void 次回出題日以前に解答した問題は次回出題日が更新されないこと(){
+        Record record = createAnsweredRecord();
+        int expectedCycleState = record.getCycleState();
+        LocalDate expectedDate = record.getNextShowDate();
+
         record.update(LocalDate.now());
         assertEquals(expectedCycleState, record.getCycleState());
         assertEquals(expectedDate, record.getNextShowDate());
     }
 
-    private Record createAnsweredRecord(LocalDate nextShowDate, int cycleState) {
+    private Record createAnsweredRecord() {
         Record record = new Record();
-        record.setLastUpdated(LocalDate.now());
-        record.setNextShowDate(nextShowDate);
-        record.setCycleState(cycleState);
+        record.update(LocalDate.now());
         return record;
     }
+
 }
