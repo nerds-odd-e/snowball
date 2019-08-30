@@ -31,7 +31,7 @@ public class OnlinePractice extends OnlineTest {
         if (recordList.isEmpty()) {
             return createQuestionsForNewUser(max, visibleQuestions);
         } else {
-            return createQuestions(recordList);
+            return createQuestions(recordList, max, visibleQuestions);
         }
     }
 
@@ -45,7 +45,7 @@ public class OnlinePractice extends OnlineTest {
                     .collect(Collectors.toList());
     }
 
-    private static OnlineTest createQuestions(List<Record> recordList) {
+    private static OnlineTest createQuestions(List<Record> recordList, int max, List<Question> visibleQuestionList) {
         recordList.sort((s1, s2) -> s2.getLastUpdated().compareTo(s1.getLastUpdated()));
         List<Question> questList = new ArrayList<>();
         for (Record record : recordList) {
