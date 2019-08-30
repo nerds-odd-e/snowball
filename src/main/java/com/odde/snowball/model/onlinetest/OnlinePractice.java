@@ -21,7 +21,7 @@ public class OnlinePractice extends OnlineTest {
     public static OnlineTest createOnlinePractice(User user, int max) {
         // SpaceBasedRepetition
         List<Question> repetitionQuestions = findSpaceBasedRepetitions(max, user, LocalDate.now());
-        if(repetitionQuestions.size() >= max) {
+        if (repetitionQuestions.size() >= max) {
             return new OnlinePractice(repetitionQuestions);
         }
 
@@ -29,23 +29,20 @@ public class OnlinePractice extends OnlineTest {
         List<Question> allQuestions = repo(Question.class).findAll();
         List<Question> dueQuestions = allQuestions.stream()
                 .filter(q -> q.isVisibleForUser(user))
-                .filter(q -> q.isDueForUser(user))
                 .collect(Collectors.toList());
         int maxQuestionCount = dueQuestions.size() > max ? max : dueQuestions.size();
 
-        if (dueQuestions.isEmpty()) {
-            List<Record> recordList = repo(Record.class).findBy("userId", user.getId());
-            recordList.sort((s1, s2) -> s2.getLastUpdated().compareTo(s1.getLastUpdated()));
-            List<Question> questList = new ArrayList<>();
-            for (Record record : recordList) {
-                questList.add(repo(Question.class).findFirst(eq("_id", record.getQuestionId())));
-            }
-            return new OnlinePractice(questList);
+        List<Record> recordList = repo(Record.class).findBy("userId", user.getId());
+        if (recordList.isEmpty()) {
+            List<Question> questions = new QuestionCollection(dueQuestions).generateQuestionList(repo(Category.class).findAll(), maxQuestionCount);
+            return new OnlinePractice(questions);
         }
-
-        List<Question> questions = new QuestionCollection(dueQuestions).generateQuestionList(repo(Category.class).findAll(), maxQuestionCount);
-
-        return new OnlinePractice(questions);
+        recordList.sort((s1, s2) -> s2.getLastUpdated().compareTo(s1.getLastUpdated()));
+        List<Question> questList = new ArrayList<>();
+        for (Record record : recordList) {
+            questList.add(repo(Question.class).findFirst(eq("_id", record.getQuestionId())));
+        }
+        return new OnlinePractice(questList);
     }
 
     public static List<Question> findSpaceBasedRepetitions(int count, User user, LocalDate currentDate) {

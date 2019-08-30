@@ -8,7 +8,6 @@ import org.junit.runner.RunWith;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -28,6 +27,7 @@ public class OnlinePracticeTest {
                 OnlinePractice.findSpaceBasedRepetitions(1, user1, null);
         assertTrue(questions.isEmpty());
     }
+
     @Test
     public void 解答済みの問題が存在する場合_問題が取得されること() {
         // setup
@@ -60,7 +60,7 @@ public class OnlinePracticeTest {
 
     @Test
     public void 自分への次回出題日が指定の日付以前の質問が存在する場合_その問題が取得できること() {
-        final LocalDate yesterday = LocalDate.of(2019,8,26);
+        final LocalDate yesterday = LocalDate.of(2019, 8, 26);
         final LocalDate today = yesterday.plusDays(1);
 
         // setup
@@ -77,13 +77,13 @@ public class OnlinePracticeTest {
         // execute
         List<Question> expectedQuestions =
                 OnlinePractice.findSpaceBasedRepetitions(2, user1, today);
-        assertEquals( mockQuestions.get(0).getId(), expectedQuestions.get(0).getId());
+        assertEquals(mockQuestions.get(0).getId(), expectedQuestions.get(0).getId());
         assertEquals(1, expectedQuestions.size());
     }
 
     @Test
     public void 指定の件数以下で次回出題日が古い順で取得されること() {
-        final LocalDate yesterday = LocalDate.of(2019,8,26);
+        final LocalDate yesterday = LocalDate.of(2019, 8, 26);
         final LocalDate today = yesterday.plusDays(1);
 
         // setup
@@ -109,7 +109,7 @@ public class OnlinePracticeTest {
 
     @Test
     public void 指定の件数以下で次回出題日と最終更新日が古い順で取得されること() {
-        final LocalDate yesterday = LocalDate.of(2019,8,26);
+        final LocalDate yesterday = LocalDate.of(2019, 8, 26);
         final LocalDate today = yesterday.plusDays(1);
 
         // setup
@@ -141,7 +141,7 @@ public class OnlinePracticeTest {
 
     @Test
     public void 問題に最終回まで解答した場合_問題が取得されないこと() {
-        final LocalDate yesterday = LocalDate.of(2019,8,1);
+        final LocalDate yesterday = LocalDate.of(2019, 8, 1);
         final LocalDate today = yesterday.plusDays(1);
         // setup
         User user = new User().save();
@@ -164,10 +164,10 @@ public class OnlinePracticeTest {
         User user = new User();
         Question question = new Question();
         Record record = Record.getOrInitializeRecord(user, question);
-        record.setLastUpdated(LocalDate.of(2019,8,1));
+        record.setLastUpdated(LocalDate.of(2019, 8, 1));
         record.setCycleState(0);
         record.calculateNextShowDate();
-        assertEquals(null,record.getNextShowDate());
+        assertEquals(null, record.getNextShowDate());
 
     }
 
@@ -176,18 +176,18 @@ public class OnlinePracticeTest {
         User user = new User();
         Question question = new Question();
         Record record = Record.getOrInitializeRecord(user, question);
-        record.setLastUpdated(LocalDate.of(2019,8,1));
+        record.setLastUpdated(LocalDate.of(2019, 8, 1));
         List<LocalDate> expected = Arrays.asList(
-            LocalDate.of(2019,8,2),
-            LocalDate.of(2019,8,4),
-            LocalDate.of(2019,8,11),
-            LocalDate.of(2019,8,31),
-            LocalDate.of(2019,10,30)
+                LocalDate.of(2019, 8, 2),
+                LocalDate.of(2019, 8, 4),
+                LocalDate.of(2019, 8, 11),
+                LocalDate.of(2019, 8, 31),
+                LocalDate.of(2019, 10, 30)
         );
         for (int i = 1; i <= Record.CYCLE.size(); i++) {
             record.setCycleState(i);
             record.calculateNextShowDate();
-            assertEquals(expected.get(i - 1),record.getNextShowDate());
+            assertEquals(expected.get(i - 1), record.getNextShowDate());
         }
     }
 
@@ -202,7 +202,7 @@ public class OnlinePracticeTest {
         record.calculateNextShowDate();
         assertEquals(LocalDate.of(2019, 10, 30), record.getNextShowDate());
 
-        record.setCycleState(Record.CYCLE.size() +1);
+        record.setCycleState(Record.CYCLE.size() + 1);
         record.calculateNextShowDate();
         assertEquals(LocalDate.of(2019, 10, 30), record.getNextShowDate());
 
@@ -226,7 +226,7 @@ public class OnlinePracticeTest {
         return IntStream.range(0, numberOfQuestion).mapToObj(index -> new Question("desc" + index, "adv" + index, category.getId(), false, false).save()).collect(Collectors.toList());
     }
 
-//    @Test
+    //    @Test
     public void _2問中1問が未回答の場合に未回答の問題だけが出題される() {
 
         User user = new User().save();
@@ -239,5 +239,30 @@ public class OnlinePracticeTest {
         List<Question> questions = onlineTest.getQuestions();
         assertEquals(1, questions.size());
         assertNotEquals(question1.getId(), questions.get(0).getId());
+    }
+
+    @Test
+    public void _hasNotAnsweredAnyQuestions() {
+        User user = new User().save();
+        List<Question> allQuestions = mockQuestion(2);
+
+        allQuestions.forEach(question -> question.recordQuestionForUser(user, LocalDate.now()));
+
+        OnlineTest onlinePractice = OnlinePractice.createOnlinePractice(user, 10);
+
+        assertEquals(2, onlinePractice.getQuestions().size());
+    }
+
+
+    @Test
+    public void _hasNotAnswered1Questions() {
+        User user = new User().save();
+        List<Question> allQuestions = mockQuestion(2);
+
+        allQuestions.get(0).recordQuestionForUser(user, LocalDate.now());
+
+        OnlineTest onlinePractice = OnlinePractice.createOnlinePractice(user, 10);
+
+        assertEquals(1, onlinePractice.getQuestions().size());
     }
 }

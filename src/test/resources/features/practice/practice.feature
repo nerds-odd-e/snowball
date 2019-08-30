@@ -35,6 +35,7 @@ Feature:
     Then User should see "Good job!"
 
   @simple-review
+  @now
   Scenario Outline: 解答した順にソートされること
     Given <FirstQuestion>と<SecondQuestion>が存在する
     And "mary"が<FirstQuestion>に解答する

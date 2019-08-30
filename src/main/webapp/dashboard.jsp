@@ -23,7 +23,7 @@
                         <button type="submit" class="btn btn-default" id="start_button">Start Test</button>
                     </form>
                      <form class="dashboard_button" name="practice" id="practice" method="get" action="/launchPractice">
-                        <input type="number" name="question_count" id="question_count" value=1 hidden />
+                        <input type="number" name="question_count" id="question_count" value=10 hidden />
                         <button type="submit" class="btn btn-default" name = "start_practice_button" id="start_practice_button">Start Practice</button>
                      </form>
                      <a href = "/onlinetest/add_question.jsp">Questions Maintenance</a>
