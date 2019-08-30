@@ -50,7 +50,7 @@ public class PracticeTestsStepDefs {
         site.visit("launchPractice");
     }
 
-    @When("User answered {int} question wrongly")
+    @When("User answered (\\d+) question wrongly")
     public void userAnsweredQuestionWrongly(int questionNum) {
         for (int i = 0; i < questionNum; i++) {
             driver.clickRadioButton("Animal");
