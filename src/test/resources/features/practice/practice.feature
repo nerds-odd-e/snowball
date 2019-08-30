@@ -66,20 +66,21 @@ Feature:
 
   # space-based repetition
   @developing
+  @now
   Scenario Outline: 解答した問題は解答日から起算して仕様に従った間隔で再度出題されること
     Given 問題1と問題2が存在する
     And ユーザがログインした状態である
     And 問題1に対して"<last-answered-date>"日前に"<answered-count>"回目の解答をした
     When プラクティスを開始
-    Then <question>が出題される
+    Then 問題<number>が出題される
     Examples:
-      | last-answered-date | answered-count | question |
-      | 1                  | 1              | 問題1      |
-      | 2                  | 2              | 問題2      |
-      | 3                  | 2              | 問題1      |
-      | 10                 | 3              | 問題1      |
-      | 30                 | 4              | 問題1      |
-      | 90                 | 5              | 問題1      |
+      | last-answered-date | answered-count | number |
+      | 1                  | 1              | 1      |
+      | 2                  | 2              | 2      |
+      | 3                  | 2              | 1      |
+      | 10                 | 3              | 1      |
+      | 30                 | 4              | 1      |
+      | 90                 | 5              | 1      |
 
   @developing
   Scenario: 延期された問題に解答した場合直近の解答日から起算して再出題される

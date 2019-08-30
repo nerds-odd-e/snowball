@@ -1,13 +1,15 @@
 package com.odde.snowball.model.onlinetest;
 
-import static com.odde.snowball.model.base.Repository.repo;
-
 import com.odde.snowball.model.User;
 import org.bson.types.ObjectId;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.odde.snowball.model.base.Repository.repo;
 
 public class OnlinePractice1 {
     public User user;
@@ -25,14 +27,17 @@ public class OnlinePractice1 {
             return new OnlinePractice(repetitionQuestions);
         }
 
+        List<Question> simpleQuestions = null;
         // SimpleReview
         List<Question> visibleQuestions = createVisibleQuestions();
         List<Record> recordList = getRecord();
         if (recordList.isEmpty()) {
-            return createQuestionsForNewUser(visibleQuestions);
+            simpleQuestions = createQuestionsForNewUser(visibleQuestions).getQuestions();
         } else {
-            return createQuestions(recordList, visibleQuestions);
+            simpleQuestions =  createQuestions(recordList, visibleQuestions).getQuestions();
         }
+
+        return new OnlinePractice(concatQuestions(repetitionQuestions, simpleQuestions, max));
     }
 
     private OnlineTest createQuestions(List<Record> recordList, List<Question> visibleQuestionList) {
@@ -73,4 +78,23 @@ public class OnlinePractice1 {
         List<Question> questions = new QuestionCollection(dueQuestions).generateQuestionList(repo(Category.class).findAll(), maxQuestionCount);
         return new OnlinePractice(questions);
     }
+
+
+    private List<Question> concatQuestions(List<Question> questions1, List<Question> questions2, int max){
+        if(questions1.size() >= max){
+            return questions1.subList(0, max);
+        }
+        List<Question> concatQuestions = new ArrayList<>(questions1);
+        for(Question question : questions2) {
+            if(!concatQuestions.contains(question)) {
+                concatQuestions.add(question);
+                if (concatQuestions.size() >= max) {
+                    return concatQuestions;
+                }
+            }
+        }
+
+        return concatQuestions;
+    }
+
 }

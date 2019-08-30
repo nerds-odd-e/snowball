@@ -258,4 +258,33 @@ public class OnlinePracticeTest {
 
         assertEquals(1, onlinePractice.getQuestions().size());
     }
+
+//    @Test
+//    public void 二つのQuestionリストを結合() {
+//        List<Question> questions1 = generateQuestion(1);
+//        List<Question> questions2 = generateQuestion(1);
+//
+//        List<Question> concatQuestions = OnlinePractice1.concatQustions(questions1, questions2, 2);
+//
+//        assertEquals(2, concatQuestions.size());
+//    }
+//
+//    @Test
+//    public void 同じQuestionが入っているリストを渡した場合_重複が取り除かれたリストが返る() {
+//        List<Question> questions1 = generateQuestion(1);
+//
+//        List<Question> concatQuestions = OnlinePractice1.concatQustions(questions1, questions1, 2);
+//
+//        assertEquals(1, concatQuestions.size());
+//    }
+//
+//    @Test
+//    public void 合わせて上限を超える場合_上限の数のリストが返る() {
+//        List<Question> questions1 = generateQuestion(2);
+//        List<Question> questions2 = generateQuestion(2);
+//
+//        List<Question> concatQuestions = OnlinePractice1.concatQustions(questions1, questions2, 3);
+//
+//        assertEquals(3, concatQuestions.size());
+//    }
 }
