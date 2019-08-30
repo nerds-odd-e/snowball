@@ -1,17 +1,15 @@
 package com.odde.snowball.model.onlinetest;
 
+import static com.mongodb.client.model.Filters.*;
+import static com.odde.snowball.model.base.Repository.repo;
+
 import com.mongodb.BasicDBObject;
 import com.odde.snowball.model.User;
 import org.bson.types.ObjectId;
-
 import java.time.LocalDate;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static com.mongodb.client.model.Filters.*;
-import static com.odde.snowball.model.base.Repository.repo;
 
 public class OnlinePractice extends OnlineTest {
     public OnlinePractice(List<Question> questions) {
