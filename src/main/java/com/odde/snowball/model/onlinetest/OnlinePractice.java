@@ -26,12 +26,12 @@ public class OnlinePractice extends OnlineTest {
         }
 
         // SimpleReview
-        List<Question> visibleQuestions = create(user);
+        List<Question> visibleQuestions = createVisibleQuestions(user);
         List<Record> recordList = getRecord(user);
         if (recordList.isEmpty()) {
-            return xxxxx(max, visibleQuestions);
+            return createQuestionsForNewUser(max, visibleQuestions);
         } else {
-            return yyyyyy(recordList);
+            return createQuestions(recordList);
         }
     }
 
@@ -39,13 +39,13 @@ public class OnlinePractice extends OnlineTest {
         return repo(Record.class).findBy("userId", user.getId());
     }
 
-    private static List<Question> create(User user) {
+    private static List<Question> createVisibleQuestions(User user) {
         return repo(Question.class).findAll().stream()
                     .filter(q -> q.isVisibleForUser(user))
                     .collect(Collectors.toList());
     }
 
-    private static OnlineTest yyyyyy(List<Record> recordList) {
+    private static OnlineTest createQuestions(List<Record> recordList) {
         recordList.sort((s1, s2) -> s2.getLastUpdated().compareTo(s1.getLastUpdated()));
         List<Question> questList = new ArrayList<>();
         for (Record record : recordList) {
@@ -54,7 +54,7 @@ public class OnlinePractice extends OnlineTest {
         return new OnlinePractice(questList);
     }
 
-    private static OnlineTest xxxxx(int max, List<Question> dueQuestions) {
+    private static OnlineTest createQuestionsForNewUser(int max, List<Question> dueQuestions) {
         int maxQuestionCount = dueQuestions.size() > max ? max : dueQuestions.size();
         List<Question> questions = new QuestionCollection(dueQuestions).generateQuestionList(repo(Category.class).findAll(), maxQuestionCount);
         return new OnlinePractice(questions);
