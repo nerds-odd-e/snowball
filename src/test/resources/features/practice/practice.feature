@@ -67,15 +67,19 @@ Feature:
   # space-based repetition
   @developing
   Scenario Outline: 解答した問題は解答日から起算して仕様に従った間隔で再度出題されること
-    Given ユーザがログインした状態である
-    And "<last-answered-date>"に問題1に対して"<answered-count>"回目の解答をした
-    When "<today>"にテストを開始
-    Then 問題1が"<is-display>"
+    Given 問題1と問題2が存在する
+    And ユーザがログインした状態である
+    And 問題1に対して"<last-answered-date>"日前に"<answered-count>"回目の解答をした
+    When プラクティスを開始
+    Then <question>が出題される
     Examples:
-      | last-answered-date | answered-count | today     | is-display |
-      | 2019-08-26          | 1              | 2019-08-27 | 表示される      |
-      | 2019-08-26          | 1              | 2019-08-28 | 表示される      |
-      | 2019-08-26          | 2              | 2019-08-28 | 表示されない     |
+      | last-answered-date | answered-count | question |
+      | 1                  | 1              | 問題1      |
+      | 2                  | 2              | 問題2      |
+      | 3                  | 2              | 問題1      |
+      | 10                 | 3              | 問題1      |
+      | 30                 | 4              | 問題1      |
+      | 90                 | 5              | 問題1      |
 
   @developing
   Scenario: 延期された問題に解答した場合直近の解答日から起算して再出題される
@@ -85,11 +89,11 @@ Feature:
     And 2019年8月27日に問題1を回答していない
     And 問題1の解答日時が2019年8月28日17時00分00秒である
     When 今日は2019年8月29日である
-    And テストを開始
+    And プラクティスを開始
     Then 問題2が出題される
     When 今日は2019年8月30日である
-    And テストを開始
+    And プラクティスを開始
     Then 問題2が出題される
     When 今日は2019年8月31日である
-    And テストを開始
+    And プラクティスを開始
     Then 問題1が出題される

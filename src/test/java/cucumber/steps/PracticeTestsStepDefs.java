@@ -157,13 +157,14 @@ public class PracticeTestsStepDefs {
     public void 問題_は解答していない(Integer int1) {
     }
 
-    @Given("{string}に問題1に対して{string}回目の解答をした")
-    public void に問題1に対して_回目の解答をした(String lastAnsweredDate, String answeredCount) {
-        Question question = repo(Question.class).findFirstBy("description", "Q1");
+    @Given("問題{int}に対して{string}日前に{string}回目の解答をした")
+    public void 問題_に対して_日前に_回目の解答をした(Integer int1, String beforeDays, String answeredCount) {
+        Question question = repo(Question.class).findFirstBy("description", "Q"+String.valueOf(int1));
         User user = User.getUserByEmail("mary@email.com");
+        LocalDate answerDate = LocalDate.now().minusDays(Long.parseLong(beforeDays));
 
         for (int i = 0; i < Integer.valueOf(answeredCount); i++) {
-            question.recordQuestionForUser(user, LocalDate.parse(lastAnsweredDate));
+            question.recordQuestionForUser(user, answerDate);
         }
     }
 
