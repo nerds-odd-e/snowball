@@ -123,7 +123,7 @@ public class LoginSteps {
         driver.expectTitleToBe("Sign Up");
     }
 
-    @Given("user {string} has logged in successfully")
+    @Given("user \"([^\"]*)\" has logged in successfully")
     public void userHasLoggedInSuccessfully(String username) {
         String email = username + "@email.com";
         String pwd = username + "pwd";
