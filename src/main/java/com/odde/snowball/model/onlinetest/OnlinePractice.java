@@ -20,19 +20,23 @@ public class OnlinePractice extends OnlineTest {
     }
 
     public static OnlineTest createOnlinePractice(User user, int max) {
+        return create(new OnlinePractice1(user, max));
+    }
+
+    private static OnlineTest create(OnlinePractice1 onlinePractice1) {
         // SpaceBasedRepetition
-        List<Question> repetitionQuestions = findSpaceBasedRepetitions(max, user, LocalDate.now());
-        if (repetitionQuestions.size() >= max) {
+        List<Question> repetitionQuestions = findSpaceBasedRepetitions(onlinePractice1.max, onlinePractice1.user, LocalDate.now());
+        if (repetitionQuestions.size() >= onlinePractice1.max) {
             return new OnlinePractice(repetitionQuestions);
         }
 
         // SimpleReview
-        List<Question> visibleQuestions = createVisibleQuestions(user);
-        List<Record> recordList = getRecord(user);
+        List<Question> visibleQuestions = createVisibleQuestions(onlinePractice1.user);
+        List<Record> recordList = getRecord(onlinePractice1.user);
         if (recordList.isEmpty()) {
-            return createQuestionsForNewUser(max, visibleQuestions);
+            return createQuestionsForNewUser(onlinePractice1.max, visibleQuestions);
         } else {
-            return createQuestions(recordList, max, visibleQuestions);
+            return createQuestions(recordList, onlinePractice1.max, visibleQuestions);
         }
     }
 
