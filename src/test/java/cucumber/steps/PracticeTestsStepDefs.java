@@ -91,7 +91,7 @@ public class PracticeTestsStepDefs {
         driver.expectPageToContainText(expectedString);
     }
 
-    @Given("問題{int}と問題{int}が存在する")
+    @Given("問題(\\d+)と問題(\\d+)が存在する")
     public void 問題1と問題2が存在する(Integer _first, Integer _second) {
         // 問題1はbackgroundで登録済み
         new QuestionBuilder()
