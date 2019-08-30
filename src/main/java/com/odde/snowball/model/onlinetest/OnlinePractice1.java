@@ -21,6 +21,23 @@ public class OnlinePractice1 {
         this.max = max;
     }
 
+    OnlineTest create() {
+        // SpaceBasedRepetition
+        List<Question> repetitionQuestions = OnlinePractice.findSpaceBasedRepetitions(max, user, LocalDate.now());
+        if (repetitionQuestions.size() >= max) {
+            return new OnlinePractice(repetitionQuestions);
+        }
+
+        // SimpleReview
+        List<Question> visibleQuestions = createVisibleQuestions();
+        List<Record> recordList = getRecord();
+        if (recordList.isEmpty()) {
+            return createQuestionsForNewUser(visibleQuestions);
+        } else {
+            return createQuestions(recordList, visibleQuestions);
+        }
+    }
+
     private OnlineTest createQuestions(List<Record> recordList, List<Question> visibleQuestionList) {
 
         List<ObjectId> answeredQuestionIdList = recordList.stream()
@@ -58,22 +75,5 @@ public class OnlinePractice1 {
         int maxQuestionCount = dueQuestions.size() > max ? max : dueQuestions.size();
         List<Question> questions = new QuestionCollection(dueQuestions).generateQuestionList(repo(Category.class).findAll(), maxQuestionCount);
         return new OnlinePractice(questions);
-    }
-
-    OnlineTest create() {
-        // SpaceBasedRepetition
-        List<Question> repetitionQuestions = OnlinePractice.findSpaceBasedRepetitions(max, user, LocalDate.now());
-        if (repetitionQuestions.size() >= max) {
-            return new OnlinePractice(repetitionQuestions);
-        }
-
-        // SimpleReview
-        List<Question> visibleQuestions = createVisibleQuestions();
-        List<Record> recordList = getRecord();
-        if (recordList.isEmpty()) {
-            return createQuestionsForNewUser(visibleQuestions);
-        } else {
-            return createQuestions(recordList, visibleQuestions);
-        }
     }
 }
