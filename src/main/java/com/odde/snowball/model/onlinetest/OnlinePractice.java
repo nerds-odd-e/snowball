@@ -5,7 +5,6 @@ import com.odde.snowball.model.User;
 import org.bson.types.ObjectId;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -15,42 +14,25 @@ import static com.mongodb.client.model.Filters.*;
 import static com.odde.snowball.model.base.Repository.repo;
 
 public class OnlinePractice extends OnlineTest {
-    private OnlinePractice(List<Question> questions) {
+    public OnlinePractice(List<Question> questions) {
         super(questions);
     }
 
     public static OnlineTest createOnlinePractice(User user, int max) {
-        return create(new OnlinePractice1(user, max));
+        return OnlinePractice1.create(new OnlinePractice1(user, max));
     }
 
-    private static OnlineTest create(OnlinePractice1 onlinePractice1) {
-        // SpaceBasedRepetition
-        List<Question> repetitionQuestions = findSpaceBasedRepetitions(onlinePractice1.max, onlinePractice1.user, LocalDate.now());
-        if (repetitionQuestions.size() >= onlinePractice1.max) {
-            return new OnlinePractice(repetitionQuestions);
-        }
-
-        // SimpleReview
-        List<Question> visibleQuestions = createVisibleQuestions(onlinePractice1.user);
-        List<Record> recordList = getRecord(onlinePractice1.user);
-        if (recordList.isEmpty()) {
-            return createQuestionsForNewUser(onlinePractice1.max, visibleQuestions);
-        } else {
-            return createQuestions(recordList, onlinePractice1.max, visibleQuestions);
-        }
-    }
-
-    private static List<Record> getRecord(User user) {
+    public static List<Record> getRecord(User user) {
         return repo(Record.class).findBy("userId", user.getId());
     }
 
-    private static List<Question> createVisibleQuestions(User user) {
+    public static List<Question> createVisibleQuestions(User user) {
         return repo(Question.class).findAll().stream()
                     .filter(q -> q.isVisibleForUser(user))
                     .collect(Collectors.toList());
     }
 
-    private static OnlineTest createQuestions(List<Record> recordList, int max, List<Question> visibleQuestionList) {
+    public static OnlineTest createQuestions(List<Record> recordList, int max, List<Question> visibleQuestionList) {
 
         List<ObjectId> answeredQuestionIdList = recordList.stream()
                 .sorted(Comparator.comparing(Record::getLastUpdated))
@@ -73,7 +55,7 @@ public class OnlinePractice extends OnlineTest {
         return new OnlinePractice(answeredQuestionList);
     }
 
-    private static OnlineTest createQuestionsForNewUser(int max, List<Question> dueQuestions) {
+    public static OnlineTest createQuestionsForNewUser(int max, List<Question> dueQuestions) {
         int maxQuestionCount = dueQuestions.size() > max ? max : dueQuestions.size();
         List<Question> questions = new QuestionCollection(dueQuestions).generateQuestionList(repo(Category.class).findAll(), maxQuestionCount);
         return new OnlinePractice(questions);
