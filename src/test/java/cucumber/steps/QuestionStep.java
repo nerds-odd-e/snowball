@@ -78,7 +78,7 @@ public class QuestionStep {
         }
     }
 
-    @Given("問題が{int}個存在する")
+    @Given("問題が(\\d+)個存在する")
     public void create_questions(int numberOfQuestions) {
         create_questions_with_category(numberOfQuestions, "Category");
     }
