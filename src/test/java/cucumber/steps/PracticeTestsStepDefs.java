@@ -133,7 +133,7 @@ public class PracticeTestsStepDefs {
     }
 
     // TODO 空実装
-    @Given("今日は{int}年{int}月{int}日である")
+    @Given("今日は(\\d+)年(\\d+)月(\\d+)日である")
     public void 今日は_年_月_日である(Integer int1, Integer int2, Integer int3) {
         // Write code here that turns the phrase above into concrete actions
 //        throw new cucumber.api.PendingException();
