@@ -150,7 +150,7 @@ public class PracticeTestsStepDefs {
         record.save();
     }
 
-    @Given("問題{int}は解答していない")
+    @Given("問題(\\d+)は解答していない")
     public void 問題_は解答していない(Integer int1) {
     }
 
