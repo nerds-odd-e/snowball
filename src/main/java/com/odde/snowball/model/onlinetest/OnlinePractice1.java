@@ -21,7 +21,7 @@ public class OnlinePractice1 {
         this.max = max;
     }
 
-    private OnlineTest createQuestions(List<Record> recordList, int max, List<Question> visibleQuestionList) {
+    private OnlineTest createQuestions(List<Record> recordList, List<Question> visibleQuestionList) {
 
         List<ObjectId> answeredQuestionIdList = recordList.stream()
                 .sorted(Comparator.comparing(Record::getLastUpdated))
@@ -44,17 +44,17 @@ public class OnlinePractice1 {
         return new OnlinePractice(answeredQuestionList);
     }
 
-    private List<Record> getRecord(User user) {
+    private List<Record> getRecord() {
         return repo(Record.class).findBy("userId", user.getId());
     }
 
-    private List<Question> createVisibleQuestions(User user) {
+    private List<Question> createVisibleQuestions() {
         return repo(Question.class).findAll().stream()
                     .filter(q -> q.isVisibleForUser(user))
                     .collect(Collectors.toList());
     }
 
-    private OnlineTest createQuestionsForNewUser(int max, List<Question> dueQuestions) {
+    private OnlineTest createQuestionsForNewUser(List<Question> dueQuestions) {
         int maxQuestionCount = dueQuestions.size() > max ? max : dueQuestions.size();
         List<Question> questions = new QuestionCollection(dueQuestions).generateQuestionList(repo(Category.class).findAll(), maxQuestionCount);
         return new OnlinePractice(questions);
@@ -68,12 +68,12 @@ public class OnlinePractice1 {
         }
 
         // SimpleReview
-        List<Question> visibleQuestions = createVisibleQuestions(user);
-        List<Record> recordList = getRecord(user);
+        List<Question> visibleQuestions = createVisibleQuestions();
+        List<Record> recordList = getRecord();
         if (recordList.isEmpty()) {
-            return createQuestionsForNewUser(max, visibleQuestions);
+            return createQuestionsForNewUser(visibleQuestions);
         } else {
-            return createQuestions(recordList, max, visibleQuestions);
+            return createQuestions(recordList, visibleQuestions);
         }
     }
 }
