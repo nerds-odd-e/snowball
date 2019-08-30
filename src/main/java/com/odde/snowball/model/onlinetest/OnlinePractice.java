@@ -26,22 +26,38 @@ public class OnlinePractice extends OnlineTest {
         }
 
         // SimpleReview
-        List<Question> visibleQuestions = repo(Question.class).findAll().stream()
-                .filter(q -> q.isVisibleForUser(user))
-                .collect(Collectors.toList());
-
-        List<Record> recordList = repo(Record.class).findBy("userId", user.getId());
+        List<Question> visibleQuestions = create(user);
+        List<Record> recordList = getRecord(user);
         if (recordList.isEmpty()) {
-            int maxQuestionCount = visibleQuestions.size() > max ? max : visibleQuestions.size();
-            List<Question> questions = new QuestionCollection(visibleQuestions).generateQuestionList(repo(Category.class).findAll(), maxQuestionCount);
-            return new OnlinePractice(questions);
+            return xxxxx(max, visibleQuestions);
+        } else {
+            return yyyyyy(recordList);
         }
+    }
+
+    private static List<Record> getRecord(User user) {
+        return repo(Record.class).findBy("userId", user.getId());
+    }
+
+    private static List<Question> create(User user) {
+        return repo(Question.class).findAll().stream()
+                    .filter(q -> q.isVisibleForUser(user))
+                    .collect(Collectors.toList());
+    }
+
+    private static OnlineTest yyyyyy(List<Record> recordList) {
         recordList.sort((s1, s2) -> s2.getLastUpdated().compareTo(s1.getLastUpdated()));
         List<Question> questList = new ArrayList<>();
         for (Record record : recordList) {
             questList.add(repo(Question.class).findFirst(eq("_id", record.getQuestionId())));
         }
         return new OnlinePractice(questList);
+    }
+
+    private static OnlineTest xxxxx(int max, List<Question> dueQuestions) {
+        int maxQuestionCount = dueQuestions.size() > max ? max : dueQuestions.size();
+        List<Question> questions = new QuestionCollection(dueQuestions).generateQuestionList(repo(Category.class).findAll(), maxQuestionCount);
+        return new OnlinePractice(questions);
     }
 
     public static List<Question> findSpaceBasedRepetitions(int count, User user, LocalDate currentDate) {
