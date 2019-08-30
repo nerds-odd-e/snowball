@@ -46,12 +46,24 @@ public class OnlinePractice extends OnlineTest {
     }
 
     private static OnlineTest createQuestions(List<Record> recordList, int max, List<Question> visibleQuestionList) {
-        recordList.sort((s1, s2) -> s2.getLastUpdated().compareTo(s1.getLastUpdated()));
-        List<Question> questList = new ArrayList<>();
-        for (Record record : recordList) {
-            questList.add(repo(Question.class).findFirst(eq("_id", record.getQuestionId())));
+
+        List<ObjectId> answeredQuestionIdList = recordList.stream()
+                .map(Record::getQuestionId)
+                .collect(Collectors.toList());
+
+        List<Question> noAnsweredQuestions = visibleQuestionList.stream()
+                .filter(visibleQuestion -> !answeredQuestionIdList.contains(visibleQuestion.getId()))
+                .limit(max)
+                .collect(Collectors.toList());
+
+        if (!noAnsweredQuestions.isEmpty()) {
+            return new OnlinePractice(noAnsweredQuestions);
         }
-        return new OnlinePractice(questList);
+
+        BasicDBObject sortCond = new BasicDBObject("nextShowDate", 1).append("lastUpdated", 1);
+        List<Question> answeredQuestionList = repo(Question.class)
+                .find(in("_id", answeredQuestionIdList), sortCond, max);
+        return new OnlinePractice(answeredQuestionList);
     }
 
     private static OnlineTest createQuestionsForNewUser(int max, List<Question> dueQuestions) {

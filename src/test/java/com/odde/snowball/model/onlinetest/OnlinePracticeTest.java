@@ -226,14 +226,14 @@ public class OnlinePracticeTest {
         return IntStream.range(0, numberOfQuestion).mapToObj(index -> new Question("desc" + index, "adv" + index, category.getId(), false, false).save()).collect(Collectors.toList());
     }
 
-    //    @Test
+    @Test
     public void _2問中1問が未回答の場合に未回答の問題だけが出題される() {
 
         User user = new User().save();
         List<Question> allQuestions = mockQuestion(2);
 
         Question question1 = allQuestions.get(0);
-        question1.recordQuestionForUser(user, LocalDate.now().minusDays(3L));
+        question1.recordQuestionForUser(user, LocalDate.now());
 
         OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user, 2);
         List<Question> questions = onlineTest.getQuestions();
@@ -260,7 +260,6 @@ public class OnlinePracticeTest {
         List<Question> allQuestions = mockQuestion(2);
 
         allQuestions.get(0).recordQuestionForUser(user, LocalDate.now());
-
         OnlineTest onlinePractice = OnlinePractice.createOnlinePractice(user, 10);
 
         assertEquals(1, onlinePractice.getQuestions().size());
