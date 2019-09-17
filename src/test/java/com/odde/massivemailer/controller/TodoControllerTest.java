@@ -41,11 +41,8 @@ public class TodoControllerTest {
     }
     @Test
     public void doGet() throws Exception {
-
         Todo.createIt("title","ohuro souji","status","0");
-
         controller.doGet(req, res);
-
         assertThat(res.getContentAsString(), CoreMatchers.containsString("\"title\":\"ohuro souji\""));
     }
 

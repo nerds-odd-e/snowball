@@ -10,7 +10,7 @@ public class SampleSteps {
 
     @When("^Topページに遷移する$")
     public void topページに遷移する() {
-        site.visit("/index.html");
+        site.visit("/");
     }
 
     @Then("^\"([^\"]*)\"が表示されている$")

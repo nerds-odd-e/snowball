@@ -66,15 +66,15 @@ cucumber {
 }
 
 tasks.cucumber {
-    dependsOn assemble, testClasses, 'appBeforeIntegrationTest'
-    finalizedBy 'appAfterIntegrationTest'
+    dependsOn assemble, testClasses//, 'appBeforeIntegrationTest'
+//    finalizedBy 'appAfterIntegrationTest'
 
     jvmOptions.systemProperties("webdriver.chrome.driver": "/usr/local/bin/chromedriver")
     jvmOptions.systemProperties([
             "geb.cucumber.step.packages": "steps",
             "geb.env": System.getProperty("geb.env"),
             "webdriver": "chrome",
-            "active_env": "test",
+            "active_env": "development",
     ])
 }
 
@@ -82,7 +82,6 @@ task vue_test {
     group "verification"
     doFirst {
         exec {
-//            commandLine 'npm', 'run', 'test:watch', '--prefix', 'frontend'
             commandLine 'npm', 'test', '--prefix', 'frontend'
         }
     }
@@ -100,11 +99,11 @@ task appVueStart {
 task cucumber_now {
     group "verification"
     finalizedBy "cucumber"
-    doFirst {
-        exec {
-            commandLine 'npm', 'run', '--prefix', 'frontend', 'build'
-        }
-    }
+    //doFirst {
+    //    exec {
+    //        commandLine 'npm', 'run', '--prefix', 'frontend', 'build'
+    //    }
+    //}
     doLast {
         cucumber {
             tags = ['@now']
