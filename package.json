@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Pre-prerequisite * The environment variables `MM_EMAIL_USERID` and `MM_EMAIL_PASSWORD` are required to send emails out. * On Mac OS X, add the following to your environment variables (~/.bash_profile). ``` export MM_EMAIL_USERID=<your gmail address> export MM_EMAIL_PASSWORD=<your gmail password> launchctl setenv MM_EMAIL_USERID $MM_EMAIL_USERID launchctl setenv MM_EMAIL_PASSWORD $MM_EMAIL_PASSWORD ``` * Reboot your IDE.",
   "dependencies": {
-    "npm": "^6.10.3"
+    "npm": "^6.12.1"
   },
   "devDependencies": {
     "@testing-library/dom": "^5.6.1",
