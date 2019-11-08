@@ -13,7 +13,6 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -68,24 +67,6 @@ public class LaunchPracticeControllerTest {
     @Test
     public void userMustSeeTheQuestionIfSheHasNotDoneItBefore() throws IOException {
         mockQuestion();
-        controller.doGet(request, response);
-        OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
-        assertThat(onlineTest.getNumberOfQuestions()).isEqualTo(1);
-    }
-
-    @Test
-    public void userMustSeeTheQuestionIfSheHasDoneItOnTheSameDay() throws IOException {
-        Question question = mockQuestion().get(0);
-        question.recordQuestionForUser(user1, LocalDate.now());
-        controller.doGet(request, response);
-        OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
-        assertThat(onlineTest.getNumberOfQuestions()).isEqualTo(1);
-    }
-
-    @Test
-    public void userMustSeeQuestionEvenIfAnsweredByAnotherUser() throws IOException {
-        Question question = mockQuestion().get(0);
-        question.recordQuestionForUser(user2, LocalDate.now());
         controller.doGet(request, response);
         OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
         assertThat(onlineTest.getNumberOfQuestions()).isEqualTo(1);

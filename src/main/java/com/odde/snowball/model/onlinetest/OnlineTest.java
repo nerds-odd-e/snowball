@@ -37,9 +37,6 @@ public abstract class OnlineTest {
         Question currentQuestion = getCurrentQuestion();
         Answer answer = new Answer(currentQuestion, selectedOptionIds);
         answers.add(answer);
-        if (user != null) {
-            currentQuestion.recordQuestionForUser(user, date);
-        }
         return answer;
     }
 

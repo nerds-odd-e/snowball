@@ -10,7 +10,6 @@ import org.bson.types.ObjectId;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -50,11 +49,6 @@ public class Question extends Entity<Question> {
         this(description, advice, category, multiple, isApproved);
         this.isPublic = isPublic;
         this.createUser = createUser;
-    }
-
-    public void recordQuestionForUser(User user, LocalDate date) {
-        Record record = Record.getOrInitializeRecord(user, this);
-        record.update(date);
     }
 
     public boolean isVisibleForUser(User user) {

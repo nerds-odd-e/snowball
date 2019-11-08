@@ -1,9 +1,5 @@
 package cucumber.steps;
 
-import com.odde.snowball.factory.QuestionBuilder;
-import com.odde.snowball.model.User;
-import com.odde.snowball.model.onlinetest.Question;
-import com.odde.snowball.model.onlinetest.Record;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -12,9 +8,6 @@ import cucumber.steps.driver.WebDriverWrapper;
 import cucumber.steps.site.SnowballSite;
 import org.openqa.selenium.WebElement;
 
-import java.time.LocalDate;
-
-import static com.odde.snowball.model.base.Repository.repo;
 import static org.junit.Assert.assertEquals;
 
 public class PracticeTestsStepDefs {
@@ -50,7 +43,7 @@ public class PracticeTestsStepDefs {
         site.visit("launchPractice");
     }
 
-    @When("User answered (\\d+) question wrongly")
+    @When("User answered {int} question wrongly")
     public void userAnsweredQuestionWrongly(int questionNum) {
         for (int i = 0; i < questionNum; i++) {
             driver.clickRadioButton("Animal");
@@ -69,12 +62,6 @@ public class PracticeTestsStepDefs {
         driver.click("#next");
     }
 
-    @When("プラクティスを開始")
-    public void プラクティスを開始() {
-        // Write code here that turns the phrase above into concrete actions
-        driver.clickButtonByName("start_practice_button");
-    }
-
     @When("問題に{int}回正解する")
     public void 問題に_回正解する(Integer count) {
         // Write code here that turns the phrase above into concrete actions
@@ -84,34 +71,11 @@ public class PracticeTestsStepDefs {
         }
     }
 
-    @Then("\"([^\"]*)\"のメッセージが表示される")
+    @Then("{string}のメッセージが表示される")
     public void のメッセージが表示される(String expectedString) {
         driver.takeScreenshot("tmp/update");
         // Write code here that turns the phrase above into concrete actions
         driver.expectPageToContainText(expectedString);
-    }
-
-    @Given("問題(\\d+)と問題(\\d+)が存在する")
-    public void 問題1と問題2が存在する(Integer _first, Integer _second) {
-        // 問題1はbackgroundで登録済み
-        new QuestionBuilder()
-                .aQuestion("Q2", "advice", "Scrum")
-                .withWrongOption("wrongOption")
-                .withCorrectOption("correctOption")
-                .please();
-    }
-
-    @Given("{string}が問題{int}に解答する")
-    public void が問題_に解答する(String user_name, Integer num) {
-        Question question = repo(Question.class)
-                .findFirstBy("description", "Q" + num);
-
-        User user = User.getUserByEmail(user_name + "@email.com");
-
-        Record record = Record.getOrInitializeRecord(user, question);
-        record.setLastUpdated(LocalDate.now());
-        record.setCycleState(1);
-        record.save();
     }
 
     @Then("問題(\\d+)が出題される")
@@ -125,43 +89,15 @@ public class PracticeTestsStepDefs {
         assertEquals("Q" + description, foundStr);
     }
 
-    @When("問題(\\d+)に正解する")
+    @When("問題{int}に正解する")
     public void 問題_に正解する(Integer int1) {
         // Write code here that turns the phrase above into concrete actions
         driver.clickRadioButton("correctOption");
         driver.click("#answer");
     }
 
-    @Given("今日は(\\d+)年(\\d+)月(\\d+)日である")
-    public void 今日は_年_月_日である(Integer int1, Integer int2, Integer int3) {
-        // 空実装
-    }
-
-    @Given("問題(\\d+)の解答日時が(\\d+)年(\\d+)月(\\d+)日である")
-    public void 問題_の解答日時が_年_月_日である(int questionNum, Integer year, Integer month, Integer dayOfMonth) {
-        Question question = repo(Question.class)
-                .findFirstBy("description", "Q" + questionNum);
-
-        User user = User.getUserByEmail("mary@email.com");
-
-        Record record = Record.getOrInitializeRecord(user, question);
-        record.setLastUpdated(LocalDate.of(year, month, dayOfMonth));
-        record.setCycleState(record.getCycleState() + 1);
-        record.save();
-    }
-
-    @Given("問題(\\d+)は解答していない")
+    @Given("問題{int}は解答していない")
     public void 問題_は解答していない(Integer int1) {
-    }
-
-    @Given("問題(\\d+)に対して\"([^\"]*)\"日前に\"([^\"]*)\"回目の解答をした")
-    public void 問題_に対して_日前に_回目の解答をした(Integer int1, String beforeDays, String answeredCount) {
-        Question question = repo(Question.class).findFirstBy("description", "Q" + String.valueOf(int1));
-        User user = User.getUserByEmail("mary@email.com");
-        LocalDate answerDate = LocalDate.now().minusDays(Long.parseLong(beforeDays));
-        Record record = Record.getOrInitializeRecord(user, question);
-        record.setCycleState(Integer.valueOf(answeredCount) - 1);
-        question.recordQuestionForUser(user, answerDate);
     }
 
     @When("{string}にテストを開始")

@@ -131,10 +131,4 @@ public class LoginSteps {
         login_in_with_email_and_pwd(email, pwd);
     }
 
-    @Given("ユーザがログインした状態である")
-    public void ユーザがログインした状態である() {
-        // Write code here that turns the phrase above into concrete actions
-        userHasLoggedInSuccessfully("gulliver");
-    }
-
 }
