@@ -2,8 +2,6 @@ package cucumber.steps;
 
 
 import com.odde.snowball.factory.QuestionBuilder;
-import com.odde.snowball.model.User;
-import com.odde.snowball.model.onlinetest.Question;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -11,17 +9,17 @@ import cucumber.api.java.en.When;
 import cucumber.steps.driver.WebDriverWrapper;
 import cucumber.steps.site.SnowballSite;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static com.odde.snowball.model.base.Repository.repo;
-
 public class PhotographicSteps {
     private final SnowballSite site = new SnowballSite();
     private final WebDriverWrapper driver = site.getDriver();
     private int currentTestTotalQuestions;
 
     //Scenario 1
+    @Given("質問1ある")
+    public void 質問1ある() {
+        QuestionBuilder.buildDefaultQuestion("category").please();
+    }
+
     @When("訓練を開始")
     public void 訓練を開始() {
         site.visit("onlinetest/launchQuiz");

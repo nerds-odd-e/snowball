@@ -10,17 +10,19 @@ Feature: Questions will disappear after correctly answered, assuming the user ha
 
   @developing
   Scenario: If there are 11 questions, the 1st time user finishes 10, and the 2nd time finishes 1, and no more question can be seen
-    Given User is taking a onlinePractice with 10 questions and there are enough questions
+    Given There is a user with email "john@example.com" and password "abcd1002"
+    And I login with "john@example.com" and "abcd1002"
+    And user should see the dashboard
+    Given 質問11ある
+    When User click the Start Practice button
     And User answered 10 questions correctly
     Then 表示文が "Good job!"
     And User click HOME button
-    Then I'm on the admin dashboard
-    And User is taking a onlinePractice with 1 questions and there are enough questions
+    And user should see the dashboard
+    When User click the Start Practice button
     And User answered 1 questions correctly
     Then 表示文が "Good job!"
     And User click HOME button
-    And User is taking a onlinePractice with 0 questions and there are enough questions
-    Then 表示文が "Good job!"
 
 #  @now
 #  Scenario Outline: ユーザが、問題を解くときにまだ正解してない問題を表示する
