@@ -33,5 +33,26 @@ Feature:
     And User answered 10 questions correctly
     Then User should see "Good job!"
 
+  @developing
+  Scenario: 2日以内に回答した問題は出題しないこと
+    Given 問題が1個存在する
+    When プラクティス開始
+    And 1個問題を解く
+    Then "Good job!"が出力される
+    When ホームに遷移
+    And プラクティス開始
+    Then "Good job!"が出力される
 
-
+  @developing
+  Scenario: 1度回答したことがある問題は回答したことがない問題より先に出題される
+    Given 問題が2個存在する
+    When プラクティス開始
+    And 1個問題を解く
+    And 時間を2日経過させる
+    And ホームに遷移
+    And プラクティス開始
+    Then 1度回答した問題が出題される
+    When 問題を解く
+    Then 回答したことがない問題が出題される
+    When 問題を解く
+    Then "Good job!"が出力される
