@@ -1,37 +1,40 @@
 package cucumber.steps;
 
+
+import com.odde.snowball.factory.QuestionBuilder;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import cucumber.steps.driver.WebDriverWrapper;
+import cucumber.steps.site.SnowballSite;
 
 public class PhotographicSteps {
+    private final SnowballSite site = new SnowballSite();
+    private final WebDriverWrapper driver = site.getDriver();
+
     @Given("問題が一問だけある")
     public void 問題が一問だけある() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
+        QuestionBuilder.buildDefaultQuestion("category").please();
     }
 
     @When("訓練を開始")
     public void 訓練を開始() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
+        site.visit("onlinetest/launchQuiz");
     }
 
-    @When("問題を解く")
-    public void 問題を解く() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
+    @When("問題を1問解く")
+    public void 問題を1問解く() {
+        driver.clickRadioButton("correctOption");
+        driver.click("#answer");
     }
 
     @When("訓練開始")
     public void 訓練開始() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
+        site.visit("onlinetest/launchQuiz");
     }
 
-    @Then("問題が表示されない")
-    public void 問題が表示されない() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
+    @Then("表示文が {string}")
+    public void 表示文が(String text) {
+        driver.expectPageToContainText(text);
     }
 }
