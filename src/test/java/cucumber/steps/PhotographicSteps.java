@@ -49,26 +49,9 @@ public class PhotographicSteps {
         driver.click("#start_practice_button");
     }
 
-    @Given("^User is taking a onlinePractice with (\\d+) questions$")
-    public void user_is_taking_a_onlinePractice_with_n_single_questions(int totalQuestions) {
-        this.currentTestTotalQuestions = totalQuestions;
-        site.visit(String.format("launchPractice?question_count=%d", totalQuestions));
-    }
-
-    @Given("^User is taking a onlinePractice with (\\d+) questions and there are enough questions$")
-    public void user_is_taking_a_onlinePractice_with_all_questions(int totalQuestions) {
-        質問を作る(totalQuestions);
-        user_is_taking_a_onlinePractice_with_n_single_questions(totalQuestions);
-    }
-
     @And("User click HOME button")
     public void click_home() {
         driver.click("#home");
-    }
-
-    @Then("^I return to dashboard page$")
-    public void inDashboard() {
-        driver.expectURLToContain("/dashboard");
     }
 
     // Scenario 3
