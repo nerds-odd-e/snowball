@@ -20,11 +20,6 @@ public class PhotographicSteps {
     private final WebDriverWrapper driver = site.getDriver();
 
     //Scenario 1
-    @Given("問題が一問だけある")
-    public void 問題が一問だけある() {
-        QuestionBuilder.buildDefaultQuestion("category").please();
-    }
-
     @When("訓練を開始")
     public void 訓練を開始() {
         site.visit("onlinetest/launchQuiz");
