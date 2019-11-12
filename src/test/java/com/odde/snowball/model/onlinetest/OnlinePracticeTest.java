@@ -5,10 +5,13 @@ import com.odde.snowball.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static com.odde.snowball.model.base.Repository.repo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RunWith(TestWithDB.class)
@@ -39,6 +42,20 @@ public class OnlinePracticeTest {
         createPrivateQuestion(users.get(0));
         generateQuestions(1);
         OnlineTest onlineTest = OnlinePractice.createOnlinePractice(users.get(1), 2);
+        int numberOfQuestions = onlineTest.getNumberOfQuestions();
+        assertEquals(1, numberOfQuestions);
+    }
+
+    @Test
+    public void 解答されている問題は返されないこと() {
+        User user = generateUsers(1).get(0);
+        List<Question> questions = generateQuestions(2);
+        Question question = questions.get(0);
+        Map<String, String> map = new HashMap<>();
+        map.put("userId", user.stringId());
+        map.put("questionId", question.stringId());
+        repo(AnswerStatus.class).fromMap(map).save();
+        OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user, 2);
         int numberOfQuestions = onlineTest.getNumberOfQuestions();
         assertEquals(1, numberOfQuestions);
     }
