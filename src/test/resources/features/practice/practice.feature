@@ -34,7 +34,7 @@ Feature:
     Then User should see "Good job!"
 
   @developing
-  Scenario: 2日以内に回答した問題は出題しないこと
+  Scenario: 回答した当日同じ問題は出題しないこと
     Given 問題が1個存在する
     When User is taking a practiceTest
     And User answered 1 question correctly
@@ -42,6 +42,21 @@ Feature:
     When ホームに遷移
     When User is taking a practiceTest
     Then User should see "問題はありません"
+
+  @developing
+  Scenario: 1日前に回答した問題は出題されないこと
+    Given 問題が1個存在する
+    And 1日前に問題に回答した履歴が存在する
+    When User is taking a practiceTest
+    Then User should see "問題はありません"
+
+  @developing
+  Scenario: 2日前に回答した問題は出題されること
+    Given 問題が1個存在する
+    And 2日前に問題に回答した履歴が存在する
+    When User is taking a practiceTest
+    And User answered 1 question correctly
+    Then User should see "Good job!"
 
   @developing
   Scenario: 1度回答したことがある問題は回答したことがない問題より先に出題される

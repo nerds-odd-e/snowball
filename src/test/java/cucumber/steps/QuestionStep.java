@@ -389,4 +389,16 @@ public class QuestionStep {
             driver.expectURLToContain("/practice/completed_practice.jsp");
         }
     }
+
+    @When("ホームに遷移")
+     public void ホームに遷移() {
+        driver.visit(dashboard_url);
+    }
+
+    @Given("{int}日前に問題に回答した履歴が存在する")
+    public void 問題に回答した履歴が存在する(int dayNumber) {
+        // TODO
+        //  DBに回答履歴を作成
+    }
+
 }
