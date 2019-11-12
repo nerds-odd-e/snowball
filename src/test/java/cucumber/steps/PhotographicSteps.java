@@ -69,5 +69,24 @@ public class PhotographicSteps {
         driver.expectURLToContain("/dashboard");
     }
 
+    // Scenario 3
+    @Given("システムに問題が{int}問ある")
+    public void システムに問題が_問ある(Integer int1) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new cucumber.api.PendingException();
+    }
+
+    @When("{int}問のテストに正解し中断する")
+    public void 問のテストに正解し中断する(Integer int1) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new cucumber.api.PendingException();
+    }
+
+    @Then("正解していない問題が{int}問ある")
+    public void 正解していない問題が_問ある(Integer int1) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new cucumber.api.PendingException();
+    }
+
 
 }

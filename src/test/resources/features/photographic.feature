@@ -23,25 +23,12 @@ Feature: Questions will disappear after correctly answered, assuming the user ha
     And User answered 1 questions correctly
     Then 表示文が "Good job!"
     And User click HOME button
-
-#  @now
-#  Scenario Outline: ユーザが、問題を解くときにまだ正解してない問題を表示する
-#    Given 問題<total_questions>ある
-#    Given システムは、テストユーザ（"test"）を利用する。
-#    Given ユーザは、正解している問題が<answered_questions>問ある
-#    Given 特訓前に正解していない問題が<not_answered_questions_before>問ある
-#    When 3問のテストに正解し中断する
-#    Then 特訓後に正解していない問題が<not_answered_questions_after>問ある
-#    Examples:
-#      | answered_questions | not_answered_questions_before | not_answered_questions_after | total_questions |
-#      | 0                  | 3                             | 3                            | 3               |
-#      | 2                  | 1                             | 1                            | 3               |
-
+    
   @developing
   Scenario: 訓練を中断する。中断した問題から再開する。訓練していない問題だけが表示される。
-    Given 問題が11問ある
+    Given システムに問題が11問ある
     When 3問のテストに正解し中断する
-    Then 問題が8問ある
+    Then 正解していない問題が8問ある
 
 
 
