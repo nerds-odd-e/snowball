@@ -395,10 +395,10 @@ public class QuestionStep {
         driver.visit(dashboard_url);
     }
 
-    @Given("{int}日前に問題に回答した履歴が存在する")
-    public void 問題に回答した履歴が存在する(int dayNumber) {
+    @Given("時間を{int}日経過させる")
+    public void 時間を経過させる(int dayNumber) {
         // TODO
-        //  DBに回答履歴を作成
+        // 回答履歴の日付を{dayNumber}日分過去の日付にする
     }
 
 }
