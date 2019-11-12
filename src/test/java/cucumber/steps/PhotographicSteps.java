@@ -12,6 +12,7 @@ public class PhotographicSteps {
     private final SnowballSite site = new SnowballSite();
     private final WebDriverWrapper driver = site.getDriver();
 
+    //Scenario 1
     @Given("問題が一問だけある")
     public void 問題が一問だけある() {
         QuestionBuilder.buildDefaultQuestion("category").please();
@@ -36,5 +37,38 @@ public class PhotographicSteps {
     @Then("表示文が {string}")
     public void 表示文が(String text) {
         driver.expectPageToContainText(text);
+    }
+
+
+    // Scenario 3
+    @Given("質問{int}ある")
+    public void 質問を作る(int numberOfTimes) {
+        for(int i = 0; i < numberOfTimes; i++) {
+            //todo: デフォルト質問が本当にnumberOfTimes個を作られているかの確認が必要
+            QuestionBuilder.buildDefaultQuestion("category").please();
+        }
+    }
+    @Given("ユーザは、解答されている質問{int}個がある")
+    public void ユーザは_解答されている質問_個がある(Integer int1) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new cucumber.api.PendingException();
+    }
+
+    @Given("解答されてない質問{int}個がある")
+    public void 解答されてない質問_個がある(Integer int1) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new cucumber.api.PendingException();
+    }
+
+    @When("{int}問のテストを行う")
+    public void 問のテストを行う(Integer int1) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new cucumber.api.PendingException();
+    }
+
+    @Then("質問{int}個が表示される")
+    public void 質問_個が表示される(Integer int1) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new cucumber.api.PendingException();
     }
 }
