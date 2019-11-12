@@ -10,6 +10,10 @@ public class AnswerStatus extends Entity<AnswerStatus> {
         return questionId;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
     public void setQuestionId(String questionId) {
         this.questionId = questionId;
     }
