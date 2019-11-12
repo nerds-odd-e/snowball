@@ -36,12 +36,12 @@ Feature:
   @developing
   Scenario: 2日以内に回答した問題は出題しないこと
     Given 問題が1個存在する
-    When プラクティス開始
-    And 1個問題を解く
-    Then "Good job!"が出力される
+    When User is taking a practiceTest
+    And User answered 1 question correctly
+    Then User should see "Good job!"
     When ホームに遷移
-    And プラクティス開始
-    Then "Good job!"が出力される
+    When User is taking a practiceTest
+    Then User should see "問題はありません"
 
   @developing
   Scenario: 1度回答したことがある問題は回答したことがない問題より先に出題される
