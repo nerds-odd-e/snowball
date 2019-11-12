@@ -5,12 +5,13 @@ Feature: Questions will disappear after correctly answered, assuming the user ha
     Given 問題が一問だけある
     When 訓練を開始
     And 問題を1問解く
-    And 訓練開始
+    And 訓練再開始
     Then 表示文が "Good job!"
 
   @developing
   Scenario Outline: ユーザが、問題を解くときにまだ正解してない問題を表示する
     Given 質問<total_questions>ある
+    Given システムは、テストユーザ（"test"）を利用する。
     Given ユーザは、解答されている質問<answered_questions>個がある
     Given 解答されてない質問<not_answered_questions>個がある
     When 3問のテストを行う
