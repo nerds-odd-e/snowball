@@ -51,24 +51,24 @@ public class PhotographicSteps {
     @Given("ユーザは、解答されている質問{int}個がある")
     public void ユーザは_解答されている質問_個がある(Integer int1) {
         // Write code here that turns the phrase above into concrete actions
-//        throw new cucumber.api.PendingException();
+        throw new cucumber.api.PendingException();
     }
 
     @Given("解答されてない質問{int}個がある")
     public void 解答されてない質問_個がある(Integer int1) {
         // Write code here that turns the phrase above into concrete actions
-//        throw new cucumber.api.PendingException();
+        throw new cucumber.api.PendingException();
     }
 
     @When("{int}問のテストを行う")
     public void 問のテストを行う(Integer int1) {
         // Write code here that turns the phrase above into concrete actions
-//        throw new cucumber.api.PendingException();
+        throw new cucumber.api.PendingException();
     }
 
     @Then("質問{int}個が表示される")
     public void 質問_個が表示される(Integer int1) {
         // Write code here that turns the phrase above into concrete actions
-//        throw new cucumber.api.PendingException();
+        throw new cucumber.api.PendingException();
     }
 }
