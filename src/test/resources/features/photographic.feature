@@ -1,4 +1,3 @@
-
 Feature: Questions will disappear after correctly answered, assuming the user has photographic memory
 
   @developing
@@ -23,18 +22,24 @@ Feature: Questions will disappear after correctly answered, assuming the user ha
     And User is taking a onlinePractice with 0 questions and there are enough questions
     Then 表示文が "Good job!"
 
+#  @now
+#  Scenario Outline: ユーザが、問題を解くときにまだ正解してない問題を表示する
+#    Given 問題<total_questions>ある
+#    Given システムは、テストユーザ（"test"）を利用する。
+#    Given ユーザは、正解している問題が<answered_questions>問ある
+#    Given 特訓前に正解していない問題が<not_answered_questions_before>問ある
+#    When 3問のテストに正解し中断する
+#    Then 特訓後に正解していない問題が<not_answered_questions_after>問ある
+#    Examples:
+#      | answered_questions | not_answered_questions_before | not_answered_questions_after | total_questions |
+#      | 0                  | 3                             | 3                            | 3               |
+#      | 2                  | 1                             | 1                            | 3               |
+
   @developing
-  Scenario Outline: ユーザが、問題を解くときにまだ正解してない問題を表示する
-    Given 質問<total_questions>ある
-    Given システムは、テストユーザ（"test"）を利用する。
-    Given ユーザは、解答されている質問<answered_questions>個がある
-    Given 解答されてない質問<not_answered_questions>個がある
-    When 3問のテストを行う
-    Then 質問<questions_to_display>個が表示される
-    Examples:
-      | answered_questions | not_answered_questions | questions_to_display | total_questions |
-      | 0                  | 3                      | 3                    | 3               |
-      | 2                  | 1                      | 1                    | 3               |
+  Scenario: 訓練を中断する。中断した問題から再開する。訓練していない問題だけが表示される。
+    Given 問題が11問ある
+    When 3問のテストに正解し中断する
+    Then 問題が8問ある
 
 
 
