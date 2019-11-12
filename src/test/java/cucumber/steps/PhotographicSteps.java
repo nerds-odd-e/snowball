@@ -2,6 +2,7 @@ package cucumber.steps;
 
 
 import com.odde.snowball.factory.QuestionBuilder;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -11,6 +12,7 @@ import cucumber.steps.site.SnowballSite;
 public class PhotographicSteps {
     private final SnowballSite site = new SnowballSite();
     private final WebDriverWrapper driver = site.getDriver();
+    private int currentTestTotalQuestions;
 
     //Scenario 1
     @When("訓練を開始")
@@ -34,6 +36,33 @@ public class PhotographicSteps {
         driver.expectPageToContainText(text);
     }
 
+    // Scenario 2
+    @When("User click the Start Practice button")
+    public void click_startPractice() {
+        driver.click("#start_practice_button");
+    }
+
+    @Given("^User is taking a onlinePractice with (\\d+) questions$")
+    public void user_is_taking_a_onlinePractice_with_n_single_questions(int totalQuestions) {
+        this.currentTestTotalQuestions = totalQuestions;
+        site.visit(String.format("launchPractice?question_count=%d", totalQuestions));
+    }
+
+    @Given("^User is taking a onlinePractice with (\\d+) questions and there are enough questions$")
+    public void user_is_taking_a_onlinePractice_with_all_questions(int totalQuestions) {
+        質問を作る(totalQuestions);
+        user_is_taking_a_onlinePractice_with_n_single_questions(totalQuestions);
+    }
+
+    @And("User click HOME button")
+    public void click_home() {
+        driver.click("#home");
+    }
+
+    @Then("^I return to dashboard page$")
+    public void inDashboard() {
+        driver.expectURLToContain("/dashboard");
+    }
 
     // Scenario 3
     @Given("質問{int}ある")
