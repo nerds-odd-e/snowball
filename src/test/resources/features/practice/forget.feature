@@ -2,7 +2,7 @@ Feature:
   User can practice questions using Spaced Repetition.
 
 
-  @now
+  @developing
   Scenario: 回答した当日同じ問題は出題しないこと
     Given 問題が1個存在する
     When User is taking a practiceTest
