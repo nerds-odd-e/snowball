@@ -72,8 +72,22 @@ public class PhotographicSteps {
     // Scenario 3
     @Given("システムに問題が{int}問ある")
     public void システムに問題が_問ある(Integer int1) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
+        new QuestionBuilder()
+                .aQuestion("question1", "advice", "Scrum")
+                .mutipleSelections()
+                .withCorrectOption("correctOption1")
+                .withWrongOption("wrongOption1")
+                .withWrongOption("wrongOption2")
+                .withCorrectOption("correctOption2")
+                .please();
+        new QuestionBuilder()
+                .aQuestion("question2", "advice", "Scrum")
+                .mutipleSelections()
+                .withCorrectOption("correctOption3")
+                .withWrongOption("wrongOption3")
+                .withWrongOption("wrongOption4")
+                .withCorrectOption("correctOption4")
+                .please();
     }
 
     @When("{int}問のテストに正解し中断する")
