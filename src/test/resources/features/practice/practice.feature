@@ -32,3 +32,4 @@ Feature:
     When User is taking a practiceTest
     And User answered 10 questions correctly
     Then User should see "Good job!"
+
