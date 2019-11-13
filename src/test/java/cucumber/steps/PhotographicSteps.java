@@ -103,8 +103,7 @@ public class PhotographicSteps {
 
     @Then("正解していない問題が{int}問ある")
     public void 正解していない問題が_問ある(Integer int1) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
+        driver.expectPageToContainText("1/1");
     }
 
 

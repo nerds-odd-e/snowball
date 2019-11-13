@@ -33,6 +33,7 @@ Feature: Questions will disappear after correctly answered, assuming the user ha
     When 訓練を開始する
     And 1問のテストに正解する
     And ホームに戻って中断する
+    And 訓練を開始する
     Then 正解していない問題が1問ある
 
 
