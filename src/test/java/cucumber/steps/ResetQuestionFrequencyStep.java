@@ -29,28 +29,13 @@ public class ResetQuestionFrequencyStep {
         return user;
     }
 
-    @Given("There is a logged in user")
-    public void there_is_a_logged_in_user() {
-        driver.visit(login_url);
-        driver.expectPageToContainText("Login Massive Mailer");
-        driver.setTextField("email", user.getEmail());
-        driver.setTextField("password", password);
-        driver.click("#login");
-    }
+
 
     @Given("The user start the practice")
     public void the_user_start_the_practice() {
         driver.click("#start_practice_button");
     }
 
-    @Given("The user answer {int} correctly")
-    public void the_user_answer_correctly(Integer correctCount) {
-        this.numberOfCorrectAnsweredQuestion = correctCount;
-        for (int i = 0; i < correctCount; ++i) {
-            driver.clickRadioButton("correct");
-            driver.click("#answer");
-        }
-    }
 
     @Given("The user answer {int} incorrectly")
     public void the_user_answer_incorrectly(Integer incorrectCount) {
