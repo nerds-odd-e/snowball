@@ -3,15 +3,15 @@ Feature:
 
   @developing
   Scenario Outline: 2日以内に回答した問題は出題しない
-    Given 問題が<all question count>個存在する
-    And <answer date>日前に回答した問題が<answered question count>個存在する
+    Given 問題が<全ての問題数>個存在する
+    And <前回の回答日>日前に回答した問題が<前回回答した問題数>個存在する
     When User is taking a practiceTest
     Then User should see "<result message>"
     Examples:
-      | all question count| answer date | answered question count   | result message   |
-      |  1                | 0           |  1                        |  問題はありません  |
-      |  1                | 1           |  1                        |  問題はありません  |
-      |  1                | 2           |  1                        |  Question        |
+      | 全ての問題数 | 前回の回答日 | 前回回答した問題数   | result message   |
+      |  1         | 0           |  1                |  問題はありません  |
+      |  1         | 1           |  1                |  問題はありません  |
+      |  1         | 2           |  1                |  Question        |
 
 
   @developing
