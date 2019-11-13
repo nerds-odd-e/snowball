@@ -85,7 +85,6 @@ public class PhotographicSteps {
                     .withCorrectOption("correctOption1")
                     .withWrongOption("wrongOption1")
                     .withWrongOption("wrongOption2")
-                    .withCorrectOption("correctOption2")
                     .please();
         }
     }
@@ -96,9 +95,11 @@ public class PhotographicSteps {
     }
 
     @When("{int}問のテストに正解する")
-    public void 問のテストに正解する(Integer int1) {
-        driver.clickRadioButton("correctOption1");
-        driver.click("#answer");
+    public void 問のテストに正解する(Integer numberAnsweredCorrectly) {
+        for (int i = 0; i < numberAnsweredCorrectly; i++) {
+            driver.clickRadioButton("correctOption1");
+            driver.click("#answer");
+        }
     }
 
     @When("ホームに戻って中断する")
@@ -107,8 +108,8 @@ public class PhotographicSteps {
     }
 
     @Then("正解していない問題が{int}問ある")
-    public void 正解していない問題が_問ある(Integer int1) {
-        driver.expectPageToContainText("1/1");
+    public void 正解していない問題が_問ある(Integer numberAnsweredIncorrectly) {
+        driver.expectPageToContainText(String.format("1/%d",  numberAnsweredIncorrectly));
     }
 
 
