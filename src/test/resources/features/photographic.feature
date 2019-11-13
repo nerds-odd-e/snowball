@@ -13,9 +13,6 @@ Feature: Questions will disappear after correctly answered, assuming the user ha
 
   @developing
   Scenario: If there are 11 questions, the 1st time user finishes 10, and the 2nd time finishes 1, and no more question can be seen
-    Given There is a user with email "john@example.com" and password "abcd1002"
-    And I login with "john@example.com" and "abcd1002"
-    And user should see the dashboard
     Given 質問11ある
     When User click the Start Practice button
     And User answered 10 questions correctly

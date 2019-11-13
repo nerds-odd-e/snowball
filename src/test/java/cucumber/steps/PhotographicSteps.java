@@ -69,6 +69,13 @@ public class PhotographicSteps {
         driver.expectURLToContain("/dashboard");
     }
 
+    @Given("質問{int}ある")
+    public void 質問_ある(Integer questionCount) {
+        for (int i = 0; i < questionCount; i++) {
+            QuestionBuilder.buildDefaultQuestion("category").please();
+        }
+    }
+
     // Scenario 3
     @Given("システムに問題が{int}問ある")
     public void システムに問題が_問ある(Integer int1) {
