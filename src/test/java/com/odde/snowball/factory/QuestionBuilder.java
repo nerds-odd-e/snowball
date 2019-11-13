@@ -4,6 +4,8 @@ import com.odde.snowball.model.onlinetest.Category;
 import com.odde.snowball.model.onlinetest.Question;
 import org.bson.types.ObjectId;
 
+import java.time.LocalDate;
+
 import static com.odde.snowball.model.base.Repository.repo;
 
 public class QuestionBuilder {
@@ -15,7 +17,13 @@ public class QuestionBuilder {
                 .withWrongOption("wrongOption")
                 .withCorrectOption("correctOption");
     }
-
+    public static QuestionBuilder buildQuestionWithDate(int pastDays) {
+        return new QuestionBuilder()
+                .aQuestion("myTest", "", "category")
+                .withWrongOption("wrongOption")
+                .withCorrectOption("correctOption");
+//                .withDateOption(LocalDate.now().minusDays(pastDays));
+    }
     public Question please() {
         return currentQuestion.save();
     }
@@ -48,5 +56,9 @@ public class QuestionBuilder {
         }
         return category.getId();
     }
+
+//    public QuestionBuilder withDateOption(LocalDate localDate) {
+//        currentQuestion.setDate(localDate);
+//    }
 
 }
