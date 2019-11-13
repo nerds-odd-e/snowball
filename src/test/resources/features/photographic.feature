@@ -1,5 +1,8 @@
 Feature: Questions will disappear after correctly answered, assuming the user has photographic memory
 
+  Background:
+    Given user "mary" has logged in successfully
+
   @developing
   Scenario: 一度表示された問題が表示されない
     Given 質問1ある
@@ -23,12 +26,14 @@ Feature: Questions will disappear after correctly answered, assuming the user ha
     And User answered 1 questions correctly
     Then 表示文が "Good job!"
     And User click HOME button
-    
+
   @developing
   Scenario: 訓練を中断する。中断した問題から再開する。訓練していない問題だけが表示される。
-    Given システムに問題が11問ある
-    When 3問のテストに正解し中断する
-    Then 正解していない問題が8問ある
+    Given システムに問題が2問ある
+    When 訓練を開始する
+    And 1問のテストに正解する
+    And ホームに戻って中断する
+    Then 正解していない問題が1問ある
 
 
 

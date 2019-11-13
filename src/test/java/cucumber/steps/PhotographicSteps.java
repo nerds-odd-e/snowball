@@ -74,24 +74,30 @@ public class PhotographicSteps {
     public void システムに問題が_問ある(Integer int1) {
         new QuestionBuilder()
                 .aQuestion("question1", "advice", "Scrum")
-                .mutipleSelections()
-                .withCorrectOption("correctOption1")
+                .withCorrectOption("correctOption")
                 .withWrongOption("wrongOption1")
                 .withWrongOption("wrongOption2")
-                .withCorrectOption("correctOption2")
                 .please();
         new QuestionBuilder()
                 .aQuestion("question2", "advice", "Scrum")
-                .mutipleSelections()
-                .withCorrectOption("correctOption3")
+                .withCorrectOption("correctOption")
                 .withWrongOption("wrongOption3")
                 .withWrongOption("wrongOption4")
-                .withCorrectOption("correctOption4")
                 .please();
     }
 
-    @When("{int}問のテストに正解し中断する")
-    public void 問のテストに正解し中断する(Integer int1) {
+    @When("訓練を開始する")
+    public void 訓練を開始する() {
+        site.visit("launchPractice");
+    }
+
+    @When("{int}問のテストに正解する")
+    public void 問のテストに正解する(Integer int1) {
+        driver.clickRadioButton("correctOption");
+        driver.click("#answer");    }
+
+    @When("ホームに戻って中断する")
+    public void ホームに戻って中断する() {
         // Write code here that turns the phrase above into concrete actions
         throw new cucumber.api.PendingException();
     }
