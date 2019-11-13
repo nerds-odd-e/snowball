@@ -40,7 +40,7 @@ public class LaunchPracticeControllerTest {
     @Test
     public void redirectToAddQuestionPageIfNoQuestionsInOnlineTest() throws Exception {
         controller.doGet(request, response);
-        assertEquals("/practice/completed_practice.jsp", response.getRedirectedUrl());
+        assertEquals("/practice/no_question.jsp", response.getRedirectedUrl());
     }
 
     @Test

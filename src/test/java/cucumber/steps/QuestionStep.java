@@ -393,7 +393,7 @@ public class QuestionStep {
             String text = driver.findElementsWithoutWait("#description").get(0).getText();
             assertEquals("What is scrum?", text);
         } else {
-            driver.expectURLToContain("/practice/completed_practice.jsp");
+            driver.expectURLToContain("/practice/no_question.jsp");
         }
     }
 
@@ -405,7 +405,6 @@ public class QuestionStep {
     @Given("時間を{int}日経過させる")
     public void 時間を経過させる(int dayNumber) {
         // TODO
-        // 回答履歴の日付を{dayNumber}日分過去の日付にする
     }
 
 }

@@ -27,6 +27,12 @@ public class LaunchPracticeController extends AppController {
         }
 
         OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user, questionCount);
+
+        if (onlineTest.getNumberOfQuestions() == 0) {
+            resp.sendRedirect("/practice/no_question.jsp");
+            return;
+        }
+
         if (onlineTest.getCurrentQuestion() == null) {
             resp.sendRedirect("/practice/completed_practice.jsp");
             return;
