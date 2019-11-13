@@ -3,6 +3,8 @@ package com.odde.snowball.controller.onlinetest;
 import com.odde.TestWithDB;
 import com.odde.snowball.model.User;
 import com.odde.snowball.model.onlinetest.*;
+import cucumber.steps.driver.WebDriverWrapper;
+import cucumber.steps.site.SnowballSite;
 import org.bson.types.ObjectId;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,12 +16,14 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.odde.snowball.model.base.Repository.repo;
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -34,6 +38,9 @@ public class AnswerControllerTest {
     private OnlineTest onlineTest;
     private Category scrum = Category.create("Scrum");
     private User currentUser = new User().save();
+
+    private final SnowballSite site = new SnowballSite();
+    private final WebDriverWrapper driver = site.getDriver();
 
     @Before
     public void setUpMockService() {
@@ -60,13 +67,13 @@ public class AnswerControllerTest {
     }
 
     @Test
-    public void postSaveAnswerStatus() throws ServletException, IOException {
+    public void postSaveCorrectAnswerStatus() throws ServletException, IOException {
         question = createQuestionWithOptions(scrum);
         onlineTest = OnlineQuiz.createOnlineQuiz(1);
         request.getSession().setAttribute("onlineTest", onlineTest);
 
-        String optionId = getFirstOptionId(question);
-        request.addParameter("optionId", optionId);
+        List<String> optionId = question.correctOptions();
+        request.addParameter("optionId", optionId.get(0));
         request.addParameter("currentQuestionId", getCurrentQuestionId());
         controller.doPost(request, response);
 
@@ -76,6 +83,7 @@ public class AnswerControllerTest {
                 .collect(Collectors.toList());
 
         Assert.assertEquals(1, answerList.size());
+
     }
 
     @Test
@@ -201,6 +209,5 @@ public class AnswerControllerTest {
         Collection<QuestionOption> options = question.getOptions();
         return options.stream().findFirst().get().stringId();
     }
-
 
 }

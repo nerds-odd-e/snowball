@@ -41,14 +41,14 @@ public class AnswerController extends AppController {
             return;
         }
 
-        Map<String, String> map = new HashMap<>();
-        map.put("userId", user.stringId());
-        map.put("questionId", currentQuestion.stringId());
-        repo(AnswerStatus.class).fromMap(map).save();
+
 
         Answer answer = onlineTest.answerCurrentQuestion(asList(selectedOtpionIds), user, LocalDate.now());
         if (answer.isCorrect()) {
-
+            Map<String, String> map = new HashMap<>();
+            map.put("userId", user.stringId());
+            map.put("questionId", currentQuestion.stringId());
+            repo(AnswerStatus.class).fromMap(map).save();
 
 
             redirectToShowQuestionWithMsg(resp, session, null);
