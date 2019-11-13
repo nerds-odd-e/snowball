@@ -3,6 +3,7 @@ package com.odde.snowball.controller.onlinetest;
 import com.odde.snowball.controller.AppController;
 import com.odde.snowball.model.User;
 import com.odde.snowball.model.onlinetest.Answer;
+import com.odde.snowball.model.onlinetest.AnswerStatus;
 import com.odde.snowball.model.onlinetest.OnlineTest;
 import com.odde.snowball.model.onlinetest.Question;
 
@@ -14,7 +15,10 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import static com.odde.snowball.model.base.Repository.repo;
 import static java.util.Arrays.asList;
 
 @WebServlet("/onlinetest/answer")
@@ -37,8 +41,16 @@ public class AnswerController extends AppController {
             return;
         }
 
+        Map<String, String> map = new HashMap<>();
+        map.put("userId", user.stringId());
+        map.put("questionId", currentQuestion.stringId());
+        repo(AnswerStatus.class).fromMap(map).save();
+
         Answer answer = onlineTest.answerCurrentQuestion(asList(selectedOtpionIds), user, LocalDate.now());
         if (answer.isCorrect()) {
+
+
+
             redirectToShowQuestionWithMsg(resp, session, null);
             return;
         }

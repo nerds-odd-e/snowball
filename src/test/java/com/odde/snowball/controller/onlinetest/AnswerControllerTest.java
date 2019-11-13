@@ -4,6 +4,7 @@ import com.odde.TestWithDB;
 import com.odde.snowball.model.User;
 import com.odde.snowball.model.onlinetest.*;
 import org.bson.types.ObjectId;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +17,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import static com.odde.snowball.model.base.Repository.repo;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -54,6 +57,25 @@ public class AnswerControllerTest {
                 .save();
 
         return question;
+    }
+
+    @Test
+    public void postSaveAnswerStatus() throws ServletException, IOException {
+        question = createQuestionWithOptions(scrum);
+        onlineTest = OnlineQuiz.createOnlineQuiz(1);
+        request.getSession().setAttribute("onlineTest", onlineTest);
+
+        String optionId = getFirstOptionId(question);
+        request.addParameter("optionId", optionId);
+        request.addParameter("currentQuestionId", getCurrentQuestionId());
+        controller.doPost(request, response);
+
+        List<String> answerList = repo(AnswerStatus.class).findBy("userId", currentUser.stringId())
+                .stream()
+                .map(a -> a.getQuestionId())
+                .collect(Collectors.toList());
+
+        Assert.assertEquals(1, answerList.size());
     }
 
     @Test
