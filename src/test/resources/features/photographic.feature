@@ -9,7 +9,7 @@ Feature: Questions will disappear after correctly answered, assuming the user ha
     And User answered 1 question correctly
     And ホームに戻る
     And 訓練開始
-    Then 表示文が "Good job!"
+    Then 表示文が "出題する問題がありません"
 
   Scenario: 正解した問題が表示されない(11問以上)
     Given 質問11ある
