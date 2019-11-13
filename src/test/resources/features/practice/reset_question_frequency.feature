@@ -13,3 +13,20 @@ Feature: The frequency of a question will be set to the base level if the user a
     And The user has seen the "Good job!"
     When User start the practice again
     Then User only sees the same question that was answer incorrectly
+
+  @developing
+  Scenario: If the user keep answer the question incorrectly, the user will keep see it on next practice
+    Given There is a logged in user
+    Given There are questions with dummy options:
+      | description         | advice               | category | correctOption |
+      | What is PO?         | PO is Product Owner  | Scrum    | correct       |
+    And The user start the practice
+    Then User only sees the same question that was answer incorrectly
+    And The user answer 1 incorrectly
+    And The user has seen the "Good job!"
+    When User start the practice again
+    Then User only sees the same question that was answer incorrectly
+    And The user answer 1 incorrectly
+    And The user has seen the "Good job!"
+    When User start the practice again
+    Then User only sees the same question that was answer incorrectly
