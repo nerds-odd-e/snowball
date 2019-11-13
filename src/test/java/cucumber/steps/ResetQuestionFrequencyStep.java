@@ -73,8 +73,8 @@ public class ResetQuestionFrequencyStep {
         driver.click("#start_practice_button");
     }
 
-    @Then("User only sees the same question that was answer incorrectly")
-    public void user_only_sees_the_same_question_that_was_answer_incorrectly() {
-        driver.expectPageToContainText("What is PO?");
+    @Then("User only sees the {string} that was incorrect")
+    public void user_only_sees_the_same_question_that_was_answer_incorrectly(String text) {
+        driver.expectPageToContainText(text);
     }
 }
