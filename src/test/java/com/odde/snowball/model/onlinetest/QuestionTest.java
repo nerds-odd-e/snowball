@@ -7,6 +7,7 @@ import org.bson.types.ObjectId;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static com.odde.snowball.model.base.Repository.repo;
@@ -86,5 +87,14 @@ public class QuestionTest {
         new Question("desc", "adv", categoryId, false, false).save();
         List<Question> questions = repo(Question.class).findAll();
         assertEquals(questions.size(), 2);
+    }
+
+    @Test
+    public void 回答した日付を設定できる() {
+//        Question question = new Question("desc", "adv", categoryId, false, false);
+//        LocalDate expectedDate = LocalDate.now();
+//        question.setDate(expectedDate);
+//        LocalDate resultDate = question.getDate();
+//        assertSame(expectedDate,resultDate);
     }
 }
