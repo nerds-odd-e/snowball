@@ -19,6 +19,10 @@ public class LaunchPracticeController extends AppController {
         HttpSession session = req.getSession(true);
         User user = (User) session.getAttribute("currentUser");
         session.setAttribute("date", LocalDate.now());
+        if(req.getParameter("date") != null) {
+            session.setAttribute("onlineTestStartDate", req.getParameter("date"));
+        }
+
 
         int questionCount = 10;
         String countParameter = req.getParameter("question_count");

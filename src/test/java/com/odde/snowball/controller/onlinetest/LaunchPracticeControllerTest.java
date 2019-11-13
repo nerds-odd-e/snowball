@@ -6,6 +6,7 @@ import com.odde.snowball.model.base.Entity;
 import com.odde.snowball.model.onlinetest.Category;
 import com.odde.snowball.model.onlinetest.OnlineTest;
 import com.odde.snowball.model.onlinetest.Question;
+import net.bytebuddy.asm.Advice;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,12 +14,14 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 @RunWith(TestWithDB.class)
 public class LaunchPracticeControllerTest {
@@ -109,4 +112,15 @@ public class LaunchPracticeControllerTest {
         OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
         assertThat(onlineTest).isNull();
     }
+
+    @Test
+    public void startWithQueryDate() throws IOException {
+        //ToDo あとでlocalDateにする
+        request.addParameter("date", "2019/01/01");
+        controller.doGet(request, response);
+
+        String actual = (String) request.getSession().getAttribute("onlineTestStartDate");
+        assertEquals("2019/01/01", actual);
+    }
+
 }
