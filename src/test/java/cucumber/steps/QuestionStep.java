@@ -78,6 +78,13 @@ public class QuestionStep {
         }
     }
 
+    @Given("(\\d+)日前に回答した問題が(\\d+)個存在する")
+    public void create_answered_questions(int pastDays, int numberOfQuestions) {
+        for (int i = 0; i < numberOfQuestions; i++) {
+            QuestionBuilder.buildAnsweredQuestion(pastDays).please();
+        }
+    }
+
     @Given("問題が(\\d+)個存在する")
     public void create_questions(int numberOfQuestions) {
         create_questions_with_category(numberOfQuestions, "Category");
