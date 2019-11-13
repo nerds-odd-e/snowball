@@ -12,9 +12,11 @@ import cucumber.api.java.en.When;
 import cucumber.steps.driver.WebDriverWrapper;
 import cucumber.steps.site.SnowballSite;
 import org.bson.types.ObjectId;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.Color;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -78,11 +80,12 @@ public class QuestionStep {
         }
     }
 
-    @Given("(\\d+)日前に回答した問題が(\\d+)個存在する")
+    @Given("(\\d+)日前に問題を(\\d+)個回答した")
     public void create_answered_questions(int pastDays, int numberOfQuestions) {
-        for (int i = 0; i < numberOfQuestions; i++) {
-//            QuestionBuilder.buildAnsweredQuestion(pastDays).please();
-        }
+        create_questions(numberOfQuestions);
+        LocalDate answerDate = LocalDate.now().minusDays(pastDays);
+        site.visit("launchPractice?date=" + answerDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+        user_answered_correctly_the(numberOfQuestions);
     }
 
     @Given("問題が(\\d+)個存在する")

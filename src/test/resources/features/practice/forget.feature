@@ -4,7 +4,7 @@ Feature:
   @developing
   Scenario Outline: 2日以内に回答した問題は出題しない
     Given 問題が<全ての問題数>個存在する
-    And <前回の回答日>日前に回答した問題が<前回回答した問題数>個存在する
+    And <前回の回答日>日前に問題を<前回回答した問題数>個回答した
     When User is taking a practiceTest
     Then User should see "<result message>"
     Examples:
