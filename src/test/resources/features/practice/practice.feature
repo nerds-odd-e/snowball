@@ -13,6 +13,7 @@ Feature:
     When User answered 1 questions correctly
     Then User should see "Good job!"
 
+  @developing
   Scenario: Return first question should be shown if questions have been answered today
     Given User is taking a practiceTest
     When User answered 1 question correctly
