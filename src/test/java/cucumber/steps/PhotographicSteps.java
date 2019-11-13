@@ -98,8 +98,7 @@ public class PhotographicSteps {
 
     @When("ホームに戻って中断する")
     public void ホームに戻って中断する() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
+        site.visit("dashboard");
     }
 
     @Then("正解していない問題が{int}問ある")
