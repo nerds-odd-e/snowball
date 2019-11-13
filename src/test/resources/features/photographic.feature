@@ -3,26 +3,23 @@ Feature: Questions will disappear after correctly answered, assuming the user ha
   Background:
     Given user "mary" has logged in successfully
 
-  @developing
-  Scenario: 一度表示された問題が表示されない
+  Scenario: 正解した問題が表示されない
     Given 質問1ある
-    When 訓練を開始
-    And 問題を1問解く
-    And 訓練再開始
+    When 訓練開始
+    And User answered 1 question correctly
+    And ホームに戻る
+    And 訓練開始
     Then 表示文が "Good job!"
 
-  @developing
-  Scenario: If there are 11 questions, the 1st time user finishes 10, and the 2nd time finishes 1, and no more question can be seen
+  Scenario: 正解した問題が表示されない(11問以上)
     Given 質問11ある
-    When User click the Start Practice button
-    And User answered 10 questions correctly
+    When 訓練開始
+    And User answered 10 question correctly
+    And ホームに戻る
+    When 訓練開始
+    And User answered 1 question correctly
     Then 表示文が "Good job!"
-    And User click HOME button
-    And user should see the dashboard
-    When User click the Start Practice button
-    And User answered 1 questions correctly
-    Then 表示文が "Good job!"
-    And User click HOME button
+    And ホームに戻る
 
   @developing
   Scenario Outline: 訓練を中断する。中断した問題から再開する。訓練していない問題だけが表示される。
