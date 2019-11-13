@@ -1,6 +1,9 @@
 Feature:
   結果画面でカテゴリ毎にファイナルスコアの出力をテストする事
 
+  Background:
+    Given user "mary" has logged in successfully
+
   Scenario Outline: テストの正答率がn％の時、最終ページの回答率欄にnが表示される
     And User is taking a onlineTest with <number_of_question> questions and there are enough questions
     And  User answered <number_of_correct> questions correctly

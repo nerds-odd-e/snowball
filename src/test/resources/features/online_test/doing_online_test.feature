@@ -1,6 +1,9 @@
 Feature:
   User can take an online test :)
 
+  Background:
+    Given user "mary" has logged in successfully
+
   Scenario: Displaying the question
     Given There are questions with dummy options:
       | description    | correctOption     | category |

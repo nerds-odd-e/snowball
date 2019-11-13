@@ -2,6 +2,7 @@ Feature:
   User can add private questions
 
   Background: Display Add Question page
+    Given user "mary" has logged in successfully
     Given there is a question category "Scrum"
 
   Scenario: TerryがPrivateな質問を追加できる

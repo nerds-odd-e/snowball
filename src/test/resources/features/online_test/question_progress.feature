@@ -2,6 +2,8 @@ Feature:
   User can see his progress on the Question and Advice page :)
 
   Background:
+    Given user "mary" has logged in successfully
+
     Given There are questions with dummy options:
       | description            | category |
       | What is scrum?         | Scrum    |
