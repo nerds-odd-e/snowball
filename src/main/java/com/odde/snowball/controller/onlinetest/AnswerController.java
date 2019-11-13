@@ -30,18 +30,9 @@ public class AnswerController extends AppController {
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
         String[] selectedOtpionIds = req.getParameterValues("optionId");
 
-        if (selectedOtpionIds == null) {
-            redirectToShowQuestionWithMsg(resp, session, "You haven't selected any option.");
-            return;
-        }
-
         Question currentQuestion = onlineTest.getCurrentQuestion();
-        if (currentQuestion == null || !currentQuestion.stringId().equals(req.getParameter("currentQuestionId"))) {
-            redirectToShowQuestionWithMsg(resp, session, "You answered previous question twice");
-            return;
-        }
 
-
+        if (validateQuestionOptions(req, resp, session, selectedOtpionIds, currentQuestion)) return;
 
         Answer answer = onlineTest.answerCurrentQuestion(asList(selectedOtpionIds), user, LocalDate.now());
         if (answer.isCorrect()) {
@@ -50,8 +41,7 @@ public class AnswerController extends AppController {
             map.put("questionId", currentQuestion.stringId());
             repo(AnswerStatus.class).fromMap(map).save();
 
-
-            redirectToShowQuestionWithMsg(resp, session, null);
+            redirectWithMessage(resp, session, null);
             return;
         }
         req.setAttribute("selectedOption", new ArrayList<>(asList(selectedOtpionIds)));
@@ -60,9 +50,22 @@ public class AnswerController extends AppController {
         req.getRequestDispatcher("/onlinetest/advice.jsp").forward(req, resp);
     }
 
-    private void redirectToShowQuestionWithMsg(HttpServletResponse resp, HttpSession session, String msg) throws IOException {
+    private boolean validateQuestionOptions(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String[] selectedOtpionIds, Question currentQuestion) throws IOException {
+        if (selectedOtpionIds == null) {
+            return redirectWithMessage(resp, session, "You haven't selected any option.");
+        }
+
+        if (currentQuestion == null || !currentQuestion.stringId().equals(req.getParameter("currentQuestionId"))) {
+            return redirectWithMessage(resp, session, "You answered previous question twice");
+        }
+
+        return false;
+    }
+
+    private boolean redirectWithMessage(HttpServletResponse resp, HttpSession session, String msg) throws IOException {
         session.setAttribute("alertMsg", msg);
         resp.sendRedirect("/onlinetest/question");
+        return true;
     }
 
 }
