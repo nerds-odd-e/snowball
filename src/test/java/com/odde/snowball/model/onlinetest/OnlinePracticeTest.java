@@ -1,6 +1,7 @@
 package com.odde.snowball.model.onlinetest;
 
 import com.odde.TestWithDB;
+import com.odde.snowball.model.ContactPerson;
 import com.odde.snowball.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -70,7 +71,9 @@ public class OnlinePracticeTest {
 
     private List<Question> generateQuestions(int numberOfQuestion) {
         Category category = new Category().save();
-        return IntStream.range(0, numberOfQuestion).mapToObj(index -> new Question("desc" + index, "adv" + index, category.getId(), false, false).save()).collect(Collectors.toList());
+        return IntStream.range(0, numberOfQuestion)
+                .mapToObj(index -> new Question("desc" + index, "adv" + index, category.getId(), false, false).save())
+                .collect(Collectors.toList());
     }
 
 }
