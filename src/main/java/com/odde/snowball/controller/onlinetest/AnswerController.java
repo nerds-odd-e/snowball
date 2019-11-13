@@ -28,29 +28,35 @@ public class AnswerController extends AppController {
         User user = (User) session.getAttribute("currentUser");
 
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
-        String[] selectedOtpionIds = req.getParameterValues("optionId");
+        String[] selectedOptionIds = req.getParameterValues("optionId");
 
         Question currentQuestion = onlineTest.getCurrentQuestion();
 
-        if (validateQuestionOptions(req, resp, session, selectedOtpionIds, currentQuestion)) return;
+        if (isValidRequest(req, resp, session, selectedOptionIds, currentQuestion)) return;
 
-        Answer answer = onlineTest.answerCurrentQuestion(asList(selectedOtpionIds), user, LocalDate.now());
-        if (answer.isCorrect()) {
-            Map<String, String> map = new HashMap<>();
-            map.put("userId", user.stringId());
-            map.put("questionId", currentQuestion.stringId());
-            repo(AnswerStatus.class).fromMap(map).save();
-
+        Answer answer = onlineTest.answerCurrentQuestion(asList(selectedOptionIds), user, LocalDate.now());
+        if (saveAnswerStatus(user, currentQuestion, answer)) {
             redirectWithMessage(resp, session, null);
             return;
         }
-        req.setAttribute("selectedOption", new ArrayList<>(asList(selectedOtpionIds)));
+        req.setAttribute("selectedOption", new ArrayList<>(asList(selectedOptionIds)));
         req.setAttribute("currentQuestion", currentQuestion);
         req.setAttribute("progress", onlineTest.progress(-1));
         req.getRequestDispatcher("/onlinetest/advice.jsp").forward(req, resp);
     }
 
-    private boolean validateQuestionOptions(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String[] selectedOtpionIds, Question currentQuestion) throws IOException {
+    private boolean saveAnswerStatus(User user, Question currentQuestion, Answer answer) {
+        if (answer.isCorrect()) {
+            Map<String, String> map = new HashMap<>();
+            map.put("userId", user.stringId());
+            map.put("questionId", currentQuestion.stringId());
+            repo(AnswerStatus.class).fromMap(map).save();
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isValidRequest(HttpServletRequest req, HttpServletResponse resp, HttpSession session, String[] selectedOtpionIds, Question currentQuestion) throws IOException {
         if (selectedOtpionIds == null) {
             return redirectWithMessage(resp, session, "You haven't selected any option.");
         }
