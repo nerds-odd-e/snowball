@@ -72,18 +72,15 @@ public class PhotographicSteps {
     // Scenario 3
     @Given("システムに問題が{int}問ある")
     public void システムに問題が_問ある(Integer int1) {
-        new QuestionBuilder()
-                .aQuestion("question1", "advice", "Scrum")
-                .withCorrectOption("correctOption")
-                .withWrongOption("wrongOption1")
-                .withWrongOption("wrongOption2")
-                .please();
-        new QuestionBuilder()
-                .aQuestion("question2", "advice", "Scrum")
-                .withCorrectOption("correctOption")
-                .withWrongOption("wrongOption3")
-                .withWrongOption("wrongOption4")
-                .please();
+        for (int i = 0; i < int1; i++) {
+            new QuestionBuilder()
+                    .aQuestion("question" + i, "advice", "Scrum")
+                    .withCorrectOption("correctOption1")
+                    .withWrongOption("wrongOption1")
+                    .withWrongOption("wrongOption2")
+                    .withCorrectOption("correctOption2")
+                    .please();
+        }
     }
 
     @When("訓練を開始する")
@@ -93,8 +90,9 @@ public class PhotographicSteps {
 
     @When("{int}問のテストに正解する")
     public void 問のテストに正解する(Integer int1) {
-        driver.clickRadioButton("correctOption");
-        driver.click("#answer");    }
+        driver.clickRadioButton("correctOption1");
+        driver.click("#answer");
+    }
 
     @When("ホームに戻って中断する")
     public void ホームに戻って中断する() {

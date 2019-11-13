@@ -27,14 +27,16 @@ Feature: Questions will disappear after correctly answered, assuming the user ha
     Then 表示文が "Good job!"
     And User click HOME button
 
-  @developing
-  Scenario: 訓練を中断する。中断した問題から再開する。訓練していない問題だけが表示される。
+  @now
+  Scenario Outline: 訓練を中断する。中断した問題から再開する。訓練していない問題だけが表示される。
     Given システムに問題が2問ある
     When 訓練を開始する
-    And 1問のテストに正解する
+    And <answer_correctly_count>問のテストに正解する
     And ホームに戻って中断する
     And 訓練を開始する
-    Then 正解していない問題が1問ある
-
+    Then 正解していない問題が<answer_incorrectly_count>問ある
+    Examples:
+      | answer_correctly_count | answer_incorrectly_count |
+      | 1                      | 1                        |
 
 
