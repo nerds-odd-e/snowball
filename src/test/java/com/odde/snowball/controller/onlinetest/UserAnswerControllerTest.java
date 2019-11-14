@@ -199,6 +199,40 @@ public class UserAnswerControllerTest {
         assertThat(onlineTest.testResult().getCorrectAnswerCount()).isEqualTo(0);
     }
 
+    @Test
+    public void doPostWithIncorrectOption() throws ServletException, IOException {
+        question = createQuestionWithOptions(scrum);
+        onlineTest = spy(OnlineQuiz.createOnlineQuiz(1));
+        request.getSession().setAttribute("onlineTest", onlineTest);
+
+        List<String> optionId = question.inCorrectOptions();
+        request.addParameter("optionId", optionId.get(0));
+        request.addParameter("currentQuestionId", getCurrentQuestionId());
+        controller.doPost(request, response);
+
+        List<AnswerStatus> answerList = repo(AnswerStatus.class).findBy("userId", currentUser.stringId());
+
+        Assert.assertEquals(0, answerList.size());
+    }
+
+    @Test
+    public void postPracticeSaveUserAnswer() throws ServletException, IOException {
+        question = createQuestionWithOptions(scrum);
+        onlineTest = spy(OnlineQuiz.createOnlineQuiz(1));
+        request.getSession().setAttribute("onlineTest", onlineTest);
+        List<String> optionId = question.correctOptions();
+        request.addParameter("optionId", optionId.get(0));
+        request.addParameter("currentQuestionId", getCurrentQuestionId());
+
+        request.getSession().setAttribute("isPractice","true");
+        controller.doPost(request, response);
+        assertEquals("true",request.getSession().getAttribute("isPractice"));
+
+        List<UserAnswer> userAnswers = repo(UserAnswer.class).findAll();
+        Assert.assertEquals(1, userAnswers.size());
+
+    }
+
     public static String getFirstOptionId(Question question) {
         Collection<QuestionOption> options = question.getOptions();
         return options.stream().findFirst().get().stringId();
