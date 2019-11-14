@@ -35,7 +35,8 @@ public class UserAnswerController extends AppController {
         if (isValidRequest(req, resp, session, selectedOptionIds, currentQuestion)) return;
 
         UserAnswer answer = onlineTest.answerCurrentQuestion(asList(selectedOptionIds), user, LocalDate.now());
-        if (saveAnswerStatus(user, currentQuestion, answer)) {
+        answer.setUser(user);
+        if (saveAnswerStatus(currentQuestion, answer)) {
             redirectWithMessage(resp, session, null);
             return;
         }
@@ -45,10 +46,10 @@ public class UserAnswerController extends AppController {
         req.getRequestDispatcher("/onlinetest/advice.jsp").forward(req, resp);
     }
 
-    private boolean saveAnswerStatus(User user, Question currentQuestion, UserAnswer answer) {
+    private boolean saveAnswerStatus(Question currentQuestion, UserAnswer answer) {
         if (answer.isCorrect()) {
             Map<String, String> map = new HashMap<>();
-            map.put("userId", user.stringId());
+            map.put("userId", answer.getUser().stringId());
             map.put("questionId", currentQuestion.stringId());
             repo(AnswerStatus.class).fromMap(map).save();
             return true;
