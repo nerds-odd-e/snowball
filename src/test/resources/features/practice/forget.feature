@@ -13,27 +13,15 @@ Feature:
       |  1         | 1           |  1                |  問題はありません  |
       |  1         | 2           |  1                |  Question        |
 
-
   @developing
   Scenario: 1度回答したことがある問題は回答したことがない問題より先に出題される
-    Given 問題が1個存在する
+    Given There are questions with dummy options:
+      | description     | correctOption     | category |
+      | What is scrum?  | None of the above | Scrum    |
+      | What is TDD?    | None of the above | Scrum    |
     When User is taking a practiceTest
-    And 1個問題を解く
+    And What is scrum? の問題を解く
     And 時間を2日経過させる
     And User is taking a practiceTest
-    Then 1度回答した問題が出題される
-    When User answered 1 question correctly
-    Then User should see "Good job!"
+    Then What is scrum? の問題が出る
 
-  @developing
-  Scenario: 1度回答したことがある問題は回答したことがない問題より先に出題される
-    Given 問題が2個存在する
-    When User is taking a practiceTest
-    And User answered 1 question correctly
-    And 時間を2日経過させる
-    And User is taking a practiceTest
-    Then 1度回答した問題が出題される
-    When User answered 1 question correctly
-    Then 回答したことがない問題が出題される
-    When User answered 1 question correctly
-    Then User should see "Good job!"
