@@ -53,6 +53,8 @@ public class UserAnswerController extends AppController {
             map.put("questionId", currentQuestion.stringId());
             repo(AnswerStatus.class).fromMap(map).save();
 
+            answer.save();
+
 //            repo(UserAnswer.class).fromMap(map).save();
             return true;
         }
