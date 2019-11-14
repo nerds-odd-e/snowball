@@ -5,6 +5,7 @@ import com.odde.snowball.model.User;
 import com.odde.snowball.model.onlinetest.UserAnswer;
 import com.odde.snowball.model.onlinetest.OnlineTest;
 import com.odde.snowball.model.onlinetest.Question;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import static java.util.Arrays.asList;
 
@@ -29,7 +31,16 @@ public class UserAnswerController extends AppController {
 
         if (isValidRequest(req, resp, session, selectedOptionIds, currentQuestion)) return;
 
-        UserAnswer answer = onlineTest.answerCurrentQuestion(asList(selectedOptionIds), user, LocalDate.now());
+        String dateString = (String)req.getSession().getAttribute("onlineTestStartDate");
+        LocalDate localDate;
+
+        if(StringUtils.isEmpty(dateString)) {
+            localDate = LocalDate.now();
+        } else {
+            localDate = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+        }
+
+        UserAnswer answer = onlineTest.answerCurrentQuestion(asList(selectedOptionIds), user, localDate);
         answer.setUser(user);
         answer.setUserId(user.stringId());
 

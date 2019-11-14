@@ -3,6 +3,8 @@ package com.odde.snowball.model.onlinetest;
 import com.odde.snowball.model.User;
 import com.odde.snowball.model.base.Entity;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class UserAnswer extends Entity<UserAnswer> {
@@ -10,11 +12,18 @@ public class UserAnswer extends Entity<UserAnswer> {
     private Question question;
     private List<String> selectedOptionIds;
     private User user;
+    private String date;
 
     private String questionId;
     private String userId;
 
     public UserAnswer() {
+    }
+
+    UserAnswer(Question question, List<String> selectedOptionIds, LocalDate date) {
+        this.question = question;
+        this.selectedOptionIds = selectedOptionIds;
+        this.date = getDateString(date);
     }
 
     UserAnswer(Question question, List<String> selectedOptionIds) {
@@ -56,5 +65,13 @@ public class UserAnswer extends Entity<UserAnswer> {
 
     public String getUserId() {
         return this.userId;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getDateString(LocalDate date) {
+        return date.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
     }
 }

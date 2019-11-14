@@ -10,22 +10,24 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.stubbing.Answer;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.zip.ZipFile;
 
 import static com.odde.snowball.model.base.Repository.repo;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 @RunWith(TestWithDB.class)
@@ -199,6 +201,32 @@ public class UserAnswerControllerTest {
         assertThat(onlineTest.testResult().getCorrectAnswerCount()).isEqualTo(0);
     }
 
+
+    public void セッションの日付で回答履歴が保存できる() throws ServletException, IOException {
+
+        String expected = "2019/01/01";
+        request.getSession().setAttribute("onlineTestStartDate", expected);
+
+        question = createQuestionWithOptions(scrum);
+        onlineTest = OnlineQuiz.createOnlineQuiz(1);
+        request.addParameter("currentQuestionId", getCurrentQuestionId());
+        request.getSession().setAttribute("onlineTest", onlineTest);
+
+        String wrongOptionId = getFirstOptionId(question);
+        List<String> correctOptionId = question.correctOptions();
+
+        final String[] answeredOption = new String[2];
+        answeredOption[0] = correctOptionId.get(0);
+        answeredOption[1] = wrongOptionId;
+
+        request.addParameter("optionId", answeredOption);
+
+        controller.doPost(request, response);
+
+        UserAnswer answer1 = repo(UserAnswer.class).findFirstBy("date", expected);
+        assertNotNull(answer1);
+    }
+
     @Test
     public void doPostWithIncorrectOption() throws ServletException, IOException {
         question = createQuestionWithOptions(scrum);
@@ -210,7 +238,7 @@ public class UserAnswerControllerTest {
         request.addParameter("currentQuestionId", getCurrentQuestionId());
         controller.doPost(request, response);
 
-        List<AnswerStatus> answerList = repo(AnswerStatus.class).findBy("userId", currentUser.stringId());
+        List<UserAnswer> answerList = repo(UserAnswer.class).findBy("userId", currentUser.stringId());
 
         Assert.assertEquals(0, answerList.size());
     }

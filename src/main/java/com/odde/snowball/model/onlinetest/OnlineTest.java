@@ -35,7 +35,7 @@ public abstract class OnlineTest {
 
     public UserAnswer answerCurrentQuestion(List<String> selectedOptionIds, User user, LocalDate date) {
         Question currentQuestion = getCurrentQuestion();
-        UserAnswer answer = new UserAnswer(currentQuestion, selectedOptionIds);
+        UserAnswer answer = new UserAnswer(currentQuestion, selectedOptionIds, date);
         answers.add(answer);
         return answer;
     }
