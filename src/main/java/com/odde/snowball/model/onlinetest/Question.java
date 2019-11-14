@@ -91,4 +91,8 @@ public class Question extends Entity<Question> {
         addOption(option);
         return this;
     }
+
+    public List<String> inCorrectOptions() {
+        return getOptions().stream().filter(questionOption -> !questionOption.isCorrect()).map(QuestionOption::stringId).collect(toList());
+    }
 }

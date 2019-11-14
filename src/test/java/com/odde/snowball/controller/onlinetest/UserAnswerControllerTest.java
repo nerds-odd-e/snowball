@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.zip.ZipFile;
 
 import static com.odde.snowball.model.base.Repository.repo;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
@@ -75,11 +76,7 @@ public class UserAnswerControllerTest {
         request.addParameter("currentQuestionId", getCurrentQuestionId());
         controller.doPost(request, response);
 
-        List<String> answerList = repo(AnswerStatus.class).findBy("userId", currentUser.stringId())
-                .stream()
-                .map(a -> a.getQuestionId())
-                .collect(Collectors.toList());
-
+        List<AnswerStatus> answerList = repo(AnswerStatus.class).findBy("userId", currentUser.stringId());
         Assert.assertEquals(1, answerList.size());
 
     }
@@ -201,6 +198,22 @@ public class UserAnswerControllerTest {
         HttpSession session = request.getSession();
         OnlineTest onlineTest = (OnlineTest) session.getAttribute("onlineTest");
         assertThat(onlineTest.testResult().getCorrectAnswerCount()).isEqualTo(0);
+    }
+
+    @Test
+    public void doPostWithIncorrectOption() throws ServletException, IOException {
+        question = createQuestionWithOptions(scrum);
+        onlineTest = spy(OnlineQuiz.createOnlineQuiz(1));
+        request.getSession().setAttribute("onlineTest", onlineTest);
+
+        List<String> optionId = question.inCorrectOptions();
+        request.addParameter("optionId", optionId.get(0));
+        request.addParameter("currentQuestionId", getCurrentQuestionId());
+        controller.doPost(request, response);
+
+        List<AnswerStatus> answerList = repo(AnswerStatus.class).findBy("userId", currentUser.stringId());
+
+        Assert.assertEquals(0, answerList.size());
     }
 
     public static String getFirstOptionId(Question question) {
