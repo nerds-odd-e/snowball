@@ -26,6 +26,10 @@ public class UserAnswer extends Entity<UserAnswer> {
         return question;
     }
 
+    public void setQuestion(Question question){
+        this.question = question;
+    }
+
     private List<String> getSelectedOptionIds() {
         return selectedOptionIds;
     }
@@ -44,5 +48,13 @@ public class UserAnswer extends Entity<UserAnswer> {
 
     public String getQuestionId() {
         return null;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getUserId() {
+        return this.userId;
     }
 }

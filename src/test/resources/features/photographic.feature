@@ -3,16 +3,14 @@ Feature: Questions will disappear after correctly answered, assuming the user ha
   Background:
     Given user "mary" has logged in successfully
 
-  @developing
   Scenario: 正解した問題が表示されない
     Given 質問1ある
     When 訓練開始
     And User answered 1 question correctly
     And ホームに戻る
     And 訓練開始
-    Then 表示文が "出題する問題はありません"
+    Then 表示文が "出題する問題がありません"
 
-  @developing
   Scenario: 正解した問題が表示されない(11問以上)
     Given 質問11ある
     When 訓練開始

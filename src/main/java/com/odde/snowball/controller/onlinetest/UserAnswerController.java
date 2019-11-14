@@ -32,6 +32,7 @@ public class UserAnswerController extends AppController {
 
         UserAnswer answer = onlineTest.answerCurrentQuestion(asList(selectedOptionIds), user, LocalDate.now());
         answer.setUser(user);
+        answer.setUserId(user.stringId());
         if (saveAnswerStatus(answer)) {
             redirectWithMessage(resp, session, null);
             return;

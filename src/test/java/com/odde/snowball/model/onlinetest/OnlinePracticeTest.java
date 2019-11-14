@@ -6,6 +6,7 @@ import com.odde.snowball.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,10 +53,10 @@ public class OnlinePracticeTest {
         User user = generateUsers(1).get(0);
         List<Question> questions = generateQuestions(2);
         Question question = questions.get(0);
-        Map<String, String> map = new HashMap<>();
-        map.put("userId", user.stringId());
-        map.put("questionId", question.stringId());
-        repo(AnswerStatus.class).fromMap(map).save();
+        UserAnswer answer = new UserAnswer(question, new ArrayList<String>());
+        answer.setUser(user);
+        answer.setUserId(user.stringId());
+        answer.save();
         OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user, 2);
         int numberOfQuestions = onlineTest.getNumberOfQuestions();
         assertEquals(1, numberOfQuestions);
