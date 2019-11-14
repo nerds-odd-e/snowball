@@ -21,7 +21,7 @@ Feature:
       | What is TDD?    | None of the above | Scrum    |
     When User is taking a practiceTest
     And What is scrum? の問題を解く
-    And ホームに戻る
+    And ホームに戻って中断する
     And 時間を2日経過させる
     And User is taking a practiceTest
     Then What is scrum? の問題が出る
