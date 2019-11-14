@@ -34,3 +34,13 @@ Feature:
     And User answered 10 questions correctly
     Then User should see "Good job!"
 
+  @developing
+  Scenario: テストの正答は特訓に影響しないこと
+    Given User is taking a onlineTest with 1 questions and there are enough questions
+    And User answered 1 questions correctly
+    And ホームに戻る
+    When User is taking a practiceTest
+    Then 正解していない問題が1問ある
+
+
+

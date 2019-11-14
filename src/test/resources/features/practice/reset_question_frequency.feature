@@ -3,7 +3,6 @@ Feature: The frequency of a question will be set to the base level if the user a
   Background:
     Given user "mary" has logged in successfully
 
-  @now
   Scenario: If there is question and the user answer 1 of it correctly, the user see the incorrect one in next practice
     Given There are questions with dummy options:
       | description | advice                             | category | correctOption |

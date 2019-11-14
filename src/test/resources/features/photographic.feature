@@ -3,7 +3,6 @@ Feature: Questions will disappear after correctly answered, assuming the user ha
   Background:
     Given user "mary" has logged in successfully
 
-    @now
   Scenario: 正解した問題が表示されない
     Given 質問1ある
     When 訓練開始
@@ -12,7 +11,6 @@ Feature: Questions will disappear after correctly answered, assuming the user ha
     And 訓練開始
     Then 表示文が "出題する問題がありません"
 
-  @now
   Scenario: 正解した問題が表示されない(11問以上)
     Given 質問11ある
     When 訓練開始
