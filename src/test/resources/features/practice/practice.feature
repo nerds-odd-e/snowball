@@ -36,7 +36,7 @@ Feature:
 
   @developing
   Scenario: テストの正答は特訓に影響しないこと
-    Given User is taking a onlineTest with 1 questions and there are enough questions
+    Given User is taking a onlineTest with 1 questions
     And User answered 1 questions correctly
     And ホームに戻る
     When User is taking a practiceTest
