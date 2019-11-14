@@ -251,6 +251,22 @@ public class UserAnswerControllerTest {
 
     }
 
+    @Test
+    public void postQuizNotSaveUserAnswer() throws ServletException, IOException {
+        question = createQuestionWithOptions(scrum);
+        onlineTest = spy(OnlinePractice.createOnlinePractice(currentUser,1));
+        request.getSession().setAttribute("onlineTest", onlineTest);
+        List<String> optionId = question.correctOptions();
+        request.addParameter("optionId", optionId.get(0));
+        request.addParameter("currentQuestionId", getCurrentQuestionId());
+
+        controller.doPost(request, response);
+        assertNull(request.getSession().getAttribute("isPractice"));
+
+        List<UserAnswer> userAnswers = repo(UserAnswer.class).findAll();
+        Assert.assertEquals(0, userAnswers.size());
+    }
+
 
 
     public static String getFirstOptionId(Question question) {

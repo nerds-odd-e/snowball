@@ -14,7 +14,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-
 import static java.util.Arrays.asList;
 
 @WebServlet("/onlinetest/answer")
@@ -32,7 +31,13 @@ public class UserAnswerController extends AppController {
 
         UserAnswer answer = onlineTest.answerCurrentQuestion(asList(selectedOptionIds), user, LocalDate.now());
         answer.setUser(user);
-        if (saveAnswerStatus(answer)) {
+
+        boolean isPractice = false;
+        if (session.getAttribute("isPractice") != null) {
+            isPractice = true;
+        }
+
+        if (saveAnswerStatus(answer, isPractice)) {
             redirectWithMessage(resp, session, null);
             return;
         }
@@ -42,8 +47,8 @@ public class UserAnswerController extends AppController {
         req.getRequestDispatcher("/onlinetest/advice.jsp").forward(req, resp);
     }
 
-    private boolean saveAnswerStatus(UserAnswer answer) {
-        if (answer.isCorrect()) {
+    private boolean saveAnswerStatus(UserAnswer answer, boolean isPractice) {
+        if (isPractice && answer.isCorrect()) {
             answer.save();
             return true;
         }
