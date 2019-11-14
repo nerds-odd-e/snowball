@@ -18,6 +18,7 @@ public class LaunchPracticeController extends AppController {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession(true);
         User user = (User) session.getAttribute("currentUser");
+        session.setAttribute("isPractice","true");
         session.setAttribute("date", LocalDate.now());
         if(req.getParameter("date") != null) {
             session.setAttribute("onlineTestStartDate", req.getParameter("date"));

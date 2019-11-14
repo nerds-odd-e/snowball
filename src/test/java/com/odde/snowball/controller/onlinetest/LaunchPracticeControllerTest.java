@@ -122,4 +122,12 @@ public class LaunchPracticeControllerTest {
         assertEquals("2019/01/01", actual);
     }
 
+    @Test
+    public void isPractice() throws IOException {
+        controller.doGet(request, response);
+
+        assertEquals("true",request.getSession().getAttribute("isPractice"));
+
+    }
+
 }
