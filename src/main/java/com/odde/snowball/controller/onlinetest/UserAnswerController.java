@@ -3,7 +3,6 @@ package com.odde.snowball.controller.onlinetest;
 import com.odde.snowball.controller.AppController;
 import com.odde.snowball.model.User;
 import com.odde.snowball.model.onlinetest.UserAnswer;
-import com.odde.snowball.model.onlinetest.AnswerStatus;
 import com.odde.snowball.model.onlinetest.OnlineTest;
 import com.odde.snowball.model.onlinetest.Question;
 
@@ -15,10 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
-import static com.odde.snowball.model.base.Repository.repo;
 import static java.util.Arrays.asList;
 
 @WebServlet("/onlinetest/answer")
@@ -36,7 +32,7 @@ public class UserAnswerController extends AppController {
 
         UserAnswer answer = onlineTest.answerCurrentQuestion(asList(selectedOptionIds), user, LocalDate.now());
         answer.setUser(user);
-        if (saveAnswerStatus(currentQuestion, answer)) {
+        if (saveAnswerStatus(answer)) {
             redirectWithMessage(resp, session, null);
             return;
         }
@@ -46,16 +42,9 @@ public class UserAnswerController extends AppController {
         req.getRequestDispatcher("/onlinetest/advice.jsp").forward(req, resp);
     }
 
-    private boolean saveAnswerStatus(Question currentQuestion, UserAnswer answer) {
+    private boolean saveAnswerStatus(UserAnswer answer) {
         if (answer.isCorrect()) {
-            Map<String, String> map = new HashMap<>();
-            map.put("userId", answer.getUser().stringId());
-            map.put("questionId", currentQuestion.stringId());
-            repo(AnswerStatus.class).fromMap(map).save();
-
             answer.save();
-
-//            repo(UserAnswer.class).fromMap(map).save();
             return true;
         }
         return false;
