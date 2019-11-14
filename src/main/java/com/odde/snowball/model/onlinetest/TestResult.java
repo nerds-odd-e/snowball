@@ -3,14 +3,14 @@ package com.odde.snowball.model.onlinetest;
 import java.util.List;
 
 public class TestResult {
-    private List<Answer> answers;
+    private List<UserAnswer> answers;
 
-    public TestResult(List<Answer> answers) {
+    public TestResult(List<UserAnswer> answers) {
         this.answers = answers;
     }
 
     public long getCorrectAnswerCount() {
-        return answers.stream().filter(Answer::isCorrect).count();
+        return answers.stream().filter(UserAnswer::isCorrect).count();
     }
 
     public int correctPercentage() {

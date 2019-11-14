@@ -53,14 +53,14 @@ public class OnlineTestTest {
     public void answerCorrectly() {
         createQuestionWith(correctOption1, correctOption2);
         OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(1);
-        Answer answer = onlineTest.answerCurrentQuestion(stringIdsOf(correctOption1, correctOption2), user, LocalDate.now());
+        UserAnswer answer = onlineTest.answerCurrentQuestion(stringIdsOf(correctOption1, correctOption2), user, LocalDate.now());
         assertTrue(answer.isCorrect());
     }
     @Test
     public void answerIncorrectly() {
         createQuestionWith(wrongOption, correctOption2, correctOption1);
         OnlineTest onlineTest = OnlineQuiz.createOnlineQuiz(1);
-        Answer answer = onlineTest.answerCurrentQuestion(stringIdsOf(wrongOption, correctOption2), user, LocalDate.now());
+        UserAnswer answer = onlineTest.answerCurrentQuestion(stringIdsOf(wrongOption, correctOption2), user, LocalDate.now());
         assertFalse(answer.isCorrect());
     }
 

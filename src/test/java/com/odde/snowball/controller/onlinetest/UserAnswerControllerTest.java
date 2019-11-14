@@ -30,7 +30,7 @@ import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.*;
 
 @RunWith(TestWithDB.class)
-public class AnswerControllerTest {
+public class UserAnswerControllerTest {
     private AnswerController controller;
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;

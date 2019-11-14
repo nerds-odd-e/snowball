@@ -2,7 +2,7 @@ package com.odde.snowball.controller.onlinetest;
 
 import com.odde.snowball.controller.AppController;
 import com.odde.snowball.model.User;
-import com.odde.snowball.model.onlinetest.Answer;
+import com.odde.snowball.model.onlinetest.UserAnswer;
 import com.odde.snowball.model.onlinetest.AnswerStatus;
 import com.odde.snowball.model.onlinetest.OnlineTest;
 import com.odde.snowball.model.onlinetest.Question;
@@ -34,7 +34,7 @@ public class AnswerController extends AppController {
 
         if (isValidRequest(req, resp, session, selectedOptionIds, currentQuestion)) return;
 
-        Answer answer = onlineTest.answerCurrentQuestion(asList(selectedOptionIds), user, LocalDate.now());
+        UserAnswer answer = onlineTest.answerCurrentQuestion(asList(selectedOptionIds), user, LocalDate.now());
         if (saveAnswerStatus(user, currentQuestion, answer)) {
             redirectWithMessage(resp, session, null);
             return;
@@ -45,7 +45,7 @@ public class AnswerController extends AppController {
         req.getRequestDispatcher("/onlinetest/advice.jsp").forward(req, resp);
     }
 
-    private boolean saveAnswerStatus(User user, Question currentQuestion, Answer answer) {
+    private boolean saveAnswerStatus(User user, Question currentQuestion, UserAnswer answer) {
         if (answer.isCorrect()) {
             Map<String, String> map = new HashMap<>();
             map.put("userId", user.stringId());

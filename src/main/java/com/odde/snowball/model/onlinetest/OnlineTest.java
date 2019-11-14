@@ -11,7 +11,7 @@ import java.util.List;
 public abstract class OnlineTest {
 
     private final List<Question> questions;
-    private List<Answer> answers;
+    private List<UserAnswer> answers;
 
     protected OnlineTest(List<Question> questions) {
         this.questions = questions;
@@ -33,9 +33,9 @@ public abstract class OnlineTest {
         return (questions != null) ? questions.size() : 0;
     }
 
-    public Answer answerCurrentQuestion(List<String> selectedOptionIds, User user, LocalDate date) {
+    public UserAnswer answerCurrentQuestion(List<String> selectedOptionIds, User user, LocalDate date) {
         Question currentQuestion = getCurrentQuestion();
-        Answer answer = new Answer(currentQuestion, selectedOptionIds);
+        UserAnswer answer = new UserAnswer(currentQuestion, selectedOptionIds);
         answers.add(answer);
         return answer;
     }

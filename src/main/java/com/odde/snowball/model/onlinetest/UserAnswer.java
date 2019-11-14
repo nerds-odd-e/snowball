@@ -2,12 +2,12 @@ package com.odde.snowball.model.onlinetest;
 
 import java.util.List;
 
-public class Answer {
+public class UserAnswer {
 
     private Question question;
     private List<String> selectedOptionIds;
 
-    Answer(Question question, List<String> selectedOptionIds) {
+    UserAnswer(Question question, List<String> selectedOptionIds) {
         this.question = question;
         this.selectedOptionIds = selectedOptionIds;
     }
