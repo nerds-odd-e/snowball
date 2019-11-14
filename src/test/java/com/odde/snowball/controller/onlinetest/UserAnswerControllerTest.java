@@ -218,7 +218,7 @@ public class UserAnswerControllerTest {
     @Test
     public void postPracticeSaveUserAnswer() throws ServletException, IOException {
         question = createQuestionWithOptions(scrum);
-        onlineTest = spy(OnlineQuiz.createOnlineQuiz(1));
+        onlineTest = spy(OnlinePractice.createOnlinePractice(currentUser,1));
         request.getSession().setAttribute("onlineTest", onlineTest);
         List<String> optionId = question.correctOptions();
         request.addParameter("optionId", optionId.get(0));
@@ -236,7 +236,7 @@ public class UserAnswerControllerTest {
     @Test
     public void postPracticeNotSaveUserAnswer() throws ServletException, IOException {
         question = createQuestionWithOptions(scrum);
-        onlineTest = spy(OnlineQuiz.createOnlineQuiz(1));
+        onlineTest = spy(OnlinePractice.createOnlinePractice(currentUser,1));
         request.getSession().setAttribute("onlineTest", onlineTest);
         List<String> optionId = question.inCorrectOptions();
         request.addParameter("optionId", optionId.get(0));
