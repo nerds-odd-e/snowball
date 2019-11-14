@@ -13,7 +13,7 @@ public class OnlinePractice extends OnlineTest {
     }
 
     public static OnlineTest createOnlinePractice(User user, int max) {
-        List<String> answerList = repo(AnswerStatus.class).findBy("userId", user.stringId())
+        List<String> answerList = repo(UserAnswer.class).findBy("user", user.stringId())
                 .stream()
                 .map(a -> a.getQuestionId())
                 .collect(Collectors.toList());
