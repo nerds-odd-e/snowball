@@ -31,6 +31,7 @@ public class UserAnswerController extends AppController {
 
         UserAnswer answer = onlineTest.answerCurrentQuestion(asList(selectedOptionIds), user, LocalDate.now());
         answer.setUser(user);
+        answer.setUserId(user.stringId());
 
         boolean isPractice = false;
         if (session.getAttribute("isPractice") != null) {

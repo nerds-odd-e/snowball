@@ -13,9 +13,9 @@ public class OnlinePractice extends OnlineTest {
     }
 
     public static OnlineTest createOnlinePractice(User user, int max) {
-        List<String> answerList = repo(AnswerStatus.class).findBy("userId", user.stringId())
+        List<String> answerList = repo(UserAnswer.class).findBy("userId", user.stringId())
                 .stream()
-                .map(a -> a.getQuestionId())
+                .map(a -> a.getQuestion().stringId())
                 .collect(Collectors.toList());
         List<Question> visibleQuestions = repo(Question.class).findAll().stream()
                 .filter(q -> q.isVisibleForUser(user))

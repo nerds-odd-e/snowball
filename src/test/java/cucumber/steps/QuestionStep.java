@@ -12,7 +12,6 @@ import cucumber.api.java.en.When;
 import cucumber.steps.driver.WebDriverWrapper;
 import cucumber.steps.site.SnowballSite;
 import org.bson.types.ObjectId;
-import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.Color;
 
 import java.time.LocalDate;
@@ -23,7 +22,8 @@ import java.util.Map;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class QuestionStep {
     private final SnowballSite site = new SnowballSite();
@@ -410,4 +410,9 @@ public class QuestionStep {
         // TODO
     }
 
+    @Then("^\"([^\"]*)\" の問題が出る$")
+    public void の問題が出る(String expected) {
+        String text = driver.findElementsWithoutWait("#description").get(0).getText();
+        assertEquals(expected, text);
+    }
 }
