@@ -16,14 +16,12 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.odde.snowball.model.base.Repository.repo;
-import static java.util.Arrays.asList;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -31,7 +29,7 @@ import static org.mockito.Mockito.*;
 
 @RunWith(TestWithDB.class)
 public class UserAnswerControllerTest {
-    private AnswerController controller;
+    private UserAnswerController controller;
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
     private Question question;
@@ -44,7 +42,7 @@ public class UserAnswerControllerTest {
 
     @Before
     public void setUpMockService() {
-        controller = new AnswerController();
+        controller = new UserAnswerController();
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
         request.getSession().setAttribute("currentUser", currentUser);

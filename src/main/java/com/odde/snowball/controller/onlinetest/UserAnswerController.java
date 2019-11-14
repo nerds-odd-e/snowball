@@ -22,7 +22,7 @@ import static com.odde.snowball.model.base.Repository.repo;
 import static java.util.Arrays.asList;
 
 @WebServlet("/onlinetest/answer")
-public class AnswerController extends AppController {
+public class UserAnswerController extends AppController {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(true);
         User user = (User) session.getAttribute("currentUser");
