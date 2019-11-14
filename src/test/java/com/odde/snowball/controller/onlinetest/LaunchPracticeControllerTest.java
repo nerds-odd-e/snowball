@@ -114,8 +114,7 @@ public class LaunchPracticeControllerTest {
     }
 
     @Test
-    public void startWithQueryDate() throws IOException {
-        //ToDo あとでlocalDateにする
+    public void 日付指定してテストをする() throws IOException {
         request.addParameter("date", "2019/01/01");
         controller.doGet(request, response);
 
