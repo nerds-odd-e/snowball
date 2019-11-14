@@ -52,6 +52,8 @@ public class UserAnswerController extends AppController {
             map.put("userId", answer.getUser().stringId());
             map.put("questionId", currentQuestion.stringId());
             repo(AnswerStatus.class).fromMap(map).save();
+
+//            repo(UserAnswer.class).fromMap(map).save();
             return true;
         }
         return false;

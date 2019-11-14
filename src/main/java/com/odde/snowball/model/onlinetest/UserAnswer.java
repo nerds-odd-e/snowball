@@ -1,14 +1,21 @@
 package com.odde.snowball.model.onlinetest;
 
 import com.odde.snowball.model.User;
+import com.odde.snowball.model.base.Entity;
 
 import java.util.List;
 
-public class UserAnswer {
+public class UserAnswer extends Entity<UserAnswer> {
 
     private Question question;
     private List<String> selectedOptionIds;
     private User user;
+
+    private String questionId;
+    private String userId;
+
+    public UserAnswer() {
+    }
 
     UserAnswer(Question question, List<String> selectedOptionIds) {
         this.question = question;
@@ -33,5 +40,9 @@ public class UserAnswer {
 
     public User getUser() {
         return user;
+    }
+
+    public String getQuestionId() {
+        return null;
     }
 }

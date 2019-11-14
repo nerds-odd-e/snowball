@@ -79,6 +79,9 @@ public class UserAnswerControllerTest {
         List<AnswerStatus> answerList = repo(AnswerStatus.class).findBy("userId", currentUser.stringId());
         Assert.assertEquals(1, answerList.size());
 
+        List<UserAnswer> userAnswers = repo(UserAnswer.class).findAll();
+
+        Assert.assertEquals(1, userAnswers.size());
     }
 
     @Test
