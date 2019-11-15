@@ -72,6 +72,7 @@ public class UserAnswerControllerTest {
         question = createQuestionWithOptions(scrum);
         onlineTest = OnlineQuiz.createOnlineQuiz(1);
         request.getSession().setAttribute("onlineTest", onlineTest);
+        request.getSession().setAttribute("isPractice", true);
 
         List<String> optionId = question.correctOptions();
         request.addParameter("optionId", optionId.get(0));
