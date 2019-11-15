@@ -3,6 +3,7 @@ package cucumber.steps;
 import com.odde.snowball.factory.QuestionBuilder;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 import cucumber.steps.driver.WebDriverWrapper;
 import cucumber.steps.site.SnowballSite;
 
@@ -34,5 +35,8 @@ public class RetrainingStep {
         }
     }
 
-
+    @When("retrainingを開始する")
+    public void retrainingを開始する() {
+        site.visit("launchRetraining");
+    }
 }
