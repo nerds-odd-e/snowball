@@ -54,9 +54,11 @@ public class OnlinePracticeTest {
         List<Question> questions = generateQuestions(2);
         Question question = questions.get(0);
         UserAnswer answer = new UserAnswer(question, new ArrayList<String>());
+        answer.setCorrect(true);
         answer.setUser(user);
         answer.setUserId(user.stringId());
         answer.save();
+
         OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user, 2);
         int numberOfQuestions = onlineTest.getNumberOfQuestions();
         assertEquals(1, numberOfQuestions);

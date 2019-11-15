@@ -42,8 +42,9 @@ public class UserAnswerController extends AppController {
             isPractice = true;
         }
 
+        saveAnswerStatus(answer, isPractice);
+
         if (answer.isCorrect()) {
-            saveAnswerStatus(answer, isPractice);
             redirectWithMessage(resp, session, null);
             return;
         }
@@ -65,7 +66,7 @@ public class UserAnswerController extends AppController {
     }
 
     private boolean saveAnswerStatus(UserAnswer answer, boolean isPractice) {
-        if (isPractice && answer.isCorrect()) {
+        if (isPractice) {
             answer.save();
             return true;
         }

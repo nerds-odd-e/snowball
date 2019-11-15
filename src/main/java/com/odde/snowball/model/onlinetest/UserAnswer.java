@@ -17,6 +17,16 @@ public class UserAnswer extends Entity<UserAnswer> {
     private String questionId;
     private String userId;
 
+    public boolean getCorrect() {
+        return correct;
+    }
+
+    public void setCorrect(boolean correct) {
+        this.correct = correct;
+    }
+
+    private boolean correct;
+
     public UserAnswer() {
     }
 
@@ -24,11 +34,13 @@ public class UserAnswer extends Entity<UserAnswer> {
         this.question = question;
         this.selectedOptionIds = selectedOptionIds;
         this.date = getDateString(date);
+        this.correct = isCorrect();
     }
 
     UserAnswer(Question question, List<String> selectedOptionIds) {
         this.question = question;
         this.selectedOptionIds = selectedOptionIds;
+        this.correct = isCorrect();
     }
 
     public Question getQuestion() {

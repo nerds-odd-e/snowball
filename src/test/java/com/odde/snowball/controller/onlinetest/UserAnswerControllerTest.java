@@ -265,27 +265,26 @@ public class UserAnswerControllerTest {
     }
 
     @Test
-    public void postPracticeNotSaveUserAnswer() throws ServletException, IOException {
+    public void 練習問題だったら回答を保存する() throws ServletException, IOException {
         question = createQuestionWithOptions(scrum);
-        onlineTest = spy(OnlinePractice.createOnlinePractice(currentUser,1));
+        onlineTest = OnlinePractice.createOnlinePractice(currentUser,1);
         request.getSession().setAttribute("onlineTest", onlineTest);
         List<String> optionId = question.inCorrectOptions();
         request.addParameter("optionId", optionId.get(0));
         request.addParameter("currentQuestionId", getCurrentQuestionId());
 
-        request.getSession().setAttribute("isPractice","true");
+        request.getSession().setAttribute("isPractice",true);
         controller.doPost(request, response);
-        assertEquals("true",request.getSession().getAttribute("isPractice"));
 
         List<UserAnswer> userAnswers = repo(UserAnswer.class).findAll();
-        Assert.assertEquals(0, userAnswers.size());
+        Assert.assertEquals(1, userAnswers.size());
 
     }
 
     @Test
     public void postQuizNotSaveUserAnswer() throws ServletException, IOException {
         question = createQuestionWithOptions(scrum);
-        onlineTest = spy(OnlinePractice.createOnlinePractice(currentUser,1));
+        onlineTest = OnlineQuiz.createOnlineQuiz(1);
         request.getSession().setAttribute("onlineTest", onlineTest);
         List<String> optionId = question.correctOptions();
         request.addParameter("optionId", optionId.get(0));
