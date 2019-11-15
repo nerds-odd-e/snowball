@@ -21,11 +21,6 @@ public class PhotographicSteps {
     }
 
     // Scenario 2
-    @When("訓練開始")
-    public void click_startPractice() {
-        driver.click("#start_practice_button");
-    }
-
     @And("ホームに戻る")
     public void click_home() {
         driver.click("#home");
