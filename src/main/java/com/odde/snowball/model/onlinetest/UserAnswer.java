@@ -14,7 +14,6 @@ public class UserAnswer extends Entity<UserAnswer> {
     private User user;
     private String date;
 
-    private String questionId;
     private String userId;
 
     public boolean getCorrect() {
@@ -65,10 +64,6 @@ public class UserAnswer extends Entity<UserAnswer> {
 
     public User getUser() {
         return user;
-    }
-
-    public String getQuestionId() {
-        return null;
     }
 
     public void setUserId(String userId) {
