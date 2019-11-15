@@ -4,6 +4,7 @@ import static com.odde.snowball.model.base.Repository.repo;
 
 import com.odde.snowball.model.User;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -14,9 +15,14 @@ public class OnlinePractice extends OnlineTest {
     }
 
     public static OnlineTest createOnlinePractice(User user, int max) {
-        Map<String, Boolean> answerMap = repo(UserAnswer.class).findBy("userId", user.stringId())
-                .stream()
-                .collect(Collectors.toMap(a -> a.getQuestion().stringId(), a -> a.getCorrect()));
+        List<UserAnswer> answerList = repo(UserAnswer.class).findBy("userId", user.stringId());
+        Map<String,Boolean> answerMap = new HashMap<>();
+        for (UserAnswer answer:answerList) {
+            if(answer.getCorrect()) {
+                answerMap.put(answer.getQuestion().getId().toString(), answer.getCorrect());
+            }
+
+        }
         List<Question> visibleQuestions = repo(Question.class).findAll().stream()
                 .filter(q -> q.isVisibleForUser(user))
                 .filter(q -> {

@@ -43,4 +43,11 @@ Feature:
     Then 正解していない問題が1問ある
 
 
-
+  Scenario: Return first question should be shown if questions have been answered today
+    Given User is taking a practiceTest
+    When User answered 1 question wrongly
+      Then User should see Advice page
+      When User clicks on Next on Advice page
+      Then User should see "Good job!"
+      When User is taking a practiceTest
+    Then 問題1が出題される

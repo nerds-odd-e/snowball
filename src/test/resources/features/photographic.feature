@@ -1,4 +1,4 @@
-@now
+
 Feature: Questions will disappear after correctly answered, assuming the user has photographic memory
 
   Background:
