@@ -37,12 +37,7 @@ public class UserAnswerController extends AppController {
         answer.setUser(user);
         answer.setUserId(user.stringId());
 
-        boolean isPractice = false;
-        if (session.getAttribute("isPractice") != null) {
-            isPractice = true;
-        }
-
-        saveAnswerStatus(answer, isPractice);
+        saveUserAnswer(answer, session.getAttribute("isPractice") != null);
 
         if (answer.isCorrect()) {
             redirectWithMessage(resp, session, null);
@@ -65,7 +60,7 @@ public class UserAnswerController extends AppController {
 
     }
 
-    private boolean saveAnswerStatus(UserAnswer answer, boolean isPractice) {
+    private boolean saveUserAnswer(UserAnswer answer, boolean isPractice) {
         if (isPractice) {
             answer.save();
             return true;
