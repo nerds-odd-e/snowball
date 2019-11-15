@@ -88,10 +88,12 @@ public class UserAnswerControllerTest {
         question = createQuestionWithOptions(scrum);
         onlineTest = OnlineQuiz.createOnlineQuiz(1);
         request.getSession().setAttribute("onlineTest", onlineTest);
+        request.getSession().setAttribute("isPractice", true);
 
         String optionId = getFirstOptionId(question);
         request.addParameter("optionId", optionId);
         request.addParameter("currentQuestionId", getCurrentQuestionId());
+
         controller.doPost(request, response);
         ArrayList<String> selectedOption = (ArrayList<String>) request.getAttribute("selectedOption");
         assertEquals(optionId, selectedOption.get(0));
