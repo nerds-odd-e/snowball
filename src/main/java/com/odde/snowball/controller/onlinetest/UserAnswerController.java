@@ -31,14 +31,7 @@ public class UserAnswerController extends AppController {
 
         if (isValidRequest(req, resp, session, selectedOptionIds, currentQuestion)) return;
 
-        String dateString = (String)req.getSession().getAttribute("onlineTestStartDate");
-        LocalDate localDate;
-
-        if(StringUtils.isEmpty(dateString)) {
-            localDate = LocalDate.now();
-        } else {
-            localDate = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-        }
+        LocalDate localDate = getLocalDate(req);
 
         UserAnswer answer = onlineTest.answerCurrentQuestion(asList(selectedOptionIds), user, localDate);
         answer.setUser(user);
@@ -49,7 +42,8 @@ public class UserAnswerController extends AppController {
             isPractice = true;
         }
 
-        if (saveAnswerStatus(answer, isPractice)) {
+        if (answer.isCorrect()) {
+            saveAnswerStatus(answer, isPractice);
             redirectWithMessage(resp, session, null);
             return;
         }
@@ -57,6 +51,17 @@ public class UserAnswerController extends AppController {
         req.setAttribute("currentQuestion", currentQuestion);
         req.setAttribute("progress", onlineTest.progress(-1));
         req.getRequestDispatcher("/onlinetest/advice.jsp").forward(req, resp);
+    }
+
+    private LocalDate getLocalDate(HttpServletRequest req) {
+        String dateString = (String)req.getSession().getAttribute("onlineTestStartDate");
+
+        if(StringUtils.isEmpty(dateString)) {
+            return LocalDate.now();
+        } else {
+            return LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+        }
+
     }
 
     private boolean saveAnswerStatus(UserAnswer answer, boolean isPractice) {
