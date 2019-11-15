@@ -17,13 +17,15 @@ public class RetrainingStep {
             QuestionBuilder.buildDefaultQuestion("Category").please();
         }
 
+        site.visit("launchPractice");
+
         for (int i = 0; i < allQuestionCount - practiceQuestionCount; i++) {
-            driver.clickRadioButton("None of the above");
+            driver.clickRadioButton("correctOption");
             driver.click("#answer");
         }
     }
 
-    @Then("retrainingボタンが{string}")
+    @Then("retrainingボタンが^\"([^\"]*)\"$")
     public void retrainingボタンが(String isDisplay) {
         if (isDisplay.equals("表示される")) {
             driver.expectPageToContainText("Start Retraining");

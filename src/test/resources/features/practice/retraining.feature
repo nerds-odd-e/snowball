@@ -2,8 +2,11 @@ Feature:
   Practiceで出題する問題がなくなったときに、
   もっと問題が解けるようにする
 
+  Background:
+    Given user "mary" has logged in successfully
+
   @developing
-  Scenario Outline: Practiceで出題する問題がない時のみ、retrainingボタンが表示される
+  Scenario Outline: Practiceで出題する問題がない時のみ、ホーム画面にretrainingボタンが表示される
     Given 問題が<全ての問題数>個存在し、Practiceで出題される問題が<Practiceで出題される問題数>個存在する
     When ホームに遷移
     Then retrainingボタンが<表示>
