@@ -23,7 +23,7 @@ Feature: Questions will disappear after correctly answered, assuming the user ha
     And ホームに戻る
 
   Scenario Outline: 訓練を中断する。中断した問題から再開する。訓練していない問題だけが表示される。
-    Given システムに問題が3問ある
+    Given 質問3ある
     When 訓練を開始する
     And User answered <answer_correctly_count> question correctly
     And ホームに戻って中断する

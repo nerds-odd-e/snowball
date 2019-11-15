@@ -51,18 +51,6 @@ public class PhotographicSteps {
     }
 
     // Scenario 3
-    @Given("システムに問題が{int}問ある")
-    public void システムに問題が_問ある(Integer int1) {
-        for (int i = 0; i < int1; i++) {
-            new QuestionBuilder()
-                    .aQuestion("question" + i, "advice", "Scrum")
-                    .withCorrectOption("correctOption")
-                    .withWrongOption("wrongOption1")
-                    .withWrongOption("wrongOption2")
-                    .please();
-        }
-    }
-
     @When("訓練を開始する")
     public void 訓練を開始する() {
         site.visit("launchPractice");
