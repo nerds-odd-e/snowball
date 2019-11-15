@@ -56,7 +56,7 @@ public class PhotographicSteps {
         for (int i = 0; i < int1; i++) {
             new QuestionBuilder()
                     .aQuestion("question" + i, "advice", "Scrum")
-                    .withCorrectOption("correctOption1")
+                    .withCorrectOption("correctOption")
                     .withWrongOption("wrongOption1")
                     .withWrongOption("wrongOption2")
                     .please();
@@ -66,14 +66,6 @@ public class PhotographicSteps {
     @When("訓練を開始する")
     public void 訓練を開始する() {
         site.visit("launchPractice");
-    }
-
-    @When("{int}問のテストに正解する")
-    public void 問のテストに正解する(Integer numberAnsweredCorrectly) {
-        for (int i = 0; i < numberAnsweredCorrectly; i++) {
-            driver.clickRadioButton("correctOption1");
-            driver.click("#answer");
-        }
     }
 
     @When("ホームに戻って中断する")
