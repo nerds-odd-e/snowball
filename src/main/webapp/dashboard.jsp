@@ -26,6 +26,13 @@
                         <input type="number" name="question_count" id="question_count" value=10 hidden />
                         <button type="submit" class="btn btn-default" name = "start_practice_button" id="start_practice_button">Start Practice</button>
                      </form>
+
+                     <c:if test="${practiceQuestionCount == 0}" >
+                          <form class="dashboard_button" name="retraining" id="retraining" method="get" action="/launchRetraining">
+                             <input type="number" name="question_count" id="question_count" value=10 hidden />
+                             <button type="submit" class="btn btn-default" name = "start_practice_button" id="start_practice_button">Start Retraining</button>
+                          </form>
+                     </c:if>
                      <a href = "/onlinetest/add_question.jsp">Questions Maintenance</a>
                 </div>
             </div>

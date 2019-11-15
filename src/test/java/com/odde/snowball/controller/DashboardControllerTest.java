@@ -39,7 +39,9 @@ public class DashboardControllerTest {
     }
 
     private User loginOtherUser() {
-        User otherUser = new User();
+        User otherUser = new User("other@email.com");
+        otherUser.setupPassword("password");
+        otherUser.save();
         request.getSession().setAttribute("currentUser", otherUser);
         return otherUser;
     }

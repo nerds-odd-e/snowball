@@ -1,6 +1,8 @@
 package com.odde.snowball.controller;
 
 import com.odde.snowball.model.User;
+import com.odde.snowball.model.onlinetest.OnlinePractice;
+import com.odde.snowball.model.onlinetest.OnlineTest;
 import com.odde.snowball.model.onlinetest.Question;
 
 import javax.servlet.RequestDispatcher;
@@ -22,11 +24,19 @@ public class DashboardController extends AppController {
             resp.sendRedirect("/login.jsp");
             return;
         }
+
+        User user = (User)req.getSession().getAttribute("currentUser");
+
         List<Question> questions = repo(Question.class).findAll()
                 .stream()
-                .filter(q -> q.isVisibleForUser((User) req.getSession().getAttribute("currentUser")))
+                .filter(q -> q.isVisibleForUser(user))
                 .collect(Collectors.toList());
         req.setAttribute("questions", questions);
+
+        OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user, 10);
+
+        int practiceQuestionCount = onlineTest.getNumberOfQuestions();
+        req.setAttribute("practiceQuestionCount", practiceQuestionCount);
         RequestDispatcher dispatch = req.getRequestDispatcher("dashboard.jsp");
         dispatch.forward(req, resp);
     }

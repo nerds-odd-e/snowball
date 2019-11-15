@@ -26,7 +26,7 @@ public class RetrainingStep {
         }
     }
 
-    @Then("retrainingボタンが^\"([^\"]*)\"$")
+    @Then("retrainingボタンが(.+)")
     public void retrainingボタンが(String isDisplay) {
         if (isDisplay.equals("表示される")) {
             driver.expectPageToContainText("Start Retraining");
