@@ -74,6 +74,7 @@ Feature:
       | description    | opt1           | opt2              | opt3            | opt4          | opt5                | opt6              | selected | advice           |
       | What is scrum? | Scrum is Rugby | Scrum is Baseball | Scrum is Soccer | Scrum is Sumo | Scrum is BasketBall | Scrum is Swimming | 1        | Rugby is Scrum!! |
 
+  @developing
   Scenario Outline: 質問の追加が成功する(イメージ図添付ありパターン)
     Given Add Questionを開いている
     And Descriptionに"<description>" を入力する
@@ -100,6 +101,7 @@ Feature:
       | description    | opt1           | opt2              | opt3            | opt4          | opt5                | opt6              | selected | advice           |
       | What is scrum? | Scrum is Rugby | Scrum is Baseball | Scrum is Soccer | Scrum is Sumo | Scrum is BasketBall | Scrum is Swimming | 1        | Rugby is Scrum!! |
 
+  @developing
   Scenario Outline: 質問の追加が成功する(イメージ図添付なしパターン)
     Given Add Questionを開いている
     And Descriptionに"<description>" を入力する
@@ -159,6 +161,7 @@ Feature:
     When Adminが承認する
     Then 問題が承認済みになる
 
+
   Scenario Outline: 公開範囲に従って追加した質問が表示される
     Given "Terry"ユーザが登録されている
     And "admin2"ユーザが登録されている
@@ -175,6 +178,7 @@ Feature:
       | private   | Terry   | Terry  | 表示される      |
       | private   | Terry   | admin2 | 表示されない     |
 
+  @developing
   Scenario: 質問一覧に登録済みのイメージ図が表示される
     Given Add Questionを開いている
     And Descriptionに"<description>" を入力する
@@ -189,6 +193,7 @@ Feature:
     When attached-fileを選択する
     Then attached-fileを開く
 
+  @developing
   Scenario: 質問一覧にイメージ図がない質問が表示される
     Given Add Questionを開いている
     And Descriptionに"<description>" を入力する
