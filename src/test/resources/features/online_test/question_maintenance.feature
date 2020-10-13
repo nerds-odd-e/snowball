@@ -74,6 +74,57 @@ Feature:
       | description    | opt1           | opt2              | opt3            | opt4          | opt5                | opt6              | selected | advice           |
       | What is scrum? | Scrum is Rugby | Scrum is Baseball | Scrum is Soccer | Scrum is Sumo | Scrum is BasketBall | Scrum is Swimming | 1        | Rugby is Scrum!! |
 
+  Scenario Outline: 質問の追加が成功する(イメージ図添付ありパターン)
+    Given Add Questionを開いている
+    And Descriptionに"<description>" を入力する
+    And option1に"<opt1>"を入力する
+    And option2に"<opt2>"を入力する
+    And option3に"<opt3>"を入力する
+    And option4に"<opt4>"を入力する
+    And option5に"<opt5>"を入力する
+    And option6に"<opt6>"を入力する
+    And is-publicをチェックする
+    And attached-fileを選択する
+    And "option<selected>"を回答として選択する
+    And Addボタンを押す
+    And OnlineTestを開始する
+    And "<description>"という問題が出題される
+    And 2を回答として選択する
+    And Answerボタンを押す
+    Then Advice画面が表示される
+    And attached-fileが表示される
+    And attached-fileを選択する
+    Then attached-fileを開く
+
+    Examples:
+      | description    | opt1           | opt2              | opt3            | opt4          | opt5                | opt6              | selected | advice           |
+      | What is scrum? | Scrum is Rugby | Scrum is Baseball | Scrum is Soccer | Scrum is Sumo | Scrum is BasketBall | Scrum is Swimming | 1        | Rugby is Scrum!! |
+
+  Scenario Outline: 質問の追加が成功する(イメージ図添付なしパターン)
+    Given Add Questionを開いている
+    And Descriptionに"<description>" を入力する
+    And option1に"<opt1>"を入力する
+    And option2に"<opt2>"を入力する
+    And option3に"<opt3>"を入力する
+    And option4に"<opt4>"を入力する
+    And option5に"<opt5>"を入力する
+    And option6に"<opt6>"を入力する
+    And is-publicをチェックする
+    And "option<selected>"を回答として選択する
+    And Addボタンを押す
+    And OnlineTestを開始する
+    And "<description>"という問題が出題される
+    And 2を回答として選択する
+    And Answerボタンを押す
+    Then Advice画面が表示される
+    And attached-fileが空欄になっている
+
+    Examples:
+      | description    | opt1           | opt2              | opt3            | opt4          | opt5                | opt6              | selected | advice           |
+      | What is scrum? | Scrum is Rugby | Scrum is Baseball | Scrum is Soccer | Scrum is Sumo | Scrum is BasketBall | Scrum is Swimming | 1        | Rugby is Scrum!! |
+
+
+
   Scenario: 回答項目が6個未満の質問の追加が成功する
     Given Add Questionを開いている
     And Descriptionに"Terryさんはどこに住んでいますか？" を入力する
@@ -123,3 +174,28 @@ Feature:
       | public    | Terry   | admin2 | 表示される      |
       | private   | Terry   | Terry  | 表示される      |
       | private   | Terry   | admin2 | 表示されない     |
+
+  Scenario: 質問一覧に登録済みのイメージ図が表示される
+    Given Add Questionを開いている
+    And Descriptionに"<description>" を入力する
+    And option1に"<opt1>"を入力する
+    And option2に"<opt2>"を入力する
+    And is-publicをチェックする
+    And attached-fileを選択する
+    And 1を回答として選択する
+    When Addボタンを押す
+    Then Question Listが表示される
+    And attached-fileが表示される
+    When attached-fileを選択する
+    Then attached-fileを開く
+
+  Scenario: 質問一覧にイメージ図がない質問が表示される
+    Given Add Questionを開いている
+    And Descriptionに"<description>" を入力する
+    And option1に"<opt1>"を入力する
+    And option2に"<opt2>"を入力する
+    And is-publicをチェックする
+    And 1を回答として選択する
+    When Addボタンを押す
+    Then Question Listが表示される
+    And attached-fileが空欄になっている
