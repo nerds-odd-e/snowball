@@ -33,5 +33,23 @@ Feature:
     And User answered 10 questions correctly
     Then User should see "Good job!"
 
+  @developing
+  Scenario: 未回答の問題が表示される
+    Given 問題が登録されている
+    And 未回答の問題だけがある
+    When 全てのユーザが特訓を開始すると
+    Then 未回答の問題が表示される
 
+  @developing
+  Scenario: 回答してから５日たった問題が表示される
+    Given 問題が登録されている
+    And 回答してから５日たった問題がある
+    When 全てのユーザが特訓を開始すると
+    Then 回答してから５日たった問題が表示される
 
+  @developing
+  Scenario: 回答済みの問題を優先的に表示する
+    Given 問題が登録されている
+    And 回答して５日たった問題と未回答の問題がある
+    When 全てのユーザが特訓を開始すると
+    Then 回答して５日たった問題が優先して表示される
