@@ -16,6 +16,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.odde.snowball.model.base.Repository.repo;
 
@@ -90,6 +91,10 @@ public class User extends Entity<User> {
     }
 
     public AnswerInfo addAnswerInfo(AnswerInfo answerInfo) {
+        Optional<AnswerInfo> sameAnswerInfo = this.answerInfo.stream()
+                .filter(o -> o.getQuestionId().equals(answerInfo.getQuestionId()))
+                .findFirst();
+        sameAnswerInfo.ifPresent(o -> this.answerInfo.remove(o));
         this.answerInfo.add(answerInfo);
         return answerInfo;
     }
