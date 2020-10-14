@@ -75,23 +75,23 @@ Feature:
       | What is scrum? | Scrum is Rugby | Scrum is Baseball | Scrum is Soccer | Scrum is Sumo | Scrum is BasketBall | Scrum is Swimming | 1        | Rugby is Scrum!! |
 
   @developing
-  Scenario: 回答にイメージ図を使用できる(添付あり)
+  Scenario: 回答にイメージ図を使用できる(画像ファイル添付あり)
     Given Add Questionを開いている
     And 質問の内容を入力している
-    And イメージ図を指定して登録する
+    And 画像ファイルを指定して登録する
     When OnlineTestを開始する
     And 不正解の回答をする
-    Then Adviceにイメージ図のリンクが表示される
-    When イメージ図がダウンロードできる
+    Then Adviceに画像ファイルのリンクが表示される
+    When 画像ファイルがダウンロードできる
 
   @developing
-  Scenario: 回答にイメージ図を使用できる(イメージ図添付なし)
+  Scenario: 回答にイメージ図を使用できる(画像ファイル添付なし)
     Given Add Questionを開いている
     And 質問の内容を入力している
-    And イメージ図を指定せずに登録する
+    And 画像ファイルを指定せずに登録する
     When OnlineTestを開始する
     And 不正解の回答をする
-    Then Adviceにイメージ図欄が空白で表示される
+    Then Adviceにイメージ図が空白で表示される
 
   Scenario: 回答項目が6個未満の質問の追加が成功する
     Given Add Questionを開いている
@@ -145,14 +145,14 @@ Feature:
       | private   | Terry   | admin2 | 表示されない     |
 
   @developing
-  Scenario: 質問一覧にイメージ図が表示される(イメージ図添付あり)
-    Given イメージ図が添付された質問が登録されている
+  Scenario: 質問一覧にイメージ図が表示される(画像ファイル添付あり)
+    Given 画像ファイルが添付された質問が登録されている
     When Question Listを表示する
-    Then イメージ図のリンクが表示される
-    And イメージ図がダウンロードできる
+    Then 画像ファイルのリンクが表示される
+    And 画像ファイルがダウンロードできる
 
   @developing
-  Scenario: 質問一覧にイメージ図が表示される(イメージ図添付なし)
-    Given イメージ図が添付されていない質問が登録されている
+  Scenario: 質問一覧にイメージ図が表示される(画像ファイル添付なし)
+    Given 画像ファイルが添付されていない質問が登録されている
     When Question Listを表示する
-    Then イメージ図が空欄で表示される
+    Then 画像ファイルが空欄で表示される
