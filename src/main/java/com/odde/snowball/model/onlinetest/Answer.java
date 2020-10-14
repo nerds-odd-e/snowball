@@ -7,7 +7,7 @@ public class Answer {
     private Question question;
     private List<String> selectedOptionIds;
 
-    Answer(Question question, List<String> selectedOptionIds) {
+    public Answer(Question question, List<String> selectedOptionIds) {
         this.question = question;
         this.selectedOptionIds = selectedOptionIds;
     }
