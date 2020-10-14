@@ -11,8 +11,6 @@ Feature:
     Given user "mary" has logged in successfully
 
     @now
-
-      @developing
   Scenario: User can practice question of a specific category
     Given User is taking a practiceTest of "XP"
     Then "What is XP?"という問題が出題される
