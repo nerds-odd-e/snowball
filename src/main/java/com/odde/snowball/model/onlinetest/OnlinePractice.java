@@ -1,18 +1,18 @@
 package com.odde.snowball.model.onlinetest;
 
-import static com.odde.snowball.model.base.Repository.repo;
-
 import com.odde.snowball.model.User;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.odde.snowball.model.base.Repository.repo;
 
 public class OnlinePractice extends OnlineTest {
     private OnlinePractice(List<Question> questions) {
         super(questions);
     }
 
-    public static OnlineTest createOnlinePractice(User user, int max) {
+    public static OnlineTest createOnlinePractice(User user, String categoryId, int max) {
         List<Question> visibleQuestions = repo(Question.class).findAll().stream()
                 .filter(q -> q.isVisibleForUser(user))
                 .collect(Collectors.toList());

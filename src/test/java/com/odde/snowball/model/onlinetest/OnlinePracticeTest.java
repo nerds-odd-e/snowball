@@ -18,7 +18,7 @@ public class OnlinePracticeTest {
     public void 問題が3問存在する時_2問のみ返されること() {
         User user = generateUsers(1).get(0);
         generateQuestions(3);
-        OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user, 2);
+        OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user, "", 2);
         int numberOfQuestions = onlineTest.getNumberOfQuestions();
         assertEquals(2, numberOfQuestions);
     }
@@ -28,7 +28,7 @@ public class OnlinePracticeTest {
         User user = generateUsers(1).get(0);
         createPrivateQuestion(user);
         generateQuestions(1);
-        OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user, 2);
+        OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user, "", 2);
         int numberOfQuestions = onlineTest.getNumberOfQuestions();
         assertEquals(2, numberOfQuestions);
     }
@@ -38,7 +38,7 @@ public class OnlinePracticeTest {
         List<User> users = generateUsers(2);
         createPrivateQuestion(users.get(0));
         generateQuestions(1);
-        OnlineTest onlineTest = OnlinePractice.createOnlinePractice(users.get(1), 2);
+        OnlineTest onlineTest = OnlinePractice.createOnlinePractice(users.get(1), "", 2);
         int numberOfQuestions = onlineTest.getNumberOfQuestions();
         assertEquals(1, numberOfQuestions);
     }
