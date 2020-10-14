@@ -3,6 +3,12 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
+<%@ page import="com.odde.snowball.model.base.Repository" %>;
+<%@ page import="com.odde.snowball.model.onlinetest.Category" %>
+<%
+    pageContext.setAttribute("categories", Repository.repo(Category.class).findAll());
+%>
+
 <t:basic title="Dashboard">
     <jsp:attribute name="extra_head">
         <link href="/resources/practice.css" rel="stylesheet">
@@ -24,6 +30,13 @@
                     </form>
                      <form class="dashboard_button" name="practice" id="practice" method="get" action="/launchPractice">
                         <input type="number" name="question_count" id="question_count" value=10 hidden />
+                        <ul>
+                        <c:forEach items="${categories}" var="category" varStatus="Status">
+                            <li>
+                               <input type="radio" id="${category.getId()}" name="categoryId" value="${category.getId()}" /><label>${category.getName()}</label>
+                            </li>
+                        </c:forEach>
+                        </ul>
                         <button type="submit" class="btn btn-default" name = "start_practice_button" id="start_practice_button">Start Practice</button>
                      </form>
                      <a href = "/onlinetest/add_question.jsp">Questions Maintenance</a>
