@@ -109,4 +109,14 @@ public class LaunchPracticeControllerTest {
         OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
         assertThat(onlineTest).isNull();
     }
+
+    @Test
+    public void doPracticeWithCategory() throws IOException {
+        mockQuestion(11);
+        request.addParameter("category", "Retro");
+        controller.doGet(request, response);
+
+        OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
+        assertThat(onlineTest.getNumberOfQuestions()).isEqualTo(10);
+    }
 }
