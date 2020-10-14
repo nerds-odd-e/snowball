@@ -7,6 +7,10 @@ public class PracticeDateUtility {
 
     public Date getNextShowDateOnCollected(Date today) {
 
+        if(today == null){
+            throw new IllegalArgumentException("null is not allowed for the argument 'today'.");
+        }
+
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(today);
 

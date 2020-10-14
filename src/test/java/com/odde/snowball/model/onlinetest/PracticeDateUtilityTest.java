@@ -8,7 +8,6 @@ import org.junit.runner.RunWith;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
 
@@ -41,4 +40,9 @@ public class PracticeDateUtilityTest {
         assertEquals(fiveDateAfter, nextShowDate);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void getNextShowDateOnCollected_日付にnullを渡すと例外を返す() {
+        // 関数
+        Date nextShowDate = this.utility.getNextShowDateOnCollected(null);
+    }
 }
