@@ -46,8 +46,7 @@ public class UserTest {
         List<String> selectedOptionIds = new ArrayList<>();
         selectedOptionIds.add("これが正解の選択肢");
         Question question = createQuestion();
-        Answer answer = new Answer(question, selectedOptionIds);
-        return answer;
+        return new Answer(question, selectedOptionIds);
     }
 
     private Date createDate(int year, int month, int date) {
@@ -177,5 +176,28 @@ public class UserTest {
         assertEquals(answerInfo_1.getLastAnsweredDate(), answerInfo_1.getLastAnsweredDate());
         assertEquals(answerInfo_1.getNextShowDate(), answerInfo_1.getNextShowDate());
         assertEquals(answerInfo_1.getQuestionId(), answerInfo_1.getQuestionId());
+    }
+
+    @Test
+    public void insertAnswerHistory() {
+        User user = createUser();
+        Answer answer = createAnswer();
+
+        Calendar calendar = Calendar.getInstance();
+
+        // 最終回答日をセット
+        calendar.set(2020, Calendar.DECEMBER, 1);
+        Date lasAnsweredDate = calendar.getTime();
+
+        // 次回表示予定日をセット
+        calendar.add(Calendar.DAY_OF_MONTH, 5);
+        Date nextShowDate = calendar.getTime();
+
+        String questionId = answer.getQuestion().stringId();
+
+        AnswerHistory answerHistory = new AnswerHistory();
+        answerHistory.recordAnsweredQuestion(user, questionId, lasAnsweredDate);
+
+        assertEquals(nextShowDate.toString(), user.getAnswerInfo().get(0).getNextShowDate().toString());
     }
 }
