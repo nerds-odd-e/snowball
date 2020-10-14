@@ -3,6 +3,7 @@ package com.odde.snowball.model;
 import com.odde.snowball.controller.config.ApplicationConfiguration;
 import com.odde.snowball.exception.EmailException;
 import com.odde.snowball.model.base.Entity;
+import com.odde.snowball.model.onlinetest.AnswerInfo;
 import com.odde.snowball.service.MailService;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,8 +11,11 @@ import lombok.Setter;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.validation.Valid;
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.odde.snowball.model.base.Repository.repo;
 
@@ -23,6 +27,9 @@ public class User extends Entity<User> {
     private String email;
     private String hashdPassword;
     private String token;
+
+    @Valid
+    private List<AnswerInfo> answerInfo = new ArrayList<>();
 
     public User(String email) {
         setEmail(email);
@@ -82,4 +89,8 @@ public class User extends Entity<User> {
         return !StringUtils.isEmpty(password);
     }
 
+    public AnswerInfo addAnswerInfo(AnswerInfo answerInfo) {
+        this.answerInfo.add(answerInfo);
+        return answerInfo;
+    }
 }
