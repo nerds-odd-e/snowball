@@ -109,4 +109,15 @@ public class LaunchPracticeControllerTest {
         OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
         assertThat(onlineTest).isNull();
     }
+
+    @Test
+    public void questionCount_when_category_is_empty() throws IOException {
+        mockQuestion(11);
+        request.addParameter("categoryId", "");
+        controller.doGet(request, response);
+
+        OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
+        assertThat(onlineTest.getNumberOfQuestions()).isEqualTo(10);
+    }
+
 }
