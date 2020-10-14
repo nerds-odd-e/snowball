@@ -44,4 +44,6 @@ public class PracticeDateUtilityTest {
         // 関数
         this.utility.getNextShowDateOnCollected(null);
     }
+
+    
 }

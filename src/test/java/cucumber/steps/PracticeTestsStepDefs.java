@@ -1,5 +1,8 @@
 package cucumber.steps;
 
+import com.odde.snowball.model.User;
+import com.odde.snowball.model.onlinetest.AnswerInfo;
+import com.odde.snowball.model.onlinetest.Question;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -8,6 +11,10 @@ import cucumber.steps.driver.WebDriverWrapper;
 import cucumber.steps.site.SnowballSite;
 import org.openqa.selenium.WebElement;
 
+import java.util.Calendar;
+import java.util.List;
+
+import static com.odde.snowball.model.base.Repository.repo;
 import static org.junit.Assert.assertEquals;
 
 public class PracticeTestsStepDefs {
@@ -112,9 +119,46 @@ public class PracticeTestsStepDefs {
         throw new cucumber.api.PendingException();
     }
 
+    @Given("問題が登録されている")
+    public void 問題が登録されている() {
+        // todo Questionを作成　目印になる情報を盛り込む
+        // Write code here that turns the phrase above into concrete actions
+        throw new cucumber.api.PendingException();
+    }
+
     @Given("User is taking a practiceTest of {string}")
     public void userIsTakingAPracticeTestOf(String category) {
         driver.clickRadioButton(category);
         driver.clickButtonByName("start_practice_button");
+    }
+
+    @Given("誤答して1日たった問題と未回答の問題がある")
+    public void 誤答して１日たった問題と未回答の問題がある() {
+
+        // ログインしたユーザに対して誤答したAnswerInfoをAdd
+
+        // ユーザが先頭の人と仮定
+        List<Question> questionList = repo(Question.class).findAll();
+        List<User> userList = repo(User.class).findAll();
+        User loginUser = userList.get(0);
+
+        Calendar calYesterday = Calendar.getInstance();
+        calYesterday.add(Calendar.DATE, -1);
+
+        Calendar calToday  = Calendar.getInstance();
+        calToday.add(Calendar.DATE, 0);
+
+        // 新しい回答情報を作成
+        AnswerInfo ansInfo = new AnswerInfo(questionList.get(1).stringId(), calYesterday.getTime(), 1, calToday.getTime());
+
+        loginUser.addAnswerInfo(ansInfo);
+        loginUser.save();
+
+        // 答えていない質問　→　やらない
+    }
+
+    @Then("誤答して１日たった問題が優先して表示される")
+    public void 誤答して１日たった問題が優先して表示される() {
+        // todo:問題の判定方法を特定する。
     }
 }

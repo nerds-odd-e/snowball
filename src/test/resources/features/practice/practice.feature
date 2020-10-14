@@ -66,15 +66,12 @@ Feature:
     And 正答してから５日未満の問題は表示されない
 
   @developing
+//    @now
   Scenario: ある問題に誤答した場合、１日後に同じ問題が再度表示される
-    Given User is taking a practiceTest
-    And 未回答の問題がある
-    And 誤答してから１日未満の問題がある
-    And 誤答して１日以上たった問題がある
-    When 全てのユーザが特訓を開始すると
-    Then １件目に誤答して１日以上たった問題が表示される
-    And ２件目に未回答の問題が表示される
-    And 誤答してから１日未満の問題は表示されない
+    Given 問題が登録されている
+    And 誤答して1日たった問題と未回答の問題がある
+    When User is taking a practiceTest
+    Then 誤答して１日たった問題が優先して表示される
 
   @developing
   Scenario: 正答した問題と誤答した問題が混在している場合、誤答した問題が優先的に表示される
