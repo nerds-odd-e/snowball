@@ -75,7 +75,7 @@ Feature:
       | What is scrum? | Scrum is Rugby | Scrum is Baseball | Scrum is Soccer | Scrum is Sumo | Scrum is BasketBall | Scrum is Swimming | 1        | Rugby is Scrum!! |
 
   @developing
-  Scenario : 回答にイメージ図を使用できる(イメージ図添付あり)
+  Scenario: 回答にイメージ図を使用できる(イメージ図添付あり)
     Given Add Questionを開いている
     And 質問の内容を入力している
     And イメージ図を指定して登録する
@@ -85,7 +85,7 @@ Feature:
     When イメージ図がダウンロードできる
 
   @developing
-  Scenario : 回答にイメージ図を使用できる(イメージ図添付なし)
+  Scenario: 回答にイメージ図を使用できる(イメージ図添付なし)
     Given Add Questionを開いている
     And 質問の内容を入力している
     And イメージ図を指定せずに登録する
@@ -149,7 +149,7 @@ Feature:
     Given イメージ図が添付された質問が登録されている
     When Question Listを表示する
     Then イメージ図のリンクが表示される
-    And　イメージ図がダウンロードできる
+    And イメージ図がダウンロードできる
 
   @developing
   Scenario: 質問一覧にイメージ図が表示される(イメージ図添付なし)
