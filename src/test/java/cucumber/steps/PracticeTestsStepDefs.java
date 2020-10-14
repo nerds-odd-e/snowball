@@ -111,4 +111,11 @@ public class PracticeTestsStepDefs {
         // Write code here that turns the phrase above into concrete actions
         throw new cucumber.api.PendingException();
     }
+
+    @Given("User is taking a practiceTest of {string}")
+    public void userIsTakingAPracticeTestOf(String category) {
+        driver.clickRadioButton(category);
+        driver.clickButtonByName("start_practice_button");
+    }
+
 }

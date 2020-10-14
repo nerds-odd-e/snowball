@@ -12,6 +12,6 @@ Feature:
   @now
   Scenario: User can practice question of a specific category
     Given User is taking a practiceTest of "XP"
-    Then "What is XP"という問題が出題される
+    Then "What is XP?"という問題が出題される
     When User answered 1 questions correctly
     Then User should see "Good job!"
