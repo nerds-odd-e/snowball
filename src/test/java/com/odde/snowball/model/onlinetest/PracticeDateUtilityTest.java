@@ -27,9 +27,8 @@ public class PracticeDateUtilityTest {
         this.today = this.calendar.getTime();
     }
 
-    // 関数の機能：正答時次回表示予定日を返す機能
     @Test
-    public void 日付を渡すと5日後の日付を返す() {
+    public void getNextShowDateOnCollected_日付を渡すと5日後の日付を返す() {
 
         Date nextShowDate = this.utility.getNextShowDateOnCollected(this.today);
 
@@ -43,6 +42,6 @@ public class PracticeDateUtilityTest {
     @Test(expected = IllegalArgumentException.class)
     public void getNextShowDateOnCollected_日付にnullを渡すと例外を返す() {
         // 関数
-        Date nextShowDate = this.utility.getNextShowDateOnCollected(null);
+        this.utility.getNextShowDateOnCollected(null);
     }
 }
