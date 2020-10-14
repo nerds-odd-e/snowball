@@ -26,7 +26,8 @@ public class LaunchPracticeController extends AppController {
             questionCount = Integer.parseInt(countParameter);
         }
 
-        OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user, questionCount);
+        String categoryId = req.getParameter("categoryId");
+        OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user, categoryId, questionCount);
         if (onlineTest.getCurrentQuestion() == null) {
             resp.sendRedirect("/practice/completed_practice.jsp");
             return;
