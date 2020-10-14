@@ -152,7 +152,6 @@ public class UserTest {
     }
 
     private void assertAnswerInfoEquals(AnswerInfo answerInfo_1, AnswerInfo answerInfo_2) {
-        assertEquals(answerInfo_1.getId(), answerInfo_2.getId());
         assertEquals(answerInfo_1.getCorrectCount(), answerInfo_2.getCorrectCount());
         assertEquals(answerInfo_1.getLastAnsweredDate(), answerInfo_1.getLastAnsweredDate());
         assertEquals(answerInfo_1.getNextShowDate(), answerInfo_1.getNextShowDate());
