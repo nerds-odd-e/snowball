@@ -10,7 +10,9 @@ Feature:
       | What is XP?    | correctOption | XP       |
     Given user "mary" has logged in successfully
 
-    @developing
+    @now
+
+      @developing
   Scenario: User can practice question of a specific category
     Given User is taking a practiceTest of "XP"
     Then "What is XP?"という問題が出題される
