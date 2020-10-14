@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static com.odde.snowball.model.base.Repository.repo;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
@@ -109,4 +110,38 @@ public class LaunchPracticeControllerTest {
         OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
         assertThat(onlineTest).isNull();
     }
+
+    @Test
+    public void questionCount_when_no_category_given() throws IOException {
+        mockQuestion(11);
+        request.addParameter("categoryId", "");
+        controller.doGet(request, response);
+
+        OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
+        assertThat(onlineTest.getNumberOfQuestions()).isEqualTo(10);
+    }
+
+    @Test
+    public void questionCount_when_category_is_empty() throws IOException {
+        mockQuestion(11);
+        Category scrum = Category.create("scrum");
+
+        request.addParameter("categoryId", scrum.stringId());
+        controller.doGet(request, response);
+
+        OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
+        assertThat(onlineTest).isNull();
+    }
+    @Test
+    public void questionCount_when_category_is_not_empty() throws IOException {
+        mockQuestion(11);
+        Category retro = repo(Category.class).findFirstBy("name", "Retro");
+
+        request.addParameter("categoryId", retro.stringId());
+        controller.doGet(request, response);
+
+        OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
+        assertThat(onlineTest.getNumberOfQuestions()).isEqualTo(10);
+    }
+
 }
