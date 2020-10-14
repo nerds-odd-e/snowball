@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static com.odde.snowball.model.base.Repository.repo;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
@@ -113,7 +114,7 @@ public class LaunchPracticeControllerTest {
     @Test
     public void doPracticeWithCategory() throws IOException {
         mockQuestion(11);
-        request.addParameter("categoryId", "Retro");
+        request.addParameter("categoryId", repo(Category.class).findFirstBy("name", "Retro").stringId());
         controller.doGet(request, response);
 
         OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
@@ -124,7 +125,7 @@ public class LaunchPracticeControllerTest {
     public void doPracticeWithOtherCategory() throws IOException {
         Category cat = Category.create("Empty");
         mockQuestion(11);
-        request.addParameter("categoryId", "Empty");
+        request.addParameter("categoryId", cat.stringId());
         controller.doGet(request, response);
 
         OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
