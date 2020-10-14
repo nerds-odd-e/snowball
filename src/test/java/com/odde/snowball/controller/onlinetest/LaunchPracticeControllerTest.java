@@ -113,10 +113,22 @@ public class LaunchPracticeControllerTest {
     @Test
     public void doPracticeWithCategory() throws IOException {
         mockQuestion(11);
-        request.addParameter("category", "Retro");
+        request.addParameter("categoryId", "Retro");
         controller.doGet(request, response);
 
         OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
         assertThat(onlineTest.getNumberOfQuestions()).isEqualTo(10);
     }
+
+    @Test
+    public void doPracticeWithOtherCategory() throws IOException {
+        Category cat = Category.create("Empty");
+        mockQuestion(11);
+        request.addParameter("categoryId", "Empty");
+        controller.doGet(request, response);
+
+        OnlineTest onlineTest = (OnlineTest) request.getSession().getAttribute("onlineTest");
+        assertThat(onlineTest).isNull();
+    }
+
 }
