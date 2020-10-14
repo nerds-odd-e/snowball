@@ -39,7 +39,7 @@ public class WebDriverWrapper {
         System.setProperty("webdriver.chrome.silentOutput", "true");
         java.util.logging.Logger.getLogger("org.openqa.selenium").setLevel(Level.OFF);
         ChromeOptions chromeOptions = new ChromeOptions();
-        // chromeOptions.addArguments("--headless");
+        chromeOptions.addArguments("--headless");
         chromeOptions.addArguments("--disable-gpu");
         chromeOptions.addArguments("--no-sandbox");
         chromeOptions.addArguments("--silent");
