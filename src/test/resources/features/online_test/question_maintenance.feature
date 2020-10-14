@@ -75,7 +75,7 @@ Feature:
       | What is scrum? | Scrum is Rugby | Scrum is Baseball | Scrum is Soccer | Scrum is Sumo | Scrum is BasketBall | Scrum is Swimming | 1        | Rugby is Scrum!! |
 
   @developing
-  Scenario: 回答にイメージ図を使用できる(イメージ図添付あり)
+  Scenario: 回答にイメージ図を使用できる(添付あり)
     Given Add Questionを開いている
     And 質問の内容を入力している
     And イメージ図を指定して登録する
@@ -91,7 +91,7 @@ Feature:
     And イメージ図を指定せずに登録する
     When OnlineTestを開始する
     And 不正解の回答をする
-    Then Adviceにイメージ図が表示されない
+    Then Adviceにイメージ図欄が空白で表示される
 
   Scenario: 回答項目が6個未満の質問の追加が成功する
     Given Add Questionを開いている
@@ -155,4 +155,4 @@ Feature:
   Scenario: 質問一覧にイメージ図が表示される(イメージ図添付なし)
     Given イメージ図が添付されていない質問が登録されている
     When Question Listを表示する
-    Then イメージ図が空白で表示される
+    Then イメージ図が空欄で表示される
