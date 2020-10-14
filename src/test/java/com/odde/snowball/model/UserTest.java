@@ -151,6 +151,27 @@ public class UserTest {
         assertAnswerInfoEquals(ansInfo, dbAnsInfo);
     }
 
+    @Test
+    public void 同じ質問を答えた時に回答情報を更新する() {
+        Question question = createQuestion();
+        Date lastAnsDate = createDate(2020, 9, 1);
+        Date nextShowDate = createDate(2020, 9, 6);
+        AnswerInfo ansInfo = new AnswerInfo(question.stringId(), lastAnsDate, 1, nextShowDate);
+        User user = createUser("shiomi@gmail.com", "shiomi");
+        user.addAnswerInfo(ansInfo);
+        user.save();
+
+        Date lastAnsDate2 = createDate(2020, 10, 1);
+        Date nextShowDate2 = createDate(2020, 10, 6);
+        AnswerInfo ansInfo2 = new AnswerInfo(question.stringId(), lastAnsDate2, 2, nextShowDate2);
+        user.addAnswerInfo(ansInfo2);
+        user.save();
+
+        AnswerInfo ansResult = user.getAnswerInfo().get(0);
+        assertAnswerInfoEquals(ansResult, ansInfo2);
+        assertEquals(1, user.getAnswerInfo().size());
+    }
+
     private void assertAnswerInfoEquals(AnswerInfo answerInfo_1, AnswerInfo answerInfo_2) {
         assertEquals(answerInfo_1.getCorrectCount(), answerInfo_2.getCorrectCount());
         assertEquals(answerInfo_1.getLastAnsweredDate(), answerInfo_1.getLastAnsweredDate());

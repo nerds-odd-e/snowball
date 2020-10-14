@@ -158,7 +158,7 @@ public class OnlineTestTest {
 
     @Test
     public void should_return_completed_practice_if_practice_ends() {
-        OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user, 10);
+        OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user, "", 10);
         assertEquals(onlineTest.endPageName(), "/practice/completed_practice.jsp");
     }
 
