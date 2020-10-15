@@ -55,7 +55,6 @@ Feature:
     And 正答して"<days>"日以上たった問題がある
     When 全てのユーザが特訓を開始すると
     Then 正答して"<days>"日以上たった問題は表示"<success>"
-
     Examples:
       | days                       | success |
       | 1                          | されない |
