@@ -2,6 +2,7 @@ package cucumber.steps;
 
 import com.odde.snowball.model.User;
 import com.odde.snowball.model.onlinetest.AnswerInfo;
+import com.odde.snowball.model.onlinetest.Category;
 import com.odde.snowball.model.onlinetest.Question;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -12,6 +13,7 @@ import cucumber.steps.site.SnowballSite;
 import org.openqa.selenium.WebElement;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static com.odde.snowball.model.base.Repository.repo;
@@ -160,5 +162,29 @@ public class PracticeTestsStepDefs {
     @Then("誤答して１日たった問題が優先して表示される")
     public void 誤答して１日たった問題が優先して表示される() {
         // todo:問題の判定方法を特定する。
+    }
+
+    private void createAnsweredQuestion(User user, int elapsedDays, int correctCount) {
+
+        // 次回表示予定日を現在時刻とする
+        Date nextShowDate = new Date();
+
+        // 最終回答日を今日から経過日数前の日付とする
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(nextShowDate);
+        calendar.add(Calendar.DAY_OF_MONTH, elapsedDays * -1);
+        Date answeredDate = calendar.getTime();
+
+        // 新規question作成
+        Category category = repo(Category.class).findFirstBy("name", "Retro");
+        Question question = new Question("test", "advice", category.getId(), false, true);
+        question.save();
+
+        // 作成したquestionに回答情報を追加
+        AnswerInfo answerInfo = new AnswerInfo(question.stringId(), answeredDate, correctCount, nextShowDate);
+
+        // 回答情報を登録
+        user.addAnswerInfo(answerInfo);
+        user.save();
     }
 }
