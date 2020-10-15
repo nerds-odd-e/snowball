@@ -33,6 +33,7 @@ Feature:
     And User answered 10 questions correctly
     Then User should see "Good job!"
 
+  @now
   Scenario: 未回答の問題が表示される
     Given 未回答の問題だけがある
     And User is taking a practiceTest
@@ -65,7 +66,6 @@ Feature:
     And 正答してから5日未満の問題は表示されない
 
   @developing
-   @now
   Scenario: ある問題に誤答した場合、１日後に同じ問題が再度表示される
     Given There are questions with dummy options:
       | description | correctOption | category |
