@@ -230,8 +230,8 @@ public class PracticeTestsStepDefs {
 
     @Then("未回答の問題が表示される")
     public void 未回答の問題が表示される() {
-        driver.takeScreenshot("tmp/hogehoge");
-        driver.expectElementToContainText("#description", "");
+        driver.takeScreenshot("tmp/未回答の問題が表示される");
+        driver.expectElementToContainText("#description", "What is Mob Programing.");
     }
 
     @And("回答してから５日たった問題がある")
