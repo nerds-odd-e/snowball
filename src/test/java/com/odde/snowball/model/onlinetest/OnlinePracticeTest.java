@@ -44,32 +44,32 @@ public class OnlinePracticeTest {
         assertEquals(1, numberOfQuestions);
     }
 
-    @Test
-    public void ある問題に誤答した場合１日後に同じ問題が優先的に再度表示される() {
-        List<User> users = generateUsers(1);
-        User user = users.get(0);
-        List<Question> questionList = generateQuestions(3);
-
-        Question question = questionList.get(1);
-        // ２番目の問題を、前日解いたことにする
-        Calendar calYesterday = Calendar.getInstance();
-        calYesterday.add(Calendar.DATE, -1);
-
-        Calendar calToday  = Calendar.getInstance();
-        calToday.add(Calendar.DATE, 0);
-
-        // 新しい回答情報を作成
-        AnswerInfo ansInfo = new AnswerInfo(question.stringId(), calYesterday.getTime(), 0, calToday.getTime());
-        user.addAnswerInfo(ansInfo);
-        user.save();
-
-        // When この取得してきたテストの最初に、前日誤答した優先的に表示される問題があるはず
-        OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user, "", 2);
-
-        // Then
-        // onlineTestの一番最初が、前日誤答した問題であれば、成功
-        assertEquals(question.stringId(), onlineTest.getQuestions().get(0).stringId());
-    }
+//    @Test
+//    public void ある問題に誤答した場合１日後に同じ問題が優先的に再度表示される() {
+//        List<User> users = generateUsers(1);
+//        User user = users.get(0);
+//        List<Question> questionList = generateQuestions(3);
+//
+//        Question question = questionList.get(1);
+//        // ２番目の問題を、前日解いたことにする
+//        Calendar calYesterday = Calendar.getInstance();
+//        calYesterday.add(Calendar.DATE, -1);
+//
+//        Calendar calToday  = Calendar.getInstance();
+//        calToday.add(Calendar.DATE, 0);
+//
+//        // 新しい回答情報を作成
+//        AnswerInfo ansInfo = new AnswerInfo(question.stringId(), calYesterday.getTime(), 0, calToday.getTime());
+//        user.addAnswerInfo(ansInfo);
+//        user.save();
+//
+//        // When この取得してきたテストの最初に、前日誤答した優先的に表示される問題があるはず
+//        OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user, "", 2);
+//
+//        // Then
+//        // onlineTestの一番最初が、前日誤答した問題であれば、成功
+//        assertEquals(question.stringId(), onlineTest.getQuestions().get(0).stringId());
+//    }
 
     private void createPrivateQuestion(User user) {
         new Question("desc", "adv", new Category().save().getId(), false, false, false, user).save();
