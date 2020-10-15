@@ -182,18 +182,35 @@ public class PracticeTestsStepDefs {
     @Given("正答してから{int}日未満の問題がある")
     public void 正答してから_日未満の問題がある(Integer elapsedDays) {
         User currentUser = getCurrentUser();
-        createAnsweredQuestion(currentUser, elapsedDays - 1, 1, "not over nextShowDate");
+        createAnsweredQuestion(currentUser, elapsedDays - 1, 1, "nextShowDate not over");
     }
 
     @Given("正答して{int}日以上たった問題がある")
     public void 正答して_日以上たった問題がある(Integer elapsedDays) {
         User currentUser = getCurrentUser();
-        createAnsweredQuestion(currentUser, elapsedDays, 1, "over nextShowDate");
+        createAnsweredQuestion(currentUser, elapsedDays, 1, "nextShowDate over");
     }
 
     @Given("未回答の問題がある")
     public void 未回答の問題がある() {
         createQuestion("no answer");
+    }
+
+    @Then("{int}件目に正答して{int}日以上たった問題が表示される")
+    public void 件目に正答して_日以上たった問題が表示される(Integer questionCount, Integer elapsedDays) {
+        driver.expectPageToContainText("nextShowDate over");
+    }
+
+    @Then("{int}件目に未回答の問題が表示される")
+    public void 件目に未回答の問題が表示される(Integer int1) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new cucumber.api.PendingException();
+    }
+
+    @Then("正答してから{int}日未満の問題は表示されない")
+    public void 正答してから_日未満の問題は表示されない(Integer int1) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new cucumber.api.PendingException();
     }
 
     // 回答済みの問題を作成する
@@ -229,7 +246,7 @@ public class PracticeTestsStepDefs {
 
     // ログインしているハズのユーザーを取得する
     private User getCurrentUser() {
-        User user = repo(User.class).findFirstBy("name", "mary");
+        User user = repo(User.class).findFirstBy("email", "mary@email.com");
         return user;
     }
 

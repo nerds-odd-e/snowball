@@ -34,13 +34,12 @@ Feature:
     Then User should see "Good job!"
 
   @developing
-  Scenario: ある問題に正答した場合、５日以上経つと同じ問題が再度表示される　
+  Scenario: ある問題に正答した場合、５日以上経つと同じ問題が再度表示される
     # 正答したら５日後にセットするというユニットテストを入れるのがいいのでは？
-    Given User is taking a practiceTest　　
-    And 未回答の問題がある
+    Given 未回答の問題がある
     And 正答してから5日未満の問題がある
     And 正答して5日以上たった問題がある
-    When 全てのユーザが特訓を開始すると
+    When User is taking a practiceTest
     Then 1件目に正答して5日以上たった問題が表示される
     And 2件目に未回答の問題が表示される
     And 正答してから5日未満の問題は表示されない
