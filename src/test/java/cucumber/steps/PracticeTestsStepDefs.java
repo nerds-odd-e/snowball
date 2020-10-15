@@ -1,6 +1,7 @@
 package cucumber.steps;
 
 import com.odde.snowball.model.User;
+import com.odde.snowball.model.onlinetest.Answer;
 import com.odde.snowball.model.onlinetest.AnswerInfo;
 import com.odde.snowball.model.onlinetest.Category;
 import com.odde.snowball.model.onlinetest.Question;
@@ -193,7 +194,9 @@ public class PracticeTestsStepDefs {
 
     @Given("未回答の問題がある")
     public void 未回答の問題がある() {
-        createQuestion("no answer");
+        for (int i = 0; i < 1000; i++){
+            createQuestion("no answer".concat(String.valueOf(i)));
+        }
     }
 
     @Then("{int}件目に正答して{int}日以上たった問題が表示される")
@@ -203,14 +206,17 @@ public class PracticeTestsStepDefs {
 
     @Then("{int}件目に未回答の問題が表示される")
     public void 件目に未回答の問題が表示される(Integer int1) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
+        driver.clickRadioButton("ans1");
+        driver.click("#answer");
+
+        driver.expectPageToContainText("no answer");
     }
 
     @Then("正答してから{int}日未満の問題は表示されない")
     public void 正答してから_日未満の問題は表示されない(Integer int1) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
+        driver.clickRadioButton("ans1");
+        driver.click("#answer");
+        driver.expectPageToContainText("nextShowDate not over");
     }
 
     // 回答済みの問題を作成する
@@ -240,7 +246,12 @@ public class PracticeTestsStepDefs {
     private Question createQuestion(String description) {
         Category category = repo(Category.class).findFirstBy("name", "Retro");
         Question question = new Question(description, "advice", category.getId(), false, true);
+
+        question.withOption("ans1", true);
+        question.withOption("ans2", false);
+
         question.save();
+
         return question;
     }
 

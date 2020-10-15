@@ -34,6 +34,7 @@ Feature:
     Then User should see "Good job!"
 
   @developing
+    @now
   Scenario: ある問題に正答した場合、５日以上経つと同じ問題が再度表示される
     # 正答したら５日後にセットするというユニットテストを入れるのがいいのでは？
     Given 未回答の問題がある
