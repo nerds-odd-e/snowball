@@ -128,7 +128,7 @@ public class QuestionCollectionTest {
         new AnswerHistory().recordAnsweredQuestion(user, String.valueOf(question.getId()), calendar.getTime());
         user.save();
         //when
-        List<Question> questions = questionCollection.generateQuestionList(categories, 1);
+        List<Question> questions = questionCollection.generateQuestionListForPractice(categories, 1);
         //then
         assertEquals(1, questions.size());
     }
@@ -145,7 +145,7 @@ public class QuestionCollectionTest {
         new AnswerHistory().recordAnsweredQuestion(user, String.valueOf(question.getId()), calendar.getTime());
         user.save();
         //when
-        List<Question> questions = questionCollection.generateQuestionList(categories, 1);
+        List<Question> questions = questionCollection.generateQuestionListForPractice(categories, 1);
         //then
         assertEquals(0, questions.size());
     }
@@ -166,7 +166,7 @@ public class QuestionCollectionTest {
 
         user.save();
         //when
-        List<Question> questions = questionCollection.generateQuestionList(categories, 2);
+        List<Question> questions = questionCollection.generateQuestionListForPractice(categories, 2);
         //then
         assertEquals(1, questions.size());
     }

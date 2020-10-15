@@ -31,6 +31,24 @@ public class QuestionCollection {
         }
 
         List<Question> questions = new ArrayList<>();
+        for (Category cat : categories) {
+            int maxQuestionOfCategory = getMaxQuestionOfCategory(categories.size(), numberOfQuestions, cat);
+            questions.addAll(getShuffledQuestionsOfCategory(cat).subList(0, maxQuestionOfCategory));
+            if (numberOfQuestions <= questions.size()) {
+                break;
+            }
+        }
+        questions.addAll(getRemainingQuestions(categories, numberOfQuestions - questions.size(), questions));
+
+        return questions;
+    }
+
+    public List<Question> generateQuestionListForPractice(List<Category> categories, int numberOfQuestions) {
+        if (numberOfQuestions <= 0 || allQuestions.isEmpty() || hasNoQuestionBelongCategory(categories)) {
+            return new ArrayList<>();
+        }
+
+        List<Question> questions = new ArrayList<>();
         Date today = new Date();
         User user = repo(User.class).findAll().get(0); //TODO: should generalize user
         //TODO: concerns: is it ok multi category case?
