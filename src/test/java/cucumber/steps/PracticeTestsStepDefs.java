@@ -230,6 +230,7 @@ public class PracticeTestsStepDefs {
 
     @Then("未回答の問題が表示される")
     public void 未回答の問題が表示される() {
+        driver.takeScreenshot("tmp/hogehoge");
         driver.expectElementToContainText("#description", "");
     }
 }
