@@ -32,7 +32,8 @@ public class QuestionCollection {
 
         List<Question> questions = new ArrayList<>();
         Date today = new Date();
-        User user = repo(User.class).findAll().get(0);
+        User user = repo(User.class).findAll().get(0); //TODO: should generalize user
+        //TODO: concerns: is it ok multi category case?
         if (user.getAnswerInfo().size() > 0) {
             for (AnswerInfo info : user.getAnswerInfo()) {
                 if (today.compareTo(info.getNextShowDate()) <= 0) {
