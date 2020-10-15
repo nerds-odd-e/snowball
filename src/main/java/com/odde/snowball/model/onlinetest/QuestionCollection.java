@@ -30,16 +30,22 @@ public class QuestionCollection {
             return new ArrayList<>();
         }
 
+        List<Question> questions = new ArrayList<>();
         Date today = new Date();
         User user = repo(User.class).findAll().get(0);
         if (user.getAnswerInfo().size() > 0) {
-            AnswerInfo answerInfo = user.getAnswerInfo().get(0);
-            if (today.compareTo(answerInfo.getNextShowDate()) <= 0) {
-                return new ArrayList<>();
+            for (AnswerInfo info : user.getAnswerInfo()) {
+                if (today.compareTo(info.getNextShowDate()) <= 0) {
+                    return new ArrayList<>();
+                } else {
+                    Question question = repo(Question.class).findByStringId(info.getQuestionId());
+                    questions.add(question);
+                    return questions;
+
+                }
             }
         }
 
-        List<Question> questions = new ArrayList<>();
         for (Category cat : categories) {
             int maxQuestionOfCategory = getMaxQuestionOfCategory(categories.size(), numberOfQuestions, cat);
             questions.addAll(getShuffledQuestionsOfCategory(cat).subList(0, maxQuestionOfCategory));

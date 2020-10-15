@@ -120,7 +120,7 @@ public class QuestionCollectionTest {
     @Test
     public void _5日前に回答した問題が表示される() {
         //given
-        QuestionCollection questionCollection = createQuestionCollection(1, 1);
+        QuestionCollection questionCollection = createQuestionCollection(1, 0);
         Calendar calendar = Calendar.getInstance();
         calendar.set(2020, Calendar.OCTOBER, 10);
 
@@ -133,10 +133,11 @@ public class QuestionCollectionTest {
         assertEquals(1, questions.size());
     }
 
+
     @Test
-    public void _4日前に回答した問題が表示される() {
+    public void _4日前に回答した問題が表示されない() {
         //given
-        QuestionCollection questionCollection = createQuestionCollection(1, 1);
+        QuestionCollection questionCollection = createQuestionCollection(1, 0);
         Calendar calendar = Calendar.getInstance();
         calendar.set(2020, Calendar.OCTOBER, 11);
 
@@ -149,4 +150,24 @@ public class QuestionCollectionTest {
         assertEquals(0, questions.size());
     }
 
+    @Test
+    public void _4日前と５日前１件ずつあるときは１件取得できる() {
+        //given
+        QuestionCollection questionCollection = createQuestionCollection(2, 0);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2020, Calendar.OCTOBER, 10);
+        Question question = repo(Question.class).findAll().get(0);
+        new AnswerHistory().recordAnsweredQuestion(user, String.valueOf(question.getId()), calendar.getTime());
+
+        Calendar calendar2 = Calendar.getInstance();
+        calendar.set(2020, Calendar.OCTOBER, 11);
+        Question question2 = repo(Question.class).findAll().get(1);
+        new AnswerHistory().recordAnsweredQuestion(user, String.valueOf(question2.getId()), calendar2.getTime());
+
+        user.save();
+        //when
+        List<Question> questions = questionCollection.generateQuestionList(categories, 2);
+        //then
+        assertEquals(1, questions.size());
+    }
 }
