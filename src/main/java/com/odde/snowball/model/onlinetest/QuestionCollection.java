@@ -43,38 +43,33 @@ public class QuestionCollection {
         return questions;
     }
 
-    public List<Question> generateQuestionListForPractice(List<Category> categories, int numberOfQuestions) {
+    public List<Question> generateQuestionListForPractice(List<Category> categories, int numberOfQuestions, User user) {
         if (numberOfQuestions <= 0 || allQuestions.isEmpty() || hasNoQuestionBelongCategory(categories)) {
             return new ArrayList<>();
         }
 
-        List<Question> questions = new ArrayList<>();
+        // List<Question> allQuestions = repo(Question.class).findAll();
+        List<Question> removeQuestions = new ArrayList<>();
         Date today = new Date();
-        User user = repo(User.class).findAll().get(0); //TODO: should generalize user
         //TODO: concerns: is it ok multi category case?
-        if (user.getAnswerInfo().size() > 0) {
-            for (AnswerInfo info : user.getAnswerInfo()) {
-                if (today.compareTo(info.getNextShowDate()) <= 0) {
-                    return new ArrayList<>();
-                } else {
-                    Question question = repo(Question.class).findByStringId(info.getQuestionId());
-                    questions.add(question);
-                    return questions;
-
+        for (Question question : allQuestions){
+            // boolean removeListItem = false;
+            if (user.getAnswerInfo().size() > 0) {
+                for (AnswerInfo info : user.getAnswerInfo()) {
+                    if(question.stringId().equals(info.getQuestionId())){
+                        // 次回回答日でなければ除く
+                        if (today.compareTo(info.getNextShowDate()) <= 0) {
+                            removeQuestions.add(question);
+                            break;
+                        }
+                    }
                 }
             }
         }
-
-        for (Category cat : categories) {
-            int maxQuestionOfCategory = getMaxQuestionOfCategory(categories.size(), numberOfQuestions, cat);
-            questions.addAll(getShuffledQuestionsOfCategory(cat).subList(0, maxQuestionOfCategory));
-            if (numberOfQuestions <= questions.size()) {
-                break;
-            }
+        for(Question removeQuestion: removeQuestions) {
+            allQuestions.remove(removeQuestion);
         }
-        questions.addAll(getRemainingQuestions(categories, numberOfQuestions - questions.size(), questions));
-
-        return questions;
+        return allQuestions;
     }
 
     private List<Question> getRemainingQuestions(List<Category> categories, int numberOfRemainingQuestions, List<Question> questions) {
