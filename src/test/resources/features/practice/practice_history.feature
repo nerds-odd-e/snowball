@@ -7,7 +7,6 @@ Feature:
       | What is Mob Programing. | correctOption | Retro |
     Given user "mary" has logged in successfully
 
-  @now
   Scenario: 未回答の問題が表示される
     Given 未回答の問題だけがある
     And User is taking a practiceTest
@@ -15,6 +14,7 @@ Feature:
     Then 未回答の問題が表示される
 
   @developing
+  @now
   Scenario: 回答してから５日たった問題が表示される
     Given User is taking a practiceTest
     And 回答してから５日たった問題がある

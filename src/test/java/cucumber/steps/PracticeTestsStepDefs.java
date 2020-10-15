@@ -233,4 +233,29 @@ public class PracticeTestsStepDefs {
         driver.takeScreenshot("tmp/hogehoge");
         driver.expectElementToContainText("#description", "");
     }
+
+    @And("回答してから５日たった問題がある")
+    public void 回答してから５日たった問題がある() {
+        List<User> userList = repo(User.class).findAll();
+        User loginUser = userList.get(0);
+
+        List<Question> questionList = repo(Question.class).findAll();
+        Question question = questionList.get(0);
+
+        Date lastAnsweredDate = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(lastAnsweredDate);
+        calendar.add(Calendar.DATE, -5);
+        Date nextShowDate = calendar.getTime();
+        AnswerInfo ansInfo = new AnswerInfo(question.stringId(), lastAnsweredDate, 1, nextShowDate);
+
+        loginUser.addAnswerInfo(ansInfo);
+        loginUser.save();
+    }
+
+    @Then("回答してから５日たった問題が表示される")
+    public void 回答してから５日たった問題が表示される() {
+        driver.takeScreenshot("tmp/回答してから５日たった問題が表示される");
+        driver.expectElementToContainText("#description", "What is Mob Programing.");
+    }
 }
