@@ -134,7 +134,7 @@ public class PracticeTestsStepDefs {
         driver.clickButtonByName("start_practice_button");
     }
 
-    @Given("誤答して1日たった問題と未回答の問題がある")
+    @Given("Q2を前日に解答して間違えている")
     public void 誤答して１日たった問題と未回答の問題がある() {
 
         // ログインしたユーザに対して誤答したAnswerInfoをAdd
@@ -156,12 +156,12 @@ public class PracticeTestsStepDefs {
         loginUser.addAnswerInfo(ansInfo);
         loginUser.save();
 
-        // 答えていない質問　→　やらない
     }
 
     @Then("誤答して１日たった問題が優先して表示される")
     public void 誤答して１日たった問題が優先して表示される() {
-        // todo:問題の判定方法を特定する。
+
+
     }
 
     private void createAnsweredQuestion(User user, int elapsedDays, int correctCount) {
