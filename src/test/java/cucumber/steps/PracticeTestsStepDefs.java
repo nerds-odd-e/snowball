@@ -166,7 +166,7 @@ public class PracticeTestsStepDefs {
         calToday.add(Calendar.DATE, 0);
 
         // 新しい回答情報を作成
-        AnswerInfo ansInfo = new AnswerInfo(questionList.get(1).stringId(), calYesterday.getTime(), 1, calToday.getTime());
+        AnswerInfo ansInfo = new AnswerInfo(questionList.get(1).stringId(), calYesterday.getTime(), 0, calToday.getTime());
 
         loginUser.addAnswerInfo(ansInfo);
         loginUser.save();

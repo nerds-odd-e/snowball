@@ -34,8 +34,9 @@ Feature:
     Then User should see "Good job!"
 
   @developing
-  Scenario: ある問題に正答した場合、５日以上経つと同じ問題が再度表示される
-    Given User is taking a practiceTest
+  Scenario: ある問題に正答した場合、５日以上経つと同じ問題が再度表示される　
+    # 正答したら５日後にセットするというユニットテストを入れるのがいいのでは？
+    Given User is taking a practiceTest　　
     And 未回答の問題がある
     And 正答してから5日未満の問題がある
     And 正答して5日以上たった問題がある
@@ -44,8 +45,29 @@ Feature:
     And 2件目に未回答の問題が表示される
     And 正答してから5日未満の問題は表示されない
 
+    # シナリオアウトラインを使って
+    # この日にちだったら表示される、表示されない
   @developing
-  Scenario: ある問題に誤答した場合、１日後に同じ問題が再度表示される
+  Scenario Outline: ある問題に正答し"<days>"日以上経った場合
+    # 正答したら５日後にセットするというユニットテストを入れるのがいいのでは？
+    Given User is taking a practiceTes
+    And 未回答の問題が10問以上ある
+    And 正答して"<days>"日以上たった問題がある
+    When 全てのユーザが特訓を開始すると
+    Then 正答して"<days>"日以上たった問題は表示"<success>"
+
+    Examples:
+      | days                       | success |
+      | 1                          | されない |
+      | 2                          | されない |
+      | 3                          | されない |
+      | 4                          | されない |
+      | 5                          | される   |
+
+
+  @developing
+  Scenario: ある問題に誤答した場合、１日後に同じ問題が優先的に再度表示される
+    #誤答したら翌日にセットするというユニットテストを入れるのがいいのでは？
     Given There are questions with dummy options:
       | description | correctOption | category |
       | Q2          | correctOption | Retro    |
