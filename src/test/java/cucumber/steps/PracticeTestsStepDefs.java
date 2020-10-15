@@ -217,4 +217,19 @@ public class PracticeTestsStepDefs {
         User user = repo(User.class).findFirstBy("name", "mary");
         return user;
     }
+
+    @Given("未回答の問題だけがある")
+    public void 未回答の問題だけがある() {
+        // 自動的に未回答のQuestionが1つ作られるので処理不要
+        // List<Question> questionList = repo(Question.class).findAll();
+    }
+    
+    @When("全てのユーザが特訓を開始すると")
+    public void 全てのユーザが特訓を開始すると() {
+    }
+
+    @Then("未回答の問題が表示される")
+    public void 未回答の問題が表示される() {
+        driver.expectElementToContainText("#description", "");
+    }
 }

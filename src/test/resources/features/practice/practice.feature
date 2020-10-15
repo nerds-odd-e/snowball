@@ -33,10 +33,9 @@ Feature:
     And User answered 10 questions correctly
     Then User should see "Good job!"
 
-  @developing
   Scenario: 未回答の問題が表示される
-    Given User is taking a practiceTest
-    And 未回答の問題だけがある
+    Given 未回答の問題だけがある
+    And User is taking a practiceTest
     When 全てのユーザが特訓を開始すると
     Then 未回答の問題が表示される
 
