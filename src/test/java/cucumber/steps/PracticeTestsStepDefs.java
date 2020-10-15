@@ -24,6 +24,21 @@ public class PracticeTestsStepDefs {
     private final SnowballSite site = new SnowballSite();
     private final WebDriverWrapper driver = site.getDriver();
 
+    private void 指定した問題を回答してから指定した日数たった状態にする(String questionId, int date) {
+        List<User> userList = repo(User.class).findAll();
+        User loginUser = userList.get(0);
+
+        Date lastAnsweredDate = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(lastAnsweredDate);
+        calendar.add(Calendar.DATE, -date);
+        Date nextShowDate = calendar.getTime();
+        AnswerInfo ansInfo = new AnswerInfo(questionId, lastAnsweredDate, 1, nextShowDate);
+
+        loginUser.addAnswerInfo(ansInfo);
+        loginUser.save();
+    }
+
     @And("I start a practice with 1 question")
     public void iStartAPracticeWithQuestion() {
         driver.clickButtonByName("start_practice_button");
@@ -236,21 +251,9 @@ public class PracticeTestsStepDefs {
 
     @And("回答してから５日たった問題がある")
     public void 回答してから５日たった問題がある() {
-        List<User> userList = repo(User.class).findAll();
-        User loginUser = userList.get(0);
-
         List<Question> questionList = repo(Question.class).findAll();
-        Question question = questionList.get(0);
-
-        Date lastAnsweredDate = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(lastAnsweredDate);
-        calendar.add(Calendar.DATE, -5);
-        Date nextShowDate = calendar.getTime();
-        AnswerInfo ansInfo = new AnswerInfo(question.stringId(), lastAnsweredDate, 1, nextShowDate);
-
-        loginUser.addAnswerInfo(ansInfo);
-        loginUser.save();
+        Question answeredQuestion = questionList.get(0);
+        指定した問題を回答してから指定した日数たった状態にする(answeredQuestion.stringId(), 5);
     }
 
     @Then("回答してから５日たった問題が表示される")
@@ -261,23 +264,8 @@ public class PracticeTestsStepDefs {
 
     @And("回答して５日たった問題と未回答の問題がある")
     public void 回答して５日たった問題と未回答の問題がある() {
-        createQuestion("What is Extreme Programing.");
-
-        List<User> userList = repo(User.class).findAll();
-        User loginUser = userList.get(0);
-
-        List<Question> questionList = repo(Question.class).findAll();
-        Question answeredQuestion = questionList.get(1);
-
-        Date lastAnsweredDate = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(lastAnsweredDate);
-        calendar.add(Calendar.DATE, -5);
-        Date nextShowDate = calendar.getTime();
-        AnswerInfo ansInfo = new AnswerInfo(answeredQuestion.stringId(), lastAnsweredDate, 1, nextShowDate);
-
-        loginUser.addAnswerInfo(ansInfo);
-        loginUser.save();
+        Question answeredQuestion = createQuestion("What is Extreme Programing.");
+        指定した問題を回答してから指定した日数たった状態にする(answeredQuestion.stringId(), 5);
     }
 
     @Then("回答して５日たった問題が優先して表示される")
