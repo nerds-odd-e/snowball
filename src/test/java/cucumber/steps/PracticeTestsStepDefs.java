@@ -164,7 +164,25 @@ public class PracticeTestsStepDefs {
 
     }
 
-    private void createAnsweredQuestion(User user, int elapsedDays, int correctCount) {
+    @Given("正答してから{int}日未満の問題がある")
+    public void 正答してから_日未満の問題がある(Integer elapsedDays) {
+        User currentUser = getCurrentUser();
+        createAnsweredQuestion(currentUser, elapsedDays - 1, 1, "not over nextShowDate");
+    }
+
+    @Given("正答して{int}日以上たった問題がある")
+    public void 正答して_日以上たった問題がある(Integer elapsedDays) {
+        User currentUser = getCurrentUser();
+        createAnsweredQuestion(currentUser, elapsedDays, 1, "over nextShowDate");
+    }
+
+    @Given("未回答の問題がある")
+    public void 未回答の問題がある() {
+        createQuestion("no answer");
+    }
+
+    // 回答済みの問題を作成する
+    private void createAnsweredQuestion(User user, int elapsedDays, int correctCount, String questionDescription) {
 
         // 次回表示予定日を現在時刻とする
         Date nextShowDate = new Date();
@@ -176,9 +194,7 @@ public class PracticeTestsStepDefs {
         Date answeredDate = calendar.getTime();
 
         // 新規question作成
-        Category category = repo(Category.class).findFirstBy("name", "Retro");
-        Question question = new Question("test", "advice", category.getId(), false, true);
-        question.save();
+        Question question = createQuestion(questionDescription);
 
         // 作成したquestionに回答情報を追加
         AnswerInfo answerInfo = new AnswerInfo(question.stringId(), answeredDate, correctCount, nextShowDate);
@@ -186,5 +202,19 @@ public class PracticeTestsStepDefs {
         // 回答情報を登録
         user.addAnswerInfo(answerInfo);
         user.save();
+    }
+
+    // 問題を作成する
+    private Question createQuestion(String description) {
+        Category category = repo(Category.class).findFirstBy("name", "Retro");
+        Question question = new Question(description, "advice", category.getId(), false, true);
+        question.save();
+        return question;
+    }
+
+    // ログインしているハズのユーザーを取得する
+    private User getCurrentUser() {
+        User user = repo(User.class).findFirstBy("name", "mary");
+        return user;
     }
 }
