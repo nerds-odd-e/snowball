@@ -1,6 +1,8 @@
 package com.odde.snowball.model.onlinetest;
 
 import com.odde.TestWithDB;
+import com.odde.snowball.model.AnswerHistory;
+import com.odde.snowball.model.User;
 import org.bson.types.ObjectId;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,6 +10,7 @@ import org.junit.runner.RunWith;
 import java.util.*;
 import java.util.stream.IntStream;
 
+import static com.odde.snowball.model.base.Repository.repo;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 
@@ -16,6 +19,20 @@ public class QuestionCollectionTest {
     private Category scrum = Category.create("Scrum");
     private Category tech = Category.create("Tech");
     private List<Category> categories = Collections.singletonList(scrum);
+
+    private User createUser(String email, String password) {
+        User user = new User(email);
+        user.setupPassword(password);
+        user.save();
+        return user;
+    }
+
+    private User createUser() {
+        String password = "hogehoge";
+        return createUser("answer_info2@example.com", password);
+    }
+
+    User user = createUser();
 
     @Test
     public void shouldReturnAnEmptyListIfThereIsNoQuestion() {
@@ -43,7 +60,7 @@ public class QuestionCollectionTest {
         QuestionCollection questionCollection = createQuestionCollection(2, 0);
         questionCollection.setShouldShuffleQuestions(true);
         Set<String> selections = new HashSet<>();
-        for(int i = 0; i < 10; i ++) {
+        for (int i = 0; i < 10; i++) {
             List<Question> questions = questionCollection.generateQuestionList(categories, 1);
             selections.add(questions.get(0).getDescription());
         }
@@ -98,6 +115,38 @@ public class QuestionCollectionTest {
                 .forEach(index -> questions.add(new Question("desc" + index, "adv" + index, categoryId, false, false).save())
                 );
         return questions;
+    }
+
+    @Test
+    public void _5日前に回答した問題が表示される() {
+        //given
+        QuestionCollection questionCollection = createQuestionCollection(1, 1);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2020, Calendar.OCTOBER, 10);
+
+        Question question = repo(Question.class).findAll().get(0);
+        new AnswerHistory().recordAnsweredQuestion(user, String.valueOf(question.getId()), calendar.getTime());
+        user.save();
+        //when
+        List<Question> questions = questionCollection.generateQuestionList(categories, 1);
+        //then
+        assertEquals(1, questions.size());
+    }
+
+    @Test
+    public void _4日前に回答した問題が表示される() {
+        //given
+        QuestionCollection questionCollection = createQuestionCollection(1, 1);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2020, Calendar.OCTOBER, 11);
+
+        Question question = repo(Question.class).findAll().get(0);
+        new AnswerHistory().recordAnsweredQuestion(user, String.valueOf(question.getId()), calendar.getTime());
+        user.save();
+        //when
+        List<Question> questions = questionCollection.generateQuestionList(categories, 1);
+        //then
+        assertEquals(0, questions.size());
     }
 
 }

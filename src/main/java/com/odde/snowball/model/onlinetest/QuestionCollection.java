@@ -1,10 +1,16 @@
 package com.odde.snowball.model.onlinetest;
 
 
+import com.odde.snowball.model.User;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.odde.snowball.model.base.Repository.repo;
 
 public class QuestionCollection {
     private List<Question> allQuestions;
@@ -22,6 +28,15 @@ public class QuestionCollection {
     public List<Question> generateQuestionList(List<Category> categories, int numberOfQuestions) {
         if (numberOfQuestions <= 0 || allQuestions.isEmpty() || hasNoQuestionBelongCategory(categories)) {
             return new ArrayList<>();
+        }
+
+        Date today = new Date();
+        User user = repo(User.class).findAll().get(0);
+        if (user.getAnswerInfo().size() > 0) {
+            AnswerInfo answerInfo = user.getAnswerInfo().get(0);
+            if (today.compareTo(answerInfo.getNextShowDate()) <= 0) {
+                return new ArrayList<>();
+            }
         }
 
         List<Question> questions = new ArrayList<>();
