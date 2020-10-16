@@ -23,7 +23,7 @@ public class OnlinePractice extends OnlineTest {
         List<Question> visibleQuestions = all.stream()
                 .filter(q -> q.isVisibleForUser(user))
                 .collect(Collectors.toList());
-        List<Question> questions = new QuestionCollection(visibleQuestions).generateQuestionListForPractice(repo(Category.class).findAll(), max, user);
+        List<Question> questions = new QuestionCollection(visibleQuestions).generateQuestionList(repo(Category.class).findAll(), max);
         return new OnlinePractice(questions);
     }
 
