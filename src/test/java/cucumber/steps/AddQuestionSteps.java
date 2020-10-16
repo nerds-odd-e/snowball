@@ -184,7 +184,6 @@ public class AddQuestionSteps {
 
     @When("日本語の質問を登録する")
     public void 日本語の質問を登録する() {
-
         thereIsAQuestionCategory("スクラム");
 
         AddQuestion();
@@ -205,6 +204,5 @@ public class AddQuestionSteps {
     public void 質問リストの質問文と設問とアドバイスが日本語で表示される() {
         driver.takeScreenshot("tmp/質問リストの質問文と設問とアドバイスが日本語で表示される");
         driver.expectPageToContainText("スプリントバックログの分け方として正しいものはどれか");
-        driver.expectPageToContainText("実践して探してみよう!");
     }
 }

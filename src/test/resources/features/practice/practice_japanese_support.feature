@@ -14,8 +14,7 @@ Feature:
     When 誤った設問を選択して
     And User clicks the answer button
     Then 質問の質問文と設問とアドバイスが日本語で表示される
-
-  @developing
+    
   Scenario: 質問リストの質問文と設問とアドバイスが日本語で表示できる
     Given user "mary" has logged in successfully
     When 日本語の質問を登録する
