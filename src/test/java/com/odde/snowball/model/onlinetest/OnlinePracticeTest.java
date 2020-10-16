@@ -5,6 +5,7 @@ import com.odde.snowball.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class OnlinePracticeTest {
 
     @Test
-    public void 問題が3問存在する時_2問のみ返されること() {
+    public void 問題が3問存在する時_2問のみ返されること() throws ParseException {
         User user = generateUsers(1).get(0);
         generateQuestions(3);
         OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user, "", 2);
@@ -25,7 +26,7 @@ public class OnlinePracticeTest {
     }
 
     @Test
-    public void 問題が2問存在する時_1問が自分のprivate問題です() {
+    public void 問題が2問存在する時_1問が自分のprivate問題です() throws ParseException {
         User user = generateUsers(1).get(0);
         createPrivateQuestion(user);
         generateQuestions(1);
@@ -35,7 +36,7 @@ public class OnlinePracticeTest {
     }
 
     @Test
-    public void 問題が2問存在する時_1問が他の人のprivate問題です() {
+    public void 問題が2問存在する時_1問が他の人のprivate問題です() throws ParseException {
         List<User> users = generateUsers(2);
         createPrivateQuestion(users.get(0));
         generateQuestions(1);

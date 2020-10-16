@@ -1,6 +1,7 @@
 package cucumber.steps;
 
 import com.odde.snowball.factory.QuestionBuilder;
+import com.odde.snowball.model.AnswerHistory;
 import com.odde.snowball.model.User;
 import com.odde.snowball.model.onlinetest.Answer;
 import com.odde.snowball.model.onlinetest.AnswerInfo;
@@ -31,15 +32,10 @@ public class PracticeTestsStepDefs {
         List<User> userList = repo(User.class).findAll();
         User loginUser = userList.get(0);
 
-        Date lastAnsweredDate = new Date();
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(lastAnsweredDate);
         calendar.add(Calendar.DATE, -date);
-        Date nextShowDate = calendar.getTime();
-        AnswerInfo ansInfo = new AnswerInfo(questionId, lastAnsweredDate, 1, nextShowDate);
-
-        loginUser.addAnswerInfo(ansInfo);
-        loginUser.save();
+        Date lastAnsweredDate = calendar.getTime();
+        new AnswerHistory().recordAnsweredQuestion(loginUser, questionId, lastAnsweredDate);
     }
 
     @And("I start a practice with 1 question")

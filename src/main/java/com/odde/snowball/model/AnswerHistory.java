@@ -16,5 +16,6 @@ public class AnswerHistory {
         Date nextShowDate = calendar.getTime();
 
         user.addAnswerInfo(new AnswerInfo(questionId, lasAnsweredDate, 1, nextShowDate));
+        user.save();
     }
 }

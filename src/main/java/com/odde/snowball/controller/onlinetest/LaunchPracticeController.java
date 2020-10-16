@@ -4,6 +4,7 @@ import com.odde.snowball.controller.AppController;
 import com.odde.snowball.model.User;
 import com.odde.snowball.model.onlinetest.OnlinePractice;
 import com.odde.snowball.model.onlinetest.OnlineTest;
+import lombok.SneakyThrows;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 
 @WebServlet("/launchPractice")
 public class LaunchPracticeController extends AppController {
+    @SneakyThrows
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession(true);
         User user = (User) session.getAttribute("currentUser");

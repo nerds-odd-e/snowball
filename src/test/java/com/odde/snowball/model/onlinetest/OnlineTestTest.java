@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -157,7 +158,7 @@ public class OnlineTestTest {
     }
 
     @Test
-    public void should_return_completed_practice_if_practice_ends() {
+    public void should_return_completed_practice_if_practice_ends() throws ParseException {
         OnlineTest onlineTest = OnlinePractice.createOnlinePractice(user, "", 10);
         assertEquals(onlineTest.endPageName(), "/practice/completed_practice.jsp");
     }

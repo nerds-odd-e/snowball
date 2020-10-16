@@ -3,6 +3,7 @@ package com.odde.snowball.model.onlinetest;
 import com.odde.snowball.model.User;
 import org.bson.types.ObjectId;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,7 +14,7 @@ public class OnlinePractice extends OnlineTest {
         super(questions);
     }
 
-    public static OnlineTest createOnlinePractice(User user, String categoryId, int max) {
+    public static OnlineTest createOnlinePractice(User user, String categoryId, int max) throws ParseException {
         List<Question> all;
         all = repo(Question.class).findAll();
         if ( categoryId !=null && !categoryId.isEmpty()) {
@@ -22,7 +23,7 @@ public class OnlinePractice extends OnlineTest {
         List<Question> visibleQuestions = all.stream()
                 .filter(q -> q.isVisibleForUser(user))
                 .collect(Collectors.toList());
-        List<Question> questions = new QuestionCollection(visibleQuestions).generateQuestionList(repo(Category.class).findAll(), max);
+        List<Question> questions = new QuestionCollection(visibleQuestions).generateQuestionListForPractice(repo(Category.class).findAll(), max, user);
         return new OnlinePractice(questions);
     }
 
