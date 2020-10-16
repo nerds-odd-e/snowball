@@ -331,13 +331,14 @@ public class PracticeTestsStepDefs {
         driver.click("#option1");
     }
 
-    @Then("質問のアドバイスと設問が日本語で表示される")
-    public void 質問のアドバイスと設問が日本語で表示される() {
-        driver.takeScreenshot("tmp/質問のアドバイスと設問が日本語で表示される");
-        driver.expectElementToContainText("#questionText", "実践して探してみよう!");
+    @Then("質問の質問文と設問とアドバイスが日本語で表示される")
+    public void 質問の質問文と設問とアドバイスが日本語で表示される() {
+        driver.takeScreenshot("tmp/質問の質問文と設問とアドバイスが日本語で表示される");
+        driver.expectPageToContainText("スプリントバックログの分け方として正しいものはどれか");
         driver.expectPageToContainText("設計・開発・テストフェーズでタスクを分ける");
         driver.expectPageToContainText("Given・When・Thenでタスクを分ける");
         driver.expectPageToContainText("顧客価値に従ってタスクを分ける");
         driver.expectPageToContainText("チームごとに最適を模索する");
+        driver.expectPageToContainText("実践して探してみよう!");
     }
 }
