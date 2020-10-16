@@ -50,6 +50,9 @@ public class QuestionCollection {
         if (numberOfQuestions <= 0 || allQuestions.isEmpty() || hasNoQuestionBelongCategory(categories)) {
             return new ArrayList<>();
         }
+        if (user.getAnswerInfo().size() == 0) {
+            return allQuestions;
+        }
 
         List<Question> resultQuestions = new ArrayList<>();
         List<Question> notAnsweredQuestions = new ArrayList<>();
@@ -57,23 +60,19 @@ public class QuestionCollection {
         Date today = sdf.parse(sdf.format(new Date()));
         Date nextShowDate;
         for (Question question : allQuestions){
-            if (user.getAnswerInfo().size() > 0) {
-                boolean isAnsewered = false;
-                for (AnswerInfo info : user.getAnswerInfo()) {
-                    if (question.stringId().equals(info.getQuestionId())) {
-                        isAnsewered = true;
-                        // 次回回答日でなければ除く
-                        nextShowDate = sdf.parse(sdf.format(info.getNextShowDate()));
-                        if (today.compareTo(nextShowDate) >= 0) {
-                            resultQuestions.add(question);
-                            break;
-                        }
+            boolean isAnswered = false;
+            for (AnswerInfo info : user.getAnswerInfo()) {
+                if (question.stringId().equals(info.getQuestionId())) {
+                    isAnswered = true;
+                    // 次回回答日の質問を追加する
+                    nextShowDate = sdf.parse(sdf.format(info.getNextShowDate()));
+                    if (today.compareTo(nextShowDate) >= 0) {
+                        resultQuestions.add(question);
+                        break;
                     }
                 }
-                if(isAnsewered == false){
-                    notAnsweredQuestions.add(question);
-                }
-            } else{
+            }
+            if(isAnswered == false){
                 notAnsweredQuestions.add(question);
             }
         }
