@@ -273,9 +273,9 @@ public class QuestionCollectionTest {
 
         //then
         assertEquals(3, questions.size());
-//        assertEquals(questions.get(0).getId(), question.getId());
-//        assertEquals(questions.get(1).getId(), question4.getId());
-//        assertEquals(questions.get(2).getId(), question3.getId());
+        assertEquals(questions.get(0).getId(), question.getId());
+        assertEquals(questions.get(1).getId(), question4.getId());
+        assertEquals(questions.get(2).getId(), question3.getId());
     }
 
 }

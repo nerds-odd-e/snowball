@@ -64,9 +64,7 @@ public class QuestionCollection {
             for (AnswerInfo info : user.getAnswerInfo()) {
                 if (question.stringId().equals(info.getQuestionId())) {
                     isAnswered = true;
-                    // 次回回答日の質問を追加する
-                    nextShowDate = sdf.parse(sdf.format(info.getNextShowDate()));
-                    if (today.compareTo(nextShowDate) >= 0) {
+                    if (info.isNextShowDate(today)) {
                         resultQuestions.add(question);
                         break;
                     }

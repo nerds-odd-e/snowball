@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.bson.types.ObjectId;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Getter
@@ -29,4 +31,8 @@ public class AnswerInfo {
         return id.toString();
     }
 
+    public boolean isNextShowDate(Date today) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        return (sdf.format(today).compareTo(sdf.format(this.nextShowDate)) >= 0) ;
+    }
 }
