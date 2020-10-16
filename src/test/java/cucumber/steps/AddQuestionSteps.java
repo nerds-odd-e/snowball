@@ -1,5 +1,6 @@
 package cucumber.steps;
 
+import com.odde.snowball.model.User;
 import com.odde.snowball.model.onlinetest.Category;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -183,8 +184,10 @@ public class AddQuestionSteps {
 
     @When("日本語の質問を登録する")
     public void 日本語の質問を登録する() {
-        site.visit("onlinetest/add_question.jsp");
-        driver.expectTitleToBe("Add Question");
+
+        thereIsAQuestionCategory("スクラム");
+
+        AddQuestion();
 
         descriptionに_が入力されている("スプリントバックログの分け方として正しいものはどれか");
 
@@ -192,11 +195,16 @@ public class AddQuestionSteps {
         option_に_を入力する(2, "Given・When・Thenでタスクを分ける");
         option_に_を入力する(3, "顧客価値に従ってタスクを分ける");
         option_に_を入力する(4, "チームごとに最適を模索する");
-
+        を回答として選択済み("option4");
         adviceに_を入力する("実践して探してみよう!");
+
+        addボタンを押す();
     }
 
     @Then("質問リストの質問文と設問とアドバイスが日本語で表示される")
     public void 質問リストの質問文と設問とアドバイスが日本語で表示される() {
+        driver.takeScreenshot("tmp/質問リストの質問文と設問とアドバイスが日本語で表示される");
+        driver.expectPageToContainText("スプリントバックログの分け方として正しいものはどれか");
+        driver.expectPageToContainText("実践して探してみよう!");
     }
 }
