@@ -1,5 +1,6 @@
 package cucumber.steps;
 
+import com.odde.snowball.factory.QuestionBuilder;
 import com.odde.snowball.model.User;
 import com.odde.snowball.model.onlinetest.Answer;
 import com.odde.snowball.model.onlinetest.AnswerInfo;
@@ -16,6 +17,7 @@ import org.openqa.selenium.WebElement;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import static com.odde.snowball.model.base.Repository.repo;
 import static org.junit.Assert.assertEquals;
@@ -300,5 +302,27 @@ public class PracticeTestsStepDefs {
     public void 回答して５日たった問題が優先して表示される() {
         driver.takeScreenshot("tmp/回答して５日たった問題が優先して表示される");
         driver.expectElementToContainText("#description", "What is Extreme Programing.");
+    }
+
+    @Given("日本語の質問がある")
+    public void 日本語の質問がある() {
+        new QuestionBuilder()
+                .aQuestion("スプリントバックログの分け方として正しいものはどれか", "実践して探してみよう!", "スクラム")
+                .withWrongOption("設計・開発・テストフェーズでタスクを分ける")
+                .withWrongOption("Given・When・Thenでタスクを分ける")
+                .withWrongOption("顧客価値に従ってタスクを分ける")
+                .withCorrectOption("チームごとに最適を模索する")
+                .please();
+        assertEquals(repo(Question.class).findAll().size(), 1);
+    }
+
+    @Then("質問の質問文と設問が日本語で表示される")
+    public void 質問の質問文と設問が日本語で表示される() {
+        driver.takeScreenshot("tmp/質問の質問文と設問が日本語で表示される");
+        driver.expectElementToContainText("#description", "スプリントバックログの分け方として正しいものはどれか");
+        driver.expectPageToContainText("設計・開発・テストフェーズでタスクを分ける");
+        driver.expectPageToContainText("Given・When・Thenでタスクを分ける");
+        driver.expectPageToContainText("顧客価値に従ってタスクを分ける");
+        driver.expectPageToContainText("チームごとに最適を模索する");
     }
 }
