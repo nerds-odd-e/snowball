@@ -180,4 +180,23 @@ public class AddQuestionSteps {
 
         addボタンを押す();
     }
+
+    @When("日本語の質問を登録する")
+    public void 日本語の質問を登録する() {
+        site.visit("onlinetest/add_question.jsp");
+        driver.expectTitleToBe("Add Question");
+
+        descriptionに_が入力されている("スプリントバックログの分け方として正しいものはどれか");
+
+        option_に_を入力する(1, "設計・開発・テストフェーズでタスクを分ける");
+        option_に_を入力する(2, "Given・When・Thenでタスクを分ける");
+        option_に_を入力する(3, "顧客価値に従ってタスクを分ける");
+        option_に_を入力する(4, "チームごとに最適を模索する");
+
+        adviceに_を入力する("実践して探してみよう!");
+    }
+
+    @Then("質問リストの質問文と設問とアドバイスが日本語で表示される")
+    public void 質問リストの質問文と設問とアドバイスが日本語で表示される() {
+    }
 }
