@@ -7,6 +7,7 @@ import org.bson.types.ObjectId;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.text.ParseException;
 import java.util.*;
 import java.util.stream.IntStream;
 
@@ -118,7 +119,7 @@ public class QuestionCollectionTest {
     }
 
     @Test
-    public void _5日前に回答した問題が表示される() {
+    public void _5日前に回答した問題が表示される() throws ParseException {
         //given
         QuestionCollection questionCollection = createQuestionCollection(1, 0);
 
@@ -136,7 +137,7 @@ public class QuestionCollectionTest {
 
 
     @Test
-    public void _4日前に回答した問題が表示されない() {
+    public void _4日前に回答した問題が表示されない() throws ParseException {
         //given
         QuestionCollection questionCollection = createQuestionCollection(1, 0);
         Calendar calendar = Calendar.getInstance();
@@ -152,7 +153,7 @@ public class QuestionCollectionTest {
     }
 
     @Test
-    public void _4日前と５日前１件ずつあるときは１件取得できる() {
+    public void _4日前と５日前１件ずつあるときは１件取得できる() throws ParseException {
         //given
         QuestionCollection questionCollection = createQuestionCollection(2, 0);
 
@@ -174,7 +175,7 @@ public class QuestionCollectionTest {
     }
 
     @Test
-    public void _4日前５日前６日前１件ずつあるときは２件取得できる() {
+    public void _4日前５日前６日前１件ずつあるときは２件取得できる() throws ParseException {
         //given
         QuestionCollection questionCollection = createQuestionCollection(3, 0);
 
@@ -201,7 +202,7 @@ public class QuestionCollectionTest {
     }
 
     @Test
-    public void _複数カテゴリで５日前が１件ずつあるときは２件取得できる() {
+    public void _複数カテゴリで５日前が１件ずつあるときは２件取得できる() throws ParseException {
         //given
         QuestionCollection questionCollection = createQuestionCollection(2, 2);
 
@@ -233,7 +234,7 @@ public class QuestionCollectionTest {
     }
 
     @Test
-    public void _未回答の質問が１件だけある時に1件取得できる() {
+    public void _未回答の質問が１件だけある時に1件取得できる() throws ParseException {
         //given
         QuestionCollection questionCollection = createQuestionCollection(1, 0);
 
@@ -242,4 +243,39 @@ public class QuestionCollectionTest {
         //then
         assertEquals(1, questions.size());
     }
+
+
+    @Test
+    public void _未回答の質問が末尾にくる() throws ParseException {
+        //given
+        QuestionCollection questionCollection = createQuestionCollection(4, 0);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, -5);
+        Question question = repo(Question.class).findAll().get(0);
+        new AnswerHistory().recordAnsweredQuestion(user, String.valueOf(question.getId()), calendar.getTime());
+
+        Calendar calendar2 = Calendar.getInstance();
+        calendar2.add(Calendar.DATE, -4);
+        Question question2 = repo(Question.class).findAll().get(1);
+        new AnswerHistory().recordAnsweredQuestion(user, String.valueOf(question2.getId()), calendar2.getTime());
+
+        Question question3 = repo(Question.class).findAll().get(2);
+
+        Calendar calendar4 = Calendar.getInstance();
+        calendar4.add(Calendar.DATE, -5);
+        Question question4 = repo(Question.class).findAll().get(3);
+        new AnswerHistory().recordAnsweredQuestion(user, String.valueOf(question4.getId()), calendar4.getTime());
+
+        user.save();
+        //when
+        List<Question> questions = questionCollection.generateQuestionListForPractice(categories, 10, user);
+
+        //then
+        assertEquals(3, questions.size());
+//        assertEquals(questions.get(0).getId(), question.getId());
+//        assertEquals(questions.get(1).getId(), question4.getId());
+//        assertEquals(questions.get(2).getId(), question3.getId());
+    }
+
 }

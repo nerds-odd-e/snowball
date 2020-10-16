@@ -3,6 +3,8 @@ package com.odde.snowball.model.onlinetest;
 
 import com.odde.snowball.model.User;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,33 +45,40 @@ public class QuestionCollection {
         return questions;
     }
 
-    public List<Question> generateQuestionListForPractice(List<Category> categories, int numberOfQuestions, User user) {
+    //TODO: concerns: is it ok multi category case?
+    public List<Question> generateQuestionListForPractice(List<Category> categories, int numberOfQuestions, User user) throws ParseException {
         if (numberOfQuestions <= 0 || allQuestions.isEmpty() || hasNoQuestionBelongCategory(categories)) {
             return new ArrayList<>();
         }
 
-        // List<Question> allQuestions = repo(Question.class).findAll();
-        List<Question> removeQuestions = new ArrayList<>();
-        Date today = new Date();
-        //TODO: concerns: is it ok multi category case?
+        List<Question> resultQuestions = new ArrayList<>();
+        List<Question> notAnsweredQuestions = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        Date today = sdf.parse(sdf.format(new Date()));
+        Date nextShowDate;
         for (Question question : allQuestions){
-            // boolean removeListItem = false;
             if (user.getAnswerInfo().size() > 0) {
+                boolean isAnsewered = false;
                 for (AnswerInfo info : user.getAnswerInfo()) {
-                    if(question.stringId().equals(info.getQuestionId())){
+                    if (question.stringId().equals(info.getQuestionId())) {
+                        isAnsewered = true;
                         // 次回回答日でなければ除く
-                        if (today.compareTo(info.getNextShowDate()) <= 0) {
-                            removeQuestions.add(question);
+                        nextShowDate = sdf.parse(sdf.format(info.getNextShowDate()));
+                        if (today.compareTo(nextShowDate) >= 0) {
+                            resultQuestions.add(question);
                             break;
                         }
                     }
                 }
+                if(isAnsewered == false){
+                    notAnsweredQuestions.add(question);
+                }
+            } else{
+                notAnsweredQuestions.add(question);
             }
         }
-        for(Question removeQuestion: removeQuestions) {
-            allQuestions.remove(removeQuestion);
-        }
-        return allQuestions;
+        resultQuestions.addAll(notAnsweredQuestions);
+        return resultQuestions;
     }
 
     private List<Question> getRemainingQuestions(List<Category> categories, int numberOfRemainingQuestions, List<Question> questions) {
