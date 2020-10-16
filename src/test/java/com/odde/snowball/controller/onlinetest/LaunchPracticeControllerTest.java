@@ -49,7 +49,7 @@ public class LaunchPracticeControllerTest {
             throws Exception {
         mockQuestion();
         controller.doGet(request, response);
-        assertEquals("/onlinetest/question", response.getRedirectedUrl());
+        assertEquals("/practice/question", response.getRedirectedUrl());
     }
 
 

@@ -33,6 +33,6 @@ public class LaunchPracticeController extends AppController {
             return;
         }
         session.setAttribute("onlineTest", onlineTest);
-        resp.sendRedirect("/onlinetest/question");
+        resp.sendRedirect("/practice/question");
     }
 }
